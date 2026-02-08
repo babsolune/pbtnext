@@ -1,0 +1,494 @@
+/*
+ * Copy this file into your theme to customize it.
+ * https://www.phpboost.com/wiki/structure-d-un-theme#paragraph-le-repertoire-theme
+ *
+ * contains elements for all admin menus
+ *    - index menu
+ *    - modal admin menu
+ *    - support menu
+ *    - quick links menu
+ *    - extended menu
+ *    - menu management
+ */
+
+/* --- Top left Menu --- */
+.admin-index {
+    ul {
+        margin: 0;
+        list-style-type: none;
+        display: flex;
+        flex-direction: row;
+    }
+
+    li {
+        width: calc(100% / 4);
+
+        &:first-child:after { content: ''; }
+    }
+
+    a {
+        display: block;
+        padding: 0.3em;
+        text-align: center;
+
+        @media (min-width: 769px) { padding: 0.555em; }
+    }
+}
+
+/* --- Left menu titles --- */
+.menu-title {
+    display: none;
+
+    @media (min-width: 769px) {
+        display: block;
+        margin: 1.618em 0 0;
+        padding: 0.309em;
+        overflow: hidden;
+
+        h5 {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .pbt-logo,
+        .site-logo {
+            display: inline-block;
+            height: 1.618em;
+            width: 1.618em;
+            background-image: url('../theme/images/logo.svg');
+            background-repeat: no-repeat;
+            background-position: center ;
+            background-size: contain;
+            vertical-align: middle;
+        }
+    }
+}
+
+/* --- Left menu --- */
+.admin-menu {
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    & > ul > li {
+        display:inline-block;
+        width: calc(100% /  5 - 3px);
+        text-align: center;
+
+        @media (min-width: 769px) and (min-height: 601px) {
+            width: 100%;
+            display: block;
+            text-align: left;
+        }
+    }
+
+    .admin-li > a {
+        display: block;
+        padding: 0.456em;
+        font-weight: 400;
+        font-size: 1.3rem;
+        text-decoration: none;
+        text-transform: uppercase;
+        @media (min-width: 769px) and (min-height: 601px) {
+            padding: 0.618em 1.309em;
+            transition: padding 0.3s ease;
+        }
+
+        & > i { padding: 0.456em 1.456em 0.456em 0.456em; }
+
+        span {
+            display: none;
+            @media (min-width: 769px) and (min-height: 601px) { display: inline-block; }
+        }
+    }
+
+    @media (min-width: 769px) and (min-height: 601px) {
+        .admin-li:hover > a {
+            padding: 0.618em 1.309em 0.618em 2.309em;
+            transition: padding 1.8s ease;
+        }
+    }
+
+    @media (min-width: 769px) { margin-bottom: 20px; }
+}
+
+@media (min-width: 769px) {
+    .cssmenu-title { white-space: normal; }
+}
+
+/* --- Modal panels contents ---- */
+.modal .next-menu {
+	width:100%;
+	z-index: 20;
+	padding: 1.618em;
+	margin-top: 5px;
+	display: flex;
+	flex-direction: row;
+    justify-content: space-between;
+
+    i { padding-bottom: 3px; }
+    a { text-decoration: none; }
+}
+
+.modal-menu {
+    margin: 0;
+	display: flex;
+	flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    ul, li {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    ul li a {
+        display: block;
+        padding: 0.456em 0.809em;
+    }
+
+    li > a {
+        border-width: 1px;
+        border-style: solid;
+        border-color: transparent;
+    }
+
+    li.has-sub > a { font-size: 1.618rem; }
+
+    & > li {
+        margin-bottom: 1em;
+
+        @media (min-width: 479px) { vertical-align: text-top; }
+
+        & > a {
+            display: flex;
+            padding: 0.618em;
+            text-decoration: none;
+            border-width: 0 0 1px 0;
+            white-space: normal;
+            font-size: 1.618rem;
+        }
+    }
+
+    i,  img {
+        margin-right: 0.309em;
+        align-self: center;
+    }
+
+    .level-2 {
+        & > li:first-child > a { border-width: 0 1px 1px; }
+        & > li.has-sub > a { display: none; }
+        & ul { padding: 0; }
+    }
+}
+
+ /* --- support Menu --- */
+#support-pbt {
+    display: none;
+    @media (min-width: 769px) { display: block; }
+
+    .admin-menu > ul > li {
+        display: block;
+        width: 100%;
+        text-align: left;
+    }
+}
+
+/* --- Top right Quick links menu --- */
+#admin-quick-menu {
+    min-height: 39px;
+    @media (min-width: 769px) {
+		overflow: hidden;
+		border-width: 0 0 1px 0;
+		border-style: solid;
+		border-color: transparent;
+	}
+
+    ul {
+        position: absolute;
+        z-index: 2;
+        opacity: 0;
+        visibility: hidden;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        transition: all 0.5s ease 0s;
+        list-style-type: none;
+        @media (min-width: 769px) {
+            position: relative;
+            float: right;
+            opacity: 1;
+            visibility: visible;
+            width: auto;
+            padding: 0 8px;
+        }
+    }
+
+    &.opened ul {
+        opacity: 1;
+        visibility: visible;
+        transition: all 0.5s ease 0s;
+    }
+
+    li {
+        display: block;
+        @media (min-width: 769px) { display: inline-block; }
+
+        .quick-link {
+            display: block;
+            padding: 10px;
+            margin: 0;
+            text-decoration: none;
+            @media (min-width: 769px) {
+                text-align: right;
+                padding: 14px 10px;
+            }
+        }
+    }
+}
+
+.js-menu-button {
+	display: table;
+	margin: auto;
+	padding: 10px;
+
+    @media (min-width: 769px) { display: none; }
+
+    &:hover { text-decoration: none; }
+}
+
+/* --- Extended menu --- */
+.admin-extend-menu {
+    p { padding: 0; }
+
+    ul { margin: 0; 
+        h5 { padding: 10px 0; }
+    }
+
+    li {
+        display: inline-block;
+        margin: 5px 0 0;
+        vertical-align: text-top;
+        width: calc(97% / 2);
+        @media (min-width: 481px) { width: calc(97% / 4); }
+        @media (min-width: 981px) { width: calc(97% / 6); }
+
+        a {
+            display: block;
+            padding: 10px 5px;
+            text-align: center;
+        }
+
+    }
+}
+
+/* --- Menus management --- */
+#valid-position-menus {
+	position: fixed;
+	z-index: 2;
+	bottom: 10%;
+	left: 0;
+	right: 0;
+	text-align: center;
+	padding: 6px;
+    @media (min-width: 481px) {
+        left: auto;
+        bottom: 5%;
+    }
+}
+
+.menus-block-list::before,
+.menus-block-list::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+/* --- Themes selector --- */
+.themesmanagement {
+    padding: 8px 12px;
+    @media (min-width: 769px) {
+        padding: 12px 12px 13px;
+        text-align: right;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    select {
+        margin-right: 20px;
+        padding: 0;
+        width: auto;
+        min-width: 200px;
+    }
+}
+
+/* --- Menus location --- */
+.container-block {
+	margin: 0.618em auto 0;
+	width: 210px;
+	position: relative;
+}
+
+.container-block-absolute {
+	position: absolute;
+	width: 210px;
+	display: none;
+	top: calc(100% - 3px);
+	z-index: 2;
+}
+
+.menu-block-libelle {
+	margin: 0;
+	border-width: 1px 1px 0 1px;
+	border-style: solid;
+	border-color: transparent;
+	border-radius: 5px 5px 0 0;
+	text-align: center;
+	padding: 0.309em 0.618em;
+}
+
+.menus-block-add {
+	margin: 0;
+	border-width: 0 1px 1px 1px;
+	border-style: solid;
+	border-color: transparent;
+	border-radius: 0 0 5px 5px;
+	cursor: pointer;
+	text-align: center;
+	padding: 0.309em 0;
+    @media (max-width: 768px) { padding-bottom: 5px; }
+    
+    i { margin-right: 0.309em; }
+}
+
+.menus-block-add-links {
+	margin: -1px 0 0;
+	border-radius: 0;
+	border-width: 1px 1px 0 1px;
+
+    &:last-child {
+        border-width: 1px;
+        border-style: solid;
+        border-color: transparent;
+        border-radius: 0 0 5px 5px;
+    }
+
+    a {
+        padding: 0.618em;
+        display: block;
+    }
+}
+
+.menus-block-container {
+	margin: 0 0 6px 0;
+	padding: 5px 5px 7px 5px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+
+    .cell-mini 		{ display: none;  }
+
+    &:hover .cell-mini { display: block; }
+}
+
+#container-main .menus-block-container:hover .cell-mini { display: none; }
+
+.menus-block-title {
+	display: inline-block;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	max-width: 100%;
+}
+
+.menus-block-top {
+	margin-bottom: 0.456em;
+	text-align: center;
+}
+
+.menus-block-move-cursor { cursor: move; }
+
+.menus-block-move {
+	position: relative;
+	height: 0.456em;
+
+    a {
+        position: absolute;
+        right: 0.618em;
+        @media (min-width: 769px) { opacity: 0; }
+    }
+}
+
+.menus-block-move-top a    { top: -0.456em;}
+.menus-block-move-bottom a { bottom: -0.618em;}
+
+@media (min-width: 769px) {
+	.menus-block-container:hover > .menus-block-move a { opacity: 1; }
+}
+
+/* --- Menus contents --- */
+#mod_topheader, #mod_header, #mod_subheader, #mod_left,
+#mod_right, #mod_topcentral,
+#mod_central, #mod_bottomcentral,
+#mod_topfooter, #mod_footer {
+	margin-top: -15px;
+	padding: 30px 10px 10px 10px;
+	min-height: 75px;
+	border-width: 2px;
+	border-style: dashed;
+	border-color: transparent;
+}
+
+/* --- Menu Containers --- */
+#container-top-header,
+#container-inner-header,
+#container-sub-header,
+#container-top-footer,
+#container-footer-content {
+	padding: 0.618em;
+	vertical-align: top;
+}
+
+#container-main-content .menus-block-container {
+	display: inline-block;
+    vertical-align: top;
+	margin: 0 5px 5px 5px;
+}
+
+.menus-management-column {
+	display: flex;
+	flex-direction: column;
+}
+
+.menus-management-column-left,
+.menus-management-column-right,
+.menus-management-column-central {
+	width: 100%;
+	padding: 0.618em;
+}
+
+#container-top-footer { clear: both; }
+
+.menusmanagement .fa-arrows-alt { display: none; }
+
+.menus-block-top .fa { padding: 0.309em; }
+
+@media (min-width: 769px) and (min-height: 601px) {
+	.menusmanagement .fa-arrows-alt { display: inline-block; }
+}
+
+@media (min-width: 981px) {
+	.menus-management-column { flex-direction: row; }
+
+	.menus-management-column-left,
+	.menus-management-column-right {
+		width: calc(100% / 4) ;
+		min-width: 240px;
+	}
+
+	.menus-management-column-central { width: calc(100% / 2); }
+}

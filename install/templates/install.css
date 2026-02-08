@@ -1,0 +1,127 @@
+/* --- Menus ---------------------------------------------------------------- */
+.step-menu{
+    .cssmenu-title {
+        border-width: 0 0 3px 0;
+        border-style: solid;
+        border-color: transparent;
+        @media (min-width: 769px) { border-width: 0 0 0 5px; }
+        @media (max-width: 768px) {
+            display: block;
+            padding: 0.309em;
+            text-align: center;
+            white-space: normal;
+        }
+    }
+
+    @media (max-width: 768px) {
+        &.cssmenu > ul > li {
+            display: inline-block;
+            width: calc(100% / 7);
+
+            & > .cssmenu-title {
+                i {
+                    display: inline-block;
+                    padding: 0;
+                }
+                span { display: none; }
+            }
+        }
+    }
+}
+
+.row-current .cssmenu-title {
+	border-color: var(--warning-tone);
+    background-color: rgba(var(--main-rgb-t), 0.5);
+}
+
+.row-success .cssmenu-title {
+	border-color: var(--success-tone);
+	background-color: rgba(var(--main-rgb-t), 0.5);
+}
+
+.help-menu .cssmenu-title {
+    color: var(--txt-alt);
+    @media (max-width: 768px) {
+		display: inline-block;
+		width: calc(100% / 2);
+	}
+}
+
+/* --- Content -------------------------------------------------------------- */
+#global h1 {
+	padding: 0.809em;
+	border-width: 0 0 2px;
+    border-style: solid;
+    border-color: var(--bdr-main);
+}
+
+.admin-main { flex: 1 1 auto; }
+
+section header {
+    margin-bottom: 0.809em;
+
+    h2 {
+        padding: 0.809em;
+        border-bottom: none;
+        font-weight: 400;
+    }
+}
+
+.next-step button {
+	margin: 0;
+    padding: 1em 2em;
+    border-width: 1px 0 1px 1px;
+
+    &:hover, &:last-child { border-width: 1px; }
+}
+
+/* --- Welcome -------------------------------------------------------------- */
+@media (min-width: 769px) {
+	.pbt-box { padding: 0 0.456em 0.456em 6.18em; }
+}
+
+/* --- License -------------------------------------------------------------- */
+.license-container {
+	margin-bottom: 0.809em;
+	padding: 1em 0;
+	background-color: var(--bgc-main);
+	border-width: 1px;
+    border-style: solid;
+    border-color: var(--bdr-main);
+}
+
+.license-content {
+	padding: 0 1em;
+	width: auto;
+	height: 340px;
+	overflow-y: scroll;
+}
+
+/* --- Server configuration ------------------------------------------------- */
+#chmod .message-helper {
+	display: inline-block;
+	width: calc(50% - 0.809em);
+}
+
+/* --- Finish --------------------------------------------------------------- */
+.finish-menu ul {
+	display: table;
+	margin: 1.309em auto;
+	padding: 0;
+	list-style-type: none;
+
+    li {
+        display: inline-block;
+        padding: 0.809em;
+        width: 100%;
+        text-align: center;
+        @media (min-width: 769px) {
+            width: 200px;
+            vertical-align: top;
+        }
+
+        a { text-decoration: none; }
+
+        span { display: block; }
+    }
+}
