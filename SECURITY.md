@@ -1,5 +1,7 @@
 # Security Policy
 
+This is a development version of PHPBoost, DO NOT INSTALL on an online server
+
 ## Supported Versions
 
 The 2 last PHPBoost versions are supported :
@@ -8,14 +10,12 @@ The 2 last PHPBoost versions are supported :
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 6.0.x   | :white_check_mark: |
-| 5.2.x   | :white_check_mark: |
-| < 5.2   | :x:                |
+| 6.dev   | :white_check_mark: |
 
 ## Reporting a Vulnerability
 
 Security vulnerabilities can be reported on our bugtracker with a high priority.
 
-[![PHPBoost](https://img.shields.io/badge/PHPBoost-official_website-366493)](https://www.phpboost.com/bugtracker "link to PHPBoost CMS Bugtracker")
+[![PHPBoost](https://img.shields.io/badge/PHPBoost-official_website-366493)](https://www.phpboost.com/user/pm-768 "link to babsolune pm at PHPBoost CMS official website")
 
 You can also contact us by mail : security@phpboost.com
