@@ -1,6 +1,5 @@
 # Kernel
 cache/*
-stats/cache/*
 robots.txt
 sitemap.xml
 kernel/db/config.php
@@ -14,8 +13,12 @@ images/avatars/*
 images/maths/*
 images/customization/*
 images/smileys/*
-gallery/pics/*
 upload/*
+
+# Modules
+flux/xml/*
+gallery/pics/*
+stats/cache/*
 
 # Non official graphic templates
 !templates
