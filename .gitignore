@@ -7,7 +7,6 @@ kernel/db/config.php
 *.swp
 *.orig
 *.htaccess
-update/update_log.txt
 
 # Images & files
 images/group/*
