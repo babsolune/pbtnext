@@ -10,12 +10,14 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-require_once('../admin/admin_begin.php');
+define('PATH_TO_ROOT', '../../');
+
+require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
 
 $lang = LangLoader::get_all_langs('gallery');
 
 define('TITLE', $lang['gallery.config.module.title']);
-require_once('../admin/admin_header.php');
+require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 $config = GalleryConfig::load();
 
 $request = AppContext::get_request();
@@ -156,6 +158,6 @@ $view->put_all(array(
 
 $view->display();
 
-require_once('../admin/admin_footer.php');
+require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
 
 ?>

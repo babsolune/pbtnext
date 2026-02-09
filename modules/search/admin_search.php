@@ -9,7 +9,9 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-require_once('../admin/admin_begin.php');
+define('PATH_TO_ROOT', '../../');
+
+require_once(PATH_TO_ROOT . '/admin/admin_begin.php');
 
 //------------------------------------------------------------------- Language
 $lang = LangLoader::get_all_langs('search');
@@ -28,7 +30,7 @@ $config = SearchConfig::load();
 
 //--------------------------------------------------------------------- Header
 define('TITLE', $weighting ? $lang['search.config.weighting'] : $lang['form.configuration']);
-require_once('../admin/admin_header.php');
+require_once(PATH_TO_ROOT . '/admin/admin_header.php');
 
 //Si c'est confirmé on execute
 if ($valid)
@@ -123,5 +125,5 @@ else
 
 $view->display();
 
-require_once('../admin/admin_footer.php');
+require_once(PATH_TO_ROOT . '/admin/admin_footer.php');
 ?>
