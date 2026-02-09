@@ -179,11 +179,8 @@ class HtaccessFileCache implements CacheData
         $this->add_section('Skip rewriting for existing directories');
 		$this->add_line('RewriteCond %{REQUEST_FILENAME} -d');
 		$this->add_line('RewriteRule ^ - [L]');
-        $this->add_section('Handle direct index.php requests for all modules');
-        $this->add_line('RewriteRule ^([a-zA-Z0-9_-]+)\/([a-zA-Z0-9_-]+[a-zA-Z0-9_\-.]+\.php)(.*)$ ' . $this->general_config->get_site_path() . '/modules/$1/$2$3 [L,QSA]');
-        // Optional: Handle direct index.php requests for all modules
-		$this->add_line('RewriteRule ^([a-zA-Z0-9_-]+)\/index\.php$ ' . $this->general_config->get_site_path() . '/modules/$1/index.php [L,QSA]');
 	}
+
 
 	private function add_core_rules()
 	{
@@ -240,10 +237,6 @@ class HtaccessFileCache implements CacheData
 		}
 
 		$this->add_section('Modules rules');
-
-        $this->add_line('# Handle direct .php file requests for all modules');
-        $this->add_line('RewriteRule ^([a-zA-Z0-9_-]+)\/([a-zA-Z0-9_-]+\.php)(.*)$ ' . $this->general_config->get_site_path() . '/modules/$1/$2$3 [L,QSA]');
-
 
 		foreach ($modules as $module)
 		{
@@ -302,6 +295,12 @@ class HtaccessFileCache implements CacheData
 				}
 			}
 		}
+
+		// Generic fallback rules for direct .php file access (placed last to allow module-specific rules priority)
+		$this->add_section('Generic module file access');
+		$this->add_line('# Handle direct .php file requests for all modules');
+		$this->add_line('RewriteRule ^([a-zA-Z0-9_-]+)\/([a-zA-Z0-9_\-.]+\.php)(.*)$ ' . $this->general_config->get_site_path() . '/modules/$1/$2$3 [L,QSA]');
+		$this->add_line('RewriteRule ^([a-zA-Z0-9_-]+)\/index\.php$ ' . $this->general_config->get_site_path() . '/modules/$1/index.php [L,QSA]');
 	}
 
 	private function add_user_rules()

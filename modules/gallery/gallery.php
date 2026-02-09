@@ -11,9 +11,11 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-require_once('../kernel/begin.php');
-require_once('../gallery/gallery_begin.php');
-require_once('../kernel/header.php');
+define('PATH_TO_ROOT', '../../');
+
+require_once(PATH_TO_ROOT . '/kernel/begin.php');
+require_once(PATH_TO_ROOT . '/modules/gallery/gallery_begin.php');
+require_once(PATH_TO_ROOT . '/kernel/header.php');
 
 $config = GalleryConfig::load();
 
@@ -251,6 +253,6 @@ else
 	}
 }
 
-require_once('../kernel/footer.php');
+require_once(PATH_TO_ROOT . '/kernel/footer.php');
 
 ?>
