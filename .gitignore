@@ -1,10 +1,12 @@
 # Kernel
+cache/*
 stats/cache/*
 robots.txt
 sitemap.xml
 kernel/db/config.php
 *.swp
 *.orig
+*.htaccess
 update/update_log.txt
 
 # Images & files
