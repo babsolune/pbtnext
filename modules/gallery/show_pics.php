@@ -9,9 +9,11 @@
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
 
-require_once('../kernel/begin.php');
-require_once('../gallery/gallery_begin.php');
-require_once('../kernel/header_no_display.php');
+define('PATH_TO_ROOT', '../../');
+
+require_once(PATH_TO_ROOT . '/kernel/begin.php');
+require_once(ModulesManager::get_module_path('gallery') . '/gallery_begin.php');
+require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 $request = AppContext::get_request();
 
 $g_idpics = $request->get_getint('id', 0);
@@ -48,6 +50,6 @@ else
 	die(LangLoader::get_message('gallery.no.random.item', 'common', 'gallery')); //Echec paramètres images incorrects.
 }
 
-require_once('../kernel/footer_no_display.php');
+require_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');
 
 ?>

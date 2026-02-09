@@ -11,10 +11,10 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-require_once('../kernel/begin.php');
+require_once(PATH_TO_ROOT . '/kernel/begin.php');
 AppContext::get_session()->no_session_location(); //Permet de ne pas mettre jour la page dans la session.
-include_once('../gallery/gallery_begin.php');
-require_once('../kernel/header_no_display.php');
+include_once(ModulesManager::get_module_path('gallery') . '/gallery_begin.php');
+require_once(PATH_TO_ROOT . '/kernel/header_no_display.php');
 
 if (AppContext::get_current_user()->is_readonly())
 	exit;

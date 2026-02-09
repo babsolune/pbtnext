@@ -474,8 +474,8 @@ class GalleryDisplayCategoryController extends ModuleController
 				while ($row = $result->fetch())
 				{
 					//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
-					if (!file_exists(PATH_TO_ROOT . '/modules/gallery/pics/thumbnails/' . $row['path']))
-						$Gallery->Resize_pics(PATH_TO_ROOT . '/modules/gallery/pics/' . $row['path']); //Redimensionnement + création miniature
+					if (!file_exists(ModulesManager::get_module_path('gallery') . '/pics/thumbnails/' . $row['path']))
+						$Gallery->Resize_pics(ModulesManager::get_module_path('gallery') . '/pics/' . $row['path']); //Redimensionnement + création miniature
 
 					$info = new SplFileInfo($row['path']);
 					$extension = $info->getExtension();
@@ -488,12 +488,12 @@ class GalleryDisplayCategoryController extends ModuleController
 					}
 					elseif ($config->get_pics_enlargement_mode() == GalleryConfig::POPUP) //Ouverture en popup simple.
 					{
-						$onclick = 'increment_view(' . $row['id'] . ');display_pics_popup(\'' . PATH_TO_ROOT . '/modules/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['id_category']) . '\', \'' . $row['width'] . '\', \'' . $row['height'] . '\');return false;';
+						$onclick = 'increment_view(' . $row['id'] . ');display_pics_popup(\'' . '../gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['id_category']) . '\', \'' . $row['width'] . '\', \'' . $row['height'] . '\');return false;';
 						$display_link = '';
 					}
 					elseif ($config->get_pics_enlargement_mode() == GalleryConfig::RESIZE) //Ouverture en agrandissement simple.
 					{
-						$onclick = 'increment_view(' . $row['id'] . ');display_pics(' . $row['id'] . ', \'' . PATH_TO_ROOT . '/modules/gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['id_category']) . '\');return false;';
+						$onclick = 'increment_view(' . $row['id'] . ');display_pics(' . $row['id'] . ', \'' . '../gallery/show_pics' . url('.php?id=' . $row['id'] . '&amp;cat=' . $row['id_category']) . '\');return false;';
 						$display_link = '';
 					}
 					else //Ouverture nouvelle page.
@@ -552,16 +552,15 @@ class GalleryDisplayCategoryController extends ModuleController
 						'COMMENTS' => CommentsService::get_number_and_lang_comments('gallery', $row['id']),
 
 						'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
-						'U_ITEM' => PATH_TO_ROOT . '/modules/gallery/gallery' . url('.php?cat=' . $row['id_category'] . '&amp;id=' . $row['id'], '-' . $row['id_category'] . '-' . $row['id'] . '.php'),
-						'U_PICTURE' => 'show_pics.php?id=' . $row['id'] . '&amp;cat=' . $row['id_category'] . '&amp;ext=.' . $extension,
+						'U_ITEM' => '../gallery/gallery' . url('.php?cat=' . $row['id_category'] . '&amp;id=' . $row['id'], '-' . $row['id_category'] . '-' . $row['id'] . '.php'),
+						'U_PICTURE' => '../gallery/show_pics.php?id=' . $row['id'] . '&amp;cat=' . $row['id_category'] . '&amp;ext=.' . $extension,
 						'U_DELETE' => url('gallery.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;cat=' . $category->get_id()),
 						'U_MOVE' => url('gallery.php?id=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token() . '&amp;move=\' + this.options[this.selectedIndex].value'),
 						'U_DISPLAY' => $display_link,
-						'U_COMMENTS' => PATH_TO_ROOT . '/modules/gallery/gallery' . url('.php?cat=' . $row['id_category'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['id_category'] . '-' . $row['id'] . '.php?com=0') . '#comments-list',
+						'U_COMMENTS' => '../gallery/gallery' . url('.php?cat=' . $row['id_category'] . '&amp;id=' . $row['id'] . '&amp;com=0', '-' . $row['id_category'] . '-' . $row['id'] . '.php?com=0') . '#comments-list',
 					));
 				}
 				$result->dispose();
-
 				//Création des cellules du tableau si besoin est.
 				while (!is_int($j/$nbr_column_pics))
 				{

@@ -192,12 +192,12 @@
 				var key_right = start_thumb + j;
 				if( direction == 'left' && array_pics[key_left] )
 				{
-					document.getElementById('thumb' + i).innerHTML = '<a href="' + array_pics[key_left]['link'] + '"><img src="{PATH_TO_ROOT}/gallery/pics/thumbnails/' + array_pics[key_left]['path'] + '" alt="' + array_pics[key_left]['path'] + '" /></a>';
+					document.getElementById('thumb' + i).innerHTML = '<a href="' + array_pics[key_left]['link'] + '"><img src="{PATH_TO_ROOT}/modules/gallery/pics/thumbnails/' + array_pics[key_left]['path'] + '" alt="' + array_pics[key_left]['path'] + '" /></a>';
 					j++;
 				}
 				else if( direction == 'right' && array_pics[key_right] )
 				{
-					document.getElementById('thumb' + i).innerHTML = '<a href="' + array_pics[key_right]['link'] + '"><img src="{PATH_TO_ROOT}/gallery/pics/thumbnails/' + array_pics[key_right]['path'] + '" alt="' + array_pics[key_right]['path'] + '" /></a>';
+					document.getElementById('thumb' + i).innerHTML = '<a href="' + array_pics[key_right]['link'] + '"><img src="{PATH_TO_ROOT}/modules/gallery/pics/thumbnails/' + array_pics[key_right]['path'] + '" alt="' + array_pics[key_right]['path'] + '" /></a>';
 					j++;
 				}
 			}
@@ -429,7 +429,7 @@
 												# START list_preview_pics #
 													<td class="align-center# IF list_preview_pics.C_CURRENT_ITEM # current# ENDIF #" style="height:{list_preview_pics.HEIGHT}px">
 														<span id="thumb{list_preview_pics.ID}">
-															<a class="offload" href="{list_preview_pics.URL}"><img src="pics/thumbnails/{list_preview_pics.PATH}" alt="{list_preview_pics.NAME}" /></a>
+															<a class="offload" href="{list_preview_pics.URL}"><img src="{PATH_TO_ROOT}/modules/gallery/pics/thumbnails/{list_preview_pics.PATH}" alt="{list_preview_pics.NAME}" /></a>
 														</span>
 													</td>
 												# END list_preview_pics #
