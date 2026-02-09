@@ -9,6 +9,13 @@ kernel/db/config.php
 *.htaccess
 
 # Images & files
+images/group/*
+images/avatars/*
+images/maths/*
+images/customization/*
+images/smileys/*
+gallery/pics/*
+upload/*
 
 # Non official graphic templates
 !templates
