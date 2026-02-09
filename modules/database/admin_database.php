@@ -72,7 +72,6 @@ $action        = $request->get_getvalue('action', '');
 if ($action == 'backup_table' && !empty($get_table)) // Save for unic table
 	$tables_backup = true;
 
-    // Debug::stop(new FileTemplate('/database/admin_database_management.tpl'));
 $view = new FileTemplate('database/admin_database_management.tpl');
 $view->add_lang($lang);
 

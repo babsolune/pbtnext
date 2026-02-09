@@ -49,7 +49,7 @@ class FeedMenu extends Menu
 	{
 		$theme_id = AppContext::get_current_user()->get_theme();
 		if (!empty($module_id) && file_exists(PATH_TO_ROOT . '/templates/' . $theme_id . '/modules/' . $module_id . '/feed.tpl'))
-			$tpl = new FileTemplate('/templates/' . $theme_id . '/modules/' . $module_id . '/feed.tpl');
+			$tpl = new FileTemplate('templates/' . $theme_id . '/modules/' . $module_id . '/feed.tpl');
 		elseif (!empty($module_id))
 		{
 			// Check new /modules structure with fallback to root

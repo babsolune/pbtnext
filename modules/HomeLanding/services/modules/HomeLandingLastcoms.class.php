@@ -19,9 +19,9 @@ class HomeLandingLastcoms
 
         $theme_id = AppContext::get_current_user()->get_theme();
 		if (file_exists(PATH_TO_ROOT . '/templates/' . $theme_id . '/modules/HomeLanding/pagecontent/' . $module_name . '.tpl'))
-			$view = new FileTemplate('/templates/' . $theme_id . '/modules/HomeLanding/pagecontent/' . $module_name . '.tpl');
+			$view = new FileTemplate('templates/' . $theme_id . '/modules/HomeLanding/pagecontent/' . $module_name . '.tpl');
         elseif (file_exists(PATH_TO_ROOT . '/modules/HomeLanding/templates/pagecontent/' . $module_name . '.tpl'))
-			$view = new FileTemplate('/modules/HomeLanding/templates/pagecontent/' . $module_name . '.tpl');
+			$view = new FileTemplate('modules/HomeLanding/templates/pagecontent/' . $module_name . '.tpl');
 		else
             $view = new FileTemplate('modules/HomeLanding/pagecontent/messages.tpl');
 
