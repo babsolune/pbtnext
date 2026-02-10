@@ -65,6 +65,9 @@
 		jQuery('<span/>').text(${escapejs(@common.url)}).appendTo('#menu_label_url_' + id);
 		jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_url', name : 'menu_element_' + id + '_url'}).appendTo('#menu_label_url_' + id);
 
+		jQuery('<label/>', {id : 'menu_label_target_' + id, for : 'menu_element_' + id + '_target', class : 'label-sup label-mini grouped-element'}).appendTo('#menu_inputs_' + id);
+		jQuery('<input/>', {type : 'checkbox', id : 'menu_element_' + id + '_target', 'aria-label' : ${escapejs(@common.open.new.window)}, name : 'menu_element_' + id + '_target', class : 'checkbox-mini'}).appendTo('#menu_label_target_' + id);
+
 		jQuery('<label/>', {id : 'menu_label_image_' + id, for : 'menu_element_' + id + '_image', class : 'label-sup grouped-element'}).appendTo('#menu_inputs_' + id);
 		jQuery('<span/>').text(${escapejs(@common.image)}).appendTo('#menu_label_image_' + id);
 		jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_image', name : 'menu_element_' + id + '_image', onblur: "image_preview(this,menu_element_" + id + "_image_preview)"}).appendTo('#menu_label_image_' + id);
@@ -111,6 +114,9 @@
 		jQuery('<label/>', {id : 'menu_label_url_' + id, for : 'menu_element_' + id + '_url', class : 'label-sup grouped-element'}).appendTo('#menu_inputs_' + id);
 		jQuery('<span/>').text(${escapejs(@common.url)}).appendTo('#menu_label_url_' + id);
 		jQuery('<input/>', {type : 'text', id : 'menu_element_' + id + '_url', name : 'menu_element_' + id + '_url'}).appendTo('#menu_label_url_' + id);
+
+		jQuery('<label/>', {id : 'menu_label_target_' + id, for : 'menu_element_' + id + '_target', class : 'label-sup label-mini grouped-element'}).appendTo('#menu_inputs_' + id);
+		jQuery('<input/>', {type : 'checkbox', id : 'menu_element_' + id + '_target', 'aria-label' : ${escapejs(@common.open.new.window)}, name : 'menu_element_' + id + '_target', class : 'checkbox-mini'}).appendTo('#menu_label_target_' + id);
 
 		jQuery('<label/>', {id : 'menu_label_image_' + id, for : 'menu_element_' + id + '_image', class : 'label-sup grouped-element'}).appendTo('#menu_inputs_' + id);
 		jQuery('<span/>').text(${escapejs(@common.image)}).appendTo('#menu_label_image_' + id);
@@ -219,7 +225,7 @@
 		<fieldset>
 			<legend># IF C_EDIT #{@menu.links.edit}# ELSE #{@menu.links.add}# ENDIF #</legend>
 			<div class="fieldset-inset">
-				<div class="form-element">
+                <div class="form-element">
 					<label for="menu_element_{ID}_name">* {@common.name}</label>
 					<div class="form-field"><input type="text" name="menu_element_{ID}_name" id="menu_element_{ID}_name" value="{MENU_NAME}"></div>
 				</div>

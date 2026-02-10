@@ -21,6 +21,7 @@
 				<span class="grouped-element bgc-full notice"><i class="fa fa-folder" aria-hidden="true"></i></span>
 				<label for="menu_element_{ID}_name" class="label-sup grouped-element"><span>{@common.name}</span><input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name"></label>
 				<label for="menu_element_{ID}_url" class="label-sup grouped-element"><span>{@common.url}</span><input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url"></label>
+				<label for="menu_element_{ID}_target" class="label-sup label-mini grouped-element"><input aria-label="{@common.open.new.window}" type="checkbox" class="checkbox-mini" id="menu_element_{ID}_target" name="menu_element_{ID}_target" # IF C_TARGET # checked="checked"# ENDIF #></label>
 				<label for="menu_element_{ID}_image" class="label-sup grouped-element"><span>{@common.image}</span><input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)"></label>
 				<label for="menu_element_{ID}_icon" class="label-sup grouped-element"><span>{@common.icon}</span> <input type="text" value="{ICON}" id="menu_element_{ID}_icon" name="menu_element_{ID}_icon"></label>
 				<script>
@@ -67,6 +68,7 @@
 				<span class="grouped-element bgc-full link-color"><i class="fa fa-globe" aria-hidden="true"></i></span>
 				<label for="menu_element_{ID}_name" class="label-sup grouped-element"><span>{@common.name}</span> <input type="text" value="{TITLE}" id="menu_element_{ID}_name" name="menu_element_{ID}_name"></label>
 				<label for="menu_element_{ID}_url" class="label-sup grouped-element"><span>{@common.url}</span> <input type="text" value="{RELATIVE_URL}" id="menu_element_{ID}_url" name="menu_element_{ID}_url"></label>
+				<label for="menu_element_{ID}_target" class="label-sup label-mini grouped-element"><input aria-label="{@common.open.new.window}" type="checkbox" class="checkbox-mini" id="menu_element_{ID}_target" name="menu_element_{ID}_target"# IF C_TARGET # checked="checked"# ENDIF #></label>
 				<label for="menu_element_{ID}_image" class="label-sup grouped-element"><span>{@common.image}</span> <input type="text" value="{RELATIVE_IMG}" id="menu_element_{ID}_image" name="menu_element_{ID}_image" onblur="image_preview(this,menu_element_{ID}_image_preview)"></label>
 				<label for="menu_element_{ID}_icon" class="label-sup grouped-element"><span>{@common.icon}</span> <input type="text" value="{ICON}" id="menu_element_{ID}_icon" name="menu_element_{ID}_icon"></label>
 				<script>

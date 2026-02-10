@@ -122,6 +122,12 @@ option { padding: 0 0.228em; }
 	width: 1%;
 }
 
+.inputs-with-sup .label-mini {
+    flex: 0 0 auto;
+	width: auto;
+    padding: 0 0.618em;
+}
+
 .grouped-checkbox { position: relative; }
 .grouped-checkbox [type="checkbox"] {
 	position: absolute;

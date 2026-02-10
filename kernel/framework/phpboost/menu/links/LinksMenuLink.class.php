@@ -23,11 +23,12 @@ class LinksMenuLink extends LinksMenuElement
 	* @param string $url Destination url
 	* @param string $image Menu's image url relative to the website root or absolute
 	* @param string $icon Menu's icon class
+	* @param bool $target If true, opens the link in a new window
 	* @param int $id The Menu's id in the database
 	*/
-	public function __construct($title, $url, $image = '', $icon = '')
+	public function __construct($title, $url, $target, $image = '', $icon = '')
 	{
-		parent::__construct($title, $url, $image, $icon);
+		parent::__construct($title, $url, $target, $image, $icon);
 	}
 
 	/**
