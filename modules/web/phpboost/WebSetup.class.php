@@ -128,7 +128,7 @@ class WebSetup extends DefaultModuleSetup
 			'author_user_id' => 1,
 			'views_number' => 0,
 			'partner' => 1,
-			'partner_thumbnail' => '/web/templates/images/phpboost_banner.png'
+			'partner_thumbnail' => '/modules/web/templates/images/phpboost_banner.png'
 		));
 	}
 }

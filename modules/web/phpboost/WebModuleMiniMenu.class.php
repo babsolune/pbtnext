@@ -55,16 +55,15 @@ class WebModuleMiniMenu extends ModuleMiniMenu
 
 		foreach ($partners_items as $partner)
 		{
-			$partner_thumbnail = new Url($partner['partner_thumbnail']);
-			$thumbnail = $partner_thumbnail->rel();
+			$thumbnail = Url::to_rel($partner['partner_thumbnail']);
             $category_rewrited_name = $partner['category_rewrited_name'] ?? 'root';
 
-			$view->assign_block_vars('items', array(
+			$view->assign_block_vars('items', [
 				'C_HAS_PARTNER_THUMBNAIL' => !empty($thumbnail),
 				'NAME'                    => $partner['title'],
 				'U_PARTNER_THUMBNAIL'     => $thumbnail,
 				'U_VISIT'                 => WebUrlBuilder::display($partner['id_category'], $category_rewrited_name, $partner['id'], $partner['rewrited_title'])->rel()
-			));
+			]);
 		}
 
 		return $view->render();
