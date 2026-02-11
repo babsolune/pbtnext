@@ -257,7 +257,7 @@ while ( $row = $result->fetch() )
 			$array_answer = explode('|', $row['answers']);
 			$array_vote = explode('|', $row['votes']);
 
-			$sum_vote = (int)array_sum($array_vote);
+			$sum_vote = array_sum(array_map('intval', $array_vote));
 			$sum_vote = ($sum_vote == 0) ? 1 : $sum_vote; //Empêche la division par 0.
 
 			foreach ($array_answer as $key => $answer)
