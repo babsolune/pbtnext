@@ -75,7 +75,7 @@ elseif ($id_media > 0)
 
 	define('TITLE', $media['title']);
 	define('DESCRIPTION', TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse(stripslashes($media['content'])), '<br><br/>'), 150));
-	require_once('../kernel/header.php');
+	require_once(PATH_TO_ROOT . '/kernel/header.php');
 
 	// Update views_number
 	PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "media SET views_number = views_number + 1 WHERE id = :id", array('id' => $id_media));

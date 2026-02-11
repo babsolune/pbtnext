@@ -97,6 +97,7 @@
 									</div>
 								</div>
 							</div>
+                            <div class="spacer"></div>
 						</div>
 					# ENDIF #
 					<div class="cell-flex # IF C_GRID_VIEW #cell-columns-{ITEMS_PER_ROW}# ELSE #cell-row# ENDIF #">

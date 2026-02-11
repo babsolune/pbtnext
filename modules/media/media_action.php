@@ -69,7 +69,7 @@ if ($invisible > 0)
 
 	require_once(PATH_TO_ROOT . '/kernel/header.php');
 
-	AppContext::get_response()->redirect('media' . url('.php?cat=' . $media['id_category'], '-0-' . $media['id_category'] . '.php'));
+	AppContext::get_response()->redirect(PATH_TO_ROOT . '/media/media' . url('.php?cat=' . $media['id_category'], '-0-' . $media['id_category'] . '.php'));
 }
 // Delete a file
 else if ($delete > 0)
@@ -113,7 +113,7 @@ else if ($delete > 0)
 	define('TITLE', $lang['media.delete.item']);
 	require_once(PATH_TO_ROOT . '/kernel/header.php');
 
-	AppContext::get_response()->redirect('media' . url('.php?cat=' . $media['id_category'], '-0-' . $media['id_category'] . '.php'));
+	AppContext::get_response()->redirect(PATH_TO_ROOT . '/media/media' . url('.php?cat=' . $media['id_category'], '-0-' . $media['id_category'] . '.php'));
 }
 // Add/edit form
 else if ($add >= 0 && !$submit || $edit > 0)
@@ -416,7 +416,7 @@ elseif ($submit)
 
 		HooksService::execute_hook_action('edit', 'media', array_merge($properties, array('url' => Url::to_rel('/media/' . url('media.php?id=' . $media['idedit'], 'media-' . $media['idedit'] . '-' . $media['id_category'] . '-' . Url::encode_rewrite($media['title']) . '.php')))));
 
-		AppContext::get_response()->redirect('media' . url('.php?id=' . $media['idedit']));
+		AppContext::get_response()->redirect(PATH_TO_ROOT . '/media/media' . url('.php?id=' . $media['idedit']));
 	}
 	// Add
 	else if (!$media['idedit'] && (($auth_write = CategoriesAuthorizationsService::check_authorizations($media['id_category'])->write()) || CategoriesAuthorizationsService::check_authorizations($media['id_category'])->contribution()))
@@ -469,7 +469,8 @@ elseif ($submit)
 		else
 		{
 			HooksService::execute_hook_action('add', 'media', array_merge($properties, array('url' => Url::to_rel('/media/' . url('media.php?id=' . $new_id_media, 'media-' . $new_id_media . '-' . $media['id_category'] . '-' . Url::encode_rewrite($media['title']) . '.php')))));
-			AppContext::get_response()->redirect('media' . url('.php?id=' . $new_id_media));
+
+			AppContext::get_response()->redirect(PATH_TO_ROOT . '/media/media' . url('.php?id=' . $new_id_media));
 		}
 	}
 	else
