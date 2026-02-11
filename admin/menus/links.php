@@ -34,20 +34,21 @@ if ($action == 'save')
         global $request;
 		$menu = null;
 		$menu_element_id = $elements_ids['id'];
-		$menu_name  = $request->get_postvalue('menu_element_' . $menu_element_id . '_name', '', TSTRING_UNCHANGE);
-		$menu_url   = $request->get_postvalue('menu_element_' . $menu_element_id . '_url', '');
-		$menu_image = $request->get_postvalue('menu_element_' . $menu_element_id . '_image', '');
-		$menu_icon  = $request->get_postvalue('menu_element_' . $menu_element_id . '_icon', '');
+		$menu_name   = $request->get_postvalue('menu_element_' . $menu_element_id . '_name', '', TSTRING_UNCHANGE);
+		$menu_url    = $request->get_postvalue('menu_element_' . $menu_element_id . '_url', '');
+		$menu_target = $request->get_postvalue('menu_element_' . $menu_element_id . '_target', '');
+		$menu_image  = $request->get_postvalue('menu_element_' . $menu_element_id . '_image', '');
+		$menu_icon   = $request->get_postvalue('menu_element_' . $menu_element_id . '_icon', '');
 
 		$array_size = count($elements_ids);
 
 		if ($array_size == 1 && $level > 0)
 		{   // If it's a menu, there's only one element;
-			$menu = new LinksMenuLink($menu_name, $menu_url, $menu_image, HTMLEmojisDecoder::decode_html_emojis($menu_icon));
+			$menu = new LinksMenuLink($menu_name, $menu_url, $menu_target, $menu_image, HTMLEmojisDecoder::decode_html_emojis($menu_icon));
 		}
 		else
 		{
-			$menu = new LinksMenu($menu_name, $menu_url, $menu_image, HTMLEmojisDecoder::decode_html_emojis($menu_icon));
+			$menu = new LinksMenu($menu_name, $menu_url, $menu_target, $menu_image, HTMLEmojisDecoder::decode_html_emojis($menu_icon));
 
 			// We unset the id key of the array
 			unset($elements_ids['id']);
@@ -206,14 +207,15 @@ $view->put_all(array(
 	'C_PUSHMENU_DISABLED_BODY'         => $menu->is_disabled_body(),
 	'C_PUSHMENU_PUSHED_CONTENT'        => $menu->is_pushed_content(),
 
-	'AUTH_MENUS' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, $menu->get_auth(), array(), 'menu_element_' . $menu->get_uid() . '_auth'),
-	'MENU_ID'    => $menu->get_id(),
-	'MENU_TREE'  => $menu->display($edit_menu_tpl, LinksMenuElement::LINKS_MENU_ELEMENT__FULL_DISPLAYING),
-	'MENU_NAME'  => $menu->get_title(),
-	'MENU_URL'   => $menu->get_url(true),
-	'MENU_IMG'   => $menu->get_image(true),
-	'MENU_ICON'  => $menu->get_icon(),
-	'ID'         => $menu->get_uid()
+	'AUTH_MENUS'  => Authorizations::generate_select(Menu::MENU_AUTH_BIT, $menu->get_auth(), array(), 'menu_element_' . $menu->get_uid() . '_auth'),
+	'MENU_ID'     => $menu->get_id(),
+	'MENU_TREE'   => $menu->display($edit_menu_tpl, LinksMenuElement::LINKS_MENU_ELEMENT__FULL_DISPLAYING),
+	'MENU_NAME'   => $menu->get_title(),
+	'MENU_URL'    => $menu->get_url(true),
+	'MENU_TARGET' => $menu->get_target(),
+	'MENU_IMG'    => $menu->get_image(true),
+	'MENU_ICON'   => $menu->get_icon(),
+	'ID'          => $menu->get_uid()
 ));
 
 foreach (LinksMenu::get_menu_types_list() as $type_name)
