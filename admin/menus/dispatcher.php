@@ -8,16 +8,13 @@
 */
 
 defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '../..');
-
 require_once PATH_TO_ROOT . '/kernel/begin.php';
 
-
-
-$url_controller_mappers = array(
-new UrlControllerMapper('MenuControllerConfigurationsList', '`^(?:/configs(?:/list)?)?/?$`'),
-new UrlControllerMapper('MenuControllerConfigurationEdit', '`^/configs/([0-9]+)/edit/?$`',
-array('menu_config_id'))
-);
+$url_controller_mappers = [
+    new UrlControllerMapper('MenuControllerConfigurationsList', '`^(?:/configs(?:/list)?)?/?$`'),
+    new UrlControllerMapper('MenuControllerConfigurationEdit', '`^/configs/([0-9]+)/edit/?$`',
+    ['menu_config_id'])
+];
 DispatchManager::dispatch($url_controller_mappers);
 
 ?>

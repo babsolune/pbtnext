@@ -218,11 +218,11 @@ class ClassLoader
         try
         {
             $installed_modules = ModulesManager::get_installed_modules_ids_list();
-            
+
             foreach ($installed_modules as $module_id)
             {
                 $module_path = ModulesManager::get_module_path($module_id);
-                
+
                 // Scan the module root and phpboost folder
                 if (is_dir($module_path))
                 {
@@ -232,14 +232,14 @@ class ClassLoader
                     {
                         self::add_classes($phpboost_folder, $pattern, true);
                     }
-                    
+
                     // Secondary scan: look in controllers and other module folders
                     $controllers_folder = $module_path . '/controllers';
                     if (is_dir($controllers_folder))
                     {
                         self::add_classes($controllers_folder, $pattern, true);
                     }
-                    
+
                     // Scan module root for any direct class files
                     $folder = new Folder($module_path);
                     $files = $folder->get_files($pattern);

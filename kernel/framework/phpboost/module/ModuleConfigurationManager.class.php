@@ -75,7 +75,7 @@ class ModuleConfigurationManager
 	private static function find_desc_ini_file($module_id)
 	{
 		$module_path = self::get_module_path($module_id);
-		
+
 		// Module - Langs priority order
 		//      /lang/$lang/modules/$module/desc.ini
 		//      /modules/$module/lang/$lang/desc.ini
