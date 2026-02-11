@@ -303,7 +303,7 @@ class TextHelper
 
         // Fixed string lengths for multi-byte characters
         $string = preg_replace_callback(
-            '/s:(\d+):"(.*?)";/s',
+            '/s:(\d+):"((?:[^"]|(?<=\\\\)")*)";/s',  // Better regex to handle escaped quotes
             function (array $matches) {
                 $value = $matches[2] ?? '';
                 $value = (string) $value;
@@ -312,12 +312,21 @@ class TextHelper
             $string
         );
 
-        // Attempt to deserialize
-        $result = $result = unserialize($string, ['allowed_classes' => false]);
+        // Attempt to deserialize with error suppression to check validity
+        $result = @unserialize($string, ['allowed_classes' => false]);
+
         if ($result === false && $string !== 'b:0;') {
-            // treat as non‑serialized or log/debug
-            return $string;
+            // If unserialize fails, try to clean trailing data
+            // Find the position where valid serialized data ends
+            $cleaned = trim($string);
+            $result = @unserialize($cleaned, ['allowed_classes' => false]);
+
+            if ($result === false) {
+                // Last resort: return the original string
+                return $string;
+            }
         }
+
         return $result;
     }
 
