@@ -76,12 +76,11 @@
 }
 
 .listorder-drop-down .listorder-dd-panel::after {
+	font: var(--fa-font-solid);
 	content: '\f0d7';
-	font-family: "Font Awesome 7 Free";
 	display: inline-block;
 	position: absolute;
 	right: 10px;
-	font-weight: 900;
 	font-style: normal;
 	font-variant: normal;
 	text-rendering: auto;

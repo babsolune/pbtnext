@@ -46,11 +46,10 @@
 }
 
 .dictionary-selected-cat:after {
-	font-family: 'Font Awesome 7 free';
-	font-weight: 400;
+	font: var(--fa-font-regular);
+	content:'\f057';
 	position: absolute;
 	top: 50%;
 	transform: translateY(-45%);
 	right: 0.309em;
-	content:'\f057'
 }

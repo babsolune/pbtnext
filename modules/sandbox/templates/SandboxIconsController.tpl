@@ -67,8 +67,7 @@
 <pre class="precode"><code>.success { ... }
 .success::before {
     content: "\f00c";
-    font-family: 'Font Awesome 7 Free';
-    font-weight: 900; // 400 = regular | 900 = solid
+	font: var(--fa-font-solid); // regular | solid | brands
 }</code></pre>
 							</div>
 						</div>

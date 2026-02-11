@@ -99,13 +99,12 @@
 #category-nav .has-children>[class*="toggle-menu-button-"] { cursor: pointer; }
 
 #category-nav .has-children>[class*="toggle-menu-button-"] > .list-item:before {
+	font: var(--fa-font-regular);
+	content: '\f0fe';
 	position: absolute;
 	top: 50%;
 	transform: translateY(-50%);
 	left: 0.456em;
-	content: '\f0fe';
-	font-family: 'Font Awesome 7 free';
-	font-weight: 400;
 }
 
 #category-nav .has-children>[class*="toggle-menu-button-"]>.is-open-menu.list-item::before { content: '\f146'; }

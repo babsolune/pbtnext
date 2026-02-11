@@ -38,14 +38,13 @@
 .wiki-mini-nav .has-sub > .swap-handle { cursor: zoom-in; }
 .wiki-mini-nav .has-sub.open > .swap-handle { cursor: zoom-out; }
 
-.wiki-mini-nav .has-sub > .swap-handle::after { 
-    font-family: 'Font Awesome 7 free';
-    font-weight: 900;
+.wiki-mini-nav .has-sub > .swap-handle::after {
+	font: var(--fa-font-solid);
+    content: '\f0d7';
     position: absolute;
     right: 0.456em;
     top: 50%;
     transform: translateY(-50%);
-    content: '\f0d7';
 }
 
 .wiki-mini-nav .has-sub.open > .swap-handle::after { 

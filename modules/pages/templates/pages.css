@@ -27,13 +27,12 @@
 .has-children > [class*="toggle-menu-button-"] { cursor: pointer; }
 
 .has-children > [class*="toggle-menu-button-"] > .categories-item:before {
+	font: var(--fa-font-regular);
+	content: '\f0fe';
 	position: absolute;
 	top: 50%;
 	transform: translateY(-50%);
 	left: 0.456em;
-	content: '\f0fe';
-	font-family: 'Font Awesome 7 free';
-	font-weight: 400;
 }
 
 .has-children > [class*="toggle-menu-button-"] > .is-open-menu.categories-item:before { content:'\f146'; }

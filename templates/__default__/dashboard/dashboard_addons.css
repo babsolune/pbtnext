@@ -30,12 +30,11 @@
 
 .multiple-select-menu-container .addon-menu-title::after,
 .addon-with-menu .addon-menu-title::after {
+	font: var(--fa-font-solid);
+	content: '\f0d7';
 	position: absolute;
 	top: 0.618em;
 	right: 5px;
-	content: '\f0d7';
-	font-family: 'Font Awesome 7 free';
-	font-weight: 900;
 }
 
 .addon-with-menu .opened.addon-menu-title::after { content: '\f0d8'; }

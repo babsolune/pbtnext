@@ -16,10 +16,9 @@
 #module-connect .js-menu-button .stacked { margin: 0 0 0 0.809em; }
 
 #module-connect .js-menu-button::after {
-	position: absolute;
-	font-family: 'Font Awesome 7 Free';
-	font-weight: 900;
+	font: var(--fa-font-solid);
 	content: '\f0d7';
+	position: absolute;
 	right: 0.809em;
 }
 
