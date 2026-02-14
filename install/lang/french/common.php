@@ -43,9 +43,9 @@ $lang['install.title']              = 'Installation de PHPBoost';
 $lang['install.documentation.link'] = 'https://www.phpboost.com/wiki/installer-phpboost';
 
 // Welcome
-$lang['install.welcome.title']                    = 'Préambule';
-$lang['install.welcome.message']                  = 'Bienvenue dans l\'assistant d\'installation de PHPBoost';
-$lang['install.welcome.description']              = '
+$lang['install.welcome.title']   = 'PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' <em>' . Environment::get_phpboost_name_version() . '</em>';
+$lang['install.welcome.message'] = 'Bienvenue dans l\'assistant d\'installation';
+$lang['install.welcome.description'] = '
 	<p>Merci d\'avoir accordé votre confiance à PHPBoost pour créer votre site web.</p>
 	<p>Pour installer PHPBoost, vous devez disposer d\'un minimum d\'informations concernant votre hébergement qui devraient être fournies par votre hébergeur. L\'installation est entièrement automatisée, elle ne devrait prendre que quelques minutes. Cliquez sur la flèche ci-dessous pour démarrer le processus d\'installation.</p>
 	<p>Cordialement, l\'équipe PHPBoost</p>
