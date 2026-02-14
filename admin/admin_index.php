@@ -57,21 +57,21 @@ while ($row = $result->fetch())
 	$view->assign_block_vars('comments_list', array_merge(
 		Date::get_array_tpl_vars(new Date($row['comment_timestamp'], Timezone::SERVER_TIMEZONE), 'date'),
 		array(
-		'C_VISITOR'          => $row['level'] == User::VISITOR_LEVEL || empty($row['user_id']),
-		'C_VISITOR_EMAIL'    => $visitor_email_enabled,
-		'C_USER_GROUP_COLOR' => !empty($group_color),
+            'C_VISITOR'          => $row['level'] == User::VISITOR_LEVEL || empty($row['user_id']),
+            'C_VISITOR_EMAIL'    => $visitor_email_enabled,
+            'C_USER_GROUP_COLOR' => !empty($group_color),
 
-		'COMMENTS_NUMBER'   => $comments_number,
-		'CONTENT'           => FormatingHelper::second_parse($row['message']),
-		'USER_DISPLAY_NAME' => ($row['level'] != User::VISITOR_LEVEL) && !empty($row['display_name']) ? $row['display_name'] : (!empty($row['pseudo']) ? $row['pseudo'] : $lang['user.guest']),
-		'VISITOR_EMAIL'     => $row['visitor_email'],
-		'USER_LEVEL_CLASS'  => UserService::get_level_class($row['level']),
-		'USER_GROUP_COLOR'  => $group_color,
-		'MODULE_NAME'       => $row['module_id'] != 'user' ? ModulesManager::get_module($row['module_id'])->get_configuration()->get_name() : $lang['contribution.contribution'],
+            'COMMENTS_NUMBER'   => $comments_number,
+            'CONTENT'           => FormatingHelper::second_parse($row['message']),
+            'USER_DISPLAY_NAME' => ($row['level'] != User::VISITOR_LEVEL) && !empty($row['display_name']) ? $row['display_name'] : (!empty($row['pseudo']) ? $row['pseudo'] : $lang['user.guest']),
+            'VISITOR_EMAIL'     => $row['visitor_email'],
+            'USER_LEVEL_CLASS'  => UserService::get_level_class($row['level']),
+            'USER_GROUP_COLOR'  => $group_color,
+            'MODULE_NAME'       => $row['module_id'] != 'user' ? ModulesManager::get_module($row['module_id'])->get_configuration()->get_name() : $lang['contribution.contribution'],
 
-		'U_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
-		'U_DELETE'       => CommentsUrlBuilder::delete($row['path'], $row['id'], REWRITED_SCRIPT)->rel(),
-		'U_LINK'         => Url::to_rel($row['path']) . '#com' . $row['id']
+            'U_USER_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
+            'U_DELETE'       => CommentsUrlBuilder::delete($row['path'], $row['id'], REWRITED_SCRIPT)->rel(),
+            'U_LINK'         => Url::to_rel($row['path']) . '#com' . $row['id']
 		)
 	));
 }
