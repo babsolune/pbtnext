@@ -417,6 +417,18 @@ class Environment
 		return trim($build);
 	}
 
+    /**
+	 * Returns phpboost name of the major version
+	 * @return string the name of the major version
+	 */
+	public static function get_phpboost_name_version()
+	{
+		$file = new File(PATH_TO_ROOT . '/kernel/.name');
+		$build = $file->read();
+		$file->close();
+		return trim($build);
+	}
+
 	/**
 	 * Displays the environment with content of the page.
 	 */
