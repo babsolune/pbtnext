@@ -195,9 +195,9 @@ class UnreadContributionsCache implements CacheData
 	 * Loads and returns the unread contribution cached data.
 	 * @return UnreadContributionsCache The cached data
 	 */
-	public static function load()
+	public static function load(): UnreadContributionsCache
 	{
-		return CacheManager::load(__CLASS__, 'kernel', 'unread-contributions');
+		return CacheManager::load(self::class, 'kernel', 'unread-contributions');
 	}
 
 	/**

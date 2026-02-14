@@ -30,7 +30,7 @@ interface ModuleSetup
 
 	/**
 	 * Upgrade the module
-	 * @return version upgrading
+	 * @return string $version upgrading
 	 */
 	function upgrade($installed_version);
 }

@@ -30,6 +30,11 @@ class Notification extends Event
 	private $module_id = '';
 
 	/**
+	 * @var Date The fixing date of the notification.
+	 */
+	private $fixing_date = '';
+
+	/**
 	 * @var array Authorization array containing the people who can read the contribution.
 	 */
 	private $auth = array();
