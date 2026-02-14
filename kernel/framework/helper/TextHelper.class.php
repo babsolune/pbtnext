@@ -307,13 +307,13 @@ class TextHelper
             function (array $matches) {
                 $value = $matches[2] ?? '';
                 $value = (string) $value;
-                return 's:' . strlen($value) . ':"' . $value . '";';
+                return 's:' . mb_strlen($value, '8bit') . ':"' . $value . '";';
             },
             $string
         );
 
         // Attempt to deserialize with error suppression to check validity
-        $result = @unserialize($string, ['allowed_classes' => false]);
+        $result = @unserialize(trim($string), ['allowed_classes' => false]);
 
         if ($result === false && $string !== 'b:0;') {
             // If unserialize fails, try to clean trailing data
