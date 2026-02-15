@@ -120,9 +120,6 @@ class DefaultTemplateData implements TemplateData
 		$this->vars[$key] = $value;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
 	public function put_all(array $vars)
 	{
 		foreach ($vars as $key => $value)

@@ -79,7 +79,7 @@ interface Template extends View
 
 	/**
      * Assigns template variables. It could be simple variables, loop or subtemplates.
-     * @param mixed[string] $vars A map key => value where <code>$value</code> will be assigned to the template variable of name <code>$key</code>
+     * @param mixed[] $vars A map key => value where <code>$value</code> will be assigned to the template variable of name <code>$key</code>
      */
     function put_all(array $vars);
 
@@ -106,7 +106,7 @@ interface Template extends View
 
 	/**
      * Adds a lang map to the template map list in which template variables beginning by L_ will be searched for of not already registered
-     * @param string[string] $lang the language map
+     * @param string[] $lang the language map
      */
     function add_lang(array $lang);
 

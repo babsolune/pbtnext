@@ -14,6 +14,7 @@ class ReCaptcha extends Captcha
 	private static $_siteVerifyUrl = "https://www.google.com/recaptcha/api/siteverify";
 
 	private $config;
+	private $recaptcha_error;
 
 	public function __construct()
 	{

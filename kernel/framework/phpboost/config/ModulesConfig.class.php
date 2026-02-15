@@ -47,7 +47,7 @@ class ModulesConfig extends AbstractConfigData
 
 	/**
 	 * Sets the modules list
-	 * @param Module[string] $modules_list The modules list
+	 * @param Module[] $modules_list The modules list
 	 */
 	public function set_modules(array $modules)
 	{

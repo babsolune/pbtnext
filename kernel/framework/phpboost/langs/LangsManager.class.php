@@ -22,7 +22,7 @@ class LangsManager
 	}
 
 	/**
-	 * @return Lang[string] the Lang map (name => lang) of the installed langs (activated or not)
+	 * @return Lang[] the Lang map (name => lang) of the installed langs (activated or not)
 	 * sorted by name
 	 */
 	public static function get_installed_langs_map_sorted_by_localized_name()
@@ -47,7 +47,7 @@ class LangsManager
 	}
 
 	/**
-	 * @return Lang[string] the Langs map (name => lang) of the installed langs (and activated)
+	 * @return Lang[] the Langs map (name => lang) of the installed langs (and activated)
 	 * sorted by name
 	 */
 	public static function get_activated_langs_map_sorted_by_localized_name()
@@ -72,7 +72,7 @@ class LangsManager
 	}
 
 	/**
-	 * @return Lang[string] the Langs map (name => lang) of the installed langs (and activated and authorized)
+	 * @return Lang[] the Langs map (name => lang) of the installed langs (and activated and authorized)
 	 * sorted by name
 	 */
 	public static function get_activated_and_authorized_langs_map_sorted_by_localized_name()

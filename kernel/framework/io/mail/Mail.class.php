@@ -184,7 +184,7 @@ class Mail
 
 	/**
 	 * Returns a map associating email addresses to the corresponding names (can be empty).
-	 * @return string[string]
+	 * @return string[]
 	 */
 	public function get_recipients()
 	{
@@ -193,7 +193,7 @@ class Mail
 
 	/**
 	 * Returns a map associating email addresses to the corresponding names (can be empty).
-	 * @return string[string]
+	 * @return string[]
 	 */
 	public function get_cc_recipients()
 	{
@@ -202,7 +202,7 @@ class Mail
 
 	/**
 	 * Returns a map associating email addresses to the corresponding names (can be empty).
-	 * @return string[string]
+	 * @return string[]
 	 */
 	public function get_bcc_recipients()
 	{
@@ -211,7 +211,7 @@ class Mail
 
 	/**
 	 * Returns email attachments list.
-	 * @return string[string]
+	 * @return string[]
 	 */
 	public function get_attachments()
 	{
@@ -220,7 +220,7 @@ class Mail
 
 	/**
 	 * Sets the mail attachments
-	 * @param string[string] $attachments Mail attachments
+	 * @param string[] $attachments Mail attachments
 	 */
 	public function set_attachments(Array $attachments)
 	{

@@ -24,9 +24,9 @@ interface DAO
 
     /**
      * Update all fields in the table to the given value if row match the where clause.
-     * @param mixed[string] $fields keys are the fields names to update, values, their new value
+     * @param mixed[] $fields keys are the fields names to update, values, their new value
      * @param string $where the part of the query that came just after the from
-     * @param string[string] $parameters the query vars to inject into the <code>$where</code>
+     * @param string[] $parameters the query vars to inject into the <code>$where</code>
      */
     function update(array $fields, $where = DAO::WHERE_ALL, array $parameters = array());
 
@@ -40,14 +40,14 @@ interface DAO
     /**
      * Deletes all object matching the where clause from the table.
      * @param string $where the part of the query that came just after the from
-     * @param string[string] $parameters the query vars to inject into the <code>$where</code>
+     * @param string[] $parameters the query vars to inject into the <code>$where</code>
      */
     function delete_all($where = DAO::WHERE_ALL, array $parameters = array());
 
     /**
      * Count the number of object in the table matching the <code>$where</code> clause
      * @param string $where the part of the query that came just after the from
-     * @param string[string] $parameters the query vars to inject into the <code>$where</code>
+     * @param string[] $parameters the query vars to inject into the <code>$where</code>
      */
     function count($where = DAO::WHERE_ALL, array $parameters = array());
 
@@ -76,7 +76,7 @@ interface DAO
 	/**
 	 * retrieves all the objects in the table matching the <code>$criteria</code>
 	 * @param string $criteria the part of the query that came just after the from
-	 * @param string[string] $parameters the query vars to inject into the <code>$criteria</code>
+	 * @param string[] $parameters the query vars to inject into the <code>$criteria</code>
 	 * @return QueryResultMapper the objects list
 	 */
 	function find_by_criteria($criteria, $parameters = array());

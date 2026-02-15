@@ -37,7 +37,7 @@ class MappingModel
 	}
 
 	/**
-	 * @param mixed[string] $properties_map
+	 * @param mixed[] $properties_map
 	 * @return PropertiesMapInterface
 	 */
 	public function new_instance($properties_map = array())
@@ -50,7 +50,7 @@ class MappingModel
 
 	/**
 	 * @param PropertiesMapInterface $instance
-	 * @return mixed[string]
+	 * @return mixed[]
 	 */
 	public function get_raw_value($instance)
 	{

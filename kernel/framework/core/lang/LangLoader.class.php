@@ -130,7 +130,7 @@ class LangLoader
 	 * @param string $filename the language filename
 	 * @param string $module the module to look for languages files in
 	 * @param string $forced_file the language filename to return inevitably
-	 * @return array  string[string] the lang array which keys are languages identifiers and values the
+	 * @return array  string[] the lang array which keys are languages identifiers and values the
 	 * translated messages
 	 */
 	public static function get($filename, $module = '', $forced_file = '')

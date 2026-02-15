@@ -12,7 +12,7 @@
 interface DBConnection
 {
     /**
-     * @param mixed[string] $db_connection_data
+     * @param mixed[] $db_connection_data
      * @throws DBConnectionException
      * @throws UnexistingDatabaseException
      */

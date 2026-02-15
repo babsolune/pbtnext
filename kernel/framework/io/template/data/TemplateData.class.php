@@ -64,7 +64,7 @@ interface TemplateData
 
 	/**
 	 * Assigns template variables. It could be simple variables, loop or subtemplates.
-	 * @param mixed[string] $vars A map key => value where <code>$value</code> will be assigned to the template variable of name <code>$key</code>
+	 * @param mixed[] $vars A map key => value where <code>$value</code> will be assigned to the template variable of name <code>$key</code>
 	 */
 	function put_all(array $vars);
 

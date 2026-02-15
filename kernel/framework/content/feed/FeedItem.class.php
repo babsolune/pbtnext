@@ -50,7 +50,7 @@ class FeedItem
     public function set_enclosure(FeedItemEnclosure $value) { $this->enclosure = $value; }
     /**
      * Sets the feed item auth, useful to check authorizations
-     * @param int[string] $value the item authorizations array
+     * @param int[] $value the item authorizations array
      */
     public function set_auth($auth) { $this->auth = $auth; }
     /**

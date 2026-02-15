@@ -15,6 +15,7 @@ class JoinMappingModel
 	private $fk_db_field_name;
 	private $primary_key;
 	private $fields;
+	private $classname;
 
 	public function __construct($table_name, $fk_db_field_name, MappingModelField $primary_key,
 	$fields)

@@ -29,7 +29,7 @@ class SQLFragment
 	}
 
 	/**
-	 * @return mixed[string]
+	 * @return mixed[]
 	 */
 	public function get_parameters()
     {
@@ -38,7 +38,7 @@ class SQLFragment
 
     /**
      * Adds the fragment parameters to the <code>$parameters</code> map
-     * @param mixed[string] $parameters the parameters that will be filled
+     * @param mixed[] $parameters the parameters that will be filled
      */
     public function add_parameters_to_map(array & $parameters)
     {

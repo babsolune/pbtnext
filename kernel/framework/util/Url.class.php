@@ -276,10 +276,10 @@ class Url
     }
 
     /**
-     * @param string $url
+     * @param Url $url
      * @return int
      */
-    public static function get_url_file_size(string $url): int
+    public static function get_url_file_size(Url $url): int
     {
         $file_size = 0;
 

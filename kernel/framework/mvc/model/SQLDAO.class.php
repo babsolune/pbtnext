@@ -51,7 +51,7 @@ abstract class SQLDAO implements DAO
 	protected $pk_setter;
 
 	/**
-	 * @var string[string] $fields_mapping[$property] => $db_field_name
+	 * @var string[] $fields_mapping[$property] => $db_field_name
 	 */
 	protected $fields_mapping = [];
 

@@ -23,7 +23,7 @@ class MySQLSelectQueryResult extends AbstractSelectQueryResult
 	private $index = 0;
 
 	/**
-	 * @var string[string]
+	 * @var string[]
 	 */
 	private $current = '';
 

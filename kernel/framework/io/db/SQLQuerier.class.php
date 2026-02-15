@@ -23,7 +23,7 @@ interface SQLQuerier
 	 * If not (there's a lot of chance that you have forgotten to register this
 	 * query var in the <code>$parameters</code> map), the query var won't be replaced</p>
 	 * @param string $query the query to execute
-	 * @param string[string] $parameters the query_var map
+	 * @param string[] $parameters the query_var map
 	 * @return SelectQueryResult the query result set
 	 */
 	function select($query, $parameters = array(), $fetch_mode = SelectQueryResult::FETCH_ASSOC);
@@ -37,7 +37,7 @@ interface SQLQuerier
 	 * If not (there's a lot of chance that you have forgotten to register this
 	 * query var in the <code>$parameters</code> map), the query var won't be replaced</p>
 	 * @param string $query the query to execute
-	 * @param string[string] $parameters the query_var map
+	 * @param string[] $parameters the query_var map
 	 * @return InjectQueryResult the query result
 	 */
 	function inject($query, $parameters = array());

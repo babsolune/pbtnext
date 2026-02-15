@@ -54,7 +54,7 @@ abstract class Menu
 	public $title = '';
 	/**
 	 * @access protected
-	 * @var int[string] Represents the Menu authorisations array
+	 * @var int[] Represents the Menu authorisations array
 	 */
 	public $auth = null;
 	/**
