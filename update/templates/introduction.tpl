@@ -7,7 +7,7 @@
         <h2>{@step.introduction.message}</h2>
     </header>
 
-	{@H|step.introduction.explanation}
+	{@H|step.introduction.clue}
 	# IF C_PUT_UNDER_MAINTENANCE #{@H|step.introduction.maintenance_notice}# ENDIF #
 	{@H|step.introduction.team_signature}
 </div>

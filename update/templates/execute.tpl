@@ -3,7 +3,7 @@
 </header>
 
 <div class="content">
-	{@H|step.execute.explanation}
+	{@H|step.execute.clue}
 	# INCLUDE INCOMPATIBLE_MODULES #
 	# INCLUDE INCOMPATIBLE_THEMES #
 	# INCLUDE INCOMPATIBLE_LANGS #

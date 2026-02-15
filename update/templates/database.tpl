@@ -9,7 +9,7 @@
 		</a>
 	</div>
 	<span class="spacer">&nbsp;</span>
-	{@H|db.parameters.config.explanation}
+	{@H|db.parameters.config.clue}
 	# IF ERROR #
 		<div class="message-helper bgc error">{ERROR}</div>
 	# END #

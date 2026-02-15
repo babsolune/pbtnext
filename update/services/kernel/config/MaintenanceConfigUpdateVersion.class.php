@@ -5,34 +5,35 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2022 04 06
  * @since       PHPBoost 5.0 - 2017 04 05
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class MaintenanceConfigUpdateVersion extends ConfigUpdateVersion
 {
-	public function __construct()
-	{
-		parent::__construct('kernel', false, 'kernel-maintenance');
-	}
+    public function __construct()
+    {
+        parent::__construct('kernel', false, 'kernel-maintenance');
+    }
 
-	protected function build_new_config()
-	{
-		$old_config = $this->get_old_config();
+    protected function build_new_config(): bool
+    {
+        $old_config = $this->get_old_config();
 
-		$maintenance_config = MaintenanceConfig::load();
-		
-		if (!$maintenance_config->is_under_maintenance())
-		{
-			$maintenance_config->set_property('enabled', true);
-			$maintenance_config->set_property('unlimited', true);
-			
-			if ($old_config->has_property('message'))
-				$maintenance_config->set_property('message', $old_config->get_property('message'));
-			
-			$this->save_new_config('kernel-maintenance', $maintenance_config);
+        $maintenance_config = MaintenanceConfig::load();
 
-			return true;
-		}
-		return false;
-	}
+        if (!$maintenance_config->is_under_maintenance())
+        {
+            $maintenance_config->set_property('enabled', true);
+            $maintenance_config->set_property('unlimited', true);
+
+            if ($old_config->has_property('message'))
+                $maintenance_config->set_property('message', $old_config->get_property('message'));
+
+            $this->save_new_config('kernel-maintenance', $maintenance_config);
+
+            return true;
+        }
+        return false;
+    }
 }
 ?>

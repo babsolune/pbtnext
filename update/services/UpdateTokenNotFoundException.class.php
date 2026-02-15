@@ -10,10 +10,8 @@
 
 class UpdateTokenNotFoundException extends Exception
 {
-	public function __construct($token_name)
-	{
-		parent::__construct('Token "' . $token_name . '" was not found, please restart update');
-	}
+    public function __construct($token_name)
+    {
+        parent::__construct('Token "' . $token_name . '" was not found, please restart update');
+    }
 }
-
-?>
