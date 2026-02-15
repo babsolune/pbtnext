@@ -148,6 +148,12 @@ class NginxFileCache implements CacheData
         $this->add_line('	break;');
         $this->add_line('}');
         $this->add_empty_line();
+        $this->add_line('if (!-f $request_filename) {');
+        $this->add_line('    if ($request_uri !~* "(\.php|/)$") {');
+        $this->add_line('        rewrite ^(.*)$ ' . $this->general_config->get_site_path() . '/modules/$1/ permanent;');
+        $this->add_line('    }');
+        $this->add_line('}');
+        $this->add_empty_line();
         $this->add_line('# Handle direct index.php requests for all modules');
         $this->add_line('location ~ ^/([a-zA-Z0-9_-]+)/index\.php$ {');
         $this->add_line('	rewrite ^/([a-zA-Z0-9_-]+)/index\.php$ ' . $this->general_config->get_site_path() . '/modules/$1/index.php break;');
