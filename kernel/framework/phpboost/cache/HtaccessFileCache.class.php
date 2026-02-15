@@ -172,6 +172,10 @@ class HtaccessFileCache implements CacheData
 		$this->add_section('Rewrite rules');
 		$this->add_line('RewriteEngine on');
 		$this->add_line('RewriteBase /');
+		$this->add_line('RewriteCond %{REQUEST_FILENAME} !-f');
+		$this->add_line('RewriteCond %{REQUEST_URI} !(.*)/$');
+		$this->add_line('RewriteCond %{REQUEST_URI} !(\.php|/)$ [NC]');
+		$this->add_line('RewriteRule ^(.*)$ ' . $this->general_config->get_site_path() . '/$1/ [L,R=301]');
 
         $this->add_section('Skip rewriting for existing files');
 		$this->add_line('RewriteCond %{REQUEST_FILENAME} -f');
