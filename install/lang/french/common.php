@@ -16,9 +16,9 @@
 ####################################################
 
 $lang['install.chmod.cache.not.writable'] = '
-	<h1>Installation de PHPBoost</h1>
-	<p><strong>Attention</strong> : les dossiers /cache et /cache/tpl n\'existent pas ou ne sont pas inscriptibles. Veuillez les créer et/ou changer leur CHMOD (mettre 755) pour pouvoir lancer l\'installation.</p>
-	<p>Une fois ceci fait, actualisez la page pour continuer ou cliquez <a href="#">ici</a>.</p>
+    <h1>Installation de PHPBoost</h1>
+    <p><strong>Attention</strong> : les dossiers /cache et /cache/tpl n\'existent pas ou ne sont pas inscriptibles. Veuillez les créer et/ou changer leur CHMOD (mettre 755) pour pouvoir lancer l\'installation.</p>
+    <p>Une fois ceci fait, actualisez la page pour continuer ou cliquez <a href="#">ici</a>.</p>
 ';
 
 // Steps menu
@@ -43,12 +43,12 @@ $lang['install.title']              = 'Installation de PHPBoost';
 $lang['install.documentation.link'] = 'https://www.phpboost.com/wiki/installer-phpboost';
 
 // Welcome
-$lang['install.welcome.title']   = 'PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' <em>' . Environment::get_phpboost_name_version() . '</em>';
-$lang['install.welcome.message'] = 'Bienvenue dans l\'assistant d\'installation';
+$lang['install.welcome.title']       = 'PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' <em>' . Environment::get_phpboost_name_version() . '</em>';
+$lang['install.welcome.message']     = 'Bienvenue dans l\'assistant d\'installation';
 $lang['install.welcome.description'] = '
-	<p>Merci d\'avoir accordé votre confiance à PHPBoost pour créer votre site web.</p>
-	<p>Pour installer PHPBoost, vous devez disposer d\'un minimum d\'informations concernant votre hébergement qui devraient être fournies par votre hébergeur. L\'installation est entièrement automatisée, elle ne devrait prendre que quelques minutes. Cliquez sur la flèche ci-dessous pour démarrer le processus d\'installation.</p>
-	<p>Cordialement, l\'équipe PHPBoost</p>
+    <p>Merci d\'avoir accordé votre confiance à PHPBoost pour créer votre site web.</p>
+    <p>Pour installer PHPBoost, vous devez disposer d\'un minimum d\'informations concernant votre hébergement qui devraient être fournies par votre hébergeur. L\'installation est entièrement automatisée, elle ne devrait prendre que quelques minutes. Cliquez sur la flèche ci-dessous pour démarrer le processus d\'installation.</p>
+    <p>Cordialement, l\'équipe PHPBoost</p>
 ';
 $lang['install.welcome.distribution']             = 'Distribution :distribution';
 $lang['install.welcome.distribution.description'] = '<p>Il existe différentes distributions de PHPBoost permettant à l\'utilisateur d\'obtenir automatiquement une configuration appropriée à ses besoins. Une distribution contient des modules ainsi que quelques paramétrages du système (noyau).</p><p>PHPBoost va s\'installer selon la configuration de cette distribution, vous pourrez évidemment par la suite modifier sa configuration et ajouter ou supprimer des modules.</p>';
@@ -62,9 +62,9 @@ $lang['install.license.warning.agreement'] = 'Vous devez accepter la licence pou
 // Server setup
 $lang['install.server.title']       = 'Vérification de la configuration du serveur';
 $lang['install.server.description'] = '
-	<p>Avant de commencer les étapes d\'installation de PHPBoost, la configuration de votre serveur va être vérifiée afin d\'établir sa compatibilité avec PHPBoost.</p>
-	<div class="message-helper bgc notice">Veillez à ce que chaque condition obligatoire soit vérifiée sans quoi vous risquez d\'avoir des problèmes en utilisant le logiciel.</div>
-	<p>En cas de problème n\'hésitez pas à poser vos questions sur le <a href="https://www.phpboost.com/forum/">forum de support</a>.</p>
+    <p>Avant de commencer les étapes d\'installation de PHPBoost, la configuration de votre serveur va être vérifiée afin d\'établir sa compatibilité avec PHPBoost.</p>
+    <div class="message-helper bgc notice">Veillez à ce que chaque condition obligatoire soit vérifiée sans quoi vous risquez d\'avoir des problèmes en utilisant le logiciel.</div>
+    <p>En cas de problème n\'hésitez pas à poser vos questions sur le <a href="https://www.phpboost.com/forum/">forum de support</a>.</p>
 ';
 
 $lang['install.php.version']                         = 'Version de PHP';
@@ -126,8 +126,8 @@ $lang['install.db.required.schema']       = 'Vous devez renseigner le nom de la 
 $lang['install.phpboost.already.installed']                   = 'Installation existante';
 $lang['install.phpboost.already.installed.alert']             = 'Il existe déjà une installation de PHPBoost sur cette base de données avec ce préfixe. Si vous continuez, ces tables seront supprimées et vous perdrez certainement des données.';
 $lang['install.phpboost.already.installed.description']       = '
-	<p>La base de données sur laquelle vous souhaitez installer PHPBoost contient déjà une installation de PHPBoost.</p>
-	<p>Si vous effectuez l\'installation sur cette base de données avec cette configuration, vous écraserez les données présentes actuellement. Si vous voulez installer deux fois PHPBoost sur la même base de données, utilisez des préfixes différents.</p>
+    <p>La base de données sur laquelle vous souhaitez installer PHPBoost contient déjà une installation de PHPBoost.</p>
+    <p>Si vous effectuez l\'installation sur cette base de données avec cette configuration, vous écraserez les données présentes actuellement. Si vous voulez installer deux fois PHPBoost sur la même base de données, utilisez des préfixes différents.</p>
 ';
 $lang['install.phpboost.already.installed.overwrite']         = 'Je souhaite écraser l\'installation de PHPBoost déjà existante';
 $lang['install.phpboost.already.installed.overwrite.confirm'] = 'Vous devez confirmer l\'écrasement de la précédente installation';
@@ -158,8 +158,8 @@ $lang['install.website.captcha.config']   = 'Configuration du captcha';
 $lang['install.admin.title'] = 'Compte administrateur';
 $lang['install.admin.creation'] = 'Création du compte administrateur';
 $lang['install.admin.creation.description'] = '
-	<p>Ce compte donne accès au panneau d\'administration par lequel vous configurerez votre site. Vous pourrez modifier les informations concernant ce compte en consultant votre profil.</p>
-	<p>Par la suite, il sera possible de donner à plusieurs personnes le statut d\'administrateur, ce compte est celui du premier administrateur, sans lequel vous ne pourriez pas gérer le site.</p>
+    <p>Ce compte donne accès au panneau d\'administration par lequel vous configurerez votre site. Vous pourrez modifier les informations concernant ce compte en consultant votre profil.</p>
+    <p>Par la suite, il sera possible de donner à plusieurs personnes le statut d\'administrateur, ce compte est celui du premier administrateur, sans lequel vous ne pourriez pas gérer le site.</p>
 ';
 
 $lang['install.admin.login.length'] = 'Votre pseudo est trop court (3 caractères minimum)';
@@ -192,61 +192,61 @@ Cordialement l\'équipe PHPBoost.';
 $lang['install.congratulations'] = 'Félicitations !';
 $lang['install.finish.title']    = 'Fin de l\'installation';
 $lang['install.finish.message'] = '
-	<fieldset>
-		<legend>PHPBoost est désormais installé !</legend>
-		<div class="fielset-inset">
-			<p class="message-helper bgc success">L\'installation de PHPBoost s\'est déroulée avec succès. L\'équipe PHPBoost vous remercie de lui avoir fait confiance et est heureuse de vous compter parmi ses utilisateurs.</p>
-			<p>Nous vous conseillons de vous tenir au courant de l\'évolution de PHPBoost via le site de la communauté francophone, <a href="https://www.phpboost.com">www.phpboost.com</a>. Vous serez automatiquement averti dans le panneau d\'administration de l\'arrivée de nouvelles mises à jour. Il est fortement conseillé de tenir votre système à jour afin de profiter des dernières nouveautés et de corriger les éventuelles failles ou erreurs.</p>
-			<p class="message-helper bgc warning">Par mesure de sécurité nous vous conseillons fortement de supprimer le dossier <b>install</b> et tout ce qu\'il contient. Des personnes mal intentionnées pourraient relancer le script d\'installation et écraser certaines de vos données ! Une option vous sera proposée une fois connecté sur le site pour effectuer cette suppression.</p>
-			<p>N\'oubliez pas de consulter la <a href="https://www.phpboost.com/wiki/">documentation</a> qui vous guidera dans l\'utilisation de PHPBoost ainsi que la <a href="https://www.phpboost.com/faq/"><abbr aria-label="Foire Aux Questions">FAQ</abbr></a> qui répond aux questions les plus fréquentes.</p>
-			<p>En cas de problème, rendez-vous sur le <a href="https://www.phpboost.com/forum/">forum du support de PHPBoost</a>.</p>
-		</div>
-	</fieldset>
-	<fieldset>
-		<legend>Remerciements</legend>
-		<div class="fielset-inset">
-			<h2>Membres de la communauté</h2>
-			<p>Merci à tous les membres de la communauté qui nous encouragent au quotidien et contribuent à la qualité du logiciel que ce soit en suggérant des nouvelles fonctionnalités ou en signalant des dysfonctionnements, ce qui permet d\'aboutir entre autres à un CMS stable et efficace.</p>
-			<p>Merci aux membres des équipes de PHPBoost et particulièrement à <strong>mipel</strong> de l\'équipe communication, <strong>mipel</strong>, <strong>olivierb</strong> et <strong>xela</strong> pour la documentation, <strong>babsolune</strong> et <strong>xela</strong> pour l\'aide au développement, <strong>ElenWii</strong> et <strong>babsolune</strong> pour les graphismes, <strong>mipel</strong> et <strong>olivierb</strong> pour la modération de la communauté et <strong>janus57</strong> pour l\'appui aux développements et à l\'aide de la communauté sur le forum.</p>
-			<h2>Projets</h2>
-			<p>PHPBoost utilise différents outils afin d\'élargir ses fonctionnalités sans augmenter trop le temps de développement. Ces outils sont tous libres, distribués sous la licence GNU/GPL pour la plupart.</p>
-			<ul>
-				<li><a href="https://notepad-plus-plus.org/fr">Notepad++</a>, <a href="https://atom.io/">Atom</a>, <a href="https://fr.netbeans.org/">NetBeans</a> et <a href="https://sublimetext.com">Sublime Text</a> : Editeurs de texte puissants utilisés pour le développement de PHPBoost.</li>
-				<li><a href="https://github.com/chamilo/pclzip">PCLZIP</a> créé par <a href="https://www.phpconcept.net/">PHPConcept</a> : Librairie permettant de travailler sur des archives au format Zip.</li>
-				<li><a href="https://github.com/daanforever/phpmathpublisher">PHPMathPublisher</a> : Ensemble de fonctions permettant de mettre en forme des formules mathématiques à partir d\'une syntaxe proche de celle du <a href="https://fr.wikipedia.org/wiki/LaTeX">LaTeX</a>.</li>
-				<li><a href="https://www.tiny.cloud/">TinyMCE</a> : Editeur <abbr aria-label="What You See Is What You Get">WYSIWYG</abbr> permettant la mise en page à la volée.</li>
-				<li><a href="http://qbnz.com/highlighter/">GeSHi</a> : Colorateur de code source dans de nombreux langages informatiques.</li>
-				<li><a href="https://jquery.com">jQuery</a> : Framework Javascript et <abbr aria-label="Asynchronous Javascript And XML">AJAX</abbr></li>
-				<li><a href="https://fontawesome.com/?from=io">Font Awesome</a> : librairie d\'icônes</li>
-			</ul>
-		</div>
-	</fieldset>
-	<fieldset>
-		<legend>Faire un don</legend>
-		<div class="fielset-inset">
-			Si vous souhaitez supporter PHPBoost financièrement vous pouvez nous faire un don via paypal :
+    <fieldset>
+        <legend>PHPBoost est désormais installé !</legend>
+        <div class="fielset-inset">
+            <p class="message-helper bgc success">L\'installation de PHPBoost s\'est déroulée avec succès. L\'équipe PHPBoost vous remercie de lui avoir fait confiance et est heureuse de vous compter parmi ses utilisateurs.</p>
+            <p>Nous vous conseillons de vous tenir au courant de l\'évolution de PHPBoost via le site de la communauté francophone, <a href="https://www.phpboost.com">www.phpboost.com</a>. Vous serez automatiquement averti dans le panneau d\'administration de l\'arrivée de nouvelles mises à jour. Il est fortement conseillé de tenir votre système à jour afin de profiter des dernières nouveautés et de corriger les éventuelles failles ou erreurs.</p>
+            <p class="message-helper bgc warning">Par mesure de sécurité nous vous conseillons fortement de supprimer le dossier <b>install</b> et tout ce qu\'il contient. Des personnes mal intentionnées pourraient relancer le script d\'installation et écraser certaines de vos données ! Une option vous sera proposée une fois connecté sur le site pour effectuer cette suppression.</p>
+            <p>N\'oubliez pas de consulter la <a href="https://www.phpboost.com/wiki/">documentation</a> qui vous guidera dans l\'utilisation de PHPBoost ainsi que la <a href="https://www.phpboost.com/faq/"><abbr aria-label="Foire Aux Questions">FAQ</abbr></a> qui répond aux questions les plus fréquentes.</p>
+            <p>En cas de problème, rendez-vous sur le <a href="https://www.phpboost.com/forum/">forum du support de PHPBoost</a>.</p>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Remerciements</legend>
+        <div class="fielset-inset">
+            <h2>Membres de la communauté</h2>
+            <p>Merci à tous les membres de la communauté qui nous encouragent au quotidien et contribuent à la qualité du logiciel que ce soit en suggérant des nouvelles fonctionnalités ou en signalant des dysfonctionnements, ce qui permet d\'aboutir entre autres à un CMS stable et efficace.</p>
+            <p>Merci aux membres des équipes de PHPBoost et particulièrement à <strong>mipel</strong> de l\'équipe communication, <strong>mipel</strong>, <strong>olivierb</strong> et <strong>xela</strong> pour la documentation, <strong>babsolune</strong> et <strong>xela</strong> pour l\'aide au développement, <strong>ElenWii</strong> et <strong>babsolune</strong> pour les graphismes, <strong>mipel</strong> et <strong>olivierb</strong> pour la modération de la communauté et <strong>janus57</strong> pour l\'appui aux développements et à l\'aide de la communauté sur le forum.</p>
+            <h2>Projets</h2>
+            <p>PHPBoost utilise différents outils afin d\'élargir ses fonctionnalités sans augmenter trop le temps de développement. Ces outils sont tous libres, distribués sous la licence GNU/GPL pour la plupart.</p>
+            <ul>
+                <li><a href="https://notepad-plus-plus.org/fr">Notepad++</a>, <a href="https://atom.io/">Atom</a>, <a href="https://fr.netbeans.org/">NetBeans</a> et <a href="https://sublimetext.com">Sublime Text</a> : Editeurs de texte puissants utilisés pour le développement de PHPBoost.</li>
+                <li><a href="https://github.com/chamilo/pclzip">PCLZIP</a> créé par <a href="https://www.phpconcept.net/">PHPConcept</a> : Librairie permettant de travailler sur des archives au format Zip.</li>
+                <li><a href="https://github.com/daanforever/phpmathpublisher">PHPMathPublisher</a> : Ensemble de fonctions permettant de mettre en forme des formules mathématiques à partir d\'une syntaxe proche de celle du <a href="https://fr.wikipedia.org/wiki/LaTeX">LaTeX</a>.</li>
+                <li><a href="https://www.tiny.cloud/">TinyMCE</a> : Editeur <abbr aria-label="What You See Is What You Get">WYSIWYG</abbr> permettant la mise en page à la volée.</li>
+                <li><a href="http://qbnz.com/highlighter/">GeSHi</a> : Colorateur de code source dans de nombreux langages informatiques.</li>
+                <li><a href="https://jquery.com">jQuery</a> : Framework Javascript et <abbr aria-label="Asynchronous Javascript And XML">AJAX</abbr></li>
+                <li><a href="https://fontawesome.com/?from=io">Font Awesome</a> : librairie d\'icônes</li>
+            </ul>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Faire un don</legend>
+        <div class="fielset-inset">
+            Si vous souhaitez supporter PHPBoost financièrement vous pouvez nous faire un don via paypal :
 
-			<div class="align-center">
-				<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-					<input type="hidden" name="cmd" value="_s-xclick">
-					<input type="hidden" name="hosted_button_id" value="7EFHMABH75HPE">
-					<input type="image" src="https://resources.phpboost.com/documentation/paypal/button_french.png" border="0" name="submit" alt="PHPBoost - PayPal">
-				</form>
-			</div>
-		</div>
-	</fieldset>
-	<fieldset>
-		<legend>Crédits</legend>
-		<div class="fielset-inset">
-			<ul>
-				<li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, fondateur du projet PHPBoost et développeur retraité</li>
-				<li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, développeur retraité</li>
-				<li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, développeur retraité</li>
-				<li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, développeur retraité</li>
-				<li><strong>Julien BRISWALTER</strong> <em>(alias j1.seth)</em>, développeur</li>
-			</ul>
-		</div>
-	</fieldset>
+            <div class="align-center">
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="7EFHMABH75HPE">
+                    <input type="image" src="https://resources.phpboost.com/documentation/paypal/button_french.png" border="0" name="submit" alt="PHPBoost - PayPal">
+                </form>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Crédits</legend>
+        <div class="fielset-inset">
+            <ul>
+                <li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, fondateur du projet PHPBoost et développeur retraité</li>
+                <li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, développeur retraité</li>
+                <li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, développeur retraité</li>
+                <li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, développeur retraité</li>
+                <li><strong>Julien BRISWALTER</strong> <em>(alias j1.seth)</em>, développeur</li>
+            </ul>
+        </div>
+    </fieldset>
 ';
 $lang['install.site.index']  = 'Aller à l\'accueil du site';
 $lang['install.admin.index'] = 'Aller dans le panneau d\'administration';

@@ -102,6 +102,17 @@ ${resources('update/update')}
 			jQuery('.lang-selector').selectImg({
 				ariaLabel : ${escapejs(LangLoader::get_message('common.click.to.select', 'common-lang'))}
 			});
+            jQuery('*').on('focus', function(e) {
+                $this = jQuery(this);
+                jQuery(window).keyup(function (e) {
+                    var code = (e.keyCode ? e.keyCode : e.which);
+                    if (code == 9) {
+                        $this.addClass('focus-on-tab');
+                    }
+                });
+            }).on('click', function(e) {
+                jQuery(this).removeClass('focus-on-tab');
+            });
 		</script>
 	</body>
 </html>
