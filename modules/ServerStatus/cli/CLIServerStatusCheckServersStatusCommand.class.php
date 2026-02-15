@@ -9,17 +9,17 @@
 
 class CLIServerStatusCheckServersStatusCommand implements CLICommand
 {
-	public function short_description()
+	public function short_description(): string
 	{
 		return 'Checks the servers status.';
 	}
 
-	public function help(array $args)
+	public function help(array $args): void
 	{
 		CLIOutput::writeln('Checks the servers status. Try to get game servers informations if they are online.');
 	}
 
-	public function execute(array $args)
+	public function execute(array $args): void
 	{
 		ServerStatusService::check_servers_status(true);
 		CLIOutput::writeln('The servers status have successfully been updated');

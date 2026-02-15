@@ -48,6 +48,10 @@ class CLIClearCacheCommand implements CLICommand
         $cache_service->clear_css_cache();
         CLIOutput::writeln('[clear] JS cache');
         $cache_service->clear_js_cache();
+        CLIOutput::writeln('htaccess has been regenerated');
+        HtaccessFileCache::regenerate();
+        CLIOutput::writeln('Nginx has been regenerated');
+        NginxFileCache::regenerate();
         CLIOutput::writeln('cache has been successfully cleared');
     }
 }

@@ -11,12 +11,12 @@
 
 class CLIDumpCommand implements CLICommand
 {
-    public function short_description()
+    public function short_description(): string
     {
         return 'Dump database';
     }
 
-    public function help(array $args)
+    public function help(array $args): void
     {
         CLIOutput::writeln('scenario: phpboost dump [file [tables ...] [--no-zip]]');
         CLIOutput::writeln('Dumps the database in a file (either the one specified as the first parameter or a default one).');
@@ -24,7 +24,7 @@ class CLIDumpCommand implements CLICommand
         CLIOutput::writeln('Use the --no-zip flag to skip ZIP file creation.');
     }
 
-    public function execute(array $args)
+    public function execute(array $args): void
     {
         $create_zip = true;
         if (in_array('--no-zip', $args))

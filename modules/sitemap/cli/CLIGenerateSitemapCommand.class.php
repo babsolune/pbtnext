@@ -9,17 +9,17 @@
 
 class CLIGenerateSitemapCommand implements CLICommand
 {
-	public function short_description()
+	public function short_description(): string
 	{
 		return 'Generates the sitemap.xml file.';
 	}
 
-	public function help(array $args)
+	public function help(array $args): void
 	{
 		CLIOutput::writeln('Generates the sitemap.xml file. If is already exists, it is overridden.');
 	}
 
-	public function execute(array $args)
+	public function execute(array $args): void
 	{
 		try
 		{
