@@ -16,9 +16,9 @@ images/smileys/*
 upload/*
 
 # Modules
-flux/xml/*
-gallery/pics/*
-stats/cache/*
+modules/flux/xml/*
+modules/gallery/pics/*
+modules/stats/cache/*
 
 # Non official graphic templates
 !templates
