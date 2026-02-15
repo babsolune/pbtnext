@@ -555,7 +555,7 @@ function affiche_symbol($texte, $haut)
             $tmp_blanc   = ImageColorAllocate($tmp_img, 255, 255, 255);
             $tmp_blanc   = imagecolortransparent($tmp_img, $tmp_blanc);
             ImageFilledRectangle($tmp_img, 0, 0, $tmp_largeur, $tmp_hauteur, $tmp_blanc);
-            ImageTTFText($tmp_img, $t, 0, 5, (int)($tmp_hauteur / 2), $tmp_noir, $font, $texte);
+            ImageTTFText($tmp_img, $t, 0, 5, $tmp_hauteur / 2, $tmp_noir, $font, $texte);
             $img       = $tmp_img;
             $toutblanc = true;
             $sx        = $sy        = $ex        = $ey        = -1;
@@ -623,7 +623,7 @@ function affiche_symbol($texte, $haut)
             $tmp_blanc   = ImageColorAllocate($tmp_img, 255, 255, 255);
             $tmp_blanc   = imagecolortransparent($tmp_img, $tmp_blanc);
             ImageFilledRectangle($tmp_img, 0, 0, $tmp_largeur, $tmp_hauteur, $tmp_blanc);
-            ImageTTFText($tmp_img, $t, 0, 0, $tmp_hauteur / 4, $tmp_noir, $font, $texte);
+            ImageTTFText($tmp_img, $t, 0, 0, (int) round($tmp_hauteur / 4), $tmp_noir, $font, $texte);
             // ImageTTFText($tmp_img, $t, 0,5,5,$tmp_noir, $font,$texte);
             // $img=$tmp_img;
             $toutblanc = true;
@@ -1123,15 +1123,15 @@ class expression_math extends expression
             $largeur += imagesx($img[$i]);
         }
         $this->base_verticale = $dessus;
-        $result               = ImageCreate(max($largeur, 1), max($hauteur, 1));
-        $noir                 = ImageColorAllocate($result, 0, 0, 0);
-        $blanc                = ImageColorAllocate($result, 255, 255, 255);
-        $blanc                = imagecolortransparent($result, $blanc);
+        $result = ImageCreate(max($largeur, 1), max($hauteur, 1));
+        $noir   = ImageColorAllocate($result, 0, 0, 0);
+        $blanc  = ImageColorAllocate($result, 255, 255, 255);
+        $blanc  = imagecolortransparent($result, $blanc);
         ImageFilledRectangle($result, 0, 0, $largeur - 1, $hauteur - 1, $blanc);
         $pos = 0;
         for ($i = 0; $i < count($img); $i++) {
             if (isset($img[$i])) {
-                ImageCopy($result, $img[$i], $pos, $dessus - $base[$i], 0, 0, imagesx($img[$i]), imagesy($img[$i]));
+                ImageCopy($result, $img[$i], $pos, (int) round($dessus - $base[$i]), 0, 0, imagesx($img[$i]), imagesy($img[$i]));
                 $pos += imagesx($img[$i]);
             }
         }
@@ -1163,7 +1163,7 @@ class expression_math extends expression
         ImageFilledRectangle($result, 0, 0, $largeur + 4, $hauteur - 1, $blanc);
         ImageCopy($result, $img1, (int) (($largeur - $largeur1) / 2), 0, 0, 0, $largeur1, $hauteur1);
         imageline($result, 0, $this->base_verticale, $largeur, $this->base_verticale, $noir);
-        ImageCopy($result, $img2, (int) (($largeur - $largeur2) / 2), $hauteur1 + 4, 0, 0, $largeur2, $hauteur2);
+        ImageCopy($result, $img2, (int) round(($largeur - $largeur2) / 2), $hauteur1 + 4, 0, 0, $largeur2, $hauteur2);
         $this->image = $result;
     }
 
@@ -1353,9 +1353,9 @@ class expression_math extends expression
         $blanc         = ImageColorAllocate($imggauche, 255, 255, 255);
         $blanc         = imagecolortransparent($imggauche, $blanc);
         ImageFilledRectangle($imggauche, 0, 0, $largeurgauche - 1, $hauteurgauche - 1, $blanc);
-        ImageCopy($imggauche, $imgsymbole, (int)(($largeurgauche - $largeursymbole) / 2), $hauteur2, 0, 0, $largeursymbole, $hauteursymbole);
-        ImageCopy($imggauche, $img2, (int)(($largeurgauche - $largeur2) / 2), 0, 0, 0, $largeur2, $hauteur2);
-        ImageCopy($imggauche, $img1, (int)(($largeurgauche - $largeur1) / 2), $hauteur2 + $hauteursymbole, 0, 0, $largeur1, $hauteur1);
+        ImageCopy($imggauche, $imgsymbole, ($largeurgauche - $largeursymbole) / 2, $hauteur2, 0, 0, $largeursymbole, $hauteursymbole);
+        ImageCopy($imggauche, $img2, ($largeurgauche - $largeur2) / 2, 0, 0, 0, $largeur2, $hauteur2);
+        ImageCopy($imggauche, $img1, ($largeurgauche - $largeur1) / 2, $hauteur2 + $hauteursymbole, 0, 0, $largeur1, $hauteur1);
         $imgfin               = alignement2($imggauche, $basesymbole + $hauteur2, $imgexp, $baseexp);
         $this->image          = $imgfin;
         $this->base_verticale = max($basesymbole + $hauteur2, $baseexp + $hauteur2);
@@ -1386,8 +1386,8 @@ class expression_math extends expression
         $blanc   = ImageColorAllocate($imgfin, 255, 255, 255);
         $blanc   = imagecolortransparent($imgfin, $blanc);
         ImageFilledRectangle($imgfin, 0, 0, $largeur - 1, $hauteur - 1, $blanc);
-        ImageCopy($imgfin, $imgsup, (int)(($largeur - $largeursup) / 2), 0, 0, 0, $largeursup, $hauteursup);
-        ImageCopy($imgfin, $imgexp, (int)(($largeur - $largeurexp) / 2), $hauteursup, 0, 0, $largeurexp, $hauteurexp);
+        ImageCopy($imgfin, $imgsup, ($largeur - $largeursup) / 2, 0, 0, 0, $largeursup, $hauteursup);
+        ImageCopy($imgfin, $imgexp, ($largeur - $largeurexp) / 2, $hauteursup, 0, 0, $largeurexp, $hauteurexp);
         $this->image          = $imgfin;
         $this->base_verticale = $baseexp + $hauteursup;
     }
@@ -1417,8 +1417,8 @@ class expression_math extends expression
         $blanc   = ImageColorAllocate($imgfin, 255, 255, 255);
         $blanc   = imagecolortransparent($imgfin, $blanc);
         ImageFilledRectangle($imgfin, 0, 0, $largeur - 1, $hauteur - 1, $blanc);
-        ImageCopy($imgfin, $imgexp, (int)(($largeur - $largeurexp) / 2), 0, 0, 0, $largeurexp, $hauteurexp);
-        ImageCopy($imgfin, $imginf, (int)(($largeur - $largeurinf) / 2), $hauteurexp, 0, 0, $largeurinf, $hauteurinf);
+        ImageCopy($imgfin, $imgexp, ($largeur - $largeurexp) / 2, 0, 0, 0, $largeurexp, $hauteurexp);
+        ImageCopy($imgfin, $imginf, ($largeur - $largeurinf) / 2, $hauteurexp, 0, 0, $largeurinf, $hauteurinf);
         $this->image          = $imgfin;
         $this->base_verticale = $baseexp;
     }
@@ -1479,7 +1479,7 @@ class expression_math extends expression
             $l = $padding / 2 - 1;
             for ($col = 0; $col < $nbcolonne; $col++) {
                 if ($i < count($this->noeuds[3]->noeuds)) {
-                    ImageCopy($imgfin, $img[$i], $l + (int)(ceil($largeur_colonne[$col] - $largeur[$i]) / 2), $h + $dessus_ligne[$ligne] - $base[$i], 0, 0, $largeur[$i], $hauteur[$i]);
+                    ImageCopy($imgfin, $img[$i], $l + ceil($largeur_colonne[$col] - $largeur[$i]) / 2, $h + $dessus_ligne[$ligne] - $base[$i], 0, 0, $largeur[$i], $hauteur[$i]);
                     //ImageRectangle($imgfin,$l,$h,$l+$largeur_colonne[$col],$h+$hauteur_ligne[$ligne],$noir);
                 }
                 $l += $largeur_colonne[$col] + $padding;
@@ -1551,14 +1551,14 @@ class expression_math extends expression
         for ($ligne = 0; $ligne < $nbligne; $ligne++) {
             $l = $padding / 2 - 1;
             if (substr($typecolonne, 0, 1) == "1") {
-                ImageLine($imgfin, 0, (int)($h - $padding / 2), 0, (int)($h + $hauteur_ligne[$ligne] + $padding / 2), $noir);
+                ImageLine($imgfin, 0, $h - $padding / 2, 0, $h + $hauteur_ligne[$ligne] + $padding / 2, $noir);
             }
 
             for ($col = 0; $col < $nbcolonne; $col++) {
                 if ($i < count($this->noeuds[3]->noeuds)) {
-                    ImageCopy($imgfin, $img[$i], $l + (int)(ceil($largeur_colonne[$col] - $largeur[$i]) / 2), $h + $dessus_ligne[$ligne] - $base[$i], 0, 0, $largeur[$i], $hauteur[$i]);
+                    ImageCopy($imgfin, $img[$i], $l + ceil($largeur_colonne[$col] - $largeur[$i]) / 2, $h + $dessus_ligne[$ligne] - $base[$i], 0, 0, $largeur[$i], $hauteur[$i]);
                     if (substr($typecolonne, $col + 1, 1) == "1") {
-                        ImageLine($imgfin, (int)($l + $largeur_colonne[$col] + $padding / 2), (int)($h - $padding / 2), (int)($l + $largeur_colonne[$col] + $padding / 2), (int)($h + $hauteur_ligne[$ligne] + $padding / 2), $noir);
+                        ImageLine($imgfin, $l + $largeur_colonne[$col] + $padding / 2, $h - $padding / 2, $l + $largeur_colonne[$col] + $padding / 2, $h + $hauteur_ligne[$ligne] + $padding / 2, $noir);
                     }
 
                 }
@@ -1566,7 +1566,7 @@ class expression_math extends expression
                 $i++;
             }
             if (substr($typeligne, $ligne + 1, 1) == "1") {
-                ImageLine($imgfin, 0, (int)($h + $hauteur_ligne[$ligne] + $padding / 2), $largeurfin - 1, (int)($h + $hauteur_ligne[$ligne] + $padding / 2), $noir);
+                ImageLine($imgfin, 0, $h + $hauteur_ligne[$ligne] + $padding / 2, $largeurfin - 1, $h + $hauteur_ligne[$ligne] + $padding / 2, $noir);
             }
 
             $h += $hauteur_ligne[$ligne] + $padding;
@@ -1601,7 +1601,7 @@ class expression_math extends expression
         ImageCopy($imgfin, $imgsup, $largeur - 6, 0, $largeursup - 6, 0, $largeursup, $hauteursup);
         imagesetthickness($imgfin, 1);
         imageline($imgfin, 0, 6, $largeur - 4, 6, $noir);
-        ImageCopy($imgfin, $imgexp, (int)(($largeur - $largeurexp) / 2), $hauteursup, 0, 0, $largeurexp, $hauteurexp);
+        ImageCopy($imgfin, $imgexp, ($largeur - $largeurexp) / 2, $hauteursup, 0, 0, $largeurexp, $hauteurexp);
         $this->image          = $imgfin;
         $this->base_verticale = $baseexp + $hauteursup;
     }
@@ -1683,8 +1683,8 @@ class expression_math extends expression
         $blanc   = ImageColorAllocate($imgfin, 255, 255, 255);
         $blanc   = imagecolortransparent($imgfin, $blanc);
         ImageFilledRectangle($imgfin, 0, 0, $largeur - 1, $hauteur - 1, $blanc);
-        ImageCopy($imgfin, $imgsup, (int)(($largeur - $largeursup) / 2), 0, 0, 0, $largeursup, $hauteursup);
-        ImageCopy($imgfin, $imgexp, (int)(($largeur - $largeurexp) / 2), $hauteursup, 0, 0, $largeurexp, $hauteurexp);
+        ImageCopy($imgfin, $imgsup, ($largeur - $largeursup) / 2, 0, 0, 0, $largeursup, $hauteursup);
+        ImageCopy($imgfin, $imgexp, ($largeur - $largeurexp) / 2, $hauteursup, 0, 0, $largeurexp, $hauteurexp);
         $this->image          = $imgfin;
         $this->base_verticale = $baseexp + $hauteursup;
     }
@@ -1718,8 +1718,8 @@ class expression_math extends expression
         $blanc   = ImageColorAllocate($imgfin, 255, 255, 255);
         $blanc   = imagecolortransparent($imgfin, $blanc);
         ImageFilledRectangle($imgfin, 0, 0, $largeur - 1, $hauteur - 1, $blanc);
-        ImageCopy($imgfin, $imglim, (int)(($largeur - $largeurlim) / 2), 0, 0, 0, $largeurlim, $hauteurlim);
-        ImageCopy($imgfin, $imginf, (int)(($largeur - $largeurinf) / 2), $hauteurlim, 0, 0, $largeurinf, $hauteurinf);
+        ImageCopy($imgfin, $imglim, ($largeur - $largeurlim) / 2, 0, 0, 0, $largeurlim, $hauteurlim);
+        ImageCopy($imgfin, $imginf, ($largeur - $largeurinf) / 2, $hauteurlim, 0, 0, $largeurinf, $hauteurinf);
 
         $this->image          = alignement2($imgfin, $baselim, $imgexp, $baseexp);
         $this->base_verticale = max($baselim, $baseexp);
