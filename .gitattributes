@@ -5,3 +5,12 @@
 *.woff2 binary
 
 *.tpl text diff=html linguist-language=html
+
+# Force LF for all text files
+* text eol=lf
+
+# Explicitly mark binaries to keep them untouched
+*.png binary
+*.jpg binary
+*.gif binary
+*.webp binary

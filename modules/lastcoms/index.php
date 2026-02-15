@@ -6,16 +6,14 @@
  * @version     PHPBoost 6.1 - last update: 2017 06 15
  * @since       PHPBoost 3.0 - 2009 07 26
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
-*/
+ */
 
-define('PATH_TO_ROOT', '../../');
+define('PATH_TO_ROOT', '../..');
 
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
-$url_controller_mappers = array(
-	new UrlControllerMapper('AdminLastcomsConfigController', '`^/admin(?:/config)?/?$`')
-);
+$url_controller_mappers = [
+    new UrlControllerMapper('AdminLastcomsConfigController', '`^/admin(?:/config)?/?$`'),
+];
 
 DispatchManager::dispatch($url_controller_mappers);
-
-?>

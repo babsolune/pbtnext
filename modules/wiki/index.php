@@ -8,7 +8,7 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
  */
 
-define('PATH_TO_ROOT', '../../');
+define('PATH_TO_ROOT', '../..');
 
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
@@ -50,4 +50,3 @@ $url_controller_mappers = [
     new UrlControllerMapper('WikiCategoryController', '`^(?:/([0-9]+)-([a-z0-9-_]+))?/?([0-9]+)?/?([0-9]+)?/?$`', ['id_category', 'rewrited_name', 'page', 'subcategories_page']),
 ];
 DispatchManager::dispatch($url_controller_mappers);
-?>

@@ -10,7 +10,7 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-define('PATH_TO_ROOT', '../../');
+define('PATH_TO_ROOT', '../..');
 
 require_once(PATH_TO_ROOT . '/kernel/begin.php');
 AppContext::get_session()->no_session_location(); //Permet de ne pas mettre jour la page dans la session.

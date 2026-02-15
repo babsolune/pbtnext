@@ -6,27 +6,26 @@
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2016 02 11
  * @since       PHPBoost 3.0 - 2010 05 02
-*/
+ */
 
-define('PATH_TO_ROOT', '../../');
+define('PATH_TO_ROOT', '../..');
 
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
-$url_controller_mappers = array(
-	// Fields
-	new UrlControllerMapper('AdminContactFieldsListController', '`^/admin/fields(?:/list)?/?$`'),
-	new UrlControllerMapper('AdminContactFieldFormController', '`^/admin/fields/add/?$`'),
-	new UrlControllerMapper('AdminContactFieldFormController', '`^/admin/fields/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('ContactAjaxDeleteFieldController', '`^/admin/fields/delete/?$`'),
-	new UrlControllerMapper('ContactAjaxChangeFieldDisplayController', '`^/admin/fields/change_display/?$`'),
-	new UrlControllerMapper('ContactAjaxCheckFieldNameController', '`^/admin/fields/check_name/?$`'),
+$url_controller_mappers = [
+    // Fields
+    new UrlControllerMapper('AdminContactFieldsListController', '`^/admin/fields(?:/list)?/?$`'),
+    new UrlControllerMapper('AdminContactFieldFormController', '`^/admin/fields/add/?$`'),
+    new UrlControllerMapper('AdminContactFieldFormController', '`^/admin/fields/([0-9]+)/edit/?$`', ['id']),
+    new UrlControllerMapper('ContactAjaxDeleteFieldController', '`^/admin/fields/delete/?$`'),
+    new UrlControllerMapper('ContactAjaxChangeFieldDisplayController', '`^/admin/fields/change_display/?$`'),
+    new UrlControllerMapper('ContactAjaxCheckFieldNameController', '`^/admin/fields/check_name/?$`'),
 
-	// Configuration
-	new UrlControllerMapper('AdminContactConfigController', '`^/admin(?:/config)?/?([a-z]+)?/?$`', array('message')),
+    // Configuration
+    new UrlControllerMapper('AdminContactConfigController', '`^/admin(?:/config)?/?([a-z]+)?/?$`', ['message']),
 
-	// Homepage
-	new UrlControllerMapper('ContactController')
-);
+    // Homepage
+    new UrlControllerMapper('ContactController'),
+];
 
 DispatchManager::dispatch($url_controller_mappers);
-?>

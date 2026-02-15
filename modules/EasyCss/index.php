@@ -5,15 +5,15 @@
  * @author      PaperToss <t0ssp4p3r@gmail.com>
  * @version     PHPBoost 6.1 - last update: 2016 06 13
  * @since       PHPBoost 5.0 - 2016 04 22
-*/
+ */
 
-define('PATH_TO_ROOT', '../../');
+define('PATH_TO_ROOT', '../..');
 
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
-$url_controller_mappers = array(
+$url_controller_mappers = [
 //Admin
     new UrlControllerMapper('AdminEasyCssThemeController', '`^/admin/theme/?$`'),
-    new UrlControllerMapper('AdminEasyCssEditController', '`^/admin/edit/(.+)/(.+)/?$`', array('theme', 'file')),
-);
+    new UrlControllerMapper('AdminEasyCssEditController', '`^/admin/edit/(.+)/(.+)/?$`', ['theme', 'file']),
+];
 DispatchManager::dispatch($url_controller_mappers);

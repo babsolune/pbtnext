@@ -7,36 +7,35 @@
  * @since       PHPBoost 5.0 - 2016 02 18
  * @contributor mipel <mipel@phpboost.com>
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
-*/
+ */
 
-define('PATH_TO_ROOT', '../../');
+define('PATH_TO_ROOT', '../..');
 
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
-$url_controller_mappers = array(
-	//Admin
-	new UrlControllerMapper('AdminQuotesConfigController', '`^/admin(?:/config)?/?$`'),
+$url_controller_mappers = [
+    //Admin
+    new UrlControllerMapper('AdminQuotesConfigController', '`^/admin(?:/config)?/?$`'),
 
-	//Categories
-	new UrlControllerMapper('DefaultCategoriesManagementController', '`^/categories/?$`'),
-	new UrlControllerMapper('DefaultCategoriesFormController', '`^/categories/add/?([0-9]+)?/?$`', array('id_parent')),
-	new UrlControllerMapper('DefaultCategoriesFormController', '`^/categories/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('DefaultDeleteCategoryController', '`^/categories/([0-9]+)/delete/?$`', array('id')),
+    //Categories
+    new UrlControllerMapper('DefaultCategoriesManagementController', '`^/categories/?$`'),
+    new UrlControllerMapper('DefaultCategoriesFormController', '`^/categories/add/?([0-9]+)?/?$`', ['id_parent']),
+    new UrlControllerMapper('DefaultCategoriesFormController', '`^/categories/([0-9]+)/edit/?$`', ['id']),
+    new UrlControllerMapper('DefaultDeleteCategoryController', '`^/categories/([0-9]+)/delete/?$`', ['id']),
 
-	//Management
-	new UrlControllerMapper('QuotesItemsManagerController', '`^/manage/?$`'),
-	new UrlControllerMapper('QuotesItemFormController', '`^/add/?([0-9]+)?/?([a-z0-9-_]+)?/?$`', array('id_category', 'writer')),
-	new UrlControllerMapper('QuotesItemFormController', '`^/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('QuotesDeleteItemController', '`^/([0-9]+)/delete/?$`', array('id')),
+    //Management
+    new UrlControllerMapper('QuotesItemsManagerController', '`^/manage/?$`'),
+    new UrlControllerMapper('QuotesItemFormController', '`^/add/?([0-9]+)?/?([a-z0-9-_]+)?/?$`', ['id_category', 'writer']),
+    new UrlControllerMapper('QuotesItemFormController', '`^/([0-9]+)/edit/?$`', ['id']),
+    new UrlControllerMapper('QuotesDeleteItemController', '`^/([0-9]+)/delete/?$`', ['id']),
 
-	new UrlControllerMapper('AjaxQuotesWriterAutoCompleteController','`^/ajax_writers/?$`'),
-	new UrlControllerMapper('QuotesWriterController', '`^/writer/([a-z0-9-_]+)?/?([0-9]+)?/?$`', array('writer', 'page')),
+    new UrlControllerMapper('AjaxQuotesWriterAutoCompleteController', '`^/ajax_writers/?$`'),
+    new UrlControllerMapper('QuotesWriterController', '`^/writer/([a-z0-9-_]+)?/?([0-9]+)?/?$`', ['writer', 'page']),
 
-	new UrlControllerMapper('QuotesPendingItemsController', '`^/pending/?([0-9]+)?/?$`', array('page')),
-	new UrlControllerMapper('QuotesMemberItemsController', '`^/member/?([0-9]+)?/?([0-9]+)?/?$`', array('user_id', 'page')),
+    new UrlControllerMapper('QuotesPendingItemsController', '`^/pending/?([0-9]+)?/?$`', ['page']),
+    new UrlControllerMapper('QuotesMemberItemsController', '`^/member/?([0-9]+)?/?([0-9]+)?/?$`', ['user_id', 'page']),
 
-	new UrlControllerMapper('QuotesCategoryController', '`^(?:/([0-9]+)-([a-z0-9-_]+))?/?([0-9]+)?/?$`', array('id', 'rewrited_name', 'page', 'subcategories_page')),
+    new UrlControllerMapper('QuotesCategoryController', '`^(?:/([0-9]+)-([a-z0-9-_]+))?/?([0-9]+)?/?$`', ['id', 'rewrited_name', 'page', 'subcategories_page']),
 
-);
+];
 DispatchManager::dispatch($url_controller_mappers);
-?>

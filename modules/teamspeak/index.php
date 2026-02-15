@@ -5,19 +5,18 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2015 04 13
  * @since       PHPBoost 4.1 - 2014 09 26
-*/
+ */
 
-define('PATH_TO_ROOT', '../../');
+define('PATH_TO_ROOT', '../..');
 
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
-$url_controller_mappers = array(
-	//Config
-	new UrlControllerMapper('AdminTeamspeakConfigController', '`^/admin(?:/config)?/?$`'),
+$url_controller_mappers = [
+    //Config
+    new UrlControllerMapper('AdminTeamspeakConfigController', '`^/admin(?:/config)?/?$`'),
 
-	new UrlControllerMapper('TeamspeakAjaxViewerController', '`^/ajax_refresh_viewer/?$`'),
-	new UrlControllerMapper('TeamspeakHomeController', '`^/?$`'),
-);
+    new UrlControllerMapper('TeamspeakAjaxViewerController', '`^/ajax_refresh_viewer/?$`'),
+    new UrlControllerMapper('TeamspeakHomeController', '`^/?$`'),
+];
 
 DispatchManager::dispatch($url_controller_mappers);
-?>

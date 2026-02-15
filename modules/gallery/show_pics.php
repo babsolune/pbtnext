@@ -9,7 +9,7 @@
  * @contributor Arnaud GENET <elenwii@phpboost.com>
 */
 
-define('PATH_TO_ROOT', '../../');
+define('PATH_TO_ROOT', '../..');
 
 require_once(PATH_TO_ROOT . '/kernel/begin.php');
 require_once(ModulesManager::get_module_path('gallery') . '/gallery_begin.php');

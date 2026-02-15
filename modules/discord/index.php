@@ -5,16 +5,14 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2023 03 06
  * @since       PHPBoost 6.0 - 2023 03 05
-*/
+ */
 
-define('PATH_TO_ROOT', '../../');
+define('PATH_TO_ROOT', '../..');
 
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
-$url_controller_mappers = array(
-	new UrlControllerMapper('AdminDiscordConfigController', '`^/admin(?:/config)?/?$`')
-);
+$url_controller_mappers = [
+    new UrlControllerMapper('AdminDiscordConfigController', '`^/admin(?:/config)?/?$`'),
+];
 
 DispatchManager::dispatch($url_controller_mappers);
-
-?>

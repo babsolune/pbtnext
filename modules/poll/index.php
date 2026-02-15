@@ -6,29 +6,28 @@
  * @version     PHPBoost 6.1 - last update: 2021 06 24
  * @since       PHPBoost 6.0 - 2020 05 14
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
-*/
+ */
 
-define('PATH_TO_ROOT', '../../');
+define('PATH_TO_ROOT', '../..');
 
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
-$url_controller_mappers = array(
+$url_controller_mappers = [
     // Configuration
     new UrlControllerMapper('AdminPollConfigController', '`^/admin(?:/config)?/?$`'),
 
     // Form
-    new UrlControllerMapper('PollItemFormController', '`^/add/?([0-9]+)?/?$`', array('id_category')),
-    new UrlControllerMapper('PollItemFormController', '`^/([0-9]+)/edit/?$`', array('id')),
+    new UrlControllerMapper('PollItemFormController', '`^/add/?([0-9]+)?/?$`', ['id_category']),
+    new UrlControllerMapper('PollItemFormController', '`^/([0-9]+)/edit/?$`', ['id']),
 
     // Item
-    new UrlControllerMapper('PollItemController', '`^/([0-9]+)-([a-z0-9-_]+)/([0-9]+)-([a-z0-9-_]+)/?$`', array('id_category', 'rewrited_name_category', 'id', 'rewrited_name')),
+    new UrlControllerMapper('PollItemController', '`^/([0-9]+)-([a-z0-9-_]+)/([0-9]+)-([a-z0-9-_]+)/?$`', ['id_category', 'rewrited_name_category', 'id', 'rewrited_name']),
 
     // Items manage
     new UrlControllerMapper('PollItemsManagementController', '`^/manage/?$`'),
 
     // Mini
-    new UrlControllerMapper('AjaxPollMiniController', '`^/ajax_send/$`')
-);
+    new UrlControllerMapper('AjaxPollMiniController', '`^/ajax_send/$`'),
+];
 
 ModuleDispatchManager::dispatch($url_controller_mappers);
-?>

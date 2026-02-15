@@ -5,12 +5,11 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2018 06 19
  * @since       PHPBoost 4.0 - 2014 05 09
-*/
+ */
 
-define('PATH_TO_ROOT', '../../');
+define('PATH_TO_ROOT', '../..');
 
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
-$url_controller_mappers = array(new UrlControllerMapper('AdminQuestionCaptchaConfig', '`^(?:/admin)?(?:/config)?/?$`'));
+$url_controller_mappers = [new UrlControllerMapper('AdminQuestionCaptchaConfig', '`^(?:/admin)?(?:/config)?/?$`')];
 DispatchManager::dispatch($url_controller_mappers);
-?>

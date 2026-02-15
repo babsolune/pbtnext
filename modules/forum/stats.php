@@ -10,7 +10,7 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-define('PATH_TO_ROOT', '../../');
+define('PATH_TO_ROOT', '../..');
 
 require_once(PATH_TO_ROOT . '/kernel/begin.php');
 require_once(ModulesManager::get_module_path('forum') . '/forum_begin.php');

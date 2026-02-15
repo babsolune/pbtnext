@@ -5,11 +5,10 @@
  * @author      Julien BRISWALTER <j1.seth@PHPBoost.com>
  * @version     PHPBoost 6.1 - last update: 2021 05 07
  * @since       PHPBoost 6.0 - 2020 05 14
-*/
+ */
 
-define('PATH_TO_ROOT', '../../');
+define('PATH_TO_ROOT', '../..');
 
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 ModuleDispatchManager::dispatch();
-?>
