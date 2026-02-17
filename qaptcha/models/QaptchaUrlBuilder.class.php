@@ -7,9 +7,9 @@
  * @since       PHPBoost 5.0 - 2017 03 26
 */
 
-class QuestionCaptchaUrlBuilder
+class QaptchaUrlBuilder
 {
-	private static $dispatcher = '/QuestionCaptcha';
+	private static $dispatcher = '/Qaptcha';
 
 	public static function configuration()
 	{

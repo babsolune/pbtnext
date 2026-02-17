@@ -300,6 +300,22 @@ class InstallationServices
 				}
 			}
 		}
+        $defaultmodules_folder = new Folder(PATH_TO_ROOT);
+		foreach ($defaultmodules_folder->get_folders() as $folder)
+		{
+			$folder_name = $folder->get_name();
+			if ($folder->get_files('/config\.ini/') && !ModulesManager::is_module_installed($folder_name))
+			{
+				try
+				{
+					$modules_not_installed[$folder_name] = new Module($folder_name);
+				}
+				catch (IOException $ex)
+				{
+					continue;
+				}
+			}
+		}
 
 		@uasort($modules_not_installed, [self::class, 'callback_sort_modules_by_name']);
 

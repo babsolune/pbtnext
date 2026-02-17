@@ -19,6 +19,6 @@ $lang['questioncaptcha.config.answers.placeholder'] = 'Réponse(s)';
 $lang['questioncaptcha.config.delete']              = 'Supprimer la question';
 $lang['questioncaptcha.config.add']                 = 'Ajouter une question';
 
-$lang['advices.questioncaptcha.items.number'] = 'Le captcha QuestionCaptcha est utilisé pour sécuriser les formulaires, pensez à <a href="'.QuestionCaptchaUrlBuilder::configuration()-> rel().'">Ajouter des questions </a>pour renforcer la sécurité.';
+$lang['advices.questioncaptcha.items.number'] = 'Le captcha Qaptcha est utilisé pour sécuriser les formulaires, pensez à <a href="'.QaptchaUrlBuilder::configuration()-> rel().'">Ajouter des questions </a>pour renforcer la sécurité.';
 
 ?>

@@ -8,7 +8,7 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class QuestionCaptchaItem
+class QaptchaItem
 {
 	private $label;
 	private $answers;

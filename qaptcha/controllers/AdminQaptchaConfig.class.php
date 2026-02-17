@@ -8,16 +8,16 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminQuestionCaptchaConfig extends DefaultAdminModuleController
+class AdminQaptchaConfig extends DefaultAdminModuleController
 {
 	public static function __static()
 	{
-		self::$module_id = 'QuestionCaptcha';
+		self::$module_id = 'qaptcha';
 	}
 
 	public function __construct($locale = '')
 	{
-		self::$module_id = 'QuestionCaptcha';
+		self::$module_id = 'qaptcha';
 
 		$this->init_parameters($locale);
 		$this->init_view();
@@ -26,7 +26,7 @@ class AdminQuestionCaptchaConfig extends DefaultAdminModuleController
 	protected function init_parameters($locale = '')
 	{
 		$this->request = AppContext::get_request();
-		$this->config = QuestionCaptchaConfig::load();
+		$this->config = QaptchaConfig::load();
 		$this->lang = LangLoader::get_all_langs(self::$module_id, $locale = '');
 	}
 
@@ -71,7 +71,7 @@ class AdminQuestionCaptchaConfig extends DefaultAdminModuleController
 
 	private function display_fields(FormFieldset $fieldset)
 	{
-		$fieldset->add_field(new QuestionCaptchaFormFieldQuestions('items', $this->lang['questioncaptcha.config.label'], $this->config->get_items(),
+		$fieldset->add_field(new QaptchaFormFieldQuestions('items', $this->lang['questioncaptcha.config.label'], $this->config->get_items(),
 			array('description' => $this->lang['questioncaptcha.config.label.description'], 'class' => 'full-field')
 		));
 	}
@@ -80,7 +80,7 @@ class AdminQuestionCaptchaConfig extends DefaultAdminModuleController
 	{
 		$this->config->set_items($this->form->get_value('items'));
 
-		QuestionCaptchaConfig::save();
+		QaptchaConfig::save();
 	}
 
 	protected function execute_edit_config_hook()
@@ -94,7 +94,7 @@ class AdminQuestionCaptchaConfig extends DefaultAdminModuleController
 
 		$response = new AdminMenuDisplayResponse($view);
 		$response->set_title($title);
-		$response->add_link($title, QuestionCaptchaUrlBuilder::configuration());
+		$response->add_link($title, QaptchaUrlBuilder::configuration());
 		$env = $response->get_graphical_environment();
 		$env->set_page_title($title);
 
@@ -116,7 +116,7 @@ class AdminQuestionCaptchaConfig extends DefaultAdminModuleController
 
 	public static function get_module()
 	{
-		self::$module = ModulesManager::get_module('QuestionCaptcha');
+		self::$module = ModulesManager::get_module('Qaptcha');
 
 		return self::$module;
 	}

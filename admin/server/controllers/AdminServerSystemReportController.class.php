@@ -154,8 +154,8 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
 
 		$fieldset = new FormFieldsetHTML('advice', $lang['admin.advice']);
 
-		if (ModulesManager::is_module_installed('QuestionCaptcha') && ModulesManager::is_module_activated('QuestionCaptcha') && ContentManagementConfig::load()->get_used_captcha_module() == 'QuestionCaptcha' && QuestionCaptchaConfig::load()->count_items() < 3)
-			$fieldset->add_field(new FormFieldFree('QuestionCaptcha_questions_number', '', MessageHelper::display(LangLoader::get_message('advices.questioncaptcha.items.number', 'common', 'QuestionCaptcha'), MessageHelper::WARNING)->render()));
+		if (ModulesManager::is_module_installed('qaptcha') && ModulesManager::is_module_activated('qaptcha') && ContentManagementConfig::load()->get_used_captcha_module() == 'qaptcha' && QaptchaConfig::load()->count_items() < 3)
+			$fieldset->add_field(new FormFieldFree('qaptcha_questions_number', '', MessageHelper::display(LangLoader::get_message('advices.questioncaptcha.items.number', 'common', 'qaptcha'), MessageHelper::WARNING)->render()));
 
 		$fieldset->add_field(new FormFieldFree('modules_management', '', MessageHelper::display($lang['admin.advice.modules.management'], MessageHelper::SUCCESS)->render()));
 

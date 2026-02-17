@@ -20,6 +20,6 @@ $lang['questioncaptcha.config.delete']              = 'Delete a question';
 $lang['questioncaptcha.config.add']                 = 'Add a question';
 
 // Variable sent to admin/advices
-$lang['advices.questioncaptcha.items.number'] = 'The captcha QuestionCaptcha is used to secure forms, think to <a href="' . QuestionCaptchaUrlBuilder::configuration()-> rel() . '">Add questions </a>to enhance security.';
+$lang['advices.questioncaptcha.items.number'] = 'The captcha Qaptcha is used to secure forms, think to <a href="' . QaptchaUrlBuilder::configuration()-> rel() . '">Add questions </a>to enhance security.';
 
 ?>

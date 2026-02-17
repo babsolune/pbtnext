@@ -140,7 +140,6 @@ class AdminModulesManagementController extends DefaultAdminController
 			}
 			else
 			{
-				$this->init();
 				$this->build_view();
 				foreach ($errors as $module_name => $error)
 				{

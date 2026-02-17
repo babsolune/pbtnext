@@ -157,6 +157,7 @@ class UpdateServices
         $this->get_update_token();
 
         Environment::try_to_increase_max_execution_time();
+        Environment::load_imports();
 
         // Delete files witch are no longer present in the new version to avoid conflicts
         $this->delete_old_files();
@@ -226,6 +227,7 @@ class UpdateServices
 
     public function put_site_under_maintenance()
     {
+        ClassLoader::generate_classlist(true);
         $maintenance_config = MaintenanceConfig::load();
 
         if (!$maintenance_config->is_under_maintenance()) {
@@ -248,8 +250,7 @@ class UpdateServices
         $columns = self::$db_utils->desc_table(PREFIX . 'sessions');
 
         if (!isset($columns['location_id'])) {
-            self::$db_utils->add_column(PREFIX . 'sessions', 'location_id', ['type' => 'string', 'length' => 64, 'default' =>
-                "''"]);
+            self::$db_utils->add_column(PREFIX . 'sessions', 'location_id', ['type' => 'string', 'length' => 64, 'default' => "''"]);
         }
 
         $columns = self::$db_utils->desc_table(PREFIX . 'member_extended_fields');
@@ -859,7 +860,7 @@ class UpdateServices
                 }
 
                 // check if 'addon_type' exists and if it equals "module"
-                if (isset($config['addon_type']) && $config['addon_type'] === 'module') {
+                if (isset($config['addon_type']) && $config['addon_type'] === 'module' && $dir !== 'BBCode' && $dir !== 'qaptcha') {
                     // Remove the folder if it exists
                     $folder = new Folder($dir);
                     if ($folder->exists()) {

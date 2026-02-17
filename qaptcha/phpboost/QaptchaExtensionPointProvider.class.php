@@ -7,16 +7,16 @@
  * @since       PHPBoost 4.0 - 2014 05 09
 */
 
-class QuestionCaptchaExtensionPointProvider extends ExtensionPointProvider
+class QaptchaExtensionPointProvider extends ExtensionPointProvider
 {
 	public function __construct()
 	{
-		parent::__construct('QuestionCaptcha');
+		parent::__construct('qaptcha');
 	}
 
 	public function captcha()
 	{
-		return new QuestionCaptcha();
+		return new Qaptcha();
 	}
 
 	public function css_files()
@@ -28,7 +28,7 @@ class QuestionCaptchaExtensionPointProvider extends ExtensionPointProvider
 
 	public function url_mappings()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/QuestionCaptcha/index.php')));
+		return new UrlMappings(array(new DispatcherUrlMapping('/Qaptcha/index.php')));
 	}
 }
 ?>

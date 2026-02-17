@@ -7,12 +7,15 @@
  * @since       PHPBoost 4.0 - 2014 05 09
 */
 
-class QuestionCaptchaSetup extends DefaultModuleSetup
+class QaptchaOptions implements CaptchaOptions
 {
-	public function uninstall()
+	private $case_sensitive;
+
+	public function __construct()
 	{
-		ConfigManager::delete('question-captcha', 'config');
-		return AppContext::get_captcha_service()->uninstall_captcha('QuestionCaptcha');
+		$this->case_sensitive = QaptchaConfig::load()->is_case_sensitive();
 	}
+
+	public function is_case_sensitive() { return $this->case_sensitive; }
 }
 ?>

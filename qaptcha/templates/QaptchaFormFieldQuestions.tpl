@@ -1,11 +1,11 @@
 <script>
-	var QuestionCaptchaFormFieldQuestions = function(){
+	var QaptchaFormFieldQuestions = function(){
 		this.integer = {ITEMS_NUMBER};
 		this.id_input = ${escapejs(HTML_ID)};
 		this.max_input = {MAX_INPUT};
 	};
 
-	QuestionCaptchaFormFieldQuestions.prototype = {
+	QaptchaFormFieldQuestions.prototype = {
 		add_question : function () {
 			if (this.integer <= this.max_input) {
 				var id = this.id_input + '_' + this.integer;
@@ -16,7 +16,7 @@
 
 				jQuery('<textarea/> ', {id : 'field_answers_' + id, name : 'field_answers_' + id, class : 'answers', placeholder : '{@questioncaptcha.config.answers.placeholder}'}).appendTo('#' + id);
 
-				jQuery('<a/> ', {'aria-label' : ${escapejs(@questioncaptcha.config.delete)}, href : 'javascript:QuestionCaptchaFormFieldQuestions.delete_question('+ this.integer +');', id : 'delete_' + id}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#' + id);
+				jQuery('<a/> ', {'aria-label' : ${escapejs(@questioncaptcha.config.delete)}, href : 'javascript:QaptchaFormFieldQuestions.delete_question('+ this.integer +');', id : 'delete_' + id}).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#' + id);
 
 				jQuery('<div/> ', {class : 'spacer'}).appendTo('#' + id);
 
@@ -33,7 +33,7 @@
 			jQuery('#add_' + this.id_input).show();
 		},
 	};
-	var QuestionCaptchaFormFieldQuestions = new QuestionCaptchaFormFieldQuestions();
+	var QaptchaFormFieldQuestions = new QaptchaFormFieldQuestions();
 </script>
 
 <div id="input_questions_${escape(HTML_ID)}">
@@ -43,10 +43,10 @@
 			<textarea name="field_answers_${escape(HTML_ID)}_{fieldelements.ID}" id="field_answers_${escape(ID)}_{fieldelements.ID}" placeholder="{@questioncaptcha.config.answers.placeholder}" class="answers">{fieldelements.ANSWERS}</textarea>
 
 			# IF fieldelements.C_DELETE #
-				<a href="javascript:QuestionCaptchaFormFieldQuestions.delete_question({fieldelements.ID});" id="delete_${escape(HTML_ID)}_{fieldelements.ID}" aria-label="{@questioncaptcha.config.delete}" data-confirmation="delete-element"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
+				<a href="javascript:QaptchaFormFieldQuestions.delete_question({fieldelements.ID});" id="delete_${escape(HTML_ID)}_{fieldelements.ID}" aria-label="{@questioncaptcha.config.delete}" data-confirmation="delete-element"><i class="far fa-trash-alt" aria-hidden="true"></i></a>
 			# ENDIF #
 			<div class="spacer"></div>
 		</div>
 	# END fieldelements #
 </div>
-<a href="javascript:QuestionCaptchaFormFieldQuestions.add_question();" id="add_${escape(HTML_ID)}" class="field-question-more-value" aria-label="{@questioncaptcha.config.add}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+<a href="javascript:QaptchaFormFieldQuestions.add_question();" id="add_${escape(HTML_ID)}" class="field-question-more-value" aria-label="{@questioncaptcha.config.add}"><i class="fa fa-plus" aria-hidden="true"></i></a>
