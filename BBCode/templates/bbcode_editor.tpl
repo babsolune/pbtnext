@@ -37,7 +37,7 @@
         }
     </script>
 
-    <script src="{PATH_TO_ROOT}/modules/BBCode/templates/js/bbcode.js"></script>
+    <script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode.js"></script>
 # ENDIF #
 
 <div id="loading-preview-{FIELD}" class="loading-preview-container" style="display: none;">

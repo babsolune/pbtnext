@@ -99,7 +99,7 @@
 	}
 </script>
 # IF C_DISPLAY_SHOUT_BBCODE #
-	<script src="{PATH_TO_ROOT}/modules/BBCode/templates/js/bbcode.js"></script>
+	<script src="{PATH_TO_ROOT}/BBCode/templates/js/bbcode.js"></script>
 # ENDIF #
 
 <div class="cell-body# IF C_HORIZONTAL # shout-horizontal# ENDIF #">
