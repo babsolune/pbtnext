@@ -135,11 +135,13 @@ class HtaccessFileCache implements CacheData
 		}
 
         $this->add_section('Prevent Rewrite for font files');
-		$this->add_line('<FilesMatch "\.(woff|woff2|ttf|otf)$">');
-		$this->add_line('Header set Content-Type font/woff2');
-		$this->add_line('Header set Access-Control-Allow-Origin "*"');
-		$this->add_line('RewriteEngine Off');
-		$this->add_line('</FilesMatch>');
+		$this->add_line('<IfModule mod_headers.c>');
+		$this->add_line('   <FilesMatch "\.(woff|woff2|ttf|otf)$">');
+		$this->add_line('       Header set Content-Type font/woff2');
+		$this->add_line('       Header set Access-Control-Allow-Origin "*"');
+		$this->add_line('       RewriteEngine Off');
+		$this->add_line('   </FilesMatch>');
+		$this->add_line('</IfModule>');
 	}
 
 	private function add_http_headers()
