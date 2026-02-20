@@ -448,6 +448,14 @@ class NginxFileCache implements CacheData
 		$this->add_line('add_header X-Permitted-Cross-Domain-Policies "master-only"');
 		$this->add_line('# Prevent mime based attacks');
 		$this->add_line('add_header X-Content-Type-Options "nosniff"');
+        $this->add_line('');
+        $this->add_line('# Prevent Rewrite for font files');
+        $this->add_line('location ~* \.(eot|otf|ttf|woff|woff2)$ {');
+        $this->add_line('   add_header Access-Control-Allow-Origin "*" always;');
+        $this->add_line('   # optionally:');
+        $this->add_line('   add_header Access-Control-Allow-Methods "GET, OPTIONS" always;');
+        $this->add_line('   add_header Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept" always;');
+        $this->add_line('}');
 	}
 
 	private function disable_file_etags()
