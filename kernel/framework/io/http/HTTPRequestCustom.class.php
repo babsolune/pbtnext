@@ -377,7 +377,13 @@ class HTTPRequestCustom
     // get full site domain url
     public function get_site_domain_name()
     {
-        return self::get_server_name();
+        $server_name = self::get_server_name();
+        $port = isset($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : 80;
+        if ($port != 80 && $port != 443)
+        {
+            $server_name .= ':' . $port;
+        }
+        return $server_name;
     }
 
     // get site domain name (without host)
