@@ -159,13 +159,6 @@ class HtaccessFileCache implements CacheData
 			$this->add_line('	# chrome=1 means IE should use the Chrome rendering engine if installed.');
 			$this->add_line('	BrowserMatch MSIE ie');
 			$this->add_line('	Header set X-UA-Compatible "IE=Edge"');
-            $this->add_line('');
-            $this->add_line('	# Prevent Rewrite for font files');
-            $this->add_line('    <FilesMatch "\.(woff|woff2|ttf|otf)$">');
-            $this->add_line('        Header set Content-Type font/woff2');
-            $this->add_line('        Header set Access-Control-Allow-Origin "*"');
-            $this->add_line('        RewriteEngine Off');
-            $this->add_line('    </FilesMatch>');
 			$this->add_line('</IfModule>');
 		}
 		else
@@ -190,6 +183,15 @@ class HtaccessFileCache implements CacheData
         $this->add_section('Skip rewriting for existing directories');
 		$this->add_line('RewriteCond %{REQUEST_FILENAME} -d');
 		$this->add_line('RewriteRule ^ - [L]');
+
+        $this->add_section('Prevent Rewrite for font files');
+		$this->add_line('<IfModule mod_headers.c>');
+		$this->add_line('   <FilesMatch "\.(woff|woff2|ttf|otf)$">');
+		$this->add_line('       Header set Content-Type font/woff2');
+		$this->add_line('       Header set Access-Control-Allow-Origin "*"');
+		$this->add_line('       RewriteEngine Off');
+		$this->add_line('   </FilesMatch>');
+		$this->add_line('</IfModule>');
 	}
 
 
