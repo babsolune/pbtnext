@@ -169,7 +169,16 @@ class HtaccessFileCache implements CacheData
 
 	private function enable_rewrite_rules()
 	{
-		$this->add_section('Rewrite rules');
+        $this->add_section('Prevent Rewrite for font files');
+		$this->add_line('<IfModule mod_headers.c>');
+		$this->add_line('   <FilesMatch "\.(woff|woff2|ttf|otf)$">');
+		$this->add_line('       Header set Content-Type font/woff2');
+		$this->add_line('       Header set Access-Control-Allow-Origin "*"');
+		$this->add_line('       RewriteEngine Off');
+		$this->add_line('   </FilesMatch>');
+		$this->add_line('</IfModule>');
+
+        $this->add_section('Rewrite rules');
 		$this->add_line('RewriteEngine on');
 		$this->add_line('RewriteBase /');
 		$this->add_line('RewriteCond %{REQUEST_FILENAME} !-f');
@@ -184,14 +193,6 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('RewriteCond %{REQUEST_FILENAME} -d');
 		$this->add_line('RewriteRule ^ - [L]');
 
-        $this->add_section('Prevent Rewrite for font files');
-		$this->add_line('<IfModule mod_headers.c>');
-		$this->add_line('   <FilesMatch "\.(woff|woff2|ttf|otf)$">');
-		$this->add_line('       Header set Content-Type font/woff2');
-		$this->add_line('       Header set Access-Control-Allow-Origin "*"');
-		$this->add_line('       RewriteEngine Off');
-		$this->add_line('   </FilesMatch>');
-		$this->add_line('</IfModule>');
 	}
 
 
