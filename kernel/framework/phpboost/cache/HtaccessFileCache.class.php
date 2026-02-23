@@ -7,7 +7,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 01 14
+ * @version     PHPBoost 6.1 - last update: 2026 02 23
  * @since       PHPBoost 3.0 - 2009 10 22
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor janus57 <janus57@janus57.fr>
@@ -171,11 +171,11 @@ class HtaccessFileCache implements CacheData
 	{
         $this->add_section('Prevent Rewrite for font files');
 		$this->add_line('<IfModule mod_headers.c>');
-		$this->add_line('   <FilesMatch "\.(woff|woff2|ttf|otf)$">');
-		$this->add_line('       Header set Content-Type font/woff2');
-		$this->add_line('       Header set Access-Control-Allow-Origin "*"');
-		$this->add_line('       RewriteEngine Off');
-		$this->add_line('   </FilesMatch>');
+		$this->add_line('    <FilesMatch "\.(woff|woff2|ttf|otf)$">');
+		$this->add_line('        Header set Content-Type font/woff2');
+		$this->add_line('        Header set Access-Control-Allow-Origin "*"');
+		$this->add_line('        RewriteEngine Off');
+		$this->add_line('    </FilesMatch>');
 		$this->add_line('</IfModule>');
 
         $this->add_section('Rewrite rules');
@@ -210,27 +210,12 @@ class HtaccessFileCache implements CacheData
 		$modules = ModulesManager::get_activated_modules_map();
 		$eps = AppContext::get_extension_provider_service();
 
-		$this->add_section('UrlUpdater');
-
-        foreach ($modules as $module)
-		{
-			$id = $module->get_id();
-			if ($id == 'UrlUpdater' && $eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
-			{
-				$provider = $eps->get_provider($id);
-				foreach ($provider->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT)->list_mappings() as $mapping)
-				{
-                    $this->add_rewrite_rule($mapping->from(), $mapping->to(), $mapping->options());
-				}
-			}
-		}
-
 		// Generate high priority rewriting rules
 		$first_high_priority_mapping = true;
 		foreach ($modules as $module)
 		{
 			$id = $module->get_id();
-			if ($id !== 'UrlUpdater' && $eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
+			if ($eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
 			{
 				$provider = $eps->get_provider($id);
 				foreach ($provider->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT)->list_mappings() as $mapping)
@@ -265,7 +250,7 @@ class HtaccessFileCache implements CacheData
 			{
 				$this->add_line(str_replace('DIR', $this->general_config->get_site_path(), $rule));
 			}
-			if ($id !== 'UrlUpdater' && $eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
+			if ($eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
 			{
 				$this->add_section($id);
 				$provider = $eps->get_provider($id);
@@ -290,7 +275,7 @@ class HtaccessFileCache implements CacheData
 		foreach ($modules as $module)
 		{
 			$id = $module->get_id();
-			if ($id !== 'UrlUpdater' && $eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
+			if ($eps->provider_exists($id, UrlMappingsExtensionPoint::EXTENSION_POINT))
 			{
 				$provider = $eps->get_provider($id);
 				foreach ($provider->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT)->list_mappings() as $mapping)
