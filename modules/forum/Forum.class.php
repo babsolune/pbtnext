@@ -688,7 +688,7 @@ class Forum
         try {
             $topic_title = PersistenceContext::get_querier()->get_column_value(ForumSetup::$forum_topics_table, 'title', 'WHERE id = :id', array('id' => $idtopic));
         } catch (RowNotFoundException $e) {}
-        
+
         $properties = array('idtopic' => $idtopic, 'question' => $question, 'answers' => implode('|', $answers), 'voter_id' => 0, 'votes' => trim(str_repeat('0|', $nbr_votes)), 'type' => NumberHelper::numeric($type));
         PersistenceContext::get_querier()->insert(PREFIX . "forum_poll", $properties);
         HooksService::execute_hook_action('forum_add_poll', 'forum', array_merge($properties, array('id' => $idtopic, 'title' => $question, 'url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . ($topic_title && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . Url::encode_rewrite($topic_title) : '') . '.php'))));
@@ -783,6 +783,19 @@ class Forum
             }
         }
         return $result;
+    }
+
+    public static function mention_user($matches)
+    {
+        try
+        {
+            $req = PersistenceContext::get_querier()->select_single_row(PREFIX . 'member', ['user_id', 'display_name'], 'WHERE display_name = :name', ['name' => $matches[1]]);
+            return '<a href="'.UserUrlBuilder::profile($req['user_id'])->rel().'" class="offload">@' . $matches[1] . '</a>';
+        }
+        catch(RowNotFoundException $e)
+        {
+            return $matches[0];
+        }
     }
 }
 ?>

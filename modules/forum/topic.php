@@ -388,7 +388,7 @@ while ( $row = $result->fetch() )
 		'ID'                          => $row['id'],
 		'CLASS_COLOR'                 => ($j%2 == 0) ? '' : 2,
 		'FORUM_USER_LOGIN'            => $row['login'],
-		'FORUM_MSG_CONTENT'           => FormatingHelper::second_parse(stripslashes($row['content'])),
+		'FORUM_MSG_CONTENT'           => preg_replace_callback('#@([a-zA-Z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ._-]+)#', 'Forum::mention_user', FormatingHelper::second_parse(stripslashes($row['content']))),
 		'FORUM_USER_EDITOR_LOGIN'     => $row['login_edit'],
 		'FORUM_USER_LEVEL'            => UserService::get_level_class($row['level']),
 		'FORUM_USER_GROUP_COLOR'      => $user_group_color,
