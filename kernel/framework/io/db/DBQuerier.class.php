@@ -129,7 +129,7 @@ class DBQuerier implements SQLQuerier
      * @param string $condition the update condition beginning just after the where clause.
      * For example, <code>"length > 50 and weight < 100"</code>
      * @param string[] $parameters the query_var map
-     * @return mixed[] the row returned
+     * @return array the row returned
      */
     public function select_single_row($table_name, array $columns, $condition, array $parameters = [])
     {
@@ -207,7 +207,7 @@ class DBQuerier implements SQLQuerier
      * @param string $condition the update condition beginning just after the where clause.
      * For example, <code>"length > 50 and weight < 100"</code>
      * @param string[] $parameters the query_var map
-     * @return mixed[] the row returned
+     * @return object the row returned
      */
     public function select_rows($table_name, array $columns, $condition = 'WHERE 1', $parameters = [])
     {

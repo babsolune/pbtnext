@@ -12,7 +12,7 @@
 interface DBConnection
 {
     /**
-     * @param mixed[] $db_connection_data
+     * @param array $db_connection_data
      * @throws DBConnectionException
      * @throws UnexistingDatabaseException
      */
@@ -21,7 +21,7 @@ interface DBConnection
     function disconnect();
 
     /**
-     * @return the database link (mysql resource, pdo object, ... depends of the database)
+     * The database link (mysql resource, pdo object, ... depends of the database)
      */
     function get_link();
 
