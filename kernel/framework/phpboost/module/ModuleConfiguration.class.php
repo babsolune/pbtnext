@@ -5,7 +5,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 01 09
+ * @version     PHPBoost 6.1 - last update: 2026 03 03
  * @since       PHPBoost 3.0 - 2009 12 12
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -19,6 +19,7 @@ class ModuleConfiguration
 	private $addon_type;
 	private $module_id;
 	private $name;
+	private $genre;
 	private $description;
 	private $author;
 	private $author_email;
@@ -59,6 +60,11 @@ class ModuleConfiguration
 	public function get_name()
 	{
 		return $this->name;
+	}
+
+	public function get_genre()
+	{
+		return $this->genre;
 	}
 
 	public function get_description()
@@ -295,9 +301,10 @@ class ModuleConfiguration
 	{
 		$desc = @parse_ini_file($desc_ini_file);
 		$this->check_parse_ini_file($desc, $desc_ini_file);
-		$this->name = isset($desc['name']) ? $desc['name'] : '';
-		$this->description = isset($desc['desc']) ? $desc['desc'] : '';
-		$this->documentation = isset($desc['documentation']) && !empty($desc['documentation']) ? $desc['documentation'] : '';
+		$this->name          = isset($desc['name']) ? $desc['name'] : '';
+		$this->genre         = isset($desc['genre']) ? $desc['genre'] : '';
+		$this->description   = isset($desc['desc']) ? $desc['desc'] : '';
+		$this->documentation = isset($desc['doc']) && !empty($desc['doc']) ? $desc['doc'] : '';
 	}
 
 	private function check_parse_ini_file($parse_result, $ini_file)
@@ -313,6 +320,7 @@ class ModuleConfiguration
 		return array(
 			'addon_type'             => $this->addon_type,
 			'name'                   => $this->name,
+			'genre'                  => $this->genre,
 			'description'            => $this->description,
 			'documentation'          => $this->documentation,
 			'author'                 => $this->author,

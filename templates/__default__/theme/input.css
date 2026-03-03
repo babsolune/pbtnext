@@ -30,6 +30,11 @@
 
 .button.image img { vertical-align: sub; }
 
+.button-mini {
+    padding: 0.309em;
+    margin: 0;
+}
+
 [disabled],
 [readonly] { cursor: not-allowed; }
 
