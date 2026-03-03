@@ -182,9 +182,15 @@ class AdminModulesManagementController extends DefaultAdminController
         {
             foreach ($installed_modules as $module)
             {
-                if ($request->get_string('delete-' . $module->get_id(), ''))
+                if ($request->get_string('uninstall-' . $module->get_id(), ''))
                 {
-                    AppContext::get_response()->redirect(AdminModulesUrlBuilder::delete_module($module->get_id()));
+                    ModulesManager::uninstall_module($module->get_id(), false);
+                    AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), StringVars::replace_vars($this->lang['addon.module.warning.uninstall'], ['module' => $module->get_configuration()->get_name()]));
+                }
+                elseif ($request->get_string('delete-' . $module->get_id(), ''))
+                {
+                    ModulesManager::uninstall_module($module->get_id(), true);
+                    AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), StringVars::replace_vars($this->lang['addon.module.warning.delete'], ['module' => $module->get_configuration()->get_name()]));
                 }
                 elseif ($request->get_string('enable-' . $module->get_id(), ''))
                 {

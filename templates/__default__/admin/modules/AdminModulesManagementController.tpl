@@ -50,7 +50,7 @@
                                                         <i class="fa {genres.modules.FA_ICON}" aria-hidden="true"></i>
                                                     # ELSE #
                                                         # IF genres.modules.C_HEXA_ICON #
-                                                            <span class="hexa-icon bigger">{modules_installed.HEXA_ICON}</span>
+                                                            <span class="hexa-icon bigger">{genres.modules.HEXA_ICON}</span>
                                                         # ELSE #
                                                             <i class="far fa-fw fa-puzzle-piece" aria-hidden="true"></i>
                                                         # ENDIF #
@@ -58,8 +58,8 @@
                                                 # ENDIF #
                                                 {genres.modules.MODULE_NAME}
                                             </div>
-                                            <span class="modal-button --infos-module-{genres.modules.MODULE_NUMBER}"><i class="far fa-exclamation-triangle"></i></span>
-                                            <div id="infos-module-{genres.modules.MODULE_NUMBER}" class="modal">
+                                            <span class="modal-button --infos-module-{genres.modules.MODULE_NUMBER}" aria-label="{@common.informations}"><i class="far fa-circle-question" aria-hidden="true"></i></span>
+                                            <div id="infos-module-{genres.modules.MODULE_NUMBER}" class="modal modal-half">
                                                 <div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
                                                 <div class="modal-content">
                                                     <span class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
@@ -74,7 +74,7 @@
                                                                             <i class="fa {genres.modules.FA_ICON}" aria-hidden="true"></i>
                                                                         # ELSE #
                                                                             # IF genres.modules.C_HEXA_ICON #
-                                                                                <span class="hexa-icon bigger">{modules_installed.HEXA_ICON}</span>
+                                                                                <span class="hexa-icon bigger">{genres.modules.HEXA_ICON}</span>
                                                                             # ELSE #
                                                                                 <i class="far fa-fw fa-puzzle-piece" aria-hidden="true"></i>
                                                                             # ENDIF #
@@ -82,6 +82,7 @@
                                                                     # ENDIF #
                                                                     {genres.modules.MODULE_NAME}
                                                                 </h2>
+                                                                <button onclick="window.open('{genres.modules.U_DOCUMENTATION}', '_blank', 'noopener'); return false;" class="button button-mini bgc submit" aria-label="{@addon.modules.documentation}"><i class="fa fa-fw fa-book" aria-hidden="true"></i></button></a>
                                                             </li>
                                                             <li class="li-stretch">
                                                                 <span class="text-strong">{@common.author} :</span>
@@ -132,14 +133,13 @@
                                     <td>
                                         # IF genres.modules.C_COMPATIBLE #
                                             # IF genres.modules.C_IS_ACTIVATED #
-                                                <button type="submit" class="button button-mini bgc warning" name="disable-{genres.modules.MODULE_ID}" aria-label="{@common.disable}" value="true"><i class="far fa-fw fa-eye-slash" aria-hidden="true"></i></button>
+                                                <button type="submit" class="button button-mini bgc-full notice" name="disable-{genres.modules.MODULE_ID}" aria-label="{@H|addon.module.disable}" value="true"><i class="far fa-fw fa-eye-slash" aria-hidden="true"></i></button>
                                             # ELSE #
-                                                <button type="submit" class="button button-mini bgc success" name="enable-{genres.modules.MODULE_ID}" aria-label="{@common.enable}" value="true"><i class="far fa-fw fa-eye" aria-hidden="true"></i></button>
+                                                <button type="submit" class="button button-mini bgc-full success" name="enable-{genres.modules.MODULE_ID}" aria-label="{@common.enable}" value="true"><i class="far fa-fw fa-eye" aria-hidden="true"></i></button>
                                             # ENDIF #
                                         # ENDIF #
-                                        <button type="submit" class="button button-mini bgc error" name="delete-{genres.modules.MODULE_ID}" aria-label="{@addon.uninstall}" value="true"><i class="far fa-fw fa-trash-can" aria-hidden="true"></i></button>
-                                        <button type="submit" class="button button-mini bgc error" name="delete-{genres.modules.MODULE_ID}" aria-label="{@addon.uninstall}" value="true"><i class="far fa-fw fa-trash-can" aria-hidden="true"></i></button>
-                                        <button onclick="window.open('{genres.modules.U_DOCUMENTATION}', '_blank', 'noopener'); return false;" class="button button-mini bgc submit" aria-label="{@addon.modules.documentation}"><i class="fa fa-fw fa-book" aria-hidden="true"></i></button></a>
+                                        <button type="submit" class="button button-mini bgc-full warning" name="uninstall-{genres.modules.MODULE_ID}" aria-label="{@H|addon.module.uninstall}" value="true"><i class="fa fa-fw fa-ban" aria-hidden="true"></i></button>
+                                        <button type="submit" class="button button-mini bgc-full error" name="delete-{genres.modules.MODULE_ID}" aria-label="{@H|addon.module.delete}" value="true"><i class="far fa-fw fa-trash-can" aria-hidden="true"></i></button>
                                     </td>
                                 </tr>
                             # END genres.modules #
@@ -163,9 +163,10 @@
                         <span aria-label="{@addon.modules.select.all}">&nbsp;</span>
                     </label>
                 </li>
-                <li class="addon-menu-item"><button type="submit" name="activate-selected-modules" value="true" class="button submit" id="activate-all-button">{@addon.multiple.enable}</button></li>
-                <li class="addon-menu-item"><button type="submit" name="deactivate-selected-modules" value="true" class="button submit" id="deactivate-all-button">{@addon.multiple.disable}</button></li>
-                <li class="addon-menu-item"><button type="submit" name="delete-selected-modules" value="true" class="button alt-submit" id="delete-all-button">{@addon.multiple.uninstall}</button></li>
+                <li class="addon-menu-item"><button type="submit" name="activate-selected-modules" value="true" class="button bgc-full success" id="activate-all-button">{@addon.multiple.enable}</button></li>
+                <li class="addon-menu-item"><button type="submit" name="deactivate-selected-modules" value="true" class="button bgc-full notice" id="deactivate-all-button">{@addon.multiple.disable}</button></li>
+                <li class="addon-menu-item"><button type="submit" name="uninstall-selected-modules" value="true" class="button bgc-full warning" id="uninstall-all-button">{@addon.multiple.uninstall}</button></li>
+                <li class="addon-menu-item"><button type="submit" name="delete-selected-modules" value="true" class="button bgc-full error" id="delete-all-button">{@addon.multiple.delete}</button></li>
             </ul>
         </div>
 	# ENDIF #

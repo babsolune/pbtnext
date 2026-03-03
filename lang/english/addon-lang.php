@@ -20,6 +20,7 @@
 $lang['addon.multiple.select']     = 'Selection management';
 $lang['addon.multiple.install']    = 'Install selection';
 $lang['addon.multiple.uninstall']  = 'Uninstall selection';
+$lang['addon.multiple.delete']     = 'Delete selection';
 $lang['addon.multiple.enable']     = 'Enable selection';
 $lang['addon.multiple.disable']    = 'Disable selection';
 $lang['addon.multiple.upgrade']    = 'Upgrade selection';
@@ -90,6 +91,14 @@ $lang['addon.modules.drop.multiple'] = 'Delete all modules\'s files';
     // Upgrade
 $lang['addon.modules.upgrade']     = 'Update';
 $lang['addon.modules.upgrade.all'] = 'Update selected modules';
+
+$lang['addon.module.disable']   = '<strong>Disable</strong><br />Data and files will not be deleted';
+$lang['addon.module.uninstall'] = '<strong>Uninstall</strong><br />Data will not be deleted but files will not be deleted';
+$lang['addon.module.delete']    = '<strong>Delete</strong><br />Data and files will be deleted';
+$lang['addon.module.warning.uninstall'] = 'The module <strong>:module</strong> has been uninstalled successfully';
+$lang['addon.module.warning.delete']    = 'The module <strong>:module</strong> has been deleted successfully';
+
+
 
 // Themes
 $lang['addon.themes.directory']       = 'in the <span class ="text-strong pinned question">templates</span> folder';
