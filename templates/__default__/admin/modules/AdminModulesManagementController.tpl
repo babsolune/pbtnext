@@ -40,21 +40,17 @@
                                             </td>
                                         # ENDIF #
                                     # ENDIF #
-                                    <td class="align-left">
+                                    <td class="align-left" id="module-{genres.modules.MODULE_NUMBER}">
                                         <div class="flex-between">
                                             <div class="name">
                                                 # IF genres.modules.C_THUMBNAIL #
                                                     <img src="{genres.modules.THUMBNAIL_URL}" alt="{genres.modules.MODULE_NAME} thumbnail" class="addon-thumbnail" />
+                                                # ELSEIF genres.modules.C_FA_ICON #
+                                                    <i class="fa {genres.modules.FA_ICON}" aria-hidden="true"></i>
+                                                # ELSEIF genres.modules.C_HEXA_ICON #
+                                                    <span class="hexa-icon bigger">{genres.modules.HEXA_ICON}</span>
                                                 # ELSE #
-                                                    # IF genres.modules.C_FA_ICON #
-                                                        <i class="fa {genres.modules.FA_ICON}" aria-hidden="true"></i>
-                                                    # ELSE #
-                                                        # IF genres.modules.C_HEXA_ICON #
-                                                            <span class="hexa-icon bigger">{genres.modules.HEXA_ICON}</span>
-                                                        # ELSE #
-                                                            <i class="far fa-fw fa-puzzle-piece" aria-hidden="true"></i>
-                                                        # ENDIF #
-                                                    # ENDIF #
+                                                    <i class="far fa-fw fa-puzzle-piece" aria-hidden="true"></i>
                                                 # ENDIF #
                                                 {genres.modules.MODULE_NAME}
                                             </div>
@@ -69,16 +65,12 @@
                                                                 <h2>
                                                                     # IF genres.modules.C_THUMBNAIL #
                                                                         <img src="{genres.modules.THUMBNAIL_URL}" alt="{genres.modules.MODULE_NAME} thumbnail" class="addon-thumbnail" />
+                                                                    # ELSEIF genres.modules.C_FA_ICON #
+                                                                        <i class="fa {genres.modules.FA_ICON}" aria-hidden="true"></i>
+                                                                    # ELSEIF genres.modules.C_HEXA_ICON #
+                                                                        <span class="hexa-icon bigger">{genres.modules.HEXA_ICON}</span>
                                                                     # ELSE #
-                                                                        # IF genres.modules.C_FA_ICON #
-                                                                            <i class="fa {genres.modules.FA_ICON}" aria-hidden="true"></i>
-                                                                        # ELSE #
-                                                                            # IF genres.modules.C_HEXA_ICON #
-                                                                                <span class="hexa-icon bigger">{genres.modules.HEXA_ICON}</span>
-                                                                            # ELSE #
-                                                                                <i class="far fa-fw fa-puzzle-piece" aria-hidden="true"></i>
-                                                                            # ENDIF #
-                                                                        # ENDIF #
+                                                                        <i class="far fa-fw fa-puzzle-piece" aria-hidden="true"></i>
                                                                     # ENDIF #
                                                                     {genres.modules.MODULE_NAME}
                                                                 </h2>
@@ -138,7 +130,9 @@
                                                 <button type="submit" class="button button-mini bgc-full success" name="enable-{genres.modules.MODULE_ID}" aria-label="{@common.enable}" value="true"><i class="far fa-fw fa-eye" aria-hidden="true"></i></button>
                                             # ENDIF #
                                         # ENDIF #
-                                        <button type="submit" class="button button-mini bgc-full warning" name="uninstall-{genres.modules.MODULE_ID}" aria-label="{@H|addon.module.uninstall}" value="true"><i class="fa fa-fw fa-ban" aria-hidden="true"></i></button>
+                                        # IF C_IS_LOCALHOST #
+                                            <button type="submit" class="button button-mini bgc-full warning" name="uninstall-{genres.modules.MODULE_ID}" aria-label="{@H|addon.module.uninstall}" value="true"><i class="fa fa-fw fa-ban" aria-hidden="true"></i></button>
+                                        # ENDIF #
                                         <button type="submit" class="button button-mini bgc-full error" name="delete-{genres.modules.MODULE_ID}" aria-label="{@H|addon.module.delete}" value="true"><i class="far fa-fw fa-trash-can" aria-hidden="true"></i></button>
                                     </td>
                                 </tr>
@@ -158,14 +152,16 @@
             <a href="#" class="multiple-select-menu addon-menu-title bgc-full link-color">{@addon.multiple.select}</a>
             <ul class="addon-menu-content">
                 <li class="addon-menu-checkbox mini-checkbox select-all-checkbox bgc-full link-color">
-                    <label class="checkbox" for="delete-all-checkbox">
-                        <input type="checkbox" class="check-all" id="delete-all-checkbox" name="delete-all-checkbox" onclick="multiple_checkbox_check(this.checked, {MODULES_NUMBER}, null, false);" />
+                    <label class="checkbox" for="toggle-all-checkbox">
+                        <input type="checkbox" class="check-all" id="toggle-all-checkbox" name="toggle-all-checkbox" onclick="multiple_checkbox_check(this.checked, {MODULES_NUMBER}, null, false);" />
                         <span aria-label="{@addon.modules.select.all}">&nbsp;</span>
                     </label>
                 </li>
                 <li class="addon-menu-item"><button type="submit" name="activate-selected-modules" value="true" class="button bgc-full success" id="activate-all-button">{@addon.multiple.enable}</button></li>
                 <li class="addon-menu-item"><button type="submit" name="deactivate-selected-modules" value="true" class="button bgc-full notice" id="deactivate-all-button">{@addon.multiple.disable}</button></li>
-                <li class="addon-menu-item"><button type="submit" name="uninstall-selected-modules" value="true" class="button bgc-full warning" id="uninstall-all-button">{@addon.multiple.uninstall}</button></li>
+                # IF C_IS_LOCALHOST #
+                    <li class="addon-menu-item"><button type="submit" name="uninstall-selected-modules" value="true" class="button bgc-full warning" id="uninstall-all-button">{@addon.multiple.uninstall}</button></li>
+                # ENDIF #
                 <li class="addon-menu-item"><button type="submit" name="delete-selected-modules" value="true" class="button bgc-full error" id="delete-all-button">{@addon.multiple.delete}</button></li>
             </ul>
         </div>

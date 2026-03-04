@@ -1,5 +1,7 @@
 # INCLUDE MESSAGE_HELPER_WARNING #
 # INCLUDE MESSAGE_HELPER_SUCCESS #
+
+
 # INCLUDE CONTENT #
 <form action="{REWRITED_SCRIPT}" method="post" class="fieldset-content">
 	<input type="hidden" name="token" value="{TOKEN}">
@@ -34,16 +36,12 @@
 								<li class="li-stretch">
 									# IF modules_not_installed.C_THUMBNAIL #
 										<img class="valign-middle" src="{PATH_TO_ROOT}/{modules_not_installed.MODULE_ID}/{modules_not_installed.MODULE_ID}.png" alt="{modules_not_installed.MODULE_NAME}" />
-									# ELSE #
-										# IF modules_not_installed.C_FA_ICON #
-											<i class="{modules_not_installed.FA_ICON} fa-2x"></i>
-										# ELSE #
-											# IF modules_not_installed.C_HEXA_ICON #
-												<span class="hexa-icon bigger">{modules_not_installed.HEXA_ICON}</span>
-											# ELSE #
-												{@addon.modules.no.icon}
-											# ENDIF #
-										# ENDIF #
+									# ELSEIF modules_not_installed.C_FA_ICON #
+                                        <i class="{modules_not_installed.FA_ICON} fa-2x"></i>
+                                    # ELSEIF modules_not_installed.C_HEXA_ICON #
+                                        <span class="hexa-icon bigger">{modules_not_installed.HEXA_ICON}</span>
+                                    # ELSE #
+                                        {@addon.modules.no.icon}
 									# ENDIF #
 								</li>
 								<li class="li-stretch">
