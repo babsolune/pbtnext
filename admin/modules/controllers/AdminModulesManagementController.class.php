@@ -28,9 +28,18 @@ class AdminModulesManagementController extends DefaultAdminController
 
     private function build_view(): void
     {
-        $phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
+        $phpboost_version  = GeneralConfig::load()->get_phpboost_major_version();
         $installed_modules = ModulesManager::get_installed_modules_map_sorted_by_localized_name();
-        $module_number = 1;
+
+        $module_order = [];
+        $order = 1;
+        foreach ($installed_modules as $module)
+        {
+            $module_order[$module->get_id()] = $order;
+            $order++;
+        }
+
+        $this->view->put('C_IS_LOCALHOST', AppContext::get_request()->get_is_localhost());
 
         $grouped_modules = [];
         foreach ($installed_modules as $module)
@@ -53,7 +62,7 @@ class AdminModulesManagementController extends DefaultAdminController
 
             foreach ($modules as $module)
             {
-                $module_config = $module->get_configuration();
+                $module_config  = $module->get_configuration();
                 $author_email   = $module_config->get_author_email();
                 $author_website = $module_config->get_author_website();
                 $documentation  = $module_config->get_documentation();
@@ -61,36 +70,34 @@ class AdminModulesManagementController extends DefaultAdminController
                 $hexa_icon      = $module_config->get_hexa_icon();
                 $thumbnail      = new File(PATH_TO_ROOT . '/' . $module->get_id() . '/' . $module->get_id() . '.png');
 
-                    $this->view->assign_block_vars('genres.modules', [
-                        'C_THUMBNAIL'          => $thumbnail->exists(),
-                        'C_FA_ICON'            => !empty($fa_icon),
-                        'C_HEXA_ICON'          => !empty($hexa_icon),
-                        'C_AUTHOR_EMAIL'       => !empty($author_email),
-                        'C_AUTHOR_WEBSITE'     => !empty($author_website),
-                        'C_COMPATIBLE'         => $module_config->get_addon_type() === 'module' && $module_config->get_compatibility() === $phpboost_version,
-                        'C_COMPATIBLE_ADDON'   => $module_config->get_addon_type() === 'module',
-                        'C_COMPATIBLE_VERSION' => $module_config->get_compatibility() === $phpboost_version,
-                        'C_IS_ACTIVATED'       => $module->is_activated(),
-                        'C_DOCUMENTATION'      => !empty($documentation),
+                $this->view->assign_block_vars('genres.modules', [
+                    'C_THUMBNAIL'          => $thumbnail->exists(),
+                    'C_FA_ICON'            => !empty($fa_icon),
+                    'C_HEXA_ICON'          => !empty($hexa_icon),
+                    'C_AUTHOR_EMAIL'       => !empty($author_email),
+                    'C_AUTHOR_WEBSITE'     => !empty($author_website),
+                    'C_COMPATIBLE'         => $module_config->get_addon_type() === 'module' && $module_config->get_compatibility() === $phpboost_version,
+                    'C_COMPATIBLE_ADDON'   => $module_config->get_addon_type() === 'module',
+                    'C_COMPATIBLE_VERSION' => $module_config->get_compatibility() === $phpboost_version,
+                    'C_IS_ACTIVATED'       => $module->is_activated(),
+                    'C_DOCUMENTATION'      => !empty($documentation),
 
-                        'MODULE_NUMBER'  => $module_number,
-                        'MODULE_ID'      => $module->get_id(),
-                        'MODULE_NAME'    => TextHelper::ucfirst($module_config->get_name()),
-                        'CREATION_DATE'  => $module_config->get_creation_date(),
-                        'LAST_UPDATE'    => $module_config->get_last_update(),
-                        'VERSION'        => $module->get_installed_version(),
-                        'AUTHOR'         => $module_config->get_author(),
-                        'AUTHOR_EMAIL'   => $author_email,
-                        'AUTHOR_WEBSITE' => $author_website,
-                        'DESCRIPTION'    => $module_config->get_description(),
-                        'COMPATIBILITY'  => $module_config->get_compatibility(),
-                        'PHP_VERSION'    => $module_config->get_php_version(),
-                        'FA_ICON'        => $fa_icon,
-                        'HEXA_ICON'      => $hexa_icon,
-                        'U_DOCUMENTATION' => $documentation
-                    ]);
-
-                $module_number++;
+                    'MODULE_NUMBER'  => $module_order[$module->get_id()],
+                    'MODULE_ID'      => $module->get_id(),
+                    'MODULE_NAME'    => TextHelper::ucfirst($module_config->get_name()),
+                    'CREATION_DATE'  => $module_config->get_creation_date(),
+                    'LAST_UPDATE'    => $module_config->get_last_update(),
+                    'VERSION'        => $module->get_installed_version(),
+                    'AUTHOR'         => $module_config->get_author(),
+                    'AUTHOR_EMAIL'   => $author_email,
+                    'AUTHOR_WEBSITE' => $author_website,
+                    'DESCRIPTION'    => $module_config->get_description(),
+                    'COMPATIBILITY'  => $module_config->get_compatibility(),
+                    'PHP_VERSION'    => $module_config->get_php_version(),
+                    'FA_ICON'        => $fa_icon,
+                    'HEXA_ICON'      => $hexa_icon,
+                    'U_DOCUMENTATION' => $documentation
+                ]);
             }
         }
 
