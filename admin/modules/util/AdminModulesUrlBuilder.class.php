@@ -39,9 +39,9 @@ class AdminModulesUrlBuilder
 	/*
 	 * @ return Url
 	 */
-	public static function delete_module($id)
+	public static function delete_module($id, $level = 0)
 	{
-		return DispatchManager::get_url(self::$dispatcher, $id . '/delete/');
+		return DispatchManager::get_url(self::$dispatcher, $id . '/delete/' . $level);
 	}
 }
 ?>

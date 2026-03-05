@@ -113,6 +113,9 @@ $lang['warning.process.error']   = 'An error occurred during the operation';
 $lang['warning.confirm.delete']          = 'Do you really want to delete this item?';
 $lang['warning.confirm.delete.elements'] = 'Do you really want to delete these items?';
 
+$lang['warning.confirm.uninstall']          = 'Do you really want to uninstall this item?';
+$lang['warning.confirm.uninstall.elements'] = 'Do you really want to uninstall these items?';
+
 $lang['warning.success.config']          = 'The configuration has been modified';
 $lang['warning.success.position.update'] = 'The position of the items has been updated';
 

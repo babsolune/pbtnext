@@ -2,17 +2,32 @@
 <script>
 // Delete confirmation
 	function update_data_confirmations() {
-		jQuery('[data-confirmation]').each(function() {
-			data_confirmation = jQuery(this).attr('data-confirmation');
-			if (data_confirmation == 'delete-element')
-				var message = ${escapejs(@warning.confirm.delete)};
-			else if (data_confirmation == 'delete-elements')
-				var message = ${escapejs(@warning.confirm.delete.elements)};
-			else
-				var message = data_confirmation;
-			this.onclick = function () { return confirm(message); }
-		});
-	}
+        jQuery('[data-confirmation]').each(function() {
+            var data_confirmation = jQuery(this).attr('data-confirmation');
+            var message;
+
+            switch (data_confirmation) {
+                case 'delete-element':
+                    message = ${escapejs(@warning.confirm.delete)};
+                    break;
+                case 'delete-elements':
+                    message = ${escapejs(@warning.confirm.delete.elements)};
+                    break;
+                case 'uninstall-element':
+                    message = ${escapejs(@warning.confirm.uninstall)};
+                    break;
+                case 'uninstall-elements':
+                    message = ${escapejs(@warning.confirm.uninstall.elements)};
+                    break;
+                default:
+                    message = data_confirmation;
+            }
+
+            this.onclick = function () {
+                return confirm(message);
+            };
+        });
+    }
 
 // lightbox
 	jQuery(document).ready(function() {

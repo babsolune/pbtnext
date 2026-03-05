@@ -113,6 +113,9 @@ $lang['warning.process.error']   = 'Une erreur s\'est produite lors de l\'opéra
 $lang['warning.confirm.delete']          = 'Voulez-vous vraiment supprimer cet élément ?';
 $lang['warning.confirm.delete.elements'] = 'Voulez-vous vraiment supprimer ces éléments ?';
 
+$lang['warning.confirm.uninstall']          = 'Voulez-vous vraiment désinstaller cet élément ?';
+$lang['warning.confirm.uninstall.elements'] = 'Voulez-vous vraiment désinstaller ces éléments ?';
+
 $lang['warning.success.config']          = 'La configuration a été modifiée';
 $lang['warning.success.position.update'] = 'Les éléments ont été repositionnés';
 

@@ -131,9 +131,9 @@
                                             # ENDIF #
                                         # ENDIF #
                                         # IF C_IS_LOCALHOST #
-                                            <button type="submit" class="button button-mini bgc-full warning" name="uninstall-{genres.modules.MODULE_ID}" aria-label="{@H|addon.module.uninstall}" value="true"><i class="fa fa-fw fa-ban" aria-hidden="true"></i></button>
+                                            <button type="submit" class="button button-mini bgc-full warning" name="uninstall-{genres.modules.MODULE_ID}" aria-label="{@H|addon.module.uninstall}" value="true" data-confirmation="uninstall-element"><i class="fa fa-fw fa-ban" aria-hidden="true"></i></button>
                                         # ENDIF #
-                                        <button type="submit" class="button button-mini bgc-full error" name="delete-{genres.modules.MODULE_ID}" aria-label="{@H|addon.module.delete}" value="true"><i class="far fa-fw fa-trash-can" aria-hidden="true"></i></button>
+                                        <button type="submit" class="button button-mini bgc-full error" name="delete-{genres.modules.MODULE_ID}" aria-label="{@H|addon.module.delete}" value="true" data-confirmation="delete-element"><i class="far fa-fw fa-trash-can" aria-hidden="true"></i></button>
                                     </td>
                                 </tr>
                             # END genres.modules #
@@ -160,9 +160,9 @@
                 <li class="addon-menu-item"><button type="submit" name="activate-selected-modules" value="true" class="button bgc-full success" id="activate-all-button">{@addon.multiple.enable}</button></li>
                 <li class="addon-menu-item"><button type="submit" name="deactivate-selected-modules" value="true" class="button bgc-full notice" id="deactivate-all-button">{@addon.multiple.disable}</button></li>
                 # IF C_IS_LOCALHOST #
-                    <li class="addon-menu-item"><button type="submit" name="uninstall-selected-modules" value="true" class="button bgc-full warning" id="uninstall-all-button">{@addon.multiple.uninstall}</button></li>
+                    <li class="addon-menu-item"><button type="submit" name="uninstall-selected-modules" value="true" class="button bgc-full warning" id="uninstall-all-button" data-confirmation="uninstall-elements">{@addon.multiple.uninstall}</button></li>
                 # ENDIF #
-                <li class="addon-menu-item"><button type="submit" name="delete-selected-modules" value="true" class="button bgc-full error" id="delete-all-button">{@addon.multiple.delete}</button></li>
+                <li class="addon-menu-item"><button type="submit" name="delete-selected-modules" value="true" class="button bgc-full error" id="delete-all-button" data-confirmation="delete-elements">{@addon.multiple.delete}</button></li>
             </ul>
         </div>
 	# ENDIF #

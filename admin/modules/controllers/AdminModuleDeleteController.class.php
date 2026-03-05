@@ -16,10 +16,12 @@ class AdminModuleDeleteController extends DefaultAdminController
 	private $multiple = false;
 	private $error = '';
 	private $file;
+	private $level;
 
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->module_id = $request->get_value('id', null);
+		$this->level     = $request->get_value('level', null);
 
 		if ($this->module_id == 'delete_multiple')
 		{
@@ -34,20 +36,12 @@ class AdminModuleDeleteController extends DefaultAdminController
 
 		if ($this->module_exists())
 		{
-			$this->build_form();
+            $this->delete_module($this->level);
 
-			if ($this->submit_button->has_been_submited() && $this->form->validate())
-			{
-				$drop_files = $this->form->get_value('drop_files')->get_raw_value();
-				$this->delete_module($drop_files);
-
-				if (!$this->error)
-					AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), $this->lang['warning.process.success']);
-				else
-					$this->view->put('MESSAGE_HELPER', $this->error);
-			}
-			$this->view->put('CONTENT', $this->form->display());
-			return new AdminModulesDisplayResponse($this->view, $this->multiple ? $this->lang['addon.modules.delete.multiple'] : $this->lang['addon.modules.delete']);
+            if (!$this->error)
+                AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), $this->lang['warning.process.success']);
+            else
+                $this->view->put('MESSAGE_HELPER', $this->error);
 		}
 		else
 		{
@@ -80,26 +74,26 @@ class AdminModuleDeleteController extends DefaultAdminController
 			return ModulesManager::is_module_installed($this->module_id);
 	}
 
-	private function build_form()
-	{
-		$form = new HTMLForm(self::class);
+	// private function build_form()
+	// {
+	// 	$form = new HTMLForm(self::class);
 
-		$fieldset = new FormFieldsetHTML('delete_module', $this->multiple ? $this->lang['addon.modules.delete.multiple'] : $this->lang['addon.modules.delete']);
-		$form->add_fieldset($fieldset);
+	// 	$fieldset = new FormFieldsetHTML('delete_module', $this->multiple ? $this->lang['addon.modules.delete.multiple'] : $this->lang['addon.modules.delete']);
+	// 	$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldRadioChoice('drop_files', $this->multiple ? $this->lang['addon.modules.drop.multiple'] : $this->lang['addon.modules.drop'], '0',
-			array(
-				new FormFieldRadioChoiceOption($this->lang['common.yes'], '1'),
-				new FormFieldRadioChoiceOption($this->lang['common.no'], '0')
-			),
-			array('class' => 'inline-radio custom-radio')
-		));
+	// 	$fieldset->add_field(new FormFieldRadioChoice('drop_files', $this->multiple ? $this->lang['addon.modules.drop.multiple'] : $this->lang['addon.modules.drop'], '0',
+	// 		array(
+	// 			new FormFieldRadioChoiceOption($this->lang['common.yes'], '1'),
+	// 			new FormFieldRadioChoiceOption($this->lang['common.no'], '0')
+	// 		),
+	// 		array('class' => 'inline-radio custom-radio')
+	// 	));
 
-		$this->submit_button = new FormButtonDefaultSubmit();
-		$form->add_button($this->submit_button);
+	// 	$this->submit_button = new FormButtonDefaultSubmit();
+	// 	$form->add_button($this->submit_button);
 
-		$this->form = $form;
-	}
+	// 	$this->form = $form;
+	// }
 
 	private function delete_module($drop_files)
 	{
@@ -110,7 +104,12 @@ class AdminModuleDeleteController extends DefaultAdminController
 				$module = ModulesManager::get_module($id);
 				$this->error_check(ModulesManager::uninstall_module($id, $drop_files));
 				if (!$this->error)
-					HooksService::execute_hook_typed_action('uninstall', 'module', $id, array_merge(array('title' => $module->get_configuration()->get_name(), $module->get_configuration()->get_properties())));
+                {
+                    if ($drop_files)
+                        HooksService::execute_hook_action('delete', $id, array_merge(['title' => $module->get_configuration()->get_name(), $module->get_configuration()->get_properties()]));
+                    else
+                        HooksService::execute_hook_typed_action('uninstall', 'module', $id, array_merge(['title' => $module->get_configuration()->get_name(), $module->get_configuration()->get_properties()]));
+                }
 			}
 			$this->file->delete();
 		}
@@ -119,7 +118,12 @@ class AdminModuleDeleteController extends DefaultAdminController
 			$module = ModulesManager::get_module($this->module_id);
 			$this->error_check(ModulesManager::uninstall_module($this->module_id, $drop_files));
 			if (!$this->error)
-				HooksService::execute_hook_typed_action('uninstall', 'module', $this->module_id, array_merge(array('title' => $module->get_configuration()->get_name(), $module->get_configuration()->get_properties())));
+            {
+                if ($drop_files)
+                    HooksService::execute_hook_action('delete', $this->module_id, array_merge(['title' => $module->get_configuration()->get_name(), $module->get_configuration()->get_properties()]));
+                else
+                    HooksService::execute_hook_typed_action('uninstall', 'module', $this->module_id, array_merge(['title' => $module->get_configuration()->get_name(), $module->get_configuration()->get_properties()]));
+            }
 		}
 	}
 

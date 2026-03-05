@@ -62,6 +62,9 @@ class AdminModulesManagementController extends DefaultAdminController
 
             foreach ($modules as $module)
             {
+                if ($module->get_id() == 'BBCode' || $module->get_id() == 'qaptcha')
+                    continue;
+
                 $module_config  = $module->get_configuration();
                 $author_email   = $module_config->get_author_email();
                 $author_website = $module_config->get_author_website();
@@ -113,7 +116,7 @@ class AdminModulesManagementController extends DefaultAdminController
         $installed_modules = ModulesManager::get_installed_modules_map_sorted_by_localized_name();
         $errors = [];
 
-        if ($request->get_string('delete-selected-modules', false))
+        if ($request->get_string('delete-selected-modules', false)) // Multiple deletion
         {
             $module_ids = [];
             $module_number = 1;
@@ -127,25 +130,49 @@ class AdminModulesManagementController extends DefaultAdminController
                 $module_number++;
             }
 
-            $number_ids = count($module_ids);
-            if ($number_ids > 1)
+			$number_ids = count($module_ids);
+			if ($number_ids > 1)
+			{
+				$temporary_file = PATH_TO_ROOT . '/cache/modules_to_delete.txt';
+				$file = new File($temporary_file);
+				$file->write(implode(',', $module_ids));
+				$id = 'delete_multiple';
+			}
+			else
+				$id = $number_ids ? $module_ids[0] : '';
+
+			if ($number_ids)
+				AppContext::get_response()->redirect(AdminModulesUrlBuilder::delete_module($id, 1));
+        }
+        elseif ($request->get_string('uninstall-selected-modules', false)) // Multiple uninstallation
+        {
+            $module_ids = [];
+            $module_number = 1;
+
+            foreach ($installed_modules as $module)
             {
-                $temporary_file = PATH_TO_ROOT . '/cache/modules_to_delete.txt';
-                $file = new File($temporary_file);
-                $file->write(implode(',', $module_ids));
-                $id = 'delete_multiple';
-            }
-            else
-            {
-                $id = $number_ids ? $module_ids[0] : '';
+                if ($request->get_value('delete-checkbox-' . $module_number, 'off') === 'on')
+                {
+                    $module_ids[] = $module->get_id();
+                }
+                $module_number++;
             }
 
-            if ($number_ids)
-            {
-                AppContext::get_response()->redirect(AdminModulesUrlBuilder::delete_module($id));
-            }
+			$number_ids = count($module_ids);
+			if ($number_ids > 1)
+			{
+				$temporary_file = PATH_TO_ROOT . '/cache/modules_to_delete.txt';
+				$file = new File($temporary_file);
+				$file->write(implode(',', $module_ids));
+				$id = 'delete_multiple';
+			}
+			else
+				$id = $number_ids ? $module_ids[0] : '';
+
+			if ($number_ids)
+				AppContext::get_response()->redirect(AdminModulesUrlBuilder::delete_module($id, 0));
         }
-        elseif ($request->get_string('activate-selected-modules', false) || $request->get_string('deactivate-selected-modules', false))
+        elseif ($request->get_string('activate-selected-modules', false) || $request->get_string('deactivate-selected-modules', false)) // Multiple activation/deactivation
         {
             $activated = 0;
             if ($request->get_string('activate-selected-modules', false))
@@ -191,13 +218,11 @@ class AdminModulesManagementController extends DefaultAdminController
             {
                 if ($request->get_string('uninstall-' . $module->get_id(), ''))
                 {
-                    ModulesManager::uninstall_module($module->get_id(), false);
-                    AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), StringVars::replace_vars($this->lang['addon.module.warning.uninstall'], ['module' => $module->get_configuration()->get_name()]));
+                    AppContext::get_response()->redirect(AdminModulesUrlBuilder::delete_module($module->get_id(), 0));
                 }
                 elseif ($request->get_string('delete-' . $module->get_id(), ''))
                 {
-                    ModulesManager::uninstall_module($module->get_id(), true);
-                    AppContext::get_response()->redirect(AdminModulesUrlBuilder::list_installed_modules(), StringVars::replace_vars($this->lang['addon.module.warning.delete'], ['module' => $module->get_configuration()->get_name()]));
+                    AppContext::get_response()->redirect(AdminModulesUrlBuilder::delete_module($module->get_id(), 1));
                 }
                 elseif ($request->get_string('enable-' . $module->get_id(), ''))
                 {
