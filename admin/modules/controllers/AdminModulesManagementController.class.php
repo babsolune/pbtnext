@@ -31,6 +31,8 @@ class AdminModulesManagementController extends DefaultAdminController
         $phpboost_version  = GeneralConfig::load()->get_phpboost_major_version();
         $installed_modules = ModulesManager::get_installed_modules_map_sorted_by_localized_name();
 
+        $this->view->put('C_IS_LOCALHOST', AppContext::get_request()->get_is_localhost());
+
         $module_order = [];
         $order = 1;
         foreach ($installed_modules as $module)
@@ -39,28 +41,7 @@ class AdminModulesManagementController extends DefaultAdminController
             $order++;
         }
 
-        $this->view->put('C_IS_LOCALHOST', AppContext::get_request()->get_is_localhost());
-
-        $grouped_modules = [];
-        foreach ($installed_modules as $module)
-        {
-            $genre = $module->get_configuration()->get_genre();
-            if (!isset($grouped_modules[$genre]))
-            {
-                $grouped_modules[$genre] = [];
-            }
-            $grouped_modules[$genre][] = $module;
-        }
-
-        ksort($grouped_modules);
-
-        foreach ($grouped_modules as $genre => $modules)
-        {
-            $this->view->assign_block_vars('genres', [
-                'GENRE_NAME' => $genre
-            ]);
-
-            foreach ($modules as $module)
+            foreach ($installed_modules as $module)
             {
                 if ($module->get_id() == 'BBCode' || $module->get_id() == 'qaptcha')
                     continue;
@@ -73,7 +54,7 @@ class AdminModulesManagementController extends DefaultAdminController
                 $hexa_icon      = $module_config->get_hexa_icon();
                 $thumbnail      = new File(PATH_TO_ROOT . '/' . $module->get_id() . '/' . $module->get_id() . '.png');
 
-                $this->view->assign_block_vars('genres.modules', [
+                $this->view->assign_block_vars('installed_modules', [
                     'C_THUMBNAIL'          => $thumbnail->exists(),
                     'C_FA_ICON'            => !empty($fa_icon),
                     'C_HEXA_ICON'          => !empty($hexa_icon),
@@ -87,6 +68,7 @@ class AdminModulesManagementController extends DefaultAdminController
 
                     'MODULE_NUMBER'  => $module_order[$module->get_id()],
                     'MODULE_ID'      => $module->get_id(),
+                    'GENRE_NAME'     => $module_config->get_genre(),
                     'MODULE_NAME'    => TextHelper::ucfirst($module_config->get_name()),
                     'CREATION_DATE'  => $module_config->get_creation_date(),
                     'LAST_UPDATE'    => $module_config->get_last_update(),
@@ -102,7 +84,7 @@ class AdminModulesManagementController extends DefaultAdminController
                     'U_DOCUMENTATION' => $documentation
                 ]);
             }
-        }
+        // }
 
         $installed_modules_number = count($installed_modules);
         $this->view->put_all([

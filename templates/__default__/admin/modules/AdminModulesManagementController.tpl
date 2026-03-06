@@ -10,137 +10,111 @@
 <form action="{REWRITED_SCRIPT}" method="post">
 	<section id="installed-modules-container">
         <header class="legend">{@addon.modules.installed}</header>
-        <div class="cell-flex cell-columns-2">
-            # START genres #
-                <div class="responsive-table">
-                    <table class="table">
-                        <caption>{genres.GENRE_NAME}</caption>
-                        <thead>
-                            <tr>
-                                # IF C_SEVERAL_MODULES_INSTALLED #
-                                    <th></th>
+        <div class="cell-list">
+            <ul class="cell-flex cell-columns-3">
+                # START installed_modules #
+                    <li class="li-stretch addon-row addon# IF NOT installed_modules.C_IS_ACTIVATED # disabled-addon# ENDIF ## IF NOT installed_modules.C_COMPATIBLE # not-compatible error# ENDIF #">
+                        <div class="align-left" id="module-{installed_modules.MODULE_NUMBER}">
+                            # IF C_SEVERAL_MODULES_INSTALLED #
+                                # IF installed_modules.C_COMPATIBLE #
+                                    <label class="checkbox" for="multiple-checkbox-{installed_modules.MODULE_NUMBER}">
+                                        <input type="checkbox" id="multiple-checkbox-{installed_modules.MODULE_NUMBER}" name="delete-checkbox-{installed_modules.MODULE_NUMBER}"/>
+                                        <span>&nbsp;</span>
+                                    </label>
                                 # ENDIF #
-                                <th>{@common.name}</th>
-                                <th>{@common.version}</th>
-                                <th>{@addon.compatibility}</th>
-                                <th>{@common.status}</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            # START genres.modules #
-                                <tr class="addon-row addon# IF NOT genres.modules.C_IS_ACTIVATED # disabled-addon# ENDIF ## IF NOT genres.modules.C_COMPATIBLE # not-compatible error# ENDIF #">
-                                    # IF C_SEVERAL_MODULES_INSTALLED #
-                                        # IF genres.modules.C_COMPATIBLE #
-                                            <td class="align-center">
-                                                <label class="checkbox" for="multiple-checkbox-{genres.modules.MODULE_NUMBER}">
-                                                    <input type="checkbox" id="multiple-checkbox-{genres.modules.MODULE_NUMBER}" name="delete-checkbox-{genres.modules.MODULE_NUMBER}"/>
-                                                    <span>&nbsp;</span>
-                                                </label>
-                                            </td>
-                                        # ENDIF #
-                                    # ENDIF #
-                                    <td class="align-left" id="module-{genres.modules.MODULE_NUMBER}">
-                                        <div class="flex-between">
-                                            <div class="name">
-                                                # IF genres.modules.C_THUMBNAIL #
-                                                    <img src="{genres.modules.THUMBNAIL_URL}" alt="{genres.modules.MODULE_NAME} thumbnail" class="addon-thumbnail" />
-                                                # ELSEIF genres.modules.C_FA_ICON #
-                                                    <i class="fa {genres.modules.FA_ICON}" aria-hidden="true"></i>
-                                                # ELSEIF genres.modules.C_HEXA_ICON #
-                                                    <span class="hexa-icon bigger">{genres.modules.HEXA_ICON}</span>
-                                                # ELSE #
-                                                    <i class="far fa-fw fa-puzzle-piece" aria-hidden="true"></i>
-                                                # ENDIF #
-                                                {genres.modules.MODULE_NAME}
-                                            </div>
-                                            <span class="modal-button --infos-module-{genres.modules.MODULE_NUMBER}" aria-label="{@common.informations}"><i class="far fa-circle-question" aria-hidden="true"></i></span>
-                                            <div id="infos-module-{genres.modules.MODULE_NUMBER}" class="modal modal-half">
-                                                <div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
-                                                <div class="modal-content">
-                                                    <span class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
-                                                    <div class="cell-list">
-                                                        <ul>
-                                                            <li class="li-stretch">
-                                                                <h2>
-                                                                    # IF genres.modules.C_THUMBNAIL #
-                                                                        <img src="{genres.modules.THUMBNAIL_URL}" alt="{genres.modules.MODULE_NAME} thumbnail" class="addon-thumbnail" />
-                                                                    # ELSEIF genres.modules.C_FA_ICON #
-                                                                        <i class="fa {genres.modules.FA_ICON}" aria-hidden="true"></i>
-                                                                    # ELSEIF genres.modules.C_HEXA_ICON #
-                                                                        <span class="hexa-icon bigger">{genres.modules.HEXA_ICON}</span>
-                                                                    # ELSE #
-                                                                        <i class="far fa-fw fa-puzzle-piece" aria-hidden="true"></i>
-                                                                    # ENDIF #
-                                                                    {genres.modules.MODULE_NAME}
-                                                                </h2>
-                                                                <button onclick="window.open('{genres.modules.U_DOCUMENTATION}', '_blank', 'noopener'); return false;" class="button button-mini bgc submit" aria-label="{@addon.modules.documentation}"><i class="fa fa-fw fa-book" aria-hidden="true"></i></button></a>
-                                                            </li>
-                                                            <li class="li-stretch">
-                                                                <span class="text-strong">{@common.author} :</span>
-                                                                <span>
-                                                                    {genres.modules.AUTHOR}
-                                                                    # IF genres.modules.C_AUTHOR_EMAIL # <a href="mailto:{genres.modules.AUTHOR_EMAIL}" class="pinned bgc notice" aria-label="{@common.email}"><i class="fa iboost fa-iboost-email fa-fw" aria-hidden="true"></i></a># ENDIF #
-                                                                    # IF genres.modules.C_AUTHOR_WEBSITE # <a href="{genres.modules.AUTHOR_WEBSITE}" class="pinned bgc question" aria-label="{@common.website}"><i class="fa fa-share-square fa-fw" aria-hidden="true"></i></a> # ENDIF #
-                                                                </span>
-                                                            </li>
-                                                            <li class="li-stretch">
-                                                                <span class="text-strong">{@common.creation.date} :</span>
-                                                                {genres.modules.CREATION_DATE}
-                                                            </li>
-                                                            <li class="li-stretch">
-                                                                <span class="text-strong">{@common.last.update} :</span>
-                                                                {genres.modules.LAST_UPDATE}
-                                                            </li>
-                                                            <li>
-                                                                <span class="text-strong">{@common.description} :</span>
-                                                                {genres.modules.DESCRIPTION}
-                                                            </li>
-                                                            <li class="li-stretch">
-                                                                <span class="text-strong">{@addon.modules.php.version} :</span>
-                                                                {genres.modules.PHP_VERSION}
-                                                            </li>
-                                                            # IF NOT genres.modules.C_COMPATIBLE_ADDON #
-                                                                <li class="bgc-full error">{@addon.modules.not.module}</li>
-                                                            # ENDIF #
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>{genres.modules.VERSION}</td>
-                                    <td# IF NOT genres.modules.C_COMPATIBLE_VERSION # class="not-compatible bgc-full error"# ENDIF #>{genres.modules.COMPATIBILITY}</td>
-                                    <td>
-                                        # IF genres.modules.C_COMPATIBLE #
-                                            # IF genres.modules.C_IS_ACTIVATED #
-                                                <span class="success">{@common.enabled}</span>
-                                            # ELSE #
-                                                <span class="warning">{@common.disabled}</span>
+                            # ENDIF #
+                            # IF installed_modules.C_COMPATIBLE #
+                                # IF installed_modules.C_IS_ACTIVATED #
+                                    <span class="success" aria-label="{@common.enabled}"><i class="fa fa-fw fa-check" aria-hidden="true"></i></span>
+                                # ELSE #
+                                    <span class="warning" aria-label="{@common.disabled}"><i class="fa fa-fw fa-times" aria-hidden="true"></i></span>
+                                # ENDIF #
+                            # ELSE #
+                                <span class="error" aria-label="{@addon.not.compatible}"><i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i></span>
+                            # ENDIF #
+                            {installed_modules.MODULE_NAME}
+                        </div>
+                        <div>
+                            <button onclick="return false;" class="button button-mini default modal-button --infos-module-{installed_modules.MODULE_NUMBER}" aria-label="{@common.informations}"><i class="far fa-circle-question" aria-hidden="true"></i></button>
+                            <div id="infos-module-{installed_modules.MODULE_NUMBER}" class="modal modal-half">
+                                <div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
+                                <div class="modal-content">
+                                    <span class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
+                                    <div class="cell-list">
+                                        <ul>
+                                            <li class="li-stretch">
+                                                <h2>
+                                                    # IF installed_modules.C_THUMBNAIL #
+                                                        <img src="{installed_modules.THUMBNAIL_URL}" alt="{installed_modules.MODULE_NAME} thumbnail" class="addon-thumbnail" />
+                                                    # ELSEIF installed_modules.C_FA_ICON #
+                                                        <i class="fa {installed_modules.FA_ICON}" aria-hidden="true"></i>
+                                                    # ELSEIF installed_modules.C_HEXA_ICON #
+                                                        <span class="hexa-icon bigger">{installed_modules.HEXA_ICON}</span>
+                                                    # ELSE #
+                                                        <i class="far fa-fw fa-puzzle-piece" aria-hidden="true"></i>
+                                                    # ENDIF #
+                                                    {installed_modules.MODULE_NAME}
+                                                </h2>
+                                            </li>
+                                            <li class="li-stretch">
+                                                <span class="text-strong">{@common.author} :</span>
+                                                <span>
+                                                    {installed_modules.AUTHOR}
+                                                    # IF installed_modules.C_AUTHOR_EMAIL # <a href="mailto:{installed_modules.AUTHOR_EMAIL}" class="pinned bgc notice" aria-label="{@common.email}"><i class="fa iboost fa-iboost-email fa-fw" aria-hidden="true"></i></a># ENDIF #
+                                                    # IF installed_modules.C_AUTHOR_WEBSITE # <a href="{installed_modules.AUTHOR_WEBSITE}" class="pinned bgc question" aria-label="{@common.website}"><i class="fa fa-share-square fa-fw" aria-hidden="true"></i></a> # ENDIF #
+                                                </span>
+                                            </li>
+                                            <li class="li-stretch">
+                                                <span class="text-strong">{@category.category}</span>
+                                                {installed_modules.GENRE_NAME}
+                                            </li>
+                                            <li class="li-stretch">
+                                                <span class="text-strong">{@common.version}</span>
+                                                {installed_modules.VERSION}
+                                            </li>
+                                            <li class="li-stretch# IF NOT installed_modules.C_COMPATIBLE_VERSION # not-compatible bgc-full error# ENDIF #">
+                                                <span class="text-strong">{@addon.compatibility}</span>
+                                                {installed_modules.COMPATIBILITY}
+                                            </li>
+                                            <li class="li-stretch">
+                                                <span class="text-strong">{@common.creation.date} :</span>
+                                                {installed_modules.CREATION_DATE}
+                                            </li>
+                                            <li class="li-stretch">
+                                                <span class="text-strong">{@common.last.update} :</span>
+                                                {installed_modules.LAST_UPDATE}
+                                            </li>
+                                            <li>
+                                                <span class="text-strong">{@common.description} :</span>
+                                                {installed_modules.DESCRIPTION}
+                                            </li>
+                                            <li class="li-stretch">
+                                                <span class="text-strong">{@addon.modules.php.version} :</span>
+                                                {installed_modules.PHP_VERSION}
+                                            </li>
+                                            # IF NOT installed_modules.C_COMPATIBLE_ADDON #
+                                                <li class="bgc-full error">{@addon.modules.not.module}</li>
                                             # ENDIF #
-                                        # ELSE #
-                                            <span class="error">{@addon.not.compatible}</span>
-                                        # ENDIF #
-                                    </td>
-                                    <td>
-                                        # IF genres.modules.C_COMPATIBLE #
-                                            # IF genres.modules.C_IS_ACTIVATED #
-                                                <button type="submit" class="button button-mini bgc-full notice" name="disable-{genres.modules.MODULE_ID}" aria-label="{@H|addon.module.disable}" value="true"><i class="far fa-fw fa-eye-slash" aria-hidden="true"></i></button>
-                                            # ELSE #
-                                                <button type="submit" class="button button-mini bgc-full success" name="enable-{genres.modules.MODULE_ID}" aria-label="{@common.enable}" value="true"><i class="far fa-fw fa-eye" aria-hidden="true"></i></button>
-                                            # ENDIF #
-                                        # ENDIF #
-                                        # IF C_IS_LOCALHOST #
-                                            <button type="submit" class="button button-mini bgc-full warning" name="uninstall-{genres.modules.MODULE_ID}" aria-label="{@H|addon.module.uninstall}" value="true" data-confirmation="uninstall-element"><i class="fa fa-fw fa-ban" aria-hidden="true"></i></button>
-                                        # ENDIF #
-                                        <button type="submit" class="button button-mini bgc-full error" name="delete-{genres.modules.MODULE_ID}" aria-label="{@H|addon.module.delete}" value="true" data-confirmation="delete-element"><i class="far fa-fw fa-trash-can" aria-hidden="true"></i></button>
-                                    </td>
-                                </tr>
-                            # END genres.modules #
-                        </tbody>
-                    </table>
-                </div>
-            # END genres #
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <button onclick="window.open('{installed_modules.U_DOCUMENTATION}', '_blank', 'noopener'); return false;" class="button button-mini bgc submit" aria-label="{@addon.modules.documentation}"><i class="fa fa-fw fa-book" aria-hidden="true"></i></button></a>
+                            # IF installed_modules.C_COMPATIBLE #
+                                # IF installed_modules.C_IS_ACTIVATED #
+                                    <button type="submit" class="button button-mini bgc-full notice" name="disable-{installed_modules.MODULE_ID}" aria-label="{@H|addon.module.disable}" value="true"><i class="far fa-fw fa-eye-slash" aria-hidden="true"></i></button>
+                                # ELSE #
+                                    <button type="submit" class="button button-mini bgc-full success" name="enable-{installed_modules.MODULE_ID}" aria-label="{@common.enable}" value="true"><i class="far fa-fw fa-eye" aria-hidden="true"></i></button>
+                                # ENDIF #
+                            # ENDIF #
+                            # IF C_IS_LOCALHOST #
+                                <button type="submit" class="button button-mini bgc-full warning" name="uninstall-{installed_modules.MODULE_ID}" aria-label="{@H|addon.module.uninstall}" value="true" data-confirmation="uninstall-element"><i class="fa fa-fw fa-ban" aria-hidden="true"></i></button>
+                            # ENDIF #
+                            <button type="submit" class="button button-mini bgc-full error" name="delete-{installed_modules.MODULE_ID}" aria-label="{@H|addon.module.delete}" value="true" data-confirmation="delete-element"><i class="far fa-fw fa-trash-can" aria-hidden="true"></i></button>
+                        </div>
+                    </li>
+                # END installed_modules #
+            </ul>
         </div>
 		<footer>
 			<input type="hidden" name="token" value="{TOKEN}">

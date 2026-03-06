@@ -33,6 +33,7 @@
 .button-mini {
     padding: 0.309em;
     margin: 0;
+    width: auto;
 }
 
 [disabled],

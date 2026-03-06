@@ -143,6 +143,11 @@ select { background-color: var(--bgc-main); }
 
 .admin-li.current:not(:hover) > a { background-color: rgba(var(--lighten), 0.1); }
 
+.modal-menu > li {
+    background-color: var(--bgc-sub);
+    border-color: var(--bdr-sub);
+}
+
 .admin-menu ul.modal-menu li:hover > a,
 .modal-menu li.current > a,
 .modal-menu li:hover > a,

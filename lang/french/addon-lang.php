@@ -60,14 +60,18 @@ $lang['addon.langs.default.clue']  = 'La langue par défaut ne peut pas être d�
 $lang['addon.modules.directory']       = 'à la <span class ="text-strong pinned question">racine</span>';
 $lang['addon.modules']                 = 'Modules';
 $lang['addon.modules.management']      = 'Gestion des modules';
-$lang['addon.modules.add']             = 'Ajouter un module';
 $lang['addon.modules.update']          = 'Mettre à jour un module';
 $lang['addon.modules.delete']          = 'Suppression d\'un module';
 $lang['addon.modules.delete.multiple'] = 'Suppression de modules';
 $lang['addon.modules.installed']       = 'Modules installés';
-$lang['addon.modules.available']       = 'Modules disponibles';
 $lang['addon.modules.select.all']      = 'Sélectionner tous les modules';
 $lang['addon.modules.no.icon']         = 'Aucune icône';
+    // add
+$lang['addon.modules.add']             = 'Ajouter un module';
+$lang['addon.modules.add.tab.github']  = 'Depuis GitHub';
+$lang['addon.modules.add.tab.website'] = 'Depuis un site';
+$lang['addon.modules.add.tab.server']  = 'Depuis le serveur';
+$lang['addon.modules.add.tab.archive'] = 'Depuis une archive';
     // Warnings
 $lang['addon.modules.warning.delete']  = 'Un module doit être activé, désactivé ou supprimé uniquement depuis cette page. <br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.';
 $lang['addon.modules.warning.install'] = 'Les modules ajoutés sont automatiquement activés. Pensez à les désactiver si besoin.';
