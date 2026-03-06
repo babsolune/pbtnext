@@ -55,7 +55,7 @@ class AdminEasyCssThemeController extends ModuleController
         foreach ($obj_themes as $theme)
         {
             $this->view->assign_block_vars('themes', array(
-                'NAME' => $theme->get_id(),
+                'NAME'    => $theme->get_id(),
                 'DEFAULT' => ($theme->get_id() === ThemesManager::get_default_theme()) ? true : false,
             ));
 
@@ -64,8 +64,8 @@ class AdminEasyCssThemeController extends ModuleController
             foreach ($theme_folder->get_files('`\.css$`iu') as $file)
             {
                 $this->view->assign_block_vars('themes.css', array(
-                    'NAME'  => $file->get_name(),
-                    'URL'   => EasyCssUrlBuilder::edit($theme->get_id(), $file->get_name_without_extension())->rel(),
+                    'NAME' => $file->get_name(),
+                    'URL'  => EasyCssUrlBuilder::edit($theme->get_id(), $file->get_name_without_extension())->rel(),
                 ));
             }
         }

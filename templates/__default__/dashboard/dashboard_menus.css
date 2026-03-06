@@ -467,3 +467,10 @@
 
 	.menus-management-column-central { width: calc(100% / 2); }
 }
+
+[aria-level="2"] li { margin-left: 1.618em; }
+.level-open {
+    border-style: solid;
+    border-width: 1px 0 1px;
+    border-color: transparent;
+}

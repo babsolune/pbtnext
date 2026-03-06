@@ -267,3 +267,9 @@ a.nav-next {
 .pushmenu:not(.touch-device) .nav-item-wrapper:hover {
     background-color: rgba(var(--darken), 0.4);
 }
+
+.pushmenu.nav-levels-expand .nav-container .level-open .nav-item-wrapper > a, .pushmenu.nav-levels-none .nav-container .level-open .nav-item-wrapper > a {
+    border-color: transparent;
+}
+
+.level-open { border-color: var(--txt-alt); }

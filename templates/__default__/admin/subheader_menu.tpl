@@ -9,40 +9,9 @@
                 <li><a href="${relative_url(AdminConfigUrlBuilder::mail_config())}"><i aria-hidden="true" class="fa fa-fw iboost fa-iboost-email"></i><span>{@menu.configuration.email}</span></a></li>
             </ul>
         </li>
-        <li>
-            <a href="{PATH_TO_ROOT}/admin/menus/menus.php"><i aria-hidden="true" class="fa fa-fw fa-list-ul"></i><span>{@menu.menus}</span></a>
-            <ul class="level-2">
-                <li><a href="{PATH_TO_ROOT}/admin/menus/menus.php"><i aria-hidden="true" class="fa fa-fw fa-cog"></i><span>{@menu.management}</span></a></li>
-                <li><a href="{PATH_TO_ROOT}/admin/menus/links.php"><i aria-hidden="true" class="fa fa-fw fa-list-ul"></i><span>{@menu.links.add}</span></a></li>
-                <li><a href="{PATH_TO_ROOT}/admin/menus/content.php"><i aria-hidden="true" class="far fa-fw fa-file"></i><span>{@menu.content.add}</span></a></li>
-                <li><a href="{PATH_TO_ROOT}/admin/menus/feed.php"><i aria-hidden="true" class="fa fa-fw fa-rss"></i><span>{@menu.feed.add}</span></a></li>
-            </ul>
-        </li>
         <li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=kernel"><i aria-hidden="true" class="fa fa-fw fa-cog"></i> <span>{@menu.updates} {@menu.updates.kernel}</span></a></li>
-        <li><a href="${relative_url(AdminContentUrlBuilder::content_configuration())}"><i aria-hidden="true" class="far fa-fw fa-square"></i><span>{@menu.content}</span></a></li>
         <li><a href="${relative_url(AdminMaintainUrlBuilder::maintain())}"><i aria-hidden="true" class="far fa-fw fa-clock"></i> <span>{@menu.maintenance}</span></a></li>
         <li><a href="{PATH_TO_ROOT}/admin/admin_alerts.php"><i aria-hidden="true" class="fa fa-fw fa-bell"></i> <span>{@menu.alerts}</span></a></li>
-        <li>
-            <a href="{PATH_TO_ROOT}/admin/admin_files.php"><i aria-hidden="true" class="fa fa-fw fa-file-alt"></i><span>{@menu.files}</span></a>
-            <ul class="level-2">
-                <li><a href="{PATH_TO_ROOT}/admin/admin_files.php"><i aria-hidden="true" class="fa fa-fw fa-cog"></i><span>{@menu.management}</span></a></li>
-                <li><a href="${relative_url(AdminFilesUrlBuilder::configuration())}"><i aria-hidden="true" class="fa fa-cogs"></i><span>{@menu.configuration}</span></a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="${relative_url(UserUrlBuilder::comments())}"><i aria-hidden="true" class="far fa-fw fa-comment"></i><span>{@menu.comments}</span></a>
-            <ul class="level-2">
-                <li><a href="${relative_url(UserUrlBuilder::comments())}"><i aria-hidden="true" class="fa fa-fw fa-cog"></i><span>{@menu.management}</span></a></li>
-                <li><a href="{PATH_TO_ROOT}/admin/content/?url=/comments/config/"><i aria-hidden="true" class="fa fa-fw fa-cogs"></i><span>{@menu.configuration}</span></a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="${relative_url(AdminSmileysUrlBuilder::management())}"><i aria-hidden="true" class="far fa-fw fa-smile"></i><span>{@menu.smileys}</span></a>
-            <ul class="level-2">
-                <li><a href="${relative_url(AdminSmileysUrlBuilder::management())}"><i aria-hidden="true" class="fa fa-fw fa-cog"></i><span>{@menu.management}</span></a></li>
-                <li><a href="${relative_url(AdminSmileysUrlBuilder::add())}"><i aria-hidden="true" class="fa fa-fw fa-plus"></i><span>{@menu.add}</span></a></li>
-            </ul>
-        </li>
         # IF C_ADMIN_LINKS_1 #
             # START admin_links_1 #
                 # INCLUDE admin_links_1.MODULE_MENU #
@@ -150,9 +119,40 @@
         # ENDIF #
     </ul>
 </li>
-<li id="adminboost-modules">
-    <a href="#admin-modules" class=""><i aria-hidden="true" class="fa fa-fw fa-cube"></i><span>{@menu.modules}</span></a>
+<li id="adminboost-content">
+    <a href="#admin-content"><i aria-hidden="true" class="far fa-fw fa-square"></i><span>{@menu.content}</span></a>
     <ul>
+        <li><a href="${relative_url(AdminContentUrlBuilder::content_configuration())}"><i aria-hidden="true" class="far fa-fw fa-square"></i><span>{@menu.configuration}</span></a></li>
+        <li>
+            <a href="{PATH_TO_ROOT}/admin/menus/menus.php"><i aria-hidden="true" class="fa fa-fw fa-list-ul"></i><span>{@menu.menus}</span></a>
+            <ul class="level-2">
+                <li><a href="{PATH_TO_ROOT}/admin/menus/menus.php"><i aria-hidden="true" class="fa fa-fw fa-cog"></i><span>{@menu.management}</span></a></li>
+                <li><a href="{PATH_TO_ROOT}/admin/menus/links.php"><i aria-hidden="true" class="fa fa-fw fa-list-ul"></i><span>{@menu.links.add}</span></a></li>
+                <li><a href="{PATH_TO_ROOT}/admin/menus/content.php"><i aria-hidden="true" class="far fa-fw fa-file"></i><span>{@menu.content.add}</span></a></li>
+                <li><a href="{PATH_TO_ROOT}/admin/menus/feed.php"><i aria-hidden="true" class="fa fa-fw fa-rss"></i><span>{@menu.feed.add}</span></a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="{PATH_TO_ROOT}/admin/admin_files.php"><i aria-hidden="true" class="fa fa-fw fa-file-alt"></i><span>{@menu.files}</span></a>
+            <ul class="level-2">
+                <li><a href="{PATH_TO_ROOT}/admin/admin_files.php"><i aria-hidden="true" class="fa fa-fw fa-cog"></i><span>{@menu.management}</span></a></li>
+                <li><a href="${relative_url(AdminFilesUrlBuilder::configuration())}"><i aria-hidden="true" class="fa fa-cogs"></i><span>{@menu.configuration}</span></a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="${relative_url(UserUrlBuilder::comments())}"><i aria-hidden="true" class="far fa-fw fa-comment"></i><span>{@menu.comments}</span></a>
+            <ul class="level-2">
+                <li><a href="${relative_url(UserUrlBuilder::comments())}"><i aria-hidden="true" class="fa fa-fw fa-cog"></i><span>{@menu.management}</span></a></li>
+                <li><a href="{PATH_TO_ROOT}/admin/content/?url=/comments/config/"><i aria-hidden="true" class="fa fa-fw fa-cogs"></i><span>{@menu.configuration}</span></a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="${relative_url(AdminSmileysUrlBuilder::management())}"><i aria-hidden="true" class="far fa-fw fa-smile"></i><span>{@menu.smileys}</span></a>
+            <ul class="level-2">
+                <li><a href="${relative_url(AdminSmileysUrlBuilder::management())}"><i aria-hidden="true" class="fa fa-fw fa-cog"></i><span>{@menu.management}</span></a></li>
+                <li><a href="${relative_url(AdminSmileysUrlBuilder::add())}"><i aria-hidden="true" class="fa fa-fw fa-plus"></i><span>{@menu.add}</span></a></li>
+            </ul>
+        </li>
         # IF C_ADMIN_LINKS_5 #
             # START admin_links_5 #
                 # INCLUDE admin_links_5.MODULE_MENU #
@@ -160,8 +160,8 @@
         # ENDIF #
     </ul>
 </li>
-<li id="adminboost-content">
-    <a href="#admin-content"><i aria-hidden="true" class="far fa-fw fa-square"></i><span>{@menu.minis}</span></a>
+<li id="adminboost-modules">
+    <a href="#admin-modules" class=""><i aria-hidden="true" class="fa fa-fw fa-cube"></i><span>{@menu.modules}</span></a>
     <ul>
         # IF C_ADMIN_LINKS_6 #
             # START admin_links_6 #

@@ -127,8 +127,8 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 			'addons'  => 2,
 			'tools'   => 3,
 			'users'   => 4,
-			'modules' => 5,
-			'minis'   => 6
+			'content' => 5,
+			'modules' => 6
 		];
 
 		foreach ($modules as $module) {

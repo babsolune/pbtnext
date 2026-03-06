@@ -84,7 +84,6 @@
 
 <script>
     jQuery('#adminboost').pushmenu({
-        // expanded: true,
         expanded:  window.innerWidth > 769,
         insertClose: false,
         width: 230,
@@ -92,7 +91,10 @@
         // navTitle: '{SITE_NAME}', // null
         // pushContent: true,
         // position: 'left', // left, right, top, bottom
-        // levelOpen: 'overlap', // 'overlap', 'expand'
+        closeOpenLevels:  false,      // ferme les frères au même rang
+        closeActiveLevel: true,   // ← ferme les autres items ouverts du même niveau (défaut: true)
+        insertClose:      false,
+        levelOpen: 'expand', // 'overlap', 'expand'
         // levelTitles: true, // overlap only
         // levelSpacing: 40, // px - overlap only
         // navClass: 'fwkboost-admin',
@@ -101,6 +103,6 @@
         // insertClose: true,
         labelClose: ${escapejs(@common.close)},
         // insertBack: true,
-        labelBack: ${escapejs(@common.back)}
+        labelBack: ${escapejs(@common.back)},
     });
 </script>

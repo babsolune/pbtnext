@@ -1,32 +1,3 @@
-ul.tabs{
-    margin: 10px 0 0 0;
-    padding: 0px;
-    list-style: none;
-}
-
-ul.tabs li{
-    background: none;
-    color: #222;
-    display: inline-block;
-    padding: 10px 15px;
-    cursor: pointer;
-}
-
-ul.tabs li.current{
-    background: #fff;
-    color: #222;
-}
-
-.tab-content{
-    display: none;
-    background: #fff;
-    padding: 15px;
-}
-
-.tab-content.current{
-    display: inherit;
-}
-
 .easycss-element {
     width: 31.5%;
     margin-right: 1%;
@@ -74,7 +45,3 @@ input[type="text"], input[type="url"], input[type="number"], input[type="color"]
     height:30px;
     margin:3px;
 }
-
-    
-
-    
