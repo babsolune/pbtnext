@@ -64,6 +64,9 @@ $lang['menu.server']               = 'Server';
 $lang['menu.server.phpinfo']       = 'PHP info';
 $lang['menu.server.system.report'] = 'System report';
 
+$lang['menu.addons'] = 'Addons';
+$lang['menu.addons'] = 'Addons';
+
 $lang['menu.users'] = 'Users';
 
 $lang['menu.sanctions.manager'] = 'Sanction manager';

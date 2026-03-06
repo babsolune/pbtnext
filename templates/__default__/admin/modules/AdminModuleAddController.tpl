@@ -21,7 +21,7 @@
                 <input type="hidden" name="token" value="{TOKEN}">
                 <section id="not-installed-modules-container" class="addons-container modules-elements-container not-installed-elements-container">
                     # IF C_MODULE_AVAILABLE #
-                        <div class="cell-flex cell-columns-4">
+                        <div class="cell-flex cell-columns-4 cell-tile">
                             # START genres #
                                 <div>
                                     <header><h3>{genres.GENRE_NAME}</h3></header>
@@ -134,11 +134,3 @@
         <div id="target-archive" class="tab-content"># INCLUDE CONTENT #</div>
     </div>
 </div>
-
-<script>
-	jQuery('.addon-auth').opensubmenu({
-		osmTarget: '.addon-auth-container',
-		osmCloseExcept: '.addon-auth-content *',
-		osmCloseButton: '.addon-auth-close i',
-	});
-</script>

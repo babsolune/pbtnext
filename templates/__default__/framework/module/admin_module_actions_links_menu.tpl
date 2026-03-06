@@ -1,6 +1,6 @@
 # IF C_DISPLAY #
-	<li# IF C_HAS_SUB_LINK # class="has-sub"# ENDIF #>
-		<a href="{U_LINK}" class="cssmenu-title offload">
+	<li class="treelinks# IF C_HAS_SUB_LINK # has-sub# ENDIF #">
+		<a href="{U_LINK}" class="cssmenu-title offload ">
 			# IF C_HAS_IMG #
 				<img src="{IMG}" alt="{NAME}"/>
 			# ELSE #

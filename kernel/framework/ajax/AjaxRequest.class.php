@@ -11,21 +11,21 @@
 
 class AjaxRequest implements View
 {
-	const GET = 'get';
+	const GET  = 'get';
 	const POST = 'post';
 
-	const BEFORE_SEND = 'beforeSend';
-	const AJAX_SEND = 'ajaxSend';
-	const SUCCESS = 'success';
-	const AJAX_SUCCESS = 'ajaxSuccess';
-	const ERROR = 'error';
-	const AJAX_ERROR = 'ajaxError';
-	const COMPLETE = 'complete';
+	const BEFORE_SEND   = 'beforeSend';
+	const AJAX_SEND     = 'ajaxSend';
+	const SUCCESS       = 'success';
+	const AJAX_SUCCESS  = 'ajaxSuccess';
+	const ERROR         = 'error';
+	const AJAX_ERROR    = 'ajaxError';
+	const COMPLETE      = 'complete';
 	const AJAX_COMPLETE = 'ajaxComplete';
 
 	private $target;
-	private $method = self::POST;
-	private $events = array();
+	private $method     = self::POST;
+	private $events     = array();
 	private $parameters = array();
 
 	public function __construct($target, $onsuccess, $onfailure = null)
@@ -45,12 +45,12 @@ class AjaxRequest implements View
 		$this->method = $method;
 	}
 
-	public function set_success_callback($onsuccess)
+	public function set_onsuccess_callback($onsuccess)
 	{
 		$this->add_event_callback(self::SUCCESS, $onsuccess);
 	}
 
-	public function set_failure_callback($onfailure = null)
+	public function set_onfailure_callback($onfailure = null)
 	{
 		if ($onfailure != null)
 		{

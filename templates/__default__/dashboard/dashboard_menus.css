@@ -84,33 +84,6 @@
         }
     }
 
-    .admin-li > a {
-        display: block;
-        padding: 0.456em;
-        font-weight: 400;
-        font-size: 1.3rem;
-        text-decoration: none;
-        text-transform: uppercase;
-        @media (min-width: 769px) and (min-height: 601px) {
-            padding: 0.618em 1.309em;
-            transition: padding 0.3s ease;
-        }
-
-        & > i { padding: 0.456em 1.456em 0.456em 0.456em; }
-
-        span {
-            display: none;
-            @media (min-width: 769px) and (min-height: 601px) { display: inline-block; }
-        }
-    }
-
-    @media (min-width: 769px) and (min-height: 601px) {
-        .admin-li:hover > a {
-            padding: 0.618em 1.309em 0.618em 2.309em;
-            transition: padding 1.8s ease;
-        }
-    }
-
     @media (min-width: 769px) { margin-bottom: 20px; }
 }
 

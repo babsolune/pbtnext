@@ -103,16 +103,16 @@ class GeneralConfig extends AbstractConfigData
 		$site_path = self::get_default_site_path();
 
 		return array(
-			self::SITE_URL => $site_url,
-			self::SITE_PATH => $site_path,
-			self::SITE_NAME => '',
-			self::SITE_SLOGAN => '',
-			self::SITE_DESCRIPTION => '',
-			self::MODULE_HOME_PAGE => '',
-			self::OTHER_HOME_PAGE => '',
-			self::PHPBOOST_VERSION => '6.1',
+			self::SITE_URL          => $site_url,
+			self::SITE_PATH         => $site_path,
+			self::SITE_NAME         => '',
+			self::SITE_SLOGAN       => '',
+			self::SITE_DESCRIPTION  => '',
+			self::MODULE_HOME_PAGE  => '',
+			self::OTHER_HOME_PAGE   => '',
+			self::PHPBOOST_VERSION  => '6.1',
 			self::SITE_INSTALL_DATE => new Date(Date::DATE_NOW, Timezone::SERVER_TIMEZONE),
-			self::SITE_TIMEZONE => 'Europe/Paris',
+			self::SITE_TIMEZONE     => 'Europe/Paris',
 		);
 	}
 

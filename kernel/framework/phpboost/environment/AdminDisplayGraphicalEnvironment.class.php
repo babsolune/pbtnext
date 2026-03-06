@@ -123,12 +123,12 @@ class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironme
 
 		$array_pos = [0, 4, 4, 3, 3, 1];
 		$menus_numbers = [
-			'index' 		 => 1,
-			'administration' => 2,
-			'tools' 		 => 3,
-			'members' 		 => 4,
-			'content' 		 => 5,
-			'modules' 		 => 6
+			'admin'   => 1,
+			'addons'  => 2,
+			'tools'   => 3,
+			'users'   => 4,
+			'modules' => 5,
+			'minis'   => 6
 		];
 
 		foreach ($modules as $module) {
