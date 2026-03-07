@@ -102,7 +102,7 @@
                                                             # IF genres.server_modules.C_COMPATIBLE #
                                                                 <button type="submit" class="button button-mini submit" name="add-{genres.server_modules.MODULE_ID}" value="true">{@addon.install}</button>
                                                             # ELSE #
-                                                                <span class="addon-menu-title bgc-full error">{@addon.not.compatible}</span>
+                                                                <button type="submit" class="button button-mini bgc-full error" name="add-{genres.server_modules.MODULE_ID}" onclick="return false;">{@addon.not.compatible}</button>
                                                             # ENDIF #
                                                         </div>
                                                     </div>

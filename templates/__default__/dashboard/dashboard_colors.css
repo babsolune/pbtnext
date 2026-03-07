@@ -12,7 +12,7 @@ body {
 }
 
 #header-admin {
-    background-image:linear-gradient(135deg, var(--main-dark), var(--moderator-dark));
+    background-image:linear-gradient(135deg, var(--administrator-dark), var(--main-dark));
     background-color: var(--bgc-alt);
     color: var(--txt-alt);
 }
@@ -240,7 +240,7 @@ nav.admin-index a { color: var(--txt-alt); }
 .pushmenu .nav-container {
     color: var(--txt-alt);
     background-color: #170d24;
-    background-image:linear-gradient(135deg, var(--moderator-dark), var(--main-dark));
+    background-image:linear-gradient(135deg, var(--administrator-dark), var(--main-dark));
 }
 
 .nav-levels-overlap .nav-wrapper a,

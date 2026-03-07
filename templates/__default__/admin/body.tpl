@@ -86,7 +86,7 @@
     jQuery('#adminboost').pushmenu({
         expanded:  window.innerWidth > 769,
         insertClose: false,
-        width: 230,
+        width: 280,
         customToggle: jQuery('.adminboost-toggle'), // null
         // navTitle: '{SITE_NAME}', // null
         // pushContent: true,
@@ -104,5 +104,6 @@
         labelClose: ${escapejs(@common.close)},
         // insertBack: true,
         labelBack: ${escapejs(@common.back)},
+        removeOriginalNav: true,
     });
 </script>

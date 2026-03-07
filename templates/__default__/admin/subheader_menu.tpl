@@ -22,6 +22,7 @@
 <li  id="adminboost-addons"class="has-sub">
     <a href="#admin-addons"><i aria-hidden="true" class="fa fa-fw fa-puzzle-piece"></i><span>{@menu.addons}</span></a>
     <ul>
+        <li><a href="${relative_url(AdminConfigUrlBuilder::addons_config())}"><i aria-hidden="true" class="fa fa-fw fa-server"></i><span>{@menu.configuration}</span></a></li>
         <li>
             <a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}"><i aria-hidden="true" class="fa fa-fw fa-cubes"></i><span>{@menu.modules}</span></a>
             <ul class="level-2">

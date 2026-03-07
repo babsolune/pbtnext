@@ -14,6 +14,7 @@ require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = [
 	new UrlControllerMapper('AdminMailConfigController', '`^/mail/?$`'),
+	new UrlControllerMapper('AdminAddonsConfigController', '`^/addons/?$`'),
 	new UrlControllerMapper('AdminGeneralConfigController', '`^/(?:general/?)?$`'),
 	new UrlControllerMapper('AdminAdvancedConfigController', '`^/advanced/?$`'),
 ];

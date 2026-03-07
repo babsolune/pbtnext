@@ -21,6 +21,7 @@ class AdminModulesDisplayResponse extends AdminMenuDisplayResponse
 		$this->add_link($lang['addon.modules.installed'], AdminModulesUrlBuilder::list_installed_modules());
 		$this->add_link($lang['addon.modules.add'], AdminModulesUrlBuilder::add_module());
 		$this->add_link($lang['addon.modules.update'], AdminModulesUrlBuilder::update_module());
+		$this->add_link($lang['form.configuration'], AdminConfigUrlBuilder::addons_config());
 
 		$env = $this->get_graphical_environment();
 		$env->set_page_title($title_page);

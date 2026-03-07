@@ -95,12 +95,30 @@ $lang['addon.modules.drop.multiple'] = 'Supprimer tous les fichiers des modules'
     // Upgrade
 $lang['addon.modules.upgrade']     = 'Mettre à jour';
 $lang['addon.modules.upgrade.all'] = 'Mettre à jour les modules sélectionnés';
-
-$lang['addon.module.disable']   = '<strong>Désactiver</strong><br />Les données et les fichiers ne seront pas supprimés';
-$lang['addon.module.uninstall'] = '<strong>Désinstaller</strong><br />Les données seront supprimées mais pas les fichiers';
-$lang['addon.module.delete']    = '<strong>Supprimer</strong><br />Les données et les fichiers seront supprimés';
+    // Management
+$lang['addon.module.disable']           = '<strong>Désactiver</strong><br />Les données et les fichiers ne seront pas supprimés';
+$lang['addon.module.uninstall']         = '<strong>Désinstaller</strong><br />Les données seront supprimées mais pas les fichiers';
+$lang['addon.module.delete']            = '<strong>Supprimer</strong><br />Les données et les fichiers seront supprimés';
 $lang['addon.module.warning.uninstall'] = 'Le module <strong>:module</strong> a été désinstallé avec succès';
 $lang['addon.module.warning.delete']    = 'Le module <strong>:module</strong> a été supprimé avec succès';
+    // Configuration
+$lang['addon.github.configuration']  = 'Configuration des repos GitHub';
+$lang['addon.github.token']          = 'Token GitHub API';
+$lang['addon.github.token.clue']     = 'Lien vers le site Github api.github.com pour créer un token gratuit';
+$lang['addon.modules.repos.add']     = 'Ajouter un repo GitHub pour les modules';
+$lang['addon.themes.repos.add']      = 'Ajouter un repo GitHub pour les thèmes';
+$lang['addon.langs.repos.add']       = 'Ajouter un repo GitHub pour les langues';
+$lang['addon.servers.configuration'] = 'Configuration des sites de téléchargement';
+$lang['addon.servers.configuration.clue'] = '
+    Le site doit posséder les sous-dossiers
+    <br />/' . GeneralConfig::load()->get_phpboost_major_version() . '/modules/
+    <br />/' . GeneralConfig::load()->get_phpboost_major_version() . '/templates/
+    <br />/' . GeneralConfig::load()->get_phpboost_major_version() . '/langs/
+    ';
+$lang['addon.servers.add']           = 'Ajouter un server de téléchargement';
+$lang['addon.modules.label'] = 'Nom';
+$lang['addon.modules.url']   = 'URL';
+$lang['addon.modules.dir']   = 'Sous-répertoire';
 
 // Themes
 $lang['addon.themes.directory']       = 'dans le dossier <span class ="text-strong pinned question">templates</span>';
