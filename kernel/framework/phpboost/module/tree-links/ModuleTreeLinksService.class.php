@@ -113,9 +113,9 @@ class ModuleTreeLinksService
 			{
 				if ($element->is_visible())
 				{
-					$view->assign_block_vars('element', array(), array(
+					$view->assign_block_vars('element', [], [
 						'ELEMENT' => $element->export()
-					));
+					]);
 				}
 			}
 		}

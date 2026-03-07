@@ -25,8 +25,8 @@ class AjaxRequest implements View
 
 	private $target;
 	private $method     = self::POST;
-	private $events     = array();
-	private $parameters = array();
+	private $events     = [];
+	private $parameters = [];
 
 	public function __construct($target, $onsuccess, $onfailure = null)
 	{
@@ -94,16 +94,16 @@ class AjaxRequest implements View
 	{
 		$tpl->put('TARGET', $this->target);
 		$tpl->put('METHOD', $this->method);
-		$events = array();
+		$events = [];
 		foreach ($this->events as $event => $callback)
 		{
-			$events[] = array('NAME' => $event, 'CALLBACK' => $callback);
+			$events[] = ['NAME' => $event, 'CALLBACK' => $callback];
 		}
 		$tpl->put('event', $events);
-		$params = array();
+		$params = [];
 		foreach ($this->parameters as $key => $value)
 		{
-			$params[] = array('NAME' => $key, 'VALUE' => $value);
+			$params[] = ['NAME' => $key, 'VALUE' => $value];
 		}
 		$tpl->put('param', $params);
 	}

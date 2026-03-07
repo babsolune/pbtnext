@@ -20,9 +20,9 @@ class ModulesConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		return array(
-			self::$modules_property => array()
-		);
+		return [
+			self::$modules_property => [],
+		];
 	}
 
 	/**
