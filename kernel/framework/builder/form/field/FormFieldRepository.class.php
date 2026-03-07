@@ -30,21 +30,15 @@ class FormFieldRepository extends AbstractFormField
 		$view = new FileTemplate('framework/builder/form/FormFieldRepository.tpl');
 		$view->add_lang(LangLoader::get_all_langs());
 
-		$view->put_all([
-			'NAME'       => $this->get_html_id(),
-			'ID'         => $this->get_html_id(),
-			'C_DISABLED' => $this->is_disabled()
-		]);
-
 		$this->assign_common_template_variables($template);
 
-		$has_default = false;
 		$i = 0;
 		foreach ($this->get_value() as $options)
 		{
 			if (!empty($options))
 			{
 				$view->assign_block_vars('fieldelements', [
+                    'C_DELETE' => $i !== 0,
 					'ID'    => $i,
 					'LABEL' => $options['label'],
 					'URL'   => $options['url'],
@@ -56,7 +50,7 @@ class FormFieldRepository extends AbstractFormField
 
 		if ($i == 0)
 		{
-            $tpl->assign_block_vars('fieldelements', [
+            $view->assign_block_vars('fieldelements', [
                 'ID'    => $i,
                 'LABEL' => '',
                 'URL'   => '',
@@ -65,7 +59,10 @@ class FormFieldRepository extends AbstractFormField
 		}
 
 		$view->put_all([
-			'C_DELETE' => $i !== 0,
+
+            'NAME'       => $this->get_html_id(),
+			'ID'         => $this->get_html_id(),
+			'C_DISABLED' => $this->is_disabled(),
 
 			'MAX_INPUT'     => $this->max_input,
 			'FIELDS_NUMBER' => $i,
