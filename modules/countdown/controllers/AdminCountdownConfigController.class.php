@@ -33,38 +33,38 @@ class AdminCountdownConfigController extends DefaultAdminModuleController
 	{
 		$form = new HTMLForm('countdown');
 
-		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module()->get_configuration()->get_name()]));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldDateTime('event_date', $this->lang['countdown.config.event.date'], $this->config->get_event_date(),
-			array('class' => 'half-field')
+			['class' => 'half-field']
 		));
 
 		$fieldset->add_field(new FormFieldTextEditor('no_js', $this->lang['countdown.config.no.script'], $this->config->get_no_js(),
-			array(
+			[
 				'class' => 'half-field',
 				'description' => $this->lang['countdown.config.no.script.clue']
-			)
+			]
 		));
 
 		$fieldset->add_field(new FormFieldTextEditor('next_event', $this->lang['countdown.config.next.event'], $this->config->get_next_event(),
-			array(
+			[
 				'class' => 'half-field',
 				'description' => $this->lang['countdown.config.next.event.clue']
-			)
+			]
 		));
 
 		$fieldset->add_field(new FormFieldTextEditor('last_event', $this->lang['countdown.config.last.event'], $this->config->get_last_event(),
-			array(
+			[
 				'class' => 'half-field',
 				'description' => $this->lang['countdown.config.last.event.clue']
-			)
+			]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('stop_counter', $this->lang['countdown.config.stop.counter'], $this->config->get_stop_counter(),
-			array(
+			[
 				'class' => 'custom-checkbox',
-				'events' => array('click' => '
+				'events' => ['click' => '
 					if (HTMLForms.getField("stop_counter").getValue()) {
 						HTMLForms.getField("hidden_counter").enable();
 						HTMLForms.getField("stopped_event").enable();
@@ -72,46 +72,46 @@ class AdminCountdownConfigController extends DefaultAdminModuleController
 						HTMLForms.getField("hidden_counter").disable();
 						HTMLForms.getField("stopped_event").disable();
 					}'
-				)
-			)
+                ]
+            ]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('hidden_counter', $this->lang['countdown.config.hide.counter'], $this->config->get_hidden_counter(),
-			array(
+			[
 				'class' => 'custom-checkbox',
 				'hidden' => !$this->config->get_stop_counter()
-			)
+            ]
 		));
 
 		$fieldset->add_field(new FormFieldTextEditor('stopped_event', $this->lang['countdown.config.event.over'], $this->config->get_stopped_event(),
-			array(
+			[
 				'class' => 'half-field',
 				'hidden' => !$this->config->get_stop_counter(),
 				'description' => $this->lang['countdown.config.event.over.clue']
-			)
+            ]
 		));
 
 		$fieldset->add_field(new FormFieldSpacer('1_separator', ''));
 
 		$fieldset->add_field(new FormFieldCheckbox('timer_disabled', $this->lang['countdown.config.disable.countdown'], $this->config->get_timer_disabled(),
-			array(
+			[
 				'class' => 'custom-checkbox',
-				'events' => array('click' => '
+				'events' => ['click' => '
 					if (HTMLForms.getField("timer_disabled").getValue()) {
 						HTMLForms.getField("no_event").enable();
 					} else {
 						HTMLForms.getField("no_event").disable();
 					}'
-				)
-			)
+                ]
+            ]
 		));
 
 		$fieldset->add_field(new FormFieldTextEditor('no_event', $this->lang['countdown.config.no.event'], $this->config->get_no_event(),
-			array(
+			[
 				'class' => 'half-field',
 				'hidden' => !$this->config->get_timer_disabled(),
 				'description' => $this->lang['countdown.config.no.event.clue']
-			)
+			]
 		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['form.authorizations']);
@@ -149,7 +149,7 @@ class AdminCountdownConfigController extends DefaultAdminModuleController
 
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		CountdownConfig::save();
-		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
+		HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]), 'url' => ModulesUrlBuilder::configuration()->rel()]);
 	}
 }
 ?>

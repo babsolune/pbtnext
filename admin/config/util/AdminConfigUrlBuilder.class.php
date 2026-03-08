@@ -11,34 +11,22 @@ class AdminConfigUrlBuilder
 {
 	private static $dispatcher = '/admin/config';
 
-	/*
-	 * @ return Url
-	 */
-	public static function general_config()
+	public static function general_config(): Url
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/general/');
 	}
 
-	/*
-	 * @ return Url
-	 */
-	public static function addons_config()
+	public static function addons_config(): Url
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/addons/');
 	}
 
-    /*
-	 * @ return Url
-	 */
-	public static function advanced_config()
+	public static function advanced_config(): Url
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/advanced/', true);
 	}
 
-	/*
-	 * @ return Url
-	 */
-	public static function mail_config()
+	public static function mail_config(): Url
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/mail/');
 	}

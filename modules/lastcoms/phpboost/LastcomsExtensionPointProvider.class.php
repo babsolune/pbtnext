@@ -17,14 +17,14 @@ class LastcomsExtensionPointProvider extends ExtensionPointProvider
 
     public function menus()
     {
-	    return new ModuleMenus(array(new LastcomsModuleMiniMenu()));
+        return new ModuleMenus(array(new LastcomsModuleMiniMenu()));
     }
 
     public function css_files()
     {
-	    $module_css_files = new ModuleCssFiles();
-	    $module_css_files->adding_always_displayed_file('lastcoms_mini.css');
-	    return $module_css_files;
+        $module_css_files = new ModuleCssFiles();
+        $module_css_files->adding_always_displayed_file('lastcoms_mini.css');
+        return $module_css_files;
     }
 
 	public function url_mappings()

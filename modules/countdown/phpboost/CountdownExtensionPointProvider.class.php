@@ -16,7 +16,7 @@ class CountdownExtensionPointProvider extends ExtensionPointProvider
 
     public function menus()
     {
-        return new ModuleMenus(array(new CountdownModuleMiniMenu()));
+        return new ModuleMenus([new CountdownModuleMiniMenu()]);
     }
 
     public function css_files()
@@ -35,7 +35,7 @@ class CountdownExtensionPointProvider extends ExtensionPointProvider
 
     public function url_mappings()
     {
-        return new UrlMappings(array(new DispatcherUrlMapping('/modules/countdown/index.php')));
+        return new UrlMappings([new DispatcherUrlMapping('/countdown/index.php')]);
     }
 }
 ?>

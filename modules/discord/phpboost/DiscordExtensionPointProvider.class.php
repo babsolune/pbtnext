@@ -16,7 +16,7 @@ class DiscordExtensionPointProvider extends ExtensionPointProvider
 
     public function menus()
     {
-        return new ModuleMenus(array(new DiscordModuleMiniMenu()));
+        return new ModuleMenus([new DiscordModuleMiniMenu()]);
     }
 
     public function css_files()
@@ -28,7 +28,7 @@ class DiscordExtensionPointProvider extends ExtensionPointProvider
 
 	public function url_mappings()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/discord/index.php')));
+		return new UrlMappings([new DispatcherUrlMapping('/discord/index.php')]);
 	}
 }
 ?>

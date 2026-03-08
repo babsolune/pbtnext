@@ -10,14 +10,14 @@
 class CountdownConfig extends AbstractConfigData
 {
 	const TIMER_DISABLED = 'timer_disabled';
-	const EVENT_DATE = 'event_date';
+	const EVENT_DATE     = 'event_date';
 
-	const NO_JS = 'no_js';
-	const NEXT_EVENT = 'next_event';
-	const LAST_EVENT = 'last_event';
-	const NO_EVENT = 'no_event';
-	const STOPPED_EVENT = 'stopped_event';
-	const STOP_COUNTER = 'stop_counter';
+	const NO_JS          = 'no_js';
+	const NEXT_EVENT     = 'next_event';
+	const LAST_EVENT     = 'last_event';
+	const NO_EVENT       = 'no_event';
+	const STOPPED_EVENT  = 'stopped_event';
+	const STOP_COUNTER   = 'stop_counter';
 	const HIDDEN_COUNTER = 'hidden_counter';
 	const AUTHORIZATIONS = 'authorizations';
 

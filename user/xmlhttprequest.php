@@ -15,12 +15,12 @@ require_once('../kernel/header_no_display.php');
 
 $request = AppContext::get_request();
 
-$id_cat = $request->get_postint('id_cat', 0);
-$select_cat = $request->get_getvalue('select_cat', false);
-$selected_cat = $request->get_postint('selected_cat', 0);
+$id_cat              = $request->get_postint('id_cat', 0);
+$select_cat          = $request->get_getvalue('select_cat', false);
+$selected_cat        = $request->get_postint('selected_cat', 0);
 $display_select_link = $request->get_getint('display_select_link', 0);
-$open_cat = $request->get_postint('open_cat', 0);
-$root = $request->get_getvalue('root', false);
+$open_cat            = $request->get_postint('open_cat', 0);
+$root                = $request->get_getvalue('root', false);
 
 
 // Listing of directories whose parent is known
@@ -28,12 +28,14 @@ if ($id_cat != 0)
 {
 	echo '<ul class="upload-cat-explorer">';
 	// Select directories whose parent id is known
-	$result = PersistenceContext::get_querier()->select("SELECT id, id_parent, name
+	$result = PersistenceContext::get_querier()->select("
+        SELECT id, id_parent, name
 		FROM " . PREFIX . "upload_cat
 		WHERE id_parent = :id
-		ORDER BY name ASC", array(
+		ORDER BY name ASC", [
 			'id' => $id_cat
-	));
+        ]
+    );
 
 	while ($row = $result->fetch())
 	{

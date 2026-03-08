@@ -162,12 +162,16 @@ lateral_menu();
 $view = new FileTemplate('admin/menus/links.tpl');
 $view->add_lang($lang);
 
-$view->put_all(array(
+$view->put_all([
 	'C_EDIT' => $menu_id > 0,
 	'ACTION' => 'save',
 
-	'J_AUTH_FORM' => str_replace(array("&quot;", "<!--", "-->"), array('"', "", ""), TextHelper::to_js_string(Authorizations::generate_select(Menu::MENU_AUTH_BIT, array('r-1' => Menu::MENU_AUTH_BIT, 'r0' => Menu::MENU_AUTH_BIT, 'r1' => Menu::MENU_AUTH_BIT), array(), 'menu_element_##UID##_auth'))),
-));
+	'J_AUTH_FORM' => str_replace(
+        ["&quot;", "<!--", "-->"],
+        ['"', "", ""],
+        TextHelper::to_js_string(Authorizations::generate_select(Menu::MENU_AUTH_BIT, ['r-1' => Menu::MENU_AUTH_BIT, 'r0' => Menu::MENU_AUTH_BIT, 'r1' => Menu::MENU_AUTH_BIT], [], 'menu_element_##UID##_auth'))
+    ),
+]);
 
 // Possible locations
 $block = $request->get_getvalue('s', Menu::BLOCK_POSITION__HEADER, TINTEGER);

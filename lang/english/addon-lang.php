@@ -115,7 +115,7 @@ $lang['addon.servers.configuration.clue'] = '
     <br />/' . GeneralConfig::load()->get_phpboost_major_version() . '/templates/
     <br />/' . GeneralConfig::load()->get_phpboost_major_version() . '/langs/
 ';
-$lang['addon.servers.add']           = 'Add a download server';
+$lang['addon.servers.add']           = 'Add a download website';
 $lang['addon.modules.label'] = 'Name';
 $lang['addon.modules.url']   = 'URL';
 $lang['addon.modules.dir']   = 'Subdirectory';

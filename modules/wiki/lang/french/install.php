@@ -107,10 +107,6 @@ $lang['default.sheet.content']   = '
     Cet éditeur transforme un champ de formulaire web en une zone d\'édition dotée d\'une barre d\'icônes. Cette zone peut ensuite être 
     utilisée comme un traitement de texte pour produire du code HTML sans en connaître la syntaxe.
 
-    <h4 class="formatter-title">PCLZIP</h4>
-    Développé par PHPConcept, <a class="offload" href="https://www.phpconcept.net/pclzip/">PCLZIP</a> est une librairie permettant de 
-    travailler sur des archives au format Zip en PHP. Elle est utilisée à plusieurs reprises dans PHPBoost.
-
     <h4 class="formatter-title">GeSHi</h4>
     <a class="offload" href="https://qbnz.com/highlighter/">GeSHi</a> (Generic Syntax Highlighter) est un script PHP qui permet de colorer 
     syntaxiquement de nombreux langages informatiques.

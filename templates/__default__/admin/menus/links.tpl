@@ -1,5 +1,4 @@
 <script>
-<!--
 	function check_form()
 	{
 		if(document.getElementById('menu_element_{ID}_name').value == "") {
@@ -11,23 +10,27 @@
 
 	var idMax = {ID_MAX};
 
-	function initSortableMenu() {
+	function initSortableMenu()
+    {
 		jQuery("ul#menu_element_{ID}_list").sortable({
 			handle: '.sortable-selector',
 			placeholder: '<div class="dropzone">' + ${escapejs(@common.drop.here)} + '</div>'
 		});
 	}
 
-	function get_sortable_sequence() {
+	function get_sortable_sequence()
+    {
 		var sequence = jQuery("ul#menu_element_{ID}_list").sortable("serialize").get();
 		return sequence[0];
 	}
 
-	function build_menu_elements_tree() {
+	function build_menu_elements_tree()
+    {
 		jQuery('#menu_tree').val(JSON.stringify(get_sortable_sequence()));
 	}
 
-	function toggleProperties(id) {
+	function toggleProperties(id)
+    {
 		if (jQuery("#menu_element_" + id + "_properties").is(':hidden'))
 		{   //Si les propriétés sont repliées, on les affiche
 			jQuery("#menu_element_" + id + "_properties").fadeIn();
@@ -40,12 +43,15 @@
 		}
 	}
 
-	var authForm = {J_AUTH_FORM};
-	function getAuthForm(id) {
+    <!-- var authForm = {J_AUTH_FORM}; -->
+
+    function getAuthForm(id)
+    {
 		return authForm.replace(/##UID##/g, id);
 	}
 
-	function addSubElement(menu_element_id) {
+	function addSubElement(menu_element_id)
+    {
 		var id = idMax++;
 
 		jQuery('<li/>', {id : 'menu_element_' + id, 'data-id' : id, class : 'sortable-element'}).appendTo('#' + menu_element_id + '_list');
@@ -95,7 +101,8 @@
 		initSortableMenu();
 	}
 
-	function addSubMenu(menu_element_id) {
+	function addSubMenu(menu_element_id)
+    {
 		var id = idMax++;
 
 		jQuery('<li/>', {id : 'menu_element_' + id, 'data-id' : id, class : 'sortable-element'}).appendTo('#' + menu_element_id + '_list');
@@ -202,14 +209,17 @@
 		}
 	}
 
-	jQuery(document).ready(function() {
+	jQuery(document).ready(function()
+    {
 		initSortableMenu();
 
 		jQuery(".push-options").hide();
-		if(jQuery('.menu-type select').children('option:selected').val() == 'push') {
+		if(jQuery('.menu-type select').children('option:selected').val() == 'push')
+        {
 			jQuery(".push-options").show();
 		};
-		jQuery('.menu-type select').change(function(){
+		jQuery('.menu-type select').change(function()
+        {
 			var selectedType = $(this).children('option:selected').val();
 			if(selectedType == 'push')
 				jQuery(".push-options").fadeIn();
@@ -217,7 +227,6 @@
 				jQuery(".push-options").fadeOut();
 		});
 	});
--->
 </script>
 <div id="admin-contents">
 	<form action="links.php?action=save" method="post" class="fieldset-content" onsubmit="build_menu_elements_tree();return check_form();">
