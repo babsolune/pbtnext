@@ -14,7 +14,6 @@
 
 class AdminDisplayGraphicalEnvironment extends AbstractDisplayGraphicalEnvironment
 {
-	private $theme_properties;
 	private static $lang;
 
 	public function __construct()

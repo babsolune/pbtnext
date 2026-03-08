@@ -22,27 +22,31 @@ class AddonsConfig extends AbstractConfigData
     const DEFAULT_MODULES_REPO = [
         [
             'label'     => 'PHPBoost',
-            'url'       => 'https://github.com/PHPBoost/Modules',
+            'owner'     => 'PHPBoost',
+            'url'       => 'Modules',
             'directory' => '',
         ],
     ];
     const DEFAULT_THEMES_REPO = [
         [
             'label'     => 'PHPBoost',
-            'url'       => 'https://github.com/PHPBoost/Themes',
+            'owner'     => 'PHPBoost',
+            'url'       => 'Themes',
             'directory' => '',
         ],
     ];
     const DEFAULT_LANGS_REPO = [
         [
             'label'     => 'PHPBoost',
-            'url'       => 'https://github.com/PHPBoost/Langs',
+            'owner'     => 'PHPBoost',
+            'url'       => 'Langs',
             'directory' => '',
         ],
     ];
     const DEFAULT_ADDONS_SERVER = [
         [
             'label'     => 'PHPBoost',
+            'owner'     => 'PHPBoost',
             'url'       => 'https://dl.phpboost.com',
             'directory' => '',
         ]

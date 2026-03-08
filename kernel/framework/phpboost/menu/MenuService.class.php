@@ -449,34 +449,66 @@ class MenuService
 	{
 		$modules_menu = new LinksMenu('PHPBoost', '/', '', '', $menu_type);
 		$modules = ModulesManager::get_activated_modules_map_sorted_by_localized_name();
-		foreach ($modules as $module)
-		{
-			$configuration = $module->get_configuration();
-			$start_page = $configuration->get_home_page();
-			if (!empty($start_page))
-			{
-				$img = '';
-				$img_url = PATH_TO_ROOT . '/modules/' . $module->get_id() . '/' . $module->get_id();
 
-				foreach (array('_mini.png', '_mini.gif', '_mini.jpg', '_mini.webp') as $extension)
-				{
-					$file = new File($img_url . $extension);
-					if ($file->exists())
-					{
-						$img = '/modules/' . $module->get_id() . '/' . $file->get_name();
-						break;
-					}
-				}
-				if (!empty($img))
-					$modules_menu->add(new LinksMenuLink($configuration->get_name(), '/' . $module->get_id() . '/', $img, ''));
-				elseif (!empty($configuration->get_fa_icon()))
-					$modules_menu->add(new LinksMenuLink($configuration->get_name(), '/' . $module->get_id() . '/', '', $configuration->get_fa_icon()));
-				elseif (!empty($configuration->get_hexa_icon()))
-					$modules_menu->add(new LinksMenuLink($configuration->get_name(), '/' . $module->get_id() . '/', '', $configuration->get_hexa_icon()));
-				else
-					$modules_menu->add(new LinksMenuLink($configuration->get_name(), '/' . $module->get_id() . '/', '', ''));
-			}
-		}
+        $module_order = [];
+        $order = 1;
+        foreach ($modules as $module)
+        {
+            $module_order[$module->get_id()] = $order;
+            $order++;
+        }
+
+        $grouped_modules = [];
+        foreach ($modules as $module)
+        {
+            $genre = $module->get_configuration()->get_genre();
+            $start_page = $module->get_configuration()->get_home_page();
+            if (isset($genre) && !empty($start_page))
+            {
+                $grouped_modules[$genre][] = $module;
+            }
+        }
+
+        ksort($grouped_modules);
+
+        $sub_menu = [];
+        $sub_index = 1;
+        foreach ($grouped_modules as $genre => $modules)
+        {
+            $sub_menu[$sub_index] = new LinksMenu($genre, '', '');
+
+            foreach ($modules as $module)
+            {
+                $configuration = $module->get_configuration();
+                $start_page = $configuration->get_home_page();
+                if (!empty($start_page))
+                {
+                    $img = '';
+                    $img_url = PATH_TO_ROOT . '/modules/' . $module->get_id() . '/' . $module->get_id();
+
+                    foreach (['_mini.png', '_mini.gif', '_mini.jpg', '_mini.webp'] as $extension)
+                    {
+                        $file = new File($img_url . $extension);
+                        if ($file->exists())
+                        {
+                            $img = '/modules/' . $module->get_id() . '/' . $file->get_name();
+                            break;
+                        }
+                    }
+                    if (!empty($img))
+                        $sub_menu[$sub_index]->add(new LinksMenuLink($configuration->get_name(), '/' . $module->get_id() . '/', $img, ''));
+                    elseif (!empty($configuration->get_fa_icon()))
+                        $sub_menu[$sub_index]->add(new LinksMenuLink($configuration->get_name(), '/' . $module->get_id() . '/', '', $configuration->get_fa_icon()));
+                    elseif (!empty($configuration->get_hexa_icon()))
+                        $sub_menu[$sub_index]->add(new LinksMenuLink($configuration->get_name(), '/' . $module->get_id() . '/', '', $configuration->get_hexa_icon()));
+                    else
+                        $sub_menu[$sub_index]->add(new LinksMenuLink($configuration->get_name(), '/' . $module->get_id() . '/', '', ''));
+                }
+            }
+            $modules_menu->add($sub_menu[$sub_index]);
+            $sub_index++;
+        }
+
 		return $modules_menu;
 	}
 

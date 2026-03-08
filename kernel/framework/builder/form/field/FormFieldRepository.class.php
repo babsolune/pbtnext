@@ -41,6 +41,7 @@ class FormFieldRepository extends AbstractFormField
                     'C_DELETE' => $i !== 0,
 					'ID'    => $i,
 					'LABEL' => $options['label'],
+					'OWNER' => $options['owner'],
 					'URL'   => $options['url'],
 					'DIR'   => $options['directory']
 				]);
@@ -53,6 +54,7 @@ class FormFieldRepository extends AbstractFormField
             $view->assign_block_vars('fieldelements', [
                 'ID'    => $i,
                 'LABEL' => '',
+                'OWNER' => '',
                 'URL'   => '',
                 'DIR'   => ''
             ]);
@@ -82,10 +84,12 @@ class FormFieldRepository extends AbstractFormField
 		for ($i = 0; $i < $this->max_input; $i++)
 		{
 			$field_label_id = 'field_label_' . $this->get_html_id() . '_' . $i;
+			$field_owner_id = 'field_owner_' . $this->get_html_id() . '_' . $i;
 			$field_url_id   = 'field_url_' . $this->get_html_id() . '_' . $i;
-			if ($request->has_postparameter($field_label_id) || $request->has_postparameter($field_url_id))
+			if ($request->has_postparameter($field_label_id) || $request->has_postparameter($field_owner_id) || $request->has_postparameter($field_url_id))
 			{
 				$field_label        = $request->get_poststring($field_label_id);
+				$field_owner        = $request->get_poststring($field_owner_id);
 				$field_url          = $request->get_poststring($field_url_id);
                 $field_directory_id = 'field_directory_' . $this->get_html_id() . '_' . $i;
 				$field_directory    = $request->get_poststring($field_directory_id);
@@ -93,6 +97,7 @@ class FormFieldRepository extends AbstractFormField
 				if (!empty($field_label) || !empty($field_url))
 					$values[] = [
                         'label' => $field_label,
+                        'owner' => $field_owner,
                         'url' => $field_url,
                         'directory' => $field_directory
                     ];

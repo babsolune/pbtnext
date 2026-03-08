@@ -14,31 +14,31 @@
 
 abstract class Menu
 {
-	const MENU_AUTH_BIT = 1;
+	const MENU_AUTH_BIT      = 1;
 	const MENU_ENABLE_OR_NOT = 42;
-	const MENU_ENABLED = true;
-	const MENU_NOT_ENABLED = false;
+	const MENU_ENABLED       = true;
+	const MENU_NOT_ENABLED   = false;
 
-	const BLOCK_POSITION__NOT_ENABLED = 0;
-	const BLOCK_POSITION__HEADER = 1;
-	const BLOCK_POSITION__SUB_HEADER = 2;
-	const BLOCK_POSITION__TOP_CENTRAL = 3;
+	const BLOCK_POSITION__NOT_ENABLED    = 0;
+	const BLOCK_POSITION__HEADER         = 1;
+	const BLOCK_POSITION__SUB_HEADER     = 2;
+	const BLOCK_POSITION__TOP_CENTRAL    = 3;
 	const BLOCK_POSITION__BOTTOM_CENTRAL = 4;
-	const BLOCK_POSITION__TOP_FOOTER = 5;
-	const BLOCK_POSITION__FOOTER = 6;
-	const BLOCK_POSITION__LEFT = 7;
-	const BLOCK_POSITION__RIGHT = 8;
-	const BLOCK_POSITION__TOP_HEADER = 9;
-	const BLOCK_POSITION__ALL = 10;
+	const BLOCK_POSITION__TOP_FOOTER     = 5;
+	const BLOCK_POSITION__FOOTER         = 6;
+	const BLOCK_POSITION__LEFT           = 7;
+	const BLOCK_POSITION__RIGHT          = 8;
+	const BLOCK_POSITION__TOP_HEADER     = 9;
+	const BLOCK_POSITION__ALL            = 10;
 
-	const PUSHMENU_LEFT = 'left';
-	const PUSHMENU_RIGHT = 'right';
-	const PUSHMENU_TOP = 'top';
+	const PUSHMENU_LEFT   = 'left';
+	const PUSHMENU_RIGHT  = 'right';
+	const PUSHMENU_TOP    = 'top';
 	const PUSHMENU_BOTTOM = 'bottom';
 
 	const PUSHMENU_OVERLAP = 'overlap';
-	const PUSHMENU_EXPAND = 'expand';
-	const PUSHMENU_NONE = 'false';
+	const PUSHMENU_EXPAND  = 'expand';
+	const PUSHMENU_NONE    = 'false';
 
 	const MENU__CLASS = 'Menu';
 
