@@ -1,411 +1,423 @@
-# INCLUDE MESSAGE_HELPER #
+<section id="module-devtools">
+    <header class="section-header">
+        <h1>{@devtools.module.title}</h1>
+    </header>
+    <div class="content">
+                
+        <div id="devtool" class="tabs-container">
 
-<div class="pbtm-container">
-
-    <!-- ===================== ONGLETS ===================== -->
-    <div class="pbtm-tabs">
-        <button class="pbtm-tab active" data-tab="local">{@devtools.tab.modules}</button>
-        <button class="pbtm-tab" data-tab="remote">{@devtools.remote.title}</button>
-        <button class="pbtm-tab" data-tab="restore">{@devtools.restore.title}</button>
-        <button class="pbtm-tab" data-tab="importbdd">{@devtools.importbdd.title}</button>
-        <button class="pbtm-tab" data-tab="review">{@devtools.review.title}</button>
-        <button class="pbtm-tab" data-tab="lang">{@devtools.langrev.title}</button>
-        # IF C_IS_ADMIN #
-        <a class="pbtm-tab" href="{U_CONFIG}">{@devtools.tab.config}</a>
-        # ENDIF #
-    </div>
-
-    <!-- ===================== TAB 1: INSTALLED MODULES ===================== -->
-    <section class="pbtm-section pbtm-tab-content active" id="pbtm-tab-local">
-        <div class="pbtm-toolbar">
-            <button type="button" class="pbtm-btn pbtm-btn-secondary" id="pbtm-refresh-local">&#x21bb; {@devtools.action.refresh}</button>
-        </div>
-        <div class="pbtm-table-wrapper">
-            <table class="pbtm-table" id="pbtm-local-table">
-                <thead>
-                    <tr>
-                        <th>{@devtools.col.name}</th>
-                        <th>{@devtools.col.version}</th>
-                        <th>{@devtools.col.status}</th>
-                        <th>{@devtools.col.remote.version}</th>
-                        <th>{@devtools.col.actions}</th>
-                    </tr>
-                </thead>
-                <tbody>{MODULE_ROWS}</tbody>
-            </table>
-        </div>
-    </section>
-
-    <!-- ===================== TAB 2: REMOTE REPOSITORIES ===================== -->
-    <section class="pbtm-section pbtm-tab-content" id="pbtm-tab-remote">
-
-        <div class="pbtm-add-repo-panel" id="pbtm-add-repo-panel" style="display:none;">
-            <strong>{@devtools.repo.add}</strong>
-            <div class="pbtm-remote-controls" style="margin-top:.75rem;">
-                <div class="pbtm-control-group">
-                    <label>{@devtools.repo.org}</label>
-                    <div style="display:flex;gap:.5rem;">
-                        <input type="text" id="pbtm-add-org" value="PHPBoost" style="flex:1;padding:.35rem .6rem;border:1px solid #d1d5db;border-radius:4px;font-size:14px;">
-                        <button type="button" class="pbtm-btn pbtm-btn-secondary" id="pbtm-load-org-repos">&#x21bb;</button>
+            <!-- ===================== ONGLETS ===================== -->
+            <nav class="tabs-nav">
+                <ul class="tabs-items">
+                    <li><button class="tab-item --local active-tab">{@devtools.tab.modules}</button></li>
+                    <li><button class="tab-item --remote">{@devtools.remote.title}</button></li>
+                    <li><button class="tab-item --restore">{@devtools.restore.title}</button></li>
+                    <li><button class="tab-item --importbdd">{@devtools.importbdd.title}</button></li>
+                    <li><button class="tab-item --review">{@devtools.review.title}</button></li>
+                    <li><button class="tab-item --lang">{@devtools.langrev.title}</button></li>
+                    # IF C_IS_ADMIN #
+                        <li><a class="tab-item" href="{U_CONFIG}">{@devtools.tab.config}</a></li>
+                    # ENDIF #
+                </ul>
+            </nav>
+            <div class="tabs-wrapper">
+                <!-- ===================== TAB 1: INSTALLED MODULES ===================== -->
+                <article class="tab-content active" id="local">
+                    <div class="pbtm-toolbar">
+                        <button type="button" class="pinned bgc logo-color" id="pbtm-refresh-local">&#x21bb; {@devtools.action.refresh}</button>
                     </div>
-                </div>
-                <div class="pbtm-control-group">
-                    <label>{@devtools.repo.pick}</label>
-                    <select id="pbtm-add-repo-select" style="width:100%;">
-                        <option value="">—</option>
-                    </select>
-                </div>
-                <div class="pbtm-control-group">
-                    <label>{@devtools.repo.path}</label>
-                    <input type="text" id="pbtm-add-path" placeholder="modules" style="width:100%;padding:.35rem .6rem;border:1px solid #d1d5db;border-radius:4px;font-size:14px;box-sizing:border-box;">
-                </div>
-                <div class="pbtm-control-group">
-                    <label>{@devtools.repo.label}</label>
-                    <input type="text" id="pbtm-add-label" style="width:100%;padding:.35rem .6rem;border:1px solid #d1d5db;border-radius:4px;font-size:14px;box-sizing:border-box;">
-                </div>
-                <div class="pbtm-control-group" style="justify-content:flex-end;">
-                    <label>&nbsp;</label>
-                    <button type="button" class="pbtm-btn pbtm-btn-ok" id="pbtm-confirm-add-repo">{@devtools.repo.add.confirm}</button>
-                    <button type="button" class="pbtm-btn pbtm-btn-secondary" id="pbtm-cancel-add-repo" style="margin-top:.25rem;">{@devtools.repo.cancel}</button>
-                </div>
-            </div>
-            <p id="pbtm-add-repo-error" style="display:none;color:#dc2626;font-size:13px;margin-top:.5rem;"></p>
-        </div>
-
-        <div class="pbtm-remote-controls">
-            <div class="pbtm-control-group">
-                <label for="pbtm-repo-select">{@devtools.remote.repo}</label>
-                <select id="pbtm-repo-select">{REPO_OPTIONS}</select>
-            </div>
-            <div class="pbtm-control-group">
-                <label for="pbtm-branch-select">{@devtools.remote.branch}</label>
-                <select id="pbtm-branch-select" disabled>
-                    <option value="">{@devtools.remote.loading}</option>
-                </select>
-            </div>
-            <div class="pbtm-control-group pbtm-control-refresh">
-                <label>&nbsp;</label>
-                <button type="button" class="pbtm-btn pbtm-btn-secondary" id="pbtm-refresh-remote">&#x21bb; {@devtools.action.refresh}</button>
-                <button type="button" class="pbtm-btn pbtm-btn-ok" id="pbtm-show-add-repo" style="margin-top:.25rem;">+ {@devtools.repo.add}</button>
-            </div>
-        </div>
-
-        <div id="pbtm-remote-feedback" class="pbtm-feedback" style="display:none;"></div>
-
-        <div id="pbtm-remote-modules" style="display:none;">
-            <div class="pbtm-bulk-actions">
-                <button type="button" class="pbtm-btn pbtm-btn-secondary" id="pbtm-select-all">{@devtools.action.select.all}</button>
-                <button type="button" class="pbtm-btn pbtm-btn-secondary" id="pbtm-deselect-all">{@devtools.action.deselect.all}</button>
-                <button type="button" class="pbtm-btn pbtm-btn-ok" id="pbtm-install-sel">{@devtools.action.install.sel}</button>
-            </div>
-            <div class="pbtm-table-wrapper">
-                <table class="pbtm-table" id="pbtm-remote-table">
-                    <thead>
-                        <tr>
-                            <th class="pbtm-col-check"><input type="checkbox" id="pbtm-check-all" title="{@devtools.action.select.all}"></th>
-                            <th>{@devtools.col.name}</th>
-                            <th>{@devtools.col.remote.version}</th>
-                            <th>{@devtools.col.version}</th>
-                            <th>{@devtools.col.status}</th>
-                        </tr>
-                    </thead>
-                    <tbody id="pbtm-remote-tbody"></tbody>
-                </table>
-            </div>
-        </div>
-
-        <p id="pbtm-remote-none" style="display:none;" class="pbtm-info">{@devtools.remote.none}</p>
-        <div id="pbtm-remote-loading" class="pbtm-loading-row">
-            <span class="pbtm-spinner"></span>{@devtools.remote.loading}
-        </div>
-        <p id="pbtm-remote-error" style="display:none;" class="pbtm-error">{@devtools.remote.error}</p>
-    </section>
-
-    <!-- ===================== ONGLET 3 : RESTAURATION ===================== -->
-    <section class="pbtm-section pbtm-tab-content" id="pbtm-tab-restore">
-        <div class="pbtm-toolbar">
-            <button type="button" class="pbtm-btn pbtm-btn-secondary" id="pbtm-refresh-restore">&#x21bb; {@devtools.action.refresh}</button>
-        </div>
-        <div id="pbtm-restore-loading" class="pbtm-loading-row" style="display:none;">
-            <span class="pbtm-spinner"></span>{@devtools.remote.loading}
-        </div>
-        <p id="pbtm-restore-none" style="display:none;" class="pbtm-info">{@devtools.restore.none}</p>
-        <p id="pbtm-restore-error" style="display:none;" class="pbtm-error">{@devtools.remote.error}</p>
-        <div id="pbtm-restore-feedback" class="pbtm-feedback" style="display:none;"></div>
-        <div class="pbtm-table-wrapper" id="pbtm-restore-wrapper" style="display:none;">
-            <table class="pbtm-table">
-                <thead>
-                    <tr>
-                        <th>{@devtools.col.name}</th>
-                        <th>{@devtools.restore.date}</th>
-                        <th>{@devtools.restore.size}</th>
-                        <th>{@devtools.col.status}</th>
-                        <th>{@devtools.col.actions}</th>
-                    </tr>
-                </thead>
-                <tbody id="pbtm-restore-tbody"></tbody>
-            </table>
-        </div>
-    </section>
-
-    <!-- ===================== ONGLET 4 : IMPORT BDD ===================== -->
-    <section class="pbtm-section pbtm-tab-content" id="pbtm-tab-importbdd">
-        <div class="pbtm-info-block">
-            <p>&#x2139;&#xFE0F; Cet outil permet d'importer des tables dans un module existant ou de le compléter avec de nouvelles données.</p>
-            <p>&#x26A0;&#xFE0F; Si la table cible existe déjà, elle sera <strong>supprimée avant import</strong> des nouvelles données (DROP TABLE + CREATE + INSERT).</p>
-        </div>
-        <div class="pbtm-toolbar">
-            <button type="button" class="pbtm-btn pbtm-btn-secondary" id="pbtm-refresh-importbdd">&#x21bb; {@devtools.action.refresh}</button>
-        </div>
-        <div id="pbtm-importbdd-loading" class="pbtm-loading-row" style="display:none;">
-            <span class="pbtm-spinner"></span>{@devtools.remote.loading}
-        </div>
-        <p id="pbtm-importbdd-none"  style="display:none;" class="pbtm-info">{@devtools.importbdd.none}</p>
-        <p id="pbtm-importbdd-error" style="display:none;" class="pbtm-error">{@devtools.importbdd.error}</p>
-        <div id="pbtm-importbdd-feedback" class="pbtm-feedback" style="display:none;"></div>
-        <div class="pbtm-table-wrapper" id="pbtm-importbdd-wrapper" style="display:none;">
-            <table class="pbtm-table">
-                <thead>
-                    <tr>
-                        <th>{@devtools.importbdd.col.module}</th>
-                        <th>{@devtools.importbdd.col.tables}</th>
-                        <th>{@devtools.importbdd.col.files}</th>
-                        <th>{@devtools.importbdd.col.date}</th>
-                        <th>{@devtools.col.actions}</th>
-                    </tr>
-                </thead>
-                <tbody id="pbtm-importbdd-tbody"></tbody>
-            </table>
-        </div>
-    </section>
-
-    <!-- JS labels stored in data-attributes to avoid escaping issues -->
-    <div id="pbtm-lang" style="display:none;"
-        data-loading="{@devtools.remote.loading}"
-        data-error="{@devtools.remote.error}"
-        data-none="{@devtools.remote.none}"
-        data-success="{@devtools.install.success}"
-        data-err-prefix="{@devtools.install.error}"
-        data-no-sel="{@devtools.install.no.selection}"
-        data-active="{@devtools.status.active}"
-        data-inactive="{@devtools.status.inactive}"
-        data-not-inst="{@devtools.status.not.installed}"
-        data-up-to-date="{@devtools.status.up.to.date}"
-        data-update-avail="{@devtools.status.update.avail}"
-        data-unknown="{@devtools.status.unknown}"
-        data-activate="{@devtools.action.activate}"
-        data-deactivate="{@devtools.action.deactivate}"
-        data-uninstall="{@devtools.action.uninstall}"
-        data-local-install="{@devtools.action.local.install}"
-        data-confirm="{@devtools.uninstall.confirm}"
-        data-confirm-soft="{@devtools.uninstall.soft.confirm}"
-        data-confirm-hard="{@devtools.uninstall.hard.confirm}"
-        data-restore-download="{@devtools.restore.download}"
-        data-select-repo="{@devtools.repo.select.error}"
-        data-importbdd-confirm="{@devtools.importbdd.confirm}"
-        data-importbdd-success="{@devtools.importbdd.success}"
-        data-importbdd-importing="{@devtools.importbdd.importing}"
-        data-importbdd-action="{@devtools.importbdd.action}"
-    ></div>
-    <!-- ===================== ONGLET 5 : REVUE DE FICHIERS ===================== -->
-    <section class="pbtm-section pbtm-tab-content" id="pbtm-tab-review">
-        <div class="pbtm-toolbar">
-            <button type="button" class="pbtm-btn pbtm-btn-ok" id="pbtm-review-refresh">{@devtools.review.refresh}</button>
-            <button type="button" class="pbtm-btn pbtm-btn-danger" id="pbtm-review-clear">{@devtools.review.clear}</button>
-        </div>
-        <div id="pbtm-review-loading" class="pbtm-loading-row" style="display:none;">
-            <span class="pbtm-spinner"></span>{@devtools.review.refreshing}
-        </div>
-        <div id="pbtm-review-feedback" class="pbtm-feedback" style="display:none;"></div>
-
-        <div id="pbtm-review-counters" style="display:none;">
-            <div class="pbtm-rv-dashboard">
-
-                <!-- Colonne gauche : situation des fichiers -->
-                <div class="pbtm-rv-col">
-                    <div class="pbtm-rv-group">
-                        <div class="pbtm-rv-group-title">{@devtools.review.group.upload}</div>
-                        <button class="pbtm-rv-row pbtm-review-section-btn" data-section="onserver">
-                            <span class="pbtm-rv-label">{@devtools.review.section.files.on.server}</span>
-                            <span class="pbtm-rv-row-right">
-                                <span class="pbtm-rv-tip" data-tip="{@devtools.review.tip.onserver}">&#128065;</span>
-                                <span class="pbtm-rv-count" id="rv-cnt-onserver">—</span>
-                            </span>
-                        </button>
-                        <button class="pbtm-rv-row pbtm-review-section-btn" data-section="inupload">
-                            <span class="pbtm-rv-label">{@devtools.review.section.files.in.upload}</span>
-                            <span class="pbtm-rv-row-right">
-                                <span class="pbtm-rv-tip" data-tip="{@devtools.review.tip.inupload}">&#128065;</span>
-                                <span class="pbtm-rv-count" id="rv-cnt-inupload">—</span>
-                            </span>
-                        </button>
-                        <button class="pbtm-rv-row pbtm-review-section-btn" data-section="incontent">
-                            <span class="pbtm-rv-label">{@devtools.review.section.files.in.content}</span>
-                            <span class="pbtm-rv-row-right">
-                                <span class="pbtm-rv-tip" data-tip="{@devtools.review.tip.incontent}">&#128065;</span>
-                                <span class="pbtm-rv-count" id="rv-cnt-incontent">—</span>
-                            </span>
-                        </button>
-                        <button class="pbtm-rv-row pbtm-review-section-btn" data-section="allunused">
-                            <span class="pbtm-rv-label">{@devtools.review.section.all.unused}</span>
-                            <span class="pbtm-rv-row-right">
-                                <span class="pbtm-rv-tip" data-tip="{@devtools.review.tip.allunused}">&#128065;</span>
-                                <span class="pbtm-rv-count pbtm-rv-count-warn" id="rv-cnt-allunused">—</span>
-                            </span>
-                        </button>
+                    <div class="responsive-table">
+                        <table class="table pbtm-table" id="pbtm-local-table">
+                            <thead>
+                                <tr>
+                                    <th>{@devtools.col.name}</th>
+                                    <th>{@devtools.col.version}</th>
+                                    <th>{@devtools.col.status}</th>
+                                    <th>{@devtools.col.remote.version}</th>
+                                    <th>{@devtools.col.actions}</th>
+                                </tr>
+                            </thead>
+                            <tbody>{MODULE_ROWS}</tbody>
+                        </table>
                     </div>
-                    <div class="pbtm-rv-group">
-                        <div class="pbtm-rv-group-title">{@devtools.review.group.gallery}</div>
-                        <button class="pbtm-rv-row pbtm-review-section-btn" data-section="ingalleryfolder">
-                            <span class="pbtm-rv-label">{@devtools.review.section.gallery.folder}</span>
-                            <span class="pbtm-rv-row-right">
-                                <span class="pbtm-rv-tip" data-tip="{@devtools.review.tip.galleryfolder}">&#128065;</span>
-                                <span class="pbtm-rv-count" id="rv-cnt-galleryfolder">—</span>
-                            </span>
-                        </button>
-                        <button class="pbtm-rv-row pbtm-review-section-btn" data-section="ingallerytable">
-                            <span class="pbtm-rv-label">{@devtools.review.section.gallery.table}</span>
-                            <span class="pbtm-rv-row-right">
-                                <span class="pbtm-rv-tip" data-tip="{@devtools.review.tip.gallerytable}">&#128065;</span>
-                                <span class="pbtm-rv-count" id="rv-cnt-gallerytable">—</span>
-                            </span>
-                        </button>
-                    </div>
-                </div>
+                </article>
 
-                <!-- Colonne droite : anomalies -->
-                <div class="pbtm-rv-col">
-                    <div class="pbtm-rv-group">
-                        <div class="pbtm-rv-group-title">{@devtools.review.group.errors}</div>
-                        <button class="pbtm-rv-row pbtm-review-section-btn" data-section="usednoserver">
-                            <span class="pbtm-rv-label">{@devtools.review.section.used.not.on.server}</span>
-                            <span class="pbtm-rv-row-right">
-                                <span class="pbtm-rv-tip" data-tip="{@devtools.review.tip.usednoserver}">&#128065;</span>
-                                <span class="pbtm-rv-count pbtm-rv-count-error" id="rv-cnt-usednoserver">—</span>
-                            </span>
-                        </button>
-                        <button class="pbtm-rv-row pbtm-review-section-btn" data-section="unuseduser">
-                            <span class="pbtm-rv-label">{@devtools.review.section.unused.with.users}</span>
-                            <span class="pbtm-rv-row-right">
-                                <span class="pbtm-rv-tip" data-tip="{@devtools.review.tip.unuseduser}">&#128065;</span>
-                                <span class="pbtm-rv-count pbtm-rv-count-error" id="rv-cnt-unuseduser">—</span>
-                            </span>
-                        </button>
-                        <button class="pbtm-rv-row pbtm-review-section-btn" data-section="orphan">
-                            <span class="pbtm-rv-label">{@devtools.review.section.orphan}</span>
-                            <span class="pbtm-rv-row-right">
-                                <span class="pbtm-rv-tip" data-tip="{@devtools.review.tip.orphan}">&#128065;</span>
-                                <span class="pbtm-rv-count pbtm-rv-count-error" id="rv-cnt-orphan">—</span>
-                            </span>
-                        </button>
-                        <div class="pbtm-rv-row pbtm-rv-total">
-                            <span class="pbtm-rv-label">{@devtools.review.total.errors}</span>
-                            <span class="pbtm-rv-count pbtm-rv-count-error" id="rv-cnt-total-errors">—</span>
+                <!-- ===================== TAB 2: REMOTE REPOSITORIES ===================== -->
+                <article class="tab-content" id="remote">
+
+                    <div class="pbtm-add-repo-panel" id="pbtm-add-repo-panel" style="display:none;">
+                        <strong>{@devtools.repo.add}</strong>
+                        <div class="pbtm-remote-controls" style="margin-top:.75rem;">
+                            <div class="pbtm-control-group">
+                                <label>{@devtools.repo.org}</label>
+                                <div style="display:flex;gap:.5rem;">
+                                    <input type="text" id="pbtm-add-org" value="PHPBoost" style="flex:1;padding:.35rem .6rem;border:1px solid #d1d5db;border-radius:4px;font-size:14px;">
+                                    <button type="button" class="pbtm-btn pbtm-btn-secondary" id="pbtm-load-org-repos">&#x21bb;</button>
+                                </div>
+                            </div>
+                            <div class="pbtm-control-group">
+                                <label>{@devtools.repo.pick}</label>
+                                <select id="pbtm-add-repo-select" style="width:100%;">
+                                    <option value="">—</option>
+                                </select>
+                            </div>
+                            <div class="pbtm-control-group">
+                                <label>{@devtools.repo.path}</label>
+                                <input type="text" id="pbtm-add-path" placeholder="modules" style="width:100%;padding:.35rem .6rem;border:1px solid #d1d5db;border-radius:4px;font-size:14px;box-sizing:border-box;">
+                            </div>
+                            <div class="pbtm-control-group">
+                                <label>{@devtools.repo.label}</label>
+                                <input type="text" id="pbtm-add-label" style="width:100%;padding:.35rem .6rem;border:1px solid #d1d5db;border-radius:4px;font-size:14px;box-sizing:border-box;">
+                            </div>
+                            <div class="pbtm-control-group" style="justify-content:flex-end;">
+                                <label>&nbsp;</label>
+                                <button type="button" class="pbtm-btn pbtm-btn-ok" id="pbtm-confirm-add-repo">{@devtools.repo.add.confirm}</button>
+                                <button type="button" class="pbtm-btn pbtm-btn-secondary" id="pbtm-cancel-add-repo" style="margin-top:.25rem;">{@devtools.repo.cancel}</button>
+                            </div>
+                        </div>
+                        <p id="pbtm-add-repo-error" style="display:none;color:#dc2626;font-size:13px;margin-top:.5rem;"></p>
+                    </div>
+
+                    <div class="pbtm-remote-controls">
+                        <div class="pbtm-control-group">
+                            <label for="pbtm-repo-select">{@devtools.remote.repo}</label>
+                            <select id="pbtm-repo-select">{REPO_OPTIONS}</select>
+                        </div>
+                        <div class="pbtm-control-group">
+                            <label for="pbtm-branch-select">{@devtools.remote.branch}</label>
+                            <select id="pbtm-branch-select" disabled>
+                                <option value="">{@devtools.remote.loading}</option>
+                            </select>
+                        </div>
+                        <div class="pbtm-control-group pbtm-control-refresh">
+                            <label>&nbsp;</label>
+                            <button type="button" class="pbtm-btn pbtm-btn-secondary" id="pbtm-refresh-remote">&#x21bb; {@devtools.action.refresh}</button>
+                            <button type="button" class="pbtm-btn pbtm-btn-ok" id="pbtm-show-add-repo" style="margin-top:.25rem;">+ {@devtools.repo.add}</button>
                         </div>
                     </div>
-                    <div class="pbtm-rv-group">
-                        <div class="pbtm-rv-group-title">{@devtools.review.group.gallery.errors}</div>
-                        <button class="pbtm-rv-row pbtm-review-section-btn" data-section="nogalleryfolder">
-                            <span class="pbtm-rv-label">{@devtools.review.section.no.gallery.folder}</span>
-                            <span class="pbtm-rv-row-right">
-                                <span class="pbtm-rv-tip" data-tip="{@devtools.review.tip.nogalleryfolder}">&#128065;</span>
-                                <span class="pbtm-rv-count pbtm-rv-count-error" id="rv-cnt-nogalleryfolder">—</span>
-                            </span>
-                        </button>
-                        <button class="pbtm-rv-row pbtm-review-section-btn" data-section="nogallerytable">
-                            <span class="pbtm-rv-label">{@devtools.review.section.no.gallery.table}</span>
-                            <span class="pbtm-rv-row-right">
-                                <span class="pbtm-rv-tip" data-tip="{@devtools.review.tip.nogallerytable}">&#128065;</span>
-                                <span class="pbtm-rv-count pbtm-rv-count-error" id="rv-cnt-nogallerytable">—</span>
-                            </span>
-                        </button>
+
+                    <div id="pbtm-remote-feedback" class="pbtm-feedback" style="display:none;"></div>
+
+                    <div id="pbtm-remote-modules" style="display:none;">
+                        <div class="pbtm-bulk-actions">
+                            <button type="button" class="pbtm-btn pbtm-btn-secondary" id="pbtm-select-all">{@devtools.action.select.all}</button>
+                            <button type="button" class="pbtm-btn pbtm-btn-secondary" id="pbtm-deselect-all">{@devtools.action.deselect.all}</button>
+                            <button type="button" class="pbtm-btn pbtm-btn-ok" id="pbtm-install-sel">{@devtools.action.install.sel}</button>
+                        </div>
+                        <div class="responsive-table">
+                            <table class="table pbtm-table" id="pbtm-remote-table">
+                                <thead>
+                                    <tr>
+                                        <th class="pbtm-col-check"><input type="checkbox" id="pbtm-check-all" title="{@devtools.action.select.all}"></th>
+                                        <th>{@devtools.col.name}</th>
+                                        <th>{@devtools.col.remote.version}</th>
+                                        <th>{@devtools.col.version}</th>
+                                        <th>{@devtools.col.status}</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="pbtm-remote-tbody"></tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
 
-            </div><!-- /.pbtm-rv-dashboard -->
+                    <p id="pbtm-remote-none" style="display:none;" class="pbtm-info">{@devtools.remote.none}</p>
+                    <div id="pbtm-remote-loading" class="pbtm-loading-row">
+                        <span class="pbtm-spinner"></span>{@devtools.remote.loading}
+                    </div>
+                    <p id="pbtm-remote-error" style="display:none;" class="pbtm-error">{@devtools.remote.error}</p>
+                </article>
 
-            <!-- Panneau de détail unique -->
-            <div class="pbtm-rv-detail" id="pbtm-rv-detail" style="display:none;">
-                <div class="pbtm-rv-detail-header">
-                    <strong class="pbtm-rv-detail-title"></strong>
-                    <button type="button" class="pbtm-btn pbtm-btn-secondary pbtm-rv-detail-close">&times;</button>
-                </div>
-                <div class="pbtm-table-wrapper">
-                    <table class="pbtm-table">
-                        <thead class="pbtm-rv-thead"></thead>
-                        <tbody class="pbtm-rv-tbody"></tbody>
-                    </table>
-                </div>
+                <!-- ===================== ONGLET 3 : RESTAURATION ===================== -->
+                <article class="tab-content" id="restore">
+                    <div class="pbtm-toolbar">
+                        <button type="button" class="pbtm-btn pbtm-btn-secondary" id="pbtm-refresh-restore">&#x21bb; {@devtools.action.refresh}</button>
+                    </div>
+                    <div id="pbtm-restore-loading" class="pbtm-loading-row" style="display:none;">
+                        <span class="pbtm-spinner"></span>{@devtools.remote.loading}
+                    </div>
+                    <p id="pbtm-restore-none" style="display:none;" class="pbtm-info">{@devtools.restore.none}</p>
+                    <p id="pbtm-restore-error" style="display:none;" class="pbtm-error">{@devtools.remote.error}</p>
+                    <div id="pbtm-restore-feedback" class="pbtm-feedback" style="display:none;"></div>
+                    <div class="responsive-table" id="pbtm-restore-wrapper" style="display:none;">
+                        <table class="table pbtm-table">
+                            <thead>
+                                <tr>
+                                    <th>{@devtools.col.name}</th>
+                                    <th>{@devtools.restore.date}</th>
+                                    <th>{@devtools.restore.size}</th>
+                                    <th>{@devtools.col.status}</th>
+                                    <th>{@devtools.col.actions}</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pbtm-restore-tbody"></tbody>
+                        </table>
+                    </div>
+                </article>
+
+                <!-- ===================== ONGLET 4 : IMPORT BDD ===================== -->
+                <article class="tab-content" id="importbdd">
+                    <div class="pbtm-info-block">
+                        <p>&#x2139;&#xFE0F; Cet outil permet d'importer des tables dans un module existant ou de le compléter avec de nouvelles données.</p>
+                        <p>&#x26A0;&#xFE0F; Si la table cible existe déjà, elle sera <strong>supprimée avant import</strong> des nouvelles données (DROP TABLE + CREATE + INSERT).</p>
+                    </div>
+                    <div class="pbtm-toolbar">
+                        <button type="button" class="pbtm-btn pbtm-btn-secondary" id="pbtm-refresh-importbdd">&#x21bb; {@devtools.action.refresh}</button>
+                    </div>
+                    <div id="pbtm-importbdd-loading" class="pbtm-loading-row" style="display:none;">
+                        <span class="pbtm-spinner"></span>{@devtools.remote.loading}
+                    </div>
+                    <p id="pbtm-importbdd-none"  style="display:none;" class="pbtm-info">{@devtools.importbdd.none}</p>
+                    <p id="pbtm-importbdd-error" style="display:none;" class="pbtm-error">{@devtools.importbdd.error}</p>
+                    <div id="pbtm-importbdd-feedback" class="pbtm-feedback" style="display:none;"></div>
+                    <div class="responsive-table" id="pbtm-importbdd-wrapper" style="display:none;">
+                        <table class="table pbtm-table">
+                            <thead>
+                                <tr>
+                                    <th>{@devtools.importbdd.col.module}</th>
+                                    <th>{@devtools.importbdd.col.tables}</th>
+                                    <th>{@devtools.importbdd.col.files}</th>
+                                    <th>{@devtools.importbdd.col.date}</th>
+                                    <th>{@devtools.col.actions}</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pbtm-importbdd-tbody"></tbody>
+                        </table>
+                    </div>
+                </article>
+
+                <!-- JS labels stored in data-attributes to avoid escaping issues -->
+                <div id="pbtm-lang" style="display:none;"
+                    data-loading="{@devtools.remote.loading}"
+                    data-error="{@devtools.remote.error}"
+                    data-none="{@devtools.remote.none}"
+                    data-success="{@devtools.install.success}"
+                    data-err-prefix="{@devtools.install.error}"
+                    data-no-sel="{@devtools.install.no.selection}"
+                    data-active="{@devtools.status.active}"
+                    data-inactive="{@devtools.status.inactive}"
+                    data-not-inst="{@devtools.status.not.installed}"
+                    data-up-to-date="{@devtools.status.up.to.date}"
+                    data-update-avail="{@devtools.status.update.avail}"
+                    data-unknown="{@devtools.status.unknown}"
+                    data-activate="{@devtools.action.activate}"
+                    data-deactivate="{@devtools.action.deactivate}"
+                    data-uninstall="{@devtools.action.uninstall}"
+                    data-local-install="{@devtools.action.local.install}"
+                    data-confirm="{@devtools.uninstall.confirm}"
+                    data-confirm-soft="{@devtools.uninstall.soft.confirm}"
+                    data-confirm-hard="{@devtools.uninstall.hard.confirm}"
+                    data-restore-download="{@devtools.restore.download}"
+                    data-select-repo="{@devtools.repo.select.error}"
+                    data-importbdd-confirm="{@devtools.importbdd.confirm}"
+                    data-importbdd-success="{@devtools.importbdd.success}"
+                    data-importbdd-importing="{@devtools.importbdd.importing}"
+                    data-importbdd-action="{@devtools.importbdd.action}"
+                ></div>
+                <!-- ===================== ONGLET 5 : REVUE DE FICHIERS ===================== -->
+                <article class="tab-content" id="review">
+                    <div class="pbtm-toolbar">
+                        <button type="button" class="pbtm-btn pbtm-btn-ok" id="pbtm-review-refresh">{@devtools.review.refresh}</button>
+                        <button type="button" class="pbtm-btn pbtm-btn-danger" id="pbtm-review-clear">{@devtools.review.clear}</button>
+                    </div>
+                    <div id="pbtm-review-loading" class="pbtm-loading-row" style="display:none;">
+                        <span class="pbtm-spinner"></span>{@devtools.review.refreshing}
+                    </div>
+                    <div id="pbtm-review-feedback" class="pbtm-feedback" style="display:none;"></div>
+
+                    <div id="pbtm-review-counters" style="display:none;">
+                        <div class="pbtm-rv-dashboard">
+
+                            <!-- Colonne gauche : situation des fichiers -->
+                            <div class="pbtm-rv-col">
+                                <div class="pbtm-rv-group">
+                                    <div class="pbtm-rv-group-title">{@devtools.review.group.upload}</div>
+                                    <button class="pbtm-rv-row pbtm-review-section-btn" data-section="onserver">
+                                        <span class="pbtm-rv-label">{@devtools.review.section.files.on.server}</span>
+                                        <span class="pbtm-rv-row-right">
+                                            <span class="pbtm-rv-tip" data-tip="{@devtools.review.tip.onserver}">&#128065;</span>
+                                            <span class="pbtm-rv-count" id="rv-cnt-onserver">—</span>
+                                        </span>
+                                    </button>
+                                    <button class="pbtm-rv-row pbtm-review-section-btn" data-section="inupload">
+                                        <span class="pbtm-rv-label">{@devtools.review.section.files.in.upload}</span>
+                                        <span class="pbtm-rv-row-right">
+                                            <span class="pbtm-rv-tip" data-tip="{@devtools.review.tip.inupload}">&#128065;</span>
+                                            <span class="pbtm-rv-count" id="rv-cnt-inupload">—</span>
+                                        </span>
+                                    </button>
+                                    <button class="pbtm-rv-row pbtm-review-section-btn" data-section="incontent">
+                                        <span class="pbtm-rv-label">{@devtools.review.section.files.in.content}</span>
+                                        <span class="pbtm-rv-row-right">
+                                            <span class="pbtm-rv-tip" data-tip="{@devtools.review.tip.incontent}">&#128065;</span>
+                                            <span class="pbtm-rv-count" id="rv-cnt-incontent">—</span>
+                                        </span>
+                                    </button>
+                                    <button class="pbtm-rv-row pbtm-review-section-btn" data-section="allunused">
+                                        <span class="pbtm-rv-label">{@devtools.review.section.all.unused}</span>
+                                        <span class="pbtm-rv-row-right">
+                                            <span class="pbtm-rv-tip" data-tip="{@devtools.review.tip.allunused}">&#128065;</span>
+                                            <span class="pbtm-rv-count pbtm-rv-count-warn" id="rv-cnt-allunused">—</span>
+                                        </span>
+                                    </button>
+                                </div>
+                                <div class="pbtm-rv-group">
+                                    <div class="pbtm-rv-group-title">{@devtools.review.group.gallery}</div>
+                                    <button class="pbtm-rv-row pbtm-review-section-btn" data-section="ingalleryfolder">
+                                        <span class="pbtm-rv-label">{@devtools.review.section.gallery.folder}</span>
+                                        <span class="pbtm-rv-row-right">
+                                            <span class="pbtm-rv-tip" data-tip="{@devtools.review.tip.galleryfolder}">&#128065;</span>
+                                            <span class="pbtm-rv-count" id="rv-cnt-galleryfolder">—</span>
+                                        </span>
+                                    </button>
+                                    <button class="pbtm-rv-row pbtm-review-section-btn" data-section="ingallerytable">
+                                        <span class="pbtm-rv-label">{@devtools.review.section.gallery.table}</span>
+                                        <span class="pbtm-rv-row-right">
+                                            <span class="pbtm-rv-tip" data-tip="{@devtools.review.tip.gallerytable}">&#128065;</span>
+                                            <span class="pbtm-rv-count" id="rv-cnt-gallerytable">—</span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Colonne droite : anomalies -->
+                            <div class="pbtm-rv-col">
+                                <div class="pbtm-rv-group">
+                                    <div class="pbtm-rv-group-title">{@devtools.review.group.errors}</div>
+                                    <button class="pbtm-rv-row pbtm-review-section-btn" data-section="usednoserver">
+                                        <span class="pbtm-rv-label">{@devtools.review.section.used.not.on.server}</span>
+                                        <span class="pbtm-rv-row-right">
+                                            <span class="pbtm-rv-tip" data-tip="{@devtools.review.tip.usednoserver}">&#128065;</span>
+                                            <span class="pbtm-rv-count pbtm-rv-count-error" id="rv-cnt-usednoserver">—</span>
+                                        </span>
+                                    </button>
+                                    <button class="pbtm-rv-row pbtm-review-section-btn" data-section="unuseduser">
+                                        <span class="pbtm-rv-label">{@devtools.review.section.unused.with.users}</span>
+                                        <span class="pbtm-rv-row-right">
+                                            <span class="pbtm-rv-tip" data-tip="{@devtools.review.tip.unuseduser}">&#128065;</span>
+                                            <span class="pbtm-rv-count pbtm-rv-count-error" id="rv-cnt-unuseduser">—</span>
+                                        </span>
+                                    </button>
+                                    <button class="pbtm-rv-row pbtm-review-section-btn" data-section="orphan">
+                                        <span class="pbtm-rv-label">{@devtools.review.section.orphan}</span>
+                                        <span class="pbtm-rv-row-right">
+                                            <span class="pbtm-rv-tip" data-tip="{@devtools.review.tip.orphan}">&#128065;</span>
+                                            <span class="pbtm-rv-count pbtm-rv-count-error" id="rv-cnt-orphan">—</span>
+                                        </span>
+                                    </button>
+                                    <div class="pbtm-rv-row pbtm-rv-total">
+                                        <span class="pbtm-rv-label">{@devtools.review.total.errors}</span>
+                                        <span class="pbtm-rv-count pbtm-rv-count-error" id="rv-cnt-total-errors">—</span>
+                                    </div>
+                                </div>
+                                <div class="pbtm-rv-group">
+                                    <div class="pbtm-rv-group-title">{@devtools.review.group.gallery.errors}</div>
+                                    <button class="pbtm-rv-row pbtm-review-section-btn" data-section="nogalleryfolder">
+                                        <span class="pbtm-rv-label">{@devtools.review.section.no.gallery.folder}</span>
+                                        <span class="pbtm-rv-row-right">
+                                            <span class="pbtm-rv-tip" data-tip="{@devtools.review.tip.nogalleryfolder}">&#128065;</span>
+                                            <span class="pbtm-rv-count pbtm-rv-count-error" id="rv-cnt-nogalleryfolder">—</span>
+                                        </span>
+                                    </button>
+                                    <button class="pbtm-rv-row pbtm-review-section-btn" data-section="nogallerytable">
+                                        <span class="pbtm-rv-label">{@devtools.review.section.no.gallery.table}</span>
+                                        <span class="pbtm-rv-row-right">
+                                            <span class="pbtm-rv-tip" data-tip="{@devtools.review.tip.nogallerytable}">&#128065;</span>
+                                            <span class="pbtm-rv-count pbtm-rv-count-error" id="rv-cnt-nogallerytable">—</span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div><!-- /.pbtm-rv-dashboard -->
+
+                        <!-- Panneau de détail unique -->
+                        <div class="pbtm-rv-detail" id="pbtm-rv-detail" style="display:none;">
+                            <div class="pbtm-rv-detail-header">
+                                <strong class="pbtm-rv-detail-title"></strong>
+                                <button type="button" class="pbtm-btn pbtm-btn-secondary pbtm-rv-detail-close">&times;</button>
+                            </div>
+                            <div class="responsive-table">
+                                <table class="table pbtm-table">
+                                    <thead class="pbtm-rv-thead"></thead>
+                                    <tbody class="pbtm-rv-tbody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- ===================== TAB 6: LANG REVIEW ===================== -->
+                <article class="tab-content" id="lang">
+                    <div class="pbtm-toolbar">
+                        <select id="pbtm-lang-module-select" class="pbtm-select">
+                            <option value="">{@devtools.langrev.select.module}</option>
+                        </select>
+                    </div>
+
+                    <div id="pbtm-lang-body">
+                        <!-- Populated by JS -->
+                    </div>
+                </article>
+
+                <!-- Lang tab: URL + token passés en inputs cachés pour le bloc JS standalone -->
+                <input type="hidden" id="pbtm-lang-url"  value="{URL_AJAX_REVIEW}">
+                <input type="hidden" id="pbtm-lang-csrf" value="{CSRF_TOKEN}">
+
+                <!-- JS labels for Lang tab -->
+                <div id="pbtm-lang-labels" style="display:none;"
+                    data-select="{@devtools.langrev.select.module}"
+                    data-analyzing="{@devtools.langrev.analyzing}"
+                    data-total-keys="{@devtools.langrev.total.keys}"
+                    data-section-unused="{@devtools.langrev.section.unused}"
+                    data-section-dup-internal="{@devtools.langrev.section.dup.internal}"
+                    data-section-dup-external="{@devtools.langrev.section.dup.external}"
+                    data-col-key="{@devtools.langrev.col.key}"
+                    data-col-lang="{@devtools.langrev.col.lang}"
+                    data-col-value-fr="{@devtools.langrev.col.value.fr}"
+                    data-col-value-en="{@devtools.langrev.col.value.en}"
+                    data-col-value="{@devtools.langrev.col.value}"
+                    data-col-keys="{@devtools.langrev.col.keys}"
+                    data-col-matches="{@devtools.langrev.col.matches}"
+                    data-none="{@devtools.langrev.none}"
+                    data-error="{@devtools.langrev.error}"
+                ></div>
+
+                <!-- JS labels for Review tab -->
+                <div id="pbtm-review-lang" style="display:none;"
+                    data-refresh="{@devtools.review.refresh}"
+                    data-refreshing="{@devtools.review.refreshing}"
+                    data-refresh-success="{@devtools.review.refresh.success}"
+                    data-clear-success="{@devtools.review.clear.success}"
+                    data-error="{@devtools.remote.error}"
+                    data-incompatible="{@devtools.review.incompatible}"
+                    data-section-onserver="{@devtools.review.section.files.on.server}"
+                    data-section-inupload="{@devtools.review.section.files.in.upload}"
+                    data-section-incontent="{@devtools.review.section.files.in.content}"
+                    data-section-allunused="{@devtools.review.section.all.unused}"
+                    data-section-usednoserver="{@devtools.review.section.used.not.on.server}"
+                    data-section-unuseduser="{@devtools.review.section.unused.with.users}"
+                    data-section-orphan="{@devtools.review.section.orphan}"
+                    data-section-ingalleryfolder="{@devtools.review.section.gallery.folder}"
+                    data-section-ingallerytable="{@devtools.review.section.gallery.table}"
+                    data-section-nogalleryfolder="{@devtools.review.section.no.gallery.folder}"
+                    data-section-nogallerytable="{@devtools.review.section.no.gallery.table}"
+                    data-col-file="{@devtools.review.col.file}"
+                    data-col-module="{@devtools.review.col.module}"
+                    data-col-item="{@devtools.review.col.item}"
+                    data-col-edit="{@devtools.review.col.edit}"
+                    data-col-context="{@devtools.review.col.context}"
+                    data-col-user="{@devtools.review.col.user}"
+                    data-col-date="{@devtools.review.col.date}"
+                    data-col-size="{@devtools.review.col.size}"
+                ></div>
+
             </div>
         </div>
-    </section>
+    </div>
+    <footer></footer>
+</section>
+# INCLUDE MESSAGE_HELPER #
 
-    <!-- ===================== TAB 6: LANG REVIEW ===================== -->
-    <section class="pbtm-section pbtm-tab-content" id="pbtm-tab-lang">
-        <div class="pbtm-toolbar">
-            <select id="pbtm-lang-module-select" class="pbtm-select">
-                <option value="">{@devtools.langrev.select.module}</option>
-            </select>
-        </div>
-
-        <div id="pbtm-lang-body">
-            <!-- Populated by JS -->
-        </div>
-    </section>
-
-    <!-- Lang tab: URL + token passés en inputs cachés pour le bloc JS standalone -->
-    <input type="hidden" id="pbtm-lang-url"  value="{URL_AJAX_REVIEW}">
-    <input type="hidden" id="pbtm-lang-csrf" value="{CSRF_TOKEN}">
-
-    <!-- JS labels for Lang tab -->
-    <div id="pbtm-lang-labels" style="display:none;"
-        data-select="{@devtools.langrev.select.module}"
-        data-analyzing="{@devtools.langrev.analyzing}"
-        data-total-keys="{@devtools.langrev.total.keys}"
-        data-section-unused="{@devtools.langrev.section.unused}"
-        data-section-dup-internal="{@devtools.langrev.section.dup.internal}"
-        data-section-dup-external="{@devtools.langrev.section.dup.external}"
-        data-col-key="{@devtools.langrev.col.key}"
-        data-col-lang="{@devtools.langrev.col.lang}"
-        data-col-value-fr="{@devtools.langrev.col.value.fr}"
-        data-col-value-en="{@devtools.langrev.col.value.en}"
-        data-col-value="{@devtools.langrev.col.value}"
-        data-col-keys="{@devtools.langrev.col.keys}"
-        data-col-matches="{@devtools.langrev.col.matches}"
-        data-none="{@devtools.langrev.none}"
-        data-error="{@devtools.langrev.error}"
-    ></div>
-
-    <!-- JS labels for Review tab -->
-    <div id="pbtm-review-lang" style="display:none;"
-        data-refresh="{@devtools.review.refresh}"
-        data-refreshing="{@devtools.review.refreshing}"
-        data-refresh-success="{@devtools.review.refresh.success}"
-        data-clear-success="{@devtools.review.clear.success}"
-        data-error="{@devtools.remote.error}"
-        data-incompatible="{@devtools.review.incompatible}"
-        data-section-onserver="{@devtools.review.section.files.on.server}"
-        data-section-inupload="{@devtools.review.section.files.in.upload}"
-        data-section-incontent="{@devtools.review.section.files.in.content}"
-        data-section-allunused="{@devtools.review.section.all.unused}"
-        data-section-usednoserver="{@devtools.review.section.used.not.on.server}"
-        data-section-unuseduser="{@devtools.review.section.unused.with.users}"
-        data-section-orphan="{@devtools.review.section.orphan}"
-        data-section-ingalleryfolder="{@devtools.review.section.gallery.folder}"
-        data-section-ingallerytable="{@devtools.review.section.gallery.table}"
-        data-section-nogalleryfolder="{@devtools.review.section.no.gallery.folder}"
-        data-section-nogallerytable="{@devtools.review.section.no.gallery.table}"
-        data-col-file="{@devtools.review.col.file}"
-        data-col-module="{@devtools.review.col.module}"
-        data-col-item="{@devtools.review.col.item}"
-        data-col-edit="{@devtools.review.col.edit}"
-        data-col-context="{@devtools.review.col.context}"
-        data-col-user="{@devtools.review.col.user}"
-        data-col-date="{@devtools.review.col.date}"
-        data-col-size="{@devtools.review.col.size}"
-    ></div>
-
-</div>
 
 <script>
 (function() {

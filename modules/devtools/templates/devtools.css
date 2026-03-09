@@ -2,82 +2,9 @@
    PBT Manager — module stylesheet
    ============================================================= */
 
-.pbtm-container {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    padding: 1rem 0;
-    font-size: 14px;
-}
-
-/* Onglets */
-.pbtm-tabs {
-    display: flex;
-    gap: 0;
-    border-bottom: 2px solid #d1d5db;
-    margin-bottom: 1.25rem;
-}
-
-.pbtm-tab {
-    padding: .55rem 1.4rem;
-    background: #f3f4f6;
-    border: 1px solid #d1d5db;
-    border-bottom: none;
-    border-radius: 6px 6px 0 0;
-    margin-right: 3px;
-    margin-bottom: -2px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    color: #6b7280;
-    text-decoration: none;
-    transition: background .15s, color .15s;
-}
-
-.pbtm-tab:hover {
-    background: #e5e7eb;
-    color: #374151;
-}
-
-.pbtm-tab.active {
-    background: #fff;
-    color: var(--primary, #2d5be3);
-    border-color: #d1d5db;
-    border-bottom-color: #fff;
-    position: relative;
-    z-index: 1;
-}
-
-.pbtm-tab-content {
-    display: none;
-}
-
-.pbtm-tab-content.active {
-    display: block;
-}
-
 /* Sections */
-.pbtm-section {
-    background: var(--surface, #fff);
-    border-radius: 0 6px 6px 6px;
-    padding: 1.25rem 1.5rem;
-    box-shadow: 0 1px 4px rgba(0,0,0,.08);
-    border: 1px solid #d1d5db;
-}
-
-.pbtm-section-title {
-    font-size: 15px;
-    font-weight: 600;
-    margin: 0 0 1rem;
-    padding-bottom: .5rem;
-    border-bottom: 2px solid var(--primary, #2d5be3);
-    color: #111827;
-}
 
 /* Tables */
-.pbtm-table-wrapper {
-    overflow-x: auto;
-}
 
 .pbtm-table {
     width: 100%;
