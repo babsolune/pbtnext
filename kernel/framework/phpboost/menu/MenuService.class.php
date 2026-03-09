@@ -495,14 +495,15 @@ class MenuService
                             break;
                         }
                     }
+
                     if (!empty($img))
-                        $sub_menu[$sub_index]->add(new LinksMenuLink($configuration->get_name(), '/' . $module->get_id() . '/', $img, ''));
+                        $sub_menu[$sub_index]->add(new LinksMenuLink($configuration->get_name(), '/' . $module->get_id() . '/', 0, $img, ''));
                     elseif (!empty($configuration->get_fa_icon()))
-                        $sub_menu[$sub_index]->add(new LinksMenuLink($configuration->get_name(), '/' . $module->get_id() . '/', '', $configuration->get_fa_icon()));
+                        $sub_menu[$sub_index]->add(new LinksMenuLink($configuration->get_name(), '/' . $module->get_id() . '/', 0, '', $configuration->get_fa_icon()));
                     elseif (!empty($configuration->get_hexa_icon()))
-                        $sub_menu[$sub_index]->add(new LinksMenuLink($configuration->get_name(), '/' . $module->get_id() . '/', '', $configuration->get_hexa_icon()));
+                        $sub_menu[$sub_index]->add(new LinksMenuLink($configuration->get_name(), '/' . $module->get_id() . '/', 0, '', $configuration->get_hexa_icon()));
                     else
-                        $sub_menu[$sub_index]->add(new LinksMenuLink($configuration->get_name(), '/' . $module->get_id() . '/', '', ''));
+                        $sub_menu[$sub_index]->add(new LinksMenuLink($configuration->get_name(), '/' . $module->get_id() . '/', 0, '', ''));
                 }
             }
             $modules_menu->add($sub_menu[$sub_index]);
