@@ -76,7 +76,6 @@ class CLIRestoreDBCommand implements CLICommand
             $original_file_compressed = true;
             $extract_filename = '';
 
-            // Remplacement de PclZip par ZipArchive natif
             $zip = new ZipArchive();
             if ($zip->open($file_name) === TRUE)
             {

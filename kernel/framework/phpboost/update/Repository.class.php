@@ -24,7 +24,7 @@ class Repository
     {
         $this->url = $url;
         $server_configuration = new ServerConfiguration();
-        if (function_exists('simplexml_load_string') && $server_configuration->has_curl_library())
+        if (function_exists('simplexml_load_string') && $server_configuration->has_curl_extension())
         {
             libxml_use_internal_errors(true);
             $this->xml = simplexml_load_string($this->get_xml_content_with_curl($this->url));
@@ -95,7 +95,7 @@ class Repository
             $server_configuration = new ServerConfiguration();
 
             // Keep only the first applicable update
-            if ($server_configuration->has_curl_library() && $app->get_type() == 'kernel')
+            if ($server_configuration->has_curl_extension() && $app->get_type() == 'kernel')
                 $NewVersion = count($newerVersions) > 0 ? max(array_keys($newerVersions)) : '';
             else
                 $NewVersion = count($newerVersions) > 0 ? min(array_keys($newerVersions)) : '';

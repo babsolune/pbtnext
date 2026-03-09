@@ -30,7 +30,7 @@ class UpdateIntroductionController extends UpdateController
     private function add_navigation(Template $view)
     {
         $server_configuration = new ServerConfiguration();
-        if ($server_configuration->is_php_compatible() && PHPBoostFoldersPermissions::validate() && $server_configuration->has_mbstring_library()) {
+        if ($server_configuration->is_php_compatible() && PHPBoostFoldersPermissions::validate() && $server_configuration->has_mbstring_extension()) {
             if (UpdateServices::database_config_file_checked()) {
                 $service = new UpdateServices();
                 $service->generate_update_token();

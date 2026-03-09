@@ -36,7 +36,7 @@ if (($update = AdministratorAlertService::find_by_identifier($identifier, 'updat
 if ($app instanceof Application)
 {
 	$installation_error = $installation_success = false;
-	if ($request->get_postvalue('execute_update', '') && $server_configuration->has_curl_library() && Url::check_url_validity($app->get_autoupdate_url()))
+	if ($request->get_postvalue('execute_update', '') && $server_configuration->has_curl_extension() && Url::check_url_validity($app->get_autoupdate_url()))
 	{
 		$temporary_dir_path = PATH_TO_ROOT . '/cache/phpboost-diff';
 		$temporary_folder = new Folder($temporary_dir_path);
@@ -236,7 +236,7 @@ if ($app instanceof Application)
 
 	$view->put_all(array(
 		'C_DISPLAY_LINKS_AND_PRIORITY' => !$installation_success && $app->check_compatibility() && ($app->get_type() == 'kernel' ? version_compare(Environment::get_phpboost_version(), $app->get_version(), '<') : true),
-		'C_DISPLAY_UPDATE_BUTTON'      => $app->get_autoupdate_url() != '' && $server_configuration->has_curl_library() && Url::check_url_validity($app->get_autoupdate_url()) && !$installation_error,
+		'C_DISPLAY_UPDATE_BUTTON'      => $app->get_autoupdate_url() != '' && $server_configuration->has_curl_extension() && Url::check_url_validity($app->get_autoupdate_url()) && !$installation_error,
 		'C_NEW_FEATURES'               => $has_new_feature,
 		'C_APP_WARNING'                => $has_warning,
 		'C_IMPROVEMENTS'               => $has_improvements,

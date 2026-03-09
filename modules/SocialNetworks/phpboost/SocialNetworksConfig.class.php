@@ -49,7 +49,7 @@ class SocialNetworksConfig extends AbstractConfigData
 	public function is_authentication_available($social_network_id)
 	{
 		$server_configuration = new ServerConfiguration();
-		return in_array($social_network_id, $this->get_enabled_authentications()) && $server_configuration->has_curl_library();
+		return in_array($social_network_id, $this->get_enabled_authentications()) && $server_configuration->has_curl_extension();
 	}
 
 	/**

@@ -24,7 +24,7 @@ class AdminServerStatusConfigController extends DefaultAdminModuleController
 		}
 
 		$server_configuration = new ServerConfiguration();
-		if (!$server_configuration->has_curl_library())
+		if (!$server_configuration->has_curl_extension())
 		{
 			$this->view->put('CURL_WARNING_MSG', MessageHelper::display($this->lang['server.warning.curl.extension'], MessageHelper::WARNING));
 		}

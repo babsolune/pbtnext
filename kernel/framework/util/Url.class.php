@@ -219,7 +219,7 @@ class Url
             }
 
             $server_configuration = new ServerConfiguration();
-            if ($server_configuration->has_curl_library())
+            if ($server_configuration->has_curl_extension())
             {
                 $curl = curl_init($url->absolute());
                 curl_setopt($curl, CURLOPT_NOBODY, true);

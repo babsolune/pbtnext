@@ -91,7 +91,7 @@ class UpdateDisplayResponse extends AbstractResponse
 			array('name' => $this->lang['step.list.introduction'], 'img' => 'home'),
 		);
 
-		if (!$server_configuration->is_php_compatible() || !PHPBoostFoldersPermissions::validate() || !$server_configuration->has_mbstring_library())
+		if (!$server_configuration->is_php_compatible() || !PHPBoostFoldersPermissions::validate() || !$server_configuration->has_mbstring_extension())
 			$steps[] = array('name' => $this->lang['step.list.server'], 'img' => 'cog');
 		else if ($this->current_step > 1)
 			$this->current_step--;

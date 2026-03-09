@@ -81,7 +81,7 @@ class AdminSocialNetworksConfigController extends DefaultAdminModuleController
 		$fieldset = new FormFieldsetHTML('authentication_config', $this->lang['user.authentication']);
 		$form->add_fieldset($fieldset);
 
-		if ($this->server_configuration->has_curl_library())
+		if ($this->server_configuration->has_curl_extension())
 		{
 			foreach ($this->social_networks as $id => $social_network)
 			{
@@ -148,7 +148,7 @@ class AdminSocialNetworksConfigController extends DefaultAdminModuleController
 
 	private function save()
 	{
-		if ($this->server_configuration->has_curl_library())
+		if ($this->server_configuration->has_curl_extension())
 		{
 			$authentications_enabled = array();
 			$client_ids = array();

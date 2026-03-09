@@ -162,7 +162,7 @@ class UpdateVersionExecuteController extends UpdateController
     {
         $server_configuration = new ServerConfiguration();
         if (UpdateServices::database_config_file_checked()) {
-            if ($server_configuration->is_php_compatible() && PHPBoostFoldersPermissions::validate() && $server_configuration->has_mbstring_library()) {
+            if ($server_configuration->is_php_compatible() && PHPBoostFoldersPermissions::validate() && $server_configuration->has_mbstring_extension()) {
                 $back_url = UpdateUrlBuilder::introduction();
             } else {
                 $back_url = UpdateUrlBuilder::server_configuration();

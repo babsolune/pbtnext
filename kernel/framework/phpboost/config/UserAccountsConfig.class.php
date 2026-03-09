@@ -489,7 +489,7 @@ class UserAccountsConfig extends AbstractConfigData
 			self::REGISTRATION_AGREEMENT_PROPERTY            => LangLoader::get_message('user.registration.agreement', 'user-lang'),
 			self::UNACTIVATED_ACCOUNTS_TIMEOUT_PROPERTY      => 20,
 			self::ENABLE_AVATAR_UPLOAD_PROPERTY              => FormFieldCheckbox::CHECKED,
-			self::ENABLE_AVATAR_AUTO_RESIZING                => $server_configuration->has_gd_library() ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED,
+			self::ENABLE_AVATAR_AUTO_RESIZING                => $server_configuration->has_gd_extension() ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED,
 			self::DEFAULT_AVATAR_URL_PROPERTY                => FormFieldThumbnail::DEFAULT_VALUE,
 			self::MAX_AVATAR_WIDTH_PROPERTY                  => 120,
 			self::MAX_AVATAR_HEIGHT_PROPERTY                 => 120,

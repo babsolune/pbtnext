@@ -50,7 +50,7 @@ class UpdateServerConfigController extends UpdateController
 
     private function handle_form()
     {
-        if ($this->server_conf->is_php_compatible() && PHPBoostFoldersPermissions::validate() && $this->server_conf->has_mbstring_library()) {
+        if ($this->server_conf->is_php_compatible() && PHPBoostFoldersPermissions::validate() && $this->server_conf->has_mbstring_extension()) {
             if (UpdateServices::database_config_file_checked()) {
                 $service = new UpdateServices();
                 $service->generate_update_token();
@@ -66,11 +66,11 @@ class UpdateServerConfigController extends UpdateController
         $this->view->put_all([
             'MIN_PHP_VERSION'      => ServerConfiguration::MIN_PHP_VERSION,
             'PHP_VERSION_OK'       => $this->server_conf->is_php_compatible(),
-            'HAS_GD_LIBRARY'       => $this->server_conf->has_gd_library(),
-            'HAS_CURL_LIBRARY'     => $this->server_conf->has_curl_library(),
-            'HAS_MBSTRING_LIBRARY' => $this->server_conf->has_mbstring_library(),
+            'HAS_GD_LIBRARY'       => $this->server_conf->has_gd_extension(),
+            'HAS_CURL_LIBRARY'     => $this->server_conf->has_curl_extension(),
+            'HAS_MBSTRING_LIBRARY' => $this->server_conf->has_mbstring_extension(),
         ]);
-        if (!$this->server_conf->has_mbstring_library()) {
+        if (!$this->server_conf->has_mbstring_extension()) {
             $this->view->put('C_MBSTRING_ERROR', true);
         }
         if (!PHPBoostFoldersPermissions::validate()) {

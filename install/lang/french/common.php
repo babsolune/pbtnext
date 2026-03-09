@@ -73,12 +73,14 @@ $lang['install.php.version.check.clue']              = 'Votre version PHP est <b
 $lang['install.php.version.check.description']       = '<span class="text-strong error">Obligatoire :</span> Pour faire fonctionner PHPBoost, votre serveur doit être équipé d\'une version supérieure ou égale à PHP :min_php_version. Sans cela il vous sera impossible de le faire fonctionner correctement, contactez votre hébergeur ou migrez vers un serveur plus récent.';
 $lang['install.php.extensions']                      = 'Extensions';
 $lang['install.php.extensions.check']                = 'L\'activation de ces extensions permet d\'apporter des fonctionnalités supplémentaires mais n\'est en aucun cas indispensable (sauf la librairie MBstring).';
-$lang['install.php.extensions.check.gd']             = 'Librairie GD';
-$lang['install.php.extensions.check.gd.clue']        = 'Librairie utilisée pour générer des images. Utile par exemple pour la protection anti robots, ou les diagrammes des statistiques du site. Certains modules peuvent également s\'en servir.';
-$lang['install.php.extensions.check.curl']           = 'Librairie Curl';
-$lang['install.php.extensions.check.curl.clue']      = 'Librairie utilisée pour récupération d\'éléments distants. Nécessaire pour faire fonctionner l\'authentification externe par exemple.';
-$lang['install.php.extensions.check.mbstring']       = 'Librairie MBstring';
-$lang['install.php.extensions.check.mbstring.clue']  = 'Librairie utilisée pour la gestion des caractères UTF-8. Obligatoire pour avoir un site fonctionnel.';
+$lang['install.php.extensions.check.gd']             = 'Extension GD';
+$lang['install.php.extensions.check.gd.clue']        = 'Extension utilisée pour générer des images. Utile par exemple pour la protection anti robots, ou les diagrammes des statistiques du site. Certains modules peuvent également s\'en servir.';
+$lang['install.php.extensions.check.curl']           = 'Extension Curl';
+$lang['install.php.extensions.check.curl.clue']      = 'Extension utilisée pour récupération d\'éléments distants. Nécessaire pour faire fonctionner l\'authentification externe par exemple.';
+$lang['install.php.extensions.check.zip']            = 'Extension Zip';
+$lang['install.php.extensions.check.zip.clue']       = 'Extension utilisée pour la gestion de fichiers compressés';
+$lang['install.php.extensions.check.mbstring']       = 'Extension MBstring';
+$lang['install.php.extensions.check.mbstring.clue']  = 'Extension utilisée pour la gestion des caractères UTF-8. Obligatoire pour avoir un site fonctionnel.';
 $lang['install.php.extensions.check.mbstring.error'] = 'L\'extension php <b>mbstring</b> n\'est pas activée. Veuillez l\'activer ou contactez votre hébergeur avant de pouvoir poursuivre l\'installation.';
 $lang['install.url.rewriting']                       = 'URL Rewriting';
 $lang['install.url.rewriting.clue']                  = 'Réécriture des adresses des pages qui les rend plus lisibles et plus propices au référencement sur les moteurs de recherche';
@@ -191,7 +193,7 @@ Cordialement l\'équipe PHPBoost.';
 // End of installation
 $lang['install.congratulations'] = 'Félicitations !';
 $lang['install.finish.title']    = 'Fin de l\'installation';
-$lang['install.finish.message'] = '
+$lang['install.finish.message']  = '
     <fieldset>
         <legend>PHPBoost est désormais installé !</legend>
         <div class="fielset-inset">

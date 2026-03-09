@@ -102,7 +102,7 @@ class FileSystemHelper
 
         $server_configuration = new ServerConfiguration();
 
-        if (!$server_configuration->has_curl_library() || !Url::check_url_validity($url)) {
+        if (!$server_configuration->has_curl_extension() || !Url::check_url_validity($url)) {
             return false;
         }
 
@@ -130,7 +130,7 @@ class FileSystemHelper
 
             if ($file->exists() && $downloaded_size === $original_size && $original_size === $file->get_file_size()) {
                 if ($extract_archive && $file_extension === 'zip') {
-                    if ($server_configuration->has_zip_library()) {
+                    if ($server_configuration->has_zip_extension()) {
                         $zip_archive = new ZipArchive();
                         if ($zip_archive->open($file_name) === true) {
                             $zip_archive->extractTo($destination_path);
@@ -161,7 +161,7 @@ class FileSystemHelper
     {
         $server_configuration = new ServerConfiguration();
 
-        if ($server_configuration->has_curl_library() && Url::check_url_validity($url)) {
+        if ($server_configuration->has_curl_extension() && Url::check_url_validity($url)) {
             $ch = curl_init($url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_HEADER, 0);

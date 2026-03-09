@@ -107,7 +107,7 @@ foreach ($updates as $update)
 
 $server_configuration = new ServerConfiguration();
 $view->put_all(array(
-	'C_AUTOMATIC_UPDATE_CHECK_AVAILABLE' => ((function_exists('simplexml_load_file') && $server_configuration->has_allow_url_fopen()) || (function_exists('simplexml_load_string') && $server_configuration->has_curl_library())),
+	'C_AUTOMATIC_UPDATE_CHECK_AVAILABLE' => ((function_exists('simplexml_load_file') && $server_configuration->has_allow_url_fopen()) || (function_exists('simplexml_load_string') && $server_configuration->has_curl_extension())),
 	'C_UPDATES'                          => $updates_availables,
 	'U_CHECK'                            => 'updates.php?check=1' . (!empty($update_type) ? '&amp;type=' . $update_type : '') . '&amp;token=' . AppContext::get_session()->get_token(),
 ));

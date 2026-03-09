@@ -83,7 +83,7 @@ class ServerConfiguration
 	/**
 	 * @return bool true if GD library is available.
 	 */
-	public function has_gd_library()
+	public function has_gd_extension()
 	{
 		return @extension_loaded('gd');
 	}
@@ -91,7 +91,7 @@ class ServerConfiguration
 	/**
 	 * @return bool true if curl library is available.
 	 */
-	public function has_curl_library()
+	public function has_curl_extension()
 	{
 		return @extension_loaded('curl');
 	}
@@ -99,7 +99,7 @@ class ServerConfiguration
 	/**
 	 * @return bool true if MBstring (UTF-8) library is available.
 	 */
-	public function has_mbstring_library()
+	public function has_mbstring_extension()
 	{
 		return @extension_loaded('mbstring');
 	}
@@ -107,7 +107,7 @@ class ServerConfiguration
 	/**
 	 * @return bool true if zip library is available.
 	 */
-	public function has_zip_library()
+	public function has_zip_extension()
 	{
 		return @extension_loaded('zip');
 	}

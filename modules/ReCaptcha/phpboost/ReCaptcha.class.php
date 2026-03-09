@@ -50,7 +50,7 @@ class ReCaptcha extends Captcha
 			$validation_url = self::$_siteVerifyUrl . "?secret=" . $this->config->get_secret_key() . "&response=" . $request->get_postvalue('g-recaptcha-response', '');
 
 			$server_configuration = new ServerConfiguration();
-			if ($server_configuration->has_curl_library())
+			if ($server_configuration->has_curl_extension())
 			{
 				$curl = curl_init();
 				curl_setopt($curl, CURLOPT_URL, $validation_url);

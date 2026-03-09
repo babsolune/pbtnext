@@ -79,7 +79,7 @@ class ContentSecondParser extends AbstractParser
 		if (TextHelper::strpos($this->content, '[[MATH]]') !== false)
 		{
 			$server_config = new ServerConfiguration();
-			if ($server_config->has_gd_library())
+			if ($server_config->has_gd_extension())
 			{
 				require_once PATH_TO_ROOT . '/kernel/lib/php/mathpublisher/mathpublisher.php';
 				$this->content = preg_replace_callback('`\[\[MATH\]\](.+)\[\[/MATH\]\]`suU', array($this, 'math_code'), $this->content);

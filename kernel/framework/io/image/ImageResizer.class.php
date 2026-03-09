@@ -142,7 +142,7 @@ class ImageResizer
 	private function assert_gd_extension_is_loaded()
 	{
 		$server_configuration = new ServerConfiguration();
-		if (!$server_configuration->has_gd_library())
+		if (!$server_configuration->has_gd_extension())
 		{
 			throw new Exception('The GD extension is required but not loaded.');
 		}
