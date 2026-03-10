@@ -20,7 +20,7 @@ if (version_compare(phpversion(), ServerConfiguration::MIN_PHP_VERSION, '<') == 
 UpdateEnvironment::init();
 
 $permissions = PHPBoostFoldersPermissions::get_permissions();
-if (!$permissions['/cache']->is_writable() || !$permissions['/cache/tpl']->is_writable())
+if (!$permissions['/cache']->is_writable() || !$permissions['/cache/tpl']->is_writable() || !$permissions['/cache/js']->is_writable())
 {
 	die('Cache folder is not writable (/cache)');
 }

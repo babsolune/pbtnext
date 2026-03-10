@@ -41,8 +41,7 @@ class InstallLicenseController extends InstallController
 
 	private function build_form()
 	{
-        $server_configuration = new ServerConfiguration();
-        if ($server_configuration->is_php_compatible() && PHPBoostFoldersPermissions::validate() && $server_configuration->has_mbstring_extension())
+        if (InstallationServices::check_server())
         {
             $redirect_url = InstallUrlBuilder::database()->rel();
         }

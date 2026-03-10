@@ -85,13 +85,12 @@ class InstallDisplayResponse extends AbstractResponse
 
     private function init_steps()
     {
-        $server_configuration = new ServerConfiguration();
         $steps = [
             ['name' => $this->lang['install.step.introduction'], 'img' => 'home'],
             ['name' => $this->lang['install.step.license'], 'img' => 'file'],
         ];
 
-        if (!$server_configuration->is_php_compatible() || !PHPBoostFoldersPermissions::validate() || !$server_configuration->has_mbstring_extension())
+        if (!InstallationServices::check_server())
             $steps[] = ['name' => $this->lang['install.step.server'], 'img' => 'cog'];
         else if ($this->current_step > 1)
             $this->current_step--;

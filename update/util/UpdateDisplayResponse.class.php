@@ -83,13 +83,12 @@ class UpdateDisplayResponse extends AbstractResponse
 	private function init_steps($step_number)
 	{
 		$this->current_step = $step_number;
-		$server_configuration = new ServerConfiguration();
 
 		$steps = [
 			['name' => $this->lang['step.list.introduction'], 'img' => 'home'],
         ];
 
-		if (!$server_configuration->is_php_compatible() || !PHPBoostFoldersPermissions::validate() || !$server_configuration->has_mbstring_extension())
+		if (!UpdateServices::check_server())
 			$steps[] = ['name' => $this->lang['step.list.server'], 'img' => 'cog'];
 		else if ($this->current_step > 1)
 			$this->current_step--;

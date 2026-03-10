@@ -68,7 +68,7 @@ class InstallServerConfigController extends InstallController
 
 	private function build_view()
 	{
-		$this->view = new FileTemplate('install/server-config.tpl');
+		$this->view = new FileTemplate('install/server.tpl');
 		$this->view->put_all([
 			'MIN_PHP_VERSION'      => ServerConfiguration::MIN_PHP_VERSION,
 			'PHP_VERSION'          => $this->server_conf->get_phpversion(),

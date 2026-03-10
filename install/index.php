@@ -22,7 +22,7 @@ if (version_compare(phpversion(), ServerConfiguration::MIN_PHP_VERSION, '<') == 
 InstallEnvironment::init();
 
 $permissions = PHPBoostFoldersPermissions::get_permissions();
-if (!$permissions['/cache']->is_writable() || !$permissions['/cache/tpl']->is_writable())
+if (!$permissions['/cache']->is_writable() || !$permissions['/cache/tpl']->is_writable() || !$permissions['/cache/js']->is_writable())
 {
 	die(LangLoader::get_message('install.chmod.cache.not.writable', 'common', 'install'));
 }

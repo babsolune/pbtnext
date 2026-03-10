@@ -68,6 +68,7 @@ class UpdateServerConfigController extends UpdateController
             'PHP_VERSION_OK'       => $this->server_conf->is_php_compatible(),
             'HAS_GD_LIBRARY'       => $this->server_conf->has_gd_extension(),
             'HAS_CURL_LIBRARY'     => $this->server_conf->has_curl_extension(),
+            'HAS_ZIP_LIBRARY'      => $this->server_conf->has_zip_extension(),
             'HAS_MBSTRING_LIBRARY' => $this->server_conf->has_mbstring_extension(),
         ]);
         if (!$this->server_conf->has_mbstring_extension()) {

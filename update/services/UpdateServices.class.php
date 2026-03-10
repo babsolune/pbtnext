@@ -133,6 +133,18 @@ class UpdateServices
         return true;
     }
 
+    public static function check_server()
+    {
+        $server_configuration = new ServerConfiguration();
+        return
+            PHPBoostFoldersPermissions::validate()
+            && $server_configuration->is_php_compatible()
+            && $server_configuration->has_gd_extension()
+            && $server_configuration->has_curl_extension()
+            && $server_configuration->has_zip_extension()
+            && $server_configuration->has_mbstring_extension();
+    }
+
     private function write_connection_config_file(array $db_connection_data, $tables_prefix)
     {
         $db_config_content = '<?php' . "\n" .

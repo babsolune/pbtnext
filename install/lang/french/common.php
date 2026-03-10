@@ -72,7 +72,7 @@ $lang['install.php.version.check']                   = 'PHP version minimum :min
 $lang['install.php.version.check.clue']              = 'Votre version PHP est <b>:php_version</b>';
 $lang['install.php.version.check.description']       = '<span class="text-strong error">Obligatoire :</span> Pour faire fonctionner PHPBoost, votre serveur doit être équipé d\'une version supérieure ou égale à PHP :min_php_version. Sans cela il vous sera impossible de le faire fonctionner correctement, contactez votre hébergeur ou migrez vers un serveur plus récent.';
 $lang['install.php.extensions']                      = 'Extensions';
-$lang['install.php.extensions.check']                = 'L\'activation de ces extensions permet d\'apporter des fonctionnalités supplémentaires mais n\'est en aucun cas indispensable (sauf la librairie MBstring).';
+$lang['install.php.extensions.check']                = 'L\'activation de ces extensions permet d\'apporter des fonctionnalités supplémentaires et sont indispensables au bon fonctionnement de PHPBoost.';
 $lang['install.php.extensions.check.gd']             = 'Extension GD';
 $lang['install.php.extensions.check.gd.clue']        = 'Extension utilisée pour générer des images. Utile par exemple pour la protection anti robots, ou les diagrammes des statistiques du site. Certains modules peuvent également s\'en servir.';
 $lang['install.php.extensions.check.curl']           = 'Extension Curl';

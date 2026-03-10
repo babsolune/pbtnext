@@ -195,6 +195,18 @@ class InstallationServices
 		$this->distribution_config = parse_ini_file(PATH_TO_ROOT . '/install/distribution.ini');
 	}
 
+    public static function check_server()
+    {
+        $server_configuration = new ServerConfiguration();
+        return
+            PHPBoostFoldersPermissions::validate()
+            && $server_configuration->is_php_compatible()
+            && $server_configuration->has_gd_extension()
+            && $server_configuration->has_curl_extension()
+            && $server_configuration->has_zip_extension()
+            && $server_configuration->has_mbstring_extension();
+    }
+
 	private function generate_website_configuration($server_url, $server_path, $site_name, $site_slogan = '', $site_desc = '', $site_timezone = '')
 	{
 		$locale = LangLoader::get_locale();
