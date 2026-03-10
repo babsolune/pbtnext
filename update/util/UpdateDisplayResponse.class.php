@@ -16,8 +16,6 @@ class UpdateDisplayResponse extends AbstractResponse
 
 	private $lang;
 
-	private $distribution_lang;
-
 	private $current_step = 0;
 
 	private $steps_number;
@@ -41,7 +39,7 @@ class UpdateDisplayResponse extends AbstractResponse
 			'STEP_TITLE' => $step_title,
 			'C_HAS_PREVIOUS_STEP' => false,
 			'C_HAS_NEXT_STEP' => false,
-			'L_XML_LANGUAGE' => LangLoader::get_message('common.xml.lang', 'common-lang'),
+			'L_XML_LANGUAGE' => $this->lang['common.xml.lang'],
 			'PROGRESSION' => floor(100 * $this->current_step / $this->steps_number)
 		));
 
@@ -58,7 +56,7 @@ class UpdateDisplayResponse extends AbstractResponse
 
 	public function load_language_resources()
 	{
-		$this->lang = LangLoader::get('update', 'update');
+		$this->lang = LangLoader::get_all_langs('update');
 	}
 
 	private function add_language_bar()
@@ -87,22 +85,22 @@ class UpdateDisplayResponse extends AbstractResponse
 		$this->current_step = $step_number;
 		$server_configuration = new ServerConfiguration();
 
-		$steps = array(
-			array('name' => $this->lang['step.list.introduction'], 'img' => 'home'),
-		);
+		$steps = [
+			['name' => $this->lang['step.list.introduction'], 'img' => 'home'],
+        ];
 
 		if (!$server_configuration->is_php_compatible() || !PHPBoostFoldersPermissions::validate() || !$server_configuration->has_mbstring_extension())
-			$steps[] = array('name' => $this->lang['step.list.server'], 'img' => 'cog');
+			$steps[] = ['name' => $this->lang['step.list.server'], 'img' => 'cog'];
 		else if ($this->current_step > 1)
 			$this->current_step--;
 
 		if (!UpdateServices::database_config_file_checked())
-			$steps[] = array('name' => $this->lang['step.list.database'], 'img' => 'server');
+			$steps[] = ['name' => $this->lang['step.list.database'], 'img' => 'server'];
 		else if ($this->current_step > 2)
 			$this->current_step--;
 
-		$steps[] = array('name' => $this->lang['step.list.execute'], 'img' => 'sync-alt');
-		$steps[] = array('name' => $this->lang['step.list.end'], 'img' => 'check');
+		$steps[] = ['name' => $this->lang['step.list.execute'], 'img' => 'sync-alt'];
+		$steps[] = ['name' => $this->lang['step.list.end'], 'img' => 'check'];
 
 		$this->steps_number = count($steps);
 		$this->full_view->put('STEPS_NUMBER', $this->steps_number);

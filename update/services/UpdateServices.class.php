@@ -31,7 +31,6 @@ class UpdateServices
     private static DBQuerier $db_querier;
     private File $token;
     private File $update_log_file;
-    private array $messages;
 
     public function __construct($locale = '', $delete_update_log_file = true)
     {
@@ -47,8 +46,6 @@ class UpdateServices
         if (!empty($locale)) {
             LangLoader::set_locale($locale);
         }
-
-        $this->messages = LangLoader::get_all_langs('update');
     }
 
     public function is_already_installed(string $tables_prefix): bool

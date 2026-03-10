@@ -20,25 +20,27 @@ abstract class UpdateController extends AbstractController
         $locale = TextHelper::htmlspecialchars($request->get_string('lang', UpdateController::DEFAULT_LOCALE));
         LangLoader::set_locale($locale);
         UpdateUrlBuilder::set_locale($locale);
-        $this->lang = LangLoader::get('update', 'update');
+        $this->lang = LangLoader::get_all_langs('update');
     }
 
     protected function redirect_to_https_if_needed(HTTPRequestCustom $request)
     {
-        if (!$request->get_is_https() && @extension_loaded('curl')) {
+        if (!$request->get_is_https() && @extension_loaded('curl'))
+        {
             $status = 0;
             $curl   = curl_init(str_replace('http://', 'https://', $request->get_site_url()));
             curl_setopt($curl, CURLOPT_NOBODY, true);
             $result = curl_exec($curl);
 
-            if (false !== $result) {
+            if (false !== $result)
+            {
                 $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
             }
-            if (\PHP_VERSION_ID  < 80100) {
+            if (\PHP_VERSION_ID  < 80100)
                 curl_close($curl);
-            }
 
-            if ($status >= 200 && $status < 400) {
+            if ($status >= 200 && $status < 400)
+            {
                 header('HTTP/1.1 301 Moved Permanently');
                 header('Location: ' . str_replace('http://', 'https://', $request->get_current_url()));
                 exit;

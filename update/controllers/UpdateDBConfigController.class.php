@@ -15,7 +15,8 @@ class UpdateDBConfigController extends UpdateController
 {
     private Template $view;
     private HTMLForm $form;
-    private FormButtonSubmit $submit_button;
+    /** @var FormButtonSubmit*/
+    private $submit_button;
     private FormFieldsetHTML $overwrite_fieldset;
     private FormFieldCheckbox $overwrite_field;
     private $error = null;
@@ -40,37 +41,52 @@ class UpdateDBConfigController extends UpdateController
     {
         $this->form = new HTMLForm('databaseForm', '', false);
 
-        $fieldset_server = new FormFieldsetHTML('serverConfig', $this->lang['dbms.parameters']);
-        $this->form->add_fieldset($fieldset_server);
+        $fieldset = new FormFieldsetHTML('serverConfig', $this->lang['dbms.parameters']);
+        $this->form->add_fieldset($fieldset);
 
-        $fieldset_server->add_field(new FormFieldTextEditor('host', $this->lang['dbms.host'], 'localhost',
-            ['description' => $this->lang['dbms.host.clue'], 'required' => $this->lang['db.required.host']]
+        $fieldset->add_field(new FormFieldTextEditor('host', $this->lang['dbms.host'], 'localhost',
+            [
+                'class' => 'half-field',
+                'description' => $this->lang['dbms.host.clue'], 'required' => $this->lang['db.required.host']
+            ]
         ));
 
-        $fieldset_server->add_field($port = new FormFieldTextEditor('port', $this->lang['dbms.port'], '3306',
-            ['description' => $this->lang['dbms.port.clue'], 'required' => $this->lang['db.required.port']]
+        $fieldset->add_field($port = new FormFieldTextEditor('port', $this->lang['dbms.port'], '3306',
+            [
+                'class' => 'half-field',
+                'description' => $this->lang['dbms.port.clue'], 'required' => $this->lang['db.required.port']
+            ]
         ));
         $port->add_constraint(new FormFieldConstraintIntegerRange(1, 65536));
 
-        $fieldset_server->add_field(new FormFieldTextEditor('login', $this->lang['dbms.login'], 'root',
-            ['description' => $this->lang['dbms.login.clue'], 'required' => $this->lang['db.required.login']]
+        $fieldset->add_field(new FormFieldTextEditor('login', $this->lang['dbms.login'], 'root',
+            [
+                'class' => 'half-field',
+                'description' => $this->lang['dbms.login.clue'], 'required' => $this->lang['db.required.login']
+            ]
         ));
 
-        $fieldset_server->add_field(new FormFieldPasswordEditor('password', $this->lang['dbms.password'], '',
-            ['description' => $this->lang['dbms.password.clue']]
+        $fieldset->add_field(new FormFieldPasswordEditor('password', $this->lang['dbms.password'], '',
+            [
+                'class' => 'half-field',
+                'description' => $this->lang['dbms.password.clue']
+            ]
         ));
 
-        $fieldset_schema = new FormFieldsetHTML('schemaConfig', $this->lang['schema.properties']);
-        $this->form->add_fieldset($fieldset_schema);
-
-        $fieldset_schema->add_field($schema = new FormFieldTextEditor('schema', $this->lang['schema'], '',
-            ['required' => $this->lang['db.required.schema']],
+        $fieldset->add_field($schema = new FormFieldTextEditor('schema', $this->lang['schema'], '',
+            [
+                'class' => 'half-field',
+                'required' => $this->lang['db.required.schema']
+            ],
             [new FormFieldConstraintRegex('`^[a-z0-9_-]+$`iu')]
         ));
         $schema->add_event('change', '$FFS(\'overwriteFieldset\').disable()');
 
-        $fieldset_schema->add_field(new FormFieldTextEditor('tablesPrefix', $this->lang['schema.tablePrefix'], 'phpboost_',
-            ['description' => $this->lang['schema.tablePrefix.clue']],
+        $fieldset->add_field(new FormFieldTextEditor('tablesPrefix', $this->lang['schema.tablePrefix'], 'phpboost_',
+            [
+                'class' => 'half-field',
+                'description' => $this->lang['schema.tablePrefix.clue']
+            ],
             [new FormFieldConstraintRegex('`^[a-z0-9_]+$`iu')]
         ));
 
@@ -78,7 +94,7 @@ class UpdateDBConfigController extends UpdateController
 
         $action_fieldset->add_element(new FormButtonLinkCssImg($this->lang['step.previous'], UpdateUrlBuilder::server_configuration(), 'fa fa-arrow-left'));
         $action_fieldset->add_element(new FormButtonSubmitCssImg($this->lang['db.config.check'], 'fa fa-sync', 'database'));
-        $action_fieldset->add_element(new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'database'));
+        $action_fieldset->add_element($this->submit_button = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'database'));
 
         $this->form->add_fieldset($action_fieldset);
     }

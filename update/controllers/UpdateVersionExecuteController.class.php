@@ -46,15 +46,22 @@ class UpdateVersionExecuteController extends UpdateController
     {
         $incompatible_modules = $this->get_incompatible_modules_list();
 
-        if ($incompatible_modules) {
+        if ($incompatible_modules)
+        {
             $message = StringVars::replace_vars(count($incompatible_modules) > 1 ? $this->lang['step.execute.incompatible_modules'] : $this->lang['step.execute.incompatible_module'], ['modules' => '<b>' . implode('</b>, <b>', $incompatible_modules) . '</b>']);
 
-            if ($this->default_module_changed) {
-                if (ModulesManager::is_module_installed('news') && ModulesManager::get_module('news')->get_configuration()->get_compatibility() == UpdateServices::NEW_KERNEL_VERSION) {
+            if ($this->default_module_changed)
+            {
+                if (ModulesManager::is_module_installed('news') && ModulesManager::get_module('news')->get_configuration()->get_compatibility() == UpdateServices::NEW_KERNEL_VERSION)
+                {
                     $new_default = 'news';
-                } elseif (ModulesManager::is_module_installed('articles') && ModulesManager::get_module('articles')->get_configuration()->get_compatibility() == UpdateServices::NEW_KERNEL_VERSION) {
+                }
+                elseif (ModulesManager::is_module_installed('articles') && ModulesManager::get_module('articles')->get_configuration()->get_compatibility() == UpdateServices::NEW_KERNEL_VERSION)
+                {
                     $new_default = 'articles';
-                } else {
+                }
+                else
+                {
                     $new_default = 'forum';
                 }
 
@@ -66,10 +73,12 @@ class UpdateVersionExecuteController extends UpdateController
 
         $incompatible_themes = $this->get_incompatible_themes_list();
 
-        if ($incompatible_themes) {
+        if ($incompatible_themes)
+        {
             $message = StringVars::replace_vars(count($incompatible_themes) > 1 ? $this->lang['step.execute.incompatible_themes'] : $this->lang['step.execute.incompatible_theme'], ['themes' => '<b>' . implode('</b>, <b>', $incompatible_themes) . '</b>']);
 
-            if ($this->default_theme_changed) {
+            if ($this->default_theme_changed)
+            {
                 $message .= StringVars::replace_vars($this->lang['step.execute.incompatible_theme.default'], ['old_default' => ThemesManager::get_theme($this->user_accounts_config->get_default_theme())->get_configuration()->get_name(), 'new_default' => 'Base']);
             }
 
@@ -78,10 +87,12 @@ class UpdateVersionExecuteController extends UpdateController
 
         $incompatible_langs = $this->get_incompatible_langs_list();
 
-        if ($incompatible_langs) {
+        if ($incompatible_langs)
+        {
             $message = StringVars::replace_vars(count($incompatible_langs) > 1 ? $this->lang['step.execute.incompatible_langs'] : $this->lang['step.execute.incompatible_lang'], ['langs' => '<b>' . implode('</b>, <b>', $incompatible_langs) . '</b>']);
 
-            if ($this->default_lang_changed) {
+            if ($this->default_lang_changed)
+            {
                 $message .= StringVars::replace_vars($this->lang['step.execute.incompatible_lang.default'], ['old_default' => LangsManager::get_lang($this->user_accounts_config->get_default_lang())->get_configuration()->get_name(), 'new_default' => LangsManager::get_lang(LangLoader::get_locale())->get_configuration()->get_name()]);
             }
 
@@ -93,13 +104,15 @@ class UpdateVersionExecuteController extends UpdateController
     {
         $list = [];
 
-        foreach (ModulesManager::get_installed_modules_map() as $module) {
-            if ($module->get_configuration()->get_compatibility() != UpdateServices::NEW_KERNEL_VERSION) {
+        foreach (ModulesManager::get_installed_modules_map() as $module)
+        {
+            if ($module->get_configuration()->get_compatibility() != UpdateServices::NEW_KERNEL_VERSION)
+            {
                 $list[] = $module->get_configuration()->get_name();
-                if ($this->general_config->get_module_home_page() == $module->get_id()) {
+                if ($this->general_config->get_module_home_page() == $module->get_id())
+                {
                     $this->default_module_changed = true;
                 }
-
             }
         }
 
@@ -110,13 +123,15 @@ class UpdateVersionExecuteController extends UpdateController
     {
         $list = [];
 
-        foreach (ThemesManager::get_installed_themes_map() as $theme) {
-            if ($theme->get_configuration()->get_compatibility() != UpdateServices::NEW_KERNEL_VERSION) {
+        foreach (ThemesManager::get_installed_themes_map() as $theme)
+        {
+            if ($theme->get_configuration()->get_compatibility() != UpdateServices::NEW_KERNEL_VERSION)
+            {
                 $list[] = $theme->get_configuration()->get_name();
-                if ($this->user_accounts_config->get_default_theme() == $theme->get_id()) {
+                if ($this->user_accounts_config->get_default_theme() == $theme->get_id())
+                {
                     $this->default_theme_changed = true;
                 }
-
             }
         }
 
@@ -127,13 +142,15 @@ class UpdateVersionExecuteController extends UpdateController
     {
         $list = [];
 
-        foreach (LangsManager::get_installed_langs_map() as $lang) {
-            if ($lang->get_configuration()->get_compatibility() != UpdateServices::NEW_KERNEL_VERSION) {
+        foreach (LangsManager::get_installed_langs_map() as $lang)
+        {
+            if ($lang->get_configuration()->get_compatibility() != UpdateServices::NEW_KERNEL_VERSION)
+            {
                 $list[] = $lang->get_configuration()->get_name();
-                if ($this->user_accounts_config->get_default_lang() == $lang->get_id()) {
+                if ($this->user_accounts_config->get_default_lang() == $lang->get_id())
+                {
                     $this->default_lang_changed = true;
                 }
-
             }
         }
 
@@ -161,14 +178,19 @@ class UpdateVersionExecuteController extends UpdateController
     private function add_navigation(Template $view)
     {
         $server_configuration = new ServerConfiguration();
-        if (UpdateServices::database_config_file_checked()) {
-            if ($server_configuration->is_php_compatible() && PHPBoostFoldersPermissions::validate() && $server_configuration->has_mbstring_extension()) {
+        if (UpdateServices::database_config_file_checked())
+        {
+            if ($server_configuration->is_php_compatible() && PHPBoostFoldersPermissions::validate() && $server_configuration->has_mbstring_extension())
+            {
                 $back_url = UpdateUrlBuilder::introduction();
-            } else {
+            }
+            else
+            {
                 $back_url = UpdateUrlBuilder::server_configuration();
             }
-
-        } else {
+        }
+        else
+        {
             $back_url = UpdateUrlBuilder::database();
         }
 

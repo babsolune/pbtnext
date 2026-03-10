@@ -1,4 +1,4 @@
-${resources('update/update')}
+${resources('update/common')}
 <!DOCTYPE html>
 <html lang="{L_XML_LANGUAGE}">
 	<head>

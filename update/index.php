@@ -31,7 +31,7 @@ if ($_GET || $_POST)
 
 	if (!empty($arguments_list))
 	{
-		$argv = array('phpboost', 'update');
+		$argv = ['phpboost', 'update'];
 		$update_requested = false;
 		foreach ($arguments_list as $id => $arg)
 		{
@@ -58,13 +58,13 @@ if ($_GET || $_POST)
 	}
 }
 
-$url_controller_mappers = array(
+$url_controller_mappers = [
 	new UrlControllerMapper('UpdateIntroductionController', '`^(?:/introduction)?/?$`'),
 	new UrlControllerMapper('UpdateServerConfigController', '`^/server/?$`'),
 	new UrlControllerMapper('UpdateDBConfigController', '`^/database/?$`'),
 	new UrlControllerMapper('UpdateVersionExecuteController', '`^/execute/?$`'),
 	new UrlControllerMapper('UpdateFinishController', '`^/finish/?$`')
-);
+];
 DispatchManager::dispatch($url_controller_mappers);
 
 ?>

@@ -62,7 +62,7 @@ class UpdateServerConfigController extends UpdateController
 
     private function build_view()
     {
-        $this->view = new FileTemplate('update/server-config.tpl');
+        $this->view = new FileTemplate('update/server.tpl');
         $this->view->put_all([
             'MIN_PHP_VERSION'      => ServerConfiguration::MIN_PHP_VERSION,
             'PHP_VERSION_OK'       => $this->server_conf->is_php_compatible(),
