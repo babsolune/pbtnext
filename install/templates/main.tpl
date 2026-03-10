@@ -20,6 +20,7 @@ ${resources('install/common')}
 		<script src="{PATH_TO_ROOT}/templates/__default__/plugins/@global.js"></script>
 		<script src="{PATH_TO_ROOT}/templates/__default__/plugins/selectimg.js"></script>
 		<script src="{PATH_TO_ROOT}/templates/__default__/plugins/tooltip.js"></script>
+		<script src="{PATH_TO_ROOT}/templates/__default__/plugins/tabs.js"></script>
 		<link rel="shortcut icon" href="{PATH_TO_ROOT}/favicon.ico" type="image/x-icon" />
 	</head>
 	<body>

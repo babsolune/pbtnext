@@ -57,67 +57,94 @@ class InstallWebsiteConfigController extends InstallController
     private function build_form()
     {
         $this->form = new HTMLForm('websiteForm', '', false);
+                // Tabs start
+        $tabs_start = new FormFieldsetCapsTop('tabs_start');
+        $tabs_start->set_css_class('tabs-container');
+        $this->form->add_fieldset($tabs_start);
 
-        $fieldset = new FormFieldsetHTML('yourSite', $this->lang['install.website.yours']);
-        $this->form->add_fieldset($fieldset);
+        // Tabs menu
+		$fieldset_tabs_menu = new TabsNavFieldset('tabs_menu', '');
+		$this->form->add_fieldset($fieldset_tabs_menu);
 
-        $host = new FormFieldUrlEditor('host', $this->lang['install.website.host'], $this->current_server_host(),
+        $fieldset_tabs_menu->add_field(new TabsNavList('tabs_menu_module',
             [
-                'description' => $this->lang['install.website.host.clue'],
-                'required'    => $this->lang['install.website.host.required'],
-            ]
-        );
-        $host->add_event('change', $this->warning_if_not_equals($host, $this->lang['install.website.host.warning']));
-        $fieldset->add_field($host);
-
-        $path = new FormFieldTextEditor('path', $this->lang['install.website.path'], $this->current_server_path(),
-            ['description' => $this->lang['install.website.path.clue']]
-        );
-        $path->add_event('change', $this->warning_if_not_equals($path, $this->lang['install.website.path.warning']));
-        $fieldset->add_field($path);
-
-        $fieldset->add_field(new FormFieldTextEditor('name', $this->lang['install.website.name'], '',
-            ['required' => $this->lang['install.website.name.required']]
-        ));
-
-        $fieldset->add_field(new FormFieldTextEditor('slogan', $this->lang['install.website.slogan'], ''));
-
-        $fieldset->add_field(new FormFieldMultiLineTextEditor('description', $this->lang['install.website.description'], '',
-            ['description' => $this->lang['install.website.description.clue']]
-        ));
-
-        $fieldset->add_field(new FormFieldTimezone('timezone', $this->lang['install.website.timezone'], 'Europe/Paris',
-            ['description' => $this->lang['install.website.timezone.clue']]
-        ));
-
-        $fieldset = new FormFieldsetHTML('security_config', $this->lang['user.security']);
-        $this->form->add_fieldset($fieldset);
-
-        $fieldset->add_field(new FormFieldNumberEditor('internal_password_min_length', $this->lang['user.password.min.length'], $this->security_config->get_internal_password_min_length(),
-            ['min' => 6, 'max' => 30],
-            [new FormFieldConstraintRegex('`^[0-9]+$`iu'), new FormFieldConstraintIntegerRange(6, 30)]
-        ));
-
-        $fieldset->add_field(new FormFieldSimpleSelectChoice('internal_password_strength', $this->lang['user.password.strength'], $this->security_config->get_internal_password_strength(),
-            [
-                new FormFieldSelectChoiceOption($this->lang['user.password.strength.weak'], SecurityConfig::PASSWORD_STRENGTH_WEAK),
-                new FormFieldSelectChoiceOption($this->lang['user.password.strength.medium'], SecurityConfig::PASSWORD_STRENGTH_MEDIUM),
-                new FormFieldSelectChoiceOption($this->lang['user.password.strength.strong'], SecurityConfig::PASSWORD_STRENGTH_STRONG),
-                new FormFieldSelectChoiceOption($this->lang['user.password.strength.very.strong'], SecurityConfig::PASSWORD_STRENGTH_VERY_STRONG),
+                new TabsNavElement($this->lang['install.website.yours'], 'websiteForm_yourSite', ),
+                new TabsNavElement($this->lang['user.security'], 'websiteForm_security_config', '', '', '', 'bgc warning'),
+                new TabsNavElement($this->lang['install.website.captcha.config'], 'websiteForm_captcha_config', '', '', '', 'bgc moderator'),
             ]
         ));
 
-        $fieldset->add_field(new FormFieldCheckbox('login_and_email_forbidden_in_password', $this->lang['user.password.forbidden.tag'], $this->security_config->are_login_and_email_forbidden_in_password(),
-            ['class' => 'custom-checkbox']
-        ));
+        // Tabs content
+        $caps_wrapper_top = new FormFieldsetCapsTop('content_start');
+        $caps_wrapper_top->set_css_class('tabs-wrapper');
+        $this->form->add_fieldset($caps_wrapper_top);
+
+        $fieldset = new TabsContentFieldset('yourSite', $this->lang['install.website.yours']);
+            $this->form->add_fieldset($fieldset);
+
+            $host = new FormFieldUrlEditor('host', $this->lang['install.website.host'], $this->current_server_host(),
+                [
+                    'description' => $this->lang['install.website.host.clue'],
+                    'required'    => $this->lang['install.website.host.required'],
+                ]
+            );
+            $host->add_event('change', $this->warning_if_not_equals($host, $this->lang['install.website.host.warning']));
+            $fieldset->add_field($host);
+
+            $path = new FormFieldTextEditor('path', $this->lang['install.website.path'], $this->current_server_path(),
+                ['description' => $this->lang['install.website.path.clue']]
+            );
+            $path->add_event('change', $this->warning_if_not_equals($path, $this->lang['install.website.path.warning']));
+            $fieldset->add_field($path);
+
+            $fieldset->add_field(new FormFieldTextEditor('name', $this->lang['install.website.name'], '',
+                ['required' => $this->lang['install.website.name.required']]
+            ));
+
+            $fieldset->add_field(new FormFieldTextEditor('slogan', $this->lang['install.website.slogan'], ''));
+
+            $fieldset->add_field(new FormFieldMultiLineTextEditor('description', $this->lang['install.website.description'], '',
+                ['description' => $this->lang['install.website.description.clue']]
+            ));
+
+            $fieldset->add_field(new FormFieldTimezone('timezone', $this->lang['install.website.timezone'], 'Europe/Paris',
+                ['description' => $this->lang['install.website.timezone.clue']]
+            ));
+
+        $fieldset = new TabsContentFieldset('security_config', $this->lang['user.security']);
+            $this->form->add_fieldset($fieldset);
+
+            $fieldset->add_field(new FormFieldNumberEditor('internal_password_min_length', $this->lang['user.password.min.length'], $this->security_config->get_internal_password_min_length(),
+                ['min' => 6, 'max' => 30],
+                [new FormFieldConstraintRegex('`^[0-9]+$`iu'), new FormFieldConstraintIntegerRange(6, 30)]
+            ));
+
+            $fieldset->add_field(new FormFieldSimpleSelectChoice('internal_password_strength', $this->lang['user.password.strength'], $this->security_config->get_internal_password_strength(),
+                [
+                    new FormFieldSelectChoiceOption($this->lang['user.password.strength.weak'], SecurityConfig::PASSWORD_STRENGTH_WEAK),
+                    new FormFieldSelectChoiceOption($this->lang['user.password.strength.medium'], SecurityConfig::PASSWORD_STRENGTH_MEDIUM),
+                    new FormFieldSelectChoiceOption($this->lang['user.password.strength.strong'], SecurityConfig::PASSWORD_STRENGTH_STRONG),
+                    new FormFieldSelectChoiceOption($this->lang['user.password.strength.very.strong'], SecurityConfig::PASSWORD_STRENGTH_VERY_STRONG),
+                ]
+            ));
+
+            $fieldset->add_field(new FormFieldCheckbox('login_and_email_forbidden_in_password', $this->lang['user.password.forbidden.tag'], $this->security_config->are_login_and_email_forbidden_in_password(),
+                ['class' => 'custom-checkbox']
+            ));
 
         if ($this->distribution_config['default_captcha']) {
-            $fieldset = new FormFieldsetHTML('captcha_config', $this->lang['install.website.captcha.config']);
+            $fieldset = new TabsContentFieldset('captcha_config', $this->lang['install.website.captcha.config']);
             $this->form->add_fieldset($fieldset);
 
             $default_captcha = $this->distribution_config['default_captcha'];
             $default_captcha::display_config_form_fields($fieldset, $this->locale);
         }
+
+        $tabs_wrapper_bottom = new FormFieldsetCapsBottom('content_end');
+        $this->form->add_fieldset($tabs_wrapper_bottom);
+
+        $tabs_end = new FormFieldsetCapsBottom('tabs_end');
+        $this->form->add_fieldset($tabs_end);
 
         $action_fieldset = new FormFieldsetSubmit('actions', ['css_class' => 'fieldset-submit next-step']);
         $back            = new FormButtonLinkCssImg($this->lang['common.previous'], InstallUrlBuilder::database(), 'fa fa-arrow-left');

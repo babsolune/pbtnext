@@ -46,12 +46,6 @@ class InstallLicenseController extends InstallController
 		$fieldset = new FormFieldsetHTML('agreementFieldset', $this->lang['install.license.terms']);
 		$this->form->add_fieldset($fieldset);
 
-		$license_content = file_get_contents('gpl-license.txt');
-		$license_block = '<div class="license-container"><div class="license-content">' . $license_content . '</div></div>';
-		$fieldset->add_field(new FormFieldHTML('licenseContent', $license_block,
-			['class' => 'full-field']
-		));
-
 		$fieldset->add_field(new FormFieldCheckbox('agree', $this->lang['install.license.agreement'], FormFieldCheckbox::UNCHECKED,
 			[
                 'class' => 'full-field custom-checkbox',
@@ -73,7 +67,14 @@ class InstallLicenseController extends InstallController
 	private function create_response()
 	{
 		$view = new FileTemplate('install/license.tpl');
-		$view->put('LICENSE_FORM', $this->form->display());
+
+		$license_content = file_get_contents('gpl-license.txt');
+		$license_block = '<div class="license-container"><div class="license-content">' . $license_content . '</div></div>';
+
+		$view->put_all([
+            'LICENSE_FORM' => $this->form->display(),
+            'LICENSE_CONTENT' => $license_content
+        ]);
 		$step_title = $this->lang['install.license.title'];
 		$response = new InstallDisplayResponse(1, $step_title, $this->lang, $view);
 		return $response;

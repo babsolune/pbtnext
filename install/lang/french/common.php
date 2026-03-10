@@ -27,7 +27,7 @@ $lang['install.change.language']   = 'Changer de langue';
 $lang['install.steps.list']        = 'Liste des étapes';
 $lang['install.step.introduction'] = 'Préambule';
 $lang['install.step.license']      = 'Licence';
-$lang['install.step.server']       = 'Configuration du serveur';
+$lang['install.step.server']       = 'Configuration du site';
 $lang['install.step.database']     = 'Configuration base de données';
 $lang['install.step.website']      = 'Configuration du site';
 $lang['install.step.admin']        = 'Compte administrateur';
@@ -135,8 +135,7 @@ $lang['install.phpboost.already.installed.overwrite']         = 'Je souhaite éc
 $lang['install.phpboost.already.installed.overwrite.confirm'] = 'Vous devez confirmer l\'écrasement de la précédente installation';
 
 // Website settings
-$lang['install.website.config.title']       = 'Configuration du serveur';
-$lang['install.website.config']             = 'Configuration du site';
+$lang['install.website.config.title']       = 'Configuration du site';
 $lang['install.website.config.description'] = '<p>La configuration de base du site va être créée dans cette étape afin de permettre à PHPBoost de fonctionner. Sachez cependant que toutes les données que vous allez rentrer seront ultérieurement modifiables dans le panneau d\'administration, rubrique configuration du site. Vous pourrez dans ce même panneau renseigner davantage d\'informations facultatives à propos de votre site.</p>';
 
 $lang['install.website.yours']            = 'Votre site';
@@ -191,11 +190,16 @@ Si vous perdez votre mot de passe, vous pouvez en générer un nouveau à partir
 Cordialement l\'équipe PHPBoost.';
 
 // End of installation
-$lang['install.congratulations'] = 'Félicitations !';
-$lang['install.finish.title']    = 'Fin de l\'installation';
-$lang['install.finish.message']  = '
-    <fieldset>
-        <legend>PHPBoost est désormais installé !</legend>
+$lang['install.finish.title'] = 'Fin de l\'installation';
+
+$lang['install.tab.congrats'] = 'Félicitations';
+$lang['install.tab.thanks']   = 'Remerciements';
+$lang['install.tab.project']  = 'Projets';
+$lang['install.tab.credits']  = 'Crédits';
+
+$lang['install.tab.content.congrats']  = '
+    <div>
+        <h2>PHPBoost est désormais installé !</h2>
         <div class="fielset-inset">
             <p class="message-helper bgc success">L\'installation de PHPBoost s\'est déroulée avec succès. L\'équipe PHPBoost vous remercie de lui avoir fait confiance et est heureuse de vous compter parmi ses utilisateurs.</p>
             <p>Nous vous conseillons de vous tenir au courant de l\'évolution de PHPBoost via le site de la communauté francophone, <a href="https://www.phpboost.com">www.phpboost.com</a>. Vous serez automatiquement averti dans le panneau d\'administration de l\'arrivée de nouvelles mises à jour. Il est fortement conseillé de tenir votre système à jour afin de profiter des dernières nouveautés et de corriger les éventuelles failles ou erreurs.</p>
@@ -203,14 +207,24 @@ $lang['install.finish.message']  = '
             <p>N\'oubliez pas de consulter la <a href="https://www.phpboost.com/wiki/">documentation</a> qui vous guidera dans l\'utilisation de PHPBoost ainsi que la <a href="https://www.phpboost.com/faq/"><abbr aria-label="Foire Aux Questions">FAQ</abbr></a> qui répond aux questions les plus fréquentes.</p>
             <p>En cas de problème, rendez-vous sur le <a href="https://www.phpboost.com/forum/">forum du support de PHPBoost</a>.</p>
         </div>
-    </fieldset>
-    <fieldset>
-        <legend>Remerciements</legend>
+    </div>
+';
+
+$lang['install.tab.content.thanks']  = '
+    <div>
+        <h2>Remerciements</h2>
         <div class="fielset-inset">
-            <h2>Membres de la communauté</h2>
+            <h6>Membres de la communauté</h6>
             <p>Merci à tous les membres de la communauté qui nous encouragent au quotidien et contribuent à la qualité du logiciel que ce soit en suggérant des nouvelles fonctionnalités ou en signalant des dysfonctionnements, ce qui permet d\'aboutir entre autres à un CMS stable et efficace.</p>
             <p>Merci aux membres des équipes de PHPBoost et particulièrement à <strong>mipel</strong> de l\'équipe communication, <strong>mipel</strong>, <strong>olivierb</strong> et <strong>xela</strong> pour la documentation, <strong>babsolune</strong> et <strong>xela</strong> pour l\'aide au développement, <strong>ElenWii</strong> et <strong>babsolune</strong> pour les graphismes, <strong>mipel</strong> et <strong>olivierb</strong> pour la modération de la communauté et <strong>janus57</strong> pour l\'appui aux développements et à l\'aide de la communauté sur le forum.</p>
-            <h2>Projets</h2>
+        </div>
+    </div>
+';
+
+$lang['install.tab.content.project']  = '
+    <div>
+        <h2>Projets</h2>
+        <div class="fielset-inset">
             <p>PHPBoost utilise différents outils afin d\'élargir ses fonctionnalités sans augmenter trop le temps de développement. Ces outils sont tous libres, distribués sous la licence GNU/GPL pour la plupart.</p>
             <ul>
                 <li><a href="https://notepad-plus-plus.org/fr">Notepad++</a>, <a href="https://atom.io/">Atom</a>, <a href="https://fr.netbeans.org/">NetBeans</a> et <a href="https://sublimetext.com">Sublime Text</a> : Editeurs de texte puissants utilisés pour le développement de PHPBoost.</li>
@@ -221,23 +235,12 @@ $lang['install.finish.message']  = '
                 <li><a href="https://fontawesome.com/?from=io">Font Awesome</a> : librairie d\'icônes</li>
             </ul>
         </div>
-    </fieldset>
-    <fieldset>
-        <legend>Faire un don</legend>
-        <div class="fielset-inset">
-            Si vous souhaitez supporter PHPBoost financièrement vous pouvez nous faire un don via paypal :
+    </div>
+';
 
-            <div class="align-center">
-                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                    <input type="hidden" name="cmd" value="_s-xclick">
-                    <input type="hidden" name="hosted_button_id" value="7EFHMABH75HPE">
-                    <input type="image" src="https://resources.phpboost.com/documentation/paypal/button_french.png" border="0" name="submit" alt="PHPBoost - PayPal">
-                </form>
-            </div>
-        </div>
-    </fieldset>
-    <fieldset>
-        <legend>Crédits</legend>
+$lang['install.tab.content.credits']  = '
+    <div>
+        <h2>Crédits</h2>
         <div class="fielset-inset">
             <ul>
                 <li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, fondateur du projet PHPBoost et développeur retraité</li>
@@ -247,8 +250,26 @@ $lang['install.finish.message']  = '
                 <li><strong>Julien BRISWALTER</strong> <em>(alias j1.seth)</em>, développeur</li>
             </ul>
         </div>
-    </fieldset>
+    </div>
 ';
+
+$lang['install.donate']  = '
+    <div>
+        <h2>Faire un don</h2>
+        <div class="fielset-inset">
+            Si vous souhaitez supporter PHPBoost financièrement vous pouvez nous faire un don via paypal
+
+            <div class="align-center">
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="7EFHMABH75HPE">
+                    <input type="image" src="https://resources.phpboost.com/documentation/paypal/button_french.png" border="0" name="submit" alt="PHPBoost - PayPal">
+                </form>
+            </div>
+        </div>
+    </div>
+';
+
 $lang['install.site.index']  = 'Aller à l\'accueil du site';
 $lang['install.admin.index'] = 'Aller dans le panneau d\'administration';
 ?>

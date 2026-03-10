@@ -192,11 +192,16 @@ Best regards,
 The PHPBoost Team.';
 
 // End of installation
-$lang['install.congratulations'] = 'Congratulations!';
 $lang['install.finish.title']    = 'End of installation';
-$lang['install.finish.message'] = '
-    <fieldset>
-        <legend>PHPBoost is now installed and ready to run!</legend>
+
+$lang['install.tab.congrats'] = 'Congratulation';
+$lang['install.tab.thanks']   = 'Thanks';
+$lang['install.tab.project']  = 'Projects';
+$lang['install.tab.credits']  = 'Credits';
+
+$lang['install.tab.content.congrats']  = '
+    <div>
+        <h2>PHPBoost is now installed and ready to run!</h2>
         <div class="fielset-inset">
             <p class="message-helper bgc success">The installation of PHPBoost has been powered successfully. The PHPBoost Team thanks you for using its software and is proud to count you among its users.</p>
             <p>Keep yourself informed about the evolution of PHPBoost by visiting our website, <a href="https://www.phpboost.com">www.phpboost.com</a>. You will be warned in the administration panel when updates are available. We strongly recommend to keep your website up to date so you can take advantage of the latest features and correct any flaws or errors.</p>
@@ -204,14 +209,24 @@ $lang['install.finish.message'] = '
             <p>Don\'t forget to consult the <a href="https://www.phpboost.com/wiki/">documentation</a> which will help you for using PHPBoost and the <a href="https://www.phpboost.com/faq/"><abbr aria-label="Frequently Asked Questions">FAQ</abbr></a>.</p>
             <p>If you have any problem please go to the <a href="https://www.phpboost.com/forum/">support forum of PHPBoost</a>.</p>
         </div>
-    </fieldset>
-    <fieldset>
-        <legend>Thanks</legend>
+    </div>
+';
+
+$lang['install.tab.content.thanks']  = '
+    <div>
+        <h2>Thanks</h2>
         <div class="fielset-inset">
             <h2>Members</h2>
             <p>Thanks to all the members of the community who cheer us on daily and contribute to the software quality by reporting bugs and suggestion improvements, which allows to lead to a stable and powerful CMS.</p>
             <p>Thanks to the members of our teams and particulary to <strong>mipel</strong> for communication team, <strong>mipel</strong>, <strong>olivierb</strong> and <strong>xela</strong> for the documentation writing, <strong>babsolune</strong> and <strong>xela</strong> for the development help, <strong>ElenWii</strong> and <strong>babsolune</strong> for the graphics, <strong>mipel</strong> and <strong>olivierb</strong> for the moderation of the community and <strong>janus57</strong> for support in development and community help on the forum.</p>
-            <h2>Other projects</h2>
+            </div>
+    </div>
+';
+
+$lang['install.tab.content.project']  = '
+    <div>
+        <h2>Projets</h2>
+        <div class="fielset-inset">
             <p>PHPBoost uses different tools allowing it to enlarge its features panel enough implying the development time rising. Most of these tools under GNU/GPL license come from <a href="https://github.com/">Github</a>.</p>
             <ul>
                 <li><a href="https://notepad-plus-plus.org">Notepad++</a>, <a href="https://atom.io/">Atom</a>, <a href="https://fr.netbeans.org/">NetBeans</a> and <a href="https://www.sublimetext.com">Sublime Text</a>: Very powerful text editors used for the whole development, thanks a lot!</li>
@@ -222,9 +237,27 @@ $lang['install.finish.message'] = '
                 <li><a href="https://fontawesome.com/?from=io">Font Awesome</a>: icons librairy</li>
             </ul>
         </div>
-    </fieldset>
-    <fieldset>
-        <legend>Make a donation</legend>
+    </div>
+';
+
+$lang['install.tab.content.credits']  = '
+    <div>
+        <h2>Credits</h2>
+        <div class="fielset-inset">
+            <ul>
+                <li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, founder of PHPBoost project and developer retired</li>
+                <li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, developer retired</li>
+                <li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, developer retired</li>
+                <li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, developer retired</li>
+                <li><strong>Julien BRISWALTER</strong> <em>(alias j1.seth)</em>, developer</li>
+            </ul>
+        </div>
+    </div>
+';
+
+$lang['install.donate']  = '
+    <div>
+        <h2>Make a donation</h2>
         <div class="fielset-inset">
             If you want to support PHPBoost financially you can donate via paypal :
 
@@ -236,20 +269,9 @@ $lang['install.finish.message'] = '
                 </form>
             </div>
         </div>
-    </fieldset>
-    <fieldset>
-        <legend>Credits</legend>
-        <div class="fielset-inset">
-            <ul>
-                <li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, founder of PHPBoost project and developer retired</li>
-                <li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, developer retired</li>
-                <li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, developer retired</li>
-                <li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, developer retired</li>
-                <li><strong>Julien BRISWALTER</strong> <em>(alias j1.seth)</em>, developer</li>
-            </ul>
-        </div>
-    </fieldset>
+    </div>
 ';
+
 $lang['install.site.index']  = 'Go to the website';
 $lang['install.admin.index'] = 'Go to the administration panel';
 ?>
