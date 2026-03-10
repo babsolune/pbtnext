@@ -24,7 +24,7 @@ class InstallWebsiteConfigController extends InstallController
      */
     private $form;
     /**
-     * @var HTMLForm
+     * @var FormButtonSubmit
      */
     private $submit_button;
 

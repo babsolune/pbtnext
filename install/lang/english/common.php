@@ -135,8 +135,7 @@ $lang['install.phpboost.already.installed.overwrite']         = 'Yes, I want to 
 $lang['install.phpboost.already.installed.overwrite.confirm'] = 'Please, confirm the previous installation override';
 
 // Website settings
-$lang['install.website.config.title']          = 'Server settings';
-$lang['install.website.config']             = 'Website settings';
+$lang['install.website.config.title']       = 'Website settings';
 $lang['install.website.config.description'] = '<p>At this stage, some basic settings will be created that will allow PHPBoost to work. Anything you enter in this form may be modified after installation in the administration panel. Also after the installation, you will have to set advanced configurations in the admin panel.</p>';
 
 $lang['install.website.yours']            = 'Your website';

@@ -41,7 +41,17 @@ class InstallLicenseController extends InstallController
 
 	private function build_form()
 	{
-		$this->form = new HTMLForm('licenseForm', '', false);
+        $server_configuration = new ServerConfiguration();
+        if ($server_configuration->is_php_compatible() && PHPBoostFoldersPermissions::validate() && $server_configuration->has_mbstring_extension())
+        {
+            $redirect_url = InstallUrlBuilder::database()->rel();
+        }
+        else
+        {
+            $redirect_url = InstallUrlBuilder::server_configuration()->rel();
+        }
+
+        $this->form = new HTMLForm('licenseForm', $redirect_url, false);
 
 		$fieldset = new FormFieldsetHTML('agreementFieldset', $this->lang['install.license.terms']);
 		$this->form->add_fieldset($fieldset);
