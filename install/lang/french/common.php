@@ -230,7 +230,7 @@ $lang['install.tab.content.project']  = '
                 <li><a href="https://notepad-plus-plus.org/fr">Notepad++</a>, <a href="https://atom.io/">Atom</a>, <a href="https://fr.netbeans.org/">NetBeans</a> et <a href="https://sublimetext.com">Sublime Text</a> : Editeurs de texte puissants utilisés pour le développement de PHPBoost.</li>
                 <li><a href="https://github.com/daanforever/phpmathpublisher">PHPMathPublisher</a> : Ensemble de fonctions permettant de mettre en forme des formules mathématiques à partir d\'une syntaxe proche de celle du <a href="https://fr.wikipedia.org/wiki/LaTeX">LaTeX</a>.</li>
                 <li><a href="https://www.tiny.cloud/">TinyMCE</a> : Editeur <abbr aria-label="What You See Is What You Get">WYSIWYG</abbr> permettant la mise en page à la volée.</li>
-                <li><a href="http://qbnz.com/highlighter/">GeSHi</a> : Colorateur de code source dans de nombreux langages informatiques.</li>
+                <li><a href="https://github.com/PrismJS/prism">Prism</a> : Colorateur de code source dans de nombreux langages informatiques.</li>
                 <li><a href="https://jquery.com">jQuery</a> : Framework Javascript et <abbr aria-label="Asynchronous Javascript And XML">AJAX</abbr></li>
                 <li><a href="https://fontawesome.com/?from=io">Font Awesome</a> : librairie d\'icônes</li>
             </ul>

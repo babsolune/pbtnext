@@ -23,9 +23,57 @@
 class ContentSecondParser extends AbstractParser
 {
 	/**
-	 * Maximal number of characters that can be inserted in the [code] tag. After that, GeSHi has many difficulties to highligth and has the PHP execution stop (error 500).
+	 * Maximal number of characters that can be inserted in the [code] tag.
 	 */
 	const MAX_CODE_LENGTH = 40000;
+
+	/**
+	 * Maps GeSHi language names to Prism.js language names.
+	 */
+	private static $language_map = array(
+		'actionscript' => 'actionscript',
+		'apache'       => 'apacheconf',
+		'asm'          => 'nasm',
+		'asp'          => 'aspnet',
+		'bash'         => 'bash',
+		'c'            => 'c',
+		'cpp'          => 'cpp',
+		'cpp-qt'       => 'cpp',
+		'csharp'       => 'csharp',
+		'css'          => 'css',
+		'd'            => 'd',
+		'delphi'       => 'pascal',
+		'fortran'      => 'fortran',
+		'go'           => 'go',
+		'html'         => 'markup',
+		'java'         => 'java',
+		'java5'        => 'java',
+		'javascript'   => 'javascript',
+		'jquery'       => 'javascript',
+		'js'           => 'javascript',
+		'latex'        => 'latex',
+		'lisp'         => 'lisp',
+		'lua'          => 'lua',
+		'matlab'       => 'matlab',
+		'mysql'        => 'sql',
+		'ocaml'        => 'ocaml',
+		'oracle'       => 'sql',
+		'pascal'       => 'pascal',
+		'perl'         => 'perl',
+		'php'          => 'php',
+		'plsql'        => 'plsql',
+		'postgresql'   => 'sql',
+		'prolog'       => 'prolog',
+		'python'       => 'python',
+		'rails'        => 'ruby',
+		'ruby'         => 'ruby',
+		'sql'          => 'sql',
+		'text'         => 'plain',
+		'vb'           => 'visual-basic',
+		'xml'          => 'xml',
+		'tpl'          => 'markup',
+		'template'     => 'markup',
+	);
 	/**
 	 * Builds a ContentSecondParser object
 	 */
@@ -100,8 +148,9 @@ class ContentSecondParser extends AbstractParser
 	}
 
 	/**
-	 * Highlights a content in a supported language using the appropriate syntax highlighter.
-	 * The highlighted languages are numerous: actionscript, asm, asp, bash, c, cpp, csharp, css, d, delphi, fortran, html,
+	 * Highlights a content in a supported language using Prism.js (client-side).
+	 * Generates semantic HTML that Prism.js will highlight in the browser.
+	 * Supported: actionscript, asm, asp, bash, c, cpp, csharp, css, d, delphi, fortran, html,
 	 * java, javascript, latex, lua, matlab, mysql, pascal, perl, php, python, rails, ruby, sql, text, vb, xml,
 	 * PHPBoost templates and PHPBoost BBCode.
 	 * @param string $contents Content to highlight
@@ -113,57 +162,51 @@ class ContentSecondParser extends AbstractParser
 	{
 		$contents = TextHelper::htmlspecialchars_decode($contents);
 
-		//BBCode PHPBoost
-		if (TextHelper::strtolower($language) == 'bbcode')
+		$lang_lower = TextHelper::strtolower($language);
+
+		//BBCode PHPBoost — uses its own inline highlighter
+		if ($lang_lower == 'bbcode')
 		{
 			$bbcode_highlighter = new BBCodeHighlighter();
 			$bbcode_highlighter->set_content($contents);
 			$bbcode_highlighter->parse($inline_code);
-			$contents = $bbcode_highlighter->get_content();
+			return $bbcode_highlighter->get_content();
 		}
-		//Templates PHPBoost
-		elseif (TextHelper::strtolower($language) == 'tpl' || TextHelper::strtolower($language) == 'template')
-		{
-			require_once(PATH_TO_ROOT . '/kernel/lib/php/geshi/geshi.php');
 
-			$template_highlighter = new TemplateHighlighter();
-			$template_highlighter->set_content($contents);
-			$template_highlighter->parse($line_number ? GESHI_NORMAL_LINE_NUMBERS : GESHI_NO_LINE_NUMBERS, $inline_code);
-			$contents = $template_highlighter->get_content();
-		}
-		elseif ( TextHelper::strtolower($language) == 'plain')
+		//Plain text — no syntax highlighting, just escape
+		if ($lang_lower == 'plain' || $lang_lower == 'text')
 		{
 			$plain_code_highlighter = new PlainCodeHighlighter();
 			$plain_code_highlighter->set_content($contents);
 			$plain_code_highlighter->parse();
 			$contents = $plain_code_highlighter->get_content();
+			$pre_class = $inline_code ? 'precode precode-inline' : 'precode';
+			return '<pre class="' . $pre_class . '"><code>' . TextHelper::htmlspecialchars($contents) . '</code></pre>';
 		}
-		elseif ($language != '')
+
+		// Map language name to Prism language identifier
+		$prism_lang = isset(self::$language_map[$lang_lower]) ? self::$language_map[$lang_lower] : ($lang_lower !== '' ? $lang_lower : '');
+
+		// Escape HTML entities for safe display
+		$escaped = TextHelper::htmlspecialchars($contents);
+
+		if ($prism_lang !== '')
 		{
-			require_once(PATH_TO_ROOT . '/kernel/lib/php/geshi/geshi.php');
-			$Geshi = new GeSHi($contents, $language);
-
-			if ($line_number) //Affichage des numéros de lignes.
-			{
-				$Geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
-			}
-
-			//No container if we are in an inline tag
+			$pre_class = 'precode';
 			if ($inline_code)
-			{
-				$Geshi->set_header_type(GESHI_HEADER_NONE);
-			}
+				$pre_class .= ' precode-inline';
+			if ($line_number)
+				$pre_class .= ' line-numbers';
 
-			$contents = '<pre style="display:inline;">' . $Geshi->parse_code() . '</pre>';
+			return '<pre class="' . $pre_class . '"><code class="language-' . TextHelper::htmlspecialchars($prism_lang) . '">' . $escaped . '</code></pre>';
 		}
 		else
 		{
+			// No language specified: use PHP's built-in highlighter
 			$highlight = highlight_string($contents, true);
 			$font_replace = str_replace(array('<font ', '</font>'), array('<span ', '</span>'), $highlight);
-			$contents = preg_replace('`color="(.*?)"`', 'style="color:$1"', $font_replace);
+			return preg_replace('`color="(.*?)"`', 'style="color:$1"', $font_replace);
 		}
-
-		return $contents;
 	}
 
 	/**
@@ -203,16 +246,15 @@ class ContentSecondParser extends AbstractParser
 
 			if ($extension == 'js' || $extension == 'jquery')
 			{
-				$extension = "javascript";
+				$extension = 'javascript';
 			}
-			else if ($extension && TextHelper::strtolower($extension)!='tpl')
+			else if ($extension && TextHelper::strtolower($extension) != 'tpl')
 			{
-				require_once(PATH_TO_ROOT . '/kernel/lib/php/geshi/geshi.php');
-				$Geshi = new GeSHi();
-				$Geshi->set_language($extension);
-				if ($Geshi->error())
+				// Check if Prism knows this language (via our map or directly)
+				$lang_check = TextHelper::strtolower($extension);
+				if (!isset(self::$language_map[$lang_check]) && !in_array($lang_check, array_values(self::$language_map)))
 				{
-					$extension = "text";
+					$extension = 'text';
 				}
 			}
 		}

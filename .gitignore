@@ -23,8 +23,8 @@ modules/stats/cache/*
 # Non official graphic templates
 !templates
 # Ignore template directories :
-templates/*.*
-templates/*
+#templates/*.*
+#templates/*
 # Except following templates :
 !templates/base
 !templates/__default__

@@ -38,7 +38,7 @@ class ClassLoader
      */
     protected static array $exclude_paths = [
         '/cache', '/images', '/lang', '/upload', '/templates',
-        '/kernel/data', '/kernel/lib/js', '/kernel/lib/php/geshi',
+        '/kernel/data', '/kernel/lib/js',
         '/kernel/framework/io/db/dbms/Doctrine',
     ];
 

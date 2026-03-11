@@ -455,8 +455,15 @@ td.calendar-weekend { background-color: rgba(var(--main-rgb-t), 0.1); }
 	border-color: var(--bdr-main);
 }
 
-pre span,
-code span { color: var(--txt-main) !important; }
+pre[class*="language-"] {
+    background: transparent;
+}
+
+pre[class*="language-"] {
+    padding: 0;
+    margin: 0;
+    overflow: auto;
+}
 
 pre[style*="display:inline"] {
     background-color: var(--bgc-sub);
@@ -465,7 +472,6 @@ pre[style*="display:inline"] {
 
 pre.precode {
     background-color: var(--bgc-sub);
-    color: var(--txt-sub);
 }
 
 pre.precode .line-number { border-color: var(--bdr-sub); }

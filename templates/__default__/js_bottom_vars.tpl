@@ -1,5 +1,10 @@
 {JS_BOTTOM}
 <script>
+// Fix Prism autoloader path when JS cache is enabled (cache merges scripts, losing relative path context)
+if (typeof Prism !== 'undefined' && Prism.plugins && Prism.plugins.autoloader) {
+	Prism.plugins.autoloader.languages_path = '{PATH_TO_ROOT}/kernel/lib/js/prism/components/';
+}
+
 // Delete confirmation
 	function update_data_confirmations() {
         jQuery('[data-confirmation]').each(function() {
