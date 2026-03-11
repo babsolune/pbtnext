@@ -20,7 +20,7 @@ class UpdateFinishController extends UpdateController
 
     private function create_response(View $view): UpdateDisplayResponse
     {
-        $step_title = $this->lang['step.list.end'];
+        $step_title = $this->lang['update.step.list.end'];
         $response   = new UpdateDisplayResponse(5, $step_title, $view);
         return $response;
     }

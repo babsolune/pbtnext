@@ -83,7 +83,7 @@ $lang['install.php.extensions.check.mbstring']       = 'MBstring library';
 $lang['install.php.extensions.check.mbstring.clue']  = 'Library used for UTF-8 characters management. Mandatory to have a working website.';
 $lang['install.php.extensions.check.mbstring.error'] = 'PHP <b>mbstring</b> extension is not activated. Please activate it or contact your web hosting company before proceeding with the installation.';
 $lang['install.url.rewriting']                       = 'URL Rewriting';
-$lang['install.url.rewriting.clue']                  = 'Not only does it rewrite URLs, but it helps a lot with search engine robots.';
+$lang['install.url.rewriting.clue']                  = 'Optional<br />Not only does it rewrite URLs, but it helps a lot with search engine robots.';
 
 $lang['install.folders.chmod']         = 'Directories permissions';
 $lang['install.folders.chmod.check']   = '<span class="text-strong error">Required:</span> PHPBoost needs to change permissions of several directories to make them writable. If your hosting company allows it, it will be done automatically. However, you might need to do it by yourself to make the installation work. If you don\'t know how to change permissions of a directory, you can find help on your host website.';
@@ -195,7 +195,7 @@ $lang['install.finish.title']    = 'End of installation';
 
 $lang['install.tab.congrats'] = 'Congratulation';
 $lang['install.tab.thanks']   = 'Thanks';
-$lang['install.tab.project']  = 'Projects';
+$lang['install.tab.projects'] = 'Projects';
 $lang['install.tab.credits']  = 'Credits';
 
 $lang['install.tab.content.congrats']  = '

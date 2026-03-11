@@ -1,6 +1,4 @@
-<header>
-	<h2>{@step.execute.message}</h2>
-</header>
+<header></header>
 
 <div class="content">
 	{@H|step.execute.clue}
@@ -19,6 +17,6 @@
 	<div class="update-in-progress-background"></div>
 	<div class="update-in-progress-spinner">
 		<i class="fa fa-spin fa-cog fa-2x"></i>
-		<span>{@step.execute.update_in_progress}</span>
+		<span>{@step.execute.update.in.progress}</span>
 	</div>
 </div>

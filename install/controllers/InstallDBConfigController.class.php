@@ -64,6 +64,15 @@ class InstallDBConfigController extends InstallController
 
 	private function build_form()
 	{
+        if (InstallationServices::check_server())
+            {
+                $back_url = InstallUrlBuilder::license();
+            }
+            else
+            {
+                $back_url = InstallUrlBuilder::server_configuration();
+            }
+
 		$this->form = new HTMLForm('databaseForm', '', false);
 
 		$fieldset = new FormFieldsetHTML('serverConfig', $this->lang['install.db.parameters.config']);
@@ -141,7 +150,7 @@ class InstallDBConfigController extends InstallController
 		$this->overwrite_fieldset->disable();
 
 		$action_fieldset = new FormFieldsetSubmit('actions', ['css_class' => 'fieldset-submit next-step']);
-		$action_fieldset->add_element(new FormButtonLinkCssImg($this->lang['common.previous'], InstallUrlBuilder::server_configuration(), 'fa fa-arrow-left'));
+		$action_fieldset->add_element(new FormButtonLinkCssImg($this->lang['common.previous'], $back_url, 'fa fa-arrow-left'));
 		$this->check_button = new FormButtonSubmitCssImg($this->lang['install.db.config.check'], 'fa fa-sync', 'check_database');
 		$action_fieldset->add_element($this->check_button);
 		$this->submit_button = new FormButtonSubmitCssImg($this->lang['common.next'], 'fa fa-arrow-right', 'database');

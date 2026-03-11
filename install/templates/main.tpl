@@ -94,9 +94,7 @@ ${resources('install/common')}
 			<div id="admin-main">
 				<div id="admin-contents">
 					<section>
-						<header>
-							<h1>{STEP_TITLE}</h1>
-						</header>
+						<header><h1>{STEP_TITLE}</h1></header>
 						<article>
 							# INCLUDE INSTALL_STEP #
 						</article>

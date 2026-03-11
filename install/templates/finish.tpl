@@ -4,7 +4,7 @@
             <ul class="tabs-items">
                 <li><span class="tab-item --congrats">{@install.tab.congrats}</span></li>
                 <li><span class="tab-item --thanks">{@install.tab.thanks}</span></li>
-                <li><span class="tab-item --project">{@install.tab.project}</span></li>
+                <li><span class="tab-item --projects">{@install.tab.projects}</span></li>
                 <li><span class="tab-item --credits">{@install.tab.credits}</span></li>
             </ul>
         </nav>
@@ -15,7 +15,7 @@
             <div id="thanks" class="tab-content">
                 {@H|install.tab.content.thanks}
             </div>
-            <div id="project" class="tab-content">
+            <div id="projects" class="tab-content">
                 {@H|install.tab.content.project}
             </div>
             <div id="credits" class="tab-content">

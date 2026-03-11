@@ -85,21 +85,21 @@ class UpdateDisplayResponse extends AbstractResponse
 		$this->current_step = $step_number;
 
 		$steps = [
-			['name' => $this->lang['step.list.introduction'], 'img' => 'home'],
+			['name' => $this->lang['update.step.list.introduction'], 'img' => 'home'],
         ];
 
 		if (!UpdateServices::check_server())
-			$steps[] = ['name' => $this->lang['step.list.server'], 'img' => 'cog'];
+			$steps[] = ['name' => $this->lang['update.step.list.server'], 'img' => 'cog'];
 		else if ($this->current_step > 1)
 			$this->current_step--;
 
 		if (!UpdateServices::database_config_file_checked())
-			$steps[] = ['name' => $this->lang['step.list.database'], 'img' => 'server'];
+			$steps[] = ['name' => $this->lang['update.step.list.database'], 'img' => 'server'];
 		else if ($this->current_step > 2)
 			$this->current_step--;
 
-		$steps[] = ['name' => $this->lang['step.list.execute'], 'img' => 'sync-alt'];
-		$steps[] = ['name' => $this->lang['step.list.end'], 'img' => 'check'];
+		$steps[] = ['name' => $this->lang['update.step.list.execute'], 'img' => 'sync-alt'];
+		$steps[] = ['name' => $this->lang['update.step.list.end'], 'img' => 'check'];
 
 		$this->steps_number = count($steps);
 		$this->full_view->put('STEPS_NUMBER', $this->steps_number);

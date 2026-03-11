@@ -39,11 +39,11 @@ class UpdateServerConfigController extends UpdateController
 
         $action_fieldset = new FormFieldsetSubmit('actions');
 
-        $action_fieldset->add_element(new FormButtonLinkCssImg($this->lang['step.previous'], UpdateUrlBuilder::introduction(), 'fa fa-arrow-left'));
+        $action_fieldset->add_element(new FormButtonLinkCssImg($this->lang['update.step.previous'], UpdateUrlBuilder::introduction(), 'fa fa-arrow-left'));
 
         $action_fieldset->add_element(new FormButtonLinkCssImg($this->lang['folders.chmod.refresh'], UpdateUrlBuilder::server_configuration()->rel(), 'fa fa-sync'));
 
-        $action_fieldset->add_element($this->submit = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'server'));
+        $action_fieldset->add_element($this->submit = new FormButtonSubmitCssImg($this->lang['update.step.next'], 'fa fa-arrow-right', 'server'));
 
         $this->form->add_fieldset($action_fieldset);
     }
@@ -64,12 +64,12 @@ class UpdateServerConfigController extends UpdateController
     {
         $this->view = new FileTemplate('update/server.tpl');
         $this->view->put_all([
-            'MIN_PHP_VERSION'      => ServerConfiguration::MIN_PHP_VERSION,
-            'PHP_VERSION_OK'       => $this->server_conf->is_php_compatible(),
-            'HAS_GD_LIBRARY'       => $this->server_conf->has_gd_extension(),
-            'HAS_CURL_LIBRARY'     => $this->server_conf->has_curl_extension(),
-            'HAS_ZIP_LIBRARY'      => $this->server_conf->has_zip_extension(),
-            'HAS_MBSTRING_LIBRARY' => $this->server_conf->has_mbstring_extension(),
+            'MIN_PHP_VERSION'        => ServerConfiguration::MIN_PHP_VERSION,
+            'PHP_VERSION_OK'         => $this->server_conf->is_php_compatible(),
+            'HAS_GD_EXTENSION'       => $this->server_conf->has_gd_extension(),
+            'HAS_CURL_EXTENSION'     => $this->server_conf->has_curl_extension(),
+            'HAS_ZIP_EXTENSION'      => $this->server_conf->has_zip_extension(),
+            'HAS_MBSTRING_EXTENSION' => $this->server_conf->has_mbstring_extension(),
         ]);
         if (!$this->server_conf->has_mbstring_extension()) {
             $this->view->put('C_MBSTRING_ERROR', true);

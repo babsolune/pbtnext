@@ -177,10 +177,9 @@ class UpdateVersionExecuteController extends UpdateController
 
     private function add_navigation(Template $view)
     {
-        $server_configuration = new ServerConfiguration();
         if (UpdateServices::database_config_file_checked())
         {
-            if ($server_configuration->is_php_compatible() && PHPBoostFoldersPermissions::validate() && $server_configuration->has_mbstring_extension())
+            if (UpdateServices::check_server())
             {
                 $back_url = UpdateUrlBuilder::introduction();
             }
@@ -197,11 +196,11 @@ class UpdateVersionExecuteController extends UpdateController
         $form = new HTMLForm('continueForm', '', false);
 
         $action_fieldset = new FormFieldsetSubmit('actions');
-        $back            = new FormButtonLinkCssImg($this->lang['step.previous'], $back_url, 'fa fa-arrow-left');
+        $back            = new FormButtonLinkCssImg($this->lang['update.step.previous'], $back_url, 'fa fa-arrow-left');
         $action_fieldset->add_element($back);
         $refresh = new FormButtonLinkCssImg(LangLoader::get_message('form.refresh', 'form-lang'), UpdateUrlBuilder::update()->rel(), 'fa fa-sync');
         $action_fieldset->add_element($refresh);
-        $this->submit = new FormButtonSubmitCssImg($this->lang['step.next'], 'fa fa-arrow-right', 'finish', 'jQuery(\'#update-in-progress-container\').show();');
+        $this->submit = new FormButtonSubmitCssImg($this->lang['update.step.next'], 'fa fa-arrow-right', 'finish', 'jQuery(\'#update-in-progress-container\').show();');
         $action_fieldset->add_element($this->submit);
         $form->add_fieldset($action_fieldset);
         $view->put('SERVER_FORM', $form->display());

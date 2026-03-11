@@ -1,6 +1,6 @@
 <div class="content">
 	<div class="float-right pbt-box align-center">
-		<img src="templates/images/installboost.webp" alt="{@phpboost.logo}" />
+		<img src="templates/images/installboost.webp" alt="{@update.phpboost.logo}" />
 	</div>
 
     <header>

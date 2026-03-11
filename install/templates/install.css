@@ -101,10 +101,6 @@ section header {
 .checked-element {
     padding: 0.618em;
     border: 1px solid var(--bdr-main);
-
-    .field-description {
-        max-width: 50%;
-    }
 }
 
 /* --- Finish --------------------------------------------------------------- */

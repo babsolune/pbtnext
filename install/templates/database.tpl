@@ -1,6 +1,4 @@
-<header>
-	<!-- <h2>{@install.db.parameters.config}</h2> -->
-</header>
+<header></header>
 
 <div class="content">
 	# IF SUCCESS #
@@ -10,7 +8,7 @@
 		<div class="message-helper bgc error">{ERROR}</div>
 	# END #
 	<div class="cell-flex cell-columns-2">
-        <div class="content next-step">
+        <div class="next-step">
             # INCLUDE DATABASE_FORM #
         </div>
         <div class="cell">
@@ -25,5 +23,4 @@
 	</div>
 </div>
 
-<footer>
-</footer>
+<footer></footer>

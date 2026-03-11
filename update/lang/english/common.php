@@ -16,28 +16,23 @@
 
     //Variables générales
 $lang['update.title' ] = 'PHPBoost Update';
-$lang['steps.list' ] = 'Steps list';
-$lang['step.list.introduction' ] = 'Preamble';
-$lang['step.list.license' ] = 'License';
-$lang['step.list.server' ] = 'Server Configuration';
-$lang['step.list.database' ] = 'Database settings';
-$lang['step.list.website' ] = 'General settings';
-$lang['step.list.execute' ] = 'Update';
-$lang['step.list.end' ] = 'End of update';
-$lang['installation.progression' ] = 'Update progression';
-$lang['language.change' ] = 'Change language';
-$lang['change' ] = 'Change';
-$lang['step.previous' ] = 'Previous step';
-$lang['step.next' ] = 'Next step';
-$lang['yes' ] = 'Yes';
-$lang['no' ] = 'No';
-$lang['unknown' ] = 'Unknown';
-$lang['generatedBy' ] = 'Powered by %s';
-$lang['poweredBy' ] = 'Powered by';
-$lang['phpboost.link' ] = 'Link to PHPBoost CMS official website';
-$lang['phpboost.rights' ] = '';
-$lang['phpboost.slogan' ] = 'Create your website easily and for free!';
-$lang['phpboost.logo' ] = 'PHPBoost logo';
+$lang['update.steps.list'] = 'Steps list';
+$lang['update.step.list.introduction' ] = 'Preamble';
+$lang['update.step.list.license' ] = 'License';
+$lang['update.step.list.server' ] = 'Server Configuration';
+$lang['update.step.list.database' ] = 'Database settings';
+$lang['update.step.list.website' ] = 'General settings';
+$lang['update.step.list.execute' ] = 'Update';
+$lang['update.step.list.end' ] = 'End of update';
+$lang['update.language.change' ] = 'Change language';
+$lang['update.change' ] = 'Change';
+
+$lang['update.step.previous' ] = 'Previous step';
+$lang['update.step.next' ] = 'Next step';
+
+$lang['update.phpboost.link' ]   = 'Link to PHPBoost CMS official website';
+$lang['update.phpboost.rights' ] = '';
+$lang['update.phpboost.logo' ]   = 'PHPBoost logo';
 
 //Introduction
 $lang['step.introduction.title'   ] = 'Update of PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' to PHPBoost ' . UpdateServices::NEW_KERNEL_VERSION . ' ' . Environment::get_phpboost_name_version();
@@ -52,21 +47,23 @@ $lang['step.server.title' ] = 'Looking up server configuration...';
 $lang['step.server.description' ] = '
         <p>Before starting update, we need to establish the compatibility between PHPBoost and your server. If you have any problems, feel free to ask your questions in our <a href="https://www.phpboost.com/forum/">Support Forums</a>.</p>
         <div class="message-helper bgc notice">It is very important that each required fields are checked, otherwise you might have trouble using the software.</div>
-$lang[';
+';
 $lang['php.version'            ] = 'PHP version';
 $lang['php.version.check'      ] = 'PHP higher than :min_php_version';
 $lang['php.version.check.clue' ] = '<span style="font-weight: bold;color: red;">Required:</span> To run PHPBoost, your server must run PHP :min_php_version or higher. Below that, you might have issues with some modules.';
 $lang['php.extensions'                             ] = 'Extensions';
 $lang['php.extensions.check'                       ] = 'The activation of these extensions will provide additional features and are essential to the proper functioning of PHPBoost.';
-$lang['php.extensions.check.gdLibrary'             ] = 'GD library';
-$lang['php.extensions.check.gdLibrary.clue'        ] = 'Library used to generate pictures such as Robot Protection, Statistics Graphics and much more.';
-$lang['php.extensions.check.curlLibrary'           ] = 'Curl library';
-$lang['php.extensions.check.curlLibrary.clue'      ] = 'Library used to get distant elements. Mandatory to enable external authentication for instance.';
-$lang['php.extensions.check.mbstringLibrary'       ] = 'MBstring library';
-$lang['php.extensions.check.mbstringLibrary.clue'  ] = 'Library used for UTF-8 characters management. Mandatory to have a working website.';
-$lang['php.extensions.check.mbstringLibrary.error' ] = 'PHP <b>mbstring</b> extension is not activated. Please activate it or contact your web hosting company before proceeding with the installation.';
+$lang['php.extensions.check.gd'             ] = 'GD extension';
+$lang['php.extensions.check.gd.clue'        ] = 'Extension used to generate pictures such as Robot Protection, Statistics Graphics and much more.';
+$lang['php.extensions.check.curl'           ] = 'Curl extension';
+$lang['php.extensions.check.curl.clue'      ] = 'Extension used to get distant elements. Mandatory to enable external authentication for instance.';
+$lang['php.extensions.check.zip'] = 'Zip extension';
+$lang['php.extensions.check.zip.clue'] = 'Extension used to manage compressed files.';
+$lang['php.extensions.check.mbstring'       ] = 'MBstring extension';
+$lang['php.extensions.check.mbstring.clue'  ] = 'Extension used for UTF-8 characters management. Mandatory to have a working website.';
+$lang['php.extensions.check.mbstring.error' ] = 'PHP <b>mbstring</b> extension is not activated. Please activate it or contact your web hosting company before proceeding with the installation.';
 $lang['server.urlRewriting'      ] = 'URL Rewriting';
-$lang['server.urlRewriting.clue' ] = 'Not only does it rewrite URLs, but it helps a lot with search engine robots.';
+$lang['server.urlRewriting.clue' ] = 'Optional<br />Not only does it rewrite URLs, but it helps a lot with search engine robots.';
 $lang['folders.chmod'         ] = 'Directories permissions';
 $lang['folders.chmod.check'   ] = '<span style="font-weight: bold;color: red;">Required:</span> PHPBoost needs to change permissions of several directories to make them writable. If your hosting company allows it, it will be done automatically. However, you might need to do it by yourself to make the installation work. If you don\'t know how to change permissions of a directory, you can find help on your host website.';
 $lang['folders.chmod.refresh' ] = 'Double-check directories permissions';
@@ -113,7 +110,7 @@ $lang[';
 //Execute update
 $lang['congratulations' ] = 'Congratulations!';
 $lang['step.execute.title' ] = 'Execute update';
-$lang['step.execute.update_in_progress' ] = 'Update in progress';
+$lang['step.execute.update.in.progress' ] = 'Update in progress';
 $lang['step.execute.message' ] = 'Site update';
 $lang['step.execute.clue' ] = 'This step will convert your site PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' to ' . UpdateServices::NEW_KERNEL_VERSION . ' PHPBoost.
     <br /><br />
@@ -135,9 +132,14 @@ $lang['step.execute.incompatible_lang' ] = 'The lang :langs will be disabled bec
 $lang['step.execute.incompatible_lang.default' ] = '<br /><br /><b>:old_default</b> default lang for the site will be replaced by <b>:new_default</b> lang. When you have installed the new compatible version of <b>:old_default</b> lang, remember to reconfigure your site\'s default lang in the general configuration (if that was the only lang then uninstall <b>:new_default</b> lang so that users of the site have this lang active).';
 
 //Finish update
-$lang['finish.message' ] = '
-        <fieldset>
-            <legend>PHPBoost is now updated and ready to run!</legend>
+$lang['update.tab.congrats'] = 'Congratulations';
+$lang['update.tab.thanks']   = 'Thanks';
+$lang['update.tab.projects'] = 'Projects';
+$lang['update.tab.credits']  = 'Credits';
+
+$lang['update.tab.content.congrats'] = '
+        <div>
+            <h2>PHPBoost is now updated and ready to run!</h2>
             <div class="fielset-inset">
                 <p class="message-helper bgc success">The update of PHPBoost has been powered successfully. The PHPBoost Team thanks you for using its software and is proud to count you among its users.</p>
                 <p class="message-helper bgc warning">Please download the <a href="' . GeneralConfig::load()->get_complete_site_url() . '/cache/update.log" download>log file</a> of your update, it could be required on PHPBoost forum if you ask for support.</p>
@@ -146,51 +148,68 @@ $lang['finish.message' ] = '
                 <p>Don\'t forget the <a href="https://www.phpboost.com/wiki/">documentation</a> which will help you for using PHPBoost and the <a href="https://www.phpboost.com/faq/"><acronym aria-label="Frequently Asked Questions">FAQ</acronym></a>.</p>
                 <p>If you have any problem please go to the <a href="https://www.phpboost.com/forum/">support forum of PHPBoost</a>.</p>
             </div>
-        </fieldset>
-        <fieldset>
-            <legend>Thanks</legend>
+        </div>
+';
+
+$lang['update.tab.content.thanks'] = '
+        <div>
+            <h2>Thanks</h2>
             <div class="fielset-inset">
                 <h2>Members</h2>
                 <p>Thanks to all the members of the community who cheer us on daily and contribute to the software quality by reporting bugs and suggestion improvements, which allows to lead to a stable and powerful CMS.</p>
                 <p>Thanks to the members of our teams and particulary to <strong>mipel</strong> for communication team, <strong>mipel</strong>, <strong>olivierb</strong> and <strong>xela</strong> for the documentation writing, <strong>babsolune</strong> and <strong>xela</strong> for the development help, <strong>ElenWii</strong> and <strong>babsolune</strong> for the graphics, <strong>mipel</strong> and <strong>olivierb</strong> for the moderation of the community and <strong>janus57</strong> for support in development and community help on the forum.</p>
-                <h2>Other projects</h2>
-                <p>PHPBoost uses different tools allowing it to enlarge its features panel enough implying the development time rising. Most of these tools under GNU/GPL license come from <a href="https://github.com/">Github</a>.</p>
-                <ul>
-                    <li><a href="https://notepad-plus-plus.org">Notepad++</a>, <a href="https://atom.io/">Atom</a>, <a href="https://fr.netbeans.org/">NetBeans</a> and <a href="https://www.sublimetext.com">Sublime Text</a>: Very powerful text editors used for the whole development, thanks a lot!</li>
-                    <li><a href="https://github.com/daanforever/phpmathpublisher">PHPMathPublisher</a>: Functions which permit us to interpret LaTeX language and export it to pictures viewable by a web browser.</li>
-                    <li><a href="https://www.tiny.cloud/">TinyMCE</a>: TinyMCE is a <abbr aria-label="What You See Is What You Get">WYSIWYG</abbr> editor which allows users to see their text formatting in real time.</li>
-                    <li><a href="https://github.com/GeSHi/geshi-1.0">GeSHi</a>: Generic Syntax Highlighters used to highlight the source code of many programming languages.</li>
-                    <li><a href="https://jquery.com">jQuery</a>: Javascript and <abbr aria-label="Asynchronous Javascript And XML">AJAX</abbr> Framework</li>
-                    <li><a href="https://fontawesome.com/?from=io">Font Awesome</a>: icons librairy</li>
-                </ul>
             </div>
-        </fieldset>
-        <fieldset>
-            <legend>Make a donation</legend>
-            <div class="fielset-inset">
-                If you want to financially support PHPBoost, you can donate via paypal :
-                <div class="align-center">
-                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                        <input type="hidden" name="cmd" value="_s-xclick">
-                        <input type="hidden" name="hosted_button_id" value="7EFHMABH75HPE">
-                        <input type="image" src="https://resources.phpboost.com/documentation/paypal/button_english.png" border="0" name="submit" alt="PHPBoost - PayPal">
-                    </form>
+        </div>
+';
+
+$lang['update.tab.content.projects'] = '
+            <div>
+                <h2>Other projects</h2>
+                <div>
+                    <p>PHPBoost uses different tools allowing it to enlarge its features panel enough implying the development time rising. Most of these tools under GNU/GPL license come from <a href="https://github.com/">Github</a>.</p>
+                    <ul>
+                        <li><a href="https://notepad-plus-plus.org">Notepad++</a>, <a href="https://atom.io/">Atom</a>, <a href="https://fr.netbeans.org/">NetBeans</a> and <a href="https://www.sublimetext.com">Sublime Text</a>: Very powerful text editors used for the whole development, thanks a lot!</li>
+                        <li><a href="https://github.com/daanforever/phpmathpublisher">PHPMathPublisher</a>: Functions which permit us to interpret LaTeX language and export it to pictures viewable by a web browser.</li>
+                        <li><a href="https://www.tiny.cloud/">TinyMCE</a>: TinyMCE is a <abbr aria-label="What You See Is What You Get">WYSIWYG</abbr> editor which allows users to see their text formatting in real time.</li>
+                        <li><a href="https://github.com/GeSHi/geshi-1.0">GeSHi</a>: Generic Syntax Highlighters used to highlight the source code of many programming languages.</li>
+                        <li><a href="https://jquery.com">jQuery</a>: Javascript and <abbr aria-label="Asynchronous Javascript And XML">AJAX</abbr> Framework</li>
+                        <li><a href="https://fontawesome.com/?from=io">Font Awesome</a>: icons librairy</li>
+                    </ul>
                 </div>
             </div>
-        </fieldset>
-        <fieldset>
-            <legend>Credits</legend>
-            <div class="fielset-inset">
-                <ul>
-                    <li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, founder of PHPBoost project and developer retired</li>
-                    <li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, developer retired</li>
-                    <li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, developer retired</li>
-                    <li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, developer retired</li>
-                    <li><strong>Julien BRISWALTER</strong> <em>(alias j1.seth)</em>, developer</li>
-                </ul>
+';
+
+$lang['update.tab.content.credits'] = '
+    <div>
+        <h2>Credits</h2>
+        <div class="fielset-inset">
+            <ul>
+                <li><strong>Régis VIARRE</strong> <em>(alias CrowkaiT)</em>, founder of PHPBoost project and developer retired</li>
+                <li><strong>Benoît SAUTEL</strong> <em>(alias ben.popeye)</em>, developer retired</li>
+                <li><strong>Loic ROUCHON</strong> <em>(alias horn)</em>, developer retired</li>
+                <li><strong>Kevin MASSY</strong> <em>(alias ReidLos)</em>, developer retired</li>
+                <li><strong>Julien BRISWALTER</strong> <em>(alias j1.seth)</em>, developer</li>
+            </ul>
+        </div>
+    </div>
+';
+
+$lang['update.donate'] = '
+    <div>
+        <h2>Make a donation</h2>
+        <div class="fielset-inset">
+            If you want to financially support PHPBoost, you can donate via paypal :
+            <div class="align-center">
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="7EFHMABH75HPE">
+                    <input type="image" src="https://resources.phpboost.com/documentation/paypal/button_english.png" border="0" name="submit" alt="PHPBoost - PayPal">
+                </form>
             </div>
-        </fieldset>
-$lang[';
-$lang['site.index'  ] = 'Go to the website';
-$lang['admin.index' ] = 'Go to the administration panel';
+        </div>
+    </div>
+';
+
+$lang['update.site.index']  = 'Go to the website';
+$lang['update.admin.index'] = 'Go to the administration panel';
 ?>

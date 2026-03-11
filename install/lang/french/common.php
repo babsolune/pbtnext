@@ -83,7 +83,7 @@ $lang['install.php.extensions.check.mbstring']       = 'Extension MBstring';
 $lang['install.php.extensions.check.mbstring.clue']  = 'Extension utilisée pour la gestion des caractères UTF-8. Obligatoire pour avoir un site fonctionnel.';
 $lang['install.php.extensions.check.mbstring.error'] = 'L\'extension php <b>mbstring</b> n\'est pas activée. Veuillez l\'activer ou contactez votre hébergeur avant de pouvoir poursuivre l\'installation.';
 $lang['install.url.rewriting']                       = 'URL Rewriting';
-$lang['install.url.rewriting.clue']                  = 'Réécriture des adresses des pages qui les rend plus lisibles et plus propices au référencement sur les moteurs de recherche';
+$lang['install.url.rewriting.clue']                  = 'Optionnel<br />Réécriture des adresses des pages qui les rend plus lisibles et plus propices au référencement sur les moteurs de recherche';
 
 $lang['install.folders.chmod']         = 'Autorisations des dossiers';
 $lang['install.folders.chmod.check']   = '<span class="text-strong error">Obligatoire :</span> PHPBoost nécessite que certains dossiers soient inscriptibles. Si votre serveur le permet, leurs autorisations sont changées de façon automatique. Cependant certains serveurs empêchent la modification automatique des autorisations, il faut donc faire la manipulation manuellement, pour cela contactez votre hébergeur.';
@@ -194,7 +194,7 @@ $lang['install.finish.title'] = 'Fin de l\'installation';
 
 $lang['install.tab.congrats'] = 'Félicitations';
 $lang['install.tab.thanks']   = 'Remerciements';
-$lang['install.tab.project']  = 'Projets';
+$lang['install.tab.projects'] = 'Projets';
 $lang['install.tab.credits']  = 'Crédits';
 
 $lang['install.tab.content.congrats']  = '
@@ -257,7 +257,7 @@ $lang['install.donate']  = '
     <div>
         <h2>Faire un don</h2>
         <div class="fielset-inset">
-            Si vous souhaitez supporter PHPBoost financièrement vous pouvez nous faire un don via paypal
+            Si vous souhaitez supporter PHPBoost financièrement, vous pouvez nous faire un don via paypal
 
             <div class="align-center">
                 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">

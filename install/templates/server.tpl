@@ -1,3 +1,5 @@
+<header></header>
+
 <div class="content">
     <div class="cell-flex cell-columns-2">
         <div class="cell cell-3-4">
@@ -19,9 +21,7 @@
             <div class="content">
                 <p>${set(@H|install.php.version.check.description, ['min_php_version': MIN_PHP_VERSION])}</p>
                 <div class="flex-between checked-element">
-                    <label>
-                        ${set(@install.php.version.check, ['min_php_version': MIN_PHP_VERSION])}
-                    </label>
+                    <span>${set(@install.php.version.check, ['min_php_version': MIN_PHP_VERSION])}</span>
                     <span>${set(@H|install.php.version.check.clue, ['php_version': PHP_VERSION])}</span>
                     <span class=""# IF PHP_VERSION_OK # aria-label="{@common.yes}"# ELSE # aria-label="{@common.no}"# ENDIF #>
                         # IF PHP_VERSION_OK #
@@ -42,7 +42,7 @@
                     <div class="flex-between checked-element">
                         <span>{@install.php.extensions.check.gd}</span>
                         <div>
-                            <span aria-label="{@install.php.extensions.check.gd.clue}"><i class="fa fa-fw fa-question"></i></span>
+                            <span aria-label="{@install.php.extensions.check.gd.clue}"><i class="fa fa-fw fa-question" aria-hidden="true"></i></span>
                             <span# IF HAS_GD_EXTENSION # aria-label="{@common.yes}"# ELSE # aria-label="{@common.no}"# ENDIF #>
                                 # IF HAS_GD_EXTENSION #
                                     <i class="fa fa-check fa-fw success" aria-hidden="true"></i>
@@ -90,7 +90,6 @@
                                 # ENDIF #
                             </span>
                         </div>
-                        <span class="field-description"></span>
                     </div>
                     <div class="flex-between checked-element">
                         <label>{@install.url.rewriting}</label>
@@ -121,7 +120,7 @@
             <div class="cell-flex cell-columns-4">
                 # START folder #
                     <div class="flex-between checked-element">
-                        <label>{folder.NAME}</label>
+                        <span>{folder.NAME}</span>
                         <div>
                             <span>
                                 # IF folder.EXISTS #
@@ -145,10 +144,10 @@
     </div>
 
     # IF C_MBSTRING_ERROR #
-        <fieldset id="mbstring-error"><div class="message-helper bgc error">{@install.php.extensions.check.mbstring.error}</div></fieldset>
+        <div id="mbstring-error"><div class="message-helper bgc error">{@install.php.extensions.check.mbstring.error}</div></div>
     # END #
     # IF C_FOLDERS_ERROR #
-        <fieldset id="folders-error"><div class="message-helper bgc error">{@install.folders.chmod.error}</div></fieldset>
+        <div id="folders-error"><div class="message-helper bgc error">{@install.folders.chmod.error}</div></div>
     # END #
 </div>
 

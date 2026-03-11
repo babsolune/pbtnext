@@ -1,118 +1,157 @@
-<header>
-	<h2>{@step.server.title}</h2>
-</header>
+<header></header>
 
 <div class="content">
-	<div class="float-right pbt-box align-center">
-		<a href="https://www.php.net/" target="_blank" rel="noopener noreferrer">
-			<img src="templates/images/php.webp" alt="PHP" class="float-right" />
-		</a>
-	</div>
-	<span class="spacer">&nbsp;</span>
-	{@H|step.server.description}
-	<fieldset class="fieldset-content">
-		<legend>{@php.version}</legend>
-		<div class="fieldset-inset">
-			<p>${set(@H|php.version.check.clue, ['min_php_version': MIN_PHP_VERSION])}</p>
-			<div class="form-element">
-				<label>${set(@php.version.check, ['min_php_version': MIN_PHP_VERSION])}</label>
-				<div class="form-field"# IF PHP_VERSION_OK # aria-label="{@yes}"# ELSE # aria-label="{@no}"# ENDIF #>
-				# IF PHP_VERSION_OK #
-					<i class="fa fa-check fa-2x success" aria-hidden="true"></i><span class="sr-only">{@yes}</span>
-				# ELSE #
-					<i class="fa fa-times fa-2x error" aria-hidden="true"></i><span class="sr-only">{@no}</span>
-				# ENDIF #
-				</div>
-			</div>
-		</div>
-	</fieldset>
+    <div class="cell-flex cell-columns-2">
+        <div class="cell cell-3-4">
+            <div class="cell-body">
+                <div class="cell-content">{@H|step.server.description}</div>
+            </div>
+        </div>
+        <div class="cell cell-1-4">
+            <div class="cell-thumbnail cell-center">
+                <img src="templates/images/php.webp" alt="PHP" class="float-right" />
+                <a href="https://www.php.net/" target="_blank" rel="noopener noreferrer">php.net</a>
+            </div>
+        </div>
+    </div>
 
-	<fieldset class="fieldset-content">
-		<legend>{@php.extensions}</legend>
-		<div class="fieldset-inset">
-			<p>{@php.extensions.check}</p>
-			<div class="form-element">
-				<label>{@php.extensions.check.gdLibrary} <span class="field-description">{@php.extensions.check.gdLibrary.clue}</span></label>
-				<div class="form-field"# IF HAS_GD_LIBRARY # aria-label="{@yes}"# ELSE # aria-label="{@no}"# ENDIF #>
-				# IF HAS_GD_LIBRARY #
-					<i class="fa fa-check fa-2x success" aria-hidden="true"></i><span class="sr-only">{@yes}</span>
-				# ELSE #
-					<i class="fa fa-times fa-2x error" aria-hidden="true"></i><span class="sr-only">{@no}</span>
-				# ENDIF #
-				</div>
-			</div>
-			<div class="form-element">
-				<label>{@php.extensions.check.curlLibrary} <span class="field-description">{@php.extensions.check.curlLibrary.clue}</span></label>
-				<div class="form-field"# IF HAS_CURL_LIBRARY # aria-label="{@yes}"# ELSE # aria-label="{@no}"# ENDIF #>
-				# IF HAS_CURL_LIBRARY #
-					<i class="fa fa-check fa-2x success" aria-hidden="true"></i><span class="sr-only">{@yes}</span>
-				# ELSE #
-					<i class="fa fa-times fa-2x error" aria-hidden="true"></i><span class="sr-only">{@no}</span>
-				# ENDIF #
-				</div>
-			</div>
-			<div class="form-element">
-				<label>{@php.extensions.check.mbstringLibrary} <span class="field-description">{@php.extensions.check.mbstringLibrary.clue}</span></label>
-				<div class="form-field"# IF HAS_MBSTRING_LIBRARY # aria-label="{@yes}"# ELSE # aria-label="{@no}"# ENDIF #>
-				# IF HAS_MBSTRING_LIBRARY #
-					<i class="fa fa-check fa-2x success" aria-hidden="true"></i><span class="sr-only">{@yes}</span>
-				# ELSE #
-					<i class="fa fa-times fa-2x error" aria-hidden="true"></i><span class="sr-only">{@no}</span>
-				# ENDIF #
-				</div>
-			</div>
-			<div class="form-element">
-				<label>{@server.urlRewriting} <span class="field-description">{@server.urlRewriting.clue}</span></label>
-				<div class="form-field"# IF URL_REWRITING_KNOWN ## IF URL_REWRITING_AVAILABLE # aria-label="{@yes}"# ELSE # aria-label="{@no}"# ENDIF ## ELSE # aria-label="{@unknown}"# ENDIF #>
-				# IF URL_REWRITING_KNOWN #
-					# IF URL_REWRITING_AVAILABLE #
-					<i class="fa fa-check fa-2x success" aria-hidden="true"></i><span class="sr-only">{@yes}</span>
-					# ELSE #
-					<i class="fa fa-times fa-2x error" aria-hidden="true"></i><span class="sr-only">{@no}</span>
-					# ENDIF #
-				# ELSE #
-				<i class="fa fa-question fa-2x" aria-hidden="true"></i><span class="sr-only">{@unknown}</span>
-				# ENDIF #
-				</div>
-			</div>
-		</div>
-	</fieldset>
+    <div class="cell-flex cell-columns-2">
+        <div class="">
+            <h2>{@php.version}</h2>
+            <div class="content">
+                <p>${set(@H|php.version.check.clue, ['min_php_version': MIN_PHP_VERSION])}</p>
+                <div class="flex-between checked-element">
+                    <label>${set(@php.version.check, ['min_php_version': MIN_PHP_VERSION])}</label>
+                    <span></span>
+                    <span class=""# IF PHP_VERSION_OK # aria-label="{@common.yes}"# ELSE # aria-label="{@common.no}"# ENDIF #>
+                        # IF PHP_VERSION_OK #
+                            <i class="fa fa-check fa-fw success" aria-hidden="true"></i><span class="sr-only">{@common.yes}</span>
+                        # ELSE #
+                            <i class="fa fa-times fa-fw error" aria-hidden="true"></i><span class="sr-only">{@common.no}</span>
+                        # ENDIF #
+                    </span>
+                </div>
+            </div>
+        </div>
 
-	<fieldset class="fieldset-content">
-		<legend>{@folders.chmod}</legend>
-		<div id="chmod" class="fieldset-inset">
-			<p>{@H|folders.chmod.check}</p>
-			# START folder #
-				<div class="form-element">
-					<label>{folder.NAME}</label>
-					<div class="form-field">
-						# IF folder.EXISTS #
-							<div class="message-helper bgc success">{@folder.exists}</div>
-						# ELSE #
-							<div class="message-helper bgc error">{@folder.doesNotExist}</div>
-						# ENDIF #
-						# IF folder.IS_WRITABLE #
-							<div class="message-helper bgc success">{@folder.isWritable}</div>
-						# ELSE #
-							<div class="message-helper bgc error">{@folder.isNotWritable}</div>
-						# ENDIF #
-					</div>
-				</div>
-			# END folder #
-		</div>
-	</fieldset>
+        <div class="">
+            <h2>{@php.extensions}</h2>
+            <div class="content">
+                <p>{@php.extensions.check}</p>
+                <div class="cell-flex cell-columns-3">
+                    <div class="flex-between checked-element">
+                        <span>{@php.extensions.check.gd}</span>
+                        <div>
+                            <span aria-label="{@php.extensions.check.gd.clue}"><i class="fa fa-fw fa-question" aria-hidden="true"></i></span>
+                            <span# IF HAS_GD_EXTENSION # aria-label="{@common.yes}"# ELSE # aria-label="{@common.no}"# ENDIF #>
+                                # IF HAS_GD_EXTENSION #
+                                    <i class="fa fa-check fa-fw success" aria-hidden="true"></i><span class="sr-only">{@common.yes}</span>
+                                # ELSE #
+                                    <i class="fa fa-times fa-fw error" aria-hidden="true"></i><span class="sr-only">{@common.no}</span>
+                                # ENDIF #
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flex-between checked-element">
+                        <span>{@php.extensions.check.curl}</span>
+                        <div>
+                            <span aria-label="{@php.extensions.check.curl.clue}"><i class="fa fa-fw fa-question" aria-hidden="true"></i></span>
+                            <span# IF HAS_CURL_EXTENSION # aria-label="{@common.yes}"# ELSE # aria-label="{@common.no}"# ENDIF #>
+                                # IF HAS_CURL_EXTENSION #
+                                    <i class="fa fa-check fa-fw success" aria-hidden="true"></i><span class="sr-only">{@common.yes}</span>
+                                # ELSE #
+                                    <i class="fa fa-times fa-fw error" aria-hidden="true"></i><span class="sr-only">{@common.no}</span>
+                                # ENDIF #
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flex-between checked-element">
+                        <span>{@php.extensions.check.zip}</span>
+                        <div>
+                            <span aria-label="{@php.extensions.check.zip.clue}"><i class="fa fa-fw fa-question" aria-hidden="true"></i></span>
+                            <span# IF HAS_ZIP_EXTENSION # aria-label="{@common.yes}"# ELSE # aria-label="{@common.no}"# ENDIF #>
+                                # IF HAS_ZIP_EXTENSION #
+                                    <i class="fa fa-check fa-fw success" aria-hidden="true"></i><span class="sr-only">{@common.yes}</span>
+                                # ELSE #
+                                    <i class="fa fa-times fa-fw error" aria-hidden="true"></i><span class="sr-only">{@common.no}</span>
+                                # ENDIF #
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flex-between checked-element">
+                        <span>{@php.extensions.check.mbstring}</span>
+                        <div>
+                            <span aria-label="{@php.extensions.check.mbstring.clue}"><i class="fa fa-fw fa-question" aria-hidden="true"></i></span>
+                            <span# IF HAS_MBSTRING_EXTENSION # aria-label="{@common.yes}"# ELSE # aria-label="{@common.no}"# ENDIF #>
+                                # IF HAS_MBSTRING_EXTENSION #
+                                    <i class="fa fa-check fa-fw success" aria-hidden="true"></i><span class="sr-only">{@common.yes}</span>
+                                # ELSE #
+                                    <i class="fa fa-times fa-fw error" aria-hidden="true"></i><span class="sr-only">{@common.no}</span>
+                                # ENDIF #
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flex-between checked-element">
+                        <span>{@server.urlRewriting}</span>
+                        <div>
+                            <span aria-label="{@server.urlRewriting.clue}"><i class="fa fa-fw fa-question" aria-hidden="true"></i></span>
+                            <span# IF URL_REWRITING_KNOWN ## IF URL_REWRITING_AVAILABLE # aria-label="{@common.yes}"# ELSE # aria-label="{@common.no}"# ENDIF ## ELSE # aria-label="{@common.unknown}"# ENDIF #>
+                                # IF URL_REWRITING_KNOWN #
+                                    # IF URL_REWRITING_AVAILABLE #
+                                        <i class="fa fa-check fa-fw success" aria-hidden="true"></i><span class="sr-only">{@common.yes}</span>
+                                    # ELSE #
+                                        <i class="fa fa-times fa-fw error" aria-hidden="true"></i><span class="sr-only">{@common.no}</span>
+                                    # ENDIF #
+                                # ELSE #
+                                    <i class="fa fa-question fa-fw" aria-hidden="true"></i><span class="sr-only">{@common.unknown}</span>
+                                # ENDIF #
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-	# IF C_MBSTRING_ERROR #
-	<fieldset id="mbstring-error"><div class="message-helper bgc error">{@php.extensions.check.mbstringLibrary.error}</div></fieldset>
-	# END #
-	# IF C_FOLDERS_ERROR #
-	<fieldset id="folders-error"><div class="message-helper bgc error">{@folders.chmod.error}</div></fieldset>
-	# END #
+    <div class="">
+        <h2>{@folders.chmod}</h2>
+        <div id="chmod" class="content">
+            <p>{@H|folders.chmod.check}</p>
+            <div class="cell-flex cell-columns-4">
+                # START folder #
+                    <div class="flex-between checked-element">
+                        <span>{folder.NAME}</span>
+                        <div>
+                            <span>
+                                # IF folder.EXISTS #
+                                    <span aria-label="{@folder.exists}"><i class="fa fa-folder fa-fw success" aria-hidden="true"></i></span>
+                                # ELSE #
+                                    <span aria-label="{@folder.doesNotExist}"><i class="fa fa-folder fa-fw error" aria-hidden="true"></i></span>
+                                # ENDIF #
+                                # IF folder.IS_WRITABLE #
+                                    <span aria-label="{@folder.isWritable}"><i class="fa fa-pen-to-square fa-fw success" aria-hidden="true"></i></span>
+                                # ELSE #
+                                    <span aria-label="{@folder.isNotWritable}"><i class="fa fa-pen-to-square fa-fw error" aria-hidden="true"></i></span>
+                                # ENDIF #
+                            </span>
+                            
+                        </div>
+                    </div>
+                # END folder #
+            </div>
+        </div>
+    </div>
 
+    # IF C_MBSTRING_ERROR #
+    <div id="mbstring-error"><div class="message-helper bgc error">{@php.extensions.check.mbstring.error}</div></div>
+    # END #
+    # IF C_FOLDERS_ERROR #
+    <div id="folders-error"><div class="message-helper bgc error">{@folders.chmod.error}</div></div>
+    # END #
 </div>
 
 <footer>
-	<div class="next-step">
-		# INCLUDE CONTINUE_FORM #
-	</div>
+    <div class="next-step">
+        # INCLUDE CONTINUE_FORM #
+    </div>
 </footer>

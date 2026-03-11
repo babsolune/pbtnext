@@ -1,19 +1,22 @@
 <header></header>
 
-<div class="cell-flex cell-columns-2">
-	<div class="next-step">
-		# INCLUDE DATABASE_FORM #
-	</div>
-    <div class="content">
-        # IF ERROR #
-            <div class="message-helper bgc error">{ERROR}</div>
-        # END #
-        <div class="pbt-box align-center">
-            <a href="https://www.mysql.com/" target="_blank" rel="noopener noreferrer">
-                <img src="templates/images/mysql.webp" alt="MySQL" />
-            </a>
+<div class="content">
+    # IF ERROR #
+        <div class="message-helper bgc error">{ERROR}</div>
+    # END #
+    <div class="cell-flex cell-columns-2">
+        <div class="next-step">
+            # INCLUDE DATABASE_FORM #
         </div>
-        {@H|db.parameters.config.clue}
+        <div class="cell">
+            <div class="cell-thumbnail cell-center">
+                <img src="templates/images/mysql.webp" alt="MySQL" />
+                <a class="cell-thumbnail-caption" href="https://www.mysql.com/" target="_blank" rel="noopener noreferrer">mysql.com</a>
+            </div>
+            <div class="cell-body">
+                <div class="cell-content">{@H|db.parameters.config.clue}</div>
+            </div>
+        </div>
     </div>
 </div>
 

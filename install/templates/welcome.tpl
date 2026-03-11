@@ -1,3 +1,5 @@
+<header></header>
+
 <div class="content">
 	<div class="cell-flex cell-columns-2">
 		<div class="cell">
