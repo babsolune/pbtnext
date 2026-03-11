@@ -41,51 +41,51 @@ class UpdateDBConfigController extends UpdateController
     {
         $this->form = new HTMLForm('databaseForm', '', false);
 
-        $fieldset = new FormFieldsetHTML('serverConfig', $this->lang['dbms.parameters']);
+        $fieldset = new FormFieldsetHTML('serverConfig', $this->lang['update.dbms.parameters']);
         $this->form->add_fieldset($fieldset);
 
-        $fieldset->add_field(new FormFieldTextEditor('host', $this->lang['dbms.host'], 'localhost',
+        $fieldset->add_field(new FormFieldTextEditor('host', $this->lang['update.dbms.host'], 'localhost',
             [
                 'class' => 'half-field',
-                'description' => $this->lang['dbms.host.clue'], 'required' => $this->lang['db.required.host']
+                'description' => $this->lang['update.dbms.host.clue'], 'required' => $this->lang['update.db.required.host']
             ]
         ));
 
-        $fieldset->add_field($port = new FormFieldTextEditor('port', $this->lang['dbms.port'], '3306',
+        $fieldset->add_field($port = new FormFieldTextEditor('port', $this->lang['update.dbms.port'], '3306',
             [
                 'class' => 'half-field',
-                'description' => $this->lang['dbms.port.clue'], 'required' => $this->lang['db.required.port']
+                'description' => $this->lang['update.dbms.port.clue'], 'required' => $this->lang['update.db.required.port']
             ]
         ));
         $port->add_constraint(new FormFieldConstraintIntegerRange(1, 65536));
 
-        $fieldset->add_field(new FormFieldTextEditor('login', $this->lang['dbms.login'], 'root',
+        $fieldset->add_field(new FormFieldTextEditor('login', $this->lang['update.dbms.login'], 'root',
             [
                 'class' => 'half-field',
-                'description' => $this->lang['dbms.login.clue'], 'required' => $this->lang['db.required.login']
+                'description' => $this->lang['update.dbms.login.clue'], 'required' => $this->lang['update.db.required.login']
             ]
         ));
 
-        $fieldset->add_field(new FormFieldPasswordEditor('password', $this->lang['dbms.password'], '',
+        $fieldset->add_field(new FormFieldPasswordEditor('password', $this->lang['update.dbms.password'], '',
             [
                 'class' => 'half-field',
-                'description' => $this->lang['dbms.password.clue']
+                'description' => $this->lang['update.dbms.password.clue']
             ]
         ));
 
-        $fieldset->add_field($schema = new FormFieldTextEditor('schema', $this->lang['schema'], '',
+        $fieldset->add_field($schema = new FormFieldTextEditor('schema', $this->lang['update.schema'], '',
             [
                 'class' => 'half-field',
-                'required' => $this->lang['db.required.schema']
+                'required' => $this->lang['update.db.required.schema']
             ],
             [new FormFieldConstraintRegex('`^[a-z0-9_-]+$`iu')]
         ));
         $schema->add_event('change', '$FFS(\'overwriteFieldset\').disable()');
 
-        $fieldset->add_field(new FormFieldTextEditor('tablesPrefix', $this->lang['schema.tablePrefix'], 'phpboost_',
+        $fieldset->add_field(new FormFieldTextEditor('tablesPrefix', $this->lang['update.schema.table.prefix'], 'phpboost_',
             [
                 'class' => 'half-field',
-                'description' => $this->lang['schema.tablePrefix.clue']
+                'description' => $this->lang['update.schema.table.prefix.clue']
             ],
             [new FormFieldConstraintRegex('`^[a-z0-9_]+$`iu')]
         ));
@@ -93,7 +93,7 @@ class UpdateDBConfigController extends UpdateController
         $action_fieldset = new FormFieldsetSubmit('actions');
 
         $action_fieldset->add_element(new FormButtonLinkCssImg($this->lang['update.step.previous'], UpdateUrlBuilder::server_configuration(), 'fa fa-arrow-left'));
-        $action_fieldset->add_element(new FormButtonSubmitCssImg($this->lang['db.config.check'], 'fa fa-sync', 'database'));
+        $action_fieldset->add_element(new FormButtonSubmitCssImg($this->lang['update.db.config.check'], 'fa fa-sync', 'database'));
         $action_fieldset->add_element($this->submit_button = new FormButtonSubmitCssImg($this->lang['update.step.next'], 'fa fa-arrow-right', 'database'));
 
         $this->form->add_fieldset($action_fieldset);
@@ -108,14 +108,14 @@ class UpdateDBConfigController extends UpdateController
                 $this->create_connection($service, $host, $port, $login, $password, $schema, $tables_prefix);
                 break;
             case UpdateServices::CONNECTION_ERROR:
-                $this->error = $this->lang['db.connection.error'];
+                $this->error = $this->lang['update.db.connection.error'];
                 break;
             case UpdateServices::UNEXISTING_DATABASE:
-                $this->error = $this->lang['db.unexisting_database'];
+                $this->error = $this->lang['update.db.unexisting.database'];
                 break;
             case UpdateServices::UNKNOWN_ERROR:
             default:
-                $this->error = $this->lang['db.unknown.error'];
+                $this->error = $this->lang['update.db.unknown.error'];
                 break;
         }
     }
@@ -127,7 +127,7 @@ class UpdateDBConfigController extends UpdateController
             $service->create_connection(DBFactory::MYSQL, $host, $port, $schema, $login, $password, $tables_prefix);
             AppContext::get_response()->redirect(UpdateUrlBuilder::update());
         } else {
-            $this->error = $this->lang['phpboost.notInstalled.clue'];
+            $this->error = $this->lang['phpboost.not.installed.clue'];
         }
     }
 
@@ -138,7 +138,7 @@ class UpdateDBConfigController extends UpdateController
         if (!empty($this->error)) {
             $this->view->put('ERROR', $this->error);
         }
-        $step_title = $this->lang['step.dbConfig.title'];
+        $step_title = $this->lang['update.step.database.config'];
         $response   = new UpdateDisplayResponse(3, $step_title, $this->view);
         return $response;
     }

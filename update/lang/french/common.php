@@ -30,122 +30,129 @@ $lang['update.change']                 = 'Changer';
 $lang['update.step.previous'] = 'Étape précédente';
 $lang['update.step.next']     = 'Étape suivante';
 
-$lang['update.phpboost.link'] = 'Lien vers le site officiel de PHPBoost CMS';
-$lang['update.phpboost.rights']      = '';
-$lang['update.phpboost.logo']        = 'Logo PHPBoost';
+$lang['update.phpboost.link']   = 'Lien vers le site officiel de PHPBoost CMS';
+$lang['update.phpboost.rights'] = '';
+$lang['update.phpboost.logo']   = 'Logo PHPBoost';
 
 //Introduction
-$lang['step.introduction.title'   ] = 'Mise à jour de PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' vers PHPBoost ' . UpdateServices::NEW_KERNEL_VERSION . ' ' . Environment::get_phpboost_name_version();
-$lang['step.introduction.message' ] = 'Bienvenue dans l\'assistant de mise à jour';
-$lang['step.introduction.clue'    ] = '
+$lang['update.step.introduction.title']   = 'Mise à jour de PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' vers PHPBoost ' . UpdateServices::NEW_KERNEL_VERSION . ' ' . Environment::get_phpboost_name_version();
+$lang['update.step.introduction.message'] = 'Bienvenue dans l\'assistant de mise à jour';
+$lang['update.step.introduction.clue']    = '
         <p>Merci d\'avoir accordé votre confiance à PHPBoost pour créer votre site web.</p>
         <p>Pour mettre à jour PHPBoost vous devez disposer d\'un minimum d\'informations concernant votre hébergement qui devraient être fournies par votre hébergeur. La mise à jour est entièrement automatisée, elle ne devrait prendre que quelques minutes. Cliquez sur la flèche ci-dessous pour démarrer le processus de mise à jour.</p>
 ';
-$lang['step.introduction.maintenance_notice' ] = '<div class="message-helper bgc notice">Votre site va automatiquement être placé en maintenance. Pensez à désactiver la maintenance lorsque vous aurez vérifié que tout fonctionne correctement.</div>';
-$lang['step.introduction.team_signature'     ] = '<p>Cordialement, l\'équipe PHPBoost</p>';
+
+$lang['update.step.introduction.maintenance_notice'] = '<div class="message-helper bgc notice">Votre site va automatiquement être placé en maintenance. Pensez à désactiver la maintenance lorsque vous aurez vérifié que tout fonctionne correctement.</div>';
+$lang['update.step.introduction.team_signature']     = '<p>Cordialement, l\'équipe PHPBoost</p>';
 
 //Configuration du serveur
-$lang['step.server.title'        ] = 'Vérification de la configuration du serveur';
-$lang['step.server.description'  ] = '
+$lang['update.step.server.title']       = 'Vérification de la configuration du serveur';
+$lang['update.step.server.description'] = '
         <p>Avant de commencer la mise à jour de PHPBoost, la configuration de votre serveur va être vérifiée afin d\'établir sa compatibilité avec PHPBoost.</p>
         <p>En cas de problème n\'hésitez pas à poser vos questions sur le <a href="https://www.phpboost.com/forum/">forum de support</a>.</p>
         <div class="message-helper bgc notice">Veillez à ce que chaque condition obligatoire soit vérifiée sans quoi vous risquez d\'avoir des problèmes en utilisant le logiciel.</div>
 ';
-$lang['php.version'            ] = 'Version de PHP';
-$lang['php.version.check'      ] = 'PHP supérieur à :min_php_version';
-$lang['php.version.check.clue' ] = '<span style="font-weight:bold;color:red;">Obligatoire :</span> Pour faire fonctionner PHPBoost, votre serveur doit être équipé d\'une version supérieure ou égale à PHP :min_php_version. Sans cela il vous sera impossible de le faire fonctionner correctement, contactez votre hébergeur ou migrez vers un serveur plus récent.';
-$lang['php.extensions'] = 'Extensions';
-$lang['php.extensions.check'] = 'L\'activation de ces extensions permet d\'apporter des fonctionnalités supplémentaires et sont indispensables au bon fonctionnement de PHPBoost.';
-$lang['php.extensions.check.gd'] = 'Extension GD';
-$lang['php.extensions.check.gd.clue'] = 'Extension utilisée pour générer des images. Utile par exemple pour la protection anti robots ou les diagrammes des statistiques du site. Certains modules peuvent également s\'en servir.';
-$lang['php.extensions.check.curl'] = 'Extension Curl';
-$lang['php.extensions.check.curl.clue'] = 'Extension utilisée pour récupération d\'éléments distants. Nécessaire pour faire fonctionner l\'authentification externe par exemple.';
-$lang['php.extensions.check.zip'] = 'Extension Zip';
-$lang['php.extensions.check.zip.clue'] = 'Extension utilisée pour gestion de fichiers compressés.';
-$lang['php.extensions.check.mbstring'] = 'Extension MBstring';
-$lang['php.extensions.check.mbstring.clue'] = 'Extension utilisée pour la gestion des caractères UTF-8. Obligatoire pour avoir un site fonctionnel.';
-$lang['php.extensions.check.mbstring.error'] = 'L\'extension php <b>mbstring</b> n\'est pas activée. Veuillez l\'activer ou contactez votre hébergeur avant de pouvoir poursuivre l\'installation.';
-$lang['server.urlRewriting'      ] = 'URL Rewriting';
-$lang['server.urlRewriting.clue' ] = 'Optionnel<br />Réécriture des adresses des pages qui les rend plus lisibles et plus propices au référencement sur les moteurs de recherche';
-$lang['folders.chmod'         ] = 'Autorisations des dossiers';
-$lang['folders.chmod.check'   ] = '<span style="font-weight:bold;color:red;">Obligatoire :</span> PHPBoost nécessite que certains dossiers soient inscriptibles. Si votre serveur le permet, leurs autorisations sont changées de façon automatique. Cependant certains serveurs empêchent la modification automatique des autorisations, il faut donc faire la manipulation manuellement, pour cela voir la <a href="https://www.phpboost.com/wiki/changer-le-chmod-d-un-dossier" aria-label="Documentation PHPBoost : Changer le chmod">documentation PHPBoost</a> ou contactez votre hébergeur.';
-$lang['folders.chmod.refresh' ] = 'Revérifier les dossiers';
-$lang['folder.exists'         ] = 'Existant';
-$lang['folder.doesNotExist'   ] = 'Inexistant';
-$lang['folder.isWritable'     ] = 'Inscriptible';
-$lang['folder.isNotWritable'  ] = 'Non inscriptible';
-$lang['folders.chmod.error'   ] = 'Les répertoires ne sont pas tous existants et/ou inscriptibles. Merci de le faire à la main pour pouvoir continuer.';
+$lang['update.php.version']            = 'Version de PHP';
+$lang['update.php.version.check']      = 'PHP supérieur à :min_php_version';
+$lang['update.php.version.check.clue'] = '<span style="font-weight:bold;color:red;">Obligatoire :</span> Pour faire fonctionner PHPBoost, votre serveur doit être équipé d\'une version supérieure ou égale à PHP :min_php_version. Sans cela il vous sera impossible de le faire fonctionner correctement, contactez votre hébergeur ou migrez vers un serveur plus récent.';
+
+$lang['update.php.extensions']                      = 'Extensions';
+$lang['update.php.extensions.check']                = 'L\'activation de ces extensions permet d\'apporter des fonctionnalités supplémentaires et sont indispensables au bon fonctionnement de PHPBoost.';
+$lang['update.php.extensions.check.gd']             = 'Extension GD';
+$lang['update.php.extensions.check.gd.clue']        = 'Extension utilisée pour générer des images. Utile par exemple pour la protection anti robots ou les diagrammes des statistiques du site. Certains modules peuvent également s\'en servir.';
+$lang['update.php.extensions.check.curl']           = 'Extension Curl';
+$lang['update.php.extensions.check.curl.clue']      = 'Extension utilisée pour récupération d\'éléments distants. Nécessaire pour faire fonctionner l\'authentification externe par exemple.';
+$lang['update.php.extensions.check.zip']            = 'Extension Zip';
+$lang['update.php.extensions.check.zip.clue']       = 'Extension utilisée pour gestion de fichiers compressés.';
+$lang['update.php.extensions.check.mbstring']       = 'Extension MBstring';
+$lang['update.php.extensions.check.mbstring.clue']  = 'Extension utilisée pour la gestion des caractères UTF-8. Obligatoire pour avoir un site fonctionnel.';
+$lang['update.php.extensions.check.mbstring.error'] = 'L\'extension php <b>mbstring</b> n\'est pas activée. Veuillez l\'activer ou contactez votre hébergeur avant de pouvoir poursuivre l\'installation.';
+
+$lang['update.server.url.rewriting'] = 'URL Rewriting';
+$lang['update.server.url.rewriting.clue'] = 'Optionnel<br />Réécriture des adresses des pages qui les rend plus lisibles et plus propices au référencement sur les moteurs de recherche';
+
+$lang['update.folders.chmod']         = 'Autorisations des dossiers';
+$lang['update.folders.chmod.check']   = '<span style="font-weight:bold;color:red;">Obligatoire :</span> PHPBoost nécessite que certains dossiers soient inscriptibles. Si votre serveur le permet, leurs autorisations sont changées de façon automatique. Cependant certains serveurs empêchent la modification automatique des autorisations, il faut donc faire la manipulation manuellement, pour cela voir la <a href="https://www.phpboost.com/wiki/changer-le-chmod-d-un-dossier" aria-label="Documentation PHPBoost : Changer le chmod">documentation PHPBoost</a> ou contactez votre hébergeur.';
+$lang['update.folders.chmod.refresh'] = 'Revérifier les dossiers';
+$lang['update.folder.exists']         = 'Existant';
+$lang['update.folder.non.existent']   = 'Inexistant';
+$lang['update.folder.is.writable']    = 'Inscriptible';
+$lang['update.folder.not.writable']   = 'Non inscriptible';
+$lang['update.folders.chmod.error']   = 'Les répertoires ne sont pas tous existants et/ou inscriptibles. Merci de le faire à la main pour pouvoir continuer.';
 
 //Base de données
-$lang['step.dbConfig.title'       ] = 'Configuration base de données';
-$lang['db.parameters.config'      ] = 'Paramètres de connexion à la base de données';
-$lang['db.parameters.config.clue' ] = '<p>Cette étape permet de générer le fichier de configuration qui retiendra les identifiants de connexion à votre base de données. Si vous ne connaissez pas les informations ci-dessous, contactez votre hébergeur qui vous les transmettra.</p>';
-$lang['dbms.parameters'    ] = 'Paramètres d\'accès au <acronym aria-label="Système de Gestion de Base de Données">SGBD</acronym>';
-$lang['dbms.host'          ] = 'Nom de l\'hôte';
-$lang['dbms.host.clue'     ] = 'URL du serveur qui gère la base de données, <em>localhost</em> la plupart du temps.';
-$lang['dbms.port'          ] = 'Port du serveur';
-$lang['dbms.port.clue'     ] = 'Port du serveur qui gère la base de données, <em>3306</em> la plupart du temps.';
-$lang['dbms.login'         ] = 'Identifiant';
-$lang['dbms.login.clue'    ] = 'Fourni par l\'hébergeur';
-$lang['dbms.password'      ] = 'Mot de passe';
-$lang['dbms.password.clue' ] = 'Fourni par l\'hébergeur';
-$lang['schema.properties'       ] = 'Propriétés de la base de données';
-$lang['schema'                  ] = 'Nom de la base de données';
-$lang['schema.clue'             ] = 'Fourni par l\'hébergeur. Si la base de données n\'existe pas, PHPBoost essayera de la créer.';
-$lang['schema.tablePrefix'      ] = 'Préfixe des tables';
-$lang['schema.tablePrefix.clue' ] = 'Par défaut <em>phpboost_</em>. A changer si vous avez installé plusieurs fois PHPBoost dans la même base de données.';
-$lang['db.config.check'        ] = 'Essayer';
-$lang['db.connection.success'  ] = 'La connexion à la base de données a été effectuée avec succès. Vous pouvez poursuivre l\'installation';
-$lang['db.connection.error'    ] = 'Impossible de se connecter à la base de données. Merci de vérifier vos paramètres.';
-$lang['db.creation.error'      ] = 'La base de données que vous avez indiquée n\'existe pas.';
-$lang['db.unknown.error'       ] = 'Une erreur inconnue a été rencontrée.';
-$lang['db.required.host'       ] = 'Vous devez renseigner le nom de l\'hôte !';
-$lang['db.required.port'       ] = 'Vous devez renseigner le port !';
-$lang['db.required.login'      ] = 'Vous devez renseigner l\'identifiant de connexion !';
-$lang['db.required.schema'     ] = 'Vous devez renseigner le nom de la base de données !';
-$lang['db.unexisting_database' ] = 'La base de donnée n\'existe pas. Veuillez vérifier vos paramètres.';
-$lang['phpboost.notInstalled'      ] = 'Installation inexistante';
-$lang['phpboost.notInstalled.clue' ] = '
+$lang['update.step.database.config']      = 'Configuration base de données';
+$lang['update.db.parameters.config']      = 'Paramètres de connexion à la base de données';
+$lang['update.db.parameters.config.clue'] = '<p>Cette étape permet de générer le fichier de configuration qui retiendra les identifiants de connexion à votre base de données. Si vous ne connaissez pas les informations ci-dessous, contactez votre hébergeur qui vous les transmettra.</p>';
+$lang['update.dbms.parameters']           = 'Paramètres d\'accès au <acronym aria-label="Système de Gestion de Base de Données">SGBD</acronym>';
+$lang['update.dbms.host']                 = 'Nom de l\'hôte';
+$lang['update.dbms.host.clue']            = 'URL du serveur qui gère la base de données, <em>localhost</em> la plupart du temps.';
+$lang['update.dbms.port']                 = 'Port du serveur';
+$lang['update.dbms.port.clue']            = 'Port du serveur qui gère la base de données, <em>3306</em> la plupart du temps.';
+$lang['update.dbms.login']                = 'Identifiant';
+$lang['update.dbms.login.clue']           = 'Fourni par l\'hébergeur';
+$lang['update.dbms.password']             = 'Mot de passe';
+$lang['update.dbms.password.clue']        = 'Fourni par l\'hébergeur';
+
+$lang['update.schema.properties']        = 'Propriétés de la base de données';
+$lang['update.schema']                   = 'Nom de la base de données';
+$lang['update.schema.clue']              = 'Fourni par l\'hébergeur. Si la base de données n\'existe pas, PHPBoost essayera de la créer.';
+$lang['update.schema.table.prefix']      = 'Préfixe des tables';
+$lang['update.schema.table.prefix.clue'] = 'Par défaut <em>phpboost_</em>. A changer si vous avez installé plusieurs fois PHPBoost dans la même base de données.';
+
+$lang['update.db.config.check']        = 'Essayer';
+$lang['update.db.connection.success']  = 'La connexion à la base de données a été effectuée avec succès. Vous pouvez poursuivre l\'installation';
+$lang['update.db.connection.error']    = 'Impossible de se connecter à la base de données. Merci de vérifier vos paramètres.';
+$lang['update.db.creation.error']      = 'La base de données que vous avez indiquée n\'existe pas.';
+$lang['update.db.unknown.error']       = 'Une erreur inconnue a été rencontrée.';
+$lang['update.db.required.host']       = 'Vous devez renseigner le nom de l\'hôte !';
+$lang['update.db.required.port']       = 'Vous devez renseigner le port !';
+$lang['update.db.required.login']      = 'Vous devez renseigner l\'identifiant de connexion !';
+$lang['update.db.required.schema']     = 'Vous devez renseigner le nom de la base de données !';
+$lang['update.db.unexisting.database'] = 'La base de donnée n\'existe pas. Veuillez vérifier vos paramètres.';
+
+$lang['phpboost.not.installed']      = 'Installation inexistante';
+$lang['phpboost.not.installed.clue'] = '
         <p>La base de données sur laquelle vous souhaitez mettre à jour PHPBoost ne contient pas d\'installation.</p>
         <p> Veuillez vérifier que vous avez bien saisi le bon préfixe et la bonne base de données.</p>
 ';
 
 //Execute update
-$lang['congratulations' ] = 'Félicitations !';
-$lang['step.execute.title' ] = 'Exécuter la mise à jour';
-$lang['step.execute.update.in.progress' ] = 'Mise à jour en cours';
-$lang['step.execute.message' ] = 'Mise à jour du site';
-$lang['step.execute.clue' ] = '
+$lang['update.step.execute.title']              = 'Exécuter la mise à jour';
+$lang['update.step.execute.update.in.progress'] = 'Mise à jour en cours';
+$lang['update.step.execute.message']            = 'Mise à jour du site';
+
+$lang['update.step.execute.clue'] = '
         Cette étape va convertir votre site PHPBoost ' . GeneralConfig::load()->get_phpboost_major_version() . ' vers PHPBoost ' . UpdateServices::NEW_KERNEL_VERSION . '.
         <br /><br />Attention cette étape est irréversible, veuillez par précaution sauvegarder votre base de données au préalable !
 ';
-$lang['step.execute.incompatible_modules' ] = '
+$lang['update.step.execute.incompatible.modules'] = '
         Les modules suivants vont être désactivés car ils ne sont pas compatibles avec PHPBoost ' . UpdateServices::NEW_KERNEL_VERSION . ' : :modules.
         <br />Pour les réactiver, téléchargez leur version compatible sur le site <a href="https://www.phpboost.com/download">PHPBoost</a> si elle existe et rendez-vous sur la page mise à jour de module de votre site pour les mettre à jour (ils seront alors réactivés automatiquement).
 ';
-$lang['step.execute.incompatible_module' ] = '
+$lang['update.step.execute.incompatible.module'] = '
         Le module :modules va être désactivé car il n\'est pas compatible avec PHPBoost ' . UpdateServices::NEW_KERNEL_VERSION . '.
         <br />Pour le réactiver, téléchargez sa version compatible sur le site <a href="https://www.phpboost.com/download">PHPBoost</a> si elle existe et rendez-vous sur la page mise à jour de module de votre site pour le mettre à jour (il sera alors réactivé automatiquement).
 ';
-$lang['step.execute.incompatible_module.default' ] = '<br /><br />Le module <b>:old_default</b> placé en démarrage du site va être remplacé par le module <b>:new_default</b>. Quand vous aurez installé la nouvelle version compatible du module <b>:old_default</b> pensez à reconfigurer la page de démarrage de votre site dans la configuration générale.';
-$lang['step.execute.incompatible_themes' ] = '
+$lang['update.step.execute.incompatible.module.default'] = '<br /><br />Le module <b>:old_default</b> placé en démarrage du site va être remplacé par le module <b>:new_default</b>. Quand vous aurez installé la nouvelle version compatible du module <b>:old_default</b> pensez à reconfigurer la page de démarrage de votre site dans la configuration générale.';
+$lang['update.step.execute.incompatible.themes'] = '
         Les thèmes suivants vont être désactivés car ils ne sont pas compatibles avec PHPBoost ' . UpdateServices::NEW_KERNEL_VERSION . ' : :themes.
         <br />Pour les réactiver, téléchargez leur version compatible sur le site <a href="https://www.phpboost.com/download">PHPBoost</a> si elle existe, mettez à jour les thèmes sur le FTP de votre site dans le dossier templates puis rendez-vous sur la page de gestion des thèmes de votre site pour les réactiver.
 ';
-$lang['step.execute.incompatible_theme' ] = '
+$lang['update.step.execute.incompatible.theme'] = '
         Le thème :themes va être désactivé car il n\'est pas compatible avec PHPBoost ' . UpdateServices::NEW_KERNEL_VERSION . '.
         <br />Pour le réactiver, téléchargez sa version compatible sur le site <a href="https://www.phpboost.com/download">PHPBoost</a> si elle existe, mettez à jour le thème sur le FTP de votre site dans le dossier templates puis rendez-vous sur la page de gestion des thèmes de votre site pour le réactiver.
 ';
-$lang['step.execute.incompatible_theme.default' ] = '<br /><br />Le thème <b>:old_default</b> par défaut du site va être remplacé par le thème <b>:new_default</b>. Quand vous aurez installé la nouvelle version compatible du thème <b>:old_default</b> pensez à reconfigurer le thème par défaut de votre site dans la configuration générale (si c\'était le seul thème désinstallez ensuite le thème <b>:new_default</b> pour que les utilisateurs du site aient bien ce thème actif).';
-$lang['step.execute.incompatible_langs' ] = '
+$lang['update.step.execute.incompatible.theme.default' ] = '<br /><br />Le thème <b>:old_default</b> par défaut du site va être remplacé par le thème <b>:new_default</b>. Quand vous aurez installé la nouvelle version compatible du thème <b>:old_default</b> pensez à reconfigurer le thème par défaut de votre site dans la configuration générale (si c\'était le seul thème désinstallez ensuite le thème <b>:new_default</b> pour que les utilisateurs du site aient bien ce thème actif).';
+$lang['update.step.execute.incompatible.langs'] = '
         Les langues suivantes vont être désactivées car elles ne sont pas compatibles avec PHPBoost ' . UpdateServices::NEW_KERNEL_VERSION . ' : :langs.
         <br />Pour les réactiver, téléchargez leur version compatible sur le site <a href="https://www.phpboost.com/download">PHPBoost</a> si elle existe, mettez à jour les langues sur le FTP de votre site dans le dossier lang puis rendez-vous sur la page de gestion des langues de votre site pour les réactiver.
 ';
-$lang['step.execute.incompatible_lang' ] = '
+$lang['update.step.execute.incompatible.lang'] = '
         La langue :langs va être désactivée car elle n\'est pas compatible avec PHPBoost ' . UpdateServices::NEW_KERNEL_VERSION . '.
         <br />Pour la réactiver, téléchargez sa version compatible sur le site <a href="https://www.phpboost.com/download">PHPBoost</a> si elle existe, mettez à jour la langue sur le FTP de votre site  dans le dossier lang puis rendez-vous sur la page de gestion des langues de votre site pour la réactiver.
 ';
-$lang['step.execute.incompatible_lang.default' ] = '<br /><br />La langue <b>:old_default</b> par défaut du site va être remplacée par la langue <b>:new_default</b>. Quand vous aurez installé la nouvelle version compatible de la langue <b>:old_default</b> pensez à reconfigurer la langue par défaut de votre site dans la configuration générale (si c\'était la seule langue désinstallez ensuite la langue <b>:new_default</b> pour que les utilisateurs du site aient bien cette active).';
+$lang['update.step.execute.incompatible.lang.default'] = '<br /><br />La langue <b>:old_default</b> par défaut du site va être remplacée par la langue <b>:new_default</b>. Quand vous aurez installé la nouvelle version compatible de la langue <b>:old_default</b> pensez à reconfigurer la langue par défaut de votre site dans la configuration générale (si c\'était la seule langue désinstallez ensuite la langue <b>:new_default</b> pour que les utilisateurs du site aient bien cette active).';
 
 //Finish update
 $lang['update.tab.congrats'] = 'Félicitaions';

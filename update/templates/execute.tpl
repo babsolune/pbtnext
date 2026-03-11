@@ -1,7 +1,7 @@
 <header></header>
 
 <div class="content">
-	{@H|step.execute.clue}
+	{@H|update.step.execute.clue}
 	# INCLUDE INCOMPATIBLE_MODULES #
 	# INCLUDE INCOMPATIBLE_THEMES #
 	# INCLUDE INCOMPATIBLE_LANGS #
@@ -17,6 +17,6 @@
 	<div class="update-in-progress-background"></div>
 	<div class="update-in-progress-spinner">
 		<i class="fa fa-spin fa-cog fa-2x"></i>
-		<span>{@step.execute.update.in.progress}</span>
+		<span>{@update.step.execute.update.in.progress}</span>
 	</div>
 </div>

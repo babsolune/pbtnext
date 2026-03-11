@@ -41,7 +41,7 @@ class UpdateServerConfigController extends UpdateController
 
         $action_fieldset->add_element(new FormButtonLinkCssImg($this->lang['update.step.previous'], UpdateUrlBuilder::introduction(), 'fa fa-arrow-left'));
 
-        $action_fieldset->add_element(new FormButtonLinkCssImg($this->lang['folders.chmod.refresh'], UpdateUrlBuilder::server_configuration()->rel(), 'fa fa-sync'));
+        $action_fieldset->add_element(new FormButtonLinkCssImg($this->lang['update.folders.chmod.refresh'], UpdateUrlBuilder::server_configuration()->rel(), 'fa fa-sync'));
 
         $action_fieldset->add_element($this->submit = new FormButtonSubmitCssImg($this->lang['update.step.next'], 'fa fa-arrow-right', 'server'));
 
@@ -102,7 +102,7 @@ class UpdateServerConfigController extends UpdateController
 
     private function create_response(): UpdateDisplayResponse
     {
-        $step_title = $this->lang['step.server.title'];
+        $step_title = $this->lang['update.step.server.title'];
         $response   = new UpdateDisplayResponse(2, $step_title, $this->view);
         return $response;
     }

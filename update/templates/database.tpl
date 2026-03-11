@@ -14,7 +14,7 @@
                 <a class="cell-thumbnail-caption" href="https://www.mysql.com/" target="_blank" rel="noopener noreferrer">mysql.com</a>
             </div>
             <div class="cell-body">
-                <div class="cell-content">{@H|db.parameters.config.clue}</div>
+                <div class="cell-content">{@H|update.db.parameters.config.clue}</div>
             </div>
         </div>
     </div>

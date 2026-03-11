@@ -48,7 +48,7 @@ class UpdateVersionExecuteController extends UpdateController
 
         if ($incompatible_modules)
         {
-            $message = StringVars::replace_vars(count($incompatible_modules) > 1 ? $this->lang['step.execute.incompatible_modules'] : $this->lang['step.execute.incompatible_module'], ['modules' => '<b>' . implode('</b>, <b>', $incompatible_modules) . '</b>']);
+            $message = StringVars::replace_vars(count($incompatible_modules) > 1 ? $this->lang['update.step.execute.incompatible.modules'] : $this->lang['update.step.execute.incompatible.module'], ['modules' => '<b>' . implode('</b>, <b>', $incompatible_modules) . '</b>']);
 
             if ($this->default_module_changed)
             {
@@ -65,7 +65,7 @@ class UpdateVersionExecuteController extends UpdateController
                     $new_default = 'forum';
                 }
 
-                $message .= StringVars::replace_vars($this->lang['step.execute.incompatible_module.default'], ['old_default' => ModulesManager::get_module($this->general_config->get_module_home_page())->get_configuration()->get_name(), 'new_default' => ModulesManager::get_module($new_default)->get_configuration()->get_name()]);
+                $message .= StringVars::replace_vars($this->lang['update.step.execute.incompatible.module.default'], ['old_default' => ModulesManager::get_module($this->general_config->get_module_home_page())->get_configuration()->get_name(), 'new_default' => ModulesManager::get_module($new_default)->get_configuration()->get_name()]);
             }
 
             $view->put('INCOMPATIBLE_MODULES', MessageHelper::display($message, MessageHelper::WARNING));
@@ -75,11 +75,11 @@ class UpdateVersionExecuteController extends UpdateController
 
         if ($incompatible_themes)
         {
-            $message = StringVars::replace_vars(count($incompatible_themes) > 1 ? $this->lang['step.execute.incompatible_themes'] : $this->lang['step.execute.incompatible_theme'], ['themes' => '<b>' . implode('</b>, <b>', $incompatible_themes) . '</b>']);
+            $message = StringVars::replace_vars(count($incompatible_themes) > 1 ? $this->lang['update.step.execute.incompatible.themes'] : $this->lang['update.step.execute.incompatible.theme'], ['themes' => '<b>' . implode('</b>, <b>', $incompatible_themes) . '</b>']);
 
             if ($this->default_theme_changed)
             {
-                $message .= StringVars::replace_vars($this->lang['step.execute.incompatible_theme.default'], ['old_default' => ThemesManager::get_theme($this->user_accounts_config->get_default_theme())->get_configuration()->get_name(), 'new_default' => 'Base']);
+                $message .= StringVars::replace_vars($this->lang['update.step.execute.incompatible.theme.default'], ['old_default' => ThemesManager::get_theme($this->user_accounts_config->get_default_theme())->get_configuration()->get_name(), 'new_default' => 'Base']);
             }
 
             $view->put('INCOMPATIBLE_THEMES', MessageHelper::display($message, MessageHelper::WARNING));
@@ -89,11 +89,11 @@ class UpdateVersionExecuteController extends UpdateController
 
         if ($incompatible_langs)
         {
-            $message = StringVars::replace_vars(count($incompatible_langs) > 1 ? $this->lang['step.execute.incompatible_langs'] : $this->lang['step.execute.incompatible_lang'], ['langs' => '<b>' . implode('</b>, <b>', $incompatible_langs) . '</b>']);
+            $message = StringVars::replace_vars(count($incompatible_langs) > 1 ? $this->lang['update.step.execute.incompatible.langs'] : $this->lang['update.step.execute.incompatible.lang'], ['langs' => '<b>' . implode('</b>, <b>', $incompatible_langs) . '</b>']);
 
             if ($this->default_lang_changed)
             {
-                $message .= StringVars::replace_vars($this->lang['step.execute.incompatible_lang.default'], ['old_default' => LangsManager::get_lang($this->user_accounts_config->get_default_lang())->get_configuration()->get_name(), 'new_default' => LangsManager::get_lang(LangLoader::get_locale())->get_configuration()->get_name()]);
+                $message .= StringVars::replace_vars($this->lang['update.step.execute.incompatible.lang.default'], ['old_default' => LangsManager::get_lang($this->user_accounts_config->get_default_lang())->get_configuration()->get_name(), 'new_default' => LangsManager::get_lang(LangLoader::get_locale())->get_configuration()->get_name()]);
             }
 
             $view->put('INCOMPATIBLE_LANGS', MessageHelper::display($message, MessageHelper::WARNING));
@@ -170,7 +170,7 @@ class UpdateVersionExecuteController extends UpdateController
      */
     private function create_response(Template $view)
     {
-        $step_title = $this->lang['step.execute.title'];
+        $step_title = $this->lang['update.step.execute.title'];
         $response   = new UpdateDisplayResponse(4, $step_title, $view);
         return $response;
     }
