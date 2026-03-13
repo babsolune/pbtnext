@@ -45,8 +45,6 @@ $lang['menu.configuration']          = 'Configuration';
 $lang['menu.configuration.general']  = 'General configuration';
 $lang['menu.configuration.advanced'] = 'Advanced configuration';
 $lang['menu.configuration.email']    = 'Email configuration';
-$lang['menu.themes']                 = 'Themes';
-$lang['menu.langs']                  = 'Langs';
 $lang['menu.alerts']                 = 'Alerts';
 $lang['menu.maintenance']            = 'Maintenance';
 $lang['menu.updates']                = 'Updates';
@@ -65,7 +63,8 @@ $lang['menu.server.phpinfo']       = 'PHP info';
 $lang['menu.server.system.report'] = 'System report';
 
 $lang['menu.addons'] = 'Addons';
-$lang['menu.addons'] = 'Addons';
+$lang['menu.themes'] = 'Themes';
+$lang['menu.langs']  = 'Langs';
 
 $lang['menu.users'] = 'Users';
 

@@ -60,6 +60,7 @@ $lang['sandbox.mini.add']    = 'Ajouter';
 
 $lang['sandbox.mini.admin.menu']                = 'Menu administration';
 $lang['sandbox.mini.admin.menu.administration'] = 'Administration';
+$lang['sandbox.mini.admin.menu.addons']         = 'Extensions';
 $lang['sandbox.mini.admin.menu.tools']          = 'Outils';
 $lang['sandbox.mini.admin.menu.users']          = 'Utilisateurs';
 $lang['sandbox.mini.admin.menu.content']        = 'Contenu';

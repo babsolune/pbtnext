@@ -344,6 +344,12 @@
 							</a>
 						</li>
 						<li>
+							<a href="${relative_url(UserUrlBuilder::administration())}#openmodal-addons">
+								<i class="fa fa-fw fa-puzzle-piece" aria-hidden="true"></i>
+								<span>{@sandbox.mini.admin.menu.addons}</span>
+							</a>
+						</li>
+                        <li>
 							<a href="${relative_url(UserUrlBuilder::administration())}#openmodal-tools">
 								<i class="fa fa-fw fa-wrench" aria-hidden="true"></i>
 								<span>{@sandbox.mini.admin.menu.tools}</span>

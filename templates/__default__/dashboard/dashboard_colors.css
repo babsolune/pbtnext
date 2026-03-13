@@ -139,7 +139,10 @@ select { background-color: var(--bgc-main); }
 .menu-title { background-color: rgba(var(--darken), 0.2); }
 
 /* --- admin_menus --- */
-.admin-menu > ul > li:hover { background-color: rgba(var(--darken), 0.3); }
+.admin-menu > ul {
+    & > li:hover { background-color: rgba(var(--darken), 0.3); }
+    li a { color: var(--txt-alt); }
+}
 
 .modal-menu > li {
     background-color: var(--bgc-sub);
@@ -150,7 +153,7 @@ nav.admin-index li:hover { background-color: rgba(var(--darken), 0.1); }
 
 nav.admin-index a { color: var(--txt-alt); }
 
-.modal-menu > li > a {
+.modal-menu > li > .modal-menu-title {
 	border-color: var(--bdr-main);
 	color: var(--txt-main);
 }
