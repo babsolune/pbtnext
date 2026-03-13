@@ -86,14 +86,18 @@ class Forum
 
             //Récupération des membres suivant le sujet.
             $max_time = time() - SessionsConfig::load()->get_active_session_duration();
-            $result = PersistenceContext::get_querier()->select("SELECT m.user_id, m.display_name, m.email, tr.pm, tr.mail, v.last_view_id
-            FROM " . PREFIX . "forum_track tr
-            LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = tr.user_id
-            LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = :idtopic AND v.user_id = tr.user_id
-            WHERE tr.idtopic = :idtopic AND v.last_view_id IS NOT NULL AND m.user_id != :user_id", array(
-                'idtopic' => $idtopic,
-                'user_id' => AppContext::get_current_user()->get_id()
-            ));
+            $result = PersistenceContext::get_querier()->select("
+                    SELECT m.user_id, m.display_name, m.email, tr.pm, tr.mail, v.last_view_id
+                    FROM " . PREFIX . "forum_track tr
+                    LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = tr.user_id
+                    LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = :idtopic AND v.user_id = tr.user_id
+                    WHERE tr.idtopic = :idtopic AND v.last_view_id IS NOT NULL AND m.user_id != :user_id
+                ", [
+                    'idtopic' => $idtopic,
+                    'user_id' => AppContext::get_current_user()->get_id()
+                ]
+            );
+
             while ($row = $result->fetch())
             {
                 //Envoi un Mail à ceux dont le last_view_id est le message précedent.
@@ -177,7 +181,7 @@ class Forum
 
         $last_timestamp = time();
         //Mise à jour de la date du dernier message du topic pour marquer le message comme non lu chez les autres membres
-        PersistenceContext::get_querier()->update(PREFIX . "forum_topics", array('last_timestamp' => $last_timestamp), 'WHERE id = :idtopic', array('idtopic' => $idtopic));
+        PersistenceContext::get_querier()->update(PREFIX . "forum_topics", ['last_timestamp' => $last_timestamp], 'WHERE id = :idtopic', ['idtopic' => $idtopic]);
 
         //On récupère l'id de la catégorie du topic.
         $topic_id_category = 0;
@@ -293,8 +297,9 @@ class Forum
             if (!empty($user_posted_msg_number))
                 PersistenceContext::get_querier()->inject("UPDATE " . DB_TABLE_MEMBER . " SET posted_msg = posted_msg - 1 WHERE user_id = '" . $msg_user_id . "'");
 
-            //Mise à jour du dernier message lu par les membres.
-            PersistenceContext::get_querier()->update(PREFIX . 'forum_view', array('last_view_id' => $previous_msg_id), 'WHERE last_view_id=:id', array('id' => $idmsg));
+            // Mise à jour du dernier message lu par les membres.
+            PersistenceContext::get_querier()->update(PREFIX . 'forum_view', ['last_view_id' => $previous_msg_id], 'WHERE last_view_id=:id', ['id' => $idmsg]);
+
             //On marque le topic comme lu, si c'est le dernier du message du topic.
             if ($last_msg_id == $idmsg)
             mark_topic_as_read($idtopic, $previous_msg_id, $last_timestamp);
@@ -399,13 +404,16 @@ class Forum
             $tracked_topics_number = 0;
             //Récupère l'id du topic le plus vieux autorisé par la limite de sujet suivis.
             try {
-                $tracked_topics_number = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as number
-                FROM " . PREFIX . "forum_track
-                WHERE user_id = :user_id
-                ORDER BY id DESC
-                LIMIT " . $config->get_max_topic_number_in_favorite(), array(
-                    'user_id' => AppContext::get_current_user()->get_id()
-                ));
+                $tracked_topics_number = PersistenceContext::get_querier()->select_single_row_query("
+                        SELECT COUNT(*) as number
+                        FROM " . PREFIX . "forum_track
+                        WHERE user_id = :user_id
+                        ORDER BY id DESC
+                        LIMIT " . $config->get_max_topic_number_in_favorite()
+                    , [
+                        'user_id' => AppContext::get_current_user()->get_id()
+                    ]
+                );
             } catch (RowNotFoundException $e) {}
 
             //Suppression des sujets suivis dépassant le nbr maximum autorisé.
