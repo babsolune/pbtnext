@@ -11,7 +11,7 @@
 #                    French                        #
 ####################################################
 
-$lang['devtools.module.title'] = 'PBTools';
+$lang['devtools.module.title'] = 'PBT Manager';
 
 // Tabs
 $lang['devtools.tab.modules']  = 'Modules présents';

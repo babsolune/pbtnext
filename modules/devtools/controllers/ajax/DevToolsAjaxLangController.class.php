@@ -25,9 +25,11 @@ class DevToolsAjaxLangController extends AbstractController
         switch ($action)
         {
             case 'modules':
+            case 'lang_modules':
                 return $this->action_modules();
 
             case 'analyze':
+            case 'lang_analyze':
                 return $this->action_analyze($request);
 
             default:
@@ -36,7 +38,7 @@ class DevToolsAjaxLangController extends AbstractController
     }
 
     // -------------------------------------------------------------------------
-    // action=modules — list installed modules that have a lang folder
+    // action=modules — list installed modules with available languages
     // -------------------------------------------------------------------------
     private function action_modules()
     {
@@ -53,17 +55,42 @@ class DevToolsAjaxLangController extends AbstractController
         foreach ($entries as $entry)
         {
             if ($entry === '.' || $entry === '..') continue;
-            $lang_file = $modules_path . '/' . $entry . '/lang/french/common.php';
-            if (is_file($lang_file))
-                $modules[] = $entry;
+            $lang_path = $modules_path . '/' . $entry . '/lang';
+            if (!is_dir($lang_path)) continue;
+
+            $langs = $this->detect_languages($lang_path);
+            if (!empty($langs))
+                $modules[] = array('name' => $entry, 'languages' => $langs);
         }
 
-        sort($modules);
+        usort($modules, function($a, $b) { return strcmp($a['name'], $b['name']); });
         return new JSONResponse(array('success' => true, 'modules' => $modules));
     }
 
     // -------------------------------------------------------------------------
-    // action=analyze&module=xxx
+    // Detect available languages (subdirs of /lang/ that contain common.php)
+    // -------------------------------------------------------------------------
+    private function detect_languages($lang_path)
+    {
+        $langs = array();
+        $entries = @scandir($lang_path);
+        if (!$entries) return $langs;
+        foreach ($entries as $entry)
+        {
+            if ($entry === '.' || $entry === '..') continue;
+            if (is_file($lang_path . '/' . $entry . '/common.php'))
+                $langs[] = $entry;
+        }
+        usort($langs, function($a, $b) {
+            if ($a === 'french') return -1;
+            if ($b === 'french') return 1;
+            return strcmp($a, $b);
+        });
+        return $langs;
+    }
+
+    // -------------------------------------------------------------------------
+    // action=analyze&module=xxx&lang=french
     // -------------------------------------------------------------------------
     private function action_analyze(HTTPRequestCustom $request)
     {
@@ -71,22 +98,19 @@ class DevToolsAjaxLangController extends AbstractController
         if (!$module || !preg_match('`^[a-z0-9_-]+$`i', $module))
             return new JSONResponse(array('success' => false, 'error' => 'Invalid module'));
 
+        $lang = $request->get_string('lang', 'french');
+        if (!preg_match('`^[a-z0-9_-]+$`i', $lang))
+            return new JSONResponse(array('success' => false, 'error' => 'Invalid lang'));
+
         $module_path = PATH_TO_ROOT . '/modules/' . $module;
         if (!is_dir($module_path))
             return new JSONResponse(array('success' => false, 'error' => 'Module not found'));
 
-        // 1. Extract keys from both lang files
-        $keys_fr = $this->extract_lang_keys($module_path . '/lang/french/common.php');
-        $keys_en = $this->extract_lang_keys($module_path . '/lang/english/common.php');
+        // 1. Extract keys for the requested language
+        $keys_lang = $this->extract_lang_keys($module_path . '/lang/' . $lang . '/common.php');
 
-        // Merge: union of both lang files
-        $all_lang_keys = array();
-        foreach ($keys_fr as $k => $v) $all_lang_keys[$k] = array('fr' => $v, 'en' => isset($keys_en[$k]) ? $keys_en[$k] : null);
-        foreach ($keys_en as $k => $v)
-            if (!isset($all_lang_keys[$k])) $all_lang_keys[$k] = array('fr' => null, 'en' => $v);
-
-        if (empty($all_lang_keys))
-            return new JSONResponse(array('success' => false, 'error' => 'No lang keys found'));
+        if (empty($keys_lang))
+            return new JSONResponse(array('success' => false, 'error' => 'No lang keys found for ' . $lang));
 
         // 2. Scan all .php + .tpl files in the module for key usage
         $source_files = $this->scan_source_files($module_path);
@@ -94,29 +118,28 @@ class DevToolsAjaxLangController extends AbstractController
 
         // 3. Find unused keys
         $unused = array();
-        foreach ($all_lang_keys as $key => $values)
+        foreach ($keys_lang as $key => $value)
         {
             if (!$this->is_key_used($key, $source_content))
-                $unused[] = array(
-                    'key' => $key,
-                    'fr'  => $values['fr'],
-                    'en'  => $values['en'],
-                );
+                $unused[] = array('key' => $key, 'value' => $value);
         }
 
-        // 4. Find duplicates within this module (same value, different key)
-        $duplicates_internal = $this->find_internal_duplicates($keys_fr, $keys_en);
+        // 4. Find internal duplicates (same value, different key) for this lang
+        $duplicates_internal = $this->find_internal_duplicates_for_lang($keys_lang, $lang);
 
-        // 5. Find duplicates across all modules
-        $duplicates_external = $this->find_external_duplicates($keys_fr, $module);
+        // 5. External duplicates only for french (reference lang)
+        $duplicates_external = ($lang === 'french')
+            ? $this->find_external_duplicates($keys_lang, $module)
+            : array();
 
         return new JSONResponse(array(
-            'success'              => true,
-            'module'               => $module,
-            'total_keys'           => count($all_lang_keys),
-            'unused'               => $unused,
-            'duplicates_internal'  => $duplicates_internal,
-            'duplicates_external'  => $duplicates_external,
+            'success'             => true,
+            'module'              => $module,
+            'lang'                => $lang,
+            'total_keys'          => count($keys_lang),
+            'unused'              => $unused,
+            'duplicates_internal' => $duplicates_internal,
+            'duplicates_external' => $duplicates_external,
         ));
     }
 
@@ -186,42 +209,21 @@ class DevToolsAjaxLangController extends AbstractController
     }
 
     // -------------------------------------------------------------------------
-    // Find keys with identical values within the same module (fr or en)
+    // Find keys with identical values within a single lang file
     // -------------------------------------------------------------------------
-    private function find_internal_duplicates($keys_fr, $keys_en)
+    private function find_internal_duplicates_for_lang($keys, $lang)
     {
         $duplicates = array();
-
-        // Check in french file
         $by_value = array();
-        foreach ($keys_fr as $key => $value)
+        foreach ($keys as $key => $value)
         {
-            $norm = trim(strtolower($value));
+            $norm = trim(mb_strtolower($value, 'UTF-8'));
             if ($norm === '') continue;
             $by_value[$norm][] = $key;
         }
-        foreach ($by_value as $value => $keys)
-            if (count($keys) > 1)
-                $duplicates[] = array('lang' => 'fr', 'value' => $value, 'keys' => $keys);
-
-        // Check in english file
-        $by_value = array();
-        foreach ($keys_en as $key => $value)
-        {
-            $norm = trim(strtolower($value));
-            if ($norm === '') continue;
-            $by_value[$norm][] = $key;
-        }
-        foreach ($by_value as $value => $keys)
-            if (count($keys) > 1)
-            {
-                // Avoid reporting same group twice if fr+en are identical
-                $already = false;
-                foreach ($duplicates as $d)
-                    if ($d['keys'] === $keys) { $already = true; break; }
-                if (!$already)
-                    $duplicates[] = array('lang' => 'en', 'value' => $value, 'keys' => $keys);
-            }
+        foreach ($by_value as $value => $dup_keys)
+            if (count($dup_keys) > 1)
+                $duplicates[] = array('lang' => $lang, 'value' => $value, 'keys' => $dup_keys);
 
         return $duplicates;
     }
