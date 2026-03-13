@@ -15,6 +15,7 @@ class HomeLandingHomeController extends DefaultModuleController
 	 * @var HomeLandingModulesList
 	 */
 	private $modules;
+	private $map;
 
 	public function __construct($module_id = '')
 	{

@@ -209,7 +209,7 @@ class AdminHomeLandingConfigController extends DefaultAdminModuleController
 		$form = new HTMLForm(self::class);
 
 		// New modules warning
-		$compatible_list = $config_list = $new_modules_list = array();
+		$compatible_list = $config_list = $new_modules_list = [];
 		foreach ($this->compatible as $module)
 		{
 			$compatible_list[] = $module->get_id();
