@@ -47,7 +47,7 @@ $lang['menu.configuration.advanced'] = 'Advanced configuration';
 $lang['menu.configuration.email']    = 'Email configuration';
 $lang['menu.alerts']                 = 'Alerts';
 $lang['menu.maintenance']            = 'Maintenance';
-$lang['menu.updates']                = 'Updates';
+$lang['menu.manual.updates']         = 'Manual updates';
 $lang['menu.updates.kernel']         = 'Kernel';
 
 $lang['menu.tools'] = 'Tools';

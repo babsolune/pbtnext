@@ -45,24 +45,8 @@
                         <span class="modal-menu-title"><i aria-hidden="true" class="fa fa-fw fa-download"></i>{@menu.updates}</span>
                         <ul class="level-2">
                             <li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=kernel"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.updates.kernel}</a></li>
-                            <li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=module"><i aria-hidden="true" class="fa fa-fw fa-cubes"></i>{@menu.modules}</a></li>
-                            <li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=template"><i aria-hidden="true" class="fa fa-fw fa-image"></i>{@menu.themes}</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <span class="modal-menu-title"><i aria-hidden="true" class="far fa-fw fa-clock"></i>{@menu.maintenance}</span>
-                        <ul class="level-2">
-                            <li>
-                                <a href="${relative_url(AdminMaintainUrlBuilder::maintain())}"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.configuration}</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <span class="modal-menu-title"><i aria-hidden="true" class="fa fa-fw fa-bell"></i> {@menu.alerts}</span>
-                        <ul class="level-2">
-                            <li>
-                                <a href="{PATH_TO_ROOT}/admin/admin_alerts.php"><i aria-hidden="true" class="fa fa-fw fa-list-check"></i> {@menu.management}</a>
-                            </li>
+                            <li><a href="${relative_url(AdminMaintainUrlBuilder::maintain())}"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.maintenance}</a></li>
+                            <li><a href="{PATH_TO_ROOT}/admin/admin_alerts.php"><i aria-hidden="true" class="fa fa-fw fa-list-check"></i> {@menu.alerts}</a></li>
                         </ul>
                     </li>
                     # IF C_ADMIN_LINKS_1 #
@@ -85,11 +69,19 @@
                 </div>
                 <ul class="modal-menu">
                     <li>
+                        <span class="modal-menu-title"><i aria-hidden="true" class="fa fa-fw fa-download"></i>{@menu.updates}</span>
+                        <ul class="level-2">
+                            <li><a href="${relative_url(AdminConfigUrlBuilder::addons_config())}"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.configuration}</a></li>
+                            <li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=module"><i aria-hidden="true" class="fa fa-fw fa-cubes"></i>{@menu.modules}</a></li>
+                            <li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=template"><i aria-hidden="true" class="fa fa-fw fa-image"></i>{@menu.themes}</a></li>
+                        </ul>
+                    </li>
+                    <li>
                         <span class="modal-menu-title"><i aria-hidden="true" class="fa fa-fw fa-cubes"></i>{@menu.modules}</span>
                         <ul class="level-2">
                             <li><a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.management}</a></li>
                             <li><a href="${relative_url(AdminModulesUrlBuilder::add_module())}"><i aria-hidden="true" class="fa fa-fw fa-plus"></i>{@menu.add}</a></li>
-                            <li><a href="${relative_url(AdminModulesUrlBuilder::update_module())}"><i aria-hidden="true" class="fa fa-fw fa-level-up-alt"></i>{@menu.updates}</a></li>
+                            <li><a href="${relative_url(AdminModulesUrlBuilder::update_module())}"><i aria-hidden="true" class="fa fa-fw fa-level-up-alt"></i>{@menu.manual.updates}</a></li>
                         </ul>
                     </li>
                     <li>
@@ -212,18 +204,8 @@
                     <li>
                         <span class="modal-menu-title"><i aria-hidden="true" class="far fa-fw fa-square"></i>{@menu.content}</span>
                         <ul class="level-2">
-                            <li>
-                                <a href="${relative_url(AdminContentUrlBuilder::content_configuration())}"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.configuration}</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <span class="modal-menu-title"><i aria-hidden="true" class="fa fa-fw fa-list-ul"></i>{@menu.menus}</span>
-                        <ul class="level-2">
-                            <li><a href="{PATH_TO_ROOT}/admin/menus/menus.php"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.management}</a></li>
-                            <li><a href="{PATH_TO_ROOT}/admin/menus/links.php"><i aria-hidden="true" class="fa fa-fw fa-list-ul"></i>{@menu.links.add}</a></li>
-                            <li><a href="{PATH_TO_ROOT}/admin/menus/content.php"><i aria-hidden="true" class="far fa-fw fa-file"></i>{@menu.content.add}</a></li>
-                            <li><a href="{PATH_TO_ROOT}/admin/menus/feed.php"><i aria-hidden="true" class="fa fa-fw fa-rss"></i>{@menu.feed.add}</a></li>
+                            <li><a href="${relative_url(AdminContentUrlBuilder::content_configuration())}"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.configuration}</a></li>
+                            <li><a href="{PATH_TO_ROOT}/admin/menus/menus.php"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.menus}</a></li>
                         </ul>
                     </li>
                     <li>

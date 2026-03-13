@@ -49,7 +49,7 @@ $lang['menu.themes']                 = 'Thèmes';
 $lang['menu.langs']                  = 'Langues';
 $lang['menu.alerts']                 = 'Alertes';
 $lang['menu.maintenance']            = 'Maintenance';
-$lang['menu.updates']                = 'Mises à jour';
+$lang['menu.manual.updates']         = 'Mises à jour manuelles';
 $lang['menu.updates.kernel']         = 'Noyau';
 
 $lang['menu.tools'] = 'Outils';
