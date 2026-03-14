@@ -1,4 +1,6 @@
+<script src="{PATH_TO_ROOT}/templates/__default__/plugins/sortablejs.js"></script>
 <script>
+<!--
 	function check_form()
 	{
 		if(document.getElementById('menu_element_{ID}_name').value == "") {
@@ -10,18 +12,79 @@
 
 	var idMax = {ID_MAX};
 
-	function initSortableMenu()
-    {
-		jQuery("ul#menu_element_{ID}_list").sortable({
-			handle: '.sortable-selector',
-			placeholder: '<div class="dropzone">' + ${escapejs(@common.drop.here)} + '</div>'
+	/**
+	 * Initialise SortableJS on a single <ul class="sortable-block">.
+	 * All lists share the same group name so drag-and-drop works across
+	 * every nesting level without any re-initialisation tricks.
+	 *
+	 * @param {HTMLElement} ulEl  The <ul> DOM element to make sortable.
+	 */
+	function makeSortable(ulEl)
+	{
+		if (!ulEl || ulEl._sortableInstance) return;
+
+		ulEl._sortableInstance = Sortable.create(ulEl, {
+			group:     'menu-tree',
+			handle:    '.sortable-selector',
+			animation: 150,
+			ghostClass:  'sortable-ghost',
+			chosenClass: 'sortable-chosen',
+			dragClass:   'dragged',
+			onStart: function(evt) {
+				document.body.classList.add('dragging');
+			},
+			onEnd: function(evt) {
+				document.body.classList.remove('dragging');
+			}
 		});
 	}
 
+	/**
+	 * Initialise SortableJS on every <ul class="sortable-block"> in the page.
+	 * Safe to call multiple times — already-initialised lists are skipped.
+	 */
+	function initSortableMenu()
+	{
+		document.querySelectorAll('ul.sortable-block').forEach(makeSortable);
+	}
+
+	/**
+	 * Recursively serialize the menu tree to match the exact JSON structure
+	 * that links.php expects from the original jquery-sortable output.
+	 *
+	 * jquery-sortable used jQuery.data() on each <li data-id="4"> which returns
+	 * { id: "4" } — just the numeric id, no "menu_element_" prefix.
+	 * The PHP then does: 'menu_element_' . $t->id to build the field name.
+	 *
+	 * children structure: [ [ child1, child2, ... ] ]
+	 * (outer array + inner array of siblings — artefact of jquery-sortable double wrapping)
+	 * The PHP accesses: $element->children[0]  →  the inner array of siblings.
+	 *
+	 * Root level: flat array of items — PHP does foreach($links_list as $pos => $tree)
+	 *
+	 * @param  {HTMLElement} ulEl  A <ul class="sortable-block">
+	 * @returns {Array}  Flat array of item objects
+	 */
+	function serializeList(ulEl)
+	{
+		const items = [];
+		ulEl.querySelectorAll(':scope > li.sortable-element').forEach(function(li) {
+			const dataId = li.getAttribute('data-id');
+			const entry  = { id: dataId };  // raw numeric id, PHP prepends 'menu_element_'
+			const nested = li.querySelector(':scope > ul.sortable-block');
+			if (nested && nested.querySelectorAll(':scope > li.sortable-element').length) {
+				// Wrap in outer array: children[0] = the sibling array
+				entry.children = [ serializeList(nested) ];
+			}
+			items.push(entry);
+		});
+		return items;
+	}
+
 	function get_sortable_sequence()
-    {
-		var sequence = jQuery("ul#menu_element_{ID}_list").sortable("serialize").get();
-		return sequence[0];
+	{
+		const rootUl = document.getElementById('menu_element_{ID}_list');
+		return serializeList(rootUl);
 	}
 
 	function build_menu_elements_tree()
@@ -43,7 +106,7 @@
 		}
 	}
 
-    <!-- var authForm = {J_AUTH_FORM}; -->
+     var authForm = {J_AUTH_FORM}; 
 
     function getAuthForm(id)
     {
@@ -98,7 +161,9 @@
 		jQuery('<label/>', {for : 'menu_element_' + id + '_auth_div'}).text(${escapejs(@form.authorizations.read)} + ' ').appendTo('#menu_element_' + id + '_authorizations');
 		jQuery('<div/> ', {class : 'form-field'}).html(getAuthForm(id)).appendTo('#menu_element_' + id + '_authorizations');
 
-		initSortableMenu();
+		// Initialise SortableJS on the parent list so the new element is draggable immediately.
+		// makeSortable() is a no-op if the list was already initialised.
+		makeSortable(document.getElementById(menu_element_id + '_list'));
 	}
 
 	function addSubMenu(menu_element_id)
@@ -111,8 +176,7 @@
 
 		jQuery('<div/>', {id : 'menu_inputs_' + id, class : 'grouped-inputs inputs-with-sup large-inputs-group'}).appendTo('#menu_title_' + id);
 
-		jQuery('<span/>', {class : 'grouped-element bgc-full notice'}).appendTo('#menu_inputs_' + id);
-		jQuery('<i/>', {class : 'fa fa-folder', 'aria-hidden' : 'true'}).appendTo('#menu_inputs_' + id + ' span');
+		jQuery('<span/>', {class : 'grouped-element bgc-full notice submenu-folder-trigger', style : 'cursor:pointer;', title : ${escapejs(@menu.sub.menu)}, onclick: 'toggleSubMenuAccordion(\'menu_element_' + id + '\');return false;'}).html('<i class="fa fa-folder-open" aria-hidden="true"></i>').appendTo('#menu_inputs_' + id);
 
 		jQuery('<label/>', {id : 'menu_label_name_' + id, for : 'menu_element_' + id + '_name', class : 'label-sup grouped-element'}).appendTo('#menu_inputs_' + id);
 		jQuery('<span/>').text(${escapejs(@common.name)}).appendTo('#menu_label_name_' + id);
@@ -149,14 +213,25 @@
 		jQuery('<label/>', {for : 'menu_element_' + id + '_auth_div'}).text(${escapejs(@form.authorizations.read)} + ' ').appendTo('#menu_element_' + id + '_authorizations');
 		jQuery('<div/> ', {class : 'form-field'}).html(getAuthForm(id)).appendTo('#menu_element_' + id + '_authorizations');
 
-		jQuery('<hr/>').appendTo('#menu_element_' + id);
+		// Collapsible items — direct children of the <li>, NOT wrapping the <ul>
+		// so sortable.js keeps full access to the sortable-block for drag-and-drop
+		jQuery('<hr/>', {class : 'submenu-collapsible'}).appendTo('#menu_element_' + id);
 		jQuery('<ul/>', {id : 'menu_element_' + id + '_list', class : 'sortable-block'}).appendTo('#menu_element_' + id);
 
-		jQuery('<fieldset/>', {id : 'menu_element_' + id + '_buttons', class : 'fieldset-submit'}).appendTo('#menu_element_' + id);
+		jQuery('<fieldset/>', {id : 'menu_element_' + id + '_buttons', class : 'fieldset-submit submenu-collapsible'}).appendTo('#menu_element_' + id);
 		jQuery('<button/>', {type : 'button', class : 'button', id : 'menu_element_' + id + '_add_sub_element', name : 'menu_element_' + id + '_add_sub_element', value : ${escapejs(@menu.add.item)}, onclick : 'addSubElement(\'menu_element_' + id + '\');'}).text(${escapejs(@menu.add.item)}).appendTo('#menu_element_' + id + '_buttons');
 		jQuery('#menu_element_' + id + '_buttons').append(' ');
 
 		jQuery('<button/>', {type : 'button', class : 'button', id : 'menu_element_' + id + '_add_sub_menu', name : 'menu_element_' + id + '_add_sub_menu', value : ${escapejs(@menu.add.sub.menu)}, onclick : 'addSubMenu(\'menu_element_' + id + '\');'}).text(${escapejs(@menu.add.sub.menu)}).appendTo('#menu_element_' + id + '_buttons');
+
+		// Mark as open on creation (folder-open icon, collapsibles visible)
+		jQuery('#menu_element_' + id).addClass('submenu-accordion-open');
+		jQuery('#menu_element_' + id).find('> .submenu-collapsible').show();
+
+		// Initialise SortableJS on the new nested <ul> so it joins the shared group
+		makeSortable(document.getElementById('menu_element_' + id + '_list'));
+		// Also ensure the parent list is initialised (no-op if already done)
+		makeSortable(document.getElementById(menu_element_id + '_list'));
 
 		addSubElement('menu_element_' + id);
 	}
@@ -166,8 +241,56 @@
 		if (confirm(${escapejs(@warning.confirm.delete)}))
 		{
 			jQuery('#' + element_id).remove();
-			initSortableMenu();
+			// SortableJS updates automatically — no re-initialisation needed
 		}
+	}
+
+	/**
+	 * Toggle accordion state for a sub-menu sortable-element.
+	 * Collapses/expands: the <hr class="submenu-collapsible"> and
+	 * <fieldset class="submenu-collapsible"> that are direct children of the <li>.
+	 * The <ul class="sortable-block"> is intentionally left untouched so
+	 * sortable.js can always measure its dimensions and allow drag-and-drop.
+	 * The trigger icon switches between fa-folder-open (open) and fa-folder (closed).
+	 *
+	 * @param {string} elementId - id of the sortable-element li (e.g. 'menu_element_42')
+	 */
+	function toggleSubMenuAccordion(elementId)
+	{
+		const $li       = jQuery('#' + elementId);
+		const $targets  = $li.find('> .submenu-collapsible');
+		const $icon     = $li.find('> .sortable-title .submenu-folder-trigger i');
+		const isOpen    = $li.hasClass('submenu-accordion-open');
+
+		if (isOpen) {
+			$targets.slideUp(250);
+			$li.removeClass('submenu-accordion-open');
+			$icon.removeClass('fa-folder-open').addClass('fa-folder');
+		} else {
+			$targets.slideDown(250);
+			$li.addClass('submenu-accordion-open');
+			$icon.removeClass('fa-folder').addClass('fa-folder-open');
+		}
+	}
+
+	/**
+	 * Initialise accordion on all existing sub-menu sortable-elements at page load.
+	 * All start open (fa-folder-open). No animation on init.
+	 */
+	function initSubMenuAccordions()
+	{
+		jQuery('.menu-elements-container .sortable-element').each(function() {
+			const $li      = jQuery(this);
+			const $targets = $li.find('> .submenu-collapsible');
+
+			if ($targets.length) {
+				$li.addClass('submenu-accordion-open');
+				$targets.show();
+				$li.find('> .sortable-title .submenu-folder-trigger i')
+					.removeClass('fa-folder')
+					.addClass('fa-folder-open');
+			}
+		});
 	}
 
 	function image_preview(input,image,is_value = false)
@@ -212,6 +335,7 @@
 	jQuery(document).ready(function()
     {
 		initSortableMenu();
+		initSubMenuAccordions();
 
 		jQuery(".push-options").hide();
 		if(jQuery('.menu-type select').children('option:selected').val() == 'push')
@@ -227,6 +351,7 @@
 				jQuery(".push-options").fadeOut();
 		});
 	});
+    -->
 </script>
 <div id="admin-contents">
 	<form action="links.php?action=save" method="post" class="fieldset-content" onsubmit="build_menu_elements_tree();return check_form();">
