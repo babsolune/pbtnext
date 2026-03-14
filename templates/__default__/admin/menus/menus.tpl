@@ -79,16 +79,21 @@
 		'mod_footer'
 	);
 
+	var sortableInstances = [];
+
 	function build_menu_tree()
 	{
 		var containerListLength = menusContainerList.length;
 		for(var i = 0; i < containerListLength; i++)
 		{
-			var sequence = jQuery('#' + menusContainerList[i]).sortable("serialize").get();
+			var sequence = [];
+			jQuery('#' + menusContainerList[i]).children('div.menus-block-container').each(function() {
+				sequence.push({ id: jQuery(this).data('id') });
+			});
 			jQuery('<input/>').attr({
 				type: 'hidden',
 				name: 'menu_tree_' + menusContainerList[i],
-				value: JSON.stringify(sequence[0])
+				value: JSON.stringify(sequence)
 			}).appendTo('#form_menus');
 		}
 	}
@@ -98,13 +103,20 @@
 		var containerListLength = menusContainerList.length;
 		for(var i = 0; i < containerListLength; i++)
 		{
-			jQuery('#' + menusContainerList[i]).sortable({
-				handle: '.fa-arrows-alt',
-				group: 'menus',
-				placeholder: '<div class="dropzone">' + ${escapejs(@common.drop.here)} + '</div>',
-				containerSelector: '#mod_topheader, #mod_header, #mod_subheader, #mod_left, #mod_right, #mod_topcentral, #mod_central, #mod_bottomcentral, #mod_topfooter, #mod_footer',
-				itemSelector: 'div.menus-block-container'
-			});
+			var el = document.getElementById(menusContainerList[i]);
+			if (el) {
+				var instance = Sortable.create(el, {
+					group: 'menus',
+					handle: '.fa-arrows-alt',
+					animation: 150,
+					onEnd: function(evt) {
+						jQuery('#valid-position-menus button')
+							.addClass('warning')
+							.html('<i class="far fa-fw fa-square"></i>' + ${escapejs(@menu.valid.position)});
+					}
+				});
+				sortableInstances.push(instance);
+			}
 		}
 	}
 </script>
@@ -503,26 +515,6 @@
 						.html('<i class="far fa-fw fa-square"></i>' + ${escapejs(@menu.position)});
 				}
 			}
-
-			// Change validation button on moving
-			jQuery('.menus-block-container').each(function() {
-				let $this = jQuery(this),
-					thisId = $this.attr('id'),
-					thisParent = $this.parent().attr('id'),
-					thisPrev = $this.prev().attr('id'),
-					thisPos = thisParent + '-' + thisPrev;
-				$this.on('mouseup', function() {
-					let newParent = $this.closest('.menusmanagement').find('.dropzone').parent().attr('id'),
-						newPrev = $this.siblings('.dropzone').prev().attr('id'),
-						newPos = newParent + '-' + newPrev;
-					if($this.hasClass('dragged')) {
-						if(newPos != thisPos && newPrev != thisId)
-							jQuery('#valid-position-menus button')
-								.addClass('warning')
-								.html('<i class="far fa-fw fa-square"></i>' + ${escapejs(@menu.valid.position)});
-					}
-				});
-			});
 
 			// Change validation button on changing checkboxes status
 			jQuery('[type="checkbox"]').on('change', function(){

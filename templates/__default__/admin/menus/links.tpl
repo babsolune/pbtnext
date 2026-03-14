@@ -1,4 +1,3 @@
-<script src="{PATH_TO_ROOT}/templates/__default__/plugins/sortablejs.js"></script>
 <script>
 <!--
 	function check_form()

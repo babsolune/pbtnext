@@ -1,17 +1,17 @@
 <script>
 	var ContactFields = function(id){
 		this.id = id;
+		this._sortable = null;
 	};
 
 	ContactFields.prototype = {
 		init_sortable : function() {
-			jQuery("ul#fields_list").sortable({
+			var self = this;
+			this._sortable = Sortable.create(document.getElementById('fields_list'), {
 				handle: '.sortable-selector',
-				placeholder: '<div class="dropzone">' + ${escapejs(@common.drop.here)} + '</div>',
-				onDrop: function ($item, container, _super, event) {
-					ContactFields.change_reposition_pictures();
-					$item.removeClass(container.group.options.draggedClass).removeAttr("style");
-					$("body").removeClass(container.group.options.bodyClass);
+				animation: 150,
+				onEnd: function() {
+					self.change_reposition_pictures();
 				}
 			});
 		},
@@ -19,11 +19,14 @@
 			jQuery('#tree').val(JSON.stringify(this.get_sortable_sequence()));
 		},
 		get_sortable_sequence : function() {
-			var sequence = jQuery("ul#fields_list").sortable("serialize").get();
-			return sequence[0];
+			var sequence = [];
+			jQuery('ul#fields_list').children('li').each(function() {
+				sequence.push({ id: jQuery(this).data('id') });
+			});
+			return sequence;
 		},
 		change_reposition_pictures : function() {
-			sequence = this.get_sortable_sequence();
+			var sequence = this.get_sortable_sequence();
 			var length = sequence.length;
 			for(var i = 0; i < length; i++)
 			{
@@ -61,7 +64,7 @@
 					success: function(returnData){
 						if (returnData.code > 0) {
 							jQuery("#list-" + returnData.code).remove();
-							ContactFields.init_sortable();
+							ContactFields.change_reposition_pictures();
 						}
 					}
 				});

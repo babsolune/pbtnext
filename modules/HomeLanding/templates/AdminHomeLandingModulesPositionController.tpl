@@ -1,24 +1,32 @@
 <script>
 	var HomeLandingModules = function(id){
 		this.id = id;
+		this._sortable = null;
 	};
 
 	HomeLandingModules.prototype = {
 		init_sortable : function() {
-			jQuery("ul#modules_list").sortable({
+			var self = this;
+			this._sortable = Sortable.create(document.getElementById('modules_list'), {
 				handle: '.sortable-selector',
-				placeholder: '<div class="dropzone">' + ${escapejs(@common.drop.here)} + '</div>'
+				animation: 150,
+				onEnd: function() {
+					self.change_reposition_pictures();
+				}
 			});
 		},
 		serialize_sortable : function() {
 			jQuery('#tree').val(JSON.stringify(this.get_sortable_sequence()));
 		},
 		get_sortable_sequence : function() {
-			var sequence = jQuery("ul#modules_list").sortable("serialize").get();
-			return sequence[0];
+			var sequence = [];
+			jQuery('ul#modules_list').children('li').each(function() {
+				sequence.push({ id: jQuery(this).data('id') });
+			});
+			return sequence;
 		},
 		change_reposition_pictures : function() {
-			sequence = this.get_sortable_sequence();
+			var sequence = this.get_sortable_sequence();
 			var length = sequence.length;
 			for(var i = 0; i < length; i++)
 			{
@@ -68,9 +76,6 @@
 	var HomeLandingModules = new HomeLandingModules('modules_list');
 	jQuery(document).ready(function() {
 		HomeLandingModules.init_sortable();
-		jQuery('li.sortable-element').on('mouseout',function(){
-			HomeLandingModules.change_reposition_pictures();
-		});
 	});
 </script>
 # INCLUDE MESSAGE_HELPER #

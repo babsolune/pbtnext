@@ -1,24 +1,32 @@
 <script>
 	var Servers = function(id){
 		this.id = id;
+		this._sortable = null;
 	};
 
 	Servers.prototype = {
 		init_sortable : function() {
-			jQuery("ul#servers_list").sortable({
+			var self = this;
+			this._sortable = Sortable.create(document.getElementById('servers_list'), {
 				handle: '.sortable-selector',
-				placeholder: '<div class="dropzone">' + ${escapejs(@common.drop.here)} + '</div>'
+				animation: 150,
+				onEnd: function() {
+					self.change_reposition_pictures();
+				}
 			});
 		},
 		serialize_sortable : function() {
 			jQuery('#tree').val(JSON.stringify(this.get_sortable_sequence()));
 		},
 		get_sortable_sequence : function() {
-			var sequence = jQuery("ul#servers_list").sortable("serialize").get();
-			return sequence[0];
+			var sequence = [];
+			jQuery('ul#servers_list').children('li').each(function() {
+				sequence.push({ id: jQuery(this).data('id') });
+			});
+			return sequence;
 		},
 		change_reposition_pictures : function() {
-			sequence = this.get_sortable_sequence();
+			var sequence = this.get_sortable_sequence();
 			var length = sequence.length;
 			for(var i = 0; i < length; i++)
 			{
@@ -56,7 +64,7 @@
 					success: function(returnData){
 						if (returnData.code > 0) {
 							jQuery("#list-" + returnData.code).remove();
-							Servers.init_sortable();
+							Servers.change_reposition_pictures();
 						}
 					}
 				});
@@ -85,9 +93,6 @@
 	var Servers = new Servers('servers_list');
 	jQuery(document).ready(function() {
 		Servers.init_sortable();
-		jQuery('li.sortable-element').on('mouseout',function(){
-			Servers.change_reposition_pictures();
-		});
 	});
 </script>
 # INCLUDE MESSAGE_HELPER #

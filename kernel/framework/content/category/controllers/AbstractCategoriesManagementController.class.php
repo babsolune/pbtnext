@@ -119,7 +119,7 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 
 				self::$categories_manager->update_position($category, Category::ROOT_CATEGORY, ($position + 1));
 
-				$this->update_children_positions($tree->children[0], $category->get_id());
+				$this->update_children_positions(isset($tree->children[0]) ? $tree->children[0] : array(), $category->get_id());
 			}
 
 			$categories_cache::invalidate();
@@ -141,7 +141,7 @@ abstract class AbstractCategoriesManagementController extends ModuleController
 
 					self::$categories_manager->update_position($category, $id_parent, ($position + 1));
 
-					$this->update_children_positions($tree->children[0], $category->get_id());
+					$this->update_children_positions(isset($tree->children[0]) ? $tree->children[0] : array(), $category->get_id());
 				}
 			}
 		}
