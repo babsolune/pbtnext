@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 01
+ * @version     PHPBoost 6.1 - last update: 2021 12 01
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -35,7 +35,7 @@ $lang['sandbox.icons.fa.howto.bbcode']                = 'With BBCode';
 $lang['sandbox.icons.fa.howto.bbcode.some.icons']     = 'A list of some icons is shown in the menu. Select one by a click:';
 $lang['sandbox.icons.fa.howto.bbcode.tag']            = 'Make yours with the [fa] BBCode tag as following:';
 $lang['sandbox.icons.fa.howto.bbcode.icon.name']      = '[fa]icon name[/fa]';
-$lang['sandbox.icons.fa.howto.bbcode.icon.test']      = 'E.g., <pre class="precode precode-inline"><code>[fa]cubes[/fa]</code></pre> give the icon:';
+$lang['sandbox.icons.fa.howto.bbcode.icon.test']      = 'E.g., <pre class="precode precode-inline language-bbcode"><code class="language-bbcode">[fa]cubes[/fa]</code></pre> give the icon:';
 $lang['sandbox.icons.fa.howto.bbcode.icon.variants']  = 'Variants font-awesome features are usable with BBCode as explained at ';
 $lang['sandbox.icons.fa.howto.variants']              = 'Variants';
 $lang['sandbox.icons.fa.howto.variants.clue']         = 'Font-Awesome aloows a list of variants feature such as width, animation, rotation, stacking and more.';
@@ -69,7 +69,7 @@ $lang['sandbox.icons.icomoon.howto.guide'] = '
             </li>
             <li>
                 Before downloading the pack, you must modify the <span class="pinned bgc administrator"><i class="fa fa-cog"></i>Preferences</span> and, <span class="warning"> at least</span>,
-                fill the <pre class="precode precode-inline"><code>Class Prefix</code></pre> field with <pre class="precode precode-inline"><code class="language-css">fa-</code></pre> to enable it in PHPBoost BBCode
+                fill the <pre class="precode precode-inline"><code>Class Prefix</code></pre> field with <pre class="precode precode-inline"><code>fa-</code></pre> to enable it in PHPBoost BBCode
                 with all Font-Awesome features. <br />
                 Customize all other field to avoid conflicts from other libraries.
             </li>
@@ -108,11 +108,11 @@ $lang['sandbox.icons.icomoon.howto.sample'] = '
     </p>
     <h6>With HTML</h6>
     <p>
-        <pre class="precode precode-inline"><code class="language-html">&lt;i class="fa iboost fa-iboost-email">&lt;/i></code></pre> <i class="fa iboost fa-iboost-email"></i>
+        <pre class="precode precode-inline language-html"><code class="">&lt;i class="fa iboost fa-iboost-email">&lt;/i></code></pre> <i class="fa iboost fa-iboost-email"></i>
     </p>
     <h6>With BBCode</h6>
     <p>
-        <pre class="precode precode-inline"><code>[fa=iboost]iboost-phpboost[/fa]</code></pre> <i class="fa iboost fa-iboost-phpboost"></i>
+        <pre class="precode precode-inline language-bbcode"><code class="language-bbcode">[fa=iboost]iboost-phpboost[/fa]</code></pre> <i class="fa iboost fa-iboost-phpboost"></i>
     </p>
 ';
 ?>

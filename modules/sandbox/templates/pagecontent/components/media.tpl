@@ -63,7 +63,7 @@
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="no-style">
-<pre class="precode"><code>// Image
+<pre class="precode language-html"><code class="language-html">// Image
 &lt;figure style="max-width:300px">
     &lt;img src="path/to/picture.ext" alt="{@sandbox.component.image}" />
 &lt;/figure>

@@ -25,7 +25,7 @@
 					<label for="search-fa">{@H|sandbox.icons.fa.search}</label>
 					<input id="search-fa" type="text" name="search-fa" value="">
 				</div>
-				<div class="cell-flex cell-inline cell-tile fa-list flex-between limited-height">
+				<div class="cell-flex cell-inline cell-tile fa-list limited-height">
 					# INCLUDE FAS #
 					# INCLUDE FAB #
 				</div>
@@ -52,9 +52,9 @@
 				<div class="content">
 					<h4>{@H|sandbox.icons.fa.howto.html}</h4>
 					<p>{@H|sandbox.icons.fa.howto.html.class}</p>
-					<pre class="precode precode-inline"><code>&lt;i class="far fa-edit">&lt;/i> Edition</code></pre>
+					<pre class="precode precode-inline language-html"><code class="language-html">&lt;i class="far fa-edit">&lt;/i> Edition</code></pre>
 					<p>{@H|sandbox.icons.fa.howto.html.class.result.i}<i class="far fa-edit"></i> Edition</p>
-					<pre class="precode precode-inline"><code>&lt;a class="fa fa-globe" href="https://www.phpboost.com">PHPBoost&lt;/a></code></pre>
+					<pre class="precode precode-inline language-html"><code class="language-html">&lt;a class="fa fa-globe" href="https://www.phpboost.com">PHPBoost&lt;/a></code></pre>
 					<p>{@H|sandbox.icons.fa.howto.html.class.result.a}<a class="offload" href="https://www.phpboost.com"><i class="fa fa-globe"></i>PHPBoost</a></p>
 					<p>{@H|sandbox.icons.fa.howto.html.class.result.all}</p>
 
@@ -64,11 +64,10 @@
 						<span class="formatter-title">{@H|sandbox.icons.fa.howto.css.css.code}</span>
 						<div class="formatter-content formatter-code">
 							<div class="no-style">
-<pre class="precode"><code>.success { ... }
+<pre class="precode language-css"><code class="language-css">.success { ... }
 .success::before {
     content: "\f00c";
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
+	font: var(--fa-font-solid); // regular | solid | brands
 }</code></pre>
 							</div>
 						</div>
@@ -78,7 +77,7 @@
 						<span class="formatter-title">{@H|sandbox.icons.fa.howto.css.html.code}</span>
 						<div class="formatter-content  formatter-code">
 							<div class="no-style">
-								<pre class="precode"><code>&lt;div class="message-helper bgc success">{@sandbox.component.message.success}&lt;/div></code></pre>
+								<pre class="precode precode-inline language-html"><code class="language-html">&lt;div class="message-helper bgc success">{@sandbox.component.message.success}&lt;/div></code></pre>
 							</div>
 						</div>
 					</div>
@@ -97,7 +96,7 @@
 					<p>{@H|sandbox.icons.fa.howto.variants.clue}</p>
 					<p>{@H|sandbox.icons.fa.howto.variants.list}<a class="pinned bgc moderator offload" href="https://fontawesome.com/docs/web/style/animate" target="_blank" rel="noopener noreferer"><i class="fa fa-share"></i> Font-Awesome/examples</a></p>
 
-					<pre class="precode precode-inline"><code>&lt;i class="fa fa-spinner fa-spin-pulse fa-2x">&lt;/i></code></pre>
+					<pre class="precode precode-inline language-html"><code class="language-html">&lt;i class="fa fa-spinner fa-spin-pulse fa-2x">&lt;/i></code></pre>
 
 					<p>{@H|sandbox.icons.fa.howto.variants.spinner}<i class="fa fa-spinner fa-spin-pulse fa-2x"></i></p>
 				</div>

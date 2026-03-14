@@ -2,7 +2,7 @@
     <span class="formatter-title title-perso">{@sandbox.source.code} : radio</span>
     <div class="formatter-content formatter-code">
         <div class="no-style">
-<pre class="precode"><code>&lt;div class="form-element"> // inline-radio / custom-radio (with radio.css)
+<pre class="precode language-html"><code class="language-html">&lt;div class="form-element"> // inline-radio / custom-radio (with radio.css)
     &lt;label for="[ID]">...&lt;/label>
     &lt;div id="[ID]" class="form-field form-field-radio-button">
         &lt;div class="form-field-radio">

@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @version     PHPBoost 6.0 - last update: 2021 12 01
+ * @version     PHPBoost 6.1 - last update: 2021 12 01
  * @since       PHPBoost 4.0 - 2013 12 17
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -34,8 +34,8 @@ $lang['sandbox.icons.fa.howto.css.html.code']         = 'Code HTML :';
 $lang['sandbox.icons.fa.howto.bbcode']                = 'En BBCode';
 $lang['sandbox.icons.fa.howto.bbcode.some.icons']     = 'Les icônes les plus utilisées dans PHPBoost sont déjà implémentées dans le menu bbcode. Vous pouvez les sélectionner en cliquant sur l\'icône du menu:';
 $lang['sandbox.icons.fa.howto.bbcode.tag']            = 'Si l\'icône que vous désirez utiliser n\'apparait pas dans la liste, vous pouvez utiliser la balise [fa] comme suit:';
-$lang['sandbox.icons.fa.howto.bbcode.icon.name']      = '<pre class="precode precode-inline"><code>[fa]nom de l\'icône[/fa]</code></pre>';
-$lang['sandbox.icons.fa.howto.bbcode.icon.test']      = 'Par exemple, <pre class="precode precode-inline"><code>[fa]cubes[/fa]</code></pre> donnera l\'icône:';
+$lang['sandbox.icons.fa.howto.bbcode.icon.name']      = '<pre class="precode precode-inline language-bbcode"><code class="language-bbcode">[fa]nom de l\'icône[/fa]</code></pre>';
+$lang['sandbox.icons.fa.howto.bbcode.icon.test']      = 'Par exemple, <pre class="precode precode-inline language-bbcode"><code class="language-bbcode">[fa]cubes[/fa]</code></pre> donnera l\'icône:';
 $lang['sandbox.icons.fa.howto.bbcode.icon.variants']  = 'Les variantes sont possibles en BBCode et sont expliquées dans ';
 $lang['sandbox.icons.fa.howto.variants']              = 'Les variantes';
 $lang['sandbox.icons.fa.howto.variants.clue']         = 'Font-Awesome propose une panoplie de variantes telles que la taille de l\'icône, l\'animation, la rotation, l\'empilement et bien d\'autres.';
@@ -108,11 +108,11 @@ $lang['sandbox.icons.icomoon.howto.sample'] = '
     </p>
     <h6>En HTML</h6>
     <p>
-        <pre class="precode precode-inline"><code>&lt;i class="fa iboost fa-iboost-email">&lt;/i></code></pre> <i class="fa iboost fa-iboost-email"></i>
+        <pre class="precode precode-inline language-html"><code class="language-html">&lt;i class="fa iboost fa-iboost-email">&lt;/i></code></pre> <i class="fa iboost fa-iboost-email"></i>
     </p>
     <h6>En BBCode</h6>
     <p>
-        <pre class="precode precode-inline"><code>[fa=iboost]iboost-phpboost[/fa]</code></pre> <i class="fa iboost fa-iboost-phpboost"></i>
+        <pre class="precode precode-inline language-bbcode"><code class="language-bbcode">[fa=iboost]iboost-phpboost[/fa]</code></pre> <i class="fa iboost fa-iboost-phpboost"></i>
     </p>
 ';
 ?>

@@ -26,7 +26,7 @@
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="no-style">
-<pre class="precode"><code>&lt;ul class="sortable-block">
+<pre class="precode language-html"><code class="language-html">&lt;ul class="sortable-block">
     &lt;li class="sortable-element">
         &lt;div class="sortable-selector" aria-label="{@sandbox.component.sortable.move}">&lt;/div>
         &lt;div class="sortable-title">

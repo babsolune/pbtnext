@@ -24,7 +24,7 @@
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="no-style">
-<pre class="precode"><code>&lt;table class="table formatter-table">
+<pre class="precode language-html"><code class="language-html">&lt;table class="table formatter-table">
     &lt;tbody>
         &lt;tr class="formatter-table-row">
             &lt;td class="formatter-table-head" colspan="2">Lorem Ipsum&lt;/td>

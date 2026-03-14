@@ -43,7 +43,7 @@
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="no-style">
-<pre class="precode"><code>&lt;div class="explorer">
+<pre class="precode language-html"><code class="language-html">&lt;div class="explorer">
     &lt;div class="cats">
             &lt;h2>{@sandbox.component.explorer}&lt;/h2>
         &lt;div class="content">

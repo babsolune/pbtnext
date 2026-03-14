@@ -13,7 +13,7 @@
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="no-style">
-<pre class="precode"><code>&lt;div class="accordion-container">
+<pre class="precode language-html"><code class="language-html">&lt;div class="accordion-container">
     &lt;div id="" class="multiple-accordion"> // single-accordion
         &lt;span class="accordion-trigger">...&lt;/span>
         &lt;div class="accordion-content">...&lt;/div>

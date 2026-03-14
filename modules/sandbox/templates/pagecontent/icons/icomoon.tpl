@@ -31,7 +31,7 @@
                 <span class="formatter-title">markup</span>
                 <div class="formatter-content formatter-code">
                     <div class="no-style">
-<pre class="precode"><code>// html
+<pre class="precode language-html"><code class="language-html">// html
 &lt;span class="fa-stack fa-2x logo-stack">
     &lt;i class="fa iboost fa-iboost-phpboost-01 fa-stack-2x" style="color: #16a086;">&lt;/i>
     &lt;i class="fa iboost fa-iboost-phpboost-02 fa-stack-2x" style="color: #ffc21c;">&lt;/i>

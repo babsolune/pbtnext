@@ -2,7 +2,7 @@
     <span class="formatter-title title-perso">{@sandbox.source.code} : modal</span>
     <div class="formatter-content formatter-code">
         <div class="no-style">
-<pre class="precode"><code>&lt;span class="modal-button --target-panel button bgc logo-color">{@sandbox.component.item}&lt;/span>
+<pre class="precode language-html"><code class="language-html">&lt;span class="modal-button --target-panel button bgc logo-color">{@sandbox.component.item}&lt;/span>
 &lt;div id="target-panel" class="modal">
     &lt;div class="modal-overlay close-modal" aria-label="{@common.close}">&lt;/div>
     &lt;div class="modal-content">

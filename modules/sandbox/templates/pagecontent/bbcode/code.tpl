@@ -31,7 +31,7 @@
             <span class="formatter-title title-perso">{@sandbox.bbcode.code.php} : CategoriesCache.class.php</span>
             <div class="formatter-content formatter-code">
                 <div class="no-style">
-<pre class="precode"><code>&lt;?php
+<pre class="precode language-php"><code class="language-php">&lt;?php
 abstract class CategoriesCache implements CacheData
 {
     /**
@@ -64,7 +64,7 @@ abstract class CategoriesCache implements CacheData
         <span class="formatter-title">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="no-style">
-<pre class="precode"><code>// {@sandbox.bbcode.quote}
+<pre class="precode language-html"><code class="language-html">// {@sandbox.bbcode.quote}
 &lt;blockquote class="formatter-container formatter-blockquote">
     &lt;span class="formatter-title">John Doe&lt;/span>
     &lt;div class="formatter-content">
@@ -85,7 +85,7 @@ abstract class CategoriesCache implements CacheData
     &lt;span class="formatter-title">Code : PHP&lt;/span> <em>// file.ext</em>
     &lt;div class="formatter-content formatter-code">
         &lt;div class="no-style">
-&lt;pre class="precode">&lt;code> // class="language-" => php, html, css, bbcode, txt ...
+&lt;pre class="precode language-{language}">&lt;code class="language-{language}"> // class="language-{language}"  // {language} = php | html | css | bbcode | txt ...
     ...[code /]...&lt;/code>&lt;/pre>
         &lt;/div>
     &lt;/div>

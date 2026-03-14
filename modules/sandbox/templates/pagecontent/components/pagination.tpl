@@ -11,7 +11,7 @@
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="no-style">
-<pre class="precode"><code>&lt;nav class="pagination">
+<pre class="precode language-html"><code class="language-html">&lt;nav class="pagination">
     &lt;ul> // class="light-pagination"
         &lt;li class="pagination-item">
             &lt;a href="#" rel="prev" aria-label="{@sandbox.component.pagination.prev}" class="prev-page">&lt;i class="fa fa-angle-left">&lt;/i>&lt;/a>

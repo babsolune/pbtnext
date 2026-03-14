@@ -11,7 +11,7 @@
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="no-style">
-<pre class="precode"><code>&lt;nav>
+<pre class="precode language-html"><code class="language-html">&lt;nav>
     &lt;ul>
         &lt;li>
             &lt;a href="#">

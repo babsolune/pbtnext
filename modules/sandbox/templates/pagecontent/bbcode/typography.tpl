@@ -18,7 +18,7 @@
         <span class="formatter-title">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="no-style">
-<pre class="precode"><code>&lt;h2 class="formatter-title">{@sandbox.bbcode.title} 1&lt;/h2>
+<pre class="precode language-html"><code class="language-html">&lt;h2 class="formatter-title">{@sandbox.bbcode.title} 1&lt;/h2>
 &lt;h3 class="formatter-title">{@sandbox.bbcode.title} 2&lt;/h3>
 &lt;h4 class="formatter-title">{@sandbox.bbcode.title} 3&lt;/h4>
 &lt;h5 class="formatter-title">{@sandbox.bbcode.title} 4&lt;/h5>

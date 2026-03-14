@@ -39,7 +39,7 @@
         <span class="formatter-title title-perso">{@sandbox.source.code} :</span>
         <div class="formatter-content formatter-code">
             <div class="no-style">
-<pre class="precode"><code>&lt;ul class="formatter-ul">
+<pre class="precode language-html"><code class="language-html">&lt;ul class="formatter-ul">
     &lt;li class="formatter-li">
         {@sandbox.bbcode.item}
         &lt;ul class="formatter-ul">
