@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 03 06
+ * @version     PHPBoost 6.0 - last update: 2023 07 09
  * @since       PHPBoost 5.2 - 2020 05 19
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -65,7 +65,6 @@ class AdminSandboxBuilderController extends DefaultAdminModuleController
 			'SELECT_MARKUP'   => self::build_markup('sandbox/pagecontent/builder/select.tpl'),
 			'DND_MARKUP'      => self::build_markup('sandbox/pagecontent/builder/dnd.tpl'),
 			'BUTTON_MARKUP'   => self::build_markup('sandbox/pagecontent/builder/button.tpl'),
-			'MODAL_MARKUP'    => self::build_markup('sandbox/pagecontent/builder/modal.tpl'),
 			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
 		));
 
@@ -152,11 +151,6 @@ class AdminSandboxBuilderController extends DefaultAdminModuleController
 			$text_fields->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['sandbox.builder.password.field.confirm'], $this->lang['sandbox.builder.password.field.placeholder'],
 				array('description' => $security_config->get_internal_password_min_length() . $this->lang['sandbox.builder.password.field.clue'], 'class' => 'css-class'),
 				array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
-			));
-
-			// Icon
-			$text_fields->add_field(new FormFieldIconEditor('icon', $this->lang['sandbox.builder.icon.fields'], '',
-				array('description' => '', 'class' => 'css-class')
 			));
 
 		// TEXTAREA
@@ -268,7 +262,7 @@ class AdminSandboxBuilderController extends DefaultAdminModuleController
 					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'2', '2', array('data_option_class' => 'bgc error', 'disable' => true)),
 					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'3', '3', array('data_option_class' => 'indent')),
 					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'4', '4', array('data_option_class' => 'bgc-full question', 'selected' => true, 'data_option_icon' => 'far fa-id-card')),
-					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'5', '5', array('data_option_img' => PATH_TO_ROOT . '/templates/__default__/theme/images/logo.svg')),
+					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'5', '5', array('data_option_img' => '../templates/__default__/theme/images/logo.svg')),
 					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'6', '6')
 				),
 				array('class' => 'css-class', 'multiple_select_to_list' => true)
@@ -424,13 +418,6 @@ class AdminSandboxBuilderController extends DefaultAdminModuleController
 			$buttons->add_field(new FormFieldSpacer('alternate_submit_buttons', $this->lang['sandbox.builder.button.alternate.send']));
 			$buttons->add_element(new FormButtonSubmitCssImg($this->lang['sandbox.builder.button.icon'], 'fa fa-check', 'Submit', ''));
 			$buttons->add_element(new FormButtonSubmitImg($this->lang['sandbox.builder.button.picture'], Url::to_rel('/templates/__default__/theme/images/logo.svg'), ''));
-
-        // MODALS
-        $modal = new FormFieldsetModal('modal', $this->lang['sandbox.builder.modal']);
-            // $modal->set_button_class('button bgc moderator');
-            // $modal->set_css_class('modal-half');
-            $form->add_fieldset($modal);
-            $modal->add_field(new FormFieldSpacer('modal_content', $this->lang['sandbox.builder.modal.content']));
 
 		// SUBMIT BUTTONS
 		$buttons_fieldset = new FormFieldsetSubmit('button_submit');

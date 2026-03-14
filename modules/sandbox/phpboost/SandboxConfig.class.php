@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 01 10
+ * @version     PHPBoost 6.0 - last update: 2021 11 21
  * @since       PHPBoost 5.1 - 2017 09 28
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
 */
@@ -100,7 +100,7 @@ class SandboxConfig extends AbstractConfigData
 
 	/**
 	 * @method Set authorizations
-	 * @params array $array Array of authorizations
+	 * @params string[] $array Array of authorizations
 	 */
 	public function set_authorizations(Array $array)
 	{
@@ -112,15 +112,15 @@ class SandboxConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		return [
+		return array(
 			self::SUPERADMIN_ENABLED => false,
 			self::SUPERADMIN_NAME => '',
 			self::MENU_OPENING_TYPE => self::LEFT_MENU,
 			self::EXPANSION_TYPE => self::OVERLAP,
 			self::DISABLED_BODY => true,
 			self::PUSHED_CONTENT => true,
-			self::AUTHORIZATIONS => ['r-1' => 1, 'r0' => 1, 'r1' => 1]
-        ];
+			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13),
+		);
 	}
 
 	/**
@@ -129,7 +129,7 @@ class SandboxConfig extends AbstractConfigData
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(self::class, 'sandbox', 'config');
+		return ConfigManager::load(__CLASS__, 'sandbox', 'config');
 	}
 
 	/**

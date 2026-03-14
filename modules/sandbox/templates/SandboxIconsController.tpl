@@ -25,7 +25,7 @@
 					<label for="search-fa">{@H|sandbox.icons.fa.search}</label>
 					<input id="search-fa" type="text" name="search-fa" value="">
 				</div>
-				<div class="cell-flex cell-inline cell-tile fa-list limited-height">
+				<div class="cell-flex cell-inline cell-tile fa-list flex-between limited-height">
 					# INCLUDE FAS #
 					# INCLUDE FAB #
 				</div>
@@ -67,7 +67,8 @@
 <pre class="precode"><code>.success { ... }
 .success::before {
     content: "\f00c";
-	font: var(--fa-font-solid); // regular | solid | brands
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
 }</code></pre>
 							</div>
 						</div>

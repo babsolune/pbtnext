@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2025 03 07
+ * @version     PHPBoost 6.0 - last update: 2024 01 31
  * @since       PHPBoost 3.0 - 2012 05 05
  * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
  * @contributor Arnaud GENET <elenwii@phpboost.com>
@@ -37,9 +37,10 @@ class AdminSandboxFWKBoostController extends DefaultAdminModuleController
 	{
 		$this->view->put_all(array(
 			'BASIC'          => self::build_basic_markup(),
-			// 'ACCORDION'      => self::build_accordion_markup(),
+			'ACCORDION'      => self::build_accordion_markup(),
 			'TABS'           => self::build_tabs_markup(),
 			'WIZARD'         => self::build_wizard_markup(),
+			'MODAL'			 => self::build_markup('sandbox/pagecontent/components/modal.tpl'),
 			'LIST'           => self::build_markup('sandbox/pagecontent/components/list.tpl'),
 			'PAGINATION'     => self::build_markup('sandbox/pagecontent/components/pagination.tpl'),
 			'TABLE'          => self::build_markup('sandbox/pagecontent/components/table.tpl'),
@@ -68,11 +69,61 @@ class AdminSandboxFWKBoostController extends DefaultAdminModuleController
 		$pagination->set_url(new Url('#%d'));
 
 		$view->put_all(array(
+			'MODAL_FORM'       => $this->build_modal_form()->display(),
 			'PAGINATION_FULL'  => $pagination_full->display(),
 			'PAGINATION_LIGHT' => $pagination_light->display(),
 			'PAGINATION_TABLE' => $pagination->display()
 		));
 		return $view;
+	}
+
+	private function build_modal_form()
+	{
+		$modal_form = new HTMLForm('Sandbox_Modal');
+		$modal_form->set_css_class('modal-container');
+
+		$modal_menu = new FormFieldMenuFieldset('modal_menu', '');
+			$modal_form->add_fieldset($modal_menu);
+			$modal_menu->set_css_class('modal-nav');
+
+			$modal_menu->add_field(new FormFieldMultitabsLinkList('modal_menu_list',
+				array(
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.component.link.icon'], 'modal', 'Sandbox_Modal_modal_01', 'fa fa-cog'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.component.link.img'], 'modal', 'Sandbox_Modal_modal_02', '', '/templates/__default__/theme/images/logo.svg', '', 'sandbox-svg-icon'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.component.link'].' 3', 'modal', 'Sandbox_Modal_modal_03'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.component.link'].' 4', 'modal', 'Sandbox_Modal_modal_04', '', '', '','button d-inline-block')
+				)
+			));
+
+			$modal_01 = new FormFieldsetMultitabsHTML('modal_01', $this->lang['sandbox.component.panel'].' 1',
+				array('css_class' => 'modal modal-animation first-tab', 'modal' => true)
+			);
+			$modal_form->add_fieldset($modal_01);
+
+			$modal_01->set_description($this->lang['sandbox.lorem.short.content']);
+
+			$modal_02 = new FormFieldsetMultitabsHTML('modal_02', $this->lang['sandbox.component.panel'].' 2',
+				array('css_class' => 'modal modal-animation', 'modal' => true)
+			);
+			$modal_form->add_fieldset($modal_02);
+
+			$modal_02->set_description($this->lang['sandbox.lorem.medium.content']);
+
+			$modal_03 = new FormFieldsetMultitabsHTML('modal_03', $this->lang['sandbox.component.panel'].' 3',
+				array('css_class' => 'modal modal-animation', 'modal' => true)
+			);
+			$modal_form->add_fieldset($modal_03);
+
+			$modal_03->set_description($this->lang['sandbox.lorem.large.content']);
+
+			$modal_04 = new FormFieldsetMultitabsHTML('modal_04', $this->lang['sandbox.component.panel'].' 4',
+				array('css_class' => 'modal modal-animation', 'modal' => true)
+			);
+			$modal_form->add_fieldset($modal_04);
+
+			$modal_04->set_description($this->lang['sandbox.lorem.short.content']);
+
+		return $modal_form;
 	}
 
 	private function build_alert_markup()
@@ -144,66 +195,67 @@ class AdminSandboxFWKBoostController extends DefaultAdminModuleController
 	{
 		$accordion_tpl = new FileTemplate('sandbox/pagecontent/menus/accordion.tpl');
 		$accordion_tpl->add_lang($this->lang);
-		// $accordion_tpl->put('ACCORDION_FORM', $this->build_accordion_form()->display());
+		$accordion_tpl->add_lang($this->lang);
+		$accordion_tpl->put('ACCORDION_FORM', $this->build_accordion_form()->display());
 		return $accordion_tpl;
 	}
 
 	private function build_accordion_form()
 	{
-		// $accordion_form = new HTMLForm('Sandbox_Accordion');
-		// $accordion_form->set_css_class('accordion-container basic'); // basic|siblings
+		$accordion_form = new HTMLForm('Sandbox_Accordion');
+		$accordion_form->set_css_class('accordion-container basic'); // basic|siblings
 
-		// $accordion_controls = new FormFieldsetAccordionControls('accordion_controls_basic', '');
-		// 	$accordion_form->add_fieldset($accordion_controls);
+		$accordion_controls = new FormFieldsetAccordionControls('accordion_controls_basic', '');
+			$accordion_form->add_fieldset($accordion_controls);
 
-		// $accordion_menu = new FormFieldMenuFieldset('accordion_menu', '');
-		// 	$accordion_form->add_fieldset($accordion_menu);
-		// 	$accordion_menu->set_css_class('accordion-nav');
+		$accordion_menu = new FormFieldMenuFieldset('accordion_menu', '');
+			$accordion_form->add_fieldset($accordion_menu);
+			$accordion_menu->set_css_class('accordion-nav');
 
-		// 	$accordion_menu->add_field(new FormFieldMultitabsLinkList('accordion_menu_list',
-		// 		array(
-		// 			new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link.icon'], 'accordion', 'Sandbox_Accordion_accordion_01', 'fa fa-cog'),
-		// 			new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link.img'], 'accordion', 'Sandbox_Accordion_accordion_02', '', '/templates/__default__/theme/images/logo.svg', '', 'sandbox-svg-icon'),
-		// 			new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link'].' 3', 'accordion', 'Sandbox_Accordion_accordion_03'),
-		// 			new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link'].' 4', 'accordion', 'Sandbox_Accordion_accordion_04', '', '', '', 'bgc warning')
-		// 		)
-		// 	));
+			$accordion_menu->add_field(new FormFieldMultitabsLinkList('accordion_menu_list',
+				array(
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link.icon'], 'accordion', 'Sandbox_Accordion_accordion_01', 'fa fa-cog'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link.img'], 'accordion', 'Sandbox_Accordion_accordion_02', '', '/templates/__default__/theme/images/logo.svg', '', 'sandbox-svg-icon'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link'].' 3', 'accordion', 'Sandbox_Accordion_accordion_03'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link'].' 4', 'accordion', 'Sandbox_Accordion_accordion_04', '', '', '', 'bgc warning')
+				)
+			));
 
-		// 	$accordion_01 = new FormFieldsetMultitabsHTML('accordion_01', $this->lang['sandbox.menu.panel'].' 1',
-		// 		array('css_class' => 'accordion accordion-animation first-tab')
-		// 	);
-		// 	$accordion_form->add_fieldset($accordion_01);
+			$accordion_01 = new FormFieldsetMultitabsHTML('accordion_01', $this->lang['sandbox.menu.panel'].' 1',
+				array('css_class' => 'accordion accordion-animation first-tab')
+			);
+			$accordion_form->add_fieldset($accordion_01);
 
-		// 	$accordion_01->add_field(new FormFieldHTML('accordion_content_01', $this->lang['sandbox.lorem.short.content']));
+			$accordion_01->add_field(new FormFieldHTML('accordion_content_01', $this->lang['sandbox.lorem.short.content']));
 
-		// 	$accordion_02 = new FormFieldsetMultitabsHTML('accordion_02', $this->lang['sandbox.menu.panel'].' 2',
-		// 		array('css_class' => 'accordion accordion-animation')
-		// 	);
-		// 	$accordion_form->add_fieldset($accordion_02);
+			$accordion_02 = new FormFieldsetMultitabsHTML('accordion_02', $this->lang['sandbox.menu.panel'].' 2',
+				array('css_class' => 'accordion accordion-animation')
+			);
+			$accordion_form->add_fieldset($accordion_02);
 
-		// 	$accordion_02->add_field(new FormFieldHTML('accordion_content_02_a', $this->lang['sandbox.lorem.short.content']));
-		// 	$accordion_02->add_field(new FormFieldHTML('accordion_content_02_b', $this->lang['sandbox.lorem.short.content']));
+			$accordion_02->add_field(new FormFieldHTML('accordion_content_02_a', $this->lang['sandbox.lorem.short.content']));
+			$accordion_02->add_field(new FormFieldHTML('accordion_content_02_b', $this->lang['sandbox.lorem.short.content']));
 
-		// 	$accordion_03 = new FormFieldsetMultitabsHTML('accordion_03', $this->lang['sandbox.menu.panel'].' 3',
-		// 		array('css_class' => 'accordion accordion-animation')
-		// 	);
-		// 	$accordion_form->add_fieldset($accordion_03);
+			$accordion_03 = new FormFieldsetMultitabsHTML('accordion_03', $this->lang['sandbox.menu.panel'].' 3',
+				array('css_class' => 'accordion accordion-animation')
+			);
+			$accordion_form->add_fieldset($accordion_03);
 
-		// 	$accordion_03->add_field(new FormFieldHTML('accordion_content_03_a', $this->lang['sandbox.lorem.short.content']));
-		// 	$accordion_03->add_field(new FormFieldHTML('accordion_content_03_b', $this->lang['sandbox.lorem.short.content']));
-		// 	$accordion_03->add_field(new FormFieldHTML('accordion_content_03_c', $this->lang['sandbox.lorem.short.content']));
+			$accordion_03->add_field(new FormFieldHTML('accordion_content_03_a', $this->lang['sandbox.lorem.short.content']));
+			$accordion_03->add_field(new FormFieldHTML('accordion_content_03_b', $this->lang['sandbox.lorem.short.content']));
+			$accordion_03->add_field(new FormFieldHTML('accordion_content_03_c', $this->lang['sandbox.lorem.short.content']));
 
-		// 	$accordion_04 = new FormFieldsetMultitabsHTML('accordion_04', $this->lang['sandbox.menu.panel'].' 4',
-		// 		array('css_class' => 'accordion accordion-animation')
-		// 	);
-		// 	$accordion_form->add_fieldset($accordion_04);
+			$accordion_04 = new FormFieldsetMultitabsHTML('accordion_04', $this->lang['sandbox.menu.panel'].' 4',
+				array('css_class' => 'accordion accordion-animation')
+			);
+			$accordion_form->add_fieldset($accordion_04);
 
-		// 	$accordion_04->add_field(new FormFieldHTML('accordion_content_04_a', $this->lang['sandbox.lorem.short.content']));
-		// 	$accordion_04->add_field(new FormFieldHTML('accordion_content_04_b', $this->lang['sandbox.lorem.short.content']));
-		// 	$accordion_04->add_field(new FormFieldHTML('accordion_content_04_c', $this->lang['sandbox.lorem.short.content']));
-		// 	$accordion_04->add_field(new FormFieldHTML('accordion_content_04_d', $this->lang['sandbox.lorem.short.content']));
+			$accordion_04->add_field(new FormFieldHTML('accordion_content_04_a', $this->lang['sandbox.lorem.short.content']));
+			$accordion_04->add_field(new FormFieldHTML('accordion_content_04_b', $this->lang['sandbox.lorem.short.content']));
+			$accordion_04->add_field(new FormFieldHTML('accordion_content_04_c', $this->lang['sandbox.lorem.short.content']));
+			$accordion_04->add_field(new FormFieldHTML('accordion_content_04_d', $this->lang['sandbox.lorem.short.content']));
 
-		// return $accordion_form;
+		return $accordion_form;
 	}
 
 	private function build_tabs_markup()
@@ -217,61 +269,55 @@ class AdminSandboxFWKBoostController extends DefaultAdminModuleController
 
 	private function build_tabs_form()
 	{
-		$tabs_form = new HTMLForm('Sandbox_Tabs');
-        // Tabs content
-        $tabs_top = new FormFieldsetCapsTop('tabs_start');
-		$tabs_top->set_css_class('tabs-container');
-            $tabs_form->add_fieldset($tabs_top);
+		$tabs_form = new HTMLForm('Sandbox_Accordion');
+		$tabs_form->set_css_class('tabs-container');
 
-		$tabs_menu = new TabsNavFieldset('tabs_menu', '');
+		$tabs_menu = new FormFieldMenuFieldset('tabs_menu', '');
 			$tabs_form->add_fieldset($tabs_menu);
 			$tabs_menu->set_css_class('tabs-nav');
 
-			$tabs_menu->add_field(new TabsNavList('tabs_menu_list',
+			$tabs_menu->add_field(new FormFieldMultitabsLinkList('tabs_menu_list',
 				array(
-					new TabsNavElement($this->lang['sandbox.menu.link.icon'], 'Sandbox_Tabs_tabs_01', 'fa fa-cog'),
-					new TabsNavElement($this->lang['sandbox.menu.link.img'], 'Sandbox_Tabs_tabs_02', '', '/templates/__default__/theme/images/logo.svg', '', 'sandbox-svg-icon'),
-					new TabsNavElement($this->lang['sandbox.menu.link'].' 3', 'Sandbox_Tabs_tabs_03'),
-					new TabsNavElement($this->lang['sandbox.menu.link'].' 4', 'Sandbox_Tabs_tabs_04', '', '', '', 'bgc warning')
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link.icon'], 'tabs', 'Sandbox_Accordion_tabs_01', 'fa fa-cog'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link.img'], 'tabs', 'Sandbox_Accordion_tabs_02', '', '/templates/__default__/theme/images/logo.svg', '', 'sandbox-svg-icon'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link'].' 3', 'tabs', 'Sandbox_Accordion_tabs_03'),
+					new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link'].' 4', 'tabs', 'Sandbox_Accordion_tabs_04', '', '', '', 'bgc warning')
 				)
 			));
 
-        // Tabs content
-        $tabs_wrapper_top = new FormFieldsetCapsTop('content_start');
-            $tabs_wrapper_top->set_css_class('tabs-wrapper');
-            $tabs_form->add_fieldset($tabs_wrapper_top);
-
-			$tabs_01 = new TabsContentFieldset('tabs_01', $this->lang['sandbox.menu.panel'].' 1');
+			$tabs_01 = new FormFieldsetMultitabsHTML('tabs_01', $this->lang['sandbox.menu.panel'].' 1',
+				array('css_class' => 'tabs tabs-animation first-tab')
+			);
 			$tabs_form->add_fieldset($tabs_01);
 
 			$tabs_01->add_field(new FormFieldHTML('tabs_content_01', $this->lang['sandbox.lorem.short.content']));
 
-			$tabs_02 = new TabsContentFieldset('tabs_02', $this->lang['sandbox.menu.panel'].' 2');
+			$tabs_02 = new FormFieldsetMultitabsHTML('tabs_02', $this->lang['sandbox.menu.panel'].' 2',
+				array('css_class' => 'tabs tabs-animation')
+			);
 			$tabs_form->add_fieldset($tabs_02);
 
 			$tabs_02->add_field(new FormFieldHTML('tabs_content_02_a', $this->lang['sandbox.lorem.short.content']));
 			$tabs_02->add_field(new FormFieldHTML('tabs_content_02_b', $this->lang['sandbox.lorem.short.content']));
 
-			$tabs_03 = new TabsContentFieldset('tabs_03', $this->lang['sandbox.menu.panel'].' 3');
+			$tabs_03 = new FormFieldsetMultitabsHTML('tabs_03', $this->lang['sandbox.menu.panel'].' 3',
+				array('css_class' => 'tabs tabs-animation')
+			);
 			$tabs_form->add_fieldset($tabs_03);
 
 			$tabs_03->add_field(new FormFieldHTML('tabs_content_03_a', $this->lang['sandbox.lorem.short.content']));
 			$tabs_03->add_field(new FormFieldHTML('tabs_content_03_b', $this->lang['sandbox.lorem.short.content']));
 			$tabs_03->add_field(new FormFieldHTML('tabs_content_03_c', $this->lang['sandbox.lorem.short.content']));
 
-			$tabs_04 = new TabsContentFieldset('tabs_04', $this->lang['sandbox.menu.panel'].' 4');
+			$tabs_04 = new FormFieldsetMultitabsHTML('tabs_04', $this->lang['sandbox.menu.panel'].' 4',
+				array('css_class' => 'tabs tabs-animation')
+			);
 			$tabs_form->add_fieldset($tabs_04);
 
 			$tabs_04->add_field(new FormFieldHTML('tabs_content_04_a', $this->lang['sandbox.lorem.short.content']));
 			$tabs_04->add_field(new FormFieldHTML('tabs_content_04_b', $this->lang['sandbox.lorem.short.content']));
 			$tabs_04->add_field(new FormFieldHTML('tabs_content_04_c', $this->lang['sandbox.lorem.short.content']));
 			$tabs_04->add_field(new FormFieldHTML('tabs_content_04_d', $this->lang['sandbox.lorem.short.content']));
-
-            $tabs_wrapper_bottom = new FormFieldsetCapsBottom('content_end');
-            $tabs_form->add_fieldset($tabs_wrapper_bottom);
-
-            $tabs_bottom = new FormFieldsetCapsBottom('tabs_end');
-            $tabs_form->add_fieldset($tabs_bottom);
 
 		return $tabs_form;
 	}

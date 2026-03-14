@@ -78,7 +78,6 @@
 					# INCLUDE SELECT_MARKUP #
 					# INCLUDE DND_MARKUP #
 					# INCLUDE BUTTON_MARKUP #
-					# INCLUDE MODAL_MARKUP #
 				</div>
 			</div>
 		</div>

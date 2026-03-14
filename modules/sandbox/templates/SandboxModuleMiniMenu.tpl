@@ -344,12 +344,6 @@
 							</a>
 						</li>
 						<li>
-							<a href="${relative_url(UserUrlBuilder::administration())}#openmodal-addons">
-								<i class="fa fa-fw fa-puzzle-piece" aria-hidden="true"></i>
-								<span>{@sandbox.mini.admin.menu.addons}</span>
-							</a>
-						</li>
-                        <li>
 							<a href="${relative_url(UserUrlBuilder::administration())}#openmodal-tools">
 								<i class="fa fa-fw fa-wrench" aria-hidden="true"></i>
 								<span>{@sandbox.mini.admin.menu.tools}</span>
@@ -435,6 +429,6 @@
 			jQuery('#window-height').append(jQuery(window).innerHeight() + 'px');
 		});
 	</script>
-	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/validator.js"></script>
-	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/form.js"></script>
+	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/form/validator# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
+	<script src="{PATH_TO_ROOT}/templates/__default__/plugins/form/form# IF C_CSS_CACHE_ENABLED #.min# ENDIF #.js"></script>
 # ENDIF #

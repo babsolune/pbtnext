@@ -14,7 +14,7 @@
                                     <i class="fa fa-user" aria-hidden="true"></i>
                                 </span>
                                 <span class="administrator" itemprop="author">{@sandbox.layout.messages.login}</span>
-								<span class="smaller modal-button --message-user-datas-ID" aria-label="{@common.see.profile.datas}">
+								<span class="smaller" aria-label="{@common.see.profile.datas}" data-modal data-target="message-user-datas-ID">
 									<i class="far fa-eye" aria-hidden="true"></i>
 								</span>
                             </h3>
@@ -25,14 +25,14 @@
                         </div>
                         <div class="message-infos">
                             <time datetime="{TODAY_TIME}" itemprop="datePublished">{TODAY_TIME}</time>
-                            <a href="#" onclick="copy_to_clipboard('{U_SITE}');return false;" aria-label="{@common.copy.link.to.clipboard}"><i class="fa fa-hashtag" aria-hidden="true">ID</i></a>
+                            <a href="#ID" class="copy-link-to-clipboard" aria-label="{@common.copy.link.to.clipboard}">\#ID</a>
                         </div>
                     </div>
                 </header>
-                <div id="message-user-datas-ID" class="modal">
-                    <div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
-                    <div class="modal-content cell">
-                        <span class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
+                <div id="message-user-datas-ID" class="modal modal-animation">
+                    <div class="close-modal" aria-label="{@common.close}"></div>
+                    <div class="content-panel cell">
+                        <div class="align-right"><a href="#" class="error big hide-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></a></div>
                         <div class="cell-list">
                             <ul>
                                 <li class="li-stretch">
@@ -94,7 +94,7 @@
                         &lt;i class="fa fa-user" aria-hidden="true">&lt;/i>
                     &lt;/span>
                     &lt;span class="administrator" itemprop="author">{@sandbox.layout.messages.login}&lt;/span>
-                    &lt;span class="smaller modal-button --message-user-datas-ID" aria-label="{@common.see.profile.datas}">
+                    &lt;span class="smaller" aria-label="{@common.see.profile.datas}" data-modal data-target="message-user-datas-ID">
                         &lt;i class="far fa-eye" aria-hidden="true">&lt;/i>
                     &lt;/span>
                 &lt;/h3>
@@ -105,14 +105,14 @@
             &lt;/div>
             &lt;div class="message-infos">
                 &lt;time datetime="{TODAY_TIME}" itemprop="datePublished">{TODAY_TIME}&lt;/time>
-                &lt;a href="#" onclick="copy_to_clipboard('{U_SITE}{U_LINK}');return false;" aria-label="{@common.copy.link.to.clipboard}">&lt;i class="fa fa-hashtag" aria-hidden="true">&lt;/i>ID&lt;/a>
+                &lt;a href="#ID" class="copy-link-to-clipboard" aria-label="{@common.copy.link.to.clipboard}">\#ID&lt;/a>
             &lt;/div>
         &lt;/div>
     &lt;/header>
-    &lt;div id="message-user-datas-ID" class="modal">
-        &lt;div class="modal-overlay close-modal" aria-label="{@common.close}">&lt;/div>
-        &lt;div class="modal-content cell">
-            &lt;span class="error big hide-modal close-modal" aria-label="{@common.close}">&lt;i class="far fa-circle-xmark" aria-hidden="true">&lt;/i>&lt;/span>
+    &lt;div id="message-user-datas-ID" class="modal modal-animation">
+        &lt;div class="close-modal" aria-label="{@common.close}">&lt;/div>
+        &lt;div class="content-panel cell">
+            &lt;div class="align-right">&lt;a href="#" class="error big hide-modal" aria-label="{@common.close}">&lt;i class="far fa-circle-xmark" aria-hidden="true">&lt;/i>&lt;/a>&lt;/div>
             &lt;div class="cell-list">
                 &lt;ul>
                     &lt;li class="li-stretch">
