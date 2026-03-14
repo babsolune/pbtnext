@@ -9,7 +9,7 @@
 
 class QaptchaUrlBuilder
 {
-	private static $dispatcher = '/Qaptcha';
+	private static $dispatcher = '/qaptcha';
 
 	public static function configuration()
 	{

@@ -44,6 +44,14 @@ class FileSystemDataStore implements DataStore
 		$file = $this->get_file($name);
 		$content = $file->read();
 		$data = TextHelper::unserialize($content);
+		// If the class definition was missing at unserialize time (e.g. during
+		// an update where module paths changed), TextHelper::unserialize returns
+		// a __PHP_Incomplete_Class. Treat it as a cache miss.
+		if ($data instanceof \__PHP_Incomplete_Class)
+		{
+			$file->delete();
+			throw new RAMCacheException($name);
+		}
 		return $data;
 	}
 

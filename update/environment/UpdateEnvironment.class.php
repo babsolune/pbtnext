@@ -26,6 +26,14 @@ class UpdateEnvironment extends Environment
         Environment::load_static_constants();
         ClassLoader::clear_cache();
         ClassLoader::init_autoload();
+        // Clear all CacheManager filesystem files (/cache/CacheManager-*) immediately
+        // after the autoloader is ready. The old site may have left serialized config
+        // objects (MaintenanceConfig, Date, etc.) in those files. Any config load
+        // (GeneralConfig, UserAccountsConfig, MaintenanceConfig...) would call
+        // FileSystemDataStore::get_data() -> TextHelper::unserialize() on those stale
+        // files before the new class definitions are available -- causing fatal
+        // "incomplete object" errors that no autoloader fix can prevent.
+        AppContext::get_cache_service()->clear_phpboost_cache();
         self::load_dynamic_constants();
         self::init_output_bufferization();
         self::set_locale();

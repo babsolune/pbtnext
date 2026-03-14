@@ -312,17 +312,17 @@ class TextHelper
             $string
         );
 
-        // Attempt to deserialize with error suppression to check validity
-        $result = @unserialize(trim($string), ['allowed_classes' => false]);
+        // Deserialize with all classes allowed — PHPBoost config objects (MaintenanceConfig,
+        // GeneralConfig, etc.) are stored as serialized class instances and must be
+        // reconstructed with their class definitions intact. Using allowed_classes => false
+        // would turn every object into __PHP_Incomplete_Class, breaking config loading.
+        $result = @unserialize(trim($string));
 
         if ($result === false && $string !== 'b:0;') {
-            // If unserialize fails, try to clean trailing data
-            // Find the position where valid serialized data ends
             $cleaned = trim($string);
-            $result = @unserialize($cleaned, ['allowed_classes' => false]);
+            $result = @unserialize($cleaned);
 
             if ($result === false) {
-                // Last resort: return the original string
                 return $string;
             }
         }

@@ -11,8 +11,8 @@ class QaptchaSetup extends DefaultModuleSetup
 {
 	public function uninstall()
 	{
-		ConfigManager::delete('qaptcha', 'config');
-		return AppContext::get_captcha_service()->uninstall_captcha('qaptcha');
+		ConfigManager::delete('question-captcha', 'config');
+		return AppContext::get_captcha_service()->uninstall_captcha('Qaptcha');
 	}
 }
 ?>

@@ -38,8 +38,14 @@ abstract class ConfigUpdateVersion implements UpdateVersion
 
     public function execute()
     {
-        if (!ClassLoader::is_class_registered_and_valid(ucfirst(self::$module_id) . 'Config')) {
-            // include_once;
+        // Ensure the config class file is loaded before build_new_config() calls
+        // MaintenanceConfig::load() → unserialize(). class_exists() triggers the
+        // SPL autoloader which does the require_once, so the class is defined before
+        // any unserialize() attempt on a stored instance of it.
+        $config_class = ucfirst(self::$module_id) . 'Config';
+        if (!class_exists($config_class, true)) {
+            // Class not found even after autoload attempt — build_new_config()
+            // will fall back to default values via ConfigNotFoundException.
         }
         try {
             if ($this->build_new_config()) {

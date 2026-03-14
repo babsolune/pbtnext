@@ -168,13 +168,28 @@ class UpdateServices
         Environment::try_to_increase_max_execution_time();
         Environment::load_imports();
 
+        // Clear the phpboost object cache (CacheManager filesystem files in /cache/) first.
+        // The old site may have left serialized config objects (e.g. MaintenanceConfig, Date)
+        // in /cache/CacheManager-* files. Any subsequent config load (MaintenanceConfig::load(),
+        // etc.) would call FileSystemDataStore::get_data() → TextHelper::unserialize() on those
+        // stale files BEFORE the new classes are available, causing "incomplete object" errors.
+        AppContext::get_cache_service()->clear_phpboost_cache();
+
         // Delete files witch are no longer present in the new version to avoid conflicts
         $this->delete_old_files();
 
-        // TODO Fix the cache issue
-        // Uninstalling the UrlUpdater module to avoid problems
-        // if (ModulesManager::is_module_installed('UrlUpdater'))
-        // ModulesManager::uninstall_module('UrlUpdater');
+        // Rebuild the autoload cache immediately after deleting old root-level module dirs.
+        // Modules have moved from /module_id/ to /modules/module_id/ in this version.
+        // Any subsequent operation (UrlUpdater uninstall, maintenance, etc.) may trigger
+        // autoloading of module classes (e.g. BirthdayModuleMiniMenu via MenuService).
+        // Without this rebuild, the stale cache still maps those classes to the deleted
+        // root-level paths, causing "Failed opening required '../birthday/...'" errors.
+        ClassLoader::clear_cache();
+        ClassLoader::init_autoload();
+
+        // Uninstalling the UrlUpdater module to avoid cache conflicts during update
+        if (ModulesManager::is_module_installed('UrlUpdater'))
+            ModulesManager::uninstall_module('UrlUpdater');
 
         // Maintenance of the site if it is not already
         $this->put_site_under_maintenance();
@@ -203,20 +218,18 @@ class UpdateServices
         // Updating content
         $this->update_content();
 
-        // TODO Fix the cache issue
         // Updating content of content menus
-        // $this->update_content_menus();
+        $this->update_content_menus();
 
         // Clear autoload
         $this->clear_autoload();
 
-        // TODO Fix the cache issue
-        // Installation of the UrlUpdater module for rewriting the url of updated modules
-        // $folder = new Folder(PATH_TO_ROOT . '/modules/UrlUpdater');
-        // if ($folder->exists())
-        // ModulesManager::install_module('UrlUpdater');
-        // else
-        // $this->add_information_to_file('module UrlUpdater', 'has not been installed because it was not on the FTP');
+        // Reinstalling the UrlUpdater module for rewriting the url of updated modules
+        $folder = new Folder(PATH_TO_ROOT . '/modules/UrlUpdater');
+        if ($folder->exists())
+            ModulesManager::install_module('UrlUpdater');
+        else
+            $this->add_information_to_file('module UrlUpdater', 'has not been installed because it was not on the FTP');
 
         // Installing the SocialNetworks module
         $folder = new Folder(PATH_TO_ROOT . '/modules/SocialNetworks');
@@ -229,14 +242,21 @@ class UpdateServices
 
         // End of update: cache refresh
         $this->delete_update_token();
-        // $this->generate_cache();
+        $this->generate_cache();
 
         $this->add_information_to_file("\n" . 'End of the update to PHPBoost ', GeneralConfig::load()->get_phpboost_major_version());
     }
 
     public function put_site_under_maintenance()
     {
-        ClassLoader::generate_classlist(true);
+        // MaintenanceConfig and its dependencies must be explicitly required before
+        // any call to unserialize(). The autoloader cannot reliably resolve them during
+        // the classlist rebuild triggered by init_autoload(), because add_modules_classes()
+        // itself calls ModulesConfig::load() → unserialize() while $autoload is still
+        // being populated — leaving MaintenanceConfig unresolvable at that exact moment.
+        require_once PATH_TO_ROOT . '/kernel/framework/util/Date.class.php';
+        require_once PATH_TO_ROOT . '/kernel/framework/io/data/config/AbstractConfigData.class.php';
+        require_once PATH_TO_ROOT . '/kernel/framework/phpboost/config/MaintenanceConfig.class.php';
         $maintenance_config = MaintenanceConfig::load();
 
         if (!$maintenance_config->is_under_maintenance()) {
@@ -356,22 +376,15 @@ class UpdateServices
 
     private function update_modules_configurations()
     {
-        // Update modules configs
-        $update_modules_configs_class_list = [];
-
-        foreach ($this->get_class(PATH_TO_ROOT . self::$directory . '/modules/config/', self::$configuration_pattern, 'config') as $class) {
-            $object                                                      = new $class['name']();
-            $update_modules_configs_class_list[$object->get_module_id()] = $class['name'];
-        }
-
-        $modules_folder = new Folder(PATH_TO_ROOT);
+        // Update modules configs - each module's update class is located in its own /update/ subfolder
+        $modules_folder = new Folder(PATH_TO_ROOT . '/modules');
         foreach ($modules_folder->get_folders() as $folder) {
             if ($folder->get_files('/config\.ini/')) {
-                $has_config_update_class = false;
-                $module_id               = $folder->get_name();
-                $module                  = ModulesManager::get_module($module_id);
+                $has_config_update_class    = false;
+                $module_config_update_class = null;
+                $module_id                  = $folder->get_name();
+                $module                     = ModulesManager::get_module($module_id);
 
-                $module_folder = new Folder(PATH_TO_ROOT . '/modules/' . $module_id);
                 if ($folder->get_folders('/update/')) {
                     foreach ($this->get_class(PATH_TO_ROOT . '/modules/' . $module_id . '/update/', self::$configuration_pattern, 'config') as $class) {
                         $module_config_update_class = new $class['name']();
@@ -379,15 +392,7 @@ class UpdateServices
                             'ConfigUpdateVersion')) {
                             $has_config_update_class = true;
                         }
-
                     }
-                } elseif (in_array($module_id, array_keys($update_modules_configs_class_list))) {
-                    $module_config_update_class = new $update_modules_configs_class_list[$module_id]();
-                    if (ClassLoader::is_class_registered_and_valid($update_modules_configs_class_list[$module_id]) &&
-                        is_subclass_of($module_config_update_class, 'ConfigUpdateVersion')) {
-                        $has_config_update_class = true;
-                    }
-
                 }
 
                 if (ModulesManager::is_module_installed($module_id) && $module->get_configuration()->get_compatibility() ==
@@ -408,42 +413,53 @@ class UpdateServices
 
     private function update_modules()
     {
-        $update_modules_class_list = [];
-
-        foreach ($this->get_class(PATH_TO_ROOT . self::$directory . '/modules/', self::$module_pattern, 'module') as $class) {
-            $object = new $class['name']();
-            $update_modules_class_list[$object->get_module_id()] = $class['name'];
-        }
-
         $modules_config = ModulesConfig::load();
         $home_page      = GeneralConfig::load()->get_module_home_page();
 
         $default_module_changed = false;
 
-        $modules_folder = new Folder(PATH_TO_ROOT);
+        // Handle the QuestionCaptcha → qaptcha module replacement explicitly.
+        // QuestionCaptcha was at /QuestionCaptcha/ (root) in pbt; qaptcha is at /qaptcha/ (root) in pbtnext.
+        // QaptchaModuleUpdateVersion::execute() handles DB migration, old file deletion and config update.
+        if (ModulesManager::is_module_installed('QuestionCaptcha')) {
+            // Uninstall the old module so it no longer appears in ModulesConfig
+            ModulesManager::uninstall_module('QuestionCaptcha', false, false);
+        }
+        // Install qaptcha if it is not already installed (replaces QuestionCaptcha)
+        $qaptcha_folder = new Folder(PATH_TO_ROOT . '/qaptcha');
+        if ($qaptcha_folder->exists() && !ModulesManager::is_module_installed('qaptcha')) {
+            ModulesManager::install_module('qaptcha');
+        }
+
+        // Scan both root-level modules (qaptcha, BBCode — they stay at root in pbtnext)
+        // and /modules/ directory modules (all others moved there in pbtnext).
+        $scan_paths = [PATH_TO_ROOT, PATH_TO_ROOT . '/modules'];
+
+        foreach ($scan_paths as $scan_path) {
+        $modules_folder = new Folder($scan_path);
         foreach ($modules_folder->get_folders() as $folder) {
             if ($folder->get_files('/config\.ini/')) {
-                $has_update_class = false;
-                $module_id        = $folder->get_name();
-                $module           = ModulesManager::get_module($module_id);
+                $has_update_class    = false;
+                $module_update_class = null;
+                $module_id           = $folder->get_name();
 
-                $module_folder = new Folder(PATH_TO_ROOT . '/modules/' . $module_id);
+                // Skip non-module folders at root (kernel, admin, update, lang, etc.)
+                $ini_data = parse_ini_file($folder->get_path() . '/config.ini');
+                if (!isset($ini_data['addon_type']) || $ini_data['addon_type'] !== 'module') {
+                    continue;
+                }
+
+                $module      = ModulesManager::get_module($module_id);
+                $module_path = $folder->get_path();
+
                 if ($folder->get_folders('/update/')) {
-                    foreach ($this->get_class(PATH_TO_ROOT . '/modules/' . $module_id . '/update/', self::$module_pattern, 'module') as $class) {
+                    foreach ($this->get_class($module_path . '/update/', self::$module_pattern, 'module') as $class) {
                         $module_update_class = new $class['name']();
                         if (ClassLoader::is_class_registered_and_valid($class['name']) && is_subclass_of($module_update_class,
                             'ModuleUpdateVersion')) {
                             $has_update_class = true;
                         }
-
                     }
-                } elseif (in_array($module_id, array_keys($update_modules_class_list))) {
-                    $module_update_class = new $update_modules_class_list[$module_id]();
-                    if (ClassLoader::is_class_registered_and_valid($update_modules_class_list[$module_id]) &&
-                        is_subclass_of($module_update_class, 'ModuleUpdateVersion')) {
-                        $has_update_class = true;
-                    }
-
                 }
 
                 if (!ModulesManager::is_module_installed($module_id)) {
@@ -486,6 +502,7 @@ class UpdateServices
                 }
             }
         }
+        } // end foreach $scan_paths
         ModulesConfig::save();
 
         if ($default_module_changed) {
@@ -847,11 +864,12 @@ class UpdateServices
 
     private function delete_old_files_modules()
     {
-        // List all directories in the root folder
+        // List all directories in the root folder (old pbt structure had modules at root level)
         $directories = glob(PATH_TO_ROOT . '/*', GLOB_ONLYDIR);
 
         foreach ($directories as $dir) {
-            $iniFile = $dir . '/config.ini';
+            $iniFile  = $dir . '/config.ini';
+            $dir_name = basename($dir);
 
             // Check if the config.ini file exists in this folder
             if (file_exists($iniFile)) {
@@ -859,7 +877,7 @@ class UpdateServices
                 $config = parse_ini_file($iniFile);
 
                 // Specifically for the "gallery" module, copy the "pics" folder to the new location if it exists
-                if ($dir === 'gallery') {
+                if ($dir_name === 'gallery') {
                     $sourcePics = PATH_TO_ROOT . '/gallery/pics';
                     $destPics   = PATH_TO_ROOT . '/modules/gallery/pics';
 
@@ -869,8 +887,9 @@ class UpdateServices
                 }
 
                 // check if 'addon_type' exists and if it equals "module"
-                if (isset($config['addon_type']) && $config['addon_type'] === 'module' && $dir !== 'BBCode' && $dir !== 'qaptcha') {
-                    // Remove the folder if it exists
+                // BBCode and qaptcha remain at root level in the new structure
+                if (isset($config['addon_type']) && $config['addon_type'] === 'module' && $dir_name !== 'BBCode' && $dir_name !== 'qaptcha') {
+                    // Remove the old root-level module folder
                     $folder = new Folder($dir);
                     if ($folder->exists()) {
                         $folder->delete();

@@ -88,7 +88,12 @@ class ConfigManager
 		}
 
 		$required_value = @unserialize($result['value']);
-		if ($required_value === false)
+		// @unserialize() returns false on malformed data, but returns a
+		// __PHP_Incomplete_Class object when the class definition is missing
+		// (e.g. during an update where module paths have changed). Both cases
+		// must be treated as a cache miss so ConfigManager falls back to
+		// instantiating a fresh default object via new $classname().
+		if ($required_value === false || $required_value instanceof \__PHP_Incomplete_Class)
 		{
 			throw new ConfigNotFoundException($name);
 		}

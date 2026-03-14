@@ -19,6 +19,13 @@ class MaintenanceConfigUpdateVersion extends ConfigUpdateVersion
     {
         $old_config = $this->get_old_config();
 
+        // Explicitly load the class file before calling MaintenanceConfig::load()
+        // which triggers unserialize(). The module_id is 'kernel' so the generic
+        // class_exists('KernelConfig') in ConfigUpdateVersion::execute() does not
+        // cover MaintenanceConfig — we must require_once it here directly.
+        require_once PATH_TO_ROOT . '/kernel/framework/util/Date.class.php';
+        require_once PATH_TO_ROOT . '/kernel/framework/io/data/config/AbstractConfigData.class.php';
+        require_once PATH_TO_ROOT . '/kernel/framework/phpboost/config/MaintenanceConfig.class.php';
         $maintenance_config = MaintenanceConfig::load();
 
         if (!$maintenance_config->is_under_maintenance())

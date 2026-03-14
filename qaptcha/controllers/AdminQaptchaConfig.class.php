@@ -116,7 +116,7 @@ class AdminQaptchaConfig extends DefaultAdminModuleController
 
 	public static function get_module()
 	{
-		self::$module = ModulesManager::get_module('Qaptcha');
+		self::$module = ModulesManager::get_module('qaptcha');
 
 		return self::$module;
 	}
