@@ -111,6 +111,7 @@
 					animation: 150,
 					onEnd: function(evt) {
 						jQuery('#valid-position-menus button')
+							.removeClass('link-color')
 							.addClass('warning')
 							.html('<i class="far fa-fw fa-square"></i>' + ${escapejs(@menu.valid.position)});
 					}
@@ -506,19 +507,25 @@
 			let menusUrl = window.location.hash;
 			if(menusUrl != '') {
 				jQuery('#valid-position-menus button')
+                    .removeClass('link-color')
 					.addClass('success')
 					.html('<i class="far fa-fw fa-check-square"></i>' + ${escapejs(@menu.valid.position)});
 				if (performance.navigation.type == performance.navigation.TYPE_RELOAD) { // back to init status on reloading page
 					history.pushState('', '', ' ');
 					jQuery('#valid-position-menus button')
 						.removeClass('success')
+						.removeClass('warning')
 						.html('<i class="far fa-fw fa-square"></i>' + ${escapejs(@menu.position)});
 				}
 			}
 
 			// Change validation button on changing checkboxes status
 			jQuery('[type="checkbox"]').on('change', function(){
-				jQuery('#valid-position-menus button').addClass('warning').html('<i class="far fa-fw fa-square"></i>' + ${escapejs(@menu.valid.position)});
+				jQuery('#valid-position-menus button')
+                    .removeClass('link-color')
+                    .removeClass('success')
+                    .addClass('warning')
+                    .html('<i class="far fa-fw fa-square"></i>' + ${escapejs(@menu.valid.position)});
 			});
 
 			// opacity for unchecked block on page loading
