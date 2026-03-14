@@ -104,6 +104,7 @@ $lang['common.loading']      = 'Chargement';
 $lang['common.upload']       = 'Uploader';
 $lang['common.print']        = 'Imprimer';
 $lang['common.printable']    = 'Version imprimable';
+$lang['common.open.panel']   = 'Ouvrir le panneau';
 $lang['common.open.panels']  = 'Ouvrir tous les panneaux';
 $lang['common.close.panels'] = 'Fermer tous les panneaux';
 $lang['common.filter.items'] = 'Filtrer les éléments';
