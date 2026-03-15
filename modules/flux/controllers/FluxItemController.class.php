@@ -20,16 +20,16 @@ class FluxItemController extends DefaultModuleController
 
 		$this->count_views_number($request);
 
-		$this->build_view($request);
+		$this->build_view();
 
 		return $this->generate_response();
 	}
 
-	private function build_view(HTTPRequestCustom $request)
+	private function build_view()
 	{
 		$item = $this->get_item();
 
-		$this->build_refresh_form($request);
+		$this->build_refresh_form();
 
 		$xml_url = $this->item->get_website_xml()->absolute();
 		$rss_number = $this->config->get_rss_number();
@@ -43,18 +43,27 @@ class FluxItemController extends DefaultModuleController
 		$filename = '/modules/flux/xml/' . $lastname . $firstname . '.xml';
 
 		if ($item->is_published())
-		{
-			if ($this->submit_button->has_been_submited() && $this->form->validate())
-			{
-				// load feed items in file
-				$content = file_get_contents($xml_url);
-                $content = substr($content, 0, strpos($content, '</rss>'));
-                $content .= '</rss>';
-				file_put_contents(PATH_TO_ROOT . $filename, $content);
-				$item->set_xml_path($filename);
-				FluxService::update($item);
-			}
-		}
+        {
+            if ($this->submit_button->has_been_submited() && $this->form->validate())
+            {
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, $xml_url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+                $content = curl_exec($ch);
+                if (\PHP_VERSION_ID < 80100)
+                        curl_close($ch);
+
+                if ($content !== false) {
+                    $content = substr($content, 0, strpos($content, '</rss>'));
+                    $content .= '</rss>';
+                    file_put_contents(PATH_TO_ROOT . $filename, $content);
+                    $item->set_xml_path($filename);
+                    FluxService::update($item);
+                }
+            }
+        }
 
 		// Read cache file
 		if(file_exists(PATH_TO_ROOT . $filename) && !empty(file_get_contents(PATH_TO_ROOT . $filename)))
@@ -63,12 +72,12 @@ class FluxItemController extends DefaultModuleController
             if (FluxService::is_valid_xml(PATH_TO_ROOT . $filename))
             {
                 $xml = simplexml_load_file(PATH_TO_ROOT . $filename);
-                $items = array();
-                $items['title'] = array();
-                $items['link']  = array();
-                $items['desc']  = array();
-                $items['img']   = array();
-                $items['date']  = array();
+                $items = [];
+                $items['title'] = [];
+                $items['link']  = [];
+                $items['desc']  = [];
+                $items['img']   = [];
+                $items['date']  = [];
 
                 foreach($xml->channel->item as $i)
                 {
@@ -81,9 +90,9 @@ class FluxItemController extends DefaultModuleController
 
                 $items_number = $rss_number <= count($items['title']) ? $rss_number : count($items['title']);
 
-                $this->view->put_all(array(
+                $this->view->put_all([
                     'C_FEED_ITEMS' => true
-                ));
+                ]);
 
                 for($i = 0; $i < $items_number ; $i++)
                 {
@@ -93,7 +102,7 @@ class FluxItemController extends DefaultModuleController
                     $cut_desc = (trim(TextHelper::substr($desc, 0, $char_number)));
                     $cut_desc = TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($desc), '<br><br/>'), (int)$this->config->get_characters_number_to_cut());
                     $item_img = $items['img'][$i];
-                    $this->view->assign_block_vars('feed_items',array(
+                    $this->view->assign_block_vars('feed_items',[
                         'TITLE'           => $items['title'][$i],
                         'U_ITEM'          => $items['link'][$i],
                         'DATE'            => $item_date,
@@ -102,30 +111,30 @@ class FluxItemController extends DefaultModuleController
                         'WORDS_NUMBER'    => str_word_count($desc) - str_word_count($cut_desc),
                         'C_HAS_THUMBNAIL' => !empty($item_img),
                         'U_THUMBNAIL'     => $item_img,
-                    ));
+                    ]);
                 }
             }
             else
             {
-                $this->view->put_all(array(
+                $this->view->put_all([
                     'C_WRONG_RSS_XML' => true
-                ));
+                ]);
             }
 		}
 		elseif (file_exists(PATH_TO_ROOT . $filename) && empty(file_get_contents(PATH_TO_ROOT . $filename))) {
-			$this->view->put_all(array(
+			$this->view->put_all([
 				'C_EMPTY_FILE' => true
-			));
+			]);
 		}
 
-		$this->view->put_all(array_merge($item->get_templates_vars(), array(
+		$this->view->put_all(array_merge($item->get_templates_vars(), [
 			'FORM' => $this->form->display(),
 			'NOT_VISIBLE_MESSAGE' => MessageHelper::display(LangLoader::get_message('warning.element.not.visible', 'warning-lang'), MessageHelper::WARNING),
 			'MODULE_NAME' => $this->config->get_module_name()
-		)));
+		]));
 	}
 
-	private function build_refresh_form(HTTPRequestCustom $request)
+	private function build_refresh_form()
 	{
 		$item = $this->get_item();
 		$form = new HTMLForm(self::class);

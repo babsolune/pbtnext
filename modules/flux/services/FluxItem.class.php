@@ -242,7 +242,7 @@ class FluxItem
 
 	public function get_properties()
 	{
-		return array(
+		return [
 			'id' => $this->get_id(),
 			'id_category' => $this->get_id_category(),
 			'title' => $this->get_title(),
@@ -258,7 +258,7 @@ class FluxItem
 			'views_number' => $this->get_views_number(),
 			'visits_number' => $this->get_visits_number(),
 			'thumbnail' => $this->get_thumbnail()->relative(),
-		);
+        ];
 	}
 
 	public function set_properties(array $properties)
@@ -317,50 +317,51 @@ class FluxItem
 
 		return array_merge(
 			Date::get_array_tpl_vars($this->creation_date, 'date'),
-			array(
-            'C_NEW_WINDOW'         => $config->get_new_window(),
-            'C_CONTENT'            => !empty($content),
-			'C_IS_PUBLISHED'       => $this->is_published(),
-			'C_CONTROLS'           => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
-			'C_EDIT'               => $this->is_authorized_to_edit(),
-			'C_DELETE'             => $this->is_authorized_to_delete(),
-			'C_AUTHOR_GROUP_COLOR' => !empty($user_group_color),
-            'C_VISIT'              => !empty($this->website_url->absolute()),
-            'C_HAS_RSS'            => !empty($this->website_xml->absolute()),
-			'C_HAS_THUMBNAIL'      => $this->has_thumbnail(),
+			Date::get_array_tpl_vars($this->update_date, 'update'),
+			[
+                'C_NEW_WINDOW'         => $config->get_new_window(),
+                'C_CONTENT'            => !empty($content),
+                'C_IS_PUBLISHED'       => $this->is_published(),
+                'C_CONTROLS'           => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
+                'C_EDIT'               => $this->is_authorized_to_edit(),
+                'C_DELETE'             => $this->is_authorized_to_delete(),
+                'C_AUTHOR_GROUP_COLOR' => !empty($user_group_color),
+                'C_VISIT'              => !empty($this->website_url->absolute()),
+                'C_HAS_RSS'            => !empty($this->website_xml->absolute()),
+                'C_HAS_THUMBNAIL'      => $this->has_thumbnail(),
 
-            // Category
-			'C_ROOT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY,
-			'CATEGORY_ID'          => $category->get_id(),
-			'CATEGORY_NAME'        => $category->get_name(),
-			'U_EDIT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY ? FluxUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($category->get_id(), 'flux')->rel(),
+                // Category
+                'C_ROOT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY,
+                'CATEGORY_ID'          => $category->get_id(),
+                'CATEGORY_NAME'        => $category->get_name(),
+                'U_EDIT_CATEGORY'      => $category->get_id() == Category::ROOT_CATEGORY ? FluxUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($category->get_id(), 'flux')->rel(),
 
-			// Item
-			'ID'                  => $this->id,
-			'TITLE'               => $this->title,
-			'REWRITED_TITLE'      => $this->rewrited_title,
-			'WEBSITE_URL'         => $this->website_url->absolute(),
-			'WEBSITE_RSS'         => $this->website_xml->absolute(),
-			'CONTENT'             => $rich_content,
-			'STATUS'              => $this->get_status(),
-			'C_AUTHOR_EXIST'      => $user->get_id() !== User::VISITOR_LEVEL,
-			'AUTHOR_DISPLAY_NAME' => $user->get_display_name(),
-			'AUTHOR_LEVEL_CLASS'  => UserService::get_level_class($user->get_level()),
-			'AUTHOR_GROUP_COLOR'  => $user_group_color,
-			'VIEWS_NUMBER'        => $this->views_number,
-			'VISITS_NUMBER'       => $this->visits_number,
+                // Item
+                'ID'                  => $this->id,
+                'TITLE'               => $this->title,
+                'REWRITED_TITLE'      => $this->rewrited_title,
+                'WEBSITE_URL'         => $this->website_url->absolute(),
+                'WEBSITE_RSS'         => $this->website_xml->absolute(),
+                'CONTENT'             => $rich_content,
+                'STATUS'              => $this->get_status(),
+                'C_AUTHOR_EXIST'      => $user->get_id() !== User::VISITOR_LEVEL,
+                'AUTHOR_DISPLAY_NAME' => $user->get_display_name(),
+                'AUTHOR_LEVEL_CLASS'  => UserService::get_level_class($user->get_level()),
+                'AUTHOR_GROUP_COLOR'  => $user_group_color,
+                'VIEWS_NUMBER'        => $this->views_number,
+                'VISITS_NUMBER'       => $this->visits_number,
 
-			'U_SYNDICATION'    => SyndicationUrlBuilder::rss('flux', $this->id_category)->rel(),
-			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
-			'U_AUTHOR_CONTRIB' => FluxUrlBuilder::display_member_items($this->get_author_user()->get_id())->rel(),
-			'U_ITEM'           => $this->get_item_url(),
-			'U_VISIT'          => FluxUrlBuilder::visit($this->id)->rel(),
-			'U_DEADLINK'       => FluxUrlBuilder::dead_link($this->id)->rel(),
-			'U_CATEGORY'       => FluxUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
-			'U_EDIT'           => FluxUrlBuilder::edit($this->id)->rel(),
-			'U_DELETE'         => FluxUrlBuilder::delete($this->id)->rel(),
-			'U_THUMBNAIL'      => $this->get_thumbnail()->rel()
-			)
+                'U_SYNDICATION'    => SyndicationUrlBuilder::rss('flux', $this->id_category)->rel(),
+                'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
+                'U_AUTHOR_CONTRIB' => FluxUrlBuilder::display_member_items($this->get_author_user()->get_id())->rel(),
+                'U_ITEM'           => $this->get_item_url(),
+                'U_VISIT'          => FluxUrlBuilder::visit($this->id)->rel(),
+                'U_DEADLINK'       => FluxUrlBuilder::dead_link($this->id)->rel(),
+                'U_CATEGORY'       => FluxUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel(),
+                'U_EDIT'           => FluxUrlBuilder::edit($this->id)->rel(),
+                'U_DELETE'         => FluxUrlBuilder::delete($this->id)->rel(),
+                'U_THUMBNAIL'      => $this->get_thumbnail()->rel()
+            ]
 		);
 
 	}

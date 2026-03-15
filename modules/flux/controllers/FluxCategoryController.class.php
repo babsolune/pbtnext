@@ -44,7 +44,7 @@ class FluxCategoryController extends DefaultModuleController
 
 			if ($sub_categories_number > $subcategories_pagination->get_display_from() && $sub_categories_number <= ($subcategories_pagination->get_display_from() + $subcategories_pagination->get_number_items_per_page()))
 			{
-				$this->view->assign_block_vars('sub_categories_list', array(
+				$this->view->assign_block_vars('sub_categories_list', [
 					'C_SEVERAL_ITEMS' => $category->get_elements_number() > 1,
 					'C_CATEGORY_THUMBNAIL' => !empty($category->get_thumbnail()->rel()),
 
@@ -56,34 +56,39 @@ class FluxCategoryController extends DefaultModuleController
 
 					'U_CATEGORY_THUMBNAIL' => $category->get_thumbnail()->rel(),
 					'U_CATEGORY'           => FluxUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel()
-				));
+				]);
 			}
 		}
 
-		$condition = 'WHERE id_category = :id_category AND published = 1';
+		$condition = '
+            WHERE id_category = :id_category AND published = 1
+        ';
 
-		$parameters = array(
+		$parameters = [
 			'authorised_categories' => $authorized_categories,
 			'id_category' => $this->get_category()->get_id(),
 			'timestamp_now' => $now->get_timestamp()
-		);
+        ];
 
 		$pagination = $this->get_pagination($condition, $parameters, $page, $subcategories_page);
 
-		$result = PersistenceContext::get_querier()->select('SELECT flux.*, member.*
-		FROM '. FluxSetup::$flux_table .' flux
-		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = flux.author_user_id
-		' . $condition . '
-		ORDER BY flux.title ASC
-		LIMIT :items_number_per_page OFFSET :display_from', array_merge($parameters, array(
-			'user_id' => AppContext::get_current_user()->get_id(),
-			'items_number_per_page' => $pagination->get_number_items_per_page(),
-			'display_from' => $pagination->get_display_from()
-		)));
+		$result = PersistenceContext::get_querier()->select('
+                SELECT flux.*, member.*
+                FROM '. FluxSetup::$flux_table .' flux
+                LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = flux.author_user_id
+                ' . $condition . '
+                ORDER BY flux.title ASC
+                LIMIT :items_number_per_page OFFSET :display_from
+            ', array_merge($parameters, [
+                'user_id' => AppContext::get_current_user()->get_id(),
+                'items_number_per_page' => $pagination->get_number_items_per_page(),
+                'display_from' => $pagination->get_display_from()
+            ])
+        );
 
-		$this->last_feeds_view($request);
+		$this->last_feeds_view();
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_CATEGORY'                  => true,
 			'C_CATEGORY_THUMBNAIL' 		  => !$this->get_category()->get_id() == Category::ROOT_CATEGORY && !empty($this->get_category()->get_thumbnail()->rel()),
 			'C_ITEMS'                     => $result->get_rows_count() > 0,
@@ -114,7 +119,7 @@ class FluxCategoryController extends DefaultModuleController
 
 			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? FluxUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->get_category()->get_id(), 'flux')->rel(),
 			'U_CATEGORY_THUMBNAIL' => $this->get_category()->get_thumbnail()->rel()
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{
@@ -125,26 +130,29 @@ class FluxCategoryController extends DefaultModuleController
 		$result->dispose();
 	}
 
-	private function last_feeds_view(HTTPRequestCustom $request)
+	private function last_feeds_view()
 	{
 		$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY);
 
-		$result = PersistenceContext::get_querier()->select('SELECT flux.*, member.*
-		FROM '. FluxSetup::$flux_table .' flux
-		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = flux.author_user_id
-		WHERE id_category IN :authorised_categories
-		AND published = 1
-		ORDER BY flux.title ASC', array(
-			'user_id' => AppContext::get_current_user()->get_id(),
-			'authorised_categories' => $authorized_categories
-		));
+		$result = PersistenceContext::get_querier()->select('
+                SELECT flux.*, member.*
+                FROM '. FluxSetup::$flux_table .' flux
+                LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = flux.author_user_id
+                WHERE id_category IN :authorised_categories
+                AND published = 1
+                ORDER BY flux.title ASC
+            ', [
+                'user_id' => AppContext::get_current_user()->get_id(),
+                'authorised_categories' => $authorized_categories
+            ]
+        );
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_LAST_ITEMS' => $result->get_rows_count() > 0 && $this->config->get_last_feeds_display(),
 
 			'LAST_FEEDS_NUMBER' => $this->config->get_last_feeds_number(),
-			'L_LAST_FEEDS'      => StringVars::replace_vars($this->lang['flux.last.feeds.title'], array('feeds_number' => $this->config->get_rss_number())),
-		));
+			'L_LAST_FEEDS'      => StringVars::replace_vars($this->lang['flux.last.feeds.title'], ['feeds_number' => $this->config->get_rss_number()]),
+		]);
 
 		while ($row = $result->fetch())
 		{
@@ -159,13 +167,13 @@ class FluxCategoryController extends DefaultModuleController
 
 			if(!empty($xml_path) && $xml_file->exists() && !empty(file_get_contents(PATH_TO_ROOT . $xml_path)))
 			{
-                $xml_items = array();
-                $xml_items['title'] = array();
-                $xml_items['link']  = array();
-                $xml_items['desc']  = array();
-                $xml_items['img']   = array();
-                $xml_items['date']  = array();
-                
+                $xml_items = [];
+                $xml_items['title'] = [];
+                $xml_items['link']  = [];
+                $xml_items['desc']  = [];
+                $xml_items['img']   = [];
+                $xml_items['date']  = [];
+
                 if (FluxService::is_valid_xml(PATH_TO_ROOT . $xml_path))
                 {
                     $xml = simplexml_load_file(PATH_TO_ROOT . $xml_path);
@@ -190,7 +198,7 @@ class FluxCategoryController extends DefaultModuleController
                     $cut_desc = TextHelper::cut_string(@strip_tags(FormatingHelper::second_parse($desc), '<br><br/>'), (int)$this->config->get_characters_number_to_cut());
                     $words_number = str_word_count($desc) - str_word_count($cut_desc);
 
-                    $this->view->assign_block_vars('feed_items',array(
+                    $this->view->assign_block_vars('feed_items', [
                         'C_HAS_FEEDS'     => $xml_items_number > 0,
                         'C_HAS_THUMBNAIL' => !empty($item->get_thumbnail()),
                         'C_READ_MORE'     => strlen($desc) > $char_number,
@@ -205,7 +213,7 @@ class FluxCategoryController extends DefaultModuleController
                         'U_ITEM'      => $xml_items['link'][$i],
                         'U_ITEM_HOST' => $item->get_item_url(),
                         'U_THUMBNAIL' => Url::to_rel($item->get_thumbnail()),
-                    ));
+                    ]);
                 }
 			}
 		}

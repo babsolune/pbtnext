@@ -39,15 +39,20 @@ class FluxFeedProvider implements FeedProvider
 			$ids_categories = array_keys($categories);
 
 			$now = new Date();
-			$results = $querier->select('SELECT flux.id, flux.id_category, flux.title, flux.rewrited_title, flux.content, flux.creation_date, flux.thumbnail, cat.rewrited_name AS rewrited_name_cat
-				FROM ' . FluxSetup::$flux_table . ' flux
-				LEFT JOIN '. FluxSetup::$flux_cats_table .' cat ON cat.id = flux.id_category
-				WHERE flux.id_category IN :ids_categories
-				AND published = 1
-				ORDER BY flux.creation_date DESC', array(
-					'ids_categories' => $ids_categories,
-					'timestamp_now' => $now->get_timestamp()
-			));
+			$results = $querier->select('
+                    SELECT 
+                        flux.id, flux.id_category, flux.title, flux.rewrited_title, flux.content, flux.creation_date, flux.thumbnail,
+                        cat.rewrited_name AS rewrited_name_cat
+                    FROM ' . FluxSetup::$flux_table . ' flux
+                    LEFT JOIN '. FluxSetup::$flux_cats_table .' cat ON cat.id = flux.id_category
+                    WHERE flux.id_category IN :ids_categories
+                    AND published = 1
+                    ORDER BY flux.creation_date DESC
+                ', [
+                    'ids_categories' => $ids_categories,
+                    'timestamp_now' => $now->get_timestamp()
+                ]
+            );
 
 			foreach ($results as $row)
 			{

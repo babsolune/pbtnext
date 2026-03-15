@@ -35,7 +35,7 @@ class FluxItemFormController extends DefaultModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['form.name'], $this->get_item()->get_title(),
-			array('required' => true)
+			['required' => true]
 		));
 
 		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
@@ -47,7 +47,7 @@ class FluxItemFormController extends DefaultModuleController
 		}
 
 		$fieldset->add_field(new FormFieldUrlEditor('website_xml', $this->lang['flux.website.xml'], $this->get_item()->get_website_xml()->absolute(),
-			array('required' => true)
+			['required' => true]
 		));
 
 		$fieldset->add_field(new FormFieldThumbnail('thumbnail', $this->lang['form.thumbnail'], $this->get_item()->get_thumbnail()->relative(), FluxItem::THUMBNAIL_URL));
@@ -60,21 +60,21 @@ class FluxItemFormController extends DefaultModuleController
 			$form->add_fieldset($publication_fieldset);
 
 			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $this->lang['form.creation.date'], $this->get_item()->get_creation_date(),
-				array('required' => true)
+				['required' => true]
 			));
 
 			if (!$this->get_item()->is_published())
 			{
 				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->lang['form.update.creation.date'], false,
-					array('hidden' => $this->get_item()->get_status() != FluxItem::NOT_PUBLISHED)
+					['hidden' => $this->get_item()->get_status() != FluxItem::NOT_PUBLISHED]
 				));
 			}
 
 			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('published', $this->lang['form.publication'], $this->get_item()->get_published(),
-				array(
+				[
 					new FormFieldSelectChoiceOption($this->lang['form.publication.draft'], FluxItem::NOT_PUBLISHED),
 					new FormFieldSelectChoiceOption($this->lang['form.publication.now'], FluxItem::PUBLISHED),
-				)
+                ]
 			));
 		}
 
@@ -98,7 +98,7 @@ class FluxItemFormController extends DefaultModuleController
 			$form->add_fieldset($fieldset);
 
 			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $this->lang['contribution.description'], '',
-				array('description' => $this->lang['contribution.description.clue'])
+				['description' => $this->lang['contribution.description.clue']]
 			));
 		}
 		elseif ($this->get_item()->is_published() && $this->get_item()->is_authorized_to_edit() && $this->is_contributor_member())
@@ -108,7 +108,7 @@ class FluxItemFormController extends DefaultModuleController
 			$form->add_fieldset($fieldset);
 
 			$fieldset->add_field(new FormFieldRichTextEditor('edition_description', $this->lang['contribution.edition.description'], '',
-				array('description' => $this->lang['contribution.edition.description.clue'])
+				['description' => $this->lang['contribution.edition.description.clue']]
 			));
 		}
 	}
@@ -215,7 +215,7 @@ class FluxItemFormController extends DefaultModuleController
 			$item->set_id($id);
 
 			if (!$this->is_contributor_member())
-				HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
+				HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), ['item_url' => $item->get_item_url()]));
 		}
 		else
 		{
@@ -223,7 +223,7 @@ class FluxItemFormController extends DefaultModuleController
 			FluxService::update($item);
 
 			if (!$this->is_contributor_member())
-				HooksService::execute_hook_action('edit', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
+				HooksService::execute_hook_action('edit', self::$module_id, array_merge($item->get_properties(), ['item_url' => $item->get_item_url()]));
 		}
 
 		$this->contribution_actions($item);
@@ -253,7 +253,7 @@ class FluxItemFormController extends DefaultModuleController
 				)
 			);
 			ContributionService::save_contribution($contribution);
-			HooksService::execute_hook_action($this->is_new_item ? 'add_contribution' : 'edit_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), array('item_url' => $item->get_item_url())));
+			HooksService::execute_hook_action($this->is_new_item ? 'add_contribution' : 'edit_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), ['item_url' => $item->get_item_url()]));
 		}
 		else
 		{
@@ -265,7 +265,7 @@ class FluxItemFormController extends DefaultModuleController
 					$contribution->set_status(Event::EVENT_STATUS_PROCESSED);
 					ContributionService::save_contribution($contribution);
 				}
-				HooksService::execute_hook_action('process_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), array('item_url' => $item->get_item_url())));
+				HooksService::execute_hook_action('process_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), ['item_url' => $item->get_item_url()]));
 			}
 		}
 	}
@@ -282,16 +282,16 @@ class FluxItemFormController extends DefaultModuleController
 		elseif ($item->is_published())
 		{
 			if ($this->is_new_item)
-				AppContext::get_response()->redirect(FluxUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()), StringVars::replace_vars($this->lang['flux.message.success.add'], array('name' => $item->get_title())));
+				AppContext::get_response()->redirect(FluxUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()), StringVars::replace_vars($this->lang['flux.message.success.add'], ['name' => $item->get_title()]));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : FluxUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title())), StringVars::replace_vars($this->lang['flux.message.success.edit'], array('name' => $item->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : FluxUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title())), StringVars::replace_vars($this->lang['flux.message.success.edit'], ['name' => $item->get_title()]));
 		}
 		else
 		{
 			if ($this->is_new_item)
-				AppContext::get_response()->redirect(FluxUrlBuilder::display_pending(), StringVars::replace_vars($this->lang['flux.message.success.add'], array('name' => $item->get_title())));
+				AppContext::get_response()->redirect(FluxUrlBuilder::display_pending(), StringVars::replace_vars($this->lang['flux.message.success.add'], ['name' => $item->get_title()]));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : FluxUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['flux.message.success.edit'], array('name' => $item->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : FluxUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['flux.message.success.edit'], ['name' => $item->get_title()]));
 		}
 	}
 

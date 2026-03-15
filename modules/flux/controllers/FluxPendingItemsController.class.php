@@ -18,42 +18,47 @@ class FluxPendingItemsController extends DefaultModuleController
 	{
 		$this->check_authorizations();
 
-		$this->build_view($request);
+		$this->build_view();
 
 		return $this->generate_response();
 	}
 
-	public function build_view(HTTPRequestCustom $request)
+	public function build_view()
 	{
 		$now = new Date();
 		$config = FluxConfig::load();
 		$authorized_categories = CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY);
 
-		$condition = 'WHERE id_category IN :authorized_categories
-		' . (!CategoriesAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
-		AND published = 0';
-		$parameters = array(
+		$condition = '
+            WHERE id_category IN :authorized_categories
+            ' . (!CategoriesAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
+            AND published = 0
+        ';
+		$parameters = [
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'authorized_categories' => $authorized_categories,
 			'timestamp_now' => $now->get_timestamp()
-		);
+        ];
 
 		$page = AppContext::get_request()->get_getint('page', 1);
 		$pagination = $this->get_pagination($condition, $parameters, $page);
 
-		$result = PersistenceContext::get_querier()->select('SELECT flux.*, member.*
-		FROM '. FluxSetup::$flux_table .' flux
-		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = flux.author_user_id
-		' . $condition . '
-		ORDER BY flux.creation_date DESC
-		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
-			'number_items_per_page' => $pagination->get_number_items_per_page(),
-			'display_from' => $pagination->get_display_from()
-		)));
+		$result = PersistenceContext::get_querier()->select('
+                SELECT flux.*, member.*
+                FROM '. FluxSetup::$flux_table .' flux
+                LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = flux.author_user_id
+                ' . $condition . '
+                ORDER BY flux.creation_date DESC
+                LIMIT :number_items_per_page OFFSET :display_from
+            ', array_merge($parameters, [
+                'number_items_per_page' => $pagination->get_number_items_per_page(),
+                'display_from' => $pagination->get_display_from()
+            ])
+        );
 
 		$number_columns_display_per_line = $config->get_items_per_row();
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_ITEMS'         => $result->get_rows_count() > 0,
 			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
 			'C_PENDING'       => true,
@@ -63,7 +68,7 @@ class FluxPendingItemsController extends DefaultModuleController
 			'C_TABLE_VIEW'    => $config->get_display_type() == FluxConfig::TABLE_VIEW,
 			'C_PAGINATION'    => $pagination->has_several_pages(),
 			'PAGINATION'      => $pagination->display()
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{

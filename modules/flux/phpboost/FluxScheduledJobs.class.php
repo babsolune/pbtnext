@@ -14,10 +14,11 @@ class FluxScheduledJobs extends AbstractScheduledJobExtensionPoint
      */
     public function on_changeday(Date $yesterday, Date $today): void
     {
-        $result = PersistenceContext::get_querier()->select('SELECT flux.*
+        $result = PersistenceContext::get_querier()->select('
+            SELECT flux.*
             FROM ' . FluxSetup::$flux_table . ' flux
-            WHERE published = 1'
-        );
+            WHERE published = 1
+        ');
 
         while ($row = $result->fetch())
         {

@@ -32,7 +32,7 @@ class FluxDeleteItemController extends ModuleController
 		FluxService::clear_cache();
 		HooksService::execute_hook_action('delete', self::$module_id, $item->get_properties());
 
-		AppContext::get_response()->redirect(($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), FluxUrlBuilder::display($item->get_category()->get_id(), $item->get_category()->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title())->rel()) ? $request->get_url_referrer() : FluxUrlBuilder::home()), StringVars::replace_vars(LangLoader::get_message('flux.message.success.delete', 'common', 'flux'), array('name' => $item->get_title())));
+		AppContext::get_response()->redirect(($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), FluxUrlBuilder::display($item->get_category()->get_id(), $item->get_category()->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title())->rel()) ? $request->get_url_referrer() : FluxUrlBuilder::home()), StringVars::replace_vars(LangLoader::get_message('flux.message.success.delete', 'common', 'flux'), ['name' => $item->get_title()]));
 	}
 
 	private function get_item(HTTPRequestCustom $request)

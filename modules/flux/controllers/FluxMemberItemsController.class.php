@@ -41,12 +41,14 @@ class FluxMemberItemsController extends DefaultModuleController
 	private function build_members_listing_view()
 	{
 		$now = new Date();
-        $result = PersistenceContext::get_querier()->select('SELECT flux.*, member.*
-            FROM ' . FluxSetup::$flux_table . ' flux
-            LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = flux.author_user_id
-            WHERE id_category IN :authorized_categories
-            AND published = 1
-            ORDER BY member.display_name, flux.creation_date DESC', [
+        $result = PersistenceContext::get_querier()->select('
+                SELECT flux.*, member.*
+                FROM ' . FluxSetup::$flux_table . ' flux
+                LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = flux.author_user_id
+                WHERE id_category IN :authorized_categories
+                AND published = 1
+                ORDER BY member.display_name, flux.creation_date DESC
+            ', [
                 'authorized_categories' => $this->authorized_categories,
                 'timestamp_now' => $now->get_timestamp()
             ]
@@ -86,9 +88,11 @@ class FluxMemberItemsController extends DefaultModuleController
 	{
 		$now = new Date();
 
-		$condition = 'WHERE id_category IN :authorized_categories
-		AND author_user_id = :user_id
-		AND published = 1';
+		$condition = '
+            WHERE id_category IN :authorized_categories
+            AND author_user_id = :user_id
+            AND published = 1
+        ';
 		$parameters = [
 			'user_id' => $this->get_member()->get_id(),
 			'authorized_categories' => $this->authorized_categories,
@@ -98,15 +102,18 @@ class FluxMemberItemsController extends DefaultModuleController
 		$page = AppContext::get_request()->get_getint('page', 1);
 		$pagination = $this->get_pagination($condition, $parameters, $page);
 
-		$result = PersistenceContext::get_querier()->select('SELECT flux.*, member.*
-		FROM '. FluxSetup::$flux_table .' flux
-		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = flux.author_user_id
-		' . $condition . '
-		ORDER BY flux.creation_date DESC
-		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, [
-			'number_items_per_page' => $pagination->get_number_items_per_page(),
-			'display_from' => $pagination->get_display_from()
-		]));
+		$result = PersistenceContext::get_querier()->select('
+                SELECT flux.*, member.*
+                FROM '. FluxSetup::$flux_table .' flux
+                LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = flux.author_user_id
+                ' . $condition . '
+                ORDER BY flux.creation_date DESC
+                LIMIT :number_items_per_page OFFSET :display_from
+            ', array_merge($parameters, [
+                'number_items_per_page' => $pagination->get_number_items_per_page(),
+                'display_from' => $pagination->get_display_from()
+            ])
+        );
 
 		$this->view->put_all([
 			'C_MY_ITEMS'         => $this->is_current_member_displayed(),

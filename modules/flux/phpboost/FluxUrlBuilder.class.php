@@ -11,26 +11,17 @@ class FluxUrlBuilder
 {
 	private static $dispatcher = '/flux';
 
-	/**
-	 * @return Url
-	 */
-	public static function configuration()
+	public static function configuration(): Url
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/admin/config');
 	}
 
-	/**
-	 * @return Url
-	 */
-	public static function manage()
+	public static function manage(): Url
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/manage/');
 	}
 
-	/**
-	 * @return Url
-	 */
-	public static function display_category($id, $rewrited_name, $page = 1, $subcategories_page = 1)
+	public static function display_category($id, $rewrited_name, $page = 1, $subcategories_page = 1): Url
 	{
 		$category = $id > 0 ? $id . '-' . $rewrited_name . '/' : '';
 		$page = $page !== 1 || $subcategories_page !== 1 ? $page . '/' : '';
@@ -38,77 +29,50 @@ class FluxUrlBuilder
 		return DispatchManager::get_url(self::$dispatcher, '/' . $category . $page . $subcategories_page);
 	}
 
-	/**
-	 * @return Url
-	 */
-	public static function display_pending($page = 1)
+	public static function display_pending($page = 1): Url
 	{
 		$page = $page !== 1 ? $page . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/pending/' . $page);
 	}
 
-	/**
-	 * @return Url
-	 */
-	public static function display_member_items($user_id = null, $page = 1)
+	public static function display_member_items($user_id = null, $page = 1): Url
 	{
 		$page = $page !== 1 ? $page . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/member/' . $user_id . '/' . $page);
 	}
 
-	/**
-	 * @return Url
-	 */
-	public static function add($id_category = null)
+	public static function add($id_category = null): Url
 	{
 		$id_category = !empty($id_category) ? $id_category . '/' : '';
 		return DispatchManager::get_url(self::$dispatcher, '/add/' . $id_category);
 	}
 
-	/**
-	 * @return Url
-	 */
-	public static function edit($id)
+	public static function edit($id): Url
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/edit/');
 	}
 
-	/**
-	 * @return Url
-	 */
-	public static function delete($id)
+	public static function delete($id): Url
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id . '/delete/?token=' . AppContext::get_session()->get_token());
 	}
 
-	/**
-	 * @return Url
-	 */
-	public static function display($id_category, $rewrited_name_category, $id, $rewrited_name)
+	public static function display($id_category, $rewrited_name_category, $id, $rewrited_name): Url
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/' . $id_category . '-' . $rewrited_name_category . '/' . $id . '-' . $rewrited_name . '/');
 	}
 
-	/**
-	 * @return Url
-	 */
-	public static function visit($id)
+	public static function visit($id): Url
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/visit/' . $id);
 	}
 
-	/**
-	 * @return Url
-	 */
-	public static function dead_link($id)
+	public static function dead_link($id): Url
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/dead_link/' . $id);
 	}
 
-	/**
-	 * @return Url
-	 */
-	public static function home()
+	public static function home(): Url
 	{
 		return DispatchManager::get_url(self::$dispatcher, '/');
 	}

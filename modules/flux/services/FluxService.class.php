@@ -24,17 +24,17 @@ class FluxService
     }
 
 	/**
-	 * @desc Count items number.
+	 * Count items number.
 	 * @param string $condition (optional) : Restriction to apply to the list of items
 	*/
-	public static function count($condition = '', $parameters = array())
+	public static function count($condition = '', $parameters = [])
 	{
 		return self::$db_querier->count(FluxSetup::$flux_table, $condition, $parameters);
 	}
 
 	/**
-	 * @desc Create a new entry in the database table.
-	 * @param string[] $item : new FluxItem
+	 * Create a new entry in the database table.
+	 * @param FluxItem $item : new FluxItem
 	*/
 	public static function add(FluxItem $item)
 	{
@@ -44,36 +44,34 @@ class FluxService
 	}
 
 	/**
-	 * @desc Update an entry.
-	 * @param string[] $item : Item to update
+	 * Update an entry.
+	 * @param FluxItem $item : Item to update
 	*/
 	public static function update(FluxItem $item)
 	{
-		self::$db_querier->update(FluxSetup::$flux_table, $item->get_properties(), 'WHERE id=:id', array('id' => $item->get_id()));
+		self::$db_querier->update(FluxSetup::$flux_table, $item->get_properties(), 'WHERE id=:id', ['id' => $item->get_id()]);
 	}
 
 	/**
-	 * @desc Update the number of views of an item.
-	 * @param string[] $item : FluxItem to update
+	 * Update the number of views of an item.
+	 * @param FluxItem $item : FluxItem to update
 	*/
 	public static function update_views_number(FluxItem $item)
 	{
-		self::$db_querier->update(FluxSetup::$flux_table, array('views_number' => $item->get_views_number()), 'WHERE id=:id', array('id' => $item->get_id()));
+		self::$db_querier->update(FluxSetup::$flux_table, ['views_number' => $item->get_views_number()], 'WHERE id=:id', ['id' => $item->get_id()]);
 	}
 
 	/**
-	 * @desc Update the number of visits of an website.
-	 * @param string[] $item : FluxItem to update
+	 * Update the number of visits of an website.
+	 * @param FluxItem $item : FluxItem to update
 	*/
 	public static function update_visits_number(FluxItem $item)
 	{
-		self::$db_querier->update(FluxSetup::$flux_table, array('visits_number' => $item->get_visits_number()), 'WHERE id=:id', array('id' => $item->get_id()));
+		self::$db_querier->update(FluxSetup::$flux_table, ['visits_number' => $item->get_visits_number()], 'WHERE id=:id', ['id' => $item->get_id()]);
 	}
 
 	/**
-	 * @desc Delete an entry.
-	 * @param string $condition : Restriction to apply to the list
-	 * @param string[] $parameters : Parameters of the condition
+	 * Delete an entry.
 	*/
 	public static function delete(int $id)
 	{
@@ -82,15 +80,13 @@ class FluxService
             $controller = PHPBoostErrors::user_in_read_only();
             DispatchManager::redirect($controller);
         }
-		self::$db_querier->delete(FluxSetup::$flux_table, 'WHERE id=:id', array('id' => $id));
+		self::$db_querier->delete(FluxSetup::$flux_table, 'WHERE id=:id', ['id' => $id]);
 
-		self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'flux', 'id' => $id));
+		self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', ['module' => 'flux', 'id' => $id]);
 	}
 
 	/**
-	 * @desc Delete an entry.
-	 * @param string $condition : Restriction to apply to the list
-	 * @param string[] $parameters : Parameters of the condition
+	 * Delete all xml entries.
 	*/
 	public static function delete_xml_files()
 	{
@@ -101,19 +97,19 @@ class FluxService
 	}
 
 	/**
-	 * @desc Return the properties of an item.
-	 * @param string $condition : Restriction to apply to the list
-	 * @param string[] $parameters : Parameters of the condition
+	 * Return the properties of an item.
 	*/
 	public static function get_item(int $id)
 	{
-		$row = self::$db_querier->select_single_row_query('SELECT flux.*, member.*
-		FROM ' . FluxSetup::$flux_table . ' flux
-		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = flux.author_user_id
-		WHERE flux.id=:id', array(
-			'id'              => $id,
-			'current_user_id' => AppContext::get_current_user()->get_id()
-		));
+		$row = self::$db_querier->select_single_row_query('
+                SELECT flux.*, member.*
+                FROM ' . FluxSetup::$flux_table . ' flux
+                LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = flux.author_user_id
+                WHERE flux.id=:id
+            ', [
+                'id' => $id,
+            ]
+        );
 
 		$item = new FluxItem();
 		$item->set_properties($row);

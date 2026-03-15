@@ -18,10 +18,10 @@ class FluxCategoriesCache extends DefaultRichCategoriesCache
 	{
 		$now = new Date();
 		return FluxService::count('WHERE id_category = :id_category AND published = 1',
-			array(
+			[
 				'timestamp_now' => $now->get_timestamp(),
 				'id_category' => $id_category
-			)
+            ]
 		);
 	}
 
@@ -34,7 +34,7 @@ class FluxCategoriesCache extends DefaultRichCategoriesCache
 	{
 		$description = FluxConfig::load()->get_root_category_description();
 		if (empty($description))
-			$description = StringVars::replace_vars(LangLoader::get_message('flux.seo.description.root', 'common', 'flux'), array('site' => GeneralConfig::load()->get_site_name()));
+			$description = StringVars::replace_vars(LangLoader::get_message('flux.seo.description.root', 'common', 'flux'), ['site' => GeneralConfig::load()->get_site_name()]);
 		return $description;
 	}
 }

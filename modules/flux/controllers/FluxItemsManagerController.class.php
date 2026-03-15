@@ -22,14 +22,16 @@ class FluxItemsManagerController extends DefaultAdminModuleController
 	{
 		$display_categories = CategoriesService::get_categories_manager()->get_categories_cache()->has_categories();
 
-		$table_model = new SQLHTMLTableModel(FluxSetup::$flux_table, 'table', array(
-			new HTMLTableColumn($this->lang['common.title'], 'title'),
-			new HTMLTableColumn($this->lang['common.category'], 'id_category'),
-			new HTMLTableColumn($this->lang['common.author'], 'display_name'),
-			new HTMLTableColumn($this->lang['common.creation.date'], 'creation_date'),
-			new HTMLTableColumn($this->lang['common.status'], 'published'),
-			new HTMLTableColumn($this->lang['common.moderation'], '', array('sr-only' => true))
-		), new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
+		$table_model = new SQLHTMLTableModel(FluxSetup::$flux_table, 'table', [
+                new HTMLTableColumn($this->lang['common.title'], 'title'),
+                new HTMLTableColumn($this->lang['common.category'], 'id_category'),
+                new HTMLTableColumn($this->lang['common.author'], 'display_name'),
+                new HTMLTableColumn($this->lang['common.creation.date'], 'creation_date'),
+                new HTMLTableColumn($this->lang['common.status'], 'published'),
+                new HTMLTableColumn($this->lang['common.moderation'], '', ['sr-only' => true])
+            ],
+            new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC)
+        );
 
 		$table_model->set_filters_menu_title($this->lang['flux.filter.items']);
 		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('creation_date', 'filter1', $this->lang['common.creation.date'] . ' ' . TextHelper::lcfirst($this->lang['common.minimum'])));
@@ -38,7 +40,7 @@ class FluxItemsManagerController extends DefaultAdminModuleController
 		if ($display_categories)
 			$table_model->add_filter(new HTMLTableCategorySQLFilter('filter4'));
 
-		$status_list = array(Item::PUBLISHED => $this->lang['common.status.published.alt'], Item::NOT_PUBLISHED => $this->lang['common.status.draft'], Item::DEFERRED_PUBLICATION => $this->lang['common.status.deffered.date']);
+		$status_list = [Item::PUBLISHED => $this->lang['common.status.published.alt'], Item::NOT_PUBLISHED => $this->lang['common.status.draft'], Item::DEFERRED_PUBLICATION => $this->lang['common.status.deffered.date']];
 		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('published', 'filter5', $this->lang['common.status'], $status_list));
 
 		$table = new HTMLTable($table_model);
@@ -46,10 +48,10 @@ class FluxItemsManagerController extends DefaultAdminModuleController
 
 		$table_model->set_layout_title($this->lang['flux.management']);
 
-		$results = array();
+		$results = [];
 		$result = $table_model->get_sql_results('flux
 			LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = flux.author_user_id',
-			array('*', 'flux.id')
+			['*', 'flux.id']
 		);
 
 		foreach ($result as $row)
@@ -59,20 +61,20 @@ class FluxItemsManagerController extends DefaultAdminModuleController
 			$category = $item->get_category();
 			$user = $item->get_author_user();
 
-			$edit_item = new LinkHTMLElement(FluxUrlBuilder::edit($item->get_id()), '', array('title' => $this->lang['common.edit']), 'fa fa-edit');
-			$delete_item = new LinkHTMLElement(FluxUrlBuilder::delete($item->get_id()), '', array('title' => $this->lang['common.delete'], 'data-confirmation' => 'delete-element'), 'far fa-trash-alt');
+			$edit_item = new LinkHTMLElement(FluxUrlBuilder::edit($item->get_id()), '', ['title' => $this->lang['common.edit']], 'fa fa-edit');
+			$delete_item = new LinkHTMLElement(FluxUrlBuilder::delete($item->get_id()), '', ['title' => $this->lang['common.delete'], 'data-confirmation' => 'delete-element'], 'far fa-trash-alt');
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
-			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
+			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? ['style' => 'color: ' . $user_group_color] : []), UserService::get_level_class($user->get_level())) : $user->get_display_name();
 
-			$row = array(
+			$row = [
 				new HTMLTableRowCell(new LinkHTMLElement(FluxUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()), $item->get_title()), 'align-left'),
 				new HTMLTableRowCell(new LinkHTMLElement(FluxUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? $this->lang['common.none.alt'] : $category->get_name()))),
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell($item->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR)),
 				new HTMLTableRowCell($item->get_status()),
 				new HTMLTableRowCell($edit_item->display() . $delete_item->display(), 'controls')
-			);
+            ];
 
 			if (!$display_categories)
 				unset($row[1]);
