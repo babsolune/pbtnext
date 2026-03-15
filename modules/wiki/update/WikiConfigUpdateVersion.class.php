@@ -14,6 +14,9 @@ class WikiConfigUpdateVersion extends ConfigUpdateVersion
 	public function __construct()
 	{
 		parent::__construct('wiki');
+		$this->config_parameters_to_modify = [
+			'index_text' => 'root_category_description',
+        ];
 	}
 
 	protected function build_new_config()
