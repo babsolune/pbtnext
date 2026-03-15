@@ -463,9 +463,22 @@ class HTTPRequestCustom
 
     public function get_location_info_by_ip()
     {
-        $ip_data = @json_decode(file_get_contents('http://ip-api.com/json/' . $this->get_ip_address()));
-        if($ip_data && $ip_data->status === 'success' && isset($ip_data->countryCode))
+        $url = 'http://ip-api.com/json/' . $this->get_ip_address();
+
+        // Initialisation de cURL
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5); // On évite de bloquer le script si l'API est lente
+        $response = curl_exec($ch);
+        if (\PHP_VERSION_ID < 80100)
+            curl_close($ch);
+
+        $ip_data = json_decode($response);
+
+        if ($ip_data && isset($ip_data->status) && $ip_data->status === 'success' && isset($ip_data->countryCode)) {
             return $ip_data->countryCode;
+        }
 
         return '';
     }
