@@ -551,7 +551,7 @@ class InstallationServices
 		defined('PREFIX') or define('PREFIX', $tables_prefix);
 		$db_connection_data = [
 			'dbms' => $dbms,
-			'dsn' => 'mysql:host=' . $host . ';port=' . $port . 'dbname=' . $database,
+			'dsn' => 'mysql:host=' . $host . ';port=' . $port . ';dbname=' . $database,
 			'driver_options' => [],
 			'host' => $host,
 			'port' => $port,
