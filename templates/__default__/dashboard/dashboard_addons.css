@@ -174,3 +174,15 @@
 	font-size: 2.618em;
 	line-height: 0.9;
 }
+
+/* 6.1 */
+.addon-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addon-infos {
+    min-width: 90px;
+    &.addon-large { min-width: 170px; }
+}

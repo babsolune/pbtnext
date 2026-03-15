@@ -21,7 +21,7 @@
                 <input type="hidden" name="token" value="{TOKEN}">
                 <section id="not-installed-modules-container" class="addons-container modules-elements-container not-installed-elements-container">
                     # IF C_MODULE_AVAILABLE #
-                        <div class="cell-flex cell-columns-4 cell-tile">
+                        <div class="cell-flex cell-columns-4 cell-tile mini-checkbox">
                             # START genres #
                                 <div>
                                     <header><h3>{genres.GENRE_NAME}</h3></header>
@@ -29,7 +29,7 @@
                                         <ul>
                                             # START genres.server_modules #
                                                 <li class="li-stretch addon# IF NOT genres.server_modules.C_COMPATIBLE # not-compatible error# ENDIF #">
-                                                    <div class="align-left" id="module-{genres.server_modules.MODULE_NUMBER}">
+                                                    <div id="module-{genres.server_modules.MODULE_NUMBER}" class="addon-name align-left">
                                                         # IF C_SEVERAL_MODULES_AVAILABLE #
                                                             # IF genres.server_modules.C_COMPATIBLE #
                                                                     <label class="checkbox" for="multiple-checkbox-{genres.server_modules.MODULE_NUMBER}">
@@ -40,8 +40,8 @@
                                                         # ENDIF #
                                                         {genres.server_modules.MODULE_NAME}
                                                     </div>
-                                                    <div>
-                                                        <span aria-label="{@addon.compatibility} PHPBoost">{genres.server_modules.COMPATIBILITY}</span>
+                                                    <div class="addon-infos">
+                                                        <span class="# IF genres.server_modules.C_COMPATIBLE #success# ELSE #error# ENDIF #" aria-label="{@addon.compatibility} PHPBoost">{genres.server_modules.COMPATIBILITY}</span>
                                                         <button onclick="return false;" class="button button-mini default modal-button --infos-module-{genres.server_modules.MODULE_NUMBER}" aria-label="{@common.informations}"><i class="far fa-circle-question" aria-hidden="true"></i></button>
                                                         <div id="infos-module-{genres.server_modules.MODULE_NUMBER}" class="modal modal-half">
                                                             <div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
@@ -98,13 +98,11 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="addon-menu-container">
-                                                            # IF genres.server_modules.C_COMPATIBLE #
-                                                                <button type="submit" class="button button-mini submit" name="add-{genres.server_modules.MODULE_ID}" value="true">{@addon.install}</button>
-                                                            # ELSE #
-                                                                <button type="submit" class="button button-mini bgc-full error" name="add-{genres.server_modules.MODULE_ID}" onclick="return false;">{@addon.not.compatible}</button>
-                                                            # ENDIF #
-                                                        </div>
+                                                        # IF genres.server_modules.C_COMPATIBLE #
+                                                            <button type="submit" class="button button-mini bgc-full logo-color" name="add-{genres.server_modules.MODULE_ID}" value="true" aria-label="{@addon.install}"><i class="fa fa-fw fa-arrows-spin" aria-hidden="true"></i></button>
+                                                        # ELSE #
+                                                            <button type="submit" class="button button-mini bgc-full error" name="add-{genres.server_modules.MODULE_ID}" onclick="return false;" aria-label="{@addon.not.compatible}"><i class="fa fa-fw fa-ban" aria-hidden="true"></i></button>
+                                                        # ENDIF #
                                                     </div>
                                                 </li>
                                             # END genres.server_modules #

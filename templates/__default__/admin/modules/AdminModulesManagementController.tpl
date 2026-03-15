@@ -11,10 +11,10 @@
 	<section id="installed-modules-container">
         <header class="legend">{@addon.modules.installed}</header>
         <div class="cell-list">
-            <ul class="cell-flex cell-columns-3">
+            <ul class="col-v-3">
                 # START installed_modules #
                     <li class="li-stretch addon-row addon# IF NOT installed_modules.C_IS_ACTIVATED # disabled-addon# ENDIF ## IF NOT installed_modules.C_COMPATIBLE # not-compatible error# ENDIF #">
-                        <div class="align-left" id="module-{installed_modules.MODULE_NUMBER}">
+                        <div class="addon-name align-left mini-checkbox" id="module-{installed_modules.MODULE_NUMBER}">
                             # IF C_SEVERAL_MODULES_INSTALLED #
                                 # IF installed_modules.C_COMPATIBLE #
                                     <label class="checkbox" for="multiple-checkbox-{installed_modules.MODULE_NUMBER}">
@@ -34,7 +34,7 @@
                             # ENDIF #
                             {installed_modules.MODULE_NAME}
                         </div>
-                        <div>
+                        <div class="addon-infos addon-large">
                             <button onclick="return false;" class="button button-mini default modal-button --infos-module-{installed_modules.MODULE_NUMBER}" aria-label="{@common.informations}"><i class="far fa-circle-question" aria-hidden="true"></i></button>
                             <div id="infos-module-{installed_modules.MODULE_NUMBER}" class="modal modal-half">
                                 <div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
