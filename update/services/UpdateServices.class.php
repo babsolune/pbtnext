@@ -431,6 +431,20 @@ class UpdateServices
             ModulesManager::install_module('qaptcha');
         }
 
+        // Uninstall any module that is registered in ModulesConfig but whose folder
+        // no longer exists in pbtnext (neither in /modules/ nor at root level).
+        // These are typically third-party or discontinued modules. Without this step
+        // they remain in ModulesConfig and cause fatal errors in admin when the kernel
+        // tries to read their missing config.ini / lang folders.
+        foreach (ModulesManager::get_installed_modules_map() as $module_id => $module) {
+            $in_modules = is_dir(PATH_TO_ROOT . '/modules/' . $module_id);
+            $in_root    = is_dir(PATH_TO_ROOT . '/' . $module_id);
+            if (!$in_modules && !$in_root) {
+                ModulesManager::uninstall_module($module_id, false, false);
+                $this->add_information_to_file('module ' . $module_id, 'has been uninstalled because its folder no longer exists');
+            }
+        }
+
         // Scan both root-level modules (qaptcha, BBCode — they stay at root in pbtnext)
         // and /modules/ directory modules (all others moved there in pbtnext).
         $scan_paths = [PATH_TO_ROOT, PATH_TO_ROOT . '/modules'];
