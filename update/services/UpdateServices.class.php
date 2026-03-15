@@ -787,8 +787,20 @@ class UpdateServices
         AppContext::init_extension_provider_service();
 
         if (ServerEnvironmentConfig::load()->is_url_rewriting_enabled()) {
-            HtaccessFileCache::regenerate();
-            NginxFileCache::regenerate();
+            // Wrap in try/catch: UrlUpdater url_mappings may query category tables
+            // (e.g. pages_cats, wiki_cats) that do not yet exist after the update,
+            // causing "Table doesn't exist" errors. The .htaccess will be regenerated
+            // correctly on the first site request once all tables are in place.
+            try {
+                HtaccessFileCache::regenerate();
+            } catch (Exception $e) {
+                $this->add_information_to_file('HtaccessFileCache::regenerate()', 'skipped: ' . $e->getMessage());
+            }
+            try {
+                NginxFileCache::regenerate();
+            } catch (Exception $e) {
+                $this->add_information_to_file('NginxFileCache::regenerate()', 'skipped: ' . $e->getMessage());
+            }
         }
     }
 
