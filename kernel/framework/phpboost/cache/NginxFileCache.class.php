@@ -120,6 +120,24 @@ class NginxFileCache implements CacheData
 			}
 		}
 
+		// Write UrlUpdater redirect rules BEFORE all dispatcher rules.
+		// Plain UrlMapping objects (R=301) from UrlUpdater must fire before wiki/pages
+		// dispatcher rules, otherwise the dispatcher catches old-format URLs first.
+		if ($eps->provider_exists('UrlUpdater', UrlMappingsExtensionPoint::EXTENSION_POINT))
+		{
+			$this->add_section('UrlUpdater redirect rules (high priority)');
+			$provider = $eps->get_provider('UrlUpdater');
+			foreach ($provider->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT)->list_mappings() as $mapping)
+			{
+				if (!($mapping instanceof DispatcherUrlMapping))
+				{
+					// Use permanent redirect for mappings with R=301 option
+					$is_redirect = strpos($mapping->options(), 'R=301') !== false || strpos($mapping->options(), 'redirect') !== false;
+					$this->add_line('rewrite ^/' . ltrim($mapping->from(), '^') . ' ' . $this->general_config->get_site_path() . '/' . ltrim($mapping->to(), '/') . ($is_redirect ? ' permanent;' : ' break;'));
+				}
+			}
+		}
+
 		$this->add_section('Modules rules');
 
         $this->add_section('Skip rewriting for existing files and handle direct index.php');
@@ -155,6 +173,7 @@ class NginxFileCache implements CacheData
 				{
 					if ($mapping instanceof DispatcherUrlMapping && (!$mapping->is_high_priority() && !$mapping->is_low_priority()))
 						$mappings_normal_priority[] = $mapping;
+					// Skip plain UrlMapping for UrlUpdater — already written in high-priority section above
 				}
 
 				if (!empty($mappings_normal_priority))

@@ -235,6 +235,20 @@ class HtaccessFileCache implements CacheData
 			}
 		}
 
+		// Write UrlUpdater redirect rules (R=301) BEFORE all dispatcher rules.
+		// UrlUpdater's UrlMapping objects must fire before wiki/pages dispatcher rules
+		// otherwise the dispatcher catches old-format URLs before the redirect can apply.
+		if ($eps->provider_exists('UrlUpdater', UrlMappingsExtensionPoint::EXTENSION_POINT))
+		{
+			$this->add_section('UrlUpdater redirect rules (high priority)');
+			$provider = $eps->get_provider('UrlUpdater');
+			foreach ($provider->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT)->list_mappings() as $mapping)
+			{
+				if (!($mapping instanceof DispatcherUrlMapping))
+					$this->add_rewrite_rule($mapping->from(), $mapping->to(), $mapping->options());
+			}
+		}
+
 		$this->add_section('Modules rules');
 
 		foreach ($modules as $module)
@@ -264,7 +278,7 @@ class HtaccessFileCache implements CacheData
 							$this->add_rewrite_rule($mapping->from(), $mapping->to(), $mapping->options());
 						}
 					}
-					else
+					else if ($id !== 'UrlUpdater') // UrlUpdater non-dispatcher rules already written above
 						$this->add_rewrite_rule($mapping->from(), $mapping->to(), $mapping->options());
 				}
 			}
