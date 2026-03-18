@@ -21,7 +21,12 @@ class MenuStringFilter extends Filter
 
 	public function match()
 	{
-		if (TextHelper::substr($this->pattern, -10) == '/index.php')
+        if ($this->pattern === null)
+        {
+            return false;
+        }
+
+        if (TextHelper::substr($this->pattern, -10) == '/index.php')
 		{
 			return Url::is_current_url('/' . TextHelper::substr($this->pattern, 0, -9), true) || Url::is_current_url($this->pattern);
 		}
