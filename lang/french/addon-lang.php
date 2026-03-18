@@ -102,23 +102,25 @@ $lang['addon.module.delete']            = '<strong>Supprimer</strong><br />Les d
 $lang['addon.module.warning.uninstall'] = 'Le module <strong>:module</strong> a été désinstallé avec succès';
 $lang['addon.module.warning.delete']    = 'Le module <strong>:module</strong> a été supprimé avec succès';
     // Configuration
+$lang['addon.sub.directory']         = 'Sous-répertoire';
 $lang['addon.github.configuration']  = 'Configuration des repos GitHub';
 $lang['addon.github.token']          = 'Token GitHub API';
 $lang['addon.github.token.clue']     = 'Lien vers le site Github api.github.com pour créer un token gratuit';
 $lang['addon.modules.repos.add']     = 'Ajouter un repo GitHub pour les modules';
 $lang['addon.themes.repos.add']      = 'Ajouter un repo GitHub pour les thèmes';
 $lang['addon.langs.repos.add']       = 'Ajouter un repo GitHub pour les langues';
+$lang['addon.repos.owner']           = 'Propriétaire';
+$lang['addon.repos.repository']      = 'Repository';
 $lang['addon.servers.configuration'] = 'Configuration des sites de téléchargement';
 $lang['addon.servers.configuration.clue'] = '
-    Le site doit posséder les sous-dossiers
-    <br />/' . GeneralConfig::load()->get_phpboost_major_version() . '/modules/
-    <br />/' . GeneralConfig::load()->get_phpboost_major_version() . '/templates/
-    <br />/' . GeneralConfig::load()->get_phpboost_major_version() . '/langs/
+    Le site doit contenir les sous-dossiers
+    <span class="pinned bgc administrator">/' . GeneralConfig::load()->get_phpboost_major_version() . '/modules/</span>
+    <span class="pinned bgc administrator">/' . GeneralConfig::load()->get_phpboost_major_version() . '/templates/</span>
+    <span class="pinned bgc administrator">/' . GeneralConfig::load()->get_phpboost_major_version() . '/langs/</span>
     ';
-$lang['addon.servers.add']           = 'Ajouter un site de téléchargement';
-$lang['addon.modules.label'] = 'Nom';
-$lang['addon.modules.url']   = 'URL';
-$lang['addon.modules.dir']   = 'Sous-répertoire';
+$lang['addon.servers.add']     = 'Ajouter un site de téléchargement';
+$lang['addon.servers.website'] = 'Nom du site';
+$lang['addon.servers.url']     = 'URL du site';
 
 // Themes
 $lang['addon.themes.directory']       = 'dans le dossier <span class ="text-strong pinned question">templates</span>';

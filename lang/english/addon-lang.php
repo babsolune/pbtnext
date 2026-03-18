@@ -102,23 +102,25 @@ $lang['addon.module.delete']            = '<strong>Delete</strong><br />Data and
 $lang['addon.module.warning.uninstall'] = 'The module <strong>:module</strong> has been uninstalled successfully';
 $lang['addon.module.warning.delete']    = 'The module <strong>:module</strong> has been deleted successfully';
     // Configuration
+$lang['addon.sub.directory']         = 'Subdirectory';
 $lang['addon.github.configuration']  = 'Configuration of GitHub repositories';
 $lang['addon.github.token']          = 'GitHub API Token';
 $lang['addon.github.token.clue']     = 'Link to the GitHub api.github.com site to create a free token';
 $lang['addon.modules.repos.add']     = 'Add a GitHub repository for modules';
 $lang['addon.themes.repos.add']      = 'Add a GitHub repository for themes';
 $lang['addon.langs.repos.add']       = 'Add a GitHub repository for languages';
+$lang['addon.repos.owner']           = 'Owner';
+$lang['addon.repos.repository']      = 'Repository';
 $lang['addon.servers.configuration'] = 'Configuration of download websites';
 $lang['addon.servers.configuration.clue'] = '
-    Assuming website has sub-folders
-    <br />/' . GeneralConfig::load()->get_phpboost_major_version() . '/modules/
-    <br />/' . GeneralConfig::load()->get_phpboost_major_version() . '/templates/
-    <br />/' . GeneralConfig::load()->get_phpboost_major_version() . '/langs/
+    The site must contain the following subfolders
+    <span class="pinned bgc administrator">/' . GeneralConfig::load()->get_phpboost_major_version() . '/modules/</span>
+    <span class="pinned bgc administrator">/' . GeneralConfig::load()->get_phpboost_major_version() . '/templates/</span>
+    <span class="pinned bgc administrator">/' . GeneralConfig::load()->get_phpboost_major_version() . '/langs/</span>
 ';
-$lang['addon.servers.add']           = 'Add a download website';
-$lang['addon.modules.label'] = 'Name';
-$lang['addon.modules.url']   = 'URL';
-$lang['addon.modules.dir']   = 'Subdirectory';
+$lang['addon.servers.add']     = 'Add a download website';
+$lang['addon.servers.website'] = 'Website name';
+$lang['addon.servers.url']     = 'Website URL';
 
 
 
