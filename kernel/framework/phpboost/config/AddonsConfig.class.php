@@ -21,32 +21,28 @@ class AddonsConfig extends AbstractConfigData
 
     const DEFAULT_MODULES_REPO = [
         [
-            'label'     => 'PHPBoost',
-            'owner'     => 'PHPBoost',
-            'url'       => 'Modules',
-            'directory' => '',
+            'owner'      => 'PHPBoost',
+            'repository' => 'Modules',
+            'directory'  => '',
         ],
     ];
     const DEFAULT_THEMES_REPO = [
         [
-            'label'     => 'PHPBoost',
-            'owner'     => 'PHPBoost',
-            'url'       => 'Themes',
-            'directory' => '',
+            'owner'      => 'PHPBoost',
+            'repository' => 'Themes',
+            'directory'  => '',
         ],
     ];
     const DEFAULT_LANGS_REPO = [
         [
-            'label'     => 'PHPBoost',
-            'owner'     => 'PHPBoost',
-            'url'       => 'Langs',
-            'directory' => '',
+            'owner'      => 'PHPBoost',
+            'repository' => 'Langs',
+            'directory'  => '',
         ],
     ];
     const DEFAULT_ADDONS_SERVER = [
         [
-            'label'     => 'PHPBoost',
-            'owner'     => 'PHPBoost',
+            'website'   => 'PHPBoost',
             'url'       => 'https://dl.phpboost.com',
             'directory' => '',
         ]
@@ -108,8 +104,8 @@ class AddonsConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		return [
-            self::GITHUB_TOKEN => '',
-            self::MODULES_REPO   => self::DEFAULT_MODULES_REPO,
+            self::GITHUB_TOKEN  => '',
+            self::MODULES_REPO  => self::DEFAULT_MODULES_REPO,
             self::THEMES_REPO   => self::DEFAULT_THEMES_REPO,
             self::LANGS_REPO    => self::DEFAULT_LANGS_REPO,
             self::ADDONS_SERVER => self::DEFAULT_ADDONS_SERVER,

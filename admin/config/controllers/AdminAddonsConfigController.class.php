@@ -41,15 +41,15 @@ class AdminAddonsConfigController extends DefaultAdminController
 
         $fieldset->add_field(new FormFieldTextEditor('github_token', $this->lang['addon.github.token'], $this->configuration->get_github_token()));
 
-        $fieldset->add_field(new FormFieldRepository('modules_repos', $this->lang['addon.modules.repos.add'], $this->configuration->get_modules_repo(), 
+        $fieldset->add_field(new FormFieldAddonsRepositories('modules_repos', $this->lang['addon.modules.repos.add'], $this->configuration->get_modules_repo(), 
             ['class' => 'full-field']
         ));
 
-        $fieldset->add_field(new FormFieldRepository('themes_repos', $this->lang['addon.themes.repos.add'], $this->configuration->get_themes_repo(), 
+        $fieldset->add_field(new FormFieldAddonsRepositories('themes_repos', $this->lang['addon.themes.repos.add'], $this->configuration->get_themes_repo(), 
             ['class' => 'full-field']
         ));
 
-        $fieldset->add_field(new FormFieldRepository('langs_repos', $this->lang['addon.langs.repos.add'], $this->configuration->get_langs_repo(), 
+        $fieldset->add_field(new FormFieldAddonsRepositories('langs_repos', $this->lang['addon.langs.repos.add'], $this->configuration->get_langs_repo(), 
             ['class' => 'full-field']
         ));
 
@@ -57,7 +57,7 @@ class AdminAddonsConfigController extends DefaultAdminController
         $server_fieldset->set_description($this->lang['addon.servers.configuration.clue']);
         $form->add_fieldset($server_fieldset);
 
-        $server_fieldset->add_field(new FormFieldRepository('addons_server', $this->lang['addon.servers.add'], $this->configuration->get_addons_server(), 
+        $server_fieldset->add_field(new FormFieldAddonsServers('addons_server', $this->lang['addon.servers.add'], $this->configuration->get_addons_server(), 
             ['class' => 'full-field']
         ));
 
@@ -70,10 +70,10 @@ class AdminAddonsConfigController extends DefaultAdminController
     private function save()
     {
         $this->configuration->set_github_token($this->form->get_field_by_id('github_token')->get_value());
-        $this->configuration->set_addons_server($this->form->get_field_by_id('addons_server')->get_value());
         $this->configuration->set_modules_repo($this->form->get_field_by_id('modules_repos')->get_value());
         $this->configuration->set_themes_repo($this->form->get_field_by_id('themes_repos')->get_value());
         $this->configuration->set_langs_repo($this->form->get_field_by_id('langs_repos')->get_value());
+        $this->configuration->set_addons_server($this->form->get_field_by_id('addons_server')->get_value());
     }
 }
 ?>
