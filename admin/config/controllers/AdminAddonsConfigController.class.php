@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 03 07
+ * @version     PHPBoost 6.1 - last update: 2026 03 18
  * @since       PHPBoost 6.1 - 2026 03 07
 */
 
@@ -24,7 +24,7 @@ class AdminAddonsConfigController extends DefaultAdminController
 
 		$this->view->put('CONTENT', $this->form->display());
 
-		return new AdminModulesDisplayResponse($this->view, $this->lang['form.configuration']);
+		return new AdminAddonsConfigDisplayResponse($this->view, $this->lang['form.configuration']);
     }
 
     public function init()
