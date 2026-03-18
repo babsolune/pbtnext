@@ -104,7 +104,10 @@ class InstallWebsiteConfigController extends InstallController
             $fieldset->add_field(new FormFieldTextEditor('slogan', $this->lang['install.website.slogan'], ''));
 
             $fieldset->add_field(new FormFieldMultiLineTextEditor('description', $this->lang['install.website.description'], '',
-                ['description' => $this->lang['install.website.description.clue']]
+                [
+                    'class' => 'three-quarter-field',
+                    'description' => $this->lang['install.website.description.clue']
+                ]
             ));
 
             $fieldset->add_field(new FormFieldTimezone('timezone', $this->lang['install.website.timezone'], 'Europe/Paris',
