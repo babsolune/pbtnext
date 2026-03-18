@@ -976,6 +976,16 @@ class UpdateServices
             $folder->delete();
         }
 
+        $folder = new Folder(PATH_TO_ROOT . '/kernel/lib/php/geshi');
+        if ($folder->exists()) {
+            $folder->delete();
+        }
+
+        $folder = new Folder(PATH_TO_ROOT . '/kernel/lib/php/pcl');
+        if ($folder->exists()) {
+            $folder->delete();
+        }
+
         $folder = new Folder(PATH_TO_ROOT . '/kernel/lib/php/facebook');
         if ($folder->exists()) {
             $folder->delete();
