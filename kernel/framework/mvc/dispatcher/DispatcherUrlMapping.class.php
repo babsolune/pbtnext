@@ -23,10 +23,10 @@ class DispatcherUrlMapping extends UrlMapping
     public function __construct(string $dispatcher_name, string $match = '([\w/_-]*)$', string $from_path = '', string $redirect_path = '', bool $high_priority = false)
     {
         $module = explode('/', $dispatcher_name)[1];
-        if (in_array($module, ['kernel', 'admin', 'cache', 'install', 'update', 'user', 'syndication', 'upload', 'images', 'lang', 'templates']))
-            $prefix =  '';
-        else
-            $prefix = '/modules';
+        $root = ['kernel', 'admin', 'cache', 'install', 'update', 'user', 'syndication', 'upload', 'images', 'lang', 'templates'];
+        $is_root_module = in_array($module, $root) || (defined('PATH_TO_ROOT') && is_dir(PATH_TO_ROOT . '/' . $module));
+        $prefix = $is_root_module ? '' : '/modules';
+
         if (!empty($from_path))
         {
             if ($from_path == 'root')
