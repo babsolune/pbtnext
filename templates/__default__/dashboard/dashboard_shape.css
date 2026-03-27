@@ -67,7 +67,6 @@ body {
 
 /* --- Containers --- */
 #admin-main {
-	padding-bottom: 2.618em;
 	flex: 1 1 auto;
 	overflow: hidden;
 }

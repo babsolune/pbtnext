@@ -42,6 +42,13 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 		return new DefaultHomePageDisplay($this->get_id(), MediaDisplayCategoryController::get_view());
 	}
 
+	public function lobby(): array
+	{
+		return [
+            new MediaLobbyProvider()
+        ];
+	}
+
 	public function search()
 	{
 		return new MediaSearchable();

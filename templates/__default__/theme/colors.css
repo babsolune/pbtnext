@@ -758,6 +758,22 @@ a.wikipedia-link { border-bottom-color: var(--main-tone); }
     color: var(--txt-sub);
 }
 
+/* --- Tabs --- */
+.tab-item {
+    border-color: var(--bdr-main);
+    color: var(--txt-sub);
+    background-color: var(--bgc-sub);
+}
+
+.tab-item.current-tab {
+    background-color: var(--bgc-main);
+    color: var(--txt-main);
+}
+
+.tabs-wrapper {
+    border-color: var(--bdr-main);
+}
+
 /* --- Colors classes --------------------------------------------------------------- */
 .floating-element,
 .message-helper { background-color: var(--bgc-main); }
@@ -804,22 +820,36 @@ a.wikipedia-link { border-bottom-color: var(--main-tone); }
 .bgc.link-color    { background-color: rgba(var(--main-rgb-t), 0.2); }
 .bgc.star 		   { background-color: rgba(var(--star-rgb-t), 0.2); }
 
+.bgc.current-tab,
 .bgc-full,
 .bgc-full:hover	{ color: var(--txt-alt) !important; }
 
-.bgc-full.notice        { background-color: var(--notice-tone); 	   border-color: var(--notice-tone); }
-.bgc-full.question      { background-color: var(--question-tone); 	   border-color: var(--question-tone); }
-.bgc-full.success       { background-color: var(--success-tone); 	   border-color: var(--success-tone); }
-.bgc-full.warning       { background-color: var(--warning-tone); 	   border-color: var(--warning-tone); }
-.bgc-full.error         { background-color: var(--error-tone); 		   border-color: var(--error-tone); }
-.bgc-full.visitor       { background-color: var(--visitor-tone); 	   border-color: var(--visitor-tone); }
-.bgc-full.custom-author { background-color: var(--custom-author-tone); border-color: var(--custom-author-tone); }
-.bgc-full.member        { background-color: var(--member-tone); 	   border-color: var(--member-tone); }
-.bgc-full.moderator     { background-color: var(--moderator-tone); 	   border-color: var(--moderator-tone); }
-.bgc-full.administrator { background-color: var(--administrator-tone); border-color: var(--administrator-tone); }
-.bgc-full.logo-color    { background-color: var(--logo-tone); 		   border-color: var(--logo-tone); }
-.bgc-full.link-color    { background-color: var(--main-tone); 		   border-color: var(--main-tone); }
-.bgc-full.star    		{ background-color: var(--star-tone); 		   border-color: var(--star-tone); }
+.bgc-full.notice,
+.current-tab.notice        { background-color: var(--notice-tone); 	      border-color: var(--notice-tone); }
+.bgc-full.question,
+.current-tab.question      { background-color: var(--question-tone); 	   border-color: var(--question-tone); }
+.bgc-full.success,
+.current-tab.success       { background-color: var(--success-tone); 	   border-color: var(--success-tone); }
+.bgc-full.warning,
+.current-tab.warning       { background-color: var(--warning-tone); 	   border-color: var(--warning-tone); }
+.bgc-full.error,
+.current-tab.error         { background-color: var(--error-tone); 		   border-color: var(--error-tone); }
+.bgc-full.visitor,
+.current-tab.visitor       { background-color: var(--visitor-tone); 	   border-color: var(--visitor-tone); }
+.bgc-full.custom-author,
+.current-tab.custom-author { background-color: var(--custom-author-tone); border-color: var(--custom-author-tone); }
+.bgc-full.member,
+.current-tab.member        { background-color: var(--member-tone); 	      border-color: var(--member-tone); }
+.bgc-full.moderator,
+.current-tab.moderator     { background-color: var(--moderator-tone); 	   border-color: var(--moderator-tone); }
+.bgc-full.administrator,
+.current-tab.administrator { background-color: var(--administrator-tone); border-color: var(--administrator-tone); }
+.bgc-full.logo-color,
+.current-tab.logo-color    { background-color: var(--logo-tone); 		   border-color: var(--logo-tone); }
+.bgc-full.link-color,
+.current-tab.link-color    { background-color: var(--main-tone); 		   border-color: var(--main-tone); }
+.bgc-full.star,
+.current-tab.star    	   { background-color: var(--star-tone); 		   border-color: var(--star-tone); }
 
 .bgc-full:hover.notice        { background-color: var(--notice-light); }
 .bgc-full:hover.question      { background-color: var(--question-light); }

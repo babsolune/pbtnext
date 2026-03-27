@@ -16,5 +16,10 @@ class GuestbookExtensionPointProvider extends ModuleExtensionPointProvider
 	{
 		return new DefaultHomePageDisplay($this->get_id(), GuestbookController::get_view());
 	}
+
+	public function lobby(): array
+	{
+		return [new GuestbookLobbyProvider()];
+	}
 }
 ?>

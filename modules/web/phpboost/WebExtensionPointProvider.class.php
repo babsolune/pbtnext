@@ -13,14 +13,22 @@
 
 class WebExtensionPointProvider extends ItemsModuleExtensionPointProvider
 {
-	public function comments()
-	{
-		return new CommentsTopics(array(new WebCommentsTopic()));
-	}
-	
-	public function home_page()
-	{
-		return new DefaultHomePageDisplay($this->get_id(), WebCategoryController::get_view());
-	}
+    public function comments()
+    {
+        return new CommentsTopics(array(new WebCommentsTopic()));
+    }
+
+    public function home_page()
+    {
+        return new DefaultHomePageDisplay($this->get_id(), WebCategoryController::get_view());
+    }
+
+    public function lobby(): array
+    {
+        return [
+            new WebLobbyItemsProvider('web'),
+            new WebLobbyCategoryProvider('web'),
+        ];
+    }
 }
 ?>

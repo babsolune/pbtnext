@@ -19,5 +19,13 @@ class RecipeExtensionPointProvider extends ItemsModuleExtensionPointProvider
 	{
 		return new DefaultHomePageDisplay($this->get_id(), RecipeCategoryController::get_view());
 	}
+
+	public function lobby(): array
+	{
+		return [
+			new RecipeLobbyItemsProvider('recipe'),
+			new RecipeLobbyCategoryProvider('recipe'),
+		];
+	}
 }
 ?>

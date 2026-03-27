@@ -421,14 +421,29 @@ class UpdateServices
         // Handle the QuestionCaptcha → qaptcha module replacement explicitly.
         // QuestionCaptcha was at /QuestionCaptcha/ (root) in pbt; qaptcha is at /qaptcha/ (root) in pbtnext.
         // QaptchaModuleUpdateVersion::execute() handles DB migration, old file deletion and config update.
+        // TODO -- Move QuestionCaptcha config to qaptcha config 
         if (ModulesManager::is_module_installed('QuestionCaptcha')) {
             // Uninstall the old module so it no longer appears in ModulesConfig
-            ModulesManager::uninstall_module('QuestionCaptcha', false, false);
+            ModulesManager::uninstall_module('QuestionCaptcha', true, false);
         }
         // Install qaptcha if it is not already installed (replaces QuestionCaptcha)
         $qaptcha_folder = new Folder(PATH_TO_ROOT . '/qaptcha');
         if ($qaptcha_folder->exists() && !ModulesManager::is_module_installed('qaptcha')) {
             ModulesManager::install_module('qaptcha');
+        }
+
+        // Handle the HomeLanding → lobby module replacement explicitly.
+        // HomeLanding was at /HomeLanding/ (root) in pbt; lobby is at /lobby/ (root) in pbtnext.
+        // QaptchaModuleUpdateVersion::execute() handles DB migration, old file deletion and config update.
+        // TODO -- Move HomeLanding config to lobby config 
+        if (ModulesManager::is_module_installed('HomeLanding')) {
+            // Uninstall the old module so it no longer appears in ModulesConfig
+            ModulesManager::uninstall_module('HomeLanding', true, false);
+        }
+        // Install lobby if it is not already installed (replaces HomeLanding)
+        $lobby_folder = new Folder(PATH_TO_ROOT . '/lobby');
+        if ($lobby_folder->exists() && !ModulesManager::is_module_installed('lobby')) {
+            ModulesManager::install_module('lobby');
         }
 
         // Uninstall any module that is registered in ModulesConfig but whose folder

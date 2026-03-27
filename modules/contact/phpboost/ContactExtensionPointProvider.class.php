@@ -39,5 +39,10 @@ class ContactExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/contact/index.php')));
 	}
+
+	public function lobby(): array
+	{
+		return [new ContactLobbyProvider()];
+	}
 }
 ?>

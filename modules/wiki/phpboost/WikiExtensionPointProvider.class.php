@@ -23,6 +23,14 @@ class WikiExtensionPointProvider extends ItemsModuleExtensionPointProvider
             return new DefaultHomePageDisplay($this->get_id(), WikiCategoryController::get_view($this->get_id()));
     }
 
+	public function lobby(): array
+	{
+		return [
+			new WikiLobbyItemsProvider('wiki'),
+			new WikiLobbyCategoryProvider('wiki'),
+		];
+	}
+
     public function user()
     {
         return new WikiUserExtensionPoint();

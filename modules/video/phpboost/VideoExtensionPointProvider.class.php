@@ -19,5 +19,13 @@ class VideoExtensionPointProvider extends ItemsModuleExtensionPointProvider
 	{
 		return new DefaultHomePageDisplay($this->get_id(), VideoCategoryController::get_view());
 	}
+
+	public function lobby(): array
+	{
+		return [
+			new VideoLobbyItemsProvider('video'),
+			new VideoLobbyCategoryProvider('video'),
+		];
+	}
 }
 ?>

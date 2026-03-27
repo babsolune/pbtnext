@@ -18,5 +18,10 @@ class FluxExtensionPointProvider extends ItemsModuleExtensionPointProvider
 	{
 		return new FluxScheduledJobs();
 	}
+
+	public function lobby(): array
+	{
+		return [new FluxLobbyProvider()];
+	}
 }
 ?>

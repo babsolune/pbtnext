@@ -12,25 +12,25 @@
 
 class WebConfig extends AbstractConfigData
 {
-	const CATEGORIES_PER_PAGE = 'categories_per_page';
-	const CATEGORIES_PER_ROW = 'categories_per_row';
-	const ITEMS_PER_PAGE = 'items_per_page';
-	const ITEMS_PER_ROW = 'items_per_row';
-	const ITEMS_DEFAULT_SORT_FIELD = 'items_default_sort_field';
-	const ITEMS_DEFAULT_SORT_MODE = 'items_default_sort_mode';
-	const DEFAULT_CONTENT = 'default_content';
-	const FULL_ITEM_DISPLAY = 'full_item_display';
+	const CATEGORIES_PER_PAGE              = 'categories_per_page';
+	const CATEGORIES_PER_ROW               = 'categories_per_row';
+	const ITEMS_PER_PAGE                   = 'items_per_page';
+	const ITEMS_PER_ROW                    = 'items_per_row';
+	const ITEMS_DEFAULT_SORT_FIELD         = 'items_default_sort_field';
+	const ITEMS_DEFAULT_SORT_MODE          = 'items_default_sort_mode';
+	const DEFAULT_CONTENT                  = 'default_content';
+	const FULL_ITEM_DISPLAY                = 'full_item_display';
 	const DESCRIPTIONS_DISPLAYED_TO_GUESTS = 'descriptions_displayed_to_guests';
-	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
-	const PARTNERS_SORT_FIELD = 'partners_sort_field';
-	const PARTNERS_SORT_MODE = 'partners_sort_mode';
-	const PARTNERS_NUMBER_IN_MENU = 'partners_number_in_menu';
-	const AUTHORIZATIONS = 'authorizations';
+	const ROOT_CATEGORY_DESCRIPTION        = 'root_category_description';
+	const PARTNERS_SORT_FIELD              = 'partners_sort_field';
+	const PARTNERS_SORT_MODE               = 'partners_sort_mode';
+	const PARTNERS_NUMBER_IN_MENU          = 'partners_number_in_menu';
+	const AUTHORIZATIONS                   = 'authorizations';
 
 	const DISPLAY_TYPE = 'display_type';
-	const GRID_VIEW = 'grid_view';
-	const LIST_VIEW = 'list_view';
-	const TABLE_VIEW = 'table_view';
+	const GRID_VIEW    = 'grid_view';
+	const LIST_VIEW    = 'list_view';
+	const TABLE_VIEW   = 'table_view';
 
 	const DEFERRED_OPERATIONS = 'deferred_operations';
 

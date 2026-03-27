@@ -22,5 +22,13 @@ class DownloadExtensionPointProvider extends ItemsModuleExtensionPointProvider
 	{
 		return new DefaultHomePageDisplay($this->get_id(), DownloadCategoryController::get_view());
 	}
+
+	public function lobby(): array
+	{
+		return [
+			new DownloadLobbyItemsProvider('download'),
+			new DownloadLobbyCategoryProvider('download'),
+		];
+	}
 }
 ?>

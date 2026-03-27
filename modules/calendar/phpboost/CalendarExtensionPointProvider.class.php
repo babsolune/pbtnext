@@ -23,6 +23,13 @@ class CalendarExtensionPointProvider extends ItemsModuleExtensionPointProvider
 		return new DefaultHomePageDisplay($this->get_id(), CalendarHomeController::get_view());
 	}
 
+	public function lobby(): array
+	{
+		return [
+            new CalendarLobbyProvider()
+        ];
+	}
+
 	public function url_mappings()
 	{
 		return new UrlMappings(array(

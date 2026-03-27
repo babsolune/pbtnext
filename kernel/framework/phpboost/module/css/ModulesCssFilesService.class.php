@@ -79,21 +79,15 @@ class ModulesCssFilesService
         {
             return '/templates/' . $theme_id . '/modules/' . $module_id . '/' . $css_file;
         }
-        else if (!empty($parent_theme_id) && file_exists(PATH_TO_ROOT . '/templates/' . $parent_theme_id . '/modules/' . $module_id . '/' . $css_file))
+        elseif (!empty($parent_theme_id) && file_exists(PATH_TO_ROOT . '/templates/' . $parent_theme_id . '/modules/' . $module_id . '/' . $css_file))
         {
             return '/templates/' . $parent_theme_id . '/modules/' . $module_id . '/' . $css_file;
         }
-
-        // Check new /modules structure with fallback to root
-        $module_templates_path = PATH_TO_ROOT . '/modules/' . $module_id . '/templates';
-        if (is_dir($module_templates_path) && file_exists($module_templates_path . '/' . $css_file))
+        elseif (file_exists(PATH_TO_ROOT . '/modules/' . $module_id . '/templates/' . $css_file))
         {
             return '/modules/' . $module_id . '/templates/' . $css_file;
         }
-
-        // Fallback to root structure for backward compatibility
-        $module_templates_path = PATH_TO_ROOT . '/' . $module_id . '/templates';
-        if (is_dir($module_templates_path) && file_exists($module_templates_path . '/' . $css_file))
+        elseif (file_exists(PATH_TO_ROOT . '/' . $module_id . '/templates/' . $css_file))
         {
             return '/' . $module_id . '/templates/' . $css_file;
         }

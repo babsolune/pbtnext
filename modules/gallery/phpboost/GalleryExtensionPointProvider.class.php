@@ -62,5 +62,10 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/gallery/index.php')));
 	}
+
+	public function lobby(): array
+	{
+		return [new GalleryLobbyProvider()];
+	}
 }
 ?>

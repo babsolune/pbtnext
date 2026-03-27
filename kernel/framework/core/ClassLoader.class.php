@@ -45,7 +45,7 @@ class ClassLoader
     /**
      * @var array The folder names to exclude from autoload
      */
-    protected static array $exclude_folders_names = ['templates', 'lang'];
+    protected static array $exclude_folders_names = ['templates', 'lang', 'lib'];
 
     /**
      * Initializes the autoload class list.
@@ -207,42 +207,13 @@ class ClassLoader
             foreach ($installed_modules as $module_id) {
                 $module_path = ModulesManager::get_module_path($module_id);
 
-                // Scan the module root and models folder
+                // Scan the entire module folder recursively.
+                // Only *.class.php files are indexed (PHPBoost naming convention).
+                // This prevents third-party library files (e.g. in lib/ folders)
+                // from conflicting with kernel class names in the autoload map.
+                // 'templates', 'lang', 'lib' and 'update' folders are excluded.
                 if (is_dir($module_path)) {
-                    // Primary scan: look in models folder
-                    $models_folder = $module_path . '/models';
-                    if (is_dir($models_folder)) {
-                        self::add_classes($models_folder, $pattern, true);
-                    }
-
-                    // Secondary scan: look in controllers and other module folders
-                    $controllers_folder = $module_path . '/controllers';
-                    if (is_dir($controllers_folder)) {
-                        self::add_classes($controllers_folder, $pattern, true);
-                    }
-
-                    // Scan module root for any direct class files
-                    $folder = new Folder($module_path);
-                    $files  = $folder->get_files($pattern);
-                    foreach ($files as $file) {
-                        $filename = $file->get_name();
-                        if (!in_array($filename, ['index.php', 'config.ini'])) {
-                            $file_path     = $file->get_path();
-                            $content       = file_get_contents($file_path);
-                            $relative_path = Path::get_path_from_root($module_path);
-
-                            // Check for namespace declaration
-                            if (preg_match('~namespace\s+([^;]+)~', $content, $matches)) {
-                                $namespace                                      = trim($matches[1]);
-                                $classname                                      = $file->get_name_without_extension();
-                                self::$namespace_map[$namespace]                = $relative_path;
-                                self::$autoload[$namespace . '\\' . $classname] = $relative_path . '/' . $filename;
-                            } else {
-                                $classname                  = $file->get_name_without_extension();
-                                self::$autoload[$classname] = $relative_path . '/' . $filename;
-                            }
-                        }
-                    }
+                    self::add_classes($module_path, '`\.class\.php$`', true);
                 }
             }
         } catch (\Exception $ex) {

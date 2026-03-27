@@ -20,5 +20,13 @@ class SmalladsExtensionPointProvider extends ItemsModuleExtensionPointProvider
 	{
 		return new DefaultHomePageDisplay($this->get_id(), SmalladsCategoryController::get_view());
 	}
+
+	public function lobby(): array
+	{
+		return [
+			new SmalladsLobbyItemsProvider('smallads'),
+			new SmalladsLobbyCategoryProvider('smallads'),
+		];
+	}
 }
 ?>

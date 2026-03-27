@@ -30,6 +30,14 @@ class ItemsModuleExtensionPointProvider extends ModuleExtensionPointProvider
 		return new DefaultHomePageDisplay($this->get_id(), DefaultSeveralItemsController::get_view($this->get_id()));
 	}
 
+	public function lobby()
+	{
+		if ($class = $this->get_class('LobbyProvider'))
+			return $class;
+		else
+			return new DefaultLobbyItemsProvider($this->get_id());
+	}
+
 	public function search()
 	{
 		if ($class = $this->get_class('Searchable', 'SearchableExtensionPoint'))

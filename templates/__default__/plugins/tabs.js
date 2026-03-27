@@ -18,10 +18,18 @@ class TabsBoost
         this.init();
     }
 
-    init()
-    {
+    init() {
         this.tabLinks.forEach(link => {
-            link.addEventListener('click', this.handleTabClick.bind(this));
+            link.addEventListener('click', (event) => {
+                // Si l'élément cliqué est un enfant d'un .tab-item, on remonte au parent
+                let target = event.target;
+                while (target && !target.classList.contains('tab-item')) {
+                    target = target.parentNode;
+                }
+                if (target) {
+                    this.handleTabClick.call(this, { target: target });
+                }
+            });
         });
 
         this.displayFirstTab();

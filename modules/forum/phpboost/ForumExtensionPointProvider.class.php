@@ -37,6 +37,11 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 		return new DefaultHomePageDisplay($this->get_id(), ForumHomeController::get_view());
 	}
 
+	public function lobby(): array
+	{
+		return [new ForumLobbyProvider()];
+	}
+
 	public function scheduled_jobs()
 	{
 		return new ForumScheduledJobs();

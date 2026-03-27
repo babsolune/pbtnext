@@ -69,14 +69,6 @@
                 </div>
                 <ul class="modal-menu">
                     <li>
-                        <span class="modal-menu-title"><i aria-hidden="true" class="fa fa-fw fa-download"></i>{@menu.updates}</span>
-                        <ul class="level-2">
-                            <li><a href="${relative_url(AdminConfigUrlBuilder::addons_config())}"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.configuration}</a></li>
-                            <li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=module"><i aria-hidden="true" class="fa fa-fw fa-cubes"></i>{@menu.modules}</a></li>
-                            <li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=template"><i aria-hidden="true" class="fa fa-fw fa-image"></i>{@menu.themes}</a></li>
-                        </ul>
-                    </li>
-                    <li>
                         <span class="modal-menu-title"><i aria-hidden="true" class="fa fa-fw fa-cubes"></i>{@menu.modules}</span>
                         <ul class="level-2">
                             <li><a href="${relative_url(AdminModulesUrlBuilder::list_installed_modules())}"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.management}</a></li>
@@ -96,6 +88,14 @@
                         <ul class="level-2">
                             <li><a href="${relative_url(AdminLangsUrlBuilder::list_installed_langs())}"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.management}</a></li>
                             <li><a href="${relative_url(AdminLangsUrlBuilder::install())}"><i aria-hidden="true" class="fa fa-fw fa-plus"></i> {@menu.add}</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span class="modal-menu-title"><i aria-hidden="true" class="fa fa-fw fa-download"></i>{@menu.updates}</span>
+                        <ul class="level-2">
+                            <li><a href="${relative_url(AdminConfigUrlBuilder::addons_config())}"><i aria-hidden="true" class="fa fa-fw fa-cog"></i>{@menu.configuration}</a></li>
+                            <li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=module"><i aria-hidden="true" class="fa fa-fw fa-cubes"></i>{@menu.modules}</a></li>
+                            <li><a href="{PATH_TO_ROOT}/admin/updates/updates.php?type=template"><i aria-hidden="true" class="fa fa-fw fa-image"></i>{@menu.themes}</a></li>
                         </ul>
                     </li>
                     # IF C_ADMIN_LINKS_2 #
