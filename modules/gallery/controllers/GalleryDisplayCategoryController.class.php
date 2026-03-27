@@ -573,7 +573,7 @@ class GalleryDisplayCategoryController extends ModuleController
 		}
 	}
 
-	private function get_category()
+    private function get_category()
 	{
 		if ($this->category === null)
 		{

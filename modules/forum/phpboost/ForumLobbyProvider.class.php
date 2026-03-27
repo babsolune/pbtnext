@@ -25,6 +25,8 @@ class ForumLobbyProvider extends DefaultLobbyModuleProvider
 		$module               = LobbyModulesList::load()[$module_id];
 		$user_accounts_config = UserAccountsConfig::load();
 
+		$module_config = ForumConfig::load();
+
 		$view = $this->get_lobby_template('MessagesLobbyProvider.tpl');
 		$view->add_lang(array_merge(
             LangLoader::get_all_langs('lobby'),
@@ -68,37 +70,36 @@ class ForumLobbyProvider extends DefaultLobbyModuleProvider
 		{
 			$contents    = @strip_tags(FormatingHelper::second_parse($row['content']), '<br><br/>');
 			$cut_contents = TextHelper::cut_string($contents, (int) $module->get_characters_number_displayed());
+			$last_page = ceil($row['t_nbr_msg'] / $module_config->get_number_messages_per_page());
+			$last_page_rewrite = ($last_page > 1) ? '-' . $last_page : '';
+			$last_page = ($last_page > 1) ? 'pt=' . $last_page . '&amp;' : '';
+			$link = new Url('/forum/topic' . url('.php?' . $last_page .  'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . '-' . Url::encode_rewrite($row['title'])  . '.php') . '#m' .  $row['last_msg_id']);
+			$link_message = new Url('/forum/topic' . url('.php?' . $last_page .  'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . '-' . Url::encode_rewrite($row['title'])  . '.php'));
 			$user_avatar = !empty($row['user_avatar'])
 				? Url::to_rel($row['user_avatar'])
 				: $user_accounts_config->get_default_avatar();
 
-			$author = new User();
-			if (!empty($row['user_id']))
-			{
-				$author->set_properties($row);
-			}
-			else
-			{
-				$author->init_visitor_user();
-			}
-
 			$author_group_color = User::get_group_color($row['user_groups'], $row['level']);
 
 			$view->assign_block_vars('items', [
-				'C_AUTHOR_EXISTS'     => !empty($row['last_user_id']),
+				'C_AUTHOR_EXISTS'      => !empty($row['last_user_id']),
 				'C_AUTHOR_GROUP_COLOR' => !empty($author_group_color),
-				'C_AVATAR_IMG'        => !empty($row['user_avatar']),
-				'C_READ_MORE'         => strlen($contents) > $module->get_characters_number_displayed(),
-				'TITLE'               => $row['title'],
-				'SUMMARY'             => $cut_contents,
+				'C_AVATAR_IMG'         => !empty($row['user_avatar']),
+				'C_READ_MORE'          => strlen($contents) > $module->get_characters_number_displayed(),
+
+                'TITLE'               => $row['title'],
+				'TOPIC'               => stripslashes($row['title']),
+				'CONTENT'             => $cut_contents,
 				'DATE'                => Date::to_format($row['last_timestamp'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 				'DATE_TIMESTAMP'      => $row['last_timestamp'],
-				'AUTHOR_DISPLAY_NAME' => $author->get_display_name(),
+				'AUTHOR_DISPLAY_NAME' => $row['last_login'],
 				'AUTHOR_LEVEL_CLASS'  => UserService::get_level_class($row['level']),
 				'AUTHOR_GROUP_COLOR'  => $author_group_color ? 'color:' . $author_group_color : '',
-				'U_AVATAR_IMG'        => $user_avatar,
-				'U_AUTHOR_PROFILE'    => UserUrlBuilder::profile($row['last_user_id'])->rel(),
-				'U_ITEM'              => PATH_TO_ROOT . '/modules/forum/topic' . url('.php?id=' . $row['id'], '-' . $row['id'] . '.php'),
+
+                'U_AVATAR_IMG'     => $user_avatar,
+				'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($row['last_user_id'])->rel(),
+				'U_TOPIC'          => $link_message->rel(),
+				'U_ITEM'           => $link->rel(),
 			]);
 		}
 		$result->dispose();
@@ -107,3 +108,4 @@ class ForumLobbyProvider extends DefaultLobbyModuleProvider
 	}
 }
 ?>
+

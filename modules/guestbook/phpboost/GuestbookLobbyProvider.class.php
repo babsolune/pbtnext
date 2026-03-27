@@ -28,14 +28,19 @@ class GuestbookLobbyProvider extends DefaultLobbyModuleProvider
 		$view = $this->get_lobby_template('MessagesLobbyProvider.tpl');
 		$view->add_lang(array_merge(LangLoader::get_all_langs(), LangLoader::get_all_langs('lobby'), LangLoader::get_all_langs($module_id)));
 
-		$result = PersistenceContext::get_querier()->select(
-			'SELECT member.*, guestbook.*, guestbook.login as glogin, ext_field.user_avatar
-			FROM ' . GuestbookSetup::$guestbook_table . ' guestbook
-			LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = guestbook.user_id
-			LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' ext_field ON ext_field.user_id = member.user_id
-			ORDER BY guestbook.timestamp DESC
-			LIMIT :limit',
-			['limit' => $module->get_elements_number_displayed()]
+		$result = PersistenceContext::get_querier()->select('
+                SELECT
+                    member.*,
+                    guestbook.*, guestbook.login as glogin,
+                    ext_field.user_avatar
+                FROM ' . GuestbookSetup::$guestbook_table . ' guestbook
+                LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = guestbook.user_id
+                LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' ext_field ON ext_field.user_id = member.user_id
+                ORDER BY guestbook.timestamp DESC
+                LIMIT :limit
+            ', [
+                'limit' => $module->get_elements_number_displayed()
+            ]
 		);
 
 		$view->put_all([
@@ -52,10 +57,14 @@ class GuestbookLobbyProvider extends DefaultLobbyModuleProvider
 			$item = new GuestbookItem();
 			$item->set_properties($row);
 
-			$view->assign_block_vars('items', array_merge($item->get_template_vars(), [
-				'U_AVATAR_IMG' => !empty($row['user_avatar'])
-					? Url::to_rel($row['user_avatar'])
-					: $user_accounts_config->get_default_avatar(),
+			$contents    = @strip_tags(FormatingHelper::second_parse($item->get_content()), '<br><br/>');
+			$cut_contents = TextHelper::cut_string($contents, (int) $module->get_characters_number_displayed());
+
+            $view->assign_block_vars('items', array_merge($item->get_template_vars(), [
+				'CONTENT' => $cut_contents,
+
+				'U_AVATAR_IMG' => !empty($row['user_avatar']) ? Url::to_rel($row['user_avatar']) : $user_accounts_config->get_default_avatar(),
+                'U_ITEM'       => GuestbookUrlBuilder::home(1, $item->get_id())->rel()
 			]));
 		}
 		$result->dispose();
