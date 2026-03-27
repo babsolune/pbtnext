@@ -17,7 +17,7 @@
 				# ENDIF #
 				# IF C_MAIL_SENT #
 					<a class="offload" href="{PATH_TO_ROOT}/contact">
-						{@lobby.send.another.email}
+						{@contact.send.another.email}
 					</a>
 				# ELSE #
 					# INCLUDE CONTACT_FORM #

@@ -30,6 +30,11 @@ class ContactExtensionPointProvider extends ExtensionPointProvider
 		return new DefaultHomePageDisplay($this->get_id(), ContactController::get_view());
 	}
 
+	public function lobby(): array
+	{
+		return [new ContactLobbyProvider()];
+	}
+
 	public function tree_links()
 	{
 		return new ContactTreeLinks();
@@ -38,11 +43,6 @@ class ContactExtensionPointProvider extends ExtensionPointProvider
 	public function url_mappings()
 	{
 		return new UrlMappings(array(new DispatcherUrlMapping('/contact/index.php')));
-	}
-
-	public function lobby(): array
-	{
-		return [new ContactLobbyProvider()];
 	}
 }
 ?>
