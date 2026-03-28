@@ -7,7 +7,7 @@
  * @since       PHPBoost 6.1 - 2026 03 21
 */
 
-class MediaLobbyProvider extends DefaultLobbyModuleProvider
+class MediaLobbyProvider extends DefaultModuleLobbyProvider
 {
 	public function get_module_id(): string
 	{

@@ -7,7 +7,7 @@
  * @since       PHPBoost 6.1 - 2026 03 21
 */
 
-class DownloadLobbyItemsProvider extends DefaultLobbyItemsProvider
+class DownloadLobbyItemsProvider extends DefaultItemsLobbyProvider
 {
 	public function get_view(): FileTemplate
 	{

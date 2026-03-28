@@ -12,8 +12,8 @@ class NewsExtensionPointProvider extends ItemsModuleExtensionPointProvider
 	public function lobby(): array
 	{
 		return [
-			new DefaultLobbyItemsProvider('news'),
-			new DefaultLobbyCategoryProvider('news'),
+			new DefaultItemsLobbyProvider('news'),
+			new DefaultCategoryLobbyProvider('news'),
 			new PinnedNewsLobbyProvider(),
 		];
 	}

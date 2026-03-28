@@ -7,7 +7,7 @@
  * @since       PHPBoost 6.1 - 2026 03 21
 */
 
-class RecipeCategoryLobbyProvider extends DefaultLobbyCategoryProvider
+class RecipeCategoryLobbyProvider extends DefaultCategoryLobbyProvider
 {
 	public function __construct()
 	{

@@ -15,7 +15,7 @@ class ModuleExtensionPointProvider extends ExtensionPointProvider
      * @var Module parameters of the module
      */
     protected $module;
-    
+
     /**
      * {@inheritdoc}
      */

@@ -12,8 +12,8 @@ class ArticlesExtensionPointProvider extends ItemsModuleExtensionPointProvider
 	public function lobby(): array
 	{
 		return [
-			new DefaultLobbyItemsProvider('articles'),
-			new DefaultLobbyCategoryProvider('articles'),
+			new DefaultItemsLobbyProvider('articles'),
+			new DefaultCategoryLobbyProvider('articles'),
 		];
 	}
 }

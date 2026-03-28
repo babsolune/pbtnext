@@ -7,7 +7,7 @@
  * @since       PHPBoost 6.1 - 2026 03 21
 */
 
-class RecipeLobbyCategoryProvider extends DefaultLobbyCategoryProvider
+class RecipeLobbyCategoryProvider extends DefaultCategoryLobbyProvider
 {
 	public function get_view(): FileTemplate
 	{

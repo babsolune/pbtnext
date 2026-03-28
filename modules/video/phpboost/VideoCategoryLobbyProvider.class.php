@@ -7,7 +7,7 @@
  * @since       PHPBoost 6.1 - 2026 03 21
 */
 
-class VideoCategoryLobbyProvider extends DefaultLobbyCategoryProvider
+class VideoCategoryLobbyProvider extends DefaultCategoryLobbyProvider
 {
 	public function __construct()
 	{

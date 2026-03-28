@@ -32,10 +32,18 @@ class ItemsModuleExtensionPointProvider extends ModuleExtensionPointProvider
 
 	public function lobby()
 	{
-		if ($class = $this->get_class('LobbyProvider'))
+		if ($class = $this->get_class('LobbyProvider')) {
 			return $class;
-		else
-			return new DefaultLobbyItemsProvider($this->get_id());
+        }
+		elseif ($this->module && $this->module->get_configuration()->has_categories()) {
+			return [
+                new DefaultItemsLobbyProvider($this->get_id()),
+                new DefaultCategoryLobbyProvider($this->get_id()),
+            ];
+        }
+        else {
+            return new DefaultItemsLobbyProvider($this->get_id());
+        }
 	}
 
 	public function search()
