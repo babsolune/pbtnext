@@ -180,7 +180,7 @@ class AdminLobbyAddModulesController extends DefaultAdminModuleController
             if ($file->exists())
                 $provider = new $provider_class();
             else
-                $provider = new ItemsModuleExtensionPointProvider();
+                $provider = new ItemsModuleExtensionPointProvider($phpboost_id);
 
             $lobbyProviders = $provider->lobby();
 
