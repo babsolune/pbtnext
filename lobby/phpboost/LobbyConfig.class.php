@@ -177,7 +177,7 @@ class LobbyConfig extends AbstractConfigData
 		return [
 			self::MODULE_TITLE => LangLoader::get_message('lobby.title', 'common', 'lobby'),
 
-			self::LEFT_COLUMNS   => true,
+			self::LEFT_COLUMNS   => false,
 			self::RIGHT_COLUMNS  => true,
 			self::TOP_CENTRAL    => true,
 			self::BOTTOM_CENTRAL => true,
@@ -194,7 +194,7 @@ class LobbyConfig extends AbstractConfigData
 			self::CAROUSEL_AUTO   => self::CAROUSEL_TRUE,
 			self::CAROUSEL_HOVER  => self::CAROUSEL_TRUE,
 
-			self::EDITO => LangLoader::get_message('lobby.edito.description', 'common', 'lobby'),
+			self::EDITO => LangLoader::get_message('lobby.edito.description', 'install', 'lobby'),
 		];
 	}
 

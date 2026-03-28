@@ -16,7 +16,7 @@ class LobbySetup extends DefaultModuleSetup
 
 	public function uninstall(): void
 	{
-		$this->delete_configuration();
+		ConfigManager::delete('lobby', 'config');
 	}
 
 	/**
@@ -74,11 +74,6 @@ class LobbySetup extends DefaultModuleSetup
 		LobbyConfig::save();
 
         ClassLoader::generate_classlist(true);
-	}
-
-	private function delete_configuration(): void
-	{
-		ConfigManager::delete('lobby', 'config');
 	}
 }
 ?>

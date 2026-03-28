@@ -68,10 +68,6 @@ $lang['lobby.items.number']                    = 'Nombre d\'éléments à affich
 $lang['lobby.chars.number']                    = 'Limiter le nombre de caractères';
 $lang['lobby.category']                        = 'Catégorie';
 $lang['lobby.subcategories.content.displayed'] = 'Afficher le contenu des sous-catégories';
-// Pinned news
-$lang['lobby.pinned.news.title'] = 'Titre sur la page d\'accueil';
-// Default
-$lang['lobby.edito.description'] = 'Accédez à la <a class="offload" href="' . LobbyUrlBuilder::configuration()->relative() . '">configuration du module</a> pour paramétrer la page d\'accueil';
 
 // Configuration Anchors Menu
 $lang['lobby.config.anchors']       = 'Affichage du menu d\'accueil';
