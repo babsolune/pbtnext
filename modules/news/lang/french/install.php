@@ -16,43 +16,29 @@
 #                     French                       #
 ####################################################
 
-$lang['categories'] = $lang['items'] = array();
+$lang['categories'] = $lang['items'] = [];
 
 $lang['categories'][] = array(
-	'category.name'        => 'Test',
-	'category.description' => 'Catégorie de test'
+	'category.name'        => 'Catégorie de test',
+	'category.description' => 'Actualités de démonstration'
 );
 
 $lang['items'][] = array(
-	'item.title'   => 'Votre site sous PHPBoost CMS',
-	'item.content' => 'Votre site propulsé par PHPBoost est bien installé et fonctionnel. Afin de vous aider à le prendre en main,
-    l\'accueil de chaque module contient un message pour vous guider dans vos premiers pas. Voici également quelques recommandations supplémentaires que nous vous proposons de lire avec attention : <br />
-    <br />
-    <h2 class="formatter-title">N\'oubliez pas de supprimer le répertoire "install"</h2><br />
-    <br />
-    Supprimez le répertoire /install à la racine de votre site pour des raisons de sécurité afin que personne ne puisse recommencer l\'installation.<br />
-    <br />
-    <h2 class="formatter-title">Administrez votre site</h2><br />
-    <br />
-    Accédez au <a class="offload" href="' . UserUrlBuilder::administration()->relative() . '">panneau d\'administration de votre site</a> afin de le paramétrer comme vous le souhaitez !  Pour cela : <br />
-    <br />
-    <ul class="formatter-ul">
-        <li class="formatter-li"><a class="offload" href="' . AdminMaintainUrlBuilder::maintain()->relative() . '">Mettez votre site en maintenance</a> en attendant que vous le configuriez à votre guise.
-        </li><li class="formatter-li">Rendez vous à la <a class="offload" href="' . AdminConfigUrlBuilder::general_config()->relative() . '">Configuration générale du site</a>.
-        </li><li class="formatter-li"><a class="offload" href="' . AdminModulesUrlBuilder::list_installed_modules()->relative() . '">Configurez les modules</a> disponibles et donnez leur les droits d\'accès (si vous n\'avez pas installé le pack complet, tous les modules sont disponibles sur le site de <a class="offload" href="https://www.phpboost.com/download/">phpboost.com</a> dans la section téléchargement).
-        </li><li class="formatter-li"><a class="offload" href="' . AdminContentUrlBuilder::content_configuration()->relative() . '">Choisissez le langage de formatage du contenu</a> par défaut du site.
-        </li><li class="formatter-li"><a class="offload" href="' . AdminMembersUrlBuilder::configuration()->relative() . '">Configurez l\'inscription des membres</a>.
-        </li><li class="formatter-li"><a class="offload" href="' . AdminThemeUrlBuilder::list_installed_theme()->relative() . '">Choisissez le thème par défaut de votre site</a> pour en changer l\'apparence (vous pouvez en obtenir d\'autres sur le site de <a class="offload" href="https://www.phpboost.com/download/">phpboost.com</a>).
-        </li><li class="formatter-li">Avant de donner l\'accès de votre site à vos visiteurs, prenez un peu de temps pour y mettre du contenu.
-        </li><li class="formatter-li">Enfin <a class="offload" href="' . AdminMaintainUrlBuilder::maintain()->relative() . '">désactivez la maintenance</a> de votre site afin qu\'il soit visible par vos visiteurs.<br />
-        </li>
-    </ul><br />
-    <br />
-    <h2 class="formatter-title">Que faire si vous rencontrez un problème ?</h2><br />
-    <br />
-    N\'hésitez pas à consulter <a class="offload" href="https://www.phpboost.com/wiki/">la documentation de PHPBoost</a> ou à poser vos questions sur le <a class="offload" href="https://www.phpboost.com/forum/">forum d\'entraide</a>.<br /> <br />
-    <br />
-    <p class="float-right">Toute l\'équipe de PHPBoost vous remercie d\'utiliser son logiciel pour créer votre site web !</p>',
+	'item.title'   => 'Débuter avec le module Actualités',
+	'item.content' => '
+		<p>Cette brève actualité va vous donner quelques conseils simples pour prendre en main ce module.</p>
+		<ul class="formatter-ul">
+			<li class="formatter-li">Pour configurer votre module, <a class="offload" href="' . ModulesUrlBuilder::configuration('news')->relative() . '">cliquez ici</a></li>
+			<li class="formatter-li">Pour ajouter des catégories : <a class="offload" href="' . CategoriesUrlBuilder::add(Category::ROOT_CATEGORY, 'news')->relative() . '">cliquez ici</a> (les catégories et sous catégories sont à l\'infini)</li>
+			<li class="formatter-li">Pour ajouter une actualité : <a class="offload" href="' . ItemsUrlBuilder::add(Category::ROOT_CATEGORY, 'news')->relative() . '">cliquez ici</a></li>
+		</ul>
+		<ul class="formatter-ul">
+			<li class="formatter-li">Pour mettre en page vos news, vous pouvez utiliser le langage bbcode ou l\'éditeur WYSIWYG (cf cet <a class="offload" href="https://www.phpboost.com/wiki/bbcode">article</a>)<br /></li>
+		</ul>
+		<p>Pour en savoir plus, n\'hésitez pas à consulter la documentation du module sur le site de <a class="offload" href="https://www.phpboost.com/wiki/news">PHPBoost</a>.</p>
+		<br />
+		<br />
+		Bonne utilisation de ce module.',
 	'item.summary' => ''
 );
 ?>
