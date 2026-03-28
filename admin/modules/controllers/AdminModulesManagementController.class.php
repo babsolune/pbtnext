@@ -43,7 +43,7 @@ class AdminModulesManagementController extends DefaultAdminController
 
         foreach ($installed_modules as $module)
         {
-            if ($module->get_id() == 'BBCode' || $module->get_id() == 'qaptcha' || $module->get_id() == 'lobby')
+            if (in_array($module->get_id(), ['BBCode', 'lobby', 'nexus', 'qaptcha']))
                 continue;
 
             $module_config  = $module->get_configuration();

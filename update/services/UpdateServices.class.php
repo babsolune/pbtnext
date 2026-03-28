@@ -929,7 +929,8 @@ class UpdateServices
 
                 // check if 'addon_type' exists and if it equals "module"
                 // BBCode and qaptcha remain at root level in the new structure
-                if (isset($config['addon_type']) && $config['addon_type'] === 'module' && $dir_name !== 'BBCode' && $dir_name !== 'qaptcha') {
+                if (isset($config['addon_type']) && $config['addon_type'] === 'module' && !in_array($dir_name, ['BBCode', 'lobby', 'nexus', 'qaptcha']))
+                {
                     // Remove the old root-level module folder
                     $folder = new Folder($dir);
                     if ($folder->exists()) {
