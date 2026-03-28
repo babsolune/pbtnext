@@ -33,7 +33,7 @@ $lang['items'][] = array(
 			<li class="formatter-li">Pour ajouter une actualité : <a class="offload" href="' . ItemsUrlBuilder::add(Category::ROOT_CATEGORY, 'news')->relative() . '">cliquez ici</a></li>
 		</ul>
 		<ul class="formatter-ul">
-			<li class="formatter-li">Pour mettre en page vos news, vous pouvez utiliser le langage bbcode ou l\'éditeur WYSIWYG (cf cet <a class="offload" href="https://www.phpboost.com/wiki/bbcode">article</a>)<br /></li>
+			<li class="formatter-li">Pour mettre en page vos actualités, vous pouvez utiliser le langage bbcode ou l\'éditeur WYSIWYG (cf cet <a class="offload" href="https://www.phpboost.com/wiki/bbcode">article</a>)<br /></li>
 		</ul>
 		<p>Pour en savoir plus, n\'hésitez pas à consulter la documentation du module sur le site de <a class="offload" href="https://www.phpboost.com/wiki/news">PHPBoost</a>.</p>
 		<br />
