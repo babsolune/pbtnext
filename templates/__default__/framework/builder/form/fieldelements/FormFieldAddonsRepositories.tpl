@@ -1,8 +1,8 @@
 <script>
     //sortable
 	jQuery(document).ready(function() {
-		if (jQuery("#input_fields_${escape(ID)}")[0]) {
-			Sortable.create(document.getElementById('input_fields_${escape(ID)}'), {
+		if (jQuery("#input_fields_${escape(HTML_ID)}")[0]) {
+			Sortable.create(document.getElementById('input_fields_${escape(HTML_ID)}'), {
 				handle: '.sortable-selector',
 				animation: 150,
 				onEnd: function() {
@@ -24,22 +24,22 @@
 
     function change_ids()
     {
-        let li = jQuery("#input_fields_${escape(ID)} li");
+        let li = jQuery("#input_fields_${escape(HTML_ID)} li");
         li.each(function() {
-            jQuery(this).attr('id', '${escape(ID)}_' + jQuery(this).index());
-            jQuery(this).find('.input-owner').attr('name', 'field_owner_${escape(ID)}_' + jQuery(this).index()).attr('id', 'field_owner_${escape(ID)}_' + jQuery(this).index());
-            jQuery(this).find('.input-repository').attr('name', 'field_repository_${escape(ID)}_' + jQuery(this).index()).attr('id', 'field_repository_${escape(ID)}_' + jQuery(this).index());
-            jQuery(this).find('.input-directory').attr('name', 'field_directory_${escape(ID)}_' + jQuery(this).index()).attr('id', 'field_directory_${escape(ID)}_' + jQuery(this).index());
-            jQuery(this).find('.move-up').attr('id', 'move-up-${escape(ID)}_' + jQuery(this).index());
-            jQuery(this).find('.move-down').attr('id', 'move-down-${escape(ID)}_' + jQuery(this).index());
-            jQuery(this).find('.delete-item').attr('href', 'javascript:FormFieldAddonsRepositories.delete_field(' + jQuery(this).index() + ')').attr('id', 'delete_${escape(ID)}' + jQuery(this).index());
+            jQuery(this).attr('id', '${escape(HTML_ID)}_' + jQuery(this).index());
+            jQuery(this).find('.input-owner').attr('name', 'field_owner_${escape(HTML_ID)}_' + jQuery(this).index()).attr('id', 'field_owner_${escape(HTML_ID)}_' + jQuery(this).index());
+            jQuery(this).find('.input-repository').attr('name', 'field_repository_${escape(HTML_ID)}_' + jQuery(this).index()).attr('id', 'field_repository_${escape(HTML_ID)}_' + jQuery(this).index());
+            jQuery(this).find('.input-directory').attr('name', 'field_directory_${escape(HTML_ID)}_' + jQuery(this).index()).attr('id', 'field_directory_${escape(HTML_ID)}_' + jQuery(this).index());
+            jQuery(this).find('.move-up').attr('id', 'move-up-${escape(HTML_ID)}_' + jQuery(this).index());
+            jQuery(this).find('.move-down').attr('id', 'move-down-${escape(HTML_ID)}_' + jQuery(this).index());
+            jQuery(this).find('.delete-item').attr('href', 'javascript:FormFieldAddonsRepositories.delete_field(' + jQuery(this).index() + ')').attr('id', 'delete_${escape(HTML_ID)}' + jQuery(this).index());
         })
     }
 
     // fields
-	var FormFieldAddonsRepositories = function(){
+	var FormFieldAddonsRepositories = function() {
 		this.integer       = {FIELDS_NUMBER};
-		this.id_input      = ${escapejs(ID)};
+		this.id_input      = ${escapejs(HTML_ID)};
 		this.max_input     = {MAX_INPUT};
 	};
 
@@ -82,19 +82,19 @@
 
 	var FormFieldAddonsRepositories = new FormFieldAddonsRepositories();
 </script>
-<ul id="input_fields_${escape(ID)}" class="sortable-block form-field-values">
+<ul id="input_fields_${escape(HTML_ID)}" class="sortable-block form-field-values">
     # START fieldelements #
-        <li id="${escape(ID)}_{fieldelements.ID}">
+        <li id="${escape(HTML_ID)}_{fieldelements.ID}">
             <div class="grouped-inputs flex-wide">
                 <span class="sortable-selector grouped-element" aria-label="{@common.move}">&nbsp;</span>
-                <input class="input-owner grouped-element" type="text" name="field_owner_${escape(ID)}_{fieldelements.ID}" id="field_owner_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.OWNER}" placeholder="{@addon.repos.owner}"# IF NOT C_DELETE # disabled="disabled"# ENDIF # />
-                <input class="input-repository grouped-element" type="text" name="field_repository_${escape(ID)}_{fieldelements.ID}" id="field_repository_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.REPO}" placeholder="{@addon.repos.repository}"# IF NOT C_DELETE # disabled="disabled"# ENDIF # />
-                <input class="input-directory grouped-element" type="text" name="field_directory_${escape(ID)}_{fieldelements.ID}" id="field_directory_${escape(ID)}_{fieldelements.ID}" value="{fieldelements.DIR}" placeholder="{@addon.sub.directory}"# IF NOT C_DELETE # disabled="disabled"# ENDIF # />
-                # IF fieldelements.C_DELETE #<a class="delete-item grouped-element bgc-full error# IF NOT C_DELETE # icon-disabled# ENDIF #" href="javascript:FormFieldAddonsRepositories.delete_field('${escape(ID)}', '{fieldelements.ID}');" id="delete_${escape(ID)}_{fieldelements.ID}" aria-label="{@common.delete}"  data-confirmation="delete-element"><i class="far fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
-                <a href="#" class="move-up grouped-element" aria-label="{@common.move.up}" id="move-up-${escape(ID)}_{fieldelements.ID}" onclick="move(this.id, 'up');return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
-                <a href="#" class="move-down grouped-element" aria-label="{@common.move.down}" id="move-down-${escape(ID)}_{fieldelements.ID}" onclick="move(this.id, 'down');return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
+                <input class="input-owner grouped-element" type="text" name="field_owner_${escape(HTML_ID)}_{fieldelements.ID}" id="field_owner_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.OWNER}" placeholder="{@addon.repos.owner}"# IF NOT fieldelements.C_DELETE # readonly# ENDIF # />
+                <input class="input-repository grouped-element" type="text" name="field_repository_${escape(HTML_ID)}_{fieldelements.ID}" id="field_repository_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.REPO}" placeholder="{@addon.repos.repository}"# IF NOT fieldelements.C_DELETE # readonly# ENDIF # />
+                <input class="input-directory grouped-element" type="text" name="field_directory_${escape(HTML_ID)}_{fieldelements.ID}" id="field_directory_${escape(HTML_ID)}_{fieldelements.ID}" value="{fieldelements.DIR}" placeholder="{@addon.sub.directory}"# IF NOT fieldelements.C_DELETE # readonly# ENDIF # />
+                # IF fieldelements.C_DELETE #<a class="delete-item grouped-element bgc-full error" href="javascript:FormFieldAddonsRepositories.delete_field('${escape(HTML_ID)}', '{fieldelements.ID}');" id="delete_${escape(HTML_ID)}_{fieldelements.ID}" aria-label="{@common.delete}"  data-confirmation="delete-element"><i class="far fa-trash-alt" aria-hidden="true"></i></a># ENDIF #
+                <a href="#" class="move-up grouped-element" aria-label="{@common.move.up}" id="move-up-${escape(HTML_ID)}_{fieldelements.ID}" onclick="move(this.id, 'up');return false;"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+                <a href="#" class="move-down grouped-element" aria-label="{@common.move.down}" id="move-down-${escape(HTML_ID)}_{fieldelements.ID}" onclick="move(this.id, 'down');return false;"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
             </div>
         </li>
     # END fieldelements #
 </ul>
-<a href="javascript:FormFieldAddonsRepositories.add_field('input_fields_${escape(ID)}', '${escape(ID)}', '{FIELDS_NUMBER}');" id="add-${escape(ID)}" class="add-more-values" aria-label="{@common.add}"><i class="far fa-lg fa-plus-square" aria-hidden="true"></i></a>
+<a href="javascript:FormFieldAddonsRepositories.add_field('input_fields_${escape(HTML_ID)}', '${escape(HTML_ID)}', '{FIELDS_NUMBER}');" id="add-${escape(HTML_ID)}" class="add-more-values" aria-label="{@common.add}"><i class="far fa-lg fa-plus-square" aria-hidden="true"></i></a>

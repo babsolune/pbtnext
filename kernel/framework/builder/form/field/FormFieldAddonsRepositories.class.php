@@ -59,12 +59,9 @@ class FormFieldAddonsRepositories extends AbstractFormField
 		}
 
 		$view->put_all([
+			'HTML_ID' => $this->get_html_id(),
 
-            'NAME'       => $this->get_html_id(),
-			'ID'         => $this->get_html_id(),
-			'C_DISABLED' => $this->is_disabled(),
-
-			'MAX_INPUT'     => $this->max_input,
+            'MAX_INPUT'     => $this->max_input,
 			'FIELDS_NUMBER' => $i,
 		]);
 
@@ -83,6 +80,7 @@ class FormFieldAddonsRepositories extends AbstractFormField
 		{
 			$field_owner_id      = 'field_owner_' . $this->get_html_id() . '_' . $i;
 			$field_repository_id = 'field_repository_' . $this->get_html_id() . '_' . $i;
+
 			if ($request->has_postparameter($field_owner_id) && $request->has_postparameter($field_repository_id))
 			{
 				$field_owner        = $request->get_poststring($field_owner_id);

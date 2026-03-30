@@ -27,12 +27,6 @@ class FormFieldAddonsServers extends AbstractFormField
 		$view = new FileTemplate('framework/builder/form/fieldelements/FormFieldAddonsServers.tpl');
 		$view->add_lang(LangLoader::get_all_langs());
 
-		$view->put_all([
-			'NAME' => $this->get_html_id(),
-			'ID' => $this->get_html_id(),
-			'C_DISABLED' => $this->is_disabled()
-		]);
-
 		$this->assign_common_template_variables($template);
 
 		$i = 0;
@@ -62,9 +56,7 @@ class FormFieldAddonsServers extends AbstractFormField
 		}
 
 		$view->put_all([
-			'NAME'       => $this->get_html_id(),
-			'ID'         => $this->get_html_id(),
-			'C_DISABLED' => $this->is_disabled(),
+			'HTML_ID' => $this->get_html_id(),
 
             'MAX_INPUT'  => $this->max_input,
 			'FIELDS_NUMBER' => $i == 0 ? 1 : $i,

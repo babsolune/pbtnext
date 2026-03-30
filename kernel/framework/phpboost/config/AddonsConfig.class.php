@@ -114,11 +114,11 @@ class AddonsConfig extends AbstractConfigData
 
 	/**
 	 * Loads and returns the addons cached data.
-	 * @return ModulesConfig The cached data
+	 * @return AddonsConfig The cached data
 	 */
 	public static function load()
 	{
-		return ConfigManager::load(self::class, 'kernel', 'addons');
+		return ConfigManager::load(self::class, 'kernel', 'addons-config');
 	}
 
 	/**
@@ -126,7 +126,7 @@ class AddonsConfig extends AbstractConfigData
 	 */
 	public static function save()
 	{
-		ConfigManager::save('kernel', self::load(), 'addons');
+		ConfigManager::save('kernel', self::load(), 'addons-config');
 	}
 }
 ?>
