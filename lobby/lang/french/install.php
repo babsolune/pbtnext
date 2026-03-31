@@ -12,32 +12,90 @@
 ####################################################
 
 $lang['lobby.edito.description'] = '
-    Accédez à la <a class="offload" href="' . LobbyUrlBuilder::configuration()->relative() . '">configuration de ce module</a> pour paramétrer la <strong>page d\'accueil</strong>
-    <br /><br />
-    Votre site propulsé par PHPBoost est bien installé et fonctionnel. Afin de vous aider à le prendre en main,
-    l\'accueil de chaque module contient un message pour vous guider dans vos premiers pas. Voici également quelques recommandations supplémentaires que nous vous proposons de lire avec attention : <br />
+    Accédez à la <a class="offload" href="' . LobbyUrlBuilder::configuration()->relative() . '"><div class="pinned link-color">configuration de ce module</div></a> pour paramétrer la <strong>page d\'accueil</strong>
     <br />
-    <h2 class="formatter-title">N\'oubliez pas de supprimer le répertoire "install"</h2><br />
-    Supprimez le répertoire /install à la racine de votre site pour des raisons de sécurité afin que personne ne puisse recommencer l\'installation.<br />
     <br />
-    <h2 class="formatter-title">Administrez votre site</h2><br />
+    Votre site propulsé par PHPBoost est bien installé et fonctionnel. Afin de vous aider à le prendre en main, voici quelques recommandations que nous vous proposons de lire avec attention :
+    <br />
+    <h2 class="formatter-title">N\'oubliez pas de supprimer le répertoire <pre class="precode precode-inline"><code>install</code></pre></h2>
+    Supprimez le répertoire /install à la racine de votre site pour des raisons de sécurité afin que personne ne puisse recommencer l\'installation.
+    <br />
+    <h2 class="formatter-title">Administrez votre site</h2>
     Accédez au <a class="offload" href="' . UserUrlBuilder::administration()->relative() . '">panneau d\'administration de votre site</a> afin de le paramétrer comme vous le souhaitez !
     <br />
-    Pour cela :
-    <ul class="formatter-ul">
-        <li class="formatter-li"><a class="offload" href="' . AdminMaintainUrlBuilder::maintain()->relative() . '">Mettez votre site en maintenance</a> en attendant que vous le configuriez à votre guise.
-        </li><li class="formatter-li">Rendez vous à la <a class="offload" href="' . AdminConfigUrlBuilder::general_config()->relative() . '">Configuration générale du site</a>.
-        </li><li class="formatter-li"><a class="offload" href="' . AdminModulesUrlBuilder::list_installed_modules()->relative() . '">Configurez les modules</a> disponibles et donnez leur les droits d\'accès (si vous n\'avez pas installé le pack complet, tous les modules sont disponibles sur le site de <a class="offload" href="https://www.phpboost.com/download/">phpboost.com</a> dans la section téléchargement).
-        </li><li class="formatter-li"><a class="offload" href="' . AdminContentUrlBuilder::content_configuration()->relative() . '">Choisissez le langage de formatage du contenu</a> par défaut du site.
-        </li><li class="formatter-li"><a class="offload" href="' . AdminMembersUrlBuilder::configuration()->relative() . '">Configurez l\'inscription des membres</a>.
-        </li><li class="formatter-li"><a class="offload" href="' . AdminThemeUrlBuilder::list_installed_theme()->relative() . '">Choisissez le thème par défaut de votre site</a> pour en changer l\'apparence (vous pouvez en obtenir d\'autres sur le site de <a class="offload" href="https://www.phpboost.com/download/">phpboost.com</a>).
-        </li><li class="formatter-li">Avant de donner l\'accès de votre site à vos visiteurs, prenez un peu de temps pour y mettre du contenu.
-        </li><li class="formatter-li">Enfin <a class="offload" href="' . AdminMaintainUrlBuilder::maintain()->relative() . '">désactivez la maintenance</a> de votre site afin qu\'il soit visible par vos visiteurs.<br /></li>
-    </ul>
     <br />
-    <h2 class="formatter-title">Que faire si vous rencontrez un problème ?</h2><br />
-    N\'hésitez pas à consulter <a class="offload" href="https://www.phpboost.com/wiki/">la documentation de PHPBoost</a> ou à poser vos questions sur le <a class="offload" href="https://www.phpboost.com/forum/">forum d\'entraide</a>.<br /> <br />
+    <div class="cell-flex cell-columns-4 cell-tile">
+        <div class="cell">
+            <div class="cell-header"><h4 class="formatter-title">1. Maintenance</h4></div>
+            <div class="cell-body">
+                <div class="cell-content">
+                    <p style="text-align: center;"><a class="offload" href="' . AdminMaintainUrlBuilder::maintain()->relative() . '"><i class="fa fa-person-digging fa-2x" aria-hidden="true"></i></a></p>
+                    <a class="offload" href="' . AdminMaintainUrlBuilder::maintain()->relative() . '">Mettez votre site en maintenance</a> en attendant que vous le configuriez à votre guise.
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="cell-header"><h4 class="formatter-title">2. Modules</h4></div>
+            <div class="cell-body">
+                <div class="cell-content">
+                    <p style="text-align: center;"><a class="offload" href="' . AdminModulesUrlBuilder::add_module()->relative() . '"><i class="fa fa-puzzle-piece fa-2x" aria-hidden="true"></i></a></p>
+                    <a class="offload" href="' . AdminModulesUrlBuilder::add_module()->relative() . '">Ajoutez des modules</a> puis configurez leur droits d\'accès.
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="cell-header"><h4 class="formatter-title">3. Éditeur</h4></div>
+            <div class="cell-body">
+                <div class="cell-content">
+                    <p style="text-align: center;"><a class="offload" href="' . AdminContentUrlBuilder::content_configuration()->relative() . '"><i class="far fa-pen-to-square fa-2x" aria-hidden="true"></i></a></p>
+                    <a class="offload" href="' . AdminContentUrlBuilder::content_configuration()->relative() . '">Choisissez un éditeur de texte</a> outil indispensable pour ajouter du contenu.
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="cell-header"><h4 class="formatter-title">4. Membres</h4></div>
+            <div class="cell-body">
+                <div class="cell-content">
+                    <p style="text-align: center;"><a class="offload" href="' . AdminMembersUrlBuilder::configuration()->relative() . '"><i class="fa fa-users fa-2x" aria-hidden="true"></i></a></p>
+                    <a class="offload" href="' . AdminMembersUrlBuilder::configuration()->relative() . '">Configurez l\'inscription des membres</a>.
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="cell-header"><h4 class="formatter-title">5. Thèmes</h4></div>
+            <div class="cell-body">
+                <div class="cell-content">
+                    <p style="text-align: center;"><a class="offload" href="' . AdminThemeUrlBuilder::add_theme()->relative() . '"><i class="far fa-images fa-2x" aria-hidden="true"></i></a></p>
+                    <a class="offload" href="' . AdminThemeUrlBuilder::add_theme()->relative() . '">Ajoutez des thèmes</a> (templates) puis configurez leur droits d\'accès.
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="cell-header"><h4 class="formatter-title">6. Configuration</h4></div>
+            <div class="cell-body">
+                <div class="cell-content">
+                    <p style="text-align: center;"><a class="offload" href="' . AdminConfigUrlBuilder::general_config()->relative() . '"><i class="fa fa-gears fa-2x" aria-hidden="true"></i></a></p>
+                    Rendez vous dans la <a class="offload" href="' . AdminConfigUrlBuilder::general_config()->relative() . '">configuration générale</a> du site pour définir vos options par défaut.
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="cell-header"><h4 class="formatter-title">7. Contenu</h4></div>
+            <div class="cell-body">
+                <div class="cell-content">
+                    <p style="text-align: center;"><i class="fa fa-file-signature fa-2x" aria-hidden="true"></i></p>
+                    Avant de donner l\'accès de votre site à vos visiteurs, prenez un peu de temps pour y mettre du contenu, puis désactivez la <a class="offload" href="/phpboost/dev/pbtnext/admin/maintain/">maintenance</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+        <h2 class="formatter-title">Que faire si vous rencontrez un problème ?</h2><br />
+        N\'hésitez pas à consulter <div class="pinned bgc-full moderator"><a class="offload" href="https://www.phpboost.com/wiki/" target="_blank" rel="noopener">la documentation de PHPBoost</a></div> ou à poser vos questions sur le <div class="pinned bgc-full link-color"><a class="offload" href="https://www.phpboost.com/forum/" target="_blank" rel="noopener">forum d\'entraide</a></div>.
+    <br />
     <br />
     <p class="float-right">Toute l\'équipe de PHPBoost vous remercie d\'utiliser son logiciel pour créer votre site web !</p>
+    <div class="spacer"></div>
 ';
 ?>
