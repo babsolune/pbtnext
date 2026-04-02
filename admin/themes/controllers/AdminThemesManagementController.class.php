@@ -10,11 +10,11 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminThemesInstalledListController extends DefaultAdminController
+class AdminThemesManagementController extends DefaultAdminController
 {
 	protected function get_template_to_use()
 	{
-        return new FileTemplate('admin/themes/AdminThemesInstalledListController.tpl');
+        return new FileTemplate('admin/themes/AdminThemesManagementController.tpl');
 	}
 
 	public function execute(HTTPRequestCustom $request)

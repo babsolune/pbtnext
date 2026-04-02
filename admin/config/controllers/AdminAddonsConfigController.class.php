@@ -11,7 +11,7 @@ class AdminAddonsConfigController extends DefaultAdminController
 {
 	private $configuration;
 
-    public function execute(HTTPRequestCustom $request)
+    public function execute(HTTPRequestCustom $request): AdminAddonsConfigDisplayResponse
     {
 		$this->init();
 		$this->build_form();
@@ -74,6 +74,7 @@ class AdminAddonsConfigController extends DefaultAdminController
         $this->configuration->set_themes_repo($this->form->get_field_by_id('themes_repos')->get_value());
         $this->configuration->set_langs_repo($this->form->get_field_by_id('langs_repos')->get_value());
         $this->configuration->set_addons_server($this->form->get_field_by_id('addons_server')->get_value());
+        AddonsConfig::save();
     }
 }
 ?>

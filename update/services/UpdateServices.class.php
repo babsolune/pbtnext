@@ -962,26 +962,30 @@ class UpdateServices
 
     private function delete_old_files_admin()
     {
-        $file = new File(PATH_TO_ROOT . '/database/lang/english/database_english.php');
-        $file->delete();
-
-        $file = new File(PATH_TO_ROOT . '/database/lang/french/database_french.php');
-        $file->delete();
-
-        $folder = new Folder(PATH_TO_ROOT . '/ReCaptcha/lib');
-        if ($folder->exists()) {
-            $folder->delete();
-        }
-
-        $folder = new Folder(PATH_TO_ROOT . '/TinyMCE/lib');
-        if ($folder->exists()) {
-            $folder->delete();
-        }
-
         $folder = new Folder(PATH_TO_ROOT . '/admin/controllers');
         if ($folder->exists()) {
             $folder->delete();
         }
+
+        $file = new File(PATH_TO_ROOT . '/admin/langs/controllers/AdminUninstallLangController.class.php');
+        $file->delete();
+        $file = new File(PATH_TO_ROOT . '/admin/langs/controllers/AdminLangsInstalledListController.class.php');
+        $file->delete();
+        $file = new File(PATH_TO_ROOT . '/templates/__default__/admin/langs/controllers/AdminLangsInstalledListController.tpl');
+        $file->delete();
+        $file = new File(PATH_TO_ROOT . '/admin/langs/controllers/AdminLangsNotInstalledListController.class.php');
+        $file->delete();
+        $file = new File(PATH_TO_ROOT . '/templates/__default__/admin/langs/controllers/AdminLangsNotInstalledListController.tpl');
+        $file->delete();
+
+        $file = new File(PATH_TO_ROOT . '/admin/themes/controllers/AdminThemesInstalledListController.class.php');
+        $file->delete();
+        $file = new File(PATH_TO_ROOT . '/templates/__default__/admin/themes/controllers/AdminThemesInstalledListController.tpl');
+        $file->delete();
+        $file = new File(PATH_TO_ROOT . '/admin/themes/controllers/AdminThemesNotInstalledListController.class.php');
+        $file->delete();
+        $file = new File(PATH_TO_ROOT . '/templates/__default__/admin/themes/controllers/AdminThemesNotInstalledListController.tpl');
+        $file->delete();
 
     }
 

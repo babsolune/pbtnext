@@ -12,11 +12,11 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminLangsNotInstalledListController extends DefaultAdminController
+class AdminLangAddController extends DefaultAdminController
 {
     protected function get_template_to_use(): FileTemplate
     {
-        return new FileTemplate('admin/langs/AdminLangsNotInstalledListController.tpl');
+        return new FileTemplate('admin/langs/AdminLangAddController.tpl');
     }
 
     public function execute(HTTPRequestCustom $request): AdminLangsDisplayResponse
@@ -75,6 +75,48 @@ class AdminLangsNotInstalledListController extends DefaultAdminController
             'C_LANG_AVAILABLE'          => $not_installed_langs_number > 0,
 
             'LANGS_NUMBER' => $not_installed_langs_number
+        ]);
+
+        // Populate github repos selector
+        $addons_config = AddonsConfig::load();
+        $github_repos  = $addons_config->get_langs_repo();
+        foreach ($github_repos as $repo)
+        {
+            $this->view->assign_block_vars('github_repos', [
+                'LABEL' => $repo['owner'] . '/' . $repo['repository'],
+                'OWNER' => $repo['owner'],
+                'REPO'  => $repo['repository'],
+                'DIR'   => $repo['directory'],
+            ]);
+        }
+        $default_gh_owner = isset($github_repos[0]['owner'])      ? $github_repos[0]['owner']      : '';
+        $default_gh_repo  = isset($github_repos[0]['repository']) ? $github_repos[0]['repository'] : '';
+        $default_gh_dir   = isset($github_repos[0]['directory'])  ? $github_repos[0]['directory']  : '';
+
+        // Populate website servers selector
+        $website_servers = $addons_config->get_addons_server();
+        foreach ($website_servers as $server)
+        {
+            $this->view->assign_block_vars('website_servers', [
+                'LABEL' => $server['website'] . ' (' . $server['url'] . ')',
+                'URL'   => $server['url'],
+                'DIR'   => $server['directory'],
+            ]);
+        }
+        $default_ws_url = isset($website_servers[0]['url'])       ? $website_servers[0]['url']       : '';
+        $default_ws_dir = isset($website_servers[0]['directory']) ? $website_servers[0]['directory'] : '';
+
+        $this->view->put_all([
+            'C_GITHUB_HAS_REPOS'    => count($github_repos) > 1,
+            'GITHUB_DEFAULT_OWNER'  => $default_gh_owner,
+            'GITHUB_DEFAULT_REPO'   => $default_gh_repo,
+            'GITHUB_DEFAULT_DIR'    => $default_gh_dir,
+            'C_WEBSITE_HAS_SERVERS' => count($website_servers) > 1,
+            'WEBSITE_DEFAULT_URL'   => $default_ws_url,
+            'WEBSITE_DEFAULT_DIR'   => $default_ws_dir,
+            'U_AJAX_GITHUB_LIST'    => AdminLangsUrlBuilder::ajax_github_list()->rel(),
+            'U_AJAX_WEBSITE_LIST'   => AdminLangsUrlBuilder::ajax_website_list()->rel(),
+            'U_AJAX_INSTALL'        => AdminLangsUrlBuilder::ajax_install()->rel(),
         ]);
     }
 

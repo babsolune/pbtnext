@@ -159,4 +159,44 @@ $lang['addon.themes.upload'] = 'Uploader un thème';
     // Drop
 $lang['addon.themes.drop']          = 'Supprimer tous les fichiers du thème';
 $lang['addon.themes.drop.multiple'] = 'Supprimer tous les fichiers des thèmes';
+
+// ---- Sources distantes d'addons (GitHub / Site) ----
+
+// Onglets
+$lang['addon.modules.add.tab.github']  = 'Depuis GitHub';
+$lang['addon.modules.add.tab.website'] = 'Depuis un site';
+$lang['addon.modules.add.tab.server']  = 'Depuis le serveur';
+$lang['addon.modules.add.tab.archive'] = 'Depuis une archive';
+$lang['addon.themes.add.tab.github']   = 'Depuis GitHub';
+$lang['addon.themes.add.tab.website']  = 'Depuis un site';
+$lang['addon.themes.add.tab.server']   = 'Depuis le serveur';
+$lang['addon.themes.add.tab.archive']  = 'Depuis une archive';
+$lang['addon.langs.add.tab.github']    = 'Depuis GitHub';
+$lang['addon.langs.add.tab.website']   = 'Depuis un site';
+$lang['addon.langs.add.tab.server']    = 'Depuis le serveur';
+$lang['addon.langs.add.tab.archive']   = 'Depuis une archive';
+
+// GitHub
+$lang['addon.github.choose.repo']    = 'Choisir un dépôt';
+$lang['addon.github.custom.repo']    = 'Utiliser un dépôt personnalisé';
+$lang['addon.github.load.repo']      = 'Charger ce dépôt';
+$lang['addon.github.view.repo']      = 'Voir sur GitHub';
+$lang['addon.github.no.addon.found'] = 'Aucun addon compatible trouvé dans ce dépôt.';
+
+// Site web
+$lang['addon.website.choose.server']  = 'Choisir un serveur de téléchargement';
+$lang['addon.website.custom.server']  = 'Utiliser un serveur personnalisé';
+$lang['addon.website.load']           = 'Charger ce serveur';
+$lang['addon.website.no.addon.found'] = 'Aucun addon compatible trouvé sur ce serveur.';
+
+// Commun
+$lang['addon.loading']               = 'Chargement&hellip;';
+$lang['addon.installing']            = 'Installation&hellip;';
+$lang['addon.already.installed']     = 'Déjà installé';
+$lang['addon.source.error']          = 'Impossible d\'atteindre la source. Vérifiez l\'adresse ou votre connexion.';
+$lang['addon.sub.directory']         = 'Sous-dossier';
+$lang['addon.sub.directory.optional'] = 'Optionnel';
+$lang['addon.themes.already.installed'] = 'Ce thème est déjà installé.';
+$lang['addon.langs.already.installed']  = 'Cette langue est déjà installée.';
+$lang['warning.download.error']         = 'Le téléchargement a échoué. Vérifiez l\'URL ou votre connexion.';
 ?>

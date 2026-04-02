@@ -113,7 +113,7 @@ class LangsManager
 		return false;
 	}
 
-	public static function install($id, $authorizations = array(), $enable = true)
+	public static function install($id, $authorizations = [], $enable = true)
 	{
 		if (!empty($id) && !self::get_lang_existed($id))
 		{

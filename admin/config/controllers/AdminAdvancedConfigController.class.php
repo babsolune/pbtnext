@@ -51,10 +51,10 @@ class AdminAdvancedConfigController extends DefaultAdminController
 
 	private function load_config()
 	{
-		$this->general_config = GeneralConfig::load();
+		$this->general_config            = GeneralConfig::load();
 		$this->server_environment_config = ServerEnvironmentConfig::load();
-		$this->sessions_config = SessionsConfig::load();
-		$this->cookiebar_config = CookieBarConfig::load();
+		$this->sessions_config           = SessionsConfig::load();
+		$this->cookiebar_config          = CookieBarConfig::load();
 	}
 
 	private function build_form(HTTPRequestCustom $request)
@@ -65,24 +65,24 @@ class AdminAdvancedConfigController extends DefaultAdminController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldUrlEditor('site_url', $this->lang['configuration.site.url'], $this->general_config->get_site_url(),
-			array(
+			[
 				'class' => 'third-field', 'required' => true,
 				'description' => $this->lang['configuration.site.url.clue']
-			)
+			]
 		));
 
 		$fieldset->add_field(new FormFieldTextEditor('site_path', $this->lang['configuration.site.path'], $this->general_config->get_site_path(),
-			array(
+			[
 				'class' => 'third-field',
 				'description' => $this->lang['configuration.site.path.clue']
-			)
+			]
 		));
 
 		$fieldset->add_field(new FormFieldTimezone('site_timezone', $this->lang['configuration.site.timezone'], $this->general_config->get_site_timezone(),
-			array(
+			[
 				'class' => 'third-field',
 				'description' => $this->lang['configuration.site.timezone.clue']
-			)
+			]
 		));
 
 		if ($request->get_is_localhost() || $request->get_is_subdomain())
@@ -227,7 +227,7 @@ class AdminAdvancedConfigController extends DefaultAdminController
 					'description' => $url_rewriting_desc->display()
 				)
 			));
- 		}
+        }
 
 		$protection_file_name = !preg_match('/apache/i', $_SERVER["SERVER_SOFTWARE"]) ? 'nginx' : 'htaccess';
 

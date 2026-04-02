@@ -11,11 +11,11 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminLangsInstalledListController extends DefaultAdminController
+class AdminLangsManagementController extends DefaultAdminController
 {
 	protected function get_template_to_use()
 	{
-        return new FileTemplate('admin/langs/AdminLangsInstalledListController.tpl');
+        return new FileTemplate('admin/langs/AdminLangsManagementController.tpl');
 	}
 
 	public function execute(HTTPRequestCustom $request)
@@ -115,7 +115,7 @@ class AdminLangsInstalledListController extends DefaultAdminController
 			$lang_number = 1;
 			foreach ($installed_langs as $lang)
 			{
-				if ($lang->get_id() !== LangsManager::get_default_lang() && ($request->get_value('delete-checkbox-' . $Lang_number, 'off') == 'on') )
+				if ($lang->get_id() !== LangsManager::get_default_lang() && ($request->get_value('delete-checkbox-' . $lang_number, 'off') == 'on') )
 				{
 					$authorizations = Authorizations::auth_array_simple(Lang::ACCES_LANG, $lang->get_id());
 					LangsManager::change_informations($lang->get_id(), $activated, $authorizations);

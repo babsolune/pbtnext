@@ -12,47 +12,47 @@
 class SmalladsConfig extends AbstractConfigData
 {
 	// Categories
-	const ENABLED_SORT_FILTERS = 'enabled_sort_filters';
-	const ENABLED_CATS_ICON = 'enabled_cats_icon';
-	const ITEMS_PER_ROW = 'items_per_row';
-	const ITEMS_PER_PAGE = 'items_per_page';
-	const ROOT_CATEGORY_DESCRIPTION = 'root_category_description';
-	const DISPLAY_TYPE = 'display_type';
-	const GRID_VIEW = 'grid_view';
-	const LIST_VIEW = 'list_view';
-	const TABLE_VIEW = 'table_view';
-	const CHARACTERS_NUMBER_TO_CUT = 'characters_number_to_cut';
+	const ENABLED_SORT_FILTERS          = 'enabled_sort_filters';
+	const ENABLED_CATS_ICON             = 'enabled_cats_icon';
+	const ITEMS_PER_ROW                 = 'items_per_row';
+	const ITEMS_PER_PAGE                = 'items_per_page';
+	const ROOT_CATEGORY_DESCRIPTION     = 'root_category_description';
+	const DISPLAY_TYPE                  = 'display_type';
+	const GRID_VIEW                     = 'grid_view';
+	const LIST_VIEW                     = 'list_view';
+	const TABLE_VIEW                    = 'table_view';
+	const CHARACTERS_NUMBER_TO_CUT      = 'characters_number_to_cut';
 	const SUMMARIES_DISPLAYED_TO_GUESTS = 'summaries_displayed_to_guests';
-	const AUTHORIZATIONS = 'authorizations';
-    const DEFAULT_CONTENTS = 'default_content';
+	const AUTHORIZATIONS                = 'authorizations';
+    const DEFAULT_CONTENTS              = 'default_content';
 
 	// Items
-	const CURRENCY = 'currency';
-	const SMALLAD_TYPES = 'smallad_types';
-	const MAX_WEEKS_NUMBER_DISPLAYED = 'max_weeks_number_displayed';
-	const MAX_WEEKS_NUMBER = 'max_weeks_number';
+	const CURRENCY                    = 'currency';
+	const SMALLAD_TYPES               = 'smallad_types';
+	const MAX_WEEKS_NUMBER_DISPLAYED  = 'max_weeks_number_displayed';
+	const MAX_WEEKS_NUMBER            = 'max_weeks_number';
 	const DISPLAY_DELAY_BEFORE_DELETE = 'display_delay_before_delete';
-	const CONTACT_LEVEL = 'contact_level';
-	const DISPLAY_EMAIL_ENABLED = 'display_email_enabled';
-	const DISPLAY_PM_ENABLED = 'display_pm_enabled';
-	const DISPLAY_PHONE_ENABLED = 'display_phone_enabled';
-	const ENABLED_ITEMS_SUGGESTIONS = 'enabled_items_suggestions';
-	const SUGGESTED_ITEMS_NB = 'suggested_items_nb';
-	const ENABLED_NAVIGATION_LINKS = 'enabled_navigation_links';
-	const BRANDS = 'brands';
-	const LOCATION = 'location';
-	const DEFERRED_OPERATIONS = 'deferred_operations';
+	const CONTACT_LEVEL               = 'contact_level';
+	const DISPLAY_EMAIL_ENABLED       = 'display_email_enabled';
+	const DISPLAY_PM_ENABLED          = 'display_pm_enabled';
+	const DISPLAY_PHONE_ENABLED       = 'display_phone_enabled';
+	const ENABLED_ITEMS_SUGGESTIONS   = 'enabled_items_suggestions';
+	const SUGGESTED_ITEMS_NB          = 'suggested_items_nb';
+	const ENABLED_NAVIGATION_LINKS    = 'enabled_navigation_links';
+	const BRANDS                      = 'brands';
+	const LOCATION                    = 'location';
+	const DEFERRED_OPERATIONS         = 'deferred_operations';
 
 	// Mini Menu
-	const MINI_MENU_ITEMS_NB = 'mini_menu_items_nb';
+	const MINI_MENU_ITEMS_NB        = 'mini_menu_items_nb';
 	const MINI_MENU_ANIMATION_SPEED = 'mini_menu_animation_speed';
-	const MINI_MENU_AUTOPLAY = 'mini_menu_autoplay';
-	const MINI_MENU_AUTOPLAY_SPEED = 'mini_menu_autoplay_speed';
-	const MINI_MENU_AUTOPLAY_HOVER = 'mini_menu_autoplay_hover';
+	const MINI_MENU_AUTOPLAY        = 'mini_menu_autoplay';
+	const MINI_MENU_AUTOPLAY_SPEED  = 'mini_menu_autoplay_speed';
+	const MINI_MENU_AUTOPLAY_HOVER  = 'mini_menu_autoplay_hover';
 
 	// Usage terms
 	const USAGE_TERMS_ENABLED = 'usage_terms_enabled';
-	const USAGE_TERMS = 'usage_terms';
+	const USAGE_TERMS         = 'usage_terms';
 
 	// categories
 
@@ -446,44 +446,44 @@ class SmalladsConfig extends AbstractConfigData
 		$lang = LangLoader::get_all_langs('smallads');
 		return [
 			// Categories
-			self::ENABLED_SORT_FILTERS => true,
-			self::ENABLED_CATS_ICON => false,
-			self::ITEMS_PER_ROW => 2,
-			self::ITEMS_PER_PAGE => 10,
-			self::DISPLAY_TYPE => self::GRID_VIEW,
-			self::CHARACTERS_NUMBER_TO_CUT => 128,
+			self::ENABLED_SORT_FILTERS          => true,
+			self::ENABLED_CATS_ICON             => false,
+			self::ITEMS_PER_ROW                 => 2,
+			self::ITEMS_PER_PAGE                => 10,
+			self::DISPLAY_TYPE                  => self::GRID_VIEW,
+			self::CHARACTERS_NUMBER_TO_CUT      => 128,
 			self::SUMMARIES_DISPLAYED_TO_GUESTS => false,
-			self::ROOT_CATEGORY_DESCRIPTION => $lang['smallads.root.category.description'],
-            self::DEFAULT_CONTENTS => '',
-			self::AUTHORIZATIONS => ['r-1' => 1, 'r0' => 5, 'r1' => 21],
+			self::ROOT_CATEGORY_DESCRIPTION     => $lang['smallads.root.category.description'],
+            self::DEFAULT_CONTENTS              => '',
+			self::AUTHORIZATIONS                => ['r-1' => 1, 'r0' => 5, 'r1' => 21],
 
 			// Items
-			self::CURRENCY => '€',
-			self::SMALLAD_TYPES => [$lang['smallads.default.type']],
-			self::MAX_WEEKS_NUMBER_DISPLAYED => true,
-			self::MAX_WEEKS_NUMBER => 12,
+			self::CURRENCY                    => '€',
+			self::SMALLAD_TYPES               => [$lang['smallads.default.type']],
+			self::MAX_WEEKS_NUMBER_DISPLAYED  => true,
+			self::MAX_WEEKS_NUMBER            => 12,
 			self::DISPLAY_DELAY_BEFORE_DELETE => 2,
-			self::CONTACT_LEVEL => true,
-			self::DISPLAY_EMAIL_ENABLED => true,
-			self::DISPLAY_PM_ENABLED => true,
-			self::DISPLAY_PHONE_ENABLED => true,
-			self::ENABLED_ITEMS_SUGGESTIONS => false,
-			self::SUGGESTED_ITEMS_NB => 4,
-			self::ENABLED_NAVIGATION_LINKS => false,
-			self::BRANDS => [],
-			self::LOCATION => true,
-			self::DEFERRED_OPERATIONS => [],
+			self::CONTACT_LEVEL               => true,
+			self::DISPLAY_EMAIL_ENABLED       => true,
+			self::DISPLAY_PM_ENABLED          => true,
+			self::DISPLAY_PHONE_ENABLED       => true,
+			self::ENABLED_ITEMS_SUGGESTIONS   => false,
+			self::SUGGESTED_ITEMS_NB          => 4,
+			self::ENABLED_NAVIGATION_LINKS    => false,
+			self::BRANDS                      => [],
+			self::LOCATION                    => true,
+			self::DEFERRED_OPERATIONS         => [],
 
 			// Mini Menu
-			self::MINI_MENU_ITEMS_NB => 5,
+			self::MINI_MENU_ITEMS_NB        => 5,
 			self::MINI_MENU_ANIMATION_SPEED => '1000',
-			self::MINI_MENU_AUTOPLAY => true,
-			self::MINI_MENU_AUTOPLAY_SPEED => '3000',
-			self::MINI_MENU_AUTOPLAY_HOVER => true,
+			self::MINI_MENU_AUTOPLAY        => true,
+			self::MINI_MENU_AUTOPLAY_SPEED  => '3000',
+			self::MINI_MENU_AUTOPLAY_HOVER  => true,
 
 			// Usage Terms
 			self::USAGE_TERMS_ENABLED => false,
-			self::USAGE_TERMS => LangLoader::get_message('smallads.default.usage.terms', 'install', 'smallads'),
+			self::USAGE_TERMS         => LangLoader::get_message('smallads.default.usage.terms', 'install', 'smallads'),
         ];
 	}
 

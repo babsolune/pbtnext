@@ -161,4 +161,44 @@ $lang['addon.themes.upload'] = 'Upload theme';
     // Drop
 $lang['addon.themes.drop']          = 'Delete all the theme\'s files';
 $lang['addon.themes.drop.multiple'] = 'Delete all themes\'s files';
+
+// ---- Remote addon sources (GitHub / Website) ----
+
+// Tabs
+$lang['addon.modules.add.tab.github']  = 'From GitHub';
+$lang['addon.modules.add.tab.website'] = 'From a website';
+$lang['addon.modules.add.tab.server']  = 'From the server';
+$lang['addon.modules.add.tab.archive'] = 'From an archive';
+$lang['addon.themes.add.tab.github']   = 'From GitHub';
+$lang['addon.themes.add.tab.website']  = 'From a website';
+$lang['addon.themes.add.tab.server']   = 'From the server';
+$lang['addon.themes.add.tab.archive']  = 'From an archive';
+$lang['addon.langs.add.tab.github']    = 'From GitHub';
+$lang['addon.langs.add.tab.website']   = 'From a website';
+$lang['addon.langs.add.tab.server']    = 'From the server';
+$lang['addon.langs.add.tab.archive']   = 'From an archive';
+
+// GitHub
+$lang['addon.github.choose.repo']    = 'Choose a repository';
+$lang['addon.github.custom.repo']    = 'Use a custom repository';
+$lang['addon.github.load.repo']      = 'Load this repository';
+$lang['addon.github.view.repo']      = 'View on GitHub';
+$lang['addon.github.no.addon.found'] = 'No compatible addon found in this repository.';
+
+// Website
+$lang['addon.website.choose.server']  = 'Choose a download server';
+$lang['addon.website.custom.server']  = 'Use a custom server';
+$lang['addon.website.load']           = 'Load this server';
+$lang['addon.website.no.addon.found'] = 'No compatible addon found on this server.';
+
+// Common
+$lang['addon.loading']               = 'Loading&hellip;';
+$lang['addon.installing']            = 'Installing&hellip;';
+$lang['addon.already.installed']     = 'Already installed';
+$lang['addon.source.error']          = 'Unable to reach the source. Check the address or your connection.';
+$lang['addon.sub.directory']         = 'Subdirectory';
+$lang['addon.sub.directory.optional'] = 'Optional';
+$lang['addon.themes.already.installed'] = 'This theme is already installed.';
+$lang['addon.langs.already.installed']  = 'This language is already installed.';
+$lang['warning.download.error']         = 'Download failed. Check the URL or your network connection.';
 ?>

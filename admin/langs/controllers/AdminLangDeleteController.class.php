@@ -11,7 +11,7 @@
  * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class AdminUninstallLangController extends DefaultAdminController
+class AdminLangDeleteController extends DefaultAdminController
 {
 	private $lang_id;
 	private $multiple = false;

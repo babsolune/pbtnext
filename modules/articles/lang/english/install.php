@@ -17,12 +17,12 @@
 $lang['categories'] = $lang['items'] = [];
 
 $lang['categories'][] = array(
-	'category.name'        => 'First category',
-	'category.description' => 'Article demonstration'
+	'category.name'        => 'Test category',
+	'category.description' => 'Demonstration articles'
 );
 
 $lang['items'][] = array(
-	'item.title'   => 'How to begin with the articles module',
+	'item.title'   => 'How to begin with the Articles module',
 	'item.content' => '
 		<p>This brief article will give you some simple tips to take control of this module.</p>
 		<ul class="formatter-ul">
