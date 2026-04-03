@@ -29,7 +29,7 @@ $Bread_crumb->add($config->get_forum_name(), 'index.php');
 $Bread_crumb->add($page_title, 'membermsg.php?id=' . $member->get_id());
 
 define('TITLE', $page_title);
-define('DESCRIPTION', StringVars::replace_vars($lang['forum.member.messages.seo'], array('author' => $member->get_display_name())));
+define('DESCRIPTION', StringVars::replace_vars($lang['forum.member.messages.seo'], ['author' => $member->get_display_name()]));
 require_once(PATH_TO_ROOT . '/kernel/header.php');
 $request = AppContext::get_request();
 
@@ -61,10 +61,10 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 		$row = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as nbr_msg
 		FROM " . PREFIX . "forum_msg msg
 		LEFT JOIN " . PREFIX . "forum_topics t ON msg.idtopic = t.id
-		WHERE msg.user_id = :user_id AND t.id_category IN :authorized_categories", array(
+		WHERE msg.user_id = :user_id AND t.id_category IN :authorized_categories", [
 			'authorized_categories' => $authorized_categories,
 			'user_id' => $member->get_id()
-		));
+		]);
 		$nbr_msg = $row['nbr_msg'];
 	} catch (RowNotFoundException $e) {}
 
@@ -77,7 +77,7 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
 	}
-	$view->put_all(array(
+	$view->put_all([
 		'C_ITEMS'         => $nbr_msg > 0,
 		'C_PAGINATION'    => $pagination->has_several_pages(),
 
@@ -85,7 +85,7 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 		'PAGINATION'      => $pagination->display(),
 
 		'L_VIEW_MSG_USER' => $page_title,
-	));
+	]);
 
 	$result = PersistenceContext::get_querier()->select("SELECT
 		msg.id, msg.user_id, msg.idtopic, msg.timestamp, msg.timestamp_edit, msg.user_id_edit, msg.content,
@@ -105,13 +105,13 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 	LEFT JOIN " . DB_TABLE_SESSIONS . " s ON s.user_id = msg.user_id AND s.timestamp > :timestamp
 	WHERE msg.user_id = :user_id AND t.id_category IN :authorized_categories
 	ORDER BY msg.id DESC
-	LIMIT :number_items_per_page OFFSET :display_from", array(
+	LIMIT :number_items_per_page OFFSET :display_from", [
 		'user_id' => $member->get_id(),
 		'timestamp' => (time() - SessionsConfig::load()->get_active_session_duration()),
 		'authorized_categories' => $authorized_categories,
 		'number_items_per_page' => $pagination->get_number_items_per_page(),
 		'display_from' => $pagination->get_display_from()
-	));
+	]);
 	while ($row = $result->fetch())
 	{
 		//On encode l'url pour un éventuel rewriting, c'est une opération assez gourmande
@@ -172,9 +172,9 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 			$msg_id_result = PersistenceContext::get_querier()->select("SELECT id
 			FROM " . PREFIX . "forum_msg
 			WHERE idtopic = :idtopic
-			ORDER BY id ASC", array(
+			ORDER BY id ASC", [
 				'idtopic' => $row['idtopic']
-			));
+			]);
 
 			$current_message = 0;
 			while ($msg_id_row = $msg_id_result->fetch())
@@ -194,7 +194,7 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 
 		$view->assign_block_vars('list', array_merge(
 			Date::get_array_tpl_vars($topic_date,'TOPIC_DATE'),
-			Date::get_array_tpl_vars($user_registered_date,'USER_REGISTERED_DATE'), array(
+			Date::get_array_tpl_vars($user_registered_date,'USER_REGISTERED_DATE'), [
 			'C_USER_RANK'      => ($row['warning_percentage'] < '100' || (time() - $row['delay_banned']) < 0),
 			'C_USER_RANK_ICON' => !empty($user_rank_icon),
 			'C_USER_AVATAR'    => $row['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),
@@ -232,7 +232,7 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 			'U_VARS_ANCHOR'    	  => url('.php?' . ($topic_page > 1 ? 'pt=' . $topic_page . '&amp;' : '') . 'id=' . $row['idtopic'], '-' . $row['idtopic'] . ($topic_page > 1 ? '-' . $topic_page : '') . $rewrited_title . '.php'),
 			'U_CATEGORY'       	  => PATH_TO_ROOT . '/modules/forum/forum' . url('.php?id=' . $row['id_category'], '-' . $row['id_category'] . $rewrited_cat_title . '.php'),
 			'U_TITLE_T'        	  => PATH_TO_ROOT . '/modules/forum/topic' . url('.php?' . ($topic_page > 1 ? 'pt=' . $topic_page . '&amp;' : '') . 'id=' . $row['idtopic'], '-' . $row['idtopic'] . ($topic_page > 1 ? '-' . $topic_page : '') . $rewrited_title . '.php')
-		)));
+		]));
 
 		//Affichage des groupes du membre.
 		if (!empty($row['user_groups']))
@@ -245,7 +245,7 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 
 				if (is_numeric(array_search($idgroup, $array_user_groups)))
 				{
-					$view->assign_block_vars('list.usergroups', array(
+					$view->assign_block_vars('list.usergroups', [
 						'C_IMG_USERGROUP'   => !empty($array_group_info['img']),
 						'C_USERGROUP_COLOR' => !empty($group_color),
 
@@ -255,7 +255,7 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 
 						'U_IMG_USERGROUP'   => $array_group_info['img'],
 						'U_USERGROUP'       => UserUrlBuilder::group($idgroup)->rel()
-					));
+					]);
 				}
 			}
 		}
@@ -310,7 +310,7 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 					}
 				}
 
-				$view->assign_block_vars('list.ext_fields', array(
+				$view->assign_block_vars('list.ext_fields', [
 					'BUTTON'     => $button,
 					'U_URL'      => $row[$field_type],
 					'NAME'       => $field['name'],
@@ -319,7 +319,7 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 					'IS_UNKNOWN' => $unknown_field,
 					'TITLE'      => $title,
 					'ICON_FA'    => $icon_fa
-				));
+				]);
 			}
 		}
 	
@@ -327,9 +327,9 @@ if (ForumAuthorizationsService::check_authorizations()->read_topics_content())
 
 		foreach ($user_additional_informations as $info)
 		{
-			$view->assign_block_vars('list.additional_informations', array(
+			$view->assign_block_vars('list.additional_informations', [
 				'VALUE' => $info
-			));
+			]);
 		}
 	}
 	$result->dispose();
@@ -343,7 +343,7 @@ else
 //Listes les utilisateurs en ligne.
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '%" ."/forum/membermsg.php%'");
 
-$vars_tpl = array(
+$vars_tpl = [
 	'C_USER_CONNECTED'      => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 	'C_NO_USER_ONLINE'      => (($total_online - $total_visit) == 0),
 
@@ -360,7 +360,7 @@ $vars_tpl = array(
 	'L_MODO'   => ($total_modo > 1) ? $lang['user.moderators']    : $lang['user.moderator'],
 	'L_MEMBER' => ($total_member > 1) ? $lang['user.members'] : $lang['user.member'],
 	'L_GUEST'  => ($total_visit > 1) ? $lang['user.guests'] : $lang['user.guest'],
-);
+];
 
 $view->put_all($vars_tpl);
 $top_view->put_all($vars_tpl);

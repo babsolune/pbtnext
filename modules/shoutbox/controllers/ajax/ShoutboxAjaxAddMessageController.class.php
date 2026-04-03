@@ -20,7 +20,7 @@ class ShoutboxAjaxAddMessageController extends AbstractController
 			if ($pseudo && $content)
 			{
 				//Mod anti-flood, autorisé aux membres qui bénéficient de l'autorisation de flooder.
-				$check_time = (AppContext::get_current_user()->get_id() !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? PersistenceContext::get_querier()->get_column_value(PREFIX . "shoutbox", 'MAX(timestamp)', 'WHERE user_id = :id', array('id' => AppContext::get_current_user()->get_id())) : '';
+				$check_time = (AppContext::get_current_user()->get_id() !== -1 && ContentManagementConfig::load()->is_anti_flood_enabled()) ? PersistenceContext::get_querier()->get_column_value(PREFIX . "shoutbox", 'MAX(timestamp)', 'WHERE user_id = :id', ['id' => AppContext::get_current_user()->get_id()]) : '';
 				if (!empty($check_time) && !AppContext::get_current_user()->check_max_value(AUTH_FLOOD))
 				{
 					if ($check_time >= (time() - ContentManagementConfig::load()->get_anti_flood_duration()))
@@ -41,7 +41,7 @@ class ShoutboxAjaxAddMessageController extends AbstractController
 				$item->set_creation_date(new Date());
 				$code = ShoutboxService::add($item);
 				$item->set_id($code);
-				HooksService::execute_hook_action('add', 'shoutbox', array_merge($item->get_properties(), array('title' => LangLoader::get_message('item', 'common', 'shoutbox'), 'item_url' => ShoutboxUrlBuilder::home(1, $code)->rel())));
+				HooksService::execute_hook_action('add', 'shoutbox', array_merge($item->get_properties(), ['title' => LangLoader::get_message('item', 'common', 'shoutbox'), 'item_url' => ShoutboxUrlBuilder::home(1, $code)->rel()]));
 			}
 			else
 				$code = -3;
@@ -49,7 +49,7 @@ class ShoutboxAjaxAddMessageController extends AbstractController
 		else
 			$code = -4;
 
-		return new JSONResponse(array('code' => $code));
+		return new JSONResponse(['code' => $code]);
 	}
 
 	private function check_authorizations()

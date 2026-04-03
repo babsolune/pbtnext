@@ -47,7 +47,7 @@ class NewsletterEditSubscriberController extends DefaultModuleController
 		$form = new HTMLForm(self::class);
 		$form->set_layout_title($this->lang['newsletter.subscriber.edit']);
 
-		$columns = array('*');
+		$columns = ['*'];
 		$condition = "WHERE id = '". $id ."' AND user_id = -1";
 		$row = PersistenceContext::get_querier()->select_single_row(NewsletterSetup::$newsletter_table_subscribers, $columns, $condition);
 
@@ -55,7 +55,7 @@ class NewsletterEditSubscriberController extends DefaultModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldMailEditor('mail', $this->lang['newsletter.subscriber.email'], $row['mail'],
-			array('required' => true)
+			['required' => true]
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -68,8 +68,8 @@ class NewsletterEditSubscriberController extends DefaultModuleController
 	private function save($id)
 	{
 		$condition = "WHERE id = :id";
-		$columns = array('mail' => $this->form->get_value('mail'));
-		$parameters = array('id' => $id);
+		$columns = ['mail' => $this->form->get_value('mail')];
+		$parameters = ['id' => $id];
 		PersistenceContext::get_querier()->update(NewsletterSetup::$newsletter_table_subscribers, $columns, $condition, $parameters);
 
 		NewsletterStreamsCache::invalidate();

@@ -11,7 +11,7 @@ class AdminHistoryConfigController extends DefaultAdminModuleController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
-		$title = StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name()));
+		$title = StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]);
 		$this->build_form($title);
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
@@ -33,23 +33,23 @@ class AdminHistoryConfigController extends DefaultAdminModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldMultipleCheckbox('history_topics_disabled', $this->lang['history.config.topics.disabled'], $this->get_selected_topics_list(), $this->build_available_topics_options(),
-			array(
+			[
 				'class' => 'top-field third-field mini-checkbox'
-			)
+			]
 		));
 
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('disabled_modules', $this->lang['history.config.disabled.modules'], $this->config->get_disabled_modules(), $this->generate_disabled_modules_option(),
-			array(
+			[
 				'class'       => 'top-field third-field',
 				'size'        => 12,
 				'description' => $this->lang['history.config.disabled.modules.clue']
-			)
+			]
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('log_retention_period', $this->lang['history.config.log.retention.period'], $this->config->get_log_retention_period(), $this->build_log_retention_period_options(),
-			array(
+			[
 				'class' => 'top-field third-field'
-			)
+			]
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -62,7 +62,7 @@ class AdminHistoryConfigController extends DefaultAdminModuleController
 	private function get_selected_topics_list()
 	{
 		$history_topics_disabled = $this->config->get_history_topics_disabled();
-		$list = array();
+		$list = [];
 
 		foreach ($this->get_available_topics_list() as $topic)
 		{
@@ -81,12 +81,12 @@ class AdminHistoryConfigController extends DefaultAdminModuleController
 
 	private function get_available_topics_list()
 	{
-		return array('items', 'categories', 'contributions', 'moderation', 'users', 'comments', 'notation', 'config');
+		return ['items', 'categories', 'contributions', 'moderation', 'users', 'comments', 'notation', 'config'];
 	}
 
 	private function build_available_topics_options()
 	{
-		$list = array();
+		$list = [];
 
 		foreach ($this->get_available_topics_list() as $topic)
 		{
@@ -95,7 +95,7 @@ class AdminHistoryConfigController extends DefaultAdminModuleController
 
 		foreach (HooksService::get_modules_with_specific_hooks_list() as $module_id)
 		{
-			$list[] = new FormFieldMultipleCheckboxOption($module_id, StringVars::replace_vars($this->lang['history.config.topic.module_specific'], array('module_name' => ModulesManager::get_module($module_id)->get_configuration()->get_name())));
+			$list[] = new FormFieldMultipleCheckboxOption($module_id, StringVars::replace_vars($this->lang['history.config.topic.module_specific'], ['module_name' => ModulesManager::get_module($module_id)->get_configuration()->get_name()]));
 		}
 
 		return $list;
@@ -103,7 +103,7 @@ class AdminHistoryConfigController extends DefaultAdminModuleController
 
 	private function generate_disabled_modules_option()
 	{
-		$options = array();
+		$options = [];
 
 		foreach (ModulesManager::get_activated_modules_map() as $id => $module)
 		{
@@ -114,7 +114,7 @@ class AdminHistoryConfigController extends DefaultAdminModuleController
 
 	private function build_log_retention_period_options()
 	{
-		$options = array();
+		$options = [];
 		foreach (self::get_log_retention_periods() as $duration => $label)
 		{
 			$options[] = new FormFieldSelectChoiceOption($label, $duration);
@@ -126,7 +126,7 @@ class AdminHistoryConfigController extends DefaultAdminModuleController
 	{
 		$lang = LangLoader::get_all_langs();
 
-		return array(
+		return [
 			2629800  => '1 ' . $lang['date.month'],
 			5259600  => '2 ' . $lang['date.months'],
 			7889400  => '3 ' . $lang['date.months'],
@@ -135,7 +135,7 @@ class AdminHistoryConfigController extends DefaultAdminModuleController
 			63115200 => '2 ' . $lang['date.years'],
 			94672800 => '3 ' . $lang['date.years'],
 			0        => $lang['common.always']
-		);
+		];
 	}
 
 	private function save()
@@ -147,7 +147,7 @@ class AdminHistoryConfigController extends DefaultAdminModuleController
 		}
 		$this->config->set_history_topics_disabled($history_topics_disabled);
 
-		$disabled_modules = array();
+		$disabled_modules = [];
 		foreach ($this->form->get_value('disabled_modules') as $field => $option)
 		{
 			$disabled_modules[] = $option->get_raw_value();

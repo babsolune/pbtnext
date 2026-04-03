@@ -12,7 +12,7 @@
 	<section id="installed-modules-container">
         <header class="legend">{@addon.modules.installed}</header>
         <div class="cell-list">
-            <ul class="col-v-2">
+            <ul class="col-v-3">
                 # START installed_modules #
                     <li class="li-stretch addon-row addon# IF NOT installed_modules.C_IS_ACTIVATED # disabled-addon# ENDIF ## IF NOT installed_modules.C_COMPATIBLE # not-compatible error# ENDIF #">
                         <div class="addon-name align-left mini-checkbox" id="module-{installed_modules.MODULE_NUMBER}">

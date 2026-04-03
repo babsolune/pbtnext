@@ -24,7 +24,7 @@ class GoogleMapsFormFieldSimpleAddress extends AbstractFormField
 	 * @param string[] $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
-	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 		$this->set_css_form_field_class('form-field-map simple-address');
@@ -43,7 +43,7 @@ class GoogleMapsFormFieldSimpleAddress extends AbstractFormField
 
 		$this->assign_common_template_variables($template);
 
-		$field_tpl->put_all(array(
+		$field_tpl->put_all([
 			'C_INCLUDE_API' => $this->include_api,
 			'C_CLASS' => !empty($this->get_css_class()),
 			'C_ADDRESS' => !empty($this->get_value()),
@@ -55,11 +55,11 @@ class GoogleMapsFormFieldSimpleAddress extends AbstractFormField
 			'CLASS' => $this->get_css_class(),
 			'C_READONLY' => $this->is_readonly(),
 			'C_DISABLED' => $this->is_disabled()
-		));
+		]);
 
-		$template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $field_tpl->render()
-		));
+		]);
 
 		return $template;
 	}

@@ -16,21 +16,21 @@ class PollVotesResultService
 			$tpl = new FileTemplate('poll/PollVotesResult.tpl');
 			$tpl->add_lang(LangLoader::get_all_langs('poll'));
 
-			$tpl->put_all(array(
+			$tpl->put_all([
 				'C_HAS_VOTES' => $item->has_votes(),
 				'TOTAL_VOTES_NUMBER' => $item->get_votes_number()
-			));
+			]);
 
 			if ($item->has_votes())
 			{
 				foreach ($item->get_votes() as $answer => $votes_number)
 				{
 					$percentage = round($votes_number * 100 / $item->get_votes_number(), 0);
-					$tpl->assign_block_vars('votes_result', array(
+					$tpl->assign_block_vars('votes_result', [
 						'ANSWER' 	   => $answer,
 						'VOTES_NUMBER' => $votes_number,
 						'PERCENTAGE'   => $percentage
-					));
+					]);
 				}
 			}
 

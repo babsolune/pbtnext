@@ -21,7 +21,7 @@ class FunctionTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 	public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
 	{
         $this->register($context, $input, $output);
-		$matches = array();
+		$matches = [];
 		if ($input->consume_next('(?:(?P<class>\w+)::)?(?P<method>\w+)\(', '', $matches))
 		{
 			$class = $matches['class'];

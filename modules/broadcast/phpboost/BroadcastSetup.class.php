@@ -32,7 +32,7 @@ class BroadcastSetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(self::$broadcast_table, self::$broadcast_cats_table));
+		PersistenceContext::get_dbms_utils()->drop([self::$broadcast_table, self::$broadcast_cats_table]);
 	}
 
 	private function create_tables()
@@ -43,29 +43,29 @@ class BroadcastSetup extends DefaultModuleSetup
 
 	private function create_broadcast_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'title' => array('type' => 'string', 'length' => 250, 'notnull' => 1, 'default' => "''"),
-			'rewrited_title' => array('type' => 'string', 'length' => 250, 'default' => "''"),
-			'content' => array('type' => 'text', 'length' => 65000),
-			'published' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'release_days' => array('type' =>  'text', 'length' => 65000),
-			'start_time' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'end_time' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'update_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'thumbnail_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'author_custom_name' => array('type' =>  'string', 'length' => 255, 'default' => "''"),
-			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-		);
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array(
-				'id_category' => array('type' => 'key', 'fields' => 'id_category'),
-				'title' => array('type' => 'fulltext', 'fields' => 'title'),
-				'content' => array('type' => 'fulltext', 'fields' => 'content')
-		));
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'id_category' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'title' => ['type' => 'string', 'length' => 250, 'notnull' => 1, 'default' => "''"],
+			'rewrited_title' => ['type' => 'string', 'length' => 250, 'default' => "''"],
+			'content' => ['type' => 'text', 'length' => 65000],
+			'published' => ['type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0],
+			'release_days' => ['type' =>  'text', 'length' => 65000],
+			'start_time' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'end_time' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'creation_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'update_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'thumbnail_url' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'author_custom_name' => ['type' =>  'string', 'length' => 255, 'default' => "''"],
+			'author_user_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+		];
+		$options = [
+			'primary' => ['id'],
+			'indexes' => [
+				'id_category' => ['type' => 'key', 'fields' => 'id_category'],
+				'title' => ['type' => 'fulltext', 'fields' => 'title'],
+				'content' => ['type' => 'fulltext', 'fields' => 'content']
+		]];
 		PersistenceContext::get_dbms_utils()->create_table(self::$broadcast_table, $fields, $options);
 	}
 

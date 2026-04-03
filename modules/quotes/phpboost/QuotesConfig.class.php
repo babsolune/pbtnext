@@ -72,13 +72,13 @@ class QuotesConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::ITEMS_PER_PAGE => 15,
 			self::CATEGORIES_PER_PAGE => 10,
 			self::CATEGORIES_PER_ROW => 3,
 			self::ROOT_CATEGORY_DESCRIPTION => CategoriesService::get_default_root_category_description('quotes', 0, 5),
-			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 5, 'r1' => 13)
-		);
+			self::AUTHORIZATIONS => ['r-1' => 1, 'r0' => 5, 'r1' => 13]
+		];
 	}
 
 	/**

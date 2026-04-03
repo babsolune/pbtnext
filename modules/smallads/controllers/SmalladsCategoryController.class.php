@@ -49,20 +49,20 @@ class SmalladsCategoryController extends DefaultModuleController
 		$result_cat = PersistenceContext::get_querier()->select('SELECT smallads_cat.*
 		FROM '. SmalladsSetup::$smallads_cats_table .' smallads_cat
 		WHERE smallads_cat.id IN :authorized_categories
-		ORDER BY id', array(
+		ORDER BY id', [
 			'authorized_categories' => $authorized_categories
-		));
+		]);
 
 		while ($row_cat = $result_cat->fetch())
 		{
-			$this->view->assign_block_vars('categories', array(
+			$this->view->assign_block_vars('categories', [
 				'ID'         => $row_cat['id'],
 				'ID_PARENT'  => $row_cat['id_parent'],
 				'SUB_ORDER'  => $row_cat['c_order'],
 				'NAME'       => $row_cat['name'],
 				'U_CATEGORY' => SmalladsUrlBuilder::display_category($row_cat['id'], $row_cat['rewrited_name'])->rel(),
 				'C_ITEMS'    => $result_cat->get_rows_count() > 0,
-			));
+			]);
 		}
 		$result_cat->dispose();
 	}
@@ -74,10 +74,10 @@ class SmalladsCategoryController extends DefaultModuleController
 		$condition = 'WHERE id_category IN :authorized_categories
 		AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
 		AND archived = 0';
-		$parameters = array(
+		$parameters = [
 			'authorized_categories' => $authorized_categories,
 			'timestamp_now' => $now->get_timestamp()
-		);
+		];
 
 		$result = PersistenceContext::get_querier()->select('SELECT smallads.*, member.*, com.comments_number
 		FROM ' . SmalladsSetup::$smallads_table . ' smallads
@@ -86,14 +86,14 @@ class SmalladsCategoryController extends DefaultModuleController
 
 		' . $condition . '
 		ORDER BY smallads.creation_date DESC
-		', array_merge($parameters, array(
+		', array_merge($parameters, [
 			'user_id' => AppContext::get_current_user()->get_id()
-		)));
+		]));
 
 		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
 		$category_thumbnail = $this->get_category()->get_thumbnail()->rel();
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_CATEGORY'             => true,
 			'C_CATEGORY_THUMBNAIL'   => !$this->get_category()->get_id() == Category::ROOT_CATEGORY && !empty($this->get_category()->get_thumbnail()->rel()),
 			'C_ROOT_CATEGORY'        => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
@@ -124,7 +124,7 @@ class SmalladsCategoryController extends DefaultModuleController
 			'U_EDIT_CATEGORY'        => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? SmalladsUrlBuilder::categories_configuration()->rel() : CategoriesUrlBuilder::edit($this->get_category()->get_id(), 'smallads')->rel(),
 			'U_USAGE_TERMS' 		 => SmalladsUrlBuilder::usage_terms()->rel(),
 			'U_CATEGORY_THUMBNAIL' => $this->get_category()->get_thumbnail()->rel()
-		));
+		]);
 
 		while($row = $result->fetch())
 		{
@@ -150,11 +150,11 @@ class SmalladsCategoryController extends DefaultModuleController
 			$i = 1;
 			foreach ($smallad_types as $name)
 			{
-				$this->view->assign_block_vars('types', array(
+				$this->view->assign_block_vars('types', [
 					'C_SEPARATOR'      => $i < $type_nbr,
 					'TYPE_NAME'        => $name,
 					'TYPE_NAME_FILTER' => Url::encode_rewrite(TextHelper::strtolower($name)),
-				));
+				]);
 				$i++;
 			}
 		}
@@ -171,11 +171,11 @@ class SmalladsCategoryController extends DefaultModuleController
 			$i = 1;
 			foreach ($sources as $name => $url)
 			{
-				$this->view->assign_block_vars('items.sources', array(
+				$this->view->assign_block_vars('items.sources', [
 					'C_SEPARATOR' => $i < $nbr_sources,
 					'NAME'        => $name,
 					'URL'         => $url,
-				));
+				]);
 				$i++;
 			}
 		}
@@ -212,11 +212,11 @@ class SmalladsCategoryController extends DefaultModuleController
 		$i = 1;
 		foreach ($keywords as $keyword)
 		{
-			$this->view->assign_block_vars('keywords', array(
+			$this->view->assign_block_vars('keywords', [
 				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME'        => $keyword->get_name(),
 				'URL'         => SmalladsUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
-			));
+			]);
 			$i++;
 		}
 	}
@@ -254,7 +254,7 @@ class SmalladsCategoryController extends DefaultModuleController
 
 		$description = $this->category->get_description();
 		if (empty($description))
-			$description = StringVars::replace_vars($this->lang['smallads.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->category->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category.category', 'category-lang') . ' ' . $this->category->get_name() : '');
+			$description = StringVars::replace_vars($this->lang['smallads.seo.description.root'], ['site' => GeneralConfig::load()->get_site_name()]) . ($this->category->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category.category', 'category-lang') . ' ' . $this->category->get_name() : '');
 		$graphical_environment->get_seo_meta_data()->set_description($description);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(SmalladsUrlBuilder::display_category($this->category->get_id(), $this->category->get_rewrited_name()));
 

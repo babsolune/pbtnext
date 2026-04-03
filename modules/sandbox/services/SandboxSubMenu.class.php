@@ -14,7 +14,7 @@ class SandboxSubMenu
         $view = new FileTemplate('sandbox/SandboxSubMenu.tpl');
 		$view->add_lang(LangLoader::get_all_langs('sandbox'));
 
-		$view->put_all(array(
+		$view->put_all([
             'C_GMAP'          => ModulesManager::is_module_installed('GoogleMaps') && ModulesManager::is_module_activated('GoogleMaps') && GoogleMapsConfig::load()->get_api_key(),
             'U_HOME'          => SandboxUrlBuilder::home()->rel(),
             'U_BUILDER'       => SandboxUrlBuilder::builder()->rel(),
@@ -28,7 +28,7 @@ class SandboxSubMenu
             'U_EMAIL'         => SandboxUrlBuilder::email()->rel(),
             'U_TEMPLATE'      => SandboxUrlBuilder::template()->rel(),
             'U_LANG'          => SandboxUrlBuilder::lang()->rel(),
-		));
+		]);
 
         return $view;
     }

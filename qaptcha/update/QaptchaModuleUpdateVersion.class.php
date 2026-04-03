@@ -14,7 +14,7 @@ class QaptchaModuleUpdateVersion extends ModuleUpdateVersion
 		parent::__construct('qaptcha');
 
 		// Old files from the previous QuestionCaptcha module to delete
-		self::$delete_old_files_list = array(
+		self::$delete_old_files_list = [
 			// Old QuestionCaptcha root-level files (module was at /QuestionCaptcha/)
 			PATH_TO_ROOT . '/QuestionCaptcha/config.ini',
 			PATH_TO_ROOT . '/QuestionCaptcha/index.php',
@@ -39,12 +39,12 @@ class QaptchaModuleUpdateVersion extends ModuleUpdateVersion
 			// Old files from a previous qaptcha version
 			'/services/qaptchaQuestion.class.php',
 			'/templates/qaptcha.css',
-		);
+		];
 
-		self::$delete_old_folders_list = array(
+		self::$delete_old_folders_list = [
 			// Delete the entire old QuestionCaptcha root-level directory once files are removed
 			PATH_TO_ROOT . '/QuestionCaptcha',
-		);
+		];
 	}
 
 	public function execute()

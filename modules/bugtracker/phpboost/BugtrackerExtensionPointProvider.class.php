@@ -21,7 +21,7 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 	 */
 	public function comments()
 	{
-		return new CommentsTopics(array(new BugtrackerCommentsTopic()));
+		return new CommentsTopics([new BugtrackerCommentsTopic()]);
 	}
 
 	/**
@@ -86,7 +86,7 @@ class BugtrackerExtensionPointProvider extends ExtensionPointProvider
 	 */
 	public function url_mappings()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/bugtracker/index.php')));
+		return new UrlMappings([new DispatcherUrlMapping('/bugtracker/index.php')]);
 	}
 }
 ?>

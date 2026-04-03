@@ -127,7 +127,7 @@ class QuotesItem
 
 	public function get_properties()
 	{
-		return array(
+		return [
 			'id' => $this->get_id(),
 			'id_category' => $this->get_id_category(),
 			'creation_date' => $this->get_creation_date()->get_timestamp(),
@@ -136,7 +136,7 @@ class QuotesItem
 			'writer' => $this->get_writer(),
 			'rewrited_writer' => $this->get_rewrited_writer(),
 			'content' => $this->get_content()
-		);
+		];
 	}
 
 	public function set_properties(array $properties)
@@ -187,7 +187,7 @@ class QuotesItem
 
 		return array_merge(
 			Date::get_array_tpl_vars($this->creation_date,'date'),
-			array(
+			[
 				// Conditions
 				'C_APPROVED'         => $this->is_approved(),
 				'C_CONTROLS'         => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
@@ -220,7 +220,7 @@ class QuotesItem
 				'U_ITEM'           => $this->get_item_url(),
 				'U_EDIT'           => QuotesUrlBuilder::edit($this->id)->rel(),
 				'U_DELETE'         => QuotesUrlBuilder::delete($this->id)->rel(),
-			)
+			]
 		);
 	}
 }

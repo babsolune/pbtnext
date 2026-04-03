@@ -20,7 +20,7 @@ abstract class AbstractUrlMapper implements UrlMapper
 	/**
 	 * @var array
 	 */
-	private $captured_parameters = array();
+	private $captured_parameters = [];
 
 	public function __construct($capture_regex)
 	{

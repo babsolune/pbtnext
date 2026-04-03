@@ -53,10 +53,10 @@ if (!AppContext::get_current_user()->check_level(User::MODERATOR_LEVEL) && $chec
 $view = new FileTemplate('forum/forum_moderation_panel.tpl');
 $view->add_lang($lang);
 
-$vars_tpl = array(
+$vars_tpl = [
 	'C_TINYMCE_EDITOR'   => AppContext::get_current_user()->get_editor() == 'TinyMCE',
 	'FORUM_NAME'         => $config->get_forum_name(),
-);
+];
 
 //Redirection changement de catégorie.
 $change_cat = $request->get_postvalue('change_cat', '');
@@ -107,20 +107,20 @@ if ($action == 'alert') //Gestion des alertes
 		AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=alert' . $get_id, '', '&'));
 	}
 
-	$view->put_all(array(
+	$view->put_all([
 		'C_HOME' => false,
 
 		'U_MODERATION_FORUM_ACTION' => 'moderation_forum.php'. url('?action=alert&amp;token=' . AppContext::get_session()->get_token()),
 		'U_ACTION_ALERT'            => url('.php?action=alert&amp;del=1&amp;' . AppContext::get_session()->get_token()),
 
 		'L_ALERT' => $lang['forum.reports.management'],
-	));
+	]);
 
 	if (empty($id_get)) //On liste les alertes
 	{
-		$view->put_all(array(
+		$view->put_all([
 			'C_FORUM_ALERTS'    => true,
-		));
+		]);
 
 		//Vérification des autorisations.
 		$authorized_categories = CategoriesService::get_authorized_categories();
@@ -138,9 +138,9 @@ if ($action == 'alert') //Gestion des alertes
 		LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = ta.idmodo
 		LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.id_category
 		WHERE c.id IN :authorized_categories
-		ORDER BY ta.status ASC, ta.timestamp DESC", array(
+		ORDER BY ta.status ASC, ta.timestamp DESC", [
 			'authorized_categories' => $authorized_categories
-		));
+		]);
 		while ($row = $result->fetch())
 		{
 			$modo_group_color = ($row['status'] != 0) ? User::get_group_color($row['modo_groups'], $row['modo_level']) : '';
@@ -148,7 +148,7 @@ if ($action == 'alert') //Gestion des alertes
 			$time = new Date($row['timestamp'], Timezone::SERVER_TIMEZONE);
 
 			$view->assign_block_vars('alert_list', array_merge(
-				Date::get_array_tpl_vars($time, 'DATE'), array(
+				Date::get_array_tpl_vars($time, 'DATE'), [
 				'C_USER_GROUP_COLOR' => !empty($group_color),
 				'C_STATUS'           => $row['status'] != 0,
 				'C_MODO_GROUP_COLOR' => !empty($modo_group_color),
@@ -168,7 +168,7 @@ if ($action == 'alert') //Gestion des alertes
 				'U_TITLE'      => 'moderation_forum' . url('.php?action=alert&amp;id=' . $row['id']),
 				'U_TOPIC'      => 'topic' . url('.php?id=' . $row['idtopic'], '-' . $row['idtopic'] . '-' . Url::encode_rewrite($row['topic_title']) . '.php'),
 				'U_IDMODO_REL' => UserUrlBuilder::profile($row['idmodo'])->rel()
-			)));
+			]));
 
 			$i++;
 		}
@@ -176,9 +176,9 @@ if ($action == 'alert') //Gestion des alertes
 
 		if ($i === 0)
 		{
-			$view->put_all(array(
+			$view->put_all([
 				'C_FORUM_NO_ALERT' => true,
-			));
+			]);
 		}
 	}
 	else //On affiche les informations sur une alerte
@@ -197,10 +197,10 @@ if ($action == 'alert') //Gestion des alertes
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = ta.user_id
 		LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = ta.idmodo
 		LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.id_category
-		WHERE ta.id = :id AND c.id IN :authorized_categories", array(
+		WHERE ta.id = :id AND c.id IN :authorized_categories", [
 			'id' => $id_get,
 			'authorized_categories' => $authorized_categories
-		));
+		]);
 		$row = $result->fetch();
 		$result->dispose();
 		if (!empty($row))
@@ -221,7 +221,7 @@ if ($action == 'alert') //Gestion des alertes
 			$time = new Date($row['timestamp'], Timezone::SERVER_TIMEZONE);
 
 			$view->put_all(array_merge(
-				Date::get_array_tpl_vars($time, 'DATE'), array(
+				Date::get_array_tpl_vars($time, 'DATE'), [
 				'C_STATUS'           => $row['status'] != 0,
 				'C_MODO_GROUP_COLOR' => !empty($modo_group_color),
 				'C_USER_GROUP_COLOR' => !empty($group_color),
@@ -246,13 +246,13 @@ if ($action == 'alert') //Gestion des alertes
 				'U_CHANGE_STATUS'    => ($row['status'] == '0') ? 'moderation_forum.php' . url('?action=alert&amp;id=' . $id_get . '&amp;new_status=1&amp;token=' . AppContext::get_session()->get_token()) : 'moderation_forum.php' . url('?action=alert&amp;id=' . $id_get . '&amp;new_status=0&amp;token=' . AppContext::get_session()->get_token()),
 
 				'L_CHANGE_STATUS'    => ($row['status'] == '0') ? $lang['forum.report.change.to.solved'] : $lang['forum.report.change.to.unsolved'],
-			)));
+			]));
 		}
 		else //Groupe, modérateur partiel qui n'a pas accès à cette alerte car elle ne concerne pas son forum
 		{
-			$view->put_all(array(
+			$view->put_all([
 				'C_FORUM_ALERT_NOT_AUTH' => true,
-			));
+			]);
 		}
 	}
 }
@@ -265,7 +265,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 	if (!empty($id_get) && $request->get_postvalue('valid_user', false)) //On met à  jour le niveau d'avertissement
 	{
 		try {
-			$info_mbr = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id', 'level', 'email'), 'WHERE user_id=:id', array('id' => $id_get));
+			$info_mbr = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, ['user_id', 'level', 'email'], 'WHERE user_id=:id', ['id' => $id_get]);
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
@@ -274,7 +274,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		//Modérateur ne peux avertir l'admin (logique non?).
 		if (!empty($info_mbr['user_id']) && ($info_mbr['level'] < 2 || AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL)))
 		{
-			PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('delay_readonly' => $readonly), ' WHERE user_id = :user_id', array('user_id' => $info_mbr['user_id']));
+			PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, ['delay_readonly' => $readonly], ' WHERE user_id = :user_id', ['user_id' => $info_mbr['user_id']]);
 
 			//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
 			if ($info_mbr['user_id'] != AppContext::get_current_user()->get_id())
@@ -293,7 +293,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=punish', '', '&'));
 	}
 
-	$view->put_all(array(
+	$view->put_all([
 		'C_HOME' => false,
 
 		'U_XMLHTTPREQUEST'          => 'punish_moderation_panel',
@@ -301,7 +301,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 		'U_ACTION'                  => url('.php?action=punish&amp;token=' . AppContext::get_session()->get_token()),
 
 		'L_ALERT' => LangLoader::get_message('user.punishments.management', 'user-lang'),
-	));
+	]);
 
 	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
 	{
@@ -310,7 +310,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 			$login = $request->get_postvalue('login_mbr', '');
 			$user_id = 0;
 			try {
-				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :login', array('login' => '%' . $login .'%'));
+				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :login', ['login' => '%' . $login .'%']);
 			} catch (RowNotFoundException $e) {}
 
 			if (!empty($user_id) && !empty($login))
@@ -319,26 +319,26 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 				AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=punish', '', '&'));
 		}
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_FORUM_USER_LIST' => true,
 			'L_INFO_TYPE'   => LangLoader::get_message('user.punish.until', 'user-lang'),
 			'L_ACTION_USER' => LangLoader::get_message('user.punishments.management', 'user-lang'),
-		));
+		]);
 
 		$i = 0;
 		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, user_groups, delay_readonly
 		FROM " . PREFIX . "member
 		WHERE delay_readonly > :timestamp_now
-		ORDER BY delay_readonly", array(
+		ORDER BY delay_readonly", [
 			'timestamp_now' => time()
-		));
+		]);
 		while ($row = $result->fetch())
 		{
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 			$info = new Date($row['delay_readonly'], Timezone::SERVER_TIMEZONE);
 
 			$view->assign_block_vars('user_list', array_merge(
-				Date::get_array_tpl_vars($info, 'INFO'), array(
+				Date::get_array_tpl_vars($info, 'INFO'), [
 				'C_GROUP_COLOR' => !empty($group_color),
 
 				'LOGIN'         => $row['display_name'],
@@ -348,7 +348,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 				'U_PROFILE'     => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'U_ACTION_USER' => 'moderation_forum.php' . url('?action=punish&amp;id=' . $row['user_id'] . '&amp;token=' . AppContext::get_session()->get_token()),
 				'U_PM'          => url('.php?pm='. $row['user_id'], '-' . $row['user_id'] . '.php')
-			)));
+			]));
 
 			$i++;
 		}
@@ -356,24 +356,24 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 
 		if ($i === 0)
 		{
-			$view->put_all( array(
+			$view->put_all( [
 				'C_FORUM_NO_USER' => true,
 				'L_NO_USER' => $lang['user.no.punished.user']
-			));
+			]);
 		}
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
 		try {
-			$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'user_groups', 'delay_readonly'), 'WHERE user_id=:id', array('id' => $id_get));
+			$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, ['display_name', 'level', 'user_groups', 'delay_readonly'], 'WHERE user_id=:id', ['id' => $id_get]);
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
 
 		//Durée de la sanction.
-		$array_time = array(0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 5184000, 326592000);
-		$array_sanction = array(LangLoader::get_message('common.no', 'common-lang'), '1 ' . $lang['date.minute'], '5 ' . $lang['date.minutes'], '15 ' . $lang['date.minutes'], '30 ' . $lang['date.minutes'], '1 ' . $lang['date.hour'], '2 ' . $lang['date.hours'], '1 ' . $lang['date.day'], '2 ' . $lang['date.days'], '1 ' . $lang['date.week'], '2 ' . $lang['date.weeks'], '1 ' . $lang['date.month'], '2 ' . $lang['date.month'], '10 ' . TextHelper::strtolower($lang['date.years']));
+		$array_time = [0, 60, 300, 900, 1800, 3600, 7200, 86400, 172800, 604800, 1209600, 2419200, 5184000, 326592000];
+		$array_sanction = [LangLoader::get_message('common.no', 'common-lang'), '1 ' . $lang['date.minute'], '5 ' . $lang['date.minutes'], '15 ' . $lang['date.minutes'], '30 ' . $lang['date.minutes'], '1 ' . $lang['date.hour'], '2 ' . $lang['date.hours'], '1 ' . $lang['date.day'], '2 ' . $lang['date.days'], '1 ' . $lang['date.week'], '2 ' . $lang['date.weeks'], '1 ' . $lang['date.month'], '2 ' . $lang['date.month'], '10 ' . TextHelper::strtolower($lang['date.years'])];
 		$sanctions_number = (count($array_time) - 1);
 
 		$diff = ($member['delay_readonly'] - time());
@@ -405,7 +405,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 
 		$group_color = User::get_group_color($member['user_groups'], $member['level']);
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_FORUM_USER_INFO'  => true,
 			'C_USER_GROUP_COLOR' => !empty($group_color),
 
@@ -441,7 +441,7 @@ elseif ($action == 'punish') //Gestion des utilisateurs
 
 			'U_PM'          => UserUrlBuilder::personnal_message($id_get)->rel(),
 			'U_ACTION_INFO' => url('.php?action=punish&amp;id=' . $id_get . '&amp;token=' . AppContext::get_session()->get_token()),
-		));
+		]);
 	}
 }
 elseif ($action == 'warning') //Gestion des utilisateurs
@@ -452,7 +452,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 	if ($new_warning_level >= 0 && $new_warning_level <= 100 && !empty($id_get) && $request->get_postbool('valid_user', false)) //On met à  jour le niveau d'avertissement
 	{
 		try {
-			$info_mbr = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('user_id', 'level', 'email'), 'WHERE user_id=:id', array('id' => $id_get));
+			$info_mbr = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, ['user_id', 'level', 'email'], 'WHERE user_id=:id', ['id' => $id_get]);
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
@@ -463,7 +463,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		{
 			if ($new_warning_level < 100) //Ne peux pas mettre des avertissements supérieurs à 100.
 			{
-				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('warning_percentage' => $new_warning_level), ' WHERE user_id = :user_id', array('user_id' => $info_mbr['user_id']));
+				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, ['warning_percentage' => $new_warning_level], ' WHERE user_id = :user_id', ['user_id' => $info_mbr['user_id']]);
 
 				//Envoi d'un MP au membre pour lui signaler, si le membre en question n'est pas lui-même.
 				if ($info_mbr['user_id'] != AppContext::get_current_user()->get_id())
@@ -480,8 +480,8 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			}
 			elseif ($new_warning_level == 100) //Ban => on supprime sa session et on le banni (pas besoin d'envoyer de pm :p).
 			{
-				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('warning_percentage' => 100), ' WHERE user_id = :user_id', array('user_id' => $info_mbr['user_id']));
-				PersistenceContext::get_querier()->delete(DB_TABLE_SESSIONS, 'WHERE user_id=:id', array('id' => $info_mbr['user_id']));
+				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, ['warning_percentage' => 100], ' WHERE user_id = :user_id', ['user_id' => $info_mbr['user_id']]);
+				PersistenceContext::get_querier()->delete(DB_TABLE_SESSIONS, 'WHERE user_id=:id', ['id' => $info_mbr['user_id']]);
 
 				//Insertion de l'action dans l'historique.
 				forum_history_collector(H_BAN_USER, $info_mbr['user_id'], 'moderation_forum.php?action=warning&id=' . $info_mbr['user_id']);
@@ -495,7 +495,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=warning', '', '&'));
 	}
 
-	$view->put_all(array(
+	$view->put_all([
 		'C_HOME'                    => false,
 
 		'U_XMLHTTPREQUEST'          => 'warning_moderation_panel',
@@ -503,7 +503,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		'U_ACTION'                  => url('.php?action=warning&amp;token=' . AppContext::get_session()->get_token()),
 
 		'L_ALERT'                   => $lang['user.warnings.management'],
-	));
+	]);
 
 	if (empty($id_get)) //On liste les membres qui ont déjà un avertissement
 	{
@@ -512,7 +512,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			$login = $request->get_postvalue('login_member', '');
 			$user_id = 0;
 			try {
-				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :login', array('login' => '%' . $login .'%'));
+				$user_id = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'user_id', 'WHERE display_name LIKE :login', ['login' => '%' . $login .'%']);
 			} catch (RowNotFoundException $e) {}
 
 			if (!empty($user_id) && !empty($login))
@@ -521,11 +521,11 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 				AppContext::get_response()->redirect('/forum/moderation_forum' . url('.php?action=warning', '', '&'));
 		}
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_FORUM_USER_LIST' => true,
 			'L_INFO_TYPE'   => LangLoader::get_message('user.warning.level', 'user-lang'),
 			'L_ACTION_USER' => $lang['set_warning_user'],
-		));
+		]);
 
 		$i = 0;
 		$result = PersistenceContext::get_querier()->select("SELECT user_id, display_name, level, user_groups, warning_percentage
@@ -536,7 +536,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 		{
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
-			$view->assign_block_vars('user_list', array(
+			$view->assign_block_vars('user_list', [
 				'C_GROUP_COLOR' => !empty($group_color),
 
 				'LOGIN'         => $row['display_name'],
@@ -547,7 +547,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 				'U_ACTION_USER' => 'moderation_forum.php' . url('?action=warning&amp;id=' . $row['user_id'] . '&amp;token=' . AppContext::get_session()->get_token()),
 				'U_PROFILE'     => UserUrlBuilder::profile($row['user_id'])->rel(),
 				'U_PM'          => UserUrlBuilder::personnal_message($row['user_id'])->rel()
-			));
+			]);
 
 			$i++;
 		}
@@ -555,16 +555,16 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 
 		if ($i === 0)
 		{
-			$view->put_all( array(
+			$view->put_all( [
 				'C_FORUM_NO_USER' => true,
 				'L_NO_USER' => $lang['user.no.user.warning']
-			));
+			]);
 		}
 	}
 	else //On affiche les infos sur l'utilisateur
 	{
 		try {
-			$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, array('display_name', 'level', 'user_groups', 'delay_readonly', 'warning_percentage'), 'WHERE user_id=:id', array('id' => $id_get));
+			$member = PersistenceContext::get_querier()->select_single_row(DB_TABLE_MEMBER, ['display_name', 'level', 'user_groups', 'delay_readonly', 'warning_percentage'], 'WHERE user_id=:id', ['id' => $id_get]);
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
@@ -585,7 +585,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 
 		$group_color = User::get_group_color($member['user_groups'], $member['level']);
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_FORUM_USER_INFO'  => true,
 			'C_USER_GROUP_COLOR' => !empty($group_color),
 
@@ -605,7 +605,7 @@ elseif ($action == 'warning') //Gestion des utilisateurs
 			'U_PM' 			=> url('.php?pm='. $id_get, '-' . $id_get . '.php'),
 
 			'L_INFO_TYPE' => $lang['user.warning.level'],
-		));
+		]);
 	}
 }
 elseif ($request->get_getvalue('del_h', false) && AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL)) //Suppression de l'historique.
@@ -618,20 +618,20 @@ else //Panneau de modération
 {
 	$get_more = $request->get_getint('more', 0);
 
-	$view->put_all(array(
+	$view->put_all([
 		'C_FORUM_MODO_MAIN' => true,
 		'C_HOME'            => true,
 
 		'U_ACTION_HISTORY'  => url('.php?del_h=1&amp;token=' . AppContext::get_session()->get_token()),
 		'U_MORE_ACTION'     => !empty($get_more) ? url('.php?more=' . ($get_more + 100)) : url('.php?more=100')
-	));
+	]);
 
 	//Bouton de suppression de l'historique, visible uniquement pour l'admin.
 	if (AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL))
 	{
-		$view->put_all(array(
+		$view->put_all([
 			'C_FORUM_ADMIN' => true
-		));
+		]);
 	}
 
 	$end = !empty($get_more) ? $get_more : 15; //Limit.
@@ -645,9 +645,9 @@ else //Panneau de modération
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = h.user_id
 	LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = h.user_id_action
 	ORDER BY h.timestamp DESC
-	LIMIT :limit", array(
+	LIMIT :limit", [
 		'limit' => $end
-	));
+	]);
 	while ($row = $result->fetch())
 	{
 		$group_color = User::get_group_color($row['user_groups'], $row['user_level']);
@@ -655,7 +655,7 @@ else //Panneau de modération
 		$date = new Date($row['timestamp'], Timezone::SERVER_TIMEZONE);
 
 		$view->assign_block_vars('action_list', array_merge(
-			Date::get_array_tpl_vars($date, 'DATE'), array(
+			Date::get_array_tpl_vars($date, 'DATE'), [
 			'C_GROUP_COLOR'              => !empty($group_color),
 			'C_USER_CONCERN'             => !empty($row['user_id_action']),
 			'C_USER_CONCERN_GROUP_COLOR' => !empty($member_group_color),
@@ -673,16 +673,16 @@ else //Panneau de modération
 			'USER_LOGIN'                 => $row['member'],
 
 			'L_ACTION' => $lang[$row['action']]
-		)));
+		]));
 
 		$i++;
 	}
 	$result->dispose();
 
-	$view->put_all(array(
+	$view->put_all([
 		'C_DISPLAY_LINK_MORE_ACTION' => $i == $end,
 		'C_FORUM_NO_ACTION'          => $i == 0
-	));
+	]);
 }
 
 //Listes les utilisateurs en ligne.
@@ -707,7 +707,7 @@ foreach ($categories_tree_options as $option)
 	}
 }
 
-$vars_tpl = array_merge($vars_tpl, array(
+$vars_tpl = array_merge($vars_tpl, [
 	'C_USER_CONNECTED'      => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 	'C_NO_USER_ONLINE'      => (($total_online - $total_visit) == 0),
 
@@ -727,7 +727,7 @@ $vars_tpl = array_merge($vars_tpl, array(
 	'L_MODO'   => ($total_modo > 1) ? $lang['user.moderators']    : $lang['user.moderator'],
 	'L_MEMBER' => ($total_member > 1) ? $lang['user.members'] : $lang['user.member'],
 	'L_GUEST'  => ($total_visit > 1) ? $lang['user.guests'] : $lang['user.guest'],
-));
+]);
 
 $view->put_all($vars_tpl);
 $top_view->put_all($vars_tpl);

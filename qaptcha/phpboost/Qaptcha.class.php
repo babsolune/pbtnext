@@ -71,11 +71,11 @@ class Qaptcha extends Captcha
 		$item->set_properties(self::$items[$item_id]);
 
 		$tpl = new FileTemplate('qaptcha/qaptcha.tpl');
-		$tpl->put_all(array(
+		$tpl->put_all([
 			'ITEM_ID' => $item_id,
 			'LABEL' => $item->get_label(),
 			'HTML_ID' => $this->get_html_id()
-		));
+		]);
 
 		return $tpl->render();
 	}

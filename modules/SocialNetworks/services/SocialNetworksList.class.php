@@ -15,7 +15,7 @@ class SocialNetworksList
 	public function get_implementing_classes(string $interface_name): array
 	{
 		$folder = new Folder(ModulesManager::get_module_path('SocialNetworks') . '/social_networks');
-		$classes = array();
+		$classes = [];
 
 		foreach ($folder->get_files() as $class)
 		{
@@ -42,7 +42,7 @@ class SocialNetworksList
 	 */
 	public function get_social_networks_list(): array
 	{
-		$social_networks = array();
+		$social_networks = [];
 
 		foreach ($this->get_implementing_classes('SocialNetwork') as $social_network)
 		{
@@ -66,7 +66,7 @@ class SocialNetworksList
 	public function get_sorted_social_networks_list(): array
 	{
 		$social_networks = $this->get_social_networks_list();
-		$sorted_social_networks = array();
+		$sorted_social_networks = [];
 
 		foreach (SocialNetworksConfig::load()->get_social_networks_order() as $social_network_id)
 		{
@@ -86,7 +86,7 @@ class SocialNetworksList
 	public function get_external_authentications_list(): array
 	{
 		$get_enabled_authentications = SocialNetworksConfig::load()->get_enabled_authentications();
-		$external_authentications = array();
+		$external_authentications = [];
 
 		foreach ($this->get_sorted_social_networks_list() as $id => $social_network)
 		{
@@ -105,7 +105,7 @@ class SocialNetworksList
 	{
 		$request = AppContext::get_request();
 		$enabled_content_sharing = SocialNetworksConfig::load()->get_enabled_content_sharing();
-		$sharing_links = array();
+		$sharing_links = [];
 
 		foreach ($this->get_sorted_social_networks_list() as $id => $social_network)
 		{

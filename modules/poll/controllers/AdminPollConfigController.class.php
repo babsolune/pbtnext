@@ -17,13 +17,13 @@ class AdminPollConfigController extends DefaultConfigurationController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('cookie_name', $this->lang['poll.config.cookie.name'], $this->config->get_cookie_name(),
-			array('maxlength' => 25, 'required' => true, 'class' => 'top-field', 'description' => $this->lang['poll.config.cookie.name.clue']),
-			array(new FormFieldConstraintRegex('`^[a-z0-9_-]+$`iu'))
+			['maxlength' => 25, 'required' => true, 'class' => 'top-field', 'description' => $this->lang['poll.config.cookie.name.clue']],
+			[new FormFieldConstraintRegex('`^[a-z0-9_-]+$`iu')]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('cookie_lenght', $this->lang['poll.config.cookie.lenght'], $this->config->get_cookie_lenght(),
-			array('min' => 1, 'required' => true, 'class' => 'top-field', 'description' => $this->lang['poll.config.cookie.lenght.clue']),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'))
+			['min' => 1, 'required' => true, 'class' => 'top-field', 'description' => $this->lang['poll.config.cookie.lenght.clue']],
+			[new FormFieldConstraintRegex('`^[0-9]+$`iu')]
 		));
 
 		$search_category_children_options = new SearchCategoryChildrensOptions();
@@ -37,17 +37,17 @@ class AdminPollConfigController extends DefaultConfigurationController
 			Category::ROOT_CATEGORY,
 			$search_category_children_options,
 			$this->get_selected_items(),
-			array('description' => $this->lang['poll.config.mini.module.selected.items.clue']),
+			['description' => $this->lang['poll.config.mini.module.selected.items.clue']],
 			$categories_cache
 		));
 	}
 
 	protected function add_additional_actions_authorization()
 	{
-		return array(
+		return [
 			new ActionAuthorization($this->lang['poll.config.vote.authorization'], PollConfig::VOTE_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['poll.config.votes.result.authorization'], PollConfig::DISPLAY_VOTES_RESULT_AUTHORIZATIONS
-		));
+		)];
 	}
 
 	protected function save_additional_fields()
@@ -63,7 +63,7 @@ class AdminPollConfigController extends DefaultConfigurationController
 		$request = AppContext::get_request();
 		if ($request->has_postparameter('poll_config_form_cookie_name'))
 		{
-			$selected_items = array();
+			$selected_items = [];
 			if ($request->has_postparameter('poll_config_form_mini_module_selected_items'))
 			{
 				$pre_selected_items = $request->get_array('poll_config_form_mini_module_selected_items');

@@ -14,13 +14,13 @@ class PagesItem extends RichItem
 
 	protected function set_additional_attributes_list()
 	{
-		$this->add_additional_attribute('i_order', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
+		$this->add_additional_attribute('i_order', ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0]);
 
-		$this->add_additional_attribute('author_display', array('type' => 'boolean', 'notnull' => 1, 'default' => 0, 'attribute_post_content_field_parameters' => array(
+		$this->add_additional_attribute('author_display', ['type' => 'boolean', 'notnull' => 1, 'default' => 0, 'attribute_post_content_field_parameters' => [
 			'field_class' => 'FormFieldCheckbox',
 			'label'       => LangLoader::get_message('form.display.author', 'form-lang')
-			)
-		));
+			]
+		]);
 	}
 
 	protected function default_properties()
@@ -31,9 +31,9 @@ class PagesItem extends RichItem
 
 	protected function get_additional_template_vars()
 	{
-		return array(
+		return [
 			'C_AUTHOR_DISPLAYED' => $this->get_additional_property('author_display')
-		);
+		];
 	}
 }
 ?>

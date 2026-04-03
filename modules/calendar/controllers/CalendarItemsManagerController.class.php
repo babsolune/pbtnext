@@ -12,7 +12,7 @@
 class CalendarItemsManagerController extends DefaultModuleController
 {
 	private $items_number = 0;
-	private $ids = array();
+	private $ids = [];
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -29,15 +29,15 @@ class CalendarItemsManagerController extends DefaultModuleController
 	{
 		$display_categories = CategoriesService::get_categories_manager()->get_categories_cache()->has_categories();
 
-		$columns = array(
+		$columns = [
 			new HTMLTableColumn($this->lang['common.title'], 'title'),
 			new HTMLTableColumn($this->lang['category.category'], 'id_category'),
 			new HTMLTableColumn($this->lang['common.author'], 'display_name'),
 			new HTMLTableColumn($this->lang['date.date'], 'start_date'),
 			new HTMLTableColumn($this->lang['calendar.repetition']),
 			new HTMLTableColumn($this->lang['common.status'], 'approved'),
-			new HTMLTableColumn($this->lang['common.actions'], '', array('sr-only' => true))
-		);
+			new HTMLTableColumn($this->lang['common.actions'], '', ['sr-only' => true])
+		];
 
 		if (!$display_categories)
 			unset($columns[1]);
@@ -53,12 +53,12 @@ class CalendarItemsManagerController extends DefaultModuleController
 		$table_model->add_filter(new HTMLTableAjaxUserAutoCompleteSQLFilter('display_name', 'filter3', $this->lang['common.author']));
 		if ($display_categories)
 			$table_model->add_filter(new HTMLTableCategorySQLFilter('filter4'));
-		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('approved', 'filter5', $this->lang['common.status.publication'], array(1 => $this->lang['common.status.published'], 0 => $this->lang['common.status.draft'])));
+		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('approved', 'filter5', $this->lang['common.status.publication'], [1 => $this->lang['common.status.published'], 0 => $this->lang['common.status.draft']]));
 
 		$table = new HTMLTable($table_model);
 		$table->set_filters_fieldset_class_HTML();
 
-		$results = array();
+		$results = [];
 		$result = $table_model->get_sql_results('event
 			LEFT JOIN ' . CalendarSetup::$calendar_events_content_table . ' event_content ON event_content.id = event.content_id
 			LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = event_content.author_user_id'
@@ -74,22 +74,22 @@ class CalendarItemsManagerController extends DefaultModuleController
 			$this->ids[$this->items_number] = $item->get_id();
 
 			$edit_link = new EditLinkHTMLElement(CalendarUrlBuilder::edit_item(!$item->get_parent_id() ? $item->get_id() : $item->get_parent_id()));
-			$delete_link = new DeleteLinkHTMLElement(CalendarUrlBuilder::delete_item($item->get_id()), '', array('data-confirmation' => !$item->belongs_to_a_serie() ? 'delete-element' : ''));
+			$delete_link = new DeleteLinkHTMLElement(CalendarUrlBuilder::delete_item($item->get_id()), '', ['data-confirmation' => !$item->belongs_to_a_serie() ? 'delete-element' : '']);
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
-			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
+			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? ['style' => 'color: ' . $user_group_color] : []), UserService::get_level_class($user->get_level())) : $user->get_display_name();
 
 			$br = new BrHTMLElement();
 
-			$row = array(
+			$row = [
 				new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()), $item->get_content()->get_title()), 'align-left'),
-				new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? $this->lang['common.none.alt'] : $category->get_name()), array('data-color-surround' => $category->get_id() != Category::ROOT_CATEGORY && $category->get_color() ? $category->get_color() : ($category->get_id() == Category::ROOT_CATEGORY ? $this->config->get_event_color() : '')), 'pinned')),
+				new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? $this->lang['common.none.alt'] : $category->get_name()), ['data-color-surround' => $category->get_id() != Category::ROOT_CATEGORY && $category->get_color() ? $category->get_color() : ($category->get_id() == Category::ROOT_CATEGORY ? $this->config->get_event_color() : '')], 'pinned')),
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell($this->lang['date.from.date'] . ' ' . $item->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR) . $br->display() . $this->lang['date.to.date'] . ' ' . $item->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR)),
 				new HTMLTableRowCell($item->belongs_to_a_serie() ? $this->get_repeat_type_label($item) . ' - ' . $item->get_content()->get_repeat_number() . ' ' . $this->lang['calendar.repeat.times'] : $this->lang['common.no']),
 				new HTMLTableRowCell($item->get_content()->is_approved() ? $this->lang['common.status.published'] : $this->lang['common.status.draft']),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display(), 'controls')
-			);
+			];
 
 			if (!$display_categories)
 				unset($row[1]);

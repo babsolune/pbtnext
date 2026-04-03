@@ -48,7 +48,7 @@ class FormFieldConstraintRegex extends AbstractFormFieldConstraint
 		$js_options = '';
 		foreach ($js_options_chars as $option)
 		{
-			if (in_array($option, array('i', 'm', 'g')))
+			if (in_array($option, ['i', 'm', 'g']))
 				$js_options .= $option;
 		}
 

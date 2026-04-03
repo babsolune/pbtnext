@@ -33,7 +33,7 @@ class NewsletterMailService
 
 	public static function display_mail($language_type, $id, $title, $content)
 	{
-		$row = self::$db_querier->select_single_row(NewsletterSetup::$newsletter_table_archive, array('*'), "WHERE id = '" . $id . "'");
+		$row = self::$db_querier->select_single_row(NewsletterSetup::$newsletter_table_archive, ['*'], "WHERE id = '" . $id . "'");
 		return NewsletterMailFactory::display_mail($language_type, $row['title'] , $row['content']);
 	}
 
@@ -45,14 +45,14 @@ class NewsletterMailService
 
 		self::$db_querier->inject(
 			"INSERT INTO " . NewsletterSetup::$newsletter_table_archive . " (id_cat, title, content, timestamp, type, subscribers)
-			VALUES (:id_cat, :title, :content, :timestamp, :type, :field_type, :subscribers)", array(
+			VALUES (:id_cat, :title, :content, :timestamp, :type, :field_type, :subscribers)", [
 				'id_cat' => $id_cat,
 				'title' => $title,
 				'content' => $content,
 				'timestamp' => time(),
 				'type' => $language_type,
 				'subscribers' => 0
-		));
+		]);
 	}
 
 	public static function number_subscribers($id_cat)

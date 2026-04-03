@@ -26,7 +26,7 @@ class QuotesDeleteItemController extends ModuleController
 		QuotesService::clear_cache();
 		HooksService::execute_hook_action('delete', self::$module_id, $this->item->get_properties());
 
-		AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : QuotesUrlBuilder::home()), StringVars::replace_vars(LangLoader::get_message('quotes.message.success.delete', 'common', 'quotes'), array('writer' => $this->item->get_writer())));
+		AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : QuotesUrlBuilder::home()), StringVars::replace_vars(LangLoader::get_message('quotes.message.success.delete', 'common', 'quotes'), ['writer' => $this->item->get_writer()]));
 	}
 
 	private function get_item(HTTPRequestCustom $request)

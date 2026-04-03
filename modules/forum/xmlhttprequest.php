@@ -50,9 +50,9 @@ if ($request->get_getvalue('refresh_unread', false)) //Affichage des messages no
 		LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = '" . AppContext::get_current_user()->get_id() . "'
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = t.last_user_id
 		WHERE t.last_timestamp >= '" . $max_time_msg . "' AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL) AND c.id IN :authorized_categories
-		ORDER BY t.last_timestamp DESC", array(
+		ORDER BY t.last_timestamp DESC", [
 			'authorized_categories' => $authorized_categories
-		));
+		]);
 		while ($row = $result->fetch())
 		{
 			//Si le dernier message lu est présent on redirige vers lui, sinon on redirige vers le dernier posté.
@@ -140,16 +140,16 @@ elseif (!empty($msg_d))
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
-	$topic = array();
+	$topic = [];
 
 	//Vérification de l'appartenance du sujet au membres, ou modo.
 	try {
-		$topic = PersistenceContext::get_querier()->select_single_row_query('SELECT id_category, user_id, display_msg FROM ' . PREFIX . 'forum_topics WHERE id=:id', array('id' => $msg_d));
+		$topic = PersistenceContext::get_querier()->select_single_row_query('SELECT id_category, user_id, display_msg FROM ' . PREFIX . 'forum_topics WHERE id=:id', ['id' => $msg_d]);
 	} catch (RowNotFoundException $e) {}
 
 	if ($topic && ((!empty($topic['user_id']) && AppContext::get_current_user()->get_id() == $topic['user_id']) || ForumAuthorizationsService::check_authorizations($topic['id_category'])->moderation()))
 	{
-		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET display_msg = 1 - display_msg WHERE id = :id", array('id' => $msg_d));
+		PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET display_msg = 1 - display_msg WHERE id = :id", ['id' => $msg_d]);
 		echo ($topic['display_msg']) ? 2 : 1;
 	}
 }

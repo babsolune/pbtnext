@@ -29,7 +29,7 @@ class AdminError404DAO extends SQLDAO
 		$tablename = PREFIX . 'errors_404';
 		$primary_key = new MappingModelField('id');
 
-		$fields = array(new MappingModelField('requested_url'), new MappingModelField('from_url'), new MappingModelField('times'));
+		$fields = [new MappingModelField('requested_url'), new MappingModelField('from_url'), new MappingModelField('times')];
 
 		$model = new MappingModel($classname, $tablename, $primary_key, $fields);
 

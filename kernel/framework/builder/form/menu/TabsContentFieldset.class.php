@@ -21,10 +21,10 @@ class TabsContentFieldset extends FormFieldsetHTML
 	{
 		$template = $this->get_template_to_use();
 
-		$template->put_all(array(
+		$template->put_all([
 			'C_TITLE' => !empty($this->title),
 			'L_TITLE' => $this->title
-		));
+		]);
 
 		$this->assign_template_fields($template);
 

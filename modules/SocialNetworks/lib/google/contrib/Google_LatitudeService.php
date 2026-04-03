@@ -32,10 +32,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Location
      */
-    public function insert(Google_Location $postBody, $optParams = array()) {
-      $params = array('postBody' => $postBody);
+    public function insert(Google_Location $postBody, $optParams = []) {
+      $params = ['postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_Location($data);
       } else {
@@ -50,10 +50,10 @@
      * @opt_param string granularity Granularity of the requested location.
      * @return Google_Location
      */
-    public function get($optParams = array()) {
-      $params = array();
+    public function get($optParams = []) {
+      $params = [];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Location($data);
       } else {
@@ -65,10 +65,10 @@
      *
      * @param array $optParams Optional parameters.
      */
-    public function delete($optParams = array()) {
-      $params = array();
+    public function delete($optParams = []) {
+      $params = [];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       return $data;
     }
   }
@@ -91,10 +91,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Location
      */
-    public function insert(Google_Location $postBody, $optParams = array()) {
-      $params = array('postBody' => $postBody);
+    public function insert(Google_Location $postBody, $optParams = []) {
+      $params = ['postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_Location($data);
       } else {
@@ -110,10 +110,10 @@
      * @opt_param string granularity Granularity of the location to return.
      * @return Google_Location
      */
-    public function get($locationId, $optParams = array()) {
-      $params = array('locationId' => $locationId);
+    public function get($locationId, $optParams = []) {
+      $params = ['locationId' => $locationId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Location($data);
       } else {
@@ -131,10 +131,10 @@
      * @opt_param string granularity Granularity of the requested locations.
      * @return Google_LocationFeed
      */
-    public function listLocation($optParams = array()) {
-      $params = array();
+    public function listLocation($optParams = []) {
+      $params = [];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_LocationFeed($data);
       } else {
@@ -147,10 +147,10 @@
      * @param string $locationId Timestamp of the location to delete (ms since epoch).
      * @param array $optParams Optional parameters.
      */
-    public function delete($locationId, $optParams = array()) {
-      $params = array('locationId' => $locationId);
+    public function delete($locationId, $optParams = []) {
+      $params = ['locationId' => $locationId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       return $data;
     }
   }
@@ -267,7 +267,7 @@ class Google_LocationFeed extends Google_Model {
   protected $__itemsDataType = 'array';
   public $items;
   public $kind;
-  public function setItems(/* array(Google_Location) */ $items) {
+  public function setItems(/* [Google_Location] */ $items) {
     $this->assertIsArray($items, 'Google_Location', __METHOD__);
     $this->items = $items;
   }

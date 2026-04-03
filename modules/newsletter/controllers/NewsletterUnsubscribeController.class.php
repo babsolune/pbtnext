@@ -52,19 +52,19 @@ class NewsletterUnsubscribeController extends DefaultModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldMailEditor('mail', $this->lang['newsletter.subscriber.email'], $email,
-			array('required' => true)
+			['required' => true]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('delete_all_streams', $this->lang['newsletter.delete.all.streams'], FormFieldCheckbox::UNCHECKED,
-			array(
-				'events' => array('click' => '
+			[
+				'events' => ['click' => '
 					if (HTMLForms.getField("delete_all_streams").getValue()) {
 						HTMLForms.getField("choice").disable();
 					} else {
 						HTMLForms.getField("choice").enable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		if ($this->current_user->check_level(User::MEMBER_LEVEL) && $email == $this->current_user->get_email())
@@ -79,7 +79,7 @@ class NewsletterUnsubscribeController extends DefaultModuleController
 				$newsletter_subscribe = NewsletterService::get_visitor_id_streams($email);
 		}
 		else
-			$newsletter_subscribe = array();
+			$newsletter_subscribe = [];
 
 		$fieldset->add_field(new FormFieldMultipleCheckbox('choice', $this->lang['newsletter.unsubscribe.item.clue'], $newsletter_subscribe, $this->get_streams()));
 
@@ -110,7 +110,7 @@ class NewsletterUnsubscribeController extends DefaultModuleController
 
 	private function get_streams()
 	{
-		$streams = array();
+		$streams = [];
 		$newsletter_streams = NewsletterStreamsCache::load()->get_streams();
 		foreach ($newsletter_streams as $id => $stream)
 		{
@@ -169,7 +169,7 @@ class NewsletterUnsubscribeController extends DefaultModuleController
 		}
 		else
 		{
-			$streams = array();
+			$streams = [];
 			foreach ($this->form->get_value('choice') as $field => $option)
 			{
 				$streams[] = $option->get_id();

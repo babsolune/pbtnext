@@ -15,7 +15,7 @@ class FeedsCat
 	private $id = 0;
     private $cat_name = '';
     private $module_id = '';
-    private $children = array();
+    private $children = [];
 
     /**
      * Builds a FeedsCat Object

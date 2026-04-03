@@ -268,8 +268,8 @@ class Gallery
 	public function Add_pics($id_category, $name, $path, $user_id)
 	{
 		list($width, $height, $weight, $ext) = $this->Arg_pics('pics/' . $path);
-		$result = PersistenceContext::get_querier()->insert(GallerySetup::$gallery_table, array('id_category' => $id_category, 'name' => $name, 'path' => $path, 'width' => $width, 'height' => $height, 'weight' => $weight, 'user_id' => $user_id, 'aprob' => 1, 'views' => 0, 'timestamp' => time()));
-		HooksService::execute_hook_action('add', 'gallery', array('id' => $result->get_last_inserted_id(), 'title' => ($name ? $name : $path), 'url' => Url::to_rel('/gallery/gallery' . url('.php?cat=' . $id_category . '&amp;id=' . $result->get_last_inserted_id(), '-' . $id_category . '-' . $result->get_last_inserted_id() . '.php'))));
+		$result = PersistenceContext::get_querier()->insert(GallerySetup::$gallery_table, ['id_category' => $id_category, 'name' => $name, 'path' => $path, 'width' => $width, 'height' => $height, 'weight' => $weight, 'user_id' => $user_id, 'aprob' => 1, 'views' => 0, 'timestamp' => time()]);
+		HooksService::execute_hook_action('add', 'gallery', ['id' => $result->get_last_inserted_id(), 'title' => ($name ? $name : $path), 'url' => Url::to_rel('/gallery/gallery' . url('.php?cat=' . $id_category . '&amp;id=' . $result->get_last_inserted_id(), '-' . $id_category . '-' . $result->get_last_inserted_id() . '.php'))]);
 		return $result->get_last_inserted_id();
 	}
 
@@ -277,7 +277,7 @@ class Gallery
 	public function Del_pics($id_pics)
 	{
 		try {
-			$info_pics = PersistenceContext::get_querier()->select_single_row(GallerySetup::$gallery_table, array('name', 'path', 'id_category', 'aprob'), "WHERE id = :id", array('id' => $id_pics));
+			$info_pics = PersistenceContext::get_querier()->select_single_row(GallerySetup::$gallery_table, ['name', 'path', 'id_category', 'aprob'], "WHERE id = :id", ['id' => $id_pics]);
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
@@ -285,7 +285,7 @@ class Gallery
 
 		if (!empty($info_pics['path']))
 		{
-			PersistenceContext::get_querier()->delete(PREFIX . 'gallery', 'WHERE id=:id', array('id' => $id_pics));
+			PersistenceContext::get_querier()->delete(PREFIX . 'gallery', 'WHERE id=:id', ['id' => $id_pics]);
 
 			//Suppression physique.
 			$file = new File(ModulesManager::get_module_path('gallery') . '/pics/' . $info_pics['path']);
@@ -297,14 +297,14 @@ class Gallery
 			NotationService::delete_notes_id_in_module('gallery', $id_pics);
 
 			CommentsService::delete_comments_topic_module('gallery', $id_pics);
-			HooksService::execute_hook_action('delete', 'gallery', array('id' => $id_pics, 'title' => ($info_pics['name'] ? $info_pics['name'] : $info_pics['path'])));
+			HooksService::execute_hook_action('delete', 'gallery', ['id' => $id_pics, 'title' => ($info_pics['name'] ? $info_pics['name'] : $info_pics['path'])]);
 		}
 	}
 
 	//Renomme une image.
 	public function Rename_pics($id_pics, $name, $previous_name)
 	{
-		PersistenceContext::get_querier()->update(GallerySetup::$gallery_table, array('name' => $name), 'WHERE id = :id', array('id' => $id_pics));
+		PersistenceContext::get_querier()->update(GallerySetup::$gallery_table, ['name' => $name], 'WHERE id = :id', ['id' => $id_pics]);
 		return stripslashes((TextHelper::strlen(TextHelper::html_entity_decode($name)) > 22) ? TextHelper::htmlspecialchars(TextHelper::substr(TextHelper::html_entity_decode($name), 0, 22)) . PATH_TO_ROOT . '.' : $name);
 	}
 
@@ -312,7 +312,7 @@ class Gallery
 	public function Aprob_pics($id_pics)
 	{
 		try {
-			$aprob = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'aprob', "WHERE id = :id", array('id' => $id_pics));
+			$aprob = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'aprob', "WHERE id = :id", ['id' => $id_pics]);
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
@@ -320,11 +320,11 @@ class Gallery
 
 		if ($aprob)
 		{
-			PersistenceContext::get_querier()->update(GallerySetup::$gallery_table, array('aprob' => 0), 'WHERE id = :id', array('id' => $id_pics));
+			PersistenceContext::get_querier()->update(GallerySetup::$gallery_table, ['aprob' => 0], 'WHERE id = :id', ['id' => $id_pics]);
 		}
 		else
 		{
-			PersistenceContext::get_querier()->update(GallerySetup::$gallery_table, array('aprob' => 1), 'WHERE id = :id', array('id' => $id_pics));
+			PersistenceContext::get_querier()->update(GallerySetup::$gallery_table, ['aprob' => 1], 'WHERE id = :id', ['id' => $id_pics]);
 		}
 
 		return $aprob;
@@ -333,7 +333,7 @@ class Gallery
 	//Déplacement d'une image.
 	public function Move_pics($id_pics, $id_move)
 	{
-		PersistenceContext::get_querier()->update(GallerySetup::$gallery_table, array('id_category' => $id_move), 'WHERE id = :id', array('id' => $id_pics));
+		PersistenceContext::get_querier()->update(GallerySetup::$gallery_table, ['id_category' => $id_move], 'WHERE id = :id', ['id' => $id_pics]);
 	}
 
 	//Vérifie si le membre peut uploader une image
@@ -378,9 +378,9 @@ class Gallery
 			$weight = !empty($weight) ? $weight : 0;
 
 			//On prepare les valeurs de remplacement, pour détérminer le type de l'image.
-			$array_type = array( 1 => 'gif', 2 => 'jpg', 3 => 'png', 4 => 'jpeg', 18 => 'webp');
+			$array_type = [ 1 => 'gif', 2 => 'jpg', 3 => 'png', 4 => 'jpeg', 18 => 'webp'];
 			if (isset($array_type[$type]))
-				return array($width, $height, $weight, $array_type[$type]);
+				return [$width, $height, $weight, $array_type[$type]];
 			else
 				$this->error = 'e_unsupported_format';
 		}
@@ -394,7 +394,7 @@ class Gallery
 	//Compte le nombre d'images uploadée par un membre.
 	public function get_nbr_upload_pics($user_id)
 	{
-		return PersistenceContext::get_querier()->count(GallerySetup::$gallery_table, 'WHERE user_id=:user_id', array('user_id' => $user_id));
+		return PersistenceContext::get_querier()->count(GallerySetup::$gallery_table, 'WHERE user_id=:user_id', ['user_id' => $user_id]);
 	}
 
 	//Calcul des dimensions avec respect des proportions.
@@ -425,7 +425,7 @@ class Gallery
 			$height = $height_s;
 		}
 
-		return array($width, $height);
+		return [$width, $height];
 	}
 
 	//Header image.

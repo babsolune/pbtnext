@@ -22,11 +22,11 @@ class NewsletterDeleteArchiveController extends ModuleController
 				NewsletterAuthorizationsService::get_errors()->moderation_archives();
 			}
 			
-			$row = PersistenceContext::get_querier()->select_single_row(NewsletterSetup::$newsletter_table_archives, array('*'), "WHERE id = '". $id ."'");
+			$row = PersistenceContext::get_querier()->select_single_row(NewsletterSetup::$newsletter_table_archives, ['*'], "WHERE id = '". $id ."'");
 			
 			NewsletterService::delete_archive($id);
 			
-			HooksService::execute_hook_action('delete', self::$module_id, array('id' => $id, 'title' => $row['subject']));
+			HooksService::execute_hook_action('delete', self::$module_id, ['id' => $id, 'title' => $row['subject']]);
 
 			AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : NewsletterUrlBuilder::archives($id_stream)), LangLoader::get_message('newsletter.archive.success.delete', 'common', 'newsletter'));
 		}

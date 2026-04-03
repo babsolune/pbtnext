@@ -45,10 +45,10 @@ class LinksMenuLink extends LinksMenuElement
 		}
 
 		parent::_assign($template, $mode);
-		$template->put_all(array(
+		$template->put_all([
 			'C_DISPLAY_AUTH' => AppContext::get_current_user()->check_auth($this->get_auth(), Menu::MENU_AUTH_BIT),
 			'C_LINK' => true
-		));
+		]);
 
 		return $template->render();
 	}

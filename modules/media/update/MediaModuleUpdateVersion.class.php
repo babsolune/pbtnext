@@ -15,8 +15,8 @@ class MediaModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('media');
 
-		$this->content_tables = array(PREFIX . 'media');
-		self::$delete_old_files_list = array(
+		$this->content_tables = [PREFIX . 'media'];
+		self::$delete_old_files_list = [
 			'/lang/english/config.php',
 			'/lang/english/media_english.php',
 			'/lang/french/config.php',
@@ -31,15 +31,15 @@ class MediaModuleUpdateVersion extends ModuleUpdateVersion
 			'/templates/format/media_swf.tpl',
 			'/templates/media.tpl',
 			'/util/AdminMediaDisplayResponse.class.php'
-		);
-		self::$delete_old_folders_list = array(
+		];
+		self::$delete_old_folders_list = [
 			'/controllers/categories'
-		);
+		];
 
-		$this->database_columns_to_modify = array(
-			array(
+		$this->database_columns_to_modify = [
+			[
 				'table_name' => PREFIX . 'media',
-				'columns' => array(
+				'columns' => [
 					'idcat'     => 'id_category INT(11) NOT NULL DEFAULT 0',
 					'name'      => 'title TEXT',
 					'contents'  => 'content MEDIUMTEXT',
@@ -49,27 +49,27 @@ class MediaModuleUpdateVersion extends ModuleUpdateVersion
 					'url'       => 'file_url TEXT',
 					'counter'   => 'views_number INT(11) NOT NULL DEFAULT 0',
 					'poster'    => 'thumbnail VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 0',
-				)
-			),
-			array(
+				]
+			],
+			[
 				'table_name' => PREFIX . 'media_cats',
-				'columns' => array(
+				'columns' => [
 					'image' => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""'
-				)
-			)
-		);
+				]
+			]
+		];
 
-		$this->database_columns_to_add = array(
-			array(
+		$this->database_columns_to_add = [
+			[
 				'table_name' => PREFIX . 'media',
-				'columns' => array(
-					'summary'     => array('type' => 'text', 'length' => 65000),
-					'update_date' => array('type' => 'integer', 'length' => 11, 'notnull'  => 1, 'default' => 0),
-					'sources'     => array('type' => 'text', 'length' => 65000),
-					'rewrited_title' => array('type' => 'string', 'length' => 250, 'notnull' => 1, 'default' => "''"),
-				)
-			)
-		);
+				'columns' => [
+					'summary'     => ['type' => 'text', 'length' => 65000],
+					'update_date' => ['type' => 'integer', 'length' => 11, 'notnull'  => 1, 'default' => 0],
+					'sources'     => ['type' => 'text', 'length' => 65000],
+					'rewrited_title' => ['type' => 'string', 'length' => 250, 'notnull' => 1, 'default' => "''"],
+				]
+			]
+		];
 	}
 }
 ?>

@@ -22,7 +22,7 @@ class FormatingHelper
 	 * @param bool $addslashes if true, the parsed string will be escaped.
 	 * @return string The parsed string.
 	 */
-	public static function strparse($content, $forbidden_tags = array(), $addslashes = true)
+	public static function strparse($content, $forbidden_tags = [], $addslashes = true)
 	{
 		$parser = AppContext::get_content_formatting_service()->get_default_parser();
 

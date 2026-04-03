@@ -10,8 +10,8 @@
 
 class BirthdayCache implements CacheData
 {
-	private $users_birthday = array();
-	private $upcoming_birthdays = array();
+	private $users_birthday = [];
+	private $upcoming_birthdays = [];
 
 	public function synchronize()
 	{

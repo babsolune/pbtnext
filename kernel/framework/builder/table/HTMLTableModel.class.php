@@ -26,11 +26,11 @@ class HTMLTableModel
 	private $caption = '';
 	private $layout_title = '';
 	private $rows_per_page;
-	private $nb_rows_options = array(10, 25, 100);
+	private $nb_rows_options = [10, 25, 100];
 	private $default_sorting_rule;
-	private $allowed_sort_parameters = array();
-	private $filters = array();
-	private $permanent_filters = array();
+	private $allowed_sort_parameters = [];
+	private $filters = [];
+	private $permanent_filters = [];
 	private $filters_menu_title = '';
 	private $display_footer = true;
 	private $footer_css_class = '';

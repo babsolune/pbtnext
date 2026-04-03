@@ -54,12 +54,12 @@ abstract class TeamSpeak3_Node_Abstract implements RecursiveIterator, ArrayAcces
   /**
    * @ignore
    */
-  protected $nodeInfo = array();
+  protected $nodeInfo = [];
 
   /**
    * @ignore
    */
-  protected $storage = array();
+  protected $storage = [];
 
   /**
    * Sends a prepared command to the server and returns the result.
@@ -79,7 +79,7 @@ abstract class TeamSpeak3_Node_Abstract implements RecursiveIterator, ArrayAcces
    * @param  array  $params
    * @return TeamSpeak3_Helper_String
    */
-  public function prepare($cmd, array $params = array())
+  public function prepare($cmd, array $params = [])
   {
     return $this->getParent()->prepare($cmd, $params);
   }
@@ -91,7 +91,7 @@ abstract class TeamSpeak3_Node_Abstract implements RecursiveIterator, ArrayAcces
    * @param  array  $params
    * @return TeamSpeak3_Adapter_ServerQuery_Reply
    */
-  public function execute($cmd, array $params = array())
+  public function execute($cmd, array $params = [])
   {
     return $this->request($this->prepare($cmd, $params));
   }
@@ -193,7 +193,7 @@ abstract class TeamSpeak3_Node_Abstract implements RecursiveIterator, ArrayAcces
 
     foreach($iterator as $node)
     {
-      $siblings = array();
+      $siblings = [];
 
       for($level = 0; $level < $iterator->getDepth(); $level++)
       {
@@ -215,7 +215,7 @@ abstract class TeamSpeak3_Node_Abstract implements RecursiveIterator, ArrayAcces
    * @param  array $rules
    * @return array
    */
-  protected function filterList(array $nodes = array(), array $rules = array())
+  protected function filterList(array $nodes = [], array $rules = [])
   {
     if(!empty($rules))
     {
@@ -346,7 +346,7 @@ abstract class TeamSpeak3_Node_Abstract implements RecursiveIterator, ArrayAcces
   {
     if($this->getParent() instanceof TeamSpeak3_Node_Abstract)
     {
-      return call_user_func_array(array($this->getParent(), $name), $args);
+      return call_user_func_array([$this->getParent(), $name], $args);
     }
 
     throw new TeamSpeak3_Node_Exception("node method '" . $name . "()' does not exist");
@@ -394,7 +394,7 @@ abstract class TeamSpeak3_Node_Abstract implements RecursiveIterator, ArrayAcces
    */
   public function __sleep()
   {
-    return array("parent", "storage", "nodeId");
+    return ["parent", "storage", "nodeId"];
   }
 
   /**
@@ -402,7 +402,7 @@ abstract class TeamSpeak3_Node_Abstract implements RecursiveIterator, ArrayAcces
    */
   protected function fetchNodeList()
   {
-    $this->nodeList = array();
+    $this->nodeList = [];
   }
 
   /**
@@ -418,7 +418,7 @@ abstract class TeamSpeak3_Node_Abstract implements RecursiveIterator, ArrayAcces
    */
   protected function resetNodeInfo()
   {
-    $this->nodeInfo = array();
+    $this->nodeInfo = [];
   }
 
   /**
@@ -563,7 +563,7 @@ abstract class TeamSpeak3_Node_Abstract implements RecursiveIterator, ArrayAcces
   {
     if(method_exists($this, "modify"))
     {
-      return $this->modify(array((string) $offset => $value));
+      return $this->modify([(string) $offset => $value]);
     }
 
     throw new TeamSpeak3_Node_Exception("node '" . get_class($this) . "' is read only");

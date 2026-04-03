@@ -33,10 +33,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_SiteVerificationWebResourceResource
      */
-    public function insert($verificationMethod, Google_SiteVerificationWebResourceResource $postBody, $optParams = array()) {
-      $params = array('verificationMethod' => $verificationMethod, 'postBody' => $postBody);
+    public function insert($verificationMethod, Google_SiteVerificationWebResourceResource $postBody, $optParams = []) {
+      $params = ['verificationMethod' => $verificationMethod, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_SiteVerificationWebResourceResource($data);
       } else {
@@ -50,10 +50,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_SiteVerificationWebResourceResource
      */
-    public function get($id, $optParams = array()) {
-      $params = array('id' => $id);
+    public function get($id, $optParams = []) {
+      $params = ['id' => $id];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_SiteVerificationWebResourceResource($data);
       } else {
@@ -66,10 +66,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_SiteVerificationWebResourceListResponse
      */
-    public function listWebResource($optParams = array()) {
-      $params = array();
+    public function listWebResource($optParams = []) {
+      $params = [];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_SiteVerificationWebResourceListResponse($data);
       } else {
@@ -84,10 +84,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_SiteVerificationWebResourceResource
      */
-    public function update($id, Google_SiteVerificationWebResourceResource $postBody, $optParams = array()) {
-      $params = array('id' => $id, 'postBody' => $postBody);
+    public function update($id, Google_SiteVerificationWebResourceResource $postBody, $optParams = []) {
+      $params = ['id' => $id, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('update', array($params));
+      $data = $this->__call('update', [$params]);
       if ($this->useObjects()) {
         return new Google_SiteVerificationWebResourceResource($data);
       } else {
@@ -103,10 +103,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_SiteVerificationWebResourceResource
      */
-    public function patch($id, Google_SiteVerificationWebResourceResource $postBody, $optParams = array()) {
-      $params = array('id' => $id, 'postBody' => $postBody);
+    public function patch($id, Google_SiteVerificationWebResourceResource $postBody, $optParams = []) {
+      $params = ['id' => $id, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('patch', array($params));
+      $data = $this->__call('patch', [$params]);
       if ($this->useObjects()) {
         return new Google_SiteVerificationWebResourceResource($data);
       } else {
@@ -120,10 +120,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_SiteVerificationWebResourceGettokenResponse
      */
-    public function getToken(Google_SiteVerificationWebResourceGettokenRequest $postBody, $optParams = array()) {
-      $params = array('postBody' => $postBody);
+    public function getToken(Google_SiteVerificationWebResourceGettokenRequest $postBody, $optParams = []) {
+      $params = ['postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('getToken', array($params));
+      $data = $this->__call('getToken', [$params]);
       if ($this->useObjects()) {
         return new Google_SiteVerificationWebResourceGettokenResponse($data);
       } else {
@@ -136,10 +136,10 @@
      * @param string $id The id of a verified site or domain.
      * @param array $optParams Optional parameters.
      */
-    public function delete($id, $optParams = array()) {
-      $params = array('id' => $id);
+    public function delete($id, $optParams = []) {
+      $params = ['id' => $id];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       return $data;
     }
   }
@@ -233,7 +233,7 @@ class Google_SiteVerificationWebResourceListResponse extends Google_Model {
   protected $__itemsType = 'Google_SiteVerificationWebResourceResource';
   protected $__itemsDataType = 'array';
   public $items;
-  public function setItems(/* array(Google_SiteVerificationWebResourceResource) */ $items) {
+  public function setItems(/* [Google_SiteVerificationWebResourceResource] */ $items) {
     $this->assertIsArray($items, 'Google_SiteVerificationWebResourceResource', __METHOD__);
     $this->items = $items;
   }
@@ -248,7 +248,7 @@ class Google_SiteVerificationWebResourceResource extends Google_Model {
   protected $__siteType = 'Google_SiteVerificationWebResourceResourceSite';
   protected $__siteDataType = '';
   public $site;
-  public function setOwners(/* array(Google_string) */ $owners) {
+  public function setOwners(/* [Google_string] */ $owners) {
     $this->assertIsArray($owners, 'Google_string', __METHOD__);
     $this->owners = $owners;
   }

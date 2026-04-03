@@ -74,7 +74,7 @@ else
 
 $description = $category->get_description();
 if (empty($description))
-	$description = StringVars::replace_vars($lang['forum.root.description.seo'], array('site' => GeneralConfig::load()->get_site_name())) . ($category->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category.category', 'category-lang') . ' ' . $category->get_name() : '');
+	$description = StringVars::replace_vars($lang['forum.root.description.seo'], ['site' => GeneralConfig::load()->get_site_name()]) . ($category->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category.category', 'category-lang') . ' ' . $category->get_name() : '');
 define('DESCRIPTION', $description);
 
 require_once(PATH_TO_ROOT . '/kernel/header.php');
@@ -104,9 +104,9 @@ if (!empty($id_get))
 	//Affichage des sous forums s'il y en a.
 	if (CategoriesService::get_categories_manager('forum')->get_categories_cache()->get_children($id_get))
 	{
-		$view->put_all(array(
+		$view->put_all([
 			'C_FORUM_SUB_CATS' => true
-		));
+		]);
 
 		//Vérification des autorisations.
 		$authorized_categories = CategoriesService::get_authorized_categories($id_get);
@@ -122,13 +122,13 @@ if (!empty($id_get))
 		LEFT JOIN ' . ForumSetup::$forum_view_table . ' v ON v.user_id = :user_id AND v.idtopic = t.id
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' m ON m.user_id = t.last_user_id
 		WHERE c.id_parent = :id_cat AND c.id IN :authorized_categories
-		ORDER BY c.id_parent, c.c_order', array(
+		ORDER BY c.id_parent, c.c_order', [
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'id_cat' => $category->get_id(),
 			'authorized_categories' => $authorized_categories
-		));
+		]);
 
-		$categories = array();
+		$categories = [];
 		while ($row = $result->fetch())
 		{
 			$cat = $categories_cache->get_category($row['cid']);
@@ -141,7 +141,7 @@ if (!empty($id_get))
 		$result->dispose();
 
 		$display_sub_cats = false;
-		$is_sub_forum = array();
+		$is_sub_forum = [];
 		foreach ($categories as $row)
 		{
 			if (in_array($row['id_parent'], $is_sub_forum))
@@ -207,7 +207,7 @@ if (!empty($id_get))
 				$last_msg_date = new Date($row['last_timestamp'], Timezone::SERVER_TIMEZONE);
 
 				$view->assign_block_vars('subcats', array_merge(
-					Date::get_array_tpl_vars($last_msg_date, 'LAST_MESSAGE_DATE'), array(
+					Date::get_array_tpl_vars($last_msg_date, 'LAST_MESSAGE_DATE'), [
 					'C_BLINK'                 => $blink,
 					'C_SUBFORUMS'             => !empty($subforums),
 					'C_LAST_TOPIC_MSG'        => !empty($row['last_topic_id']),
@@ -239,7 +239,7 @@ if (!empty($id_get))
 					'U_LAST_MESSAGE'          => !empty($row['last_topic_id']) ? "topic" . url('.php?' . $last_page . 'id=' . $row['tid'], '-' . $row['tid'] . $last_page_rewrite . '-' . Url::encode_rewrite($row['title']) . '.php') . '#m' . $last_msg_id : '',
 					'U_CATEGORY_THUMBNAIL' 	  => $categories_cache->get_category($row['cid'])->get_thumbnail()->rel(),
 					'U_LAST_USER_PROFILE'     => UserUrlBuilder::profile($row['last_user_id'])->rel(),
-				)));
+				]));
 			}
 		}
 	}
@@ -249,20 +249,20 @@ if (!empty($id_get))
 	$locked_cat = ($category->get_status() == ForumCategory::STATUS_LOCKED);
 	if (!$check_group_write_auth)
 	{
-		$view->assign_block_vars('error_auth_write', array(
+		$view->assign_block_vars('error_auth_write', [
 			'L_ERROR_AUTH_WRITE' => $lang['forum.error.category.right']
-		));
+		]);
 	}
 	//Catégorie verrouillée?
 	elseif ($locked_cat)
 	{
 		$check_group_write_auth = false;
-		$view->assign_block_vars('error_auth_write', array(
+		$view->assign_block_vars('error_auth_write', [
 			'L_ERROR_AUTH_WRITE' => $lang['forum.error.locked.category']
-		));
+		]);
 	}
 
-	$nbr_topic = PersistenceContext::get_querier()->count(PREFIX . 'forum_topics', 'WHERE id_category=:id_category', array('id_category' => $id_get));
+	$nbr_topic = PersistenceContext::get_querier()->count(PREFIX . 'forum_topics', 'WHERE id_category=:id_category', ['id_category' => $id_get]);
 
 	//On crée une pagination (si activé) si le nombre de forum est trop important.
 	$page = AppContext::get_request()->get_getint('p', 1);
@@ -283,11 +283,11 @@ if (!empty($id_get))
 	{
 		if ($i >= 2)
 		{
-			$view->assign_block_vars('syndication_cats', array(
+			$view->assign_block_vars('syndication_cats', [
 				'C_DISPLAY_RAQUO' => $i > 2,
 				'LINK'            => $array[1],
 				'LABEL'           => $array[0]
-			));
+			]);
 		}
 		$current_subcat = $array[0];
 		$i++;
@@ -296,7 +296,7 @@ if (!empty($id_get))
 	//Si l'utilisateur a les droits d'édition.
 	$check_group_edit_auth = ForumAuthorizationsService::check_authorizations($id_get)->moderation();
 
-	$vars_tpl = array(
+	$vars_tpl = [
 		'C_THUMBNAILS_DISPLAYED' => $config->are_thumbnails_displayed(),
 		'C_PAGINATION'           => $pagination->has_several_pages(),
 		'C_CONTROLS'             => $check_group_edit_auth,
@@ -323,7 +323,7 @@ if (!empty($id_get))
 		'U_POST_NEW_SUBJECT'   => 'post' . url('.php?new=topic&amp;id=' . $id_get, ''),
 
 		'L_CHANGE_STATUT_TO' => sprintf($lang['forum.change.issue.status.to'], $config->get_message_before_topic_title()),
-	);
+	];
 
 	$nbr_topics_display = 0;
 	$result = PersistenceContext::get_querier()->select("SELECT
@@ -343,16 +343,16 @@ if (!empty($id_get))
 	LEFT JOIN " . PREFIX . "forum_track tr ON tr.idtopic = t.id AND tr.user_id = :user_id
 	WHERE t.id_category = :id_category
 	ORDER BY t.type DESC , t.last_timestamp DESC
-	LIMIT :number_items_per_page OFFSET :display_from", array(
+	LIMIT :number_items_per_page OFFSET :display_from", [
 		'user_id' => AppContext::get_current_user()->get_id(),
 		'id_category' => $id_get,
 		'number_items_per_page' => $pagination->get_number_items_per_page(),
 		'display_from' => $pagination->get_display_from()
-	));
+	]);
 	while ($row = $result->fetch())
 	{
 		//On définit un array pour l'appellation correspondant au type de champ
-		$type = array('2' => $lang['forum.announce'] . ':', '1' => $lang['forum.pinned'] . ':', '0' => '');
+		$type = ['2' => $lang['forum.announce'] . ':', '1' => $lang['forum.pinned'] . ':', '0' => ''];
 
 		//Vérifications des topics Lu/non Lus.
 		$topic_icon = 'fa-announce';
@@ -407,7 +407,7 @@ if (!empty($id_get))
 		$view->assign_block_vars('topics', array_merge(
 			Date::get_array_tpl_vars($first_msg_date, 'first_message_date'),
 			Date::get_array_tpl_vars($last_msg_date, 'last_message_date'),
-			array(
+			[
 			'C_PAGINATION'            => $topic_pagination->has_several_pages(),
 			'C_IMG_POLL'              => !empty($row['question']),
 			'C_IMG_TRACK'             => !empty($row['idtrack']),
@@ -443,7 +443,7 @@ if (!empty($id_get))
 			'U_LAST_MESSAGE'      => "topic" . url('.php?' . $last_page . 'id=' . $row['id'], '-' . $row['id'] . $last_page_rewrite . $rewrited_title_topic . '.php') . '#m' . $last_msg_id,
 
 			'L_ISSUE_STATUS_MESSAGE'  => ($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : ''
-			)
+			]
 		));
 		$nbr_topics_display++;
 	}
@@ -452,9 +452,9 @@ if (!empty($id_get))
 	//Affichage message aucun topics.
 	if ($nbr_topics_display == 0)
 	{
-		$view->put_all(array(
+		$view->put_all([
 			'C_NO_TOPICS' => true,
-		));
+		]);
 	}
 
 	//Listes les utilisateurs en ligne.
@@ -479,7 +479,7 @@ if (!empty($id_get))
 		}
 	}
 
-	$vars_tpl = array_merge($vars_tpl, array(
+	$vars_tpl = array_merge($vars_tpl, [
 		'C_USER_CONNECTED' => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 		'C_NO_USER_ONLINE' => (($total_online - $total_visit) == 0),
 
@@ -496,7 +496,7 @@ if (!empty($id_get))
 		'L_MODO'   => ($total_modo > 1) ? $lang['user.moderators'] : $lang['user.moderator'],
 		'L_MEMBER' => ($total_member > 1) ? $lang['user.members'] : $lang['user.member'],
 		'L_GUEST'  => ($total_visit > 1) ? $lang['user.guests'] : $lang['user.guest'],
-	));
+	]);
 
 	$view->put_all($vars_tpl);
 	$top_view->put_all($vars_tpl);

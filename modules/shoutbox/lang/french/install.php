@@ -12,8 +12,8 @@
 #                      French                      #
 ####################################################
 
-$lang = array(
+$lang = [
     'shoutbox_login' => 'PHPBoost',
     'shoutbox_content' => 'L\'équipe de PHPBoost vous souhaite la bienvenue !'
-);
+];
 ?>

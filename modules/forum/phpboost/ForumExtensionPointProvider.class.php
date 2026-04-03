@@ -64,7 +64,7 @@ class ForumExtensionPointProvider extends ExtensionPointProvider
 
 	public function url_mappings()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/forum/index.php')));
+		return new UrlMappings([new DispatcherUrlMapping('/forum/index.php')]);
 	}
 
 	public function user()

@@ -27,7 +27,7 @@ class AdminExtendedFieldsMemberListController extends DefaultAdminController
 		{
 			if ($row['name'] !== 'last_view_forum')
 			{
-				$this->view->assign_block_vars('list_extended_fields', array(
+				$this->view->assign_block_vars('list_extended_fields', [
 					'C_REQUIRED' => $row['required'],
 					'C_DISPLAY'  => $row['display'],
 					'C_FREEZE'   => $row['freeze'],
@@ -36,15 +36,15 @@ class AdminExtendedFieldsMemberListController extends DefaultAdminController
 					'NAME' => $row['name'],
 
 					'U_EDIT' => AdminExtendedFieldsUrlBuilder::edit($row['id'])->rel()
-				));
+				]);
 				$fields_number++;
 			}
 		}
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_FIELDS'         => $fields_number,
 			'C_SEVERAL_FIELDS' => $fields_number > 1
-		));
+		]);
 
 		return new AdminExtendedFieldsDisplayResponse($this->view, $this->lang['user.extended.fields.management']);
 	}
@@ -68,10 +68,10 @@ class AdminExtendedFieldsMemberListController extends DefaultAdminController
 				"UPDATE " . DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST . " SET
 				position = :position
 				WHERE id = :id"
-				, array(
+				, [
 					'position' => $position,
 					'id' => $tree->id,
-				)
+				]
 			);
 		}
 	}

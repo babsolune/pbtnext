@@ -57,14 +57,14 @@ class TeamSpeak3_Adapter_ServerQuery_Reply
    *
    * @var array
    */
-  protected $err = array();
+  protected $err = [];
 
   /**
    * Sotres an array of events that occured before or during this reply.
    *
    * @var array
    */
-  protected $evt = array();
+  protected $evt = [];
 
   /**
    * Creates a new TeamSpeak3_Adapter_ServerQuery_Reply object.
@@ -100,7 +100,7 @@ class TeamSpeak3_Adapter_ServerQuery_Reply
    */
   public function toLines()
   {
-    if(!count($this->rpl)) return array();
+    if(!count($this->rpl)) return [];
 
     $list = $this->toString(0)->split(TeamSpeak3::SEPARATOR_LIST);
 
@@ -119,7 +119,7 @@ class TeamSpeak3_Adapter_ServerQuery_Reply
    */
   public function toTable()
   {
-    $table = array();
+    $table = [];
 
     foreach($this->toLines(0) as $cells)
     {
@@ -143,7 +143,7 @@ class TeamSpeak3_Adapter_ServerQuery_Reply
    */
   public function toArray()
   {
-    $array = array();
+    $array = [];
     $table = $this->toTable(1);
 
     for($i = 0; $i < count($table); $i++)
@@ -176,7 +176,7 @@ class TeamSpeak3_Adapter_ServerQuery_Reply
   public function toAssocArray($ident)
   {
     $nodes = (func_num_args() > 1) ? $this->toArray(1) : $this->toArray();
-    $array = array();
+    $array = [];
 
     foreach($nodes as $node)
     {

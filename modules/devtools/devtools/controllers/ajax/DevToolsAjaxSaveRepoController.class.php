@@ -13,7 +13,7 @@ class DevToolsAjaxSaveRepoController extends AbstractController
     public function execute(HTTPRequestCustom $request)
     {
         if (!DevToolsAuthorizationsService::check_authorizations()->admin())
-            return new JSONResponse(array('success' => false, 'error' => 'Unauthorized'), 403);
+            return new JSONResponse(['success' => false, 'error' => 'Unauthorized'], 403);
 
         $org   = preg_replace('/[^a-zA-Z0-9_\-]/', '', $request->get_string('org', ''));
         $repo  = preg_replace('/[^a-zA-Z0-9_\-\.]/', '', $request->get_string('repo', ''));
@@ -21,22 +21,22 @@ class DevToolsAjaxSaveRepoController extends AbstractController
         $label = trim($request->get_string('label', ''));
 
         if (empty($org) || empty($repo))
-            return new JSONResponse(array('success' => false, 'error' => 'Missing parameters'));
+            return new JSONResponse(['success' => false, 'error' => 'Missing parameters']);
 
         $config = DevToolsConfig::load();
         $repos  = $config->get_repos() ?: DevToolsConfig::DEFAULT_REPOS;
 
-        $repos[] = array(
+        $repos[] = [
             'label' => $label ?: $org . '/' . $repo,
             'owner' => $org,
             'repo'  => $repo,
             'path'  => $path,
-        );
+        ];
 
         $config->set_repos($repos);
         ConfigManager::save('devtools', $config, 'config');
 
-        return new JSONResponse(array('success' => true, 'repos' => $repos));
+        return new JSONResponse(['success' => true, 'repos' => $repos]);
     }
 }
 ?>

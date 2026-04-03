@@ -35,131 +35,131 @@ class AdminShoutboxConfigController extends DefaultAdminModuleController
 	{
 		$form = new HTMLForm(self::class);
 
-		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module()->get_configuration()->get_name()]));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->lang['form.items.per.page'], $this->config->get_items_per_page(),
-			array('class' => 'third-field', 'min' => 1, 'max' => 50, 'required' => true),
-			array(new FormFieldConstraintIntegerRange(1, 50))
+			['class' => 'third-field', 'min' => 1, 'max' => 50, 'required' => true],
+			[new FormFieldConstraintIntegerRange(1, 50)]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('max_messages_number_enabled', $this->lang['shoutbox.enable.max.messages.number'], $this->config->is_max_messages_number_enabled(),
-			array(
+			[
 				'class' => 'third-field custom-checkbox',
-				'events' => array('click' => '
+				'events' => ['click' => '
 					if (HTMLForms.getField("max_messages_number_enabled").getValue()) {
 						HTMLForms.getField("max_messages_number").enable();
 					} else {
 						HTMLForms.getField("max_messages_number").disable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('max_messages_number', $this->lang['shoutbox.max.messages.number'], $this->config->get_max_messages_number(),
-			array(
+			[
 				'class' => 'third-field', 'min' => 5, 'max' => 1000, 'required' => true,
 				'hidden' => !$this->config->is_max_messages_number_enabled()
-			),
-			array(new FormFieldConstraintIntegerRange(5, 1000))
+			],
+			[new FormFieldConstraintIntegerRange(5, 1000)]
 		));
 
 		$fieldset->add_field(new FormFieldSpacer('1_separator', ''));
 
 		$fieldset->add_field(new FormFieldCheckbox('no_write_authorization_message_displayed', $this->lang['shoutbox.display.no.write.message'], $this->config->is_no_write_authorization_message_displayed(),
-			array('class' => 'third-field custom-checkbox')
+			['class' => 'third-field custom-checkbox']
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('max_links_number_per_message_enabled', $this->lang['shoutbox.enable.max.links.per.message'], $this->config->is_max_links_number_per_message_enabled(),
-			array(
+			[
 				'class' => 'third-field custom-checkbox',
-				'events' => array('click' => '
+				'events' => ['click' => '
 					if (HTMLForms.getField("max_links_number_per_message_enabled").getValue()) {
 						HTMLForms.getField("max_links_number_per_message").enable();
 					} else {
 						HTMLForms.getField("max_links_number_per_message").disable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('max_links_number_per_message', $this->lang['shoutbox.max.links.per.message'], $this->config->get_max_links_number_per_message(),
-			array('class' => 'third-field', 'min' => 1, 'max' => 20, 'required' => true, 'hidden' => !$this->config->is_max_links_number_per_message_enabled()),
-			array(new FormFieldConstraintIntegerRange(1, 20))
+			['class' => 'third-field', 'min' => 1, 'max' => 20, 'required' => true, 'hidden' => !$this->config->is_max_links_number_per_message_enabled()],
+			[new FormFieldConstraintIntegerRange(1, 20)]
 		));
 
 		$fieldset->add_field(new FormFieldSpacer('2_separator', ''));
 
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_formatting_tags', $this->lang['form.forbidden.tags'], $this->config->get_forbidden_formatting_tags(), $this->generate_forbidden_formatting_tags_option(),
-			array('size' => 10)
+			['size' => 10]
 		));
 
 		$fieldset = new FormFieldsetHTML('configuration', $this->lang['shoutbox.shoutbox.menu']);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('date_displayed', $this->lang['shoutbox.display.date'], $this->config->is_date_displayed(),
-			array('class' => 'third-field custom-checkbox')
+			['class' => 'third-field custom-checkbox']
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('validation_onkeypress_enter_enabled', $this->lang['shoutbox.enable.validation.onkeypress.enter'], $this->config->is_validation_onkeypress_enter_enabled(),
-			array('class' => 'third-field custom-checkbox')
+			['class' => 'third-field custom-checkbox']
 		));
 
 		if (ModulesManager::is_module_installed('BBCode') && ModulesManager::is_module_activated('BBCode'))
 		{
 			$fieldset->add_field(new FormFieldCheckbox('shout_bbcode_enabled', $this->lang['shoutbox.mini.enable.bbcode'], $this->config->is_shout_bbcode_enabled(),
-				array('class' => 'third-field custom-checkbox')
+				['class' => 'third-field custom-checkbox']
 			));
 		}
 
 		$fieldset->add_field(new FormFieldSpacer('3_separator', ''));
 
 		$fieldset->add_field(new FormFieldCheckbox('automatic_refresh_enabled', $this->lang['shoutbox.enable.automatic.refresh'], $this->config->is_automatic_refresh_enabled(),
-			array(
+			[
 				'class' => 'third-field custom-checkbox',
-				'events' => array('click' => '
+				'events' => ['click' => '
 					if (HTMLForms.getField("automatic_refresh_enabled").getValue()) {
 						HTMLForms.getField("refresh_delay").enable();
 					} else {
 						HTMLForms.getField("refresh_delay").disable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$fieldset->add_field(new FormFieldDecimalNumberEditor('refresh_delay', $this->lang['shoutbox.refresh.delay'], $this->config->get_refresh_delay() / 60000,
-			array('class' => 'third-field', 'min' => 0, 'max' => 60, 'step' => 0.5, 'description' => $this->lang['shoutbox.refresh.delay.clue'], 'required' => true, 'hidden' => !$this->config->is_automatic_refresh_enabled())
+			['class' => 'third-field', 'min' => 0, 'max' => 60, 'step' => 0.5, 'description' => $this->lang['shoutbox.refresh.delay.clue'], 'required' => true, 'hidden' => !$this->config->is_automatic_refresh_enabled()]
 		));
 
 		$fieldset->add_field(new FormFieldSpacer('4_separator', ''));
 
 		$fieldset->add_field(new FormFieldCheckbox('shout_max_messages_number_enabled', $this->lang['shoutbox.mini.enable.max.messages.number'], $this->config->is_shout_max_messages_number_enabled(),
-			array(
+			[
 				'class' => 'third-field custom-checkbox',
-				'events' => array('click' => '
+				'events' => ['click' => '
 					if (HTMLForms.getField("shout_max_messages_number_enabled").getValue()) {
 						HTMLForms.getField("shout_max_messages_number").enable();
 					} else {
 						HTMLForms.getField("shout_max_messages_number").disable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('shout_max_messages_number', $this->lang['shoutbox.mini.max.messages.number'], $this->config->get_shout_max_messages_number(),
-			array('class' => 'third-field', 'min' => 5, 'max' => 1000, 'required' => true, 'hidden' => !$this->config->is_shout_max_messages_number_enabled()),
-			array(new FormFieldConstraintIntegerRange(5, 1000))
+			['class' => 'third-field', 'min' => 5, 'max' => 1000, 'required' => true, 'hidden' => !$this->config->is_shout_max_messages_number_enabled()],
+			[new FormFieldConstraintIntegerRange(5, 1000)]
 		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['form.authorizations']);
 
 		$form->add_fieldset($fieldset_authorizations);
 
-		$auth_settings = new AuthorizationsSettings(array(
+		$auth_settings = new AuthorizationsSettings([
 			new ActionAuthorization($this->lang['form.authorizations.read'], ShoutboxAuthorizationsService::READ_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['form.authorizations.write'], ShoutboxAuthorizationsService::WRITE_AUTHORIZATIONS),
 			new MemberDisabledActionAuthorization($this->lang['form.authorizations.moderation'], ShoutboxAuthorizationsService::MODERATION_AUTHORIZATIONS)
-		));
+		]);
 
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());
@@ -199,7 +199,7 @@ class AdminShoutboxConfigController extends DefaultAdminModuleController
 		else
 			$this->config->hide_no_write_authorization_message();
 
-		$forbidden_formatting_tags = array();
+		$forbidden_formatting_tags = [];
 		foreach ($this->form->get_value('forbidden_formatting_tags') as $field => $option)
 		{
 			$forbidden_formatting_tags[] = $option->get_raw_value();
@@ -245,12 +245,12 @@ class AdminShoutboxConfigController extends DefaultAdminModuleController
 
 		ShoutboxConfig::save();
 
-		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
+		HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]), 'url' => ModulesUrlBuilder::configuration()->rel()]);
 	}
 
 	private function generate_forbidden_formatting_tags_option()
 	{
-		$options = array();
+		$options = [];
 		$available_tags = AppContext::get_content_formatting_service()->get_available_tags();
 		foreach ($available_tags as $identifier => $name)
 		{

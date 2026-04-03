@@ -42,10 +42,10 @@
      * @opt_param int minPayoutRank A value between 1 and 4, where 1 represents the quartile of advertisers with the lowest ranks and 4 represents the quartile of advertisers with the highest ranks. Filters out all advertisers with a lower rank than the given quartile. For example if a 2 was given only advertisers with a payout rank of 25 or higher would be included. Optional.
      * @return Google_Advertisers
      */
-    public function listAdvertisers($role, $roleId, $optParams = array()) {
-      $params = array('role' => $role, 'roleId' => $roleId);
+    public function listAdvertisers($role, $roleId, $optParams = []) {
+      $params = ['role' => $role, 'roleId' => $roleId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_Advertisers($data);
       } else {
@@ -64,10 +64,10 @@
      * @opt_param string advertiserId The ID of the advertiser to look up. Optional.
      * @return Google_Advertiser
      */
-    public function get($role, $roleId, $optParams = array()) {
-      $params = array('role' => $role, 'roleId' => $roleId);
+    public function get($role, $roleId, $optParams = []) {
+      $params = ['role' => $role, 'roleId' => $roleId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Advertiser($data);
       } else {
@@ -97,10 +97,10 @@
      * @opt_param string projection The set of fields to return.
      * @return Google_CcOffers
      */
-    public function listCcOffers($publisher, $optParams = array()) {
-      $params = array('publisher' => $publisher);
+    public function listCcOffers($publisher, $optParams = []) {
+      $params = ['publisher' => $publisher];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_CcOffers($data);
       } else {
@@ -145,10 +145,10 @@
      * @opt_param string publisherId Caret(^) delimited list of publisher IDs. Filters out all events that do not reference one of the given publishers IDs. Only used when under advertiser role. Optional.
      * @return Google_Events
      */
-    public function listEvents($role, $roleId, $optParams = array()) {
-      $params = array('role' => $role, 'roleId' => $roleId);
+    public function listEvents($role, $roleId, $optParams = []) {
+      $params = ['role' => $role, 'roleId' => $roleId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_Events($data);
       } else {
@@ -177,10 +177,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Link
      */
-    public function insert($role, $roleId, Google_Link $postBody, $optParams = array()) {
-      $params = array('role' => $role, 'roleId' => $roleId, 'postBody' => $postBody);
+    public function insert($role, $roleId, Google_Link $postBody, $optParams = []) {
+      $params = ['role' => $role, 'roleId' => $roleId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_Link($data);
       } else {
@@ -207,10 +207,10 @@
      * @opt_param string authorship The role of the author of the link.
      * @return Google_Links
      */
-    public function listLinks($role, $roleId, $optParams = array()) {
-      $params = array('role' => $role, 'roleId' => $roleId);
+    public function listLinks($role, $roleId, $optParams = []) {
+      $params = ['role' => $role, 'roleId' => $roleId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_Links($data);
       } else {
@@ -228,10 +228,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Link
      */
-    public function get($role, $roleId, $linkId, $optParams = array()) {
-      $params = array('role' => $role, 'roleId' => $roleId, 'linkId' => $linkId);
+    public function get($role, $roleId, $linkId, $optParams = []) {
+      $params = ['role' => $role, 'roleId' => $roleId, 'linkId' => $linkId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Link($data);
       } else {
@@ -268,10 +268,10 @@
      * @opt_param int minPayoutRank A value between 1 and 4, where 1 represents the quartile of publishers with the lowest ranks and 4 represents the quartile of publishers with the highest ranks. Filters out all publishers with a lower rank than the given quartile. For example if a 2 was given only publishers with a payout rank of 25 or higher would be included. Optional.
      * @return Google_Publishers
      */
-    public function listPublishers($role, $roleId, $optParams = array()) {
-      $params = array('role' => $role, 'roleId' => $roleId);
+    public function listPublishers($role, $roleId, $optParams = []) {
+      $params = ['role' => $role, 'roleId' => $roleId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_Publishers($data);
       } else {
@@ -290,10 +290,10 @@
      * @opt_param string publisherId The ID of the publisher to look up. Optional.
      * @return Google_Publisher
      */
-    public function get($role, $roleId, $optParams = array()) {
-      $params = array('role' => $role, 'roleId' => $roleId);
+    public function get($role, $roleId, $optParams = []) {
+      $params = ['role' => $role, 'roleId' => $roleId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Publisher($data);
       } else {

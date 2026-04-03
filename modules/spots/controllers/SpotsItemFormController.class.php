@@ -36,7 +36,7 @@ class SpotsItemFormController extends DefaultModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['form.name'], $this->get_item()->get_title(),
-			array('required' => true)
+			['required' => true]
 		));
 
 		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
@@ -57,33 +57,33 @@ class SpotsItemFormController extends DefaultModuleController
 
         if(SpotsService::is_gmap_enabled()) {
             $fieldset->add_field(new GoogleMapsFormFieldMapAddress('gps', $this->lang['spots.location'], new GoogleMapsMarker($this->get_item()->get_location(), $this->get_item()->get_location_latitude(), $this->get_item()->get_location_longitude()),
-				array('description' => $this->lang['spots.location.clue'], 'always_display_marker' => true)
+				['description' => $this->lang['spots.location.clue'], 'always_display_marker' => true]
 			));
 
 			$fieldset->add_field(new FormFieldCheckbox('route', $this->lang['spots.display.route'], $this->get_item()->is_route_enabled(),
-				array(
+				[
 					'description' => $this->lang['spots.display.route.clue'],
-					'events' => array('change' =>
+					'events' => ['change' =>
 						'if (HTMLForms.getField("route").getValue()) {
 							HTMLForms.getField("travel_type").enable();
 						} else {
 							HTMLForms.getField("travel_type").disable();
 						}'
-					)
-				)
+					]
+				]
 			));
 
 			$fieldset->add_field(new FormFieldSimpleSelectChoice('travel_type', $this->lang['spots.travel.type'], $this->get_item()->get_travel_type(),
-				array(
-					new FormFieldSelectChoiceOption($this->lang['spots.travel.type.car'], SpotsItem::TRAVEL_TYPE_DRIVING, array('data_option_icon' => 'fa fa-car')),
-					new FormFieldSelectChoiceOption($this->lang['spots.travel.type.walk'],  SpotsItem::TRAVEL_TYPE_WALKING, array('data_option_icon' => 'fa fa-walking')),
-					new FormFieldSelectChoiceOption($this->lang['spots.travel.type.bike'],  SpotsItem::TRAVEL_TYPE_BICYCLING, array('data_option_icon' => 'fa fa-bicycle')),
-					new FormFieldSelectChoiceOption($this->lang['spots.travel.type.train'],  SpotsItem::TRAVEL_TYPE_TRANSIT, array('data_option_icon' => 'fa fa-train')),
-				),
-				array(
+				[
+					new FormFieldSelectChoiceOption($this->lang['spots.travel.type.car'], SpotsItem::TRAVEL_TYPE_DRIVING, ['data_option_icon' => 'fa fa-car']),
+					new FormFieldSelectChoiceOption($this->lang['spots.travel.type.walk'],  SpotsItem::TRAVEL_TYPE_WALKING, ['data_option_icon' => 'fa fa-walking']),
+					new FormFieldSelectChoiceOption($this->lang['spots.travel.type.bike'],  SpotsItem::TRAVEL_TYPE_BICYCLING, ['data_option_icon' => 'fa fa-bicycle']),
+					new FormFieldSelectChoiceOption($this->lang['spots.travel.type.train'],  SpotsItem::TRAVEL_TYPE_TRANSIT, ['data_option_icon' => 'fa fa-train']),
+				],
+				[
 					'select_to_list' => true,
 					'hidden' => !$this->get_item()->is_route_enabled()
-				)
+				]
 			));
         } else {
             $fieldset->add_field(new FormFieldFree('location', $this->lang['spots.location'], $this->lang['spots.no.gmap']));
@@ -95,19 +95,19 @@ class SpotsItemFormController extends DefaultModuleController
         $form->add_fieldset($social_fieldset);
 
         $social_fieldset->add_field(new FormFieldUrlEditor('facebook', $this->lang['spots.labels.facebook'], $this->get_item()->get_facebook()->absolute(),
-			array('placeholder' => $this->lang['spots.placeholder.facebook'])
+			['placeholder' => $this->lang['spots.placeholder.facebook']]
 		));
 
         $social_fieldset->add_field(new FormFieldUrlEditor('twitter', $this->lang['spots.labels.twitter'], $this->get_item()->get_twitter()->absolute(),
-			array('placeholder' => $this->lang['spots.placeholder.twitter'])
+			['placeholder' => $this->lang['spots.placeholder.twitter']]
 		));
 
         $social_fieldset->add_field(new FormFieldUrlEditor('instagram', $this->lang['spots.labels.instagram'], $this->get_item()->get_instagram()->absolute(),
-			array('placeholder' => $this->lang['spots.placeholder.instagram'])
+			['placeholder' => $this->lang['spots.placeholder.instagram']]
 		));
 
         $social_fieldset->add_field(new FormFieldUrlEditor('youtube', $this->lang['spots.labels.youtube'], $this->get_item()->get_youtube()->absolute(),
-			array('placeholder' => $this->lang['spots.placeholder.youtube'])
+			['placeholder' => $this->lang['spots.placeholder.youtube']]
 		));
 
         if (CategoriesAuthorizationsService::check_authorizations($this->get_item()->get_id_category())->moderation())
@@ -116,21 +116,21 @@ class SpotsItemFormController extends DefaultModuleController
 			$form->add_fieldset($publication_fieldset);
 
 			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $this->lang['form.creation.date'], $this->get_item()->get_creation_date(),
-				array('required' => true)
+				['required' => true]
 			));
 
 			if (!$this->get_item()->is_published())
 			{
 				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->lang['form.update.creation.date'], false,
-					array('hidden' => $this->get_item()->get_status() != SpotsItem::NOT_PUBLISHED)
+					['hidden' => $this->get_item()->get_status() != SpotsItem::NOT_PUBLISHED]
 				));
 			}
 
 			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('published', $this->lang['form.publication'], $this->get_item()->get_published(),
-				array(
+				[
 					new FormFieldSelectChoiceOption($this->lang['form.publication.draft'], SpotsItem::NOT_PUBLISHED),
 					new FormFieldSelectChoiceOption($this->lang['form.publication.now'], SpotsItem::PUBLISHED),
-				)
+				]
 			));
 		}
 
@@ -154,7 +154,7 @@ class SpotsItemFormController extends DefaultModuleController
 			$form->add_fieldset($fieldset);
 
 			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $this->lang['contribution.description'], '',
-				array('description' => $this->lang['contribution.description.clue'])
+				['description' => $this->lang['contribution.description.clue']]
 			));
 		}
 		elseif ($this->get_item()->is_published() && $this->get_item()->is_authorized_to_edit() && $this->is_contributor_member())
@@ -164,7 +164,7 @@ class SpotsItemFormController extends DefaultModuleController
 			$form->add_fieldset($fieldset);
 
 			$fieldset->add_field(new FormFieldRichTextEditor('edition_description', $this->lang['contribution.edition.description'], '',
-				array('description' => $this->lang['contribution.edition.description.clue'])
+				['description' => $this->lang['contribution.edition.description.clue']]
 			));
 		}
 	}
@@ -283,7 +283,7 @@ class SpotsItemFormController extends DefaultModuleController
 			$item->set_id($id);
 
 			if (!$this->is_contributor_member())
-				HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
+				HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), ['item_url' => $item->get_item_url()]));
 		}
 		elseif ($this->is_duplication)
 		{
@@ -294,7 +294,7 @@ class SpotsItemFormController extends DefaultModuleController
 			$item->set_id($id);
 
 			if (!$this->is_contributor_member())
-				HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
+				HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), ['item_url' => $item->get_item_url()]));
 		}
 		else
 		{
@@ -302,7 +302,7 @@ class SpotsItemFormController extends DefaultModuleController
 			SpotsService::update($item);
 
 			if (!$this->is_contributor_member())
-				HooksService::execute_hook_action('edit', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
+				HooksService::execute_hook_action('edit', self::$module_id, array_merge($item->get_properties(), ['item_url' => $item->get_item_url()]));
 		}
 
 		$this->contribution_actions($item);
@@ -339,7 +339,7 @@ class SpotsItemFormController extends DefaultModuleController
 				)
 			);
 			ContributionService::save_contribution($contribution);
-			HooksService::execute_hook_action($this->is_new_item || $this->is_duplication ? 'add_contribution' : 'edit_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), array('item_url' => $item->get_item_url())));
+			HooksService::execute_hook_action($this->is_new_item || $this->is_duplication ? 'add_contribution' : 'edit_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), ['item_url' => $item->get_item_url()]));
 		}
 		else
 		{
@@ -351,7 +351,7 @@ class SpotsItemFormController extends DefaultModuleController
 					$contribution->set_status(Event::EVENT_STATUS_PROCESSED);
 					ContributionService::save_contribution($contribution);
 				}
-				HooksService::execute_hook_action('process_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), array('item_url' => $item->get_item_url())));
+				HooksService::execute_hook_action('process_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), ['item_url' => $item->get_item_url()]));
 			}
 		}
 	}
@@ -368,16 +368,16 @@ class SpotsItemFormController extends DefaultModuleController
 		elseif ($item->is_published())
 		{
 			if ($this->is_new_item || $this->is_duplication)
-				AppContext::get_response()->redirect(SpotsUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()), StringVars::replace_vars($this->lang['spots.message.success.add'], array('name' => $item->get_title())));
+				AppContext::get_response()->redirect(SpotsUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()), StringVars::replace_vars($this->lang['spots.message.success.add'], ['name' => $item->get_title()]));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : SpotsUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title())), StringVars::replace_vars($this->lang['spots.message.success.edit'], array('name' => $item->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : SpotsUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title())), StringVars::replace_vars($this->lang['spots.message.success.edit'], ['name' => $item->get_title()]));
 		}
 		else
 		{
 			if ($this->is_new_item || $this->is_duplication)
-				AppContext::get_response()->redirect(SpotsUrlBuilder::display_pending(), StringVars::replace_vars($this->lang['spots.message.success.add'], array('name' => $item->get_title())));
+				AppContext::get_response()->redirect(SpotsUrlBuilder::display_pending(), StringVars::replace_vars($this->lang['spots.message.success.add'], ['name' => $item->get_title()]));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : SpotsUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['spots.message.success.edit'], array('name' => $item->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : SpotsUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['spots.message.success.edit'], ['name' => $item->get_title()]));
 		}
 	}
 

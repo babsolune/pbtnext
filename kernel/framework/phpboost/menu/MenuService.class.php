@@ -28,7 +28,7 @@ class MenuService
 	/**
 	 * @var array the columns needed to instanciate a menu
 	 */
-	private static $columns = array('id', 'object', 'class', 'block', 'position', 'enabled');
+	private static $columns = ['id', 'object', 'class', 'block', 'position', 'enabled'];
 
 	public static function __static()
 	{
@@ -45,7 +45,7 @@ class MenuService
 	public static function get_menu_list($class = Menu::MENU__CLASS, $block = Menu::BLOCK_POSITION__ALL, $enabled = Menu::MENU_ENABLE_OR_NOT)
 	{
 		$fragment = self::build_menu_list_query_conditions($class, $block, $enabled);
-		$menus = array();
+		$menus = [];
 		$results = self::$querier->select_rows(DB_TABLE_MENUS, self::$columns, $fragment->get_query() . ' ORDER BY position ASC', $fragment->get_parameters());
 
         foreach ($results as $row)
@@ -90,7 +90,7 @@ class MenuService
 	{
 		try
 		{
-			$result = self::$querier->select_single_row(DB_TABLE_MENUS, self::$columns, 'WHERE id=:id', array('id' => $id));
+			$result = self::$querier->select_single_row(DB_TABLE_MENUS, self::$columns, 'WHERE id=:id', ['id' => $id]);
 			return self::initialize($result);
 		} catch (RowNotFoundException $ex)
 		{
@@ -113,18 +113,18 @@ class MenuService
 		}
 
 		$id_menu = $menu->get_id();
-		$columns = array(
+		$columns = [
 			'title' => $menu->get_title(),
 			'object' => TextHelper::serialize($menu),
 			'class' => get_class($menu),
 			'enabled' => (int) $menu->is_enabled(),
 			'block' => $block,
 			'position' => $menu->get_block_position()
-		);
+		];
 
 		if ($id_menu > 0)
 		{
-			self::$querier->update(DB_TABLE_MENUS, $columns, 'WHERE id=:id', array('id' => $id_menu));
+			self::$querier->update(DB_TABLE_MENUS, $columns, 'WHERE id=:id', ['id' => $id_menu]);
 		}
 		else
 		{
@@ -146,7 +146,7 @@ class MenuService
 			$menu = self::load($menu);
 		}
 		self::disable($menu);
-		self::$querier->delete(DB_TABLE_MENUS, 'WHERE id=:id', array('id' => $menu->get_id()));
+		self::$querier->delete(DB_TABLE_MENUS, 'WHERE id=:id', ['id' => $menu->get_id()]);
 	}
 
 	/**
@@ -181,7 +181,7 @@ class MenuService
 		if ($menu->get_id() > 0 && $menu->is_enabled())
 		{   // Updates the previous block position counter
 			// Only for already existing menu that are enabled, not for new ones
-			$parameters = array('block' => $menu->get_block(), 'position' => $menu->get_block_position());
+			$parameters = ['block' => $menu->get_block(), 'position' => $menu->get_block_position()];
 			self::$querier->inject('UPDATE ' . DB_TABLE_MENUS . ' SET position=position - 1
 				WHERE block=:block AND position > :position', $parameters);
 		}
@@ -236,7 +236,7 @@ class MenuService
 
 		if ($direction > 0)
 		{   // Moving the menu down
-			$parameters = array('block' => $menu->get_block());
+			$parameters = ['block' => $menu->get_block()];
 			$max_position = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MENUS, 'MAX(position)', 'WHERE block=:block AND enabled=1', $parameters);
 
 			// Getting the max diff
@@ -323,7 +323,7 @@ class MenuService
 	 */
 	public static function delete_mini_module($module)
 	{
-		$menus_class = array();
+		$menus_class = [];
 
 		if (MenusProvidersService::module_containing_extension_point($module))
 		{
@@ -338,7 +338,7 @@ class MenuService
 
 		if (!empty($menus_class))
 		{
-			$results = self::$querier->select_rows(DB_TABLE_MENUS, self::$columns, 'WHERE class IN :class', array('class' => $menus_class));
+			$results = self::$querier->select_rows(DB_TABLE_MENUS, self::$columns, 'WHERE class IN :class', ['class' => $menus_class]);
 			foreach ($results as $row)
 			{
 				self::delete(self::initialize($row));
@@ -353,8 +353,8 @@ class MenuService
 	 */
 	public static function update_mini_modules_list($update_cache = true)
 	{
-		$installed_menus = $installed_menus_classes = array();
-		$results = self::$querier->select_rows(DB_TABLE_MENUS, array('*'), 'WHERE class NOT IN :class_list', array('class_list' => array(ContentMenu::CONTENT_MENU__CLASS, FeedMenu::FEED_MENU__CLASS, LinksMenu::LINKS_MENU__CLASS)));
+		$installed_menus = $installed_menus_classes = [];
+		$results = self::$querier->select_rows(DB_TABLE_MENUS, ['*'], 'WHERE class NOT IN :class_list', ['class_list' => [ContentMenu::CONTENT_MENU__CLASS, FeedMenu::FEED_MENU__CLASS, LinksMenu::LINKS_MENU__CLASS]]);
 		foreach ($results as $row)
 		{
 			$installed_menus[str_replace(' ', '_', $row['title'])] = $row;
@@ -362,7 +362,7 @@ class MenuService
 		}
 		$results->dispose();
 
-		$new_menus = array();
+		$new_menus = [];
 		foreach (MenusProvidersService::get_extension_point() as $module_id => $extension_point)
 		{
 			if ($extension_point !== null)
@@ -375,11 +375,11 @@ class MenuService
 						$rewrited_title = $module_id . '/' . str_replace(' ', '_', $menu->get_title());
 						if (!array_key_exists($rewrited_title, $installed_menus))
 						{
-							$new_menus[] = array(
+							$new_menus[] = [
 								'module_id' => $module_id,
 								'title'     => $module_id . '/' . $menu->get_title(),
 								'menu'      => $menu
-							);
+							];
 						}
 						unset($installed_menus[$rewrited_title]);
 					}
@@ -391,11 +391,11 @@ class MenuService
 					$title = $module_id . '/' . $menu_class;
 					if (!array_key_exists($menu_class, $installed_menus_classes))
 					{
-						$new_menus[] = array(
+						$new_menus[] = [
 							'module_id' => $module_id,
 							'title'     => $title,
 							'menu'      => $menu
-						);
+						];
 					}
 					unset($installed_menus[$title]);
 				}
@@ -522,9 +522,9 @@ class MenuService
 	 */
 	public static function assign_positions_conditions($template, $position)
 	{
-		$vertical_position = in_array($position, array(Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT));
-		$header_position = in_array($position, array(Menu::BLOCK_POSITION__TOP_HEADER, Menu::BLOCK_POSITION__HEADER, Menu::BLOCK_POSITION__SUB_HEADER));
-		$template->put_all(array(
+		$vertical_position = in_array($position, [Menu::BLOCK_POSITION__LEFT, Menu::BLOCK_POSITION__RIGHT]);
+		$header_position = in_array($position, [Menu::BLOCK_POSITION__TOP_HEADER, Menu::BLOCK_POSITION__HEADER, Menu::BLOCK_POSITION__SUB_HEADER]);
+		$template->put_all([
 			'C_FULL_HEADER'    => $header_position,
 			'C_TOP_HEADER'     => $position == Menu::BLOCK_POSITION__TOP_HEADER,
 			'C_HEADER'         => $position == Menu::BLOCK_POSITION__HEADER,
@@ -537,7 +537,7 @@ class MenuService
 			'C_RIGHT'          => $position == Menu::BLOCK_POSITION__RIGHT,
 			'C_VERTICAL'       => $vertical_position,
 			'C_HORIZONTAL'     => !$vertical_position
-		));
+		]);
 	}
 	## Tools ##
 
@@ -582,8 +582,8 @@ class MenuService
 	 */
 	private static function build_menu_list_query_conditions($class, $block, $enabled)
 	{
-		$conditions = array();
-		$parameters = array();
+		$conditions = [];
+		$parameters = [];
 		if ($class != Menu::MENU__CLASS)
 		{
 			$conditions[] = 'class=:class';
@@ -611,7 +611,7 @@ class MenuService
 	{
 		$column = 'MAX(position) + 1 AS newPosition';
 		$condition = 'WHERE block=:block AND enabled=1';
-		$parameters = array('block' => $block);
+		$parameters = ['block' => $block];
 		return (int) self::$querier->get_column_value(DB_TABLE_MENUS, $column, $condition, $parameters);
 	}
 
@@ -621,18 +621,18 @@ class MenuService
 	 */
 	private static function initialize_menus_map()
 	{
-		return array(
-		Menu::BLOCK_POSITION__TOP_HEADER => array(),
-		Menu::BLOCK_POSITION__HEADER => array(),
-		Menu::BLOCK_POSITION__SUB_HEADER => array(),
-		Menu::BLOCK_POSITION__TOP_CENTRAL => array(),
-		Menu::BLOCK_POSITION__BOTTOM_CENTRAL => array(),
-		Menu::BLOCK_POSITION__TOP_FOOTER => array(),
-		Menu::BLOCK_POSITION__FOOTER => array(),
-		Menu::BLOCK_POSITION__LEFT => array(),
-		Menu::BLOCK_POSITION__RIGHT => array(),
-		Menu::BLOCK_POSITION__NOT_ENABLED => array()
-		);
+		return [
+		Menu::BLOCK_POSITION__TOP_HEADER => [],
+		Menu::BLOCK_POSITION__HEADER => [],
+		Menu::BLOCK_POSITION__SUB_HEADER => [],
+		Menu::BLOCK_POSITION__TOP_CENTRAL => [],
+		Menu::BLOCK_POSITION__BOTTOM_CENTRAL => [],
+		Menu::BLOCK_POSITION__TOP_FOOTER => [],
+		Menu::BLOCK_POSITION__FOOTER => [],
+		Menu::BLOCK_POSITION__LEFT => [],
+		Menu::BLOCK_POSITION__RIGHT => [],
+		Menu::BLOCK_POSITION__NOT_ENABLED => []
+		];
 	}
 
 	/**

@@ -362,7 +362,7 @@ class SpotsItem
 
 	public function get_properties()
 	{
-		return array(
+		return [
 			'id' => $this->get_id(),
 			'id_category' => $this->get_id_category(),
 			'title' => $this->get_title(),
@@ -387,7 +387,7 @@ class SpotsItem
 			'views_number' => $this->get_views_number(),
 			'visits_number' => $this->get_visits_number(),
 			'thumbnail' => $this->get_thumbnail()->relative(),
-		);
+		];
 	}
 
 	public function set_properties(array $properties)
@@ -492,7 +492,7 @@ class SpotsItem
 
 		return array_merge(
 			Date::get_array_tpl_vars($this->creation_date, 'date'),
-			array(
+			[
             'C_NEW_WINDOW'         => $config->get_new_window(true),
             'C_GMAP_ENABLED'       => SpotsService::is_gmap_enabled(),
             'C_ROUTE'              => $this->is_route_enabled(),
@@ -577,7 +577,7 @@ class SpotsItem
 			'U_INSTAGRAM'      => $this->instagram->absolute(),
 			'U_YOUTUBE'        => $this->youtube->absolute(),
 			'U_COMMENTS'       => SpotsUrlBuilder::display_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_title)->rel()
-			)
+			]
 		);
 
 	}

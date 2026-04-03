@@ -56,10 +56,10 @@ class DictionaryHomeController extends DefaultModuleController
 				LEFT JOIN ".PREFIX."dictionary_cat AS c ON l.cat = c.id
 				WHERE `approved`  = '" . $quotes_approved . "'
 				ORDER BY l.word
-				LIMIT :number_items_per_page OFFSET :display_from", array(
+				LIMIT :number_items_per_page OFFSET :display_from", [
 					'number_items_per_page' => $pagination->get_number_items_per_page(),
 					'display_from' => $pagination->get_display_from()
-				));
+				]);
 				$words_number = PersistenceContext::get_querier()->count(DictionarySetup::$dictionary_table, "WHERE (approved = 1)");
 			}
 			elseif (!empty($letter) && TextHelper::strlen($letter) > 1)
@@ -69,10 +69,10 @@ class DictionaryHomeController extends DefaultModuleController
 				LEFT JOIN ".PREFIX."dictionary_cat AS c ON l.cat = c.id
 				WHERE l.word LIKE '" .$letter[0]. "%' AND `approved`  = '" . $quotes_approved . "'
 				ORDER BY l.word
-				LIMIT :number_items_per_page OFFSET :display_from", array(
+				LIMIT :number_items_per_page OFFSET :display_from", [
 					'number_items_per_page' => $pagination->get_number_items_per_page(),
 					'display_from' => $pagination->get_display_from()
-				));
+				]);
 				$aff=true;
 			}
 			else
@@ -82,10 +82,10 @@ class DictionaryHomeController extends DefaultModuleController
 				LEFT JOIN ".PREFIX."dictionary_cat AS c ON l.cat = c.id
 				WHERE l.word LIKE '" .$letter. "%' AND `approved`  = '" . $quotes_approved . "'
 				ORDER BY l.word
-				LIMIT :number_items_per_page OFFSET :display_from", array(
+				LIMIT :number_items_per_page OFFSET :display_from", [
 					'number_items_per_page' => $pagination->get_number_items_per_page(),
 					'display_from' => $pagination->get_display_from()
-				));
+				]);
 			}
 
 			$edit = $del = false;
@@ -99,7 +99,7 @@ class DictionaryHomeController extends DefaultModuleController
 				$img = empty($row['images']) ? '<i class="fa fa-folder"></i>' : '<img src="' . $row['images'] . '" alt="' . $row['images'] . '" />';
 				$name = Texthelper::ucfirst(TextHelper::strtolower(stripslashes($row['word'])));
 
-				$this->view->assign_block_vars('items', array(
+				$this->view->assign_block_vars('items', [
 					'C_CONTROLS' => $edit || $del,
 					'C_EDIT'     => $edit,
 					'C_DELETE'   => $del,
@@ -115,16 +115,16 @@ class DictionaryHomeController extends DefaultModuleController
 
 					'U_EDIT'   => Url::to_rel('/dictionary/dictionary.php?edit=' . $row['id']),
 					'U_DELETE' => Url::to_rel('/dictionary/dictionary.php?del=' . $row['id']),
-				));
+				]);
 			}
 			$result1->dispose();
 
-			$letters = array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
+			$letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
 			foreach ($letters as $letter)
 			{
-				$this->view->assign_block_vars('letter', array(
+				$this->view->assign_block_vars('letter', [
 					'LETTER' => TextHelper::strtoupper($letter),
-				));
+				]);
 			}
 
 			$result_cat = PersistenceContext::get_querier()->select("SELECT id, name
@@ -133,10 +133,10 @@ class DictionaryHomeController extends DefaultModuleController
 
 			while ($row_cat = $result_cat->fetch())
 			{
-				$this->view->assign_block_vars('cat', array(
+				$this->view->assign_block_vars('cat', [
 					'CATEGORY_ID' => $row_cat['id'],
 					'CATEGORY_NAME' => stripslashes($row_cat['name']),
-				));
+				]);
 			}
 			$result_cat->dispose();
 
@@ -145,14 +145,14 @@ class DictionaryHomeController extends DefaultModuleController
 			ORDER BY id");
 			while ($row_cat = $result_cat->fetch())
 			{
-				$this->view->assign_block_vars('cat_list', array(
+				$this->view->assign_block_vars('cat_list', [
 					'CATEGORY_ID' => $row_cat['id'],
 					'CATEGORY_NAME' => stripslashes($row_cat['name']),
-				));
+				]);
 			}
 			$result_cat->dispose();
 
-			$this->view->put_all(array(
+			$this->view->put_all([
 				'C_EDIT' => false,
 				'C_ITEMS' => $letter,
 				'C_RESULTS' => $words_number,
@@ -161,8 +161,8 @@ class DictionaryHomeController extends DefaultModuleController
 				'REWRITE'=> (int)ServerEnvironmentConfig::load()->is_url_rewriting_enabled(),
 				'PAGINATION' => $pagination->display(),
 
-				'L_NO_WORD_LETTER' => StringVars::replace_vars($this->lang['dictionary.no.word'], array('letter' => TextHelper::strtoupper($letter))),
-			));
+				'L_NO_WORD_LETTER' => StringVars::replace_vars($this->lang['dictionary.no.word'], ['letter' => TextHelper::strtoupper($letter)]),
+			]);
 
 			return $this->view;
 		}

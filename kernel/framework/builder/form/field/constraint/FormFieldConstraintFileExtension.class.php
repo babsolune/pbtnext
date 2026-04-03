@@ -19,7 +19,7 @@ class FormFieldConstraintFileExtension extends FormFieldConstraintRegex
 
 		if (empty($error_message))
 		{
-			$error_message = StringVars::replace_vars(LangLoader::get_message('warning.regex.authorized.extensions', 'warning-lang'), array('extensions' => str_replace('|', ', ', $extensions)));
+			$error_message = StringVars::replace_vars(LangLoader::get_message('warning.regex.authorized.extensions', 'warning-lang'), ['extensions' => str_replace('|', ', ', $extensions)]);
 		}
 		$this->set_validation_error_message($error_message);
 

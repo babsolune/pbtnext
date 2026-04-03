@@ -53,9 +53,9 @@ class DefaultCategoriesFeedProvider implements FeedProvider
 			$condition = 'WHERE id_category IN :categories_id
 			AND (published = ' . Item::PUBLISHED . ($module->get_configuration()->feature_is_enabled('deferred_publication') ? ' OR (published = ' . Item::DEFERRED_PUBLICATION . ' AND (publishing_start_date > :timestamp_now OR (publishing_end_date != 0 AND publishing_end_date < :timestamp_now)))' : '') . ')';
 
-			$parameters = array(
+			$parameters = [
 				'categories_id' => array_keys(CategoriesService::get_categories_manager($this->module_id)->get_children($id_category, new SearchCategoryChildrensOptions(), true))
-			);
+			];
 
 			foreach (ItemsService::get_items_manager($this->module_id)->get_items($condition, $parameters, self::MAXIMUM_ITEMS_NUMBER, 0, 'creation_date', 'DESC') as $item)
 			{

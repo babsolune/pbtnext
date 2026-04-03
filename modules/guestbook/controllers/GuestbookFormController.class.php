@@ -62,17 +62,17 @@ class GuestbookFormController extends DefaultModuleController
 
 		if (!$current_user->check_level(User::MEMBER_LEVEL))
 		{
-			$fieldset->add_field(new FormFieldTextEditor('pseudo', $this->lang['user.username'], $this->get_item()->get_login(), array(
-				'required' => true, 'maxlength' => 25)
+			$fieldset->add_field(new FormFieldTextEditor('pseudo', $this->lang['user.username'], $this->get_item()->get_login(), [
+				'required' => true, 'maxlength' => 25]
 			));
 		}
 
 		$fieldset->add_field(new FormFieldRichTextEditor('content',  $this->lang['form.content'], $this->get_item()->get_content(),
-			array('formatter' => $formatter, 'rows' => 10, 'cols' => 47, 'required' => true),
-			array(
+			['formatter' => $formatter, 'rows' => 10, 'cols' => 47, 'required' => true],
+			[
 				(!$current_user->is_moderator() && !$current_user->is_admin() ? new FormFieldConstraintMaxLinks($this->config->get_maximum_links_message(), true) : ''),
 				new FormFieldConstraintAntiFlood(GuestbookService::get_last_message_timestamp_from_user($this->get_item()->get_author_user()->get_id())
-			))
+			)]
 		));
 
 		$fieldset->add_field(new FormFieldHidden('page', $request->get_getint('page', 1)));
@@ -147,13 +147,13 @@ class GuestbookFormController extends DefaultModuleController
 		{
 			$id_message = GuestbookService::add($message);
 			$message->set_id($id_message);
-			HooksService::execute_hook_action('add', self::$module_id, array_merge($message->get_properties(), array('title' => $this->lang['item'], 'item_url' => GuestbookUrlBuilder::home(1, $id_message)->rel())));
+			HooksService::execute_hook_action('add', self::$module_id, array_merge($message->get_properties(), ['title' => $this->lang['item'], 'item_url' => GuestbookUrlBuilder::home(1, $id_message)->rel()]));
 		}
 		else
 		{
 			$id_message = $message->get_id();
 			GuestbookService::update($message);
-			HooksService::execute_hook_action('edit', self::$module_id, array_merge($message->get_properties(), array('title' => $this->lang['item'], 'item_url' => GuestbookUrlBuilder::home(AppContext::get_request()->get_getint('page', 1), $id_message)->rel())));
+			HooksService::execute_hook_action('edit', self::$module_id, array_merge($message->get_properties(), ['title' => $this->lang['item'], 'item_url' => GuestbookUrlBuilder::home(AppContext::get_request()->get_getint('page', 1), $id_message)->rel()]));
 		}
 
 		GuestbookCache::invalidate();

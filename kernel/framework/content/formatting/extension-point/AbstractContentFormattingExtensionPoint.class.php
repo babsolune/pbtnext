@@ -11,8 +11,8 @@
 
 abstract class AbstractContentFormattingExtensionPoint implements ContentFormattingExtensionPoint
 {
-	protected $forbidden_tags = array();
-	protected $html_auth = array();
+	protected $forbidden_tags = [];
+	protected $html_auth = [];
 
 	public function __construct()
 	{

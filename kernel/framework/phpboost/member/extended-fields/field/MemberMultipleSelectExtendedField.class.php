@@ -16,7 +16,7 @@ class MemberMultipleSelectExtendedField extends AbstractMemberExtendedField
 	public function __construct()
 	{
 		parent::__construct();
-		$this->set_disable_fields_configuration(array('regex', 'default_value'));
+		$this->set_disable_fields_configuration(['regex', 'default_value']);
 		$this->set_name(LangLoader::get_message('user.field.type.multiple.select','user-lang'));
 	}
 
@@ -24,8 +24,8 @@ class MemberMultipleSelectExtendedField extends AbstractMemberExtendedField
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 
-		$options = array();
-		$default_values = array();
+		$options = [];
+		$default_values = [];
 		foreach ($member_extended_field->get_possible_values() as $name => $parameters)
 		{
 			$option = new FormFieldSelectChoiceOption(stripslashes($parameters['title']), $name);
@@ -37,21 +37,21 @@ class MemberMultipleSelectExtendedField extends AbstractMemberExtendedField
 			}
 		}
 
-		$fieldset->add_field(new FormFieldMultipleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $default_values, $options, array('required' => (bool)$member_extended_field->get_required(), 'description' => $member_extended_field->get_description())));
+		$fieldset->add_field(new FormFieldMultipleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $default_values, $options, ['required' => (bool)$member_extended_field->get_required(), 'description' => $member_extended_field->get_description()]));
 	}
 
 	public function display_field_update(MemberExtendedField $member_extended_field)
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 
-		$options = array();
+		$options = [];
 		$default_values = $this->unserialise_value($member_extended_field->get_value());
 		foreach ($member_extended_field->get_possible_values() as $name => $parameters)
 		{
 			$options[] = new FormFieldSelectChoiceOption(stripslashes($parameters['title']), $name);
 		}
 
-		$fieldset->add_field(new FormFieldMultipleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $default_values, $options, array('required' => (bool)$member_extended_field->get_required(), 'description' => $member_extended_field->get_description())));
+		$fieldset->add_field(new FormFieldMultipleSelectChoice($member_extended_field->get_field_name(), $member_extended_field->get_name(), $default_values, $options, ['required' => (bool)$member_extended_field->get_required(), 'description' => $member_extended_field->get_description()]));
 	}
 
 	public function display_field_profile(MemberExtendedField $member_extended_field)
@@ -59,17 +59,17 @@ class MemberMultipleSelectExtendedField extends AbstractMemberExtendedField
 		$value = implode(', ', $this->unserialise_value($member_extended_field->get_value()));
 		if (!empty($value))
 		{
-			return array('name' => $member_extended_field->get_name(), 'field_name' => $member_extended_field->get_field_name(), 'value' => $value);
+			return ['name' => $member_extended_field->get_name(), 'field_name' => $member_extended_field->get_field_name(), 'value' => $value];
 		}
 	}
 
 	public function get_data(HTMLForm $form, MemberExtendedField $member_extended_field)
 	{
 		$field_name = $member_extended_field->get_field_name();
-		$array = array();
+		$array = [];
 		if ($form->has_field($field_name))
 		{
-			foreach ($form->get_value($field_name, array()) as $field => $value)
+			foreach ($form->get_value($field_name, []) as $field => $value)
 			{
 				$array[] = $value->get_label();
 			}

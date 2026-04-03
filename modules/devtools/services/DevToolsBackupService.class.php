@@ -23,18 +23,18 @@ class DevToolsBackupService
         $tables = self::detect_tables($module_id);
 
         if (empty($tables))
-            return array('error' => 'no_tables', 'detail' => 'No tables detected for module ' . $module_id);
+            return ['error' => 'no_tables', 'detail' => 'No tables detected for module ' . $module_id];
 
         $sql = self::export_tables($tables);
 
         if (empty($sql))
-            return array('error' => 'empty_sql', 'detail' => 'SQL export is empty');
+            return ['error' => 'empty_sql', 'detail' => 'SQL export is empty'];
 
         $dir = PATH_TO_ROOT . '/cache/backup/' . $module_id;
         if (!is_dir($dir))
         {
             if (!@mkdir($dir, 0755, true))
-                return array('error' => 'mkdir_failed', 'detail' => 'Could not create directory ' . $dir);
+                return ['error' => 'mkdir_failed', 'detail' => 'Could not create directory ' . $dir];
         }
 
         // Protect directory with .htaccess if not already done
@@ -46,9 +46,9 @@ class DevToolsBackupService
         $filepath = $dir . '/' . $filename;
 
         if (file_put_contents($filepath, $sql) === false)
-            return array('error' => 'write_failed', 'detail' => 'Could not write to ' . $filepath);
+            return ['error' => 'write_failed', 'detail' => 'Could not write to ' . $filepath];
 
-        return array('success' => true, 'filepath' => $filepath, 'tables' => $tables);
+        return ['success' => true, 'filepath' => $filepath, 'tables' => $tables];
     }
 
     /**
@@ -61,7 +61,7 @@ class DevToolsBackupService
     public static function detect_tables($module_id)
     {
         $setup_tables   = self::detect_from_setup($module_id);
-        $prefix_tables  = array();
+        $prefix_tables  = [];
 
         if (empty($setup_tables))
             $prefix_tables = self::detect_from_db_prefix($module_id);
@@ -84,21 +84,21 @@ class DevToolsBackupService
         {
             $files = glob(PATH_TO_ROOT . '/modules/' . $module_id . '/phpboost/*Setup.class.php');
             if (empty($files))
-                return array();
+                return [];
             $setup_path = $files[0];
         }
 
         $content = file_get_contents($setup_path);
         if ($content === false)
-            return array();
+            return [];
 
         // Match: PREFIX . 'table_name'  or  PREFIX . "table_name"
         preg_match_all('/PREFIX\s*\.\s*[\'"]([a-zA-Z0-9_]+)[\'"]/', $content, $matches);
 
         if (empty($matches[1]))
-            return array();
+            return [];
 
-        $tables = array();
+        $tables = [];
         foreach (array_unique($matches[1]) as $suffix)
         {
             $tables[] = PREFIX . $suffix;
@@ -113,7 +113,7 @@ class DevToolsBackupService
     private static function detect_from_db_prefix($module_id)
     {
         $prefix = PREFIX . $module_id;
-        $tables = array();
+        $tables = [];
 
         try
         {
@@ -178,7 +178,7 @@ class DevToolsBackupService
             $sql .= $create . ';' . "\n\n";
 
             // Get column types
-            $col_types = array();
+            $col_types = [];
             $result = $querier->select('SHOW COLUMNS FROM `' . $table . '`');
             while ($col = $result->fetch())
             {
@@ -189,10 +189,10 @@ class DevToolsBackupService
 
             // INSERT rows - use full table name with backticks, querier will not re-prefix it
             $result = $querier->select('SELECT * FROM `' . $table . '`');
-            $rows = array();
+            $rows = [];
             while ($row = $result->fetch())
             {
-                $values = array();
+                $values = [];
                 foreach ($row as $col_name => $val)
                 {
                     if ($val === null)
@@ -206,8 +206,8 @@ class DevToolsBackupService
                     else
                     {
                         $escaped = str_replace(
-                            array('\\',    "'",     "\n",    "\r",    "\x00",  "\x1a"),
-                            array('\\\\',  "\\'",   '\\n',   '\\r',   '\\0',   '\\Z'),
+                            ['\\',    "'",     "\n",    "\r",    "\x00",  "\x1a"],
+                            ['\\\\',  "\\'",   '\\n',   '\\r',   '\\0',   '\\Z'],
                             (string)$val
                         );
                         $values[] = "'" . $escaped . "'";
@@ -247,7 +247,7 @@ class DevToolsBackupService
      */
     public static function split_sql_statements($sql)
     {
-        $statements = array();
+        $statements = [];
         $current    = '';
         $in_string  = false;
         $quote_char = '';
@@ -318,7 +318,7 @@ class DevToolsBackupService
     // Returns: [ ['module_id' => ..., 'filename' => ..., 'timestamp' => ..., 'size' => ...], ... ]
     public static function list_backups()
     {
-        $backups = array();
+        $backups = [];
         $save_dir = PATH_TO_ROOT . '/cache/backup/';
 
         if (!is_dir($save_dir))
@@ -346,13 +346,13 @@ class DevToolsBackupService
                 $date_part = substr($filename, strlen($module_id) + 1); // "YYYY-MM-DD_HH-MM-SS.sql"
                 $timestamp = @strtotime(substr($date_part, 0, 10) . ' ' . str_replace('-', ':', substr($date_part, 11, 8)));
 
-                $backups[] = array(
+                $backups[] = [
                     'module_id' => $module_id,
                     'filename'  => $filename,
                     'filepath'  => $filepath,
                     'timestamp' => $timestamp ?: filemtime($filepath),
                     'size'      => filesize($filepath),
-                );
+                ];
             }
         }
 

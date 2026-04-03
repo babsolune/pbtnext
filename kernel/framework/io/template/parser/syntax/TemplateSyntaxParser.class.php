@@ -12,7 +12,7 @@
  * parameters = expressionContent | (expressionContent, (",", expressionContent)+)
  * variable = simpleVar | loopVar
  * constant = "'.+'" | [0-9]+ | array
- * array = "array(", arrayContent, ")"
+ * array = "[", arrayContent, "]"
  * arrayContent = arrayElement | (arrayElement, (",", arrayElement)+)
  * arrayElement = expressionContent | ("'\w+'\s*=>\s*", expressionContent)
  * simpleVar = "\w+"

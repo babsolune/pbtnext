@@ -45,14 +45,14 @@ class QuotesItemFormController extends DefaultModuleController
 		}
 
 		$fieldset->add_field(new FormFieldAjaxCompleter('writer', $this->lang['form.author.custom.name'], $this->get_item()->get_writer(),
-			array(
+			[
 				'required' => true,
 				'file' => QuotesUrlBuilder::ajax_writers()->rel()
-			)
+			]
 		));
 
 		$fieldset->add_field(new FormFieldRichTextEditor('content', $this->lang['quotes.form.content'], $this->get_item()->get_content(),
-			array('required' => true)
+			['required' => true]
 		));
 
 
@@ -85,7 +85,7 @@ class QuotesItemFormController extends DefaultModuleController
 			$form->add_fieldset($fieldset);
 
 			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $this->lang['contribution.description'], '',
-				array('description' => $this->lang['contribution.description.clue'])
+				['description' => $this->lang['contribution.description.clue']]
 			));
 		}
 		elseif ($this->item->is_approved() && $this->item->is_authorized_to_edit() && $this->is_contributor_member())
@@ -95,7 +95,7 @@ class QuotesItemFormController extends DefaultModuleController
 			$form->add_fieldset($fieldset);
 
 			$fieldset->add_field(new FormFieldRichTextEditor('edition_description', $this->lang['contribution.edition.description'], '',
-				array('description' => $this->lang['contribution.edition.description.clue'])
+				['description' => $this->lang['contribution.edition.description.clue']]
 			));
 		}
 	}
@@ -182,14 +182,14 @@ class QuotesItemFormController extends DefaultModuleController
 			$this->item->set_id($id);
 
 			if (!$this->is_contributor_member())
-				HooksService::execute_hook_action('add', self::$module_id, array_merge($this->item->get_properties(), array('item_url' => $this->item->get_item_url())));
+				HooksService::execute_hook_action('add', self::$module_id, array_merge($this->item->get_properties(), ['item_url' => $this->item->get_item_url()]));
 		}
 		else
 		{
 			QuotesService::update($this->item);
 
 			if (!$this->is_contributor_member())
-				HooksService::execute_hook_action('edit', self::$module_id, array_merge($this->item->get_properties(), array('item_url' => $this->item->get_item_url())));
+				HooksService::execute_hook_action('edit', self::$module_id, array_merge($this->item->get_properties(), ['item_url' => $this->item->get_item_url()]));
 		}
 
 		$this->contribution_actions($this->item);
@@ -208,7 +208,7 @@ class QuotesItemFormController extends DefaultModuleController
 			else
 				$contribution->set_description(stripslashes($this->form->get_value('edition_description')));
 
-			$contribution->set_entitled(StringVars::replace_vars($this->lang['quotes.form.contribution.title'], array('name' => $item->get_writer())));
+			$contribution->set_entitled(StringVars::replace_vars($this->lang['quotes.form.contribution.title'], ['name' => $item->get_writer()]));
 			$contribution->set_fixing_url(QuotesUrlBuilder::edit($item->get_id())->relative());
 			$contribution->set_poster_id(AppContext::get_current_user()->get_id());
 			$contribution->set_module('quotes');
@@ -219,7 +219,7 @@ class QuotesItemFormController extends DefaultModuleController
 				)
 			);
 			ContributionService::save_contribution($contribution);
-			HooksService::execute_hook_action($this->is_new_item ? 'add_contribution' : 'edit_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), array('item_url' => $item->get_item_url())));
+			HooksService::execute_hook_action($this->is_new_item ? 'add_contribution' : 'edit_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), ['item_url' => $item->get_item_url()]));
 		}
 		else
 		{
@@ -230,7 +230,7 @@ class QuotesItemFormController extends DefaultModuleController
 				$item_contribution->set_status(Event::EVENT_STATUS_PROCESSED);
 
 				ContributionService::save_contribution($item_contribution);
-				HooksService::execute_hook_action('process_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), array('item_url' => $item->get_item_url())));
+				HooksService::execute_hook_action('process_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), ['item_url' => $item->get_item_url()]));
 			}
 		}
 	}
@@ -246,16 +246,16 @@ class QuotesItemFormController extends DefaultModuleController
 		elseif ($this->item->is_approved())
 		{
 			if ($this->is_new_item)
-				AppContext::get_response()->redirect(QuotesUrlBuilder::home(), StringVars::replace_vars($this->lang['quotes.message.success.add'], array('writer' => $this->item->get_writer())));
+				AppContext::get_response()->redirect(QuotesUrlBuilder::home(), StringVars::replace_vars($this->lang['quotes.message.success.add'], ['writer' => $this->item->get_writer()]));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : QuotesUrlBuilder::home()), StringVars::replace_vars($this->lang['quotes.message.success.edit'], array('writer' => $this->item->get_writer())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : QuotesUrlBuilder::home()), StringVars::replace_vars($this->lang['quotes.message.success.edit'], ['writer' => $this->item->get_writer()]));
 		}
 		else
 		{
 			if ($this->is_new_item)
-				AppContext::get_response()->redirect(QuotesUrlBuilder::display_pending(), StringVars::replace_vars($this->lang['quotes.message.success.add'], array('writer' => $this->item->get_writer())));
+				AppContext::get_response()->redirect(QuotesUrlBuilder::display_pending(), StringVars::replace_vars($this->lang['quotes.message.success.add'], ['writer' => $this->item->get_writer()]));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : QuotesUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['quotes.message.success.edit'], array('writer' => $this->item->get_writer())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : QuotesUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['quotes.message.success.edit'], ['writer' => $this->item->get_writer()]));
 		}
 	}
 

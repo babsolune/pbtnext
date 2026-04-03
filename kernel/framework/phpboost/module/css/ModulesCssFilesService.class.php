@@ -13,7 +13,7 @@
 
 class ModulesCssFilesService
 {
-    private static $modules_css_files = array();
+    private static $modules_css_files = [];
 
     public static function __static()
     {
@@ -26,7 +26,7 @@ class ModulesCssFilesService
 
     public static function get_css_files_always_displayed()
     {
-        $css_files = array();
+        $css_files = [];
         foreach (self::$modules_css_files as $module_id => $module_css_files)
         {
             if ($module_css_files !== false)
@@ -42,7 +42,7 @@ class ModulesCssFilesService
 
     public static function get_css_files_running_module_displayed()
     {
-        $css_files = array();
+        $css_files = [];
         $module_id = Environment::get_running_module_name();
         if (array_key_exists($module_id, self::$modules_css_files))
         {

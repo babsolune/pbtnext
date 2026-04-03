@@ -24,7 +24,7 @@ class Upload
     private $size              = 0;
     private $contentCheck      = true;
     private $isMultiple        = false;
-    private $files_parameters  = array();
+    private $files_parameters  = [];
 
     const UNIQ_NAME          = true;
     const NO_UNIQ_NAME       = false;
@@ -107,12 +107,12 @@ class Upload
                                             }
                                             else
                                             {
-                                                $this->files_parameters[] = array(
+                                                $this->files_parameters[] = [
                                                     'name'      => $this->original_filename, 
                                                     'path'      => $this->filename,
                                                     'size'      => $this->get_human_readable_size(),
                                                     'extension' => $this->extension
-                                                );
+                                                ];
                                             }
                                         }
                                     }
@@ -158,7 +158,7 @@ class Upload
         {
             $filepath = $this->base_directory . $this->filename;
 
-            list($width, $height, $ext) = function_exists('getimagesize') ? @getimagesize($filepath) : array(0, 0, 0);
+            list($width, $height, $ext) = function_exists('getimagesize') ? @getimagesize($filepath) : [0, 0, 0];
             if ($width > $width_max || $height > $height_max ) //Hauteur et largeur max.
             {
                 $error = 'e_upload_max_dimension';

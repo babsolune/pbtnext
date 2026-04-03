@@ -28,7 +28,7 @@ class CurrentUser extends User
 		return new self($session);
 	}
 
-	private $groups_auth = array();
+	private $groups_auth = [];
 
 	public function __construct(SessionData $session)
 	{
@@ -178,7 +178,7 @@ class CurrentUser extends User
 
 	private function array_group_intersect($array_auth_groups)
 	{
-		$array_user_auth_groups = array();
+		$array_user_auth_groups = [];
 		foreach ($array_auth_groups as $idgroup => $auth_group)
 		{
 			if (is_numeric($idgroup)) //Groupe

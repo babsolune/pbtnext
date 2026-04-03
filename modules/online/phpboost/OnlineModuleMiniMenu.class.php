@@ -50,9 +50,9 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 
 		$online_config = OnlineConfig::load();
 		$condition = 'WHERE s.timestamp > :time ORDER BY '. $online_config->get_display_order_request();
-		$parameters = array(
+		$parameters = [
 			'time' => (time() - SessionsConfig::load()->get_active_session_duration())
-		);
+		];
 
 		$users = OnlineService::get_online_users($condition, $parameters);
 		foreach ($users as $user)
@@ -67,14 +67,14 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 
 					if ($user->get_level() != User::VISITOR_LEVEL)
 					{
-						$view->assign_block_vars('items', array(
+						$view->assign_block_vars('items', [
 							'C_ROBOT'            => $user->get_level() == User::ROBOT_LEVEL,
 							'C_USER_GROUP_COLOR' => !empty($group_color),
 
 							'USER_DISPLAY_NAME' => $user->get_display_name(),
 							'USER_LEVEL_CLASS'  => UserService::get_level_class($user->get_level()),
 							'USER_GROUP_COLOR'  => $group_color,
-						));
+						]);
 					}
 				}
 			}
@@ -83,7 +83,7 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 		if (!$online_config->are_robots_displayed())
 			$this->visitor_number += $this->robot_number;
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_DISPLAY_ROBOTS' => $online_config->are_robots_displayed(),
 			'C_SEVERAL_USERS'  => $this->total_users > 1,
 			'C_MORE_USERS'     => $this->total_users > $online_config->get_members_number_displayed(),
@@ -94,7 +94,7 @@ class OnlineModuleMiniMenu extends ModuleMiniMenu
 			'MEMBERS_NUMBER'        => $this->member_number,
 			'MODERATORS_NUMBER'     => $this->moderator_number,
 			'ADMINISTRATORS_NUMBER' => $this->administrator_number,
-		));
+		]);
 
 		return $view->render();
 	}

@@ -70,13 +70,13 @@ class VideoItemController extends DefaultModuleController
 		$keywords = $item->get_keywords();
 		$has_keywords = count($keywords) > 0;
 
-		$this->view->put_all(array_merge($item->get_template_vars(), array(
+		$this->view->put_all(array_merge($item->get_template_vars(), [
 			'C_AUTHOR_DISPLAYED' => $config->is_author_displayed(),
 			'C_ENABLED_COMMENTS' => $comments_config->module_comments_is_enabled('video'),
 			'C_ENABLED_NOTATION' => $content_management_config->module_notation_is_enabled('video'),
 			'C_KEYWORDS' => $has_keywords,
 			'NOT_VISIBLE_MESSAGE' => MessageHelper::display($this->lang['warning.element.not.visible'], MessageHelper::WARNING),
-		)));
+		]));
 
 		if ($comments_config->module_comments_is_enabled('video'))
 		{
@@ -162,27 +162,27 @@ class VideoItemController extends DefaultModuleController
 					$parent = pathinfo(GeneralConfig::load()->get_site_url());
 					$parent = $parent['basename'];
 					if ($twitch_player) {
-						$video_tpl->put_all(array(
+						$video_tpl->put_all([
 							'C_TWITCH' => true,
 							'PARENT' => $parent
-						));
+						]);
 					}
 
 					// All
-					$video_tpl->put_all(array(
+					$video_tpl->put_all([
 						'PLAYER' => $player,
 						'VIDEO_ID' => $video_id
-					));
+					]);
 				}
 			}
 		}			
 
-		$video_tpl->put_all(array(
+		$video_tpl->put_all([
 			'FILE_URL' => Url::to_rel($item->get_file_url()),
 			'MIME' => $item->get_mime_type(),
 			'WIDTH' => $item->get_width(),
 			'HEIGHT' => $item->get_height()
-		));
+		]);
 
 		$this->view->put('VIDEO_FORMAT', $video_tpl);
 	}
@@ -194,11 +194,11 @@ class VideoItemController extends DefaultModuleController
 		$i = 1;
 		foreach ($keywords as $keyword)
 		{
-			$this->view->assign_block_vars('keywords', array(
+			$this->view->assign_block_vars('keywords', [
 				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
 				'URL' => VideoUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
-			));
+			]);
 			$i++;
 		}
 	}

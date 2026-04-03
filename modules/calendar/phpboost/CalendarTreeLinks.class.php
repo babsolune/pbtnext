@@ -38,11 +38,11 @@ class CalendarTreeLinks extends DefaultTreeLinks
 	private function get_requested_date()
 	{
 		$request = AppContext::get_request();
-		return array(
+		return [
 			'year'  => $request->get_getint('year', date('Y')),
 			'month' => $request->get_getint('month', date('n')),
 			'day'   => $request->get_getint('day', date('j'))
-		);
+		];
 	}
 }
 ?>

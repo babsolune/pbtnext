@@ -32,10 +32,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Url
      */
-    public function insert(Google_Url $postBody, $optParams = array()) {
-      $params = array('postBody' => $postBody);
+    public function insert(Google_Url $postBody, $optParams = []) {
+      $params = ['postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_Url($data);
       } else {
@@ -51,10 +51,10 @@
      * @opt_param string projection Additional information to return.
      * @return Google_UrlHistory
      */
-    public function listUrl($optParams = array()) {
-      $params = array();
+    public function listUrl($optParams = []) {
+      $params = [];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_UrlHistory($data);
       } else {
@@ -70,10 +70,10 @@
      * @opt_param string projection Additional information to return.
      * @return Google_Url
      */
-    public function get($shortUrl, $optParams = array()) {
-      $params = array('shortUrl' => $shortUrl);
+    public function get($shortUrl, $optParams = []) {
+      $params = ['shortUrl' => $shortUrl];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Url($data);
       } else {
@@ -135,28 +135,28 @@ class Google_AnalyticsSnapshot extends Google_Model {
   public function getShortUrlClicks() {
     return $this->shortUrlClicks;
   }
-  public function setCountries(/* array(Google_StringCount) */ $countries) {
+  public function setCountries(/* [Google_StringCount] */ $countries) {
     $this->assertIsArray($countries, 'Google_StringCount', __METHOD__);
     $this->countries = $countries;
   }
   public function getCountries() {
     return $this->countries;
   }
-  public function setPlatforms(/* array(Google_StringCount) */ $platforms) {
+  public function setPlatforms(/* [Google_StringCount] */ $platforms) {
     $this->assertIsArray($platforms, 'Google_StringCount', __METHOD__);
     $this->platforms = $platforms;
   }
   public function getPlatforms() {
     return $this->platforms;
   }
-  public function setBrowsers(/* array(Google_StringCount) */ $browsers) {
+  public function setBrowsers(/* [Google_StringCount] */ $browsers) {
     $this->assertIsArray($browsers, 'Google_StringCount', __METHOD__);
     $this->browsers = $browsers;
   }
   public function getBrowsers() {
     return $this->browsers;
   }
-  public function setReferrers(/* array(Google_StringCount) */ $referrers) {
+  public function setReferrers(/* [Google_StringCount] */ $referrers) {
     $this->assertIsArray($referrers, 'Google_StringCount', __METHOD__);
     $this->referrers = $referrers;
   }
@@ -297,7 +297,7 @@ class Google_UrlHistory extends Google_Model {
   public function getNextPageToken() {
     return $this->nextPageToken;
   }
-  public function setItems(/* array(Google_Url) */ $items) {
+  public function setItems(/* [Google_Url] */ $items) {
     $this->assertIsArray($items, 'Google_Url', __METHOD__);
     $this->items = $items;
   }

@@ -19,7 +19,7 @@ class DevToolsAjaxImportBddController extends AbstractController
     public function execute(HTTPRequestCustom $request)
     {
         if (!DevToolsAuthorizationsService::check_authorizations()->moderation())
-            return new JSONResponse(array('success' => false, 'error' => 'Unauthorized'), 403);
+            return new JSONResponse(['success' => false, 'error' => 'Unauthorized'], 403);
 
         $action = $request->get_string('action', 'list');
 
@@ -32,7 +32,7 @@ class DevToolsAjaxImportBddController extends AbstractController
                 return $this->action_import($request);
 
             default:
-                return new JSONResponse(array('success' => false, 'error' => 'Unknown action'));
+                return new JSONResponse(['success' => false, 'error' => 'Unknown action']);
         }
     }
 
@@ -46,9 +46,9 @@ class DevToolsAjaxImportBddController extends AbstractController
         $base = PATH_TO_ROOT . self::IMPORT_DIR;
 
         if (!is_dir($base))
-            return new JSONResponse(array('success' => true, 'modules' => array()));
+            return new JSONResponse(['success' => true, 'modules' => []]);
 
-        $result = array();
+        $result = [];
 
         $dirs = scandir($base);
         foreach ($dirs as $module_id)
@@ -70,24 +70,24 @@ class DevToolsAjaxImportBddController extends AbstractController
             if (empty($db_tables))
                 continue;
 
-            $files_info = array();
+            $files_info = [];
             foreach ($sql_files as $filepath)
             {
-                $files_info[] = array(
+                $files_info[] = [
                     'filename' => basename($filepath),
                     'size'     => self::format_size(filesize($filepath)),
                     'date'     => date('d/m/Y H:i', filemtime($filepath)),
-                );
+                ];
             }
 
-            $result[] = array(
+            $result[] = [
                 'module_id' => $module_id,
                 'files'     => $files_info,
                 'db_tables' => $db_tables,
-            );
+            ];
         }
 
-        return new JSONResponse(array('success' => true, 'modules' => $result));
+        return new JSONResponse(['success' => true, 'modules' => $result]);
     }
 
     // -----------------------------------------------------------------------
@@ -101,37 +101,37 @@ class DevToolsAjaxImportBddController extends AbstractController
         $filename  = preg_replace('/[^a-zA-Z0-9_\-\.]/', '', $request->get_string('filename', ''));
 
         if (empty($module_id))
-            return new JSONResponse(array('success' => false, 'error' => 'Missing module identifier'));
+            return new JSONResponse(['success' => false, 'error' => 'Missing module identifier']);
 
         $module_dir = PATH_TO_ROOT . self::IMPORT_DIR . $module_id;
 
         if (!is_dir($module_dir))
-            return new JSONResponse(array('success' => false, 'error' => 'Directory not found: ' . self::IMPORT_DIR . $module_id));
+            return new JSONResponse(['success' => false, 'error' => 'Directory not found: ' . self::IMPORT_DIR . $module_id]);
 
         // If a specific filename is given, import only that file
         if (!empty($filename))
         {
             $filepath = $module_dir . '/' . $filename;
             if (!file_exists($filepath))
-                return new JSONResponse(array('success' => false, 'error' => 'File not found : ' . $filename));
+                return new JSONResponse(['success' => false, 'error' => 'File not found : ' . $filename]);
 
             $error = $this->execute_sql_file($filepath);
             if ($error)
-                return new JSONResponse(array('success' => false, 'error' => $filename . ' : ' . $error));
+                return new JSONResponse(['success' => false, 'error' => $filename . ' : ' . $error]);
 
-            return new JSONResponse(array(
+            return new JSONResponse([
                 'success' => true,
                 'message' => 'File successfully imported: ' . $filename,
-            ));
+            ]);
         }
 
         // Otherwise import all SQL files for the module
         $sql_files = glob($module_dir . '/*.sql');
         if (empty($sql_files))
-            return new JSONResponse(array('success' => false, 'error' => 'No SQL file found for this module'));
+            return new JSONResponse(['success' => false, 'error' => 'No SQL file found for this module']);
 
-        $imported = array();
-        $errors   = array();
+        $imported = [];
+        $errors   = [];
 
         foreach ($sql_files as $filepath)
         {
@@ -147,14 +147,14 @@ class DevToolsAjaxImportBddController extends AbstractController
             $msg = 'Erreurs lors de l\'import : ' . implode(' | ', $errors);
             if (!empty($imported))
                 $msg .= ' (files successfully imported: ' . implode(', ', $imported) . ')';
-            return new JSONResponse(array('success' => false, 'error' => $msg));
+            return new JSONResponse(['success' => false, 'error' => $msg]);
         }
 
-        return new JSONResponse(array(
+        return new JSONResponse([
             'success'  => true,
             'imported' => $imported,
             'message'  => count($imported) . ' file(s) successfully imported : ' . implode(', ', $imported),
-        ));
+        ]);
     }
 
     // -----------------------------------------------------------------------
@@ -225,7 +225,7 @@ class DevToolsAjaxImportBddController extends AbstractController
     private function get_module_db_tables($module_id)
     {
         $prefix = PREFIX . $module_id;
-        $tables = array();
+        $tables = [];
 
         try
         {

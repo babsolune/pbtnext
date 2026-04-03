@@ -30,7 +30,7 @@ class SpotsService
 	 * @desc Count items number.
 	 * @param string $condition (optional) : Restriction to apply to the list of items
 	 */
-	public static function count($condition = '', $parameters = array())
+	public static function count($condition = '', $parameters = [])
 	{
 		return self::$db_querier->count(SpotsSetup::$spots_table, $condition, $parameters);
 	}
@@ -52,7 +52,7 @@ class SpotsService
 	 */
 	public static function update(SpotsItem $item)
 	{
-		self::$db_querier->update(SpotsSetup::$spots_table, $item->get_properties(), 'WHERE id=:id', array('id' => $item->get_id()));
+		self::$db_querier->update(SpotsSetup::$spots_table, $item->get_properties(), 'WHERE id=:id', ['id' => $item->get_id()]);
 	}
 
     /**
@@ -61,7 +61,7 @@ class SpotsService
 	 */
 	public static function update_views_number(SpotsItem $item)
 	{
-		self::$db_querier->update(SpotsSetup::$spots_table, array('views_number' => $item->get_views_number()), 'WHERE id=:id', array('id' => $item->get_id()));
+		self::$db_querier->update(SpotsSetup::$spots_table, ['views_number' => $item->get_views_number()], 'WHERE id=:id', ['id' => $item->get_id()]);
 	}
 
     /**
@@ -70,7 +70,7 @@ class SpotsService
 	 */
 	public static function update_visits_number(SpotsItem $item)
 	{
-		self::$db_querier->update(SpotsSetup::$spots_table, array('visits_number' => $item->get_visits_number()), 'WHERE id=:id', array('id' => $item->get_id()));
+		self::$db_querier->update(SpotsSetup::$spots_table, ['visits_number' => $item->get_visits_number()], 'WHERE id=:id', ['id' => $item->get_id()]);
 	}
 
     /**
@@ -85,9 +85,9 @@ class SpotsService
             $controller = PHPBoostErrors::user_in_read_only();
             DispatchManager::redirect($controller);
         }
-			self::$db_querier->delete(SpotsSetup::$spots_table, 'WHERE id=:id', array('id' => $id));
+			self::$db_querier->delete(SpotsSetup::$spots_table, 'WHERE id=:id', ['id' => $id]);
 
-			self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'spots', 'id' => $id));
+			self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', ['module' => 'spots', 'id' => $id]);
 	}
 
     /**
@@ -100,10 +100,10 @@ class SpotsService
 		$row = self::$db_querier->select_single_row_query('SELECT ' . self::$module_id . '.*, member.*
 		FROM ' . SpotsSetup::$spots_table . ' ' . self::$module_id . '
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = ' . self::$module_id . '.author_user_id
-		WHERE ' . self::$module_id . '.id=:id', array(
+		WHERE ' . self::$module_id . '.id=:id', [
 			'id'              => $id,
 			'current_user_id' => AppContext::get_current_user()->get_id()
-		));
+		]);
 
 		$item = new SpotsItem();
 		$item->set_properties($row);

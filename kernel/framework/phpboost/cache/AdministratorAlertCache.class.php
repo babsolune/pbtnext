@@ -21,13 +21,13 @@ class AdministratorAlertCache implements CacheData
 	{
 		$querier = PersistenceContext::get_querier();
 
-		$parameters = array(
+		$parameters = [
 			'current_status' => AdministratorAlert::ADMIN_ALERT_STATUS_UNREAD,
 			'contribution_type' => ADMINISTRATOR_ALERT_TYPE
-		);
+		];
 		$this->unread_administrator_alert = $querier->count(DB_TABLE_EVENTS, 'WHERE current_status = :current_status AND contribution_type = :contribution_type', $parameters);
 
-		$parameters = array('contribution_type' => ADMINISTRATOR_ALERT_TYPE);
+		$parameters = ['contribution_type' => ADMINISTRATOR_ALERT_TYPE];
 		$this->all_administrator_alert = $querier->count(DB_TABLE_EVENTS, 'WHERE contribution_type = :contribution_type', $parameters);
 
 	}

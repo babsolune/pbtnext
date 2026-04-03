@@ -48,10 +48,10 @@ class EditCommentBuildForm extends AbstractCommentsBuildForm
 		$fieldset = new FormFieldsetHTML('edit_comment', $lang['comment.edit']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldRichTextEditor('message', $lang['form.content'], $this->get_contents(), array(
+		$fieldset->add_field(new FormFieldRichTextEditor('message', $lang['form.content'], $this->get_contents(), [
 			'formatter' => $this->get_formatter(),
-			'rows' => 10, 'cols' => 47, 'required' => true),
-			array((!$this->user->is_moderator() && !$this->user->is_admin() ? new FormFieldConstraintMaxLinks($this->comments_configuration->get_max_links_comment()) : ''))
+			'rows' => 10, 'cols' => 47, 'required' => true],
+			[(!$this->user->is_moderator() && !$this->user->is_admin() ? new FormFieldConstraintMaxLinks($this->comments_configuration->get_max_links_comment()) : '')]
 		));
 
 		$form->add_button($submit_button = new FormButtonDefaultSubmit());

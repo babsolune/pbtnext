@@ -17,10 +17,10 @@ class RolesAuthorizations
 	private $moderators = false;
 	private $members = false;
 	private $guests = false;
-	private $groups = array();
-	private $users = array();
+	private $groups = [];
+	private $users = [];
 
-	public function __construct(array $auth_array = array())
+	public function __construct(array $auth_array = [])
 	{
 		$this->build_from_auth_array($auth_array);
 	}
@@ -32,7 +32,7 @@ class RolesAuthorizations
 	 */
 	public function build_auth_array()
 	{
-		$auth_array = array();
+		$auth_array = [];
 		$this->fill_levels_auths($auth_array);
 		$this->fill_groups_auths($auth_array);
 		$this->fill_users_auths($auth_array);
@@ -76,8 +76,8 @@ class RolesAuthorizations
 		$this->moderators = false;
 		$this->members = false;
 		$this->guests = false;
-		$this->groups = array();
-		$this->users = array();
+		$this->groups = [];
+		$this->users = [];
 	}
 
 	/**

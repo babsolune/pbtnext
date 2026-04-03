@@ -46,7 +46,7 @@ class DevToolsSetup extends DefaultModuleSetup
 
     private function drop_tables()
     {
-        PersistenceContext::get_dbms_utils()->drop(array(self::table()));
+        PersistenceContext::get_dbms_utils()->drop([self::table()]);
     }
 
     /**
@@ -56,20 +56,20 @@ class DevToolsSetup extends DefaultModuleSetup
      */
     private function create_review_table()
     {
-        $fields = array(
-            'id'                 => array('type' => 'integer', 'length' => 11,       'autoincrement' => true, 'notnull' => 1),
-            'file_path'          => array('type' => 'text',    'length' => 16777215),
-            'file_link'          => array('type' => 'text',    'length' => 16777215),
-            'edit_link'          => array('type' => 'text',    'length' => 16777215),
-            'module_source'      => array('type' => 'string',  'length' => 255,      'notnull' => 1),
-            'id_module_category' => array('type' => 'integer', 'length' => 11,       'notnull' => 1),
-            'category_name'      => array('type' => 'string',  'length' => 255),
-            'item_id'            => array('type' => 'integer', 'length' => 11,       'notnull' => 1),
-            'item_title'         => array('type' => 'string',  'length' => 255,      'notnull' => 1),
-            'id_in_module'       => array('type' => 'integer', 'length' => 11,       'notnull' => 1),
-            'file_context'       => array('type' => 'text',    'length' => 16777215),
-        );
-        $options = array('primary' => array('id'));
+        $fields = [
+            'id'                 => ['type' => 'integer', 'length' => 11,       'autoincrement' => true, 'notnull' => 1],
+            'file_path'          => ['type' => 'text',    'length' => 16777215],
+            'file_link'          => ['type' => 'text',    'length' => 16777215],
+            'edit_link'          => ['type' => 'text',    'length' => 16777215],
+            'module_source'      => ['type' => 'string',  'length' => 255,      'notnull' => 1],
+            'id_module_category' => ['type' => 'integer', 'length' => 11,       'notnull' => 1],
+            'category_name'      => ['type' => 'string',  'length' => 255],
+            'item_id'            => ['type' => 'integer', 'length' => 11,       'notnull' => 1],
+            'item_title'         => ['type' => 'string',  'length' => 255,      'notnull' => 1],
+            'id_in_module'       => ['type' => 'integer', 'length' => 11,       'notnull' => 1],
+            'file_context'       => ['type' => 'text',    'length' => 16777215],
+        ];
+        $options = ['primary' => ['id']];
 
         PersistenceContext::get_dbms_utils()->create_table(self::table(), $fields, $options);
     }

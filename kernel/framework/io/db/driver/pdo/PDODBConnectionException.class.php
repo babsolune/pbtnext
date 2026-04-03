@@ -13,7 +13,7 @@ class PDODBConnectionException extends DBConnectionException
 {
     public function __construct($message, PDO $pdo)
     {
-		$infos = array();
+		$infos = [];
 		foreach ($pdo->errorInfo() as $key => $info)
 		{
 			$infos[] = $key . ': ' . $info;

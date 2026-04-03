@@ -57,10 +57,10 @@ class CustomizationConfig extends AbstractConfigData
 
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::FAVICON_PATH => '/favicon.ico',
 			self::HEADER_LOGO_PATH_ALL_THEMES => null
-		);
+		];
 	}
 
 	/**

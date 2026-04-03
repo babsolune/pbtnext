@@ -13,7 +13,7 @@ class ExternalAuthenticationsExtensionPoint implements ExtensionPoint
 {
 	const EXTENSION_POINT = 'external_authentications';
 
-	protected $external_authentications = array();
+	protected $external_authentications = [];
 
 	/**
 	 * @param array Contains a table with instances of the class ExternalAuthentication

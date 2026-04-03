@@ -47,10 +47,10 @@ class CalendarService
 	 */
 	public static function add_participant($item_id, $user_id)
 	{
-		self::$db_querier->insert(CalendarSetup::$calendar_users_relation_table, array(
+		self::$db_querier->insert(CalendarSetup::$calendar_users_relation_table, [
 			'event_id' => $item_id,
 			'user_id' => $user_id
-		));
+		]);
 	}
 
 	/**
@@ -59,9 +59,9 @@ class CalendarService
 	 */
 	public static function update_item(CalendarItem $item)
 	{
-		self::$db_querier->update(CalendarSetup::$calendar_events_table, $item->get_properties(), 'WHERE id_event = :id', array(
+		self::$db_querier->update(CalendarSetup::$calendar_events_table, $item->get_properties(), 'WHERE id_event = :id', [
 			'id' => $item->get_id()
-		));
+		]);
 
 		return $item->get_id();
 	}
@@ -72,9 +72,9 @@ class CalendarService
 	 */
 	public static function update_item_content(CalendarItemContent $item_content)
 	{
-		self::$db_querier->update(CalendarSetup::$calendar_events_content_table, $item_content->get_properties(), 'WHERE id = :id', array(
+		self::$db_querier->update(CalendarSetup::$calendar_events_content_table, $item_content->get_properties(), 'WHERE id = :id', [
 			'id' => $item_content->get_id()
-		));
+		]);
 	}
 
 	/**
@@ -91,10 +91,10 @@ class CalendarService
 			DispatchManager::redirect($controller);
 		}
 
-		self::$db_querier->delete(CalendarSetup::$calendar_events_table, 'WHERE ' . $id_label . '=:id', array('id' => $id));
+		self::$db_querier->delete(CalendarSetup::$calendar_events_table, 'WHERE ' . $id_label . '=:id', ['id' => $id]);
 
 		if (!$has_parent)
-			PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'calendar', 'id' => $id));
+			PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', ['module' => 'calendar', 'id' => $id]);
 
 		CommentsService::delete_comments_topic_module('calendar', $id);
 
@@ -108,7 +108,7 @@ class CalendarService
 	 */
 	public static function delete_item_content($id)
 	{
-		self::$db_querier->delete(CalendarSetup::$calendar_events_content_table, 'WHERE id = :id', array('id' => $id));
+		self::$db_querier->delete(CalendarSetup::$calendar_events_content_table, 'WHERE id = :id', ['id' => $id]);
 	}
 
 	/**
@@ -127,9 +127,9 @@ class CalendarService
 	 */
 	public static function delete_all_participants($item_id)
 	{
-		self::$db_querier->delete(CalendarSetup::$calendar_users_relation_table, 'WHERE event_id = :id', array(
+		self::$db_querier->delete(CalendarSetup::$calendar_users_relation_table, 'WHERE event_id = :id', [
 			'id' => $item_id
-		));
+		]);
 	}
 
 	/**
@@ -139,10 +139,10 @@ class CalendarService
 	 */
 	public static function delete_participant($item_id, $user_id)
 	{
-		self::$db_querier->delete(CalendarSetup::$calendar_users_relation_table, 'WHERE event_id = :event_id AND user_id = :user_id', array(
+		self::$db_querier->delete(CalendarSetup::$calendar_users_relation_table, 'WHERE event_id = :event_id AND user_id = :user_id', [
 			'event_id' => $item_id,
 			'user_id' => $user_id
-		));
+		]);
 	}
 
 	/**
@@ -155,9 +155,9 @@ class CalendarService
 		FROM ' . CalendarSetup::$calendar_events_table . ' event
 		LEFT JOIN ' . CalendarSetup::$calendar_events_content_table . ' event_content ON event_content.id = event.content_id
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' author ON author.user_id = event_content.author_user_id
-		WHERE event.id_event=:id', array(
+		WHERE event.id_event=:id', [
 			'id' => $id
-		));
+		]);
 
 		$item = new CalendarItem();
 		$item->set_properties($row);
@@ -172,14 +172,14 @@ class CalendarService
 	 */
 	public static function get_item_participants($item_id)
 	{
-		$participants = array();
+		$participants = [];
 
 		$result = self::$db_querier->select('SELECT event_id, member.user_id, display_name, level, user_groups
 		FROM ' . CalendarSetup::$calendar_users_relation_table . ' participants
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = participants.user_id
-		WHERE event_id = :id', array(
+		WHERE event_id = :id', [
 			'id' => $item_id
-		));
+		]);
 
 		while($row = $result->fetch())
 		{
@@ -201,15 +201,15 @@ class CalendarService
 	 */
 	public static function get_serie_items($content_id)
 	{
-		$items = array();
+		$items = [];
 
 		$result = self::$db_querier->select('SELECT *
 		FROM ' . CalendarSetup::$calendar_events_table . ' event
 		LEFT JOIN ' . CalendarSetup::$calendar_events_content_table . ' event_content ON event_content.id = event.content_id
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' author ON author.user_id = event_content.author_user_id
-		WHERE content_id = :id', array(
+		WHERE content_id = :id', [
 			'id' => $content_id
-		));
+		]);
 
 		while($row = $result->fetch())
 		{
@@ -239,8 +239,8 @@ class CalendarService
 	 */
 	public static function get_all_current_month_items($month, $year, $month_days, $id_category = Category::ROOT_CATEGORY)
 	{
-		$items = array();
-		$authorized_categories = $id_category == Category::ROOT_CATEGORY ? CategoriesService::get_authorized_categories($id_category) : array($id_category);
+		$items = [];
+		$authorized_categories = $id_category == Category::ROOT_CATEGORY ? CategoriesService::get_authorized_categories($id_category) : [$id_category];
 
 		$first_month_day = DateTime::createFromFormat('Y-m-d H:i:s', $year . '-' . $month . '-' . 1 . ' 00:00:00', Timezone::get_timezone(Timezone::USER_TIMEZONE));
 		$last_month_day = DateTime::createFromFormat('Y-m-d H:i:s', $year . '-' . $month . '-' . $month_days . ' 23:59:59', Timezone::get_timezone(Timezone::USER_TIMEZONE));
@@ -256,13 +256,13 @@ class CalendarService
 		WHERE approved = 1
 		AND ((start_date BETWEEN :first_month_day AND :last_month_day) OR (end_date BETWEEN :first_month_day AND :last_month_day) OR (:first_month_day BETWEEN start_date AND end_date))
 		AND id_category IN :authorized_categories)
-		ORDER BY type ASC, start_date ASC", array(
+		ORDER BY type ASC, start_date ASC", [
 			'month' => $month,
 			'year' => $year,
 			'first_month_day' => $first_month_day->getTimestamp(),
 			'last_month_day' => $last_month_day->getTimestamp(),
 			'authorized_categories' => $authorized_categories
-		));
+		]);
 		
 		while ($row = $result->fetch())
 		{

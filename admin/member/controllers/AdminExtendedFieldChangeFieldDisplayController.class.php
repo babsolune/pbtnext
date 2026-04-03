@@ -16,13 +16,13 @@ class AdminExtendedFieldChangeFieldDisplayController extends AbstractController
 
 		if ($id !== 0)
 		{
-			PersistenceContext::get_querier()->update(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, array('display' => (int)$display), 'WHERE id = :id', array(
+			PersistenceContext::get_querier()->update(DB_TABLE_MEMBER_EXTENDED_FIELDS_LIST, ['display' => (int)$display], 'WHERE id = :id', [
 				'id' => $id
-			));
+			]);
 			ExtendedFieldsCache::invalidate();
 		}
 
-		return new JSONResponse(array('id' => $id, 'display' => (int)$display));
+		return new JSONResponse(['id' => $id, 'display' => (int)$display]);
 	}
 }
 ?>

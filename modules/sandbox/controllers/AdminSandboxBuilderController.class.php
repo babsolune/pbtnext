@@ -28,7 +28,7 @@ class AdminSandboxBuilderController extends DefaultAdminModuleController
 		{
 			if ($form->validate())
 			{
-				$this->view->put_all(array(
+				$this->view->put_all([
 					'C_RESULT' => true,
 					'TEXT' => $form->get_value('text'),
 					'MAIL' => $form->get_value('mail'),
@@ -44,17 +44,17 @@ class AdminSandboxBuilderController extends DefaultAdminModuleController
 					'DATE_TIME' => $form->get_value('date_time')->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 					'H_T_TEXT_FIELD' => $form->get_value('alone'),
 					'C_PREVIEW' => $this->preview_button->has_been_submited()
-				));
+				]);
 
 				$file = $form->get_value('file');
 				if ( $file !== null)
 				{
-					$this->view->put_all(array('FILE' => $file->get_name() . ' - ' . $file->get_size() . 'b - ' . $file->get_mime_type()));
+					$this->view->put_all(['FILE' => $file->get_name() . ' - ' . $file->get_size() . 'b - ' . $file->get_mime_type()]);
 				}
 			}
 		}
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_GMAP'          => $this->g_map_enabled,
 			'CONTENT'         => $form->display(),
 			'FORM_MARKUP'     => self::build_markup('sandbox/pagecontent/builder/form.tpl'),
@@ -67,7 +67,7 @@ class AdminSandboxBuilderController extends DefaultAdminModuleController
 			'BUTTON_MARKUP'   => self::build_markup('sandbox/pagecontent/builder/button.tpl'),
 			'MODAL_MARKUP'    => self::build_markup('sandbox/pagecontent/builder/modal.tpl'),
 			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
-		));
+		]);
 
 		return new AdminSandboxDisplayResponse($this->view, $this->lang['sandbox.module.title'] . ' - ' . $this->lang['sandbox.forms']);
 	}
@@ -95,68 +95,68 @@ class AdminSandboxBuilderController extends DefaultAdminModuleController
 
 			// Text
 			$text_fields->add_field(new FormFieldTextEditor('text', $this->lang['sandbox.builder.text.field'], $this->lang['sandbox.builder.text.field.lorem'],
-				array('maxlength' => 25, 'description' => $this->lang['sandbox.builder.text.field.clue'], 'class' => 'css-class'),
-				array(new FormFieldConstraintRegex('`^[a-z0-9_ ]+$`iu'))
+				['maxlength' => 25, 'description' => $this->lang['sandbox.builder.text.field.clue'], 'class' => 'css-class'],
+				[new FormFieldConstraintRegex('`^[a-z0-9_ ]+$`iu')]
 			));
 
 			// Url
 			$text_fields->add_field(new FormFieldUrlEditor('siteweb', $this->lang['sandbox.builder.url.field'], $this->lang['sandbox.builder.url.field.placeholder'],
-				array('description' => $this->lang['sandbox.builder.url.field.clue'], 'class' => 'css-class')
+				['description' => $this->lang['sandbox.builder.url.field.clue'], 'class' => 'css-class']
 			));
 
 			// Email
 			$text_fields->add_field(new FormFieldMailEditor('email', $this->lang['sandbox.builder.email.field'], $this->lang['sandbox.builder.email.field.placeholder'],
-				array('description' => $this->lang['sandbox.builder.email.field.clue'], 'class' => 'css-class')
+				['description' => $this->lang['sandbox.builder.email.field.clue'], 'class' => 'css-class']
 			));
 			$text_fields->add_field(new FormFieldMailEditor('multiple_email', $this->lang['sandbox.builder.email.field.multiple'], $this->lang['sandbox.builder.email.field.multiple.placeholder'],
-				array('description' => $this->lang['sandbox.builder.email.field.multiple.clue'], 'multiple' => true, 'class' => 'css-class')
+				['description' => $this->lang['sandbox.builder.email.field.multiple.clue'], 'multiple' => true, 'class' => 'css-class']
 			));
 
 			// Phone
 			$text_fields->add_field(new FormFieldTelEditor('tel', $this->lang['sandbox.builder.phone.field'], $this->lang['sandbox.builder.phone.field.placeholder'],
-				array('description' => $this->lang['sandbox.builder.phone.field.clue'], 'class' => 'css-class')
+				['description' => $this->lang['sandbox.builder.phone.field.clue'], 'class' => 'css-class']
 			));
 
 			// Disabled
 			$text_fields->add_field(new FormFieldTextEditor('text_disabled', $this->lang['sandbox.builder.text.field.disabled'], '',
-				array('maxlength' => 25, 'description' => $this->lang['sandbox.builder.text.field.disabled.clue'], 'disabled' => true, 'class' => 'css-class')
+				['maxlength' => 25, 'description' => $this->lang['sandbox.builder.text.field.disabled.clue'], 'disabled' => true, 'class' => 'css-class']
 			));
 
 			// Readonly
 			$text_fields->add_field(new FormFieldTextEditor('text_readonly', $this->lang['sandbox.builder.text.field.readonly'], '',
-				array('maxlength' => 25, 'description' => $this->lang['sandbox.builder.text.field.disabled.clue'], 'readonly' => true, 'class' => 'css-class')
+				['maxlength' => 25, 'description' => $this->lang['sandbox.builder.text.field.disabled.clue'], 'readonly' => true, 'class' => 'css-class']
 			));
 
 			// Required
 			$text_fields->add_field(new FormFieldTextEditor('required', $this->lang['sandbox.builder.text.field.required'], $this->lang['sandbox.builder.text.field.lorem'],
-				array('maxlength' => 25, 'description' => $this->lang['sandbox.builder.text.field.required.filled'], 'required' => true, 'class' => 'css-class')
+				['maxlength' => 25, 'description' => $this->lang['sandbox.builder.text.field.required.filled'], 'required' => true, 'class' => 'css-class']
 			));
 			$text_fields->add_field(new FormFieldTextEditor('required_empty', $this->lang['sandbox.builder.text.field.required'], '',
-				array('maxlength' => 25, 'description' => $this->lang['sandbox.builder.text.field.required.empty'], 'required' => true, 'class' => 'css-class')
+				['maxlength' => 25, 'description' => $this->lang['sandbox.builder.text.field.required.empty'], 'required' => true, 'class' => 'css-class']
 			));
 
 			// Number
 			$text_fields->add_field(new FormFieldNumberEditor('number', $this->lang['sandbox.builder.number.field'], $this->lang['sandbox.builder.number.field.placeholder'],
-				array('min' => 10, 'max' => 100, 'description' => $this->lang['sandbox.builder.number.field.clue'], 'class' => 'css-class'),
-				array(new FormFieldConstraintIntegerRange(10, 100))
+				['min' => 10, 'max' => 100, 'description' => $this->lang['sandbox.builder.number.field.clue'], 'class' => 'css-class'],
+				[new FormFieldConstraintIntegerRange(10, 100)]
 			));
 			$text_fields->add_field(new FormFieldDecimalNumberEditor('decimal', $this->lang['sandbox.builder.number.field.decimal'], $this->lang['sandbox.builder.number.field.decimal.placeholder'],
-				array('min' => 0, 'step' => 0.1, 'description' => $this->lang['sandbox.builder.number.field.decimal.clue'], 'class' => 'css-class')
+				['min' => 0, 'step' => 0.1, 'description' => $this->lang['sandbox.builder.number.field.decimal.clue'], 'class' => 'css-class']
 			));
 
 			// Password
 			$text_fields->add_field($password = new FormFieldPasswordEditor('password', $this->lang['sandbox.builder.password.field'], $this->lang['sandbox.builder.password.field.placeholder'],
-				array('description' => $security_config->get_internal_password_min_length() . $this->lang['sandbox.builder.password.field.clue'], 'class' => 'css-class'),
-				array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
+				['description' => $security_config->get_internal_password_min_length() . $this->lang['sandbox.builder.password.field.clue'], 'class' => 'css-class'],
+				[new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length())]
 			));
 			$text_fields->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['sandbox.builder.password.field.confirm'], $this->lang['sandbox.builder.password.field.placeholder'],
-				array('description' => $security_config->get_internal_password_min_length() . $this->lang['sandbox.builder.password.field.clue'], 'class' => 'css-class'),
-				array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()))
+				['description' => $security_config->get_internal_password_min_length() . $this->lang['sandbox.builder.password.field.clue'], 'class' => 'css-class'],
+				[new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length())]
 			));
 
 			// Icon
 			$text_fields->add_field(new FormFieldIconEditor('icon', $this->lang['sandbox.builder.icon.fields'], '',
-				array('description' => '', 'class' => 'css-class')
+				['description' => '', 'class' => 'css-class']
 			));
 
 		// TEXTAREA
@@ -165,17 +165,17 @@ class AdminSandboxBuilderController extends DefaultAdminModuleController
 
 			// Short multi line text
 			$textarea->add_field(new FormFieldShortMultiLineTextEditor('short_multi_line_text', $this->lang['sandbox.builder.multiline.medium'], $this->lang['sandbox.builder.multiline.lorem'],
-				array('rows' => 3, 'required' => true, 'class' => 'css-class')
+				['rows' => 3, 'required' => true, 'class' => 'css-class']
 			));
 
 			// Multi line text
 			$textarea->add_field(new FormFieldMultiLineTextEditor('multi_line_text', $this->lang['sandbox.builder.multiline'], $this->lang['sandbox.builder.multiline.lorem'],
-				array('rows' => 6, 'cols' => 47, 'description' => $this->lang['sandbox.builder.multiline.clue'], 'required' => true, 'class' => 'css-class')
+				['rows' => 6, 'cols' => 47, 'description' => $this->lang['sandbox.builder.multiline.clue'], 'required' => true, 'class' => 'css-class']
 			));
 
 			// Rich text
 			$textarea->add_field(new FormFieldRichTextEditor('rich_text', $this->lang['sandbox.builder.rich.text'], $this->lang['sandbox.builder.rich.text.placeholder'],
-				array('required' => true, 'class' => 'css-class')
+				['required' => true, 'class' => 'css-class']
 			));
 
 		// RADIO / CHECKBOX
@@ -184,33 +184,33 @@ class AdminSandboxBuilderController extends DefaultAdminModuleController
 
 			// Checkboxes
 			$choices->add_field(new FormFieldCheckbox('checkbox', $this->lang['sandbox.builder.checkbox'], FormFieldCheckbox::CHECKED,
-				array('class' => 'custom-checkbox css-class')
+				['class' => 'custom-checkbox css-class']
 			));
 			$choices->add_field(new FormFieldMultipleCheckbox('multiple_check_box', $this->lang['sandbox.builder.multiple.checkbox'],
-				array('1'),
-				array(
+				['1'],
+				[
 					new FormFieldMultipleCheckboxOption('1', $this->lang['sandbox.builder.choice'].'1'),
 					new FormFieldMultipleCheckboxOption('2', $this->lang['sandbox.builder.choice'].'2')
-				),
-				array('required' => true, 'class' => 'mini-checkbox css-class')
+				],
+				['required' => true, 'class' => 'mini-checkbox css-class']
 			));
 
 			// Radios
 			$default_option = new FormFieldRadioChoiceOption($this->lang['sandbox.builder.choice'].'1', '1');
 			$choices->add_field(new FormFieldRadioChoice('inline_radio', $this->lang['sandbox.builder.radio'] . ' inline', '',
-				array(
+				[
 					$default_option,
 					new FormFieldRadioChoiceOption($this->lang['sandbox.builder.choice'].'2', '2')
-				),
-				array('required' => true, 'class' => 'css-class inline-radio custom-radio')
+				],
+				['required' => true, 'class' => 'css-class inline-radio custom-radio']
 			));
 			$default_option = new FormFieldRadioChoiceOption($this->lang['sandbox.builder.choice'].'1', '1');
 			$choices->add_field(new FormFieldRadioChoice('radio', $this->lang['sandbox.builder.radio'], '',
-				array(
+				[
 					$default_option,
 					new FormFieldRadioChoiceOption($this->lang['sandbox.builder.choice'].'2', '2')
-				),
-				array('required' => true, 'class' => 'custom-radio css-class')
+				],
+				['required' => true, 'class' => 'custom-radio css-class']
 			));
 
 		// SELECTORS
@@ -219,68 +219,68 @@ class AdminSandboxBuilderController extends DefaultAdminModuleController
 
 			// SELECT
 			$select->add_field(new FormFieldSimpleSelectChoice('select', $this->lang['sandbox.builder.select'], '',
-				array(
+				[
 					new FormFieldSelectChoiceOption(' ', '0'),
 					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'1', '1'),
 					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'2', '2'),
 					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'3', '3'),
 					new FormFieldSelectChoiceGroupOption($this->lang['sandbox.builder.choice.group'].'1',
-						array(
+						[
 							new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'4', '4'),
 							new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'5', '5'),
-						)
+						]
 					),
 					new FormFieldSelectChoiceGroupOption($this->lang['sandbox.builder.choice.group'].'2',
-						array(
+						[
 							new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'6', '6'),
 							new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'7', '7'),
-						)
+						]
 					)
-				),
-				array('required' => true, 'class' => 'top-field css-class')
+				],
+				['required' => true, 'class' => 'top-field css-class']
 			));
 
 			$select->add_field(new FormFieldMultipleSelectChoice('multiple_select', $this->lang['sandbox.builder.multiple.select'],
-				array('1', '2'),
-				array(
+				['1', '2'],
+				[
 					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'1', '1'),
 					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'2', '2'),
 					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'3', '3')
-				),
-				array('required' => true, 'class' => 'top-field css-class')
+				],
+				['required' => true, 'class' => 'top-field css-class']
 			));
 
 			// Fake select
 			$select->add_field(new FormFieldSimpleSelectChoice('fake_select', $this->lang['sandbox.builder.select.to.list'],
-				array('1'),
-				array(
+				['1'],
+				[
 					new FormFieldSelectChoiceOption('&nbsp;', '0'),
-					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'1', '1', array('selected' => true, 'data_option_icon' => 'far fa-id-card')),
-					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'2', '2', array('data_option_icon' => 'far fa-id-card')),
-					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'3', '3', array('data_option_icon' => 'far fa-id-card')),
-				),
-				array('class' => 'top-field css-class', 'select_to_list' => true)
+					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'1', '1', ['selected' => true, 'data_option_icon' => 'far fa-id-card']),
+					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'2', '2', ['data_option_icon' => 'far fa-id-card']),
+					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'3', '3', ['data_option_icon' => 'far fa-id-card']),
+				],
+				['class' => 'top-field css-class', 'select_to_list' => true]
 			));
 			$select->add_field(new FormFieldMultipleSelectChoice('fake_multiple_select', $this->lang['sandbox.builder.multiple.select.to.list'],
-				array(),
-				array(
-					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'1', '1', array('data_option_class' => 'bgc-full question', 'data_option_icon' => 'far fa-id-card')),
-					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'2', '2', array('data_option_class' => 'bgc error', 'disable' => true)),
-					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'3', '3', array('data_option_class' => 'indent')),
-					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'4', '4', array('data_option_class' => 'bgc-full question', 'selected' => true, 'data_option_icon' => 'far fa-id-card')),
-					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'5', '5', array('data_option_img' => PATH_TO_ROOT . '/templates/__default__/theme/images/logo.svg')),
+				[],
+				[
+					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'1', '1', ['data_option_class' => 'bgc-full question', 'data_option_icon' => 'far fa-id-card']),
+					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'2', '2', ['data_option_class' => 'bgc error', 'disable' => true]),
+					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'3', '3', ['data_option_class' => 'indent']),
+					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'4', '4', ['data_option_class' => 'bgc-full question', 'selected' => true, 'data_option_icon' => 'far fa-id-card']),
+					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'5', '5', ['data_option_img' => PATH_TO_ROOT . '/templates/__default__/theme/images/logo.svg']),
 					new FormFieldSelectChoiceOption($this->lang['sandbox.builder.choice'].'6', '6')
-				),
-				array('class' => 'css-class', 'multiple_select_to_list' => true)
+				],
+				['class' => 'css-class', 'multiple_select_to_list' => true]
 			));
 
 			// Autocomplete
 			$select->add_field(new FormFieldTimezone('timezone', $this->lang['sandbox.builder.timezone'], 'UTC+0',
-				array('class' => 'top-field css-class')
+				['class' => 'top-field css-class']
 			));
 
 			$select->add_field(new FormFieldAjaxSearchUserAutoComplete('user_completition', $this->lang['sandbox.builder.user.completion'], '',
-				array('class' => 'css-class')
+				['class' => 'css-class']
 			));
 
 		// MISCELLANEOUS
@@ -294,66 +294,66 @@ class AdminSandboxBuilderController extends DefaultAdminModuleController
 			$miscellaneous->set_description($this->lang['sandbox.builder.clue']);
 
 			// Separator
-			$miscellaneous->add_field(new FormFieldSpacer('spacer', '<span class="smaller">' . $this->lang['sandbox.builder.spacer'] . '</span>', array('class' => 'css-class')));
+			$miscellaneous->add_field(new FormFieldSpacer('spacer', '<span class="smaller">' . $this->lang['sandbox.builder.spacer'] . '</span>', ['class' => 'css-class']));
 
 			// Free field
 			$miscellaneous->add_field(new FormFieldFree('free', $this->lang['sandbox.builder.free.html'], $this->lang['sandbox.builder.text.field.lorem'],
-				array('class' => 'css-class')
+				['class' => 'css-class']
 			));
 
 			// Range
 			$miscellaneous->add_field($password = new FormFieldRangeEditor('range', $this->lang['sandbox.builder.slider.field'], $this->lang['sandbox.builder.slider.field.placeholder'],
-				array('min' => 1, 'max' => 10, 'description' => $this->lang['sandbox.builder.slider.field.clue'], 'class' => 'css-class')
+				['min' => 1, 'max' => 10, 'description' => $this->lang['sandbox.builder.slider.field.clue'], 'class' => 'css-class']
 			));
 
 			// Date
 			$miscellaneous->add_field(new FormFieldDate('date', $this->lang['sandbox.builder.date'], null,
-				array('required' => true, 'class' => 'css-class')
+				['required' => true, 'class' => 'css-class']
 			));
 
 			// Date time
 			$miscellaneous->add_field(new FormFieldDateTime('date_time', $this->lang['sandbox.builder.date.hm'], null,
-				array('required' => true, 'class' => 'css-class')
+				['required' => true, 'class' => 'css-class']
 			));
 
 			// Possible values
-			$miscellaneous->add_field(new FormFieldPossibleValues('possible_values_inputs', $this->lang['sandbox.builder.possible.values'], array(),
-				array('class' => 'css-class')
+			$miscellaneous->add_field(new FormFieldPossibleValues('possible_values_inputs', $this->lang['sandbox.builder.possible.values'], [],
+				['class' => 'css-class']
 			));
 
 			// Sources
-			$miscellaneous->add_field(new FormFieldSelectSources('select_sources', $this->lang['sandbox.builder.sources'], array(),
-				array('class' => 'css-class')
+			$miscellaneous->add_field(new FormFieldSelectSources('select_sources', $this->lang['sandbox.builder.sources'], [],
+				['class' => 'css-class']
 			));
 
 			// Color picker
 			$miscellaneous->add_field(new FormFieldColorPicker('color', $this->lang['sandbox.builder.color'], '#366393',
-				array('class' => 'top-field css-class')
+				['class' => 'top-field css-class']
 			));
 
 			// Search
 			$miscellaneous->add_field(new FormFieldSearch('search', $this->lang['sandbox.builder.search'], '',
-				array('class' => 'top-field css-class')
+				['class' => 'top-field css-class']
 			));
 
 			// File picker
 			$miscellaneous->add_field(new FormFieldFilePicker('file', $this->lang['sandbox.builder.file.picker'],
-				array('class' => 'top-field css-class')
+				['class' => 'top-field css-class']
 			));
 
 			// Multiple file picker
 			$miscellaneous->add_field(new FormFieldFilePicker('multiple_files', $this->lang['sandbox.builder.multiple.file.picker'],
-				array('class' => 'top-field css-class', 'multiple' => true)
+				['class' => 'top-field css-class', 'multiple' => true]
 			));
 
 			// Thumbnail
 			$miscellaneous->add_field(new FormFieldThumbnail('thumbnail', $this->lang['sandbox.builder.thumbnail.picker'], '', FormFieldThumbnail::get_default_thumbnail_url(UserAccountsConfig::NO_AVATAR_URL),
-				array('class' => 'top-field css-class')
+				['class' => 'top-field css-class']
 			));
 
 			// Upload file
 			$miscellaneous->add_field(new FormFieldUploadFile('upload_file', $this->lang['sandbox.builder.file.upload'], '',
-				array('required' => true, 'class' => 'top-field css-class')
+				['required' => true, 'class' => 'top-field css-class']
 			));
 
 		// GOOGLE MAPS
@@ -363,26 +363,26 @@ class AdminSandboxBuilderController extends DefaultAdminModuleController
 			$form->add_fieldset($fieldset_maps);
 
 			// Simple address
-			$fieldset_maps->add_field(new GoogleMapsFormFieldSimpleAddress('simple_address', $this->lang['sandbox.builder.googlemap.simple.address'], '', array('class' => 'css-class')));
+			$fieldset_maps->add_field(new GoogleMapsFormFieldSimpleAddress('simple_address', $this->lang['sandbox.builder.googlemap.simple.address'], '', ['class' => 'css-class']));
 
 			// Map address
-			$fieldset_maps->add_field(new GoogleMapsFormFieldMapAddress('map_address', $this->lang['sandbox.builder.googlemap.map.address'], '', array('class' => 'css-class', 'include_api' => false)));
+			$fieldset_maps->add_field(new GoogleMapsFormFieldMapAddress('map_address', $this->lang['sandbox.builder.googlemap.map.address'], '', ['class' => 'css-class', 'include_api' => false]));
 
 			// Simple marker
-			$fieldset_maps->add_field(new GoogleMapsFormFieldSimpleMarker('simple_marker', $this->lang['sandbox.builder.googlemap.simple.marker'], '', array('class' => 'css-class', 'include_api' => false)));
+			$fieldset_maps->add_field(new GoogleMapsFormFieldSimpleMarker('simple_marker', $this->lang['sandbox.builder.googlemap.simple.marker'], '', ['class' => 'css-class', 'include_api' => false]));
 
 			// Multiple markers
-			$fieldset_maps->add_field(new GoogleMapsFormFieldMultipleMarkers('multiple_markers', $this->lang['sandbox.builder.googlemap.multiple.markers'], '', array('class' => 'css-class', 'include_api' => false)));
+			$fieldset_maps->add_field(new GoogleMapsFormFieldMultipleMarkers('multiple_markers', $this->lang['sandbox.builder.googlemap.multiple.markers'], '', ['class' => 'css-class', 'include_api' => false]));
 		}
 
 		// AUTH
 		$authorizations = new FormFieldsetHTML('authorizations', $this->lang['sandbox.builder.authorization']);
 			$auth_settings = new AuthorizationsSettings(
-				array(
+				[
 					new ActionAuthorization($this->lang['sandbox.builder.authorization.1'], 1, $this->lang['sandbox.builder.authorization.1.clue']),
-					new ActionAuthorization($this->lang['sandbox.builder.authorization.2'], 2))
+					new ActionAuthorization($this->lang['sandbox.builder.authorization.2'], 2)]
 				);
-			$auth_settings->build_from_auth_array(array('r1' => 3, 'r0' => 2, 'm1' => 1, 1 => 2));
+			$auth_settings->build_from_auth_array(['r1' => 3, 'r0' => 2, 'm1' => 1, 1 => 2]);
 			$auth_setter = new FormFieldAuthorizationsSetter('auth', $auth_settings);
 			$authorizations->add_field($auth_setter);
 			$form->add_fieldset($authorizations);
@@ -391,15 +391,15 @@ class AdminSandboxBuilderController extends DefaultAdminModuleController
 		$vertical_fieldset = new FormFieldsetVertical('vertical_fieldset');
 			$vertical_fieldset->set_description($this->lang['sandbox.builder.vertical.clue']);
 			$form->add_fieldset($vertical_fieldset);
-			$vertical_fieldset->add_field(new FormFieldTextEditor('alone', $this->lang['sandbox.builder.text.field'], $this->lang['sandbox.builder.text.field.lorem'], array('class' => 'css-class')));
-			$vertical_fieldset->add_field(new FormFieldCheckbox('cbhor', $this->lang['sandbox.builder.checkbox'], FormFieldCheckbox::UNCHECKED, array('class' => 'css-class')));
+			$vertical_fieldset->add_field(new FormFieldTextEditor('alone', $this->lang['sandbox.builder.text.field'], $this->lang['sandbox.builder.text.field.lorem'], ['class' => 'css-class']));
+			$vertical_fieldset->add_field(new FormFieldCheckbox('cbhor', $this->lang['sandbox.builder.checkbox'], FormFieldCheckbox::UNCHECKED, ['class' => 'css-class']));
 
 		// HORIZONTAL FIELDSET
 		$horizontal_fieldset = new FormFieldsetHorizontal('horizontal_fieldset');
 			$horizontal_fieldset->set_description($this->lang['sandbox.builder.horizontal.clue']);
 			$form->add_fieldset($horizontal_fieldset);
-			$horizontal_fieldset->add_field(new FormFieldTextEditor('texthor', $this->lang['sandbox.builder.text.field'], $this->lang['sandbox.builder.text.field.lorem'], array('required' => true, 'class' => 'css-class')));
-			$horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert', $this->lang['sandbox.builder.checkbox'], FormFieldCheckbox::CHECKED, array('class' => 'css-class')));
+			$horizontal_fieldset->add_field(new FormFieldTextEditor('texthor', $this->lang['sandbox.builder.text.field'], $this->lang['sandbox.builder.text.field.lorem'], ['required' => true, 'class' => 'css-class']));
+			$horizontal_fieldset->add_field(new FormFieldCheckbox('cbvert', $this->lang['sandbox.builder.checkbox'], FormFieldCheckbox::CHECKED, ['class' => 'css-class']));
 
 		// BUTTONS
 		$buttons = new FormFieldsetHTML('buttons', $this->lang['sandbox.builder.buttons']);

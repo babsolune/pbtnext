@@ -48,7 +48,7 @@ class BugtrackerChangeBugStatusController extends DefaultModuleController
 		$id = $request->get_int('id', 0);
 
 		try {
-			$this->bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
+			$this->bug = BugtrackerService::get_bug('WHERE id=:id', ['id' => $id]);
 		} catch (RowNotFoundException $e) {
 			$error_controller = new UserErrorController($this->lang['warning.error'], $this->lang['error.e_unexist_bug']);
 			DispatchManager::redirect($error_controller);
@@ -82,7 +82,7 @@ class BugtrackerChangeBugStatusController extends DefaultModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('status', $this->lang['labels.fields.status'], $this->bug->get_status(), $this->generate_status_list_select(),
-			array('events' => array('change' => ($versions_number ? '
+			['events' => ['change' => ($versions_number ? '
 			if (HTMLForms.getField("status").getValue() == "' . BugtrackerItem::FIXED . '" || HTMLForms.getField("status").getValue() == "' . BugtrackerItem::IN_PROGRESS . '") {
 				HTMLForms.getField("fixed_in").enable();
 				HTMLForms.getField("assigned_to").disable();
@@ -92,21 +92,21 @@ class BugtrackerChangeBugStatusController extends DefaultModuleController
 				' : '') . '} else {
 				' . ($versions_number ? 'HTMLForms.getField("fixed_in").disable();
 				' : '') . 'HTMLForms.getField("assigned_to").disable();
-			}')),
-			!$this->bug->is_fixed() && !$this->bug->is_assigned() && !$this->bug->is_in_progress() ? array(new BugtrackerConstraintStatusChanged($this->bug->get_id(), $this->bug->get_status())) : array()
+			}']],
+			!$this->bug->is_fixed() && !$this->bug->is_assigned() && !$this->bug->is_in_progress() ? [new BugtrackerConstraintStatusChanged($this->bug->get_id(), $this->bug->get_status())] : []
 		));
 
-		$user_assigned = UserService::user_exists('WHERE user_id=:user_id', array('user_id' => $this->bug->get_assigned_to_id())) ? UserService::get_user($this->bug->get_assigned_to_id()) : '';
+		$user_assigned = UserService::user_exists('WHERE user_id=:user_id', ['user_id' => $this->bug->get_assigned_to_id()]) ? UserService::get_user($this->bug->get_assigned_to_id()) : '';
 
 		$fieldset->add_field(new FormFieldAjaxUserAutoComplete('assigned_to', $this->lang['labels.fields.assigned_to_id'], !empty($user_assigned) ? $user_assigned->get_display_name() : '',
-			array('required' => true, 'hidden' => !$this->bug->is_assigned()),
-			array(new FormFieldConstraintUserExist())
+			['required' => true, 'hidden' => !$this->bug->is_assigned()],
+			[new FormFieldConstraintUserExist()]
 		));
 
 		//Fix versions
 		if ($versions_number)
 		{
-			$array_versions = array();
+			$array_versions = [];
 			$array_versions[] = new FormFieldSelectChoiceOption(' ', 0);
 			foreach ($versions as $key => $version)
 			{
@@ -115,13 +115,13 @@ class BugtrackerChangeBugStatusController extends DefaultModuleController
 			}
 
 			$fieldset->add_field(new FormFieldSimpleSelectChoice('fixed_in', $this->lang['labels.fields.fixed_in'], $this->bug->get_fixed_in(), $array_versions,
-				array('description' => $this->lang['explain.change_status_select_fix_version'], 'hidden' => !$this->bug->is_fixed() && !$this->bug->is_in_progress()
-			)));
+				['description' => $this->lang['explain.change_status_select_fix_version'], 'hidden' => !$this->bug->is_fixed() && !$this->bug->is_in_progress()
+			]));
 		}
 
-		$fieldset->add_field(new FormFieldRichTextEditor('comments_message', $this->lang['comment.comment'], '', array(
+		$fieldset->add_field(new FormFieldRichTextEditor('comments_message', $this->lang['comment.comment'], '', [
 			'description' => $this->lang['explain.change_status_comments_message']
-		)));
+		]));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -132,7 +132,7 @@ class BugtrackerChangeBugStatusController extends DefaultModuleController
 
 	private function get_status_list()
 	{
-		return array(
+		return [
 			BugtrackerItem::NEW_BUG     => $this->lang['status.new'],
 			BugtrackerItem::PENDING     => $this->lang['status.pending'],
 			BugtrackerItem::ASSIGNED    => $this->lang['status.assigned'],
@@ -140,12 +140,12 @@ class BugtrackerChangeBugStatusController extends DefaultModuleController
 			BugtrackerItem::REJECTED    => $this->lang['status.rejected'],
 			BugtrackerItem::REOPEN      => $this->lang['status.reopen'],
 			BugtrackerItem::FIXED       => $this->lang['status.fixed']
-		);
+		];
 	}
 
 	private function generate_status_list_select()
 	{
-		$options = array();
+		$options = [];
 		foreach ($this->get_status_list() as $id => $label)
 		{
 			$options[] = new FormFieldSelectChoiceOption($label, $id);
@@ -157,7 +157,7 @@ class BugtrackerChangeBugStatusController extends DefaultModuleController
 	private function save()
 	{
 		$now = new Date();
-		$pm_recipients_list = array();
+		$pm_recipients_list = [];
 		$send_pm = true;
 
 		$versions = array_reverse($this->config->get_versions_fix(), true);
@@ -172,30 +172,30 @@ class BugtrackerChangeBugStatusController extends DefaultModuleController
 				if ($fixed_in != $this->bug->get_fixed_in())
 				{
 					//Bug history update
-					BugtrackerService::add_history(array(
+					BugtrackerService::add_history([
 						'bug_id'		=> $this->bug->get_id(),
 						'updater_id'	=> $this->current_user->get_id(),
 						'update_date'	=> $now->get_timestamp(),
 						'updated_field'	=> 'fixed_in',
 						'old_value'		=> $this->bug->get_fixed_in(),
 						'new_value'		=> $fixed_in
-					));
+					]);
 
 					$this->bug->set_fixed_in($fixed_in);
 				}
 			}
-			else if (in_array($status, array(BugtrackerItem::NEW_BUG, BugtrackerItem::REJECTED)))
+			else if (in_array($status, [BugtrackerItem::NEW_BUG, BugtrackerItem::REJECTED]))
 				$this->bug->set_fixed_in(0);
 		}
 
 		if (!$this->form->field_is_disabled('assigned_to'))
 		{
 			$assigned_to = $this->form->get_value('assigned_to');
-			$assigned_to_id = UserService::user_exists("WHERE display_name = :display_name", array('display_name' => $assigned_to));
+			$assigned_to_id = UserService::user_exists("WHERE display_name = :display_name", ['display_name' => $assigned_to]);
 
 			if ($this->bug->get_assigned_to_id())
 			{
-				$old_user_assigned_id = UserService::user_exists("WHERE user_id = :user_id", array('user_id' => $this->bug->get_assigned_to_id()));
+				$old_user_assigned_id = UserService::user_exists("WHERE user_id = :user_id", ['user_id' => $this->bug->get_assigned_to_id()]);
 				$old_user_assigned = !empty($old_user_assigned_id) ? UserService::get_user($old_user_assigned_id) : 0;
 			}
 			else
@@ -207,14 +207,14 @@ class BugtrackerChangeBugStatusController extends DefaultModuleController
 			if ($new_assigned_to_id != $this->bug->get_assigned_to_id())
 			{
 				//Bug history update
-				BugtrackerService::add_history(array(
+				BugtrackerService::add_history([
 					'bug_id'		=> $this->bug->get_id(),
 					'updater_id'	=> $this->current_user->get_id(),
 					'update_date'	=> $now->get_timestamp(),
 					'updated_field'	=> 'assigned_to_id',
 					'old_value'		=> $old_user_assigned ? $old_user_assigned->get_display_name() : $this->lang['common.nobody'],
 					'new_value'		=> $new_user_assigned ? $new_user_assigned->get_display_name() : $this->lang['common.nobody']
-				));
+				]);
 
 				//Bug update
 				$this->bug->set_assigned_to_id($new_assigned_to_id);
@@ -231,14 +231,14 @@ class BugtrackerChangeBugStatusController extends DefaultModuleController
 		if ($status != $old_status)
 		{
 			//Bug history update
-			BugtrackerService::add_history(array(
+			BugtrackerService::add_history([
 				'bug_id'		=> $this->bug->get_id(),
 				'updater_id'	=> $this->current_user->get_id(),
 				'update_date'	=> $now->get_timestamp(),
 				'updated_field'	=> 'status',
 				'old_value'		=> $old_status,
 				'new_value'		=> $status
-			));
+			]);
 
 			//Bug update
 			$this->bug->set_status($status);
@@ -287,19 +287,19 @@ class BugtrackerChangeBugStatusController extends DefaultModuleController
 			CommentsManager::add_comment($comments_topic->get_module_id(), $comments_topic->get_id_in_module(), $comments_topic->get_topic_identifier(), $comments_topic->get_path(), $comment);
 
 			//New line in the bug history
-			BugtrackerService::add_history(array(
+			BugtrackerService::add_history([
 				'bug_id' => $this->bug->get_id(),
 				'updater_id' => $this->current_user->get_id(),
 				'update_date' => $now->get_timestamp(),
 				'change_comment' => $this->lang['notice.new_comment'],
-			));
+			]);
 		}
 
 		//Send PM with comment to updaters if the option is enabled
 		if (!$this->bug->is_new() && $this->config->are_pm_enabled() && $is_pm_enabled && $send_pm)
 			BugtrackerPMService::send_PM_to_updaters($status, $this->bug->get_id(), $comment, $pm_recipients_list);
 
-		if (in_array($status, array(BugtrackerItem::NEW_BUG, BugtrackerItem::REOPEN, BugtrackerItem::REJECTED, BugtrackerItem::FIXED)) && $this->config->are_admin_alerts_enabled() && in_array($this->bug->get_severity(), $this->config->get_admin_alerts_levels()))
+		if (in_array($status, [BugtrackerItem::NEW_BUG, BugtrackerItem::REOPEN, BugtrackerItem::REJECTED, BugtrackerItem::FIXED]) && $this->config->are_admin_alerts_enabled() && in_array($this->bug->get_severity(), $this->config->get_admin_alerts_levels()))
 		{
 			$alerts = AdministratorAlertService::find_by_criteria($this->bug->get_id(), 'bugtracker');
 			if (!empty($alerts))
@@ -326,8 +326,8 @@ class BugtrackerChangeBugStatusController extends DefaultModuleController
 		BugtrackerStatsCache::invalidate();
 
 		$status_list = $this->get_status_list();
-		$hook_description = StringVars::replace_vars($this->lang['bugtracker.specific_hook.bugtracker_change_status.description'], array('id' => $this->bug->get_id(), 'old_status' => (isset($status_list[$old_status]) ? $status_list[$old_status] : $old_status), 'new_status' => (isset($status_list[$this->bug->get_status()]) ? $status_list[$this->bug->get_status()] : $this->bug->get_status())));
-		HooksService::execute_hook_action('bugtracker_change_status', self::$module_id, array_merge(array('url' => BugtrackerUrlBuilder::detail($this->bug->get_id() . '-' . $this->bug->get_rewrited_title())->rel()), $this->bug->get_properties()), $hook_description);
+		$hook_description = StringVars::replace_vars($this->lang['bugtracker.specific_hook.bugtracker_change_status.description'], ['id' => $this->bug->get_id(), 'old_status' => (isset($status_list[$old_status]) ? $status_list[$old_status] : $old_status), 'new_status' => (isset($status_list[$this->bug->get_status()]) ? $status_list[$this->bug->get_status()] : $this->bug->get_status())]);
+		HooksService::execute_hook_action('bugtracker_change_status', self::$module_id, array_merge(['url' => BugtrackerUrlBuilder::detail($this->bug->get_id() . '-' . $this->bug->get_rewrited_title())->rel()], $this->bug->get_properties()), $hook_description);
 	}
 
 	private function build_response(View $view)

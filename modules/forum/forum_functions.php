@@ -12,14 +12,14 @@
 //Listes les utilisateurs en ligne.
 function forum_list_user_online($condition)
 {
-	list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = array(0, 0, 0, 0, '');
+	list($total_admin, $total_modo, $total_member, $total_visit, $users_list) = [0, 0, 0, 0, ''];
 	$result = PersistenceContext::get_querier()->select("SELECT s.user_id, m.level, m.display_name, m.user_groups
 	FROM " . DB_TABLE_SESSIONS . " s
 	LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = s.user_id
 	WHERE s.timestamp > :timestamp " . $condition . "
-	ORDER BY s.timestamp DESC", array(
+	ORDER BY s.timestamp DESC", [
 		'timestamp' => (time() - SessionsConfig::load()->get_active_session_duration())
-	));
+	]);
 	while ($row = $result->fetch())
 	{
 		$group_color = User::get_group_color($row['user_groups'], $row['level']);
@@ -73,7 +73,7 @@ function forum_list_user_online($condition)
 		$total++;
 	}
 
-	return array($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total);
+	return [$users_list, $total_admin, $total_modo, $total_member, $total_visit, $total];
 }
 
 //Calcul du temps de péremption, ou de dernière vue des messages par à rapport à la configuration.
@@ -97,18 +97,18 @@ function mark_topic_as_read($idtopic, $last_msg_id, $last_timestamp)
 	{
 		$check_view_id = 0;
 		try {
-			$check_view_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_view", 'last_view_id', 'WHERE user_id = :user_id AND idtopic = :idtopic', array('user_id' => AppContext::get_current_user()->get_id(), 'idtopic' => $idtopic));
+			$check_view_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_view", 'last_view_id', 'WHERE user_id = :user_id AND idtopic = :idtopic', ['user_id' => AppContext::get_current_user()->get_id(), 'idtopic' => $idtopic]);
 		} catch (RowNotFoundException $e) {}
 
 		if (!empty($check_view_id) && $check_view_id != $last_msg_id)
 		{
 			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET nbr_views = nbr_views + 1 WHERE id = '" . $idtopic . "'");
-			PersistenceContext::get_querier()->update(PREFIX . "forum_view", array('last_view_id' => $last_msg_id, 'timestamp' => time()), 'WHERE idtopic = :idtopic AND user_id = :user_id', array('idtopic' => $idtopic, 'user_id' => AppContext::get_current_user()->get_id()));
+			PersistenceContext::get_querier()->update(PREFIX . "forum_view", ['last_view_id' => $last_msg_id, 'timestamp' => time()], 'WHERE idtopic = :idtopic AND user_id = :user_id', ['idtopic' => $idtopic, 'user_id' => AppContext::get_current_user()->get_id()]);
 		}
 		elseif (empty($check_view_id))
 		{
 			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET nbr_views = nbr_views + 1 WHERE id = '" . $idtopic . "'");
-			PersistenceContext::get_querier()->insert(PREFIX . "forum_view", array('idtopic' => $idtopic, 'last_view_id' => $last_msg_id, 'user_id' => AppContext::get_current_user()->get_id(), 'timestamp' => time()));
+			PersistenceContext::get_querier()->insert(PREFIX . "forum_view", ['idtopic' => $idtopic, 'last_view_id' => $last_msg_id, 'user_id' => AppContext::get_current_user()->get_id(), 'timestamp' => time()]);
 		}
 		else
 			PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "forum_topics SET nbr_views = nbr_views + 1 WHERE id = '" . $idtopic . "'");
@@ -120,7 +120,7 @@ function mark_topic_as_read($idtopic, $last_msg_id, $last_timestamp)
 //Gestion de l'historique des actions sur le forum.
 function forum_history_collector($type, $user_id_action = '', $url_action = '')
 {
-	PersistenceContext::get_querier()->insert(PREFIX . "forum_history", array('action' => $type, 'user_id' => AppContext::get_current_user()->get_id(), 'user_id_action' => NumberHelper::numeric($user_id_action), 'url' => $url_action, 'timestamp' => time()));
+	PersistenceContext::get_querier()->insert(PREFIX . "forum_history", ['action' => $type, 'user_id' => AppContext::get_current_user()->get_id(), 'user_id_action' => NumberHelper::numeric($user_id_action), 'url' => $url_action, 'timestamp' => time()]);
 }
 
 //Gestion du rss du forum.
@@ -133,13 +133,13 @@ function forum_generate_feeds()
 function parentChildSort_r
 $idField        = The item's ID identifier (required)
 $parentField    = The item's parent identifier (required)
-$els            = The array (required)
+$els            = The [required]
 $parentID       = The parent ID for which to sort (internal)
 $result     = The result set (internal)
 $depth          = The depth (internal)
 ----------------------------------*/
 
-function parentChildSort_r($idField, $parentField, $els, $parentID = 0, &$result = array(), &$depth = 0){
+function parentChildSort_r($idField, $parentField, $els, $parentID = 0, &$result = [], &$depth = 0){
 	foreach ($els as $key => $value):
 		if ($value[$parentField] == $parentID){
 			$value['depth'] = $depth;

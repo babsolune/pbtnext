@@ -12,7 +12,7 @@
 #                     English                      #
 ####################################################
 
-$lang = array(
+$lang = [
 	'ad' => 'Andorra',
 	'ae' => 'United Arab Emirates',
 	'af' => 'Afghanistan',
@@ -265,3 +265,4 @@ $lang = array(
 	'other' => 'Others',
 );
 ?>
+]

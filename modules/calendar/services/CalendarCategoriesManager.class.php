@@ -23,7 +23,7 @@ class CalendarCategoriesManager extends CategoriesManager
 		$result = PersistenceContext::get_querier()->select('SELECT id_event
 		FROM ' . CalendarSetup::$calendar_events_table . ' event
 		LEFT JOIN ' . CalendarSetup::$calendar_events_content_table . ' event_content ON event_content.id = event.content_id
-		WHERE id_category = :id_category', array('id_category' => $id));
+		WHERE id_category = :id_category', ['id_category' => $id]);
 		while ($row = $result->fetch())
 		{
 			CalendarService::delete_item($row['id_event']);

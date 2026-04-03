@@ -53,7 +53,7 @@ class AdminCustomizeFaviconController extends DefaultAdminModuleController
 		if ($this->config->get_favicon_path() == null || $this->config->get_favicon_path() == '')
 		{
 			$fieldset->add_field(new FormFieldFree('current_favicon', $this->lang['customization.favicon.current'], $this->lang['customization.favicon.current.null'],
-				array('class' => 'top-field third-field')
+				['class' => 'top-field third-field']
 			));
 		}
 		else
@@ -63,20 +63,20 @@ class AdminCustomizeFaviconController extends DefaultAdminModuleController
 				$favicon_file = new File(PATH_TO_ROOT . $this->config->get_favicon_path());
 				$picture = '<img src="' . Url::to_rel($favicon_file->get_path()) . '" alt="' . $this->lang['customization.favicon.current'] . '" />';
 				$fieldset->add_field(new FormFieldFree('current_favicon', $this->lang['customization.favicon.current'], $picture,
-					array('class' => 'top-field third-field')
+					['class' => 'top-field third-field']
 				));
 			}
 			else
 			{
 				$fieldset->add_field(new FormFieldFree('current_favicon', $this->lang['customization.favicon.current'], '<span class="text-strong error">' . $this->lang['customization.favicon.current.erased'] . '</span>',
-					array('class' => 'top-field third-field')
+					['class' => 'top-field third-field']
 				));
 			}
 		}
 
 		$fieldset->add_field(new FormFieldFilePicker('favicon', $this->lang['customization.favicon.current.change'],
-			array('class' => 'top-field third-field'),
-			array(new FormFieldConstraintPictureFile())
+			['class' => 'top-field third-field'],
+			[new FormFieldConstraintPictureFile()]
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();

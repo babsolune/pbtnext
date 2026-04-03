@@ -82,10 +82,10 @@ class DefaultDisplayItemController extends AbstractItemController
 
 		if (in_array('idcard', $this->enabled_features))
 		{
-			$this->view->put_all(array(
+			$this->view->put_all([
 				'C_ID_CARD' => $this->get_item()->is_published(),
 				'ID_CARD'   => IdcardService::display_idcard($this->get_item()->get_author_user())
-			));
+			]);
 		}
 
 		if (in_array('notation', $this->enabled_features))
@@ -103,9 +103,9 @@ class DefaultDisplayItemController extends AbstractItemController
 
 		$this->view->put_all(array_merge(
 			$this->get_item()->get_template_vars(),
-			array(
+			[
 				'ADDITIONAL_CONTENT' => $this->get_item()->get_additional_content_template()
-			)
+			]
 		));
 	}
 
@@ -149,7 +149,7 @@ class DefaultDisplayItemController extends AbstractItemController
 
 	protected function get_additionnal_seo_properties()
 	{
-		return array();
+		return [];
 	}
 
 	protected function get_seo_page_type()

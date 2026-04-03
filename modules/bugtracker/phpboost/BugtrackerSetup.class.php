@@ -36,7 +36,7 @@ class BugtrackerSetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(self::$bugtracker_table, self::$bugtracker_history_table, self::$bugtracker_users_filters_table));
+		PersistenceContext::get_dbms_utils()->drop([self::$bugtracker_table, self::$bugtracker_history_table, self::$bugtracker_users_filters_table]);
 	}
 
 	private function create_tables()
@@ -48,66 +48,66 @@ class BugtrackerSetup extends DefaultModuleSetup
 
 	private function create_bugtracker_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'title' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'content' => array('type' => 'text', 'length' => 65000),
-			'author_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'submit_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'fix_date' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'status' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'severity' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'priority' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'type' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'category' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'reproductible' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 1),
-			'reproduction_method' => array('type' => 'text', 'length' => 65000),
-			'detected_in' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'fixed_in' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'assigned_to_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array(
-				'title' => array('type' => 'fulltext', 'fields' => 'title'),
-				'content' => array('type' => 'fulltext', 'fields' => 'content')
-			)
-		);
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'title' => ['type' => 'string', 'length' => 255, 'default' => "''"],
+			'content' => ['type' => 'text', 'length' => 65000],
+			'author_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'submit_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'fix_date' => ['type' => 'integer', 'length' => 11, 'default' => 0],
+			'status' => ['type' => 'string', 'length' => 255, 'default' => "''"],
+			'severity' => ['type' => 'integer', 'length' => 11, 'default' => 0],
+			'priority' => ['type' => 'integer', 'length' => 11, 'default' => 0],
+			'type' => ['type' => 'integer', 'length' => 11, 'default' => 0],
+			'category' => ['type' => 'integer', 'length' => 11, 'default' => 0],
+			'reproductible' => ['type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 1],
+			'reproduction_method' => ['type' => 'text', 'length' => 65000],
+			'detected_in' => ['type' => 'integer', 'length' => 11, 'default' => 0],
+			'fixed_in' => ['type' => 'integer', 'length' => 11, 'default' => 0],
+			'assigned_to_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0]
+		];
+		$options = [
+			'primary' => ['id'],
+			'indexes' => [
+				'title' => ['type' => 'fulltext', 'fields' => 'title'],
+				'content' => ['type' => 'fulltext', 'fields' => 'content']
+			]
+		];
 		PersistenceContext::get_dbms_utils()->create_table(self::$bugtracker_table, $fields, $options);
 	}
 
 	private function create_bugtracker_history_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'bug_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'updater_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'update_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'updated_field' => array('type' => 'string', 'length' => 64, 'default' => 0),
-			'old_value' => array('type' => 'text', 'length' => 65000),
-			'new_value' => array('type' => 'text', 'length' => 65000),
-			'change_comment' => array('type' => 'text', 'length' => 65000)
-		);
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array('bug_id' => array('type' => 'key', 'fields' => 'bug_id'))
-		);
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'bug_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'updater_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'update_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'updated_field' => ['type' => 'string', 'length' => 64, 'default' => 0],
+			'old_value' => ['type' => 'text', 'length' => 65000],
+			'new_value' => ['type' => 'text', 'length' => 65000],
+			'change_comment' => ['type' => 'text', 'length' => 65000]
+		];
+		$options = [
+			'primary' => ['id'],
+			'indexes' => ['bug_id' => ['type' => 'key', 'fields' => 'bug_id']]
+		];
 		PersistenceContext::get_dbms_utils()->create_table(self::$bugtracker_history_table, $fields, $options);
 	}
 
 	private function create_bugtracker_users_filters_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'page' => array('type' => 'string', 'length' => 64, 'notnull' => 1, 'default' => "''"),
-			'filters' => array('type' => 'string', 'length' => 64, 'notnull' => 1, 'default' => "''"),
-			'filters_ids' => array('type' => 'string', 'length' => 64, 'notnull' => 1, 'default' => "''"),
-		);
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array('user_id' => array('type' => 'key', 'fields' => 'user_id'))
-		);
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'user_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'page' => ['type' => 'string', 'length' => 64, 'notnull' => 1, 'default' => "''"],
+			'filters' => ['type' => 'string', 'length' => 64, 'notnull' => 1, 'default' => "''"],
+			'filters_ids' => ['type' => 'string', 'length' => 64, 'notnull' => 1, 'default' => "''"],
+		];
+		$options = [
+			'primary' => ['id'],
+			'indexes' => ['user_id' => ['type' => 'key', 'fields' => 'user_id']]
+		];
 		PersistenceContext::get_dbms_utils()->create_table(self::$bugtracker_users_filters_table, $fields, $options);
 	}
 
@@ -115,7 +115,7 @@ class BugtrackerSetup extends DefaultModuleSetup
 	{
 		$lang = LangLoader::get('install', 'bugtracker');
 
-		PersistenceContext::get_querier()->insert(self::$bugtracker_table, array(
+		PersistenceContext::get_querier()->insert(self::$bugtracker_table, [
 			'id' => 1,
 			'title' => $lang['bug.1.title'],
 			'content' => $lang['bug.1.content'],
@@ -132,9 +132,9 @@ class BugtrackerSetup extends DefaultModuleSetup
 			'detected_in' => 0,
 			'fixed_in' => 0,
 			'assigned_to_id' => 0
-		));
+		]);
 
-		PersistenceContext::get_querier()->insert(self::$bugtracker_table, array(
+		PersistenceContext::get_querier()->insert(self::$bugtracker_table, [
 			'id' => 2,
 			'title' => $lang['bug.2.title'],
 			'content' => $lang['bug.2.content'],
@@ -151,9 +151,9 @@ class BugtrackerSetup extends DefaultModuleSetup
 			'detected_in' => 0,
 			'fixed_in' => 0,
 			'assigned_to_id' => 0
-		));
+		]);
 
-		PersistenceContext::get_querier()->insert(self::$bugtracker_table, array(
+		PersistenceContext::get_querier()->insert(self::$bugtracker_table, [
 			'id' => 3,
 			'title' => $lang['bug.3.title'],
 			'content' => $lang['bug.3.content'],
@@ -170,7 +170,7 @@ class BugtrackerSetup extends DefaultModuleSetup
 			'detected_in' => 0,
 			'fixed_in' => 0,
 			'assigned_to_id' => 0
-		));
+		]);
 	}
 }
 ?>

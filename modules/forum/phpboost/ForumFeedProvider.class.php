@@ -40,10 +40,10 @@ class ForumFeedProvider implements FeedProvider
 				FROM ' . PREFIX . 'forum_topics t
 				LEFT JOIN ' . PREFIX . 'forum_msg msg ON msg.id = t.last_msg_id
 				WHERE t.id_category IN :ids_categories
-				ORDER BY t.last_timestamp DESC LIMIT :limit OFFSET 0', array(
+				ORDER BY t.last_timestamp DESC LIMIT :limit OFFSET 0', [
 					'ids_categories' => $ids_categories,
 					'limit' => 2 * $config->get_number_messages_per_page()
-			));
+			]);
 
 			foreach ($results as $row)
 			{

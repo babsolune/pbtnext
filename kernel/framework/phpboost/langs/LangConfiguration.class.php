@@ -125,7 +125,7 @@ class LangConfiguration
 
 	public function get_properties()
 	{
-		return array(
+		return [
 			'addon_type'    => $this->addon_type,
 			'name'          => $this->name,
 			'author_name'   => $this->author_name,
@@ -136,7 +136,7 @@ class LangConfiguration
 			'compatibility' => $this->compatibility,
 			'identifier'    => $this->identifier,
 			'picture_url'   => $this->picture_url->rel()
-		);
+		];
 	}
 }
 ?>

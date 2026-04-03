@@ -32,10 +32,10 @@ class QuotesPendingItemsController extends DefaultModuleController
 		$condition = 'WHERE id_category IN :authorized_categories
 		' . (!CategoriesAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
 		AND approved = 0';
-		$parameters = array(
+		$parameters = [
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'authorized_categories' => $authorized_categories
-		);
+		];
 
 		$page = $request->get_getint('page', 1);
 		$pagination = $this->get_pagination($condition, $parameters, $page);
@@ -45,17 +45,17 @@ class QuotesPendingItemsController extends DefaultModuleController
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = quotes.author_user_id
 		' . $condition . '
 		ORDER BY quotes.creation_date DESC
-		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
+		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, [
 			'number_items_per_page' => (int)$pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
-		)));
+		]));
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_ITEMS' => $result->get_rows_count() > 0,
 			'C_PENDING_ITEMS' => true,
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display()
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{

@@ -31,10 +31,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Userinfo
      */
-    public function get($optParams = array()) {
-      $params = array();
+    public function get($optParams = []) {
+      $params = [];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Userinfo($data);
       } else {
@@ -73,10 +73,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Userinfo
      */
-    public function get($optParams = array()) {
-      $params = array();
+    public function get($optParams = []) {
+      $params = [];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Userinfo($data);
       } else {

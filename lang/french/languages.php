@@ -10,7 +10,7 @@
 ####################################################
 #                     French                       #
 ####################################################
-$lang = array(
+$lang = [
     'de'  => 'Allemand',
     'en'  => 'Anglais',
     'ar'  => 'Arabe',
@@ -63,5 +63,5 @@ $lang = array(
     'uk'  => 'Ukrainien',
     'vi'  => 'Vietnamien',
     'war' => 'Winaray',
-);
+];
 ?>

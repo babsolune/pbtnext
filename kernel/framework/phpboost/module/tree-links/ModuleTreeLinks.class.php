@@ -11,7 +11,7 @@
 
 class ModuleTreeLinks
 {
-	private $links = array();
+	private $links = [];
 
 	public function add_link(ModuleLink $link)
 	{

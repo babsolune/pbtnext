@@ -15,19 +15,19 @@ class BugtrackerModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('bugtracker');
 
-		self::$delete_old_files_list = array(
+		self::$delete_old_files_list = [
 			'/phpboost/BugtrackerHomePageExtensionPoint.class.php',
 			'/services/Bug.class.php'
-		);
+		];
 
-		$this->database_columns_to_modify = array(
-			array(
+		$this->database_columns_to_modify = [
+			[
 				'table_name' => PREFIX . 'bugtracker',
-				'columns' => array(
+				'columns' => [
 					'contents'    => 'content MEDIUMTEXT'
-				)
-			)
-		);
+				]
+			]
+		];
 	}
 
 	protected function update_content()

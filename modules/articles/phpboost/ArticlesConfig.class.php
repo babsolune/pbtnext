@@ -14,12 +14,12 @@ class ArticlesConfig extends DefaultRichModuleConfig
 {
 	public function get_additional_default_values()
 	{
-		return array(
+		return [
 			self::DISPLAY_TYPE         => self::GRID_VIEW,
 			self::ITEMS_PER_PAGE       => 10,
 			self::CATEGORIES_PER_ROW   => 2,
 			self::VIEWS_NUMBER_ENABLED => true
-        );
+        ];
 	}
 }
 ?>

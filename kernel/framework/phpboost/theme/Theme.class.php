@@ -18,7 +18,7 @@ class Theme
     private $authorizations;
 	const ACCES_THEME = 1;
 
-	public function __construct($theme_id, array $authorizations = array(), $activated = false)
+	public function __construct($theme_id, array $authorizations = [], $activated = false)
 	{
         $this->theme_id = $theme_id;
         $this->activated = $activated;

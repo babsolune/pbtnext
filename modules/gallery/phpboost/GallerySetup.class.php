@@ -36,7 +36,7 @@ class GallerySetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(self::$gallery_table, self::$gallery_cats_table));
+		PersistenceContext::get_dbms_utils()->drop([self::$gallery_table, self::$gallery_cats_table]);
 	}
 
 	private function create_tables()
@@ -47,25 +47,25 @@ class GallerySetup extends DefaultModuleSetup
 
 	private function create_gallery_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'name' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'path' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'width' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
-			'height' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
-			'weight' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
-			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'aprob' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'views' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'timestamp' => array('type' => 'integer', 'length' => 11, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array(
-				'id_category' => array('type' => 'key', 'fields' => 'id_category')
-			)
-		);
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'id_category' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'name' => ['type' => 'string', 'length' => 255, 'default' => "''"],
+			'path' => ['type' => 'string', 'length' => 255, 'default' => "''"],
+			'width' => ['type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0],
+			'height' => ['type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0],
+			'weight' => ['type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0],
+			'user_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'aprob' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0],
+			'views' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'timestamp' => ['type' => 'integer', 'length' => 11, 'default' => 0]
+		];
+		$options = [
+			'primary' => ['id'],
+			'indexes' => [
+				'id_category' => ['type' => 'key', 'fields' => 'id_category']
+			]
+		];
 		PersistenceContext::get_dbms_utils()->create_table(self::$gallery_table, $fields, $options);
 	}
 
@@ -83,7 +83,7 @@ class GallerySetup extends DefaultModuleSetup
 
 	private function insert_gallery_cats_data()
 	{
-		PersistenceContext::get_querier()->insert(self::$gallery_cats_table, array(
+		PersistenceContext::get_querier()->insert(self::$gallery_cats_table, [
 			'id' => 1,
 			'id_parent' => 0,
 			'c_order' => 1,
@@ -92,12 +92,12 @@ class GallerySetup extends DefaultModuleSetup
 			'name' => $this->messages['default.cat.name'],
 			'description' => $this->messages['default.cat.description'],
 			'thumbnail' => '/templates/__default__/images/default_category.webp'
-		));
+		]);
 	}
 
 	private function insert_gallery_data()
 	{
-		PersistenceContext::get_querier()->insert(self::$gallery_table, array(
+		PersistenceContext::get_querier()->insert(self::$gallery_table, [
 			'id' => 1,
 			'id_category' => 1,
 			'name' => $this->messages['default.gallerypicture.name'],
@@ -109,7 +109,7 @@ class GallerySetup extends DefaultModuleSetup
 			'aprob' => 1,
 			'views' => 0,
 			'timestamp' => time()
-		));
+		]);
 	}
 }
 ?>

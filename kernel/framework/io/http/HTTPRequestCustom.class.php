@@ -119,7 +119,7 @@ class HTTPRequestCustom
         return $this->get_var($this->_request, self::string, $varname, $default_value);
     }
 
-    public function get_array($varname, $default_value = array())
+    public function get_array($varname, $default_value = [])
     {
         return $this->get_var($this->_request, self::t_array, $varname, $default_value);
     }
@@ -129,7 +129,7 @@ class HTTPRequestCustom
         return $this->get_var($_COOKIE, self::string, $varname, $default_value);
     }
 
-    public function _get_parameters_array($varname, $default_value = array())
+    public function _get_parameters_array($varname, $default_value = [])
     {
         return $this->get_var($this->_request, self::t_array, $varname, $default_value);
     }
@@ -178,7 +178,7 @@ class HTTPRequestCustom
         return $this->get_var($this->_get, self::string, $varname, $default_value);
     }
 
-    public function get_getarray($varname, $default_value = array())
+    public function get_getarray($varname, $default_value = [])
     {
         return $this->get_var($this->_get, self::t_array, $varname, $default_value);
     }
@@ -208,7 +208,7 @@ class HTTPRequestCustom
         return $this->get_var($this->_post, self::string, $varname, $default_value);
     }
 
-    public function get_postarray($varname, $default_value = array())
+    public function get_postarray($varname, $default_value = [])
     {
         return $this->get_var($this->_post, self::t_array, $varname, $default_value);
     }
@@ -299,12 +299,12 @@ class HTTPRequestCustom
 
     private static function sanitize($value)
     {
-        return str_replace(array("\r\n", "\r"), "\n", $value);
+        return str_replace(["\r\n", "\r"], "\n", $value);
     }
 
     private static function sanitize_html(Array $array)
     {
-        $proper_array = array();
+        $proper_array = [];
 
         foreach ($array as $key => $value)
         {
@@ -353,7 +353,7 @@ class HTTPRequestCustom
 
     public function get_is_localhost()
     {
-        $patterns = array('localhost', 'local.dev', 'local.pbt', '127.0.0.1', '::1');
+        $patterns = ['localhost', 'local.dev', 'local.pbt', '127.0.0.1', '::1'];
 
         foreach ($patterns as $value)
         {

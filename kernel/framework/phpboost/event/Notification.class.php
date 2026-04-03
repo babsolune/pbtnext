@@ -37,7 +37,7 @@ class Notification extends Event
 	/**
 	 * @var array Authorization array containing the people who can read the contribution.
 	 */
-	private $auth = array();
+	private $auth = [];
 
 	/**
 	 * Builds a Contribution object.

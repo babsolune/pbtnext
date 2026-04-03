@@ -12,7 +12,7 @@
 class QuotesItemsManagerController extends DefaultModuleController
 {
 	private $elements_number = 0;
-	private $ids = array();
+	private $ids = [];
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -29,14 +29,14 @@ class QuotesItemsManagerController extends DefaultModuleController
 	{
 		$display_categories = CategoriesService::get_categories_manager()->get_categories_cache()->has_categories();
 
-		$table_model = new SQLHTMLTableModel(QuotesSetup::$quotes_table, 'items-manager', array(
+		$table_model = new SQLHTMLTableModel(QuotesSetup::$quotes_table, 'items-manager', [
 			new HTMLTableColumn($this->lang['item'], 'quote'),
 			new HTMLTableColumn($this->lang['common.category'], 'id_category'),
 			new HTMLTableColumn($this->lang['common.author'], 'author'),
 			new HTMLTableColumn($this->lang['common.creation.date'], 'creation_date'),
 			new HTMLTableColumn($this->lang['common.status'], 'approved'),
-			new HTMLTableColumn($this->lang['common.moderation'], '', array('css_class'=>'col-small', 'sr-only' => true))
-		), new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
+			new HTMLTableColumn($this->lang['common.moderation'], '', ['css_class'=>'col-small', 'sr-only' => true])
+		], new HTMLTableSortingRule('creation_date', HTMLTableSortingRule::DESC));
 
 		$table_model->set_filters_menu_title($this->lang['quotes.filter.items']);
 		$table_model->add_filter(new HTMLTableDateGreaterThanOrEqualsToSQLFilter('creation_date', 'filter1', $this->lang['common.creation.date'] . ' ' . TextHelper::lcfirst($this->lang['common.minimum'])));
@@ -45,7 +45,7 @@ class QuotesItemsManagerController extends DefaultModuleController
 		if ($display_categories)
 			$table_model->add_filter(new HTMLTableCategorySQLFilter('filter4'));
 
-		$status_list = array(Item::PUBLISHED => $this->lang['common.status.approved'], Item::NOT_PUBLISHED => $this->lang['common.status.draft']);
+		$status_list = [Item::PUBLISHED => $this->lang['common.status.approved'], Item::NOT_PUBLISHED => $this->lang['common.status.draft']];
 		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('approved', 'filter5', $this->lang['common.status.publication'], $status_list));
 
 		$table = new HTMLTable($table_model);
@@ -53,10 +53,10 @@ class QuotesItemsManagerController extends DefaultModuleController
 
 		$table_model->set_layout_title($this->lang['quotes.items.management']);
 
-		$results = array();
+		$results = [];
 		$result = $table_model->get_sql_results('quotes
 			LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = quotes.author_user_id',
-			array('*', 'quotes.id')
+			['*', 'quotes.id']
 		);
 
 		foreach ($result as $row)
@@ -71,14 +71,14 @@ class QuotesItemsManagerController extends DefaultModuleController
 			$edit_link = new EditLinkHTMLElement(QuotesUrlBuilder::edit($quote->get_id()));
 			$delete_link = new DeleteLinkHTMLElement(QuotesUrlBuilder::delete($quote->get_id()));
 
-			$results[] = new HTMLTableRow(array(
+			$results[] = new HTMLTableRow([
 				new HTMLTableRowCell($quote->get_content(), 'left'),
 				new HTMLTableRowCell(new LinkHTMLElement(QuotesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? $this->lang['common.none.alt'] : $category->get_name()))),
 				new HTMLTableRowCell(new LinkHTMLElement(QuotesUrlBuilder::display_writer_items($quote->get_rewrited_writer()), $quote->get_writer())),
 				new HTMLTableRowCell($quote->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
 				new HTMLTableRowCell($quote->is_approved() ? $this->lang['common.yes'] : $this->lang['common.no']),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display(), 'controls')
-			));
+			]);
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 

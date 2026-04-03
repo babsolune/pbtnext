@@ -9,15 +9,15 @@
 
 class FaqCache implements CacheData
 {
-	private $items = array();
-	private $categories = array();
+	private $items = [];
+	private $categories = [];
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{
-		$this->items = $this->categories = array();
+		$this->items = $this->categories = [];
 
 		$result = PersistenceContext::get_querier()->select('
 			SELECT id, id_category, title
@@ -31,10 +31,10 @@ class FaqCache implements CacheData
 		{
 			$this->categories[] = $row['id_category'];
 
-			$this->items[$row['id_category']][] = array(
+			$this->items[$row['id_category']][] = [
 				'id' => $row['id'],
 				'title' => $row['title']
-			);
+			];
 		}
 		$result->dispose();
 	}

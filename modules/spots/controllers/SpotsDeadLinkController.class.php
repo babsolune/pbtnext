@@ -18,7 +18,7 @@ class SpotsDeadLinkController extends AbstractController
 		if (!empty($id) && AppContext::get_current_user()->check_level(User::MEMBER_LEVEL))
 		{
 			try {
-				$this->item = SpotsService::get_item('WHERE spots.id = :id', array('id' => $id));
+				$this->item = SpotsService::get_item('WHERE spots.id = :id', ['id' => $id]);
 			} catch (RowNotFoundException $e) {
 				$error_controller = PHPBoostErrors::unexisting_page();
 				DispatchManager::redirect($error_controller);
@@ -32,11 +32,11 @@ class SpotsDeadLinkController extends AbstractController
 		}
 		else if ($this->item !== null && $this->item->is_published())
 		{
-			if (!PersistenceContext::get_querier()->row_exists(PREFIX . 'events', 'WHERE id_in_module=:id_in_module AND module=\'spots\' AND current_status = 0', array('id_in_module' => $this->item->get_id())))
+			if (!PersistenceContext::get_querier()->row_exists(PREFIX . 'events', 'WHERE id_in_module=:id_in_module AND module=\'spots\' AND current_status = 0', ['id_in_module' => $this->item->get_id()]))
 			{
 				$contribution = new Contribution();
 				$contribution->set_id_in_module($this->item->get_id());
-				$contribution->set_entitled(StringVars::replace_vars(LangLoader::get_message('contribution.deadlink', 'common'), array('link_name' => $this->item->get_title())));
+				$contribution->set_entitled(StringVars::replace_vars(LangLoader::get_message('contribution.deadlink', 'common'), ['link_name' => $this->item->get_title()]));
 				$contribution->set_fixing_url(SpotsUrlBuilder::edit($this->item->get_id())->relative());
 				$contribution->set_description(LangLoader::get_message('contribution.deadlink_explain', 'common'));
 				$contribution->set_poster_id(AppContext::get_current_user()->get_id());

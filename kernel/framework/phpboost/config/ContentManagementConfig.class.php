@@ -230,16 +230,16 @@ class ContentManagementConfig extends AbstractConfigData
 
 	protected function get_default_values()
 	{
-		return array(
+		return [
 			self::ANTI_FLOOD_ENABLED               => false,
 			self::ANTI_FLOOD_DURATION              => 7,
 			self::USED_CAPTCHA_MODULE              => 'qaptcha',
 			self::NEW_CONTENT_ENABLED              => true,
 			self::NEW_CONTENT_DURATION             => 5,
-			self::NEW_CONTENT_UNAUTHORIZED_MODULES => array(),
+			self::NEW_CONTENT_UNAUTHORIZED_MODULES => [],
 			self::NOTATION_ENABLED                 => true,
 			self::NOTATION_SCALE                   => 5,
-			self::NOTATION_UNAUTHORIZED_MODULES    => array(),
+			self::NOTATION_UNAUTHORIZED_MODULES    => [],
 			self::CONTENT_SHARING_ENABLED          => true,
 			self::CONTENT_SHARING_EMAIL_ENABLED    => true,
 			self::CONTENT_SHARING_PRINT_ENABLED    => true,
@@ -247,8 +247,8 @@ class ContentManagementConfig extends AbstractConfigData
 			self::OPENGRAPH_ENABLED                => true,
 			self::SITE_DEFAULT_PICTURE_URL         => '',
 			self::ID_CARD_ENABLED              	   => true,
-			self::ID_CARD_UNAUTHORIZED_MODULES => array(),
-		);
+			self::ID_CARD_UNAUTHORIZED_MODULES => [],
+		];
 	}
 
 	/**

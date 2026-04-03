@@ -19,7 +19,7 @@ class FormFieldsetHTML extends AbstractFormFieldset
 	 * constructor
 	 * @param string $name The name of the fieldset
 	 */
-	public function __construct($id, $name = '', $options = array())
+	public function __construct($id, $name = '', $options = [])
 	{
 		parent::__construct($id, $options);
 		$this->title = $name;
@@ -34,10 +34,10 @@ class FormFieldsetHTML extends AbstractFormFieldset
 	{
 		$template = $this->get_template_to_use();
 
-		$template->put_all(array(
+		$template->put_all([
 			'C_TITLE' => !empty($this->title),
 			'L_TITLE' => $this->title
-		));
+		]);
 
 		$this->assign_template_fields($template);
 

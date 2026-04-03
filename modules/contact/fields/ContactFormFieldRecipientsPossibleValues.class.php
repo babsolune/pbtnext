@@ -14,7 +14,7 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 {
 	private $max_input = 50;
 
-	public function __construct($id, $label = '', array $value = array(), array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label = '', array $value = [], array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
@@ -35,29 +35,29 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 			if (!empty($options))
 			{
 				$has_default = $options['is_default'] ? true : $has_default;
-				$view->assign_block_vars('fieldelements', array(
+				$view->assign_block_vars('fieldelements', [
 					'C_DELETABLE' => $i > 0,
 					'ID' => $i,
 					'NAME' => stripslashes($options['title']),
 					'IS_DEFAULT' => (int)$options['is_default'],
 					'EMAIL' => $i > 0 ? stripslashes($options['email']) : implode(',', MailServiceConfig::load()->get_administrators_mails())
-				));
+				]);
 				$i++;
 			}
 		}
 
-		$view->put_all(array(
+		$view->put_all([
 			'NAME' => $this->get_html_id(),
 			'HTML_ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->is_disabled(),
 			'MAX_INPUT' => $this->max_input,
 			'NBR_FIELDS' => $i,
 			'C_HAS_DEFAULT_VALUE' => $has_default
-		));
+		]);
 
-		$template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $view->render()
-		));
+		]);
 
 		return $template;
 	}
@@ -75,7 +75,7 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 		$nb_recipients = count($recipients);
 		$recipients_keys = array_keys($recipients);
 
-		$values = array();
+		$values = [];
 		for ($i = 0; $i <= $this->max_input; $i++)
 		{
 			$field_name = 'field_name_' . $this->get_html_id() . '_' . $i;
@@ -90,11 +90,11 @@ class ContactFormFieldRecipientsPossibleValues extends AbstractFormField
 				if ($request->get_poststring($field_title) && $email)
 				{
 					$id = $i < $nb_recipients ? $recipients_keys[$i] : preg_replace('/\s+/u', '', $request->get_poststring($field_name));
-					$values[$id] = array(
+					$values[$id] = [
 						'is_default' => $request->get_postint($field_is_default, 0),
 						'title' => addslashes($request->get_poststring($field_title)),
 						'email' => $request->get_poststring($field_email, '')
-					);
+					];
 				}
 			}
 		}

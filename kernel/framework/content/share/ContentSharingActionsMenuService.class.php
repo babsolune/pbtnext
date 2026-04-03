@@ -16,7 +16,7 @@ class ContentSharingActionsMenuService
 
 	public static function get_content_sharing_actions_links()
 	{
-		$content_sharing_actions_menu_links = array();
+		$content_sharing_actions_menu_links = [];
 		$extension_point = AppContext::get_extension_provider_service()->get_extension_point(ContentSharingActionsMenuLinksExtensionPoint::EXTENSION_POINT);
 
 		foreach ($extension_point as $id => $provider)
@@ -47,9 +47,9 @@ class ContentSharingActionsMenuService
 		$content_sharing_actions_menu_links = self::get_content_sharing_actions_links();
 		foreach ($content_sharing_actions_menu_links as $link)
 		{
-			self::$tpl->assign_block_vars('element', array(
+			self::$tpl->assign_block_vars('element', [
 				'ELEMENT' => $link->export()->render()
-			));
+			]);
 		}
 
 		return self::$tpl->render();

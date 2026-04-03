@@ -31,10 +31,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_DirectDealsList
      */
-    public function listDirectDeals($optParams = array()) {
-      $params = array();
+    public function listDirectDeals($optParams = []) {
+      $params = [];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_DirectDealsList($data);
       } else {
@@ -48,10 +48,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_DirectDeal
      */
-    public function get($id, $optParams = array()) {
-      $params = array('id' => $id);
+    public function get($id, $optParams = []) {
+      $params = ['id' => $id];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_DirectDeal($data);
       } else {
@@ -79,10 +79,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Account
      */
-    public function patch($id, Google_Account $postBody, $optParams = array()) {
-      $params = array('id' => $id, 'postBody' => $postBody);
+    public function patch($id, Google_Account $postBody, $optParams = []) {
+      $params = ['id' => $id, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('patch', array($params));
+      $data = $this->__call('patch', [$params]);
       if ($this->useObjects()) {
         return new Google_Account($data);
       } else {
@@ -95,10 +95,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_AccountsList
      */
-    public function listAccounts($optParams = array()) {
-      $params = array();
+    public function listAccounts($optParams = []) {
+      $params = [];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_AccountsList($data);
       } else {
@@ -113,10 +113,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Account
      */
-    public function update($id, Google_Account $postBody, $optParams = array()) {
-      $params = array('id' => $id, 'postBody' => $postBody);
+    public function update($id, Google_Account $postBody, $optParams = []) {
+      $params = ['id' => $id, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('update', array($params));
+      $data = $this->__call('update', [$params]);
       if ($this->useObjects()) {
         return new Google_Account($data);
       } else {
@@ -130,10 +130,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Account
      */
-    public function get($id, $optParams = array()) {
-      $params = array('id' => $id);
+    public function get($id, $optParams = []) {
+      $params = ['id' => $id];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Account($data);
       } else {
@@ -160,10 +160,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Creative
      */
-    public function insert(Google_Creative $postBody, $optParams = array()) {
-      $params = array('postBody' => $postBody);
+    public function insert(Google_Creative $postBody, $optParams = []) {
+      $params = ['postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_Creative($data);
       } else {
@@ -179,10 +179,10 @@
      * @opt_param string maxResults Maximum number of entries returned on one result page. If not set, the default is 100. Optional.
      * @return Google_CreativesList
      */
-    public function listCreatives($optParams = array()) {
-      $params = array();
+    public function listCreatives($optParams = []) {
+      $params = [];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_CreativesList($data);
       } else {
@@ -198,10 +198,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Creative
      */
-    public function get($accountId, $buyerCreativeId, $adgroupId, $optParams = array()) {
-      $params = array('accountId' => $accountId, 'buyerCreativeId' => $buyerCreativeId, 'adgroupId' => $adgroupId);
+    public function get($accountId, $buyerCreativeId, $adgroupId, $optParams = []) {
+      $params = ['accountId' => $accountId, 'buyerCreativeId' => $buyerCreativeId, 'adgroupId' => $adgroupId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Creative($data);
       } else {

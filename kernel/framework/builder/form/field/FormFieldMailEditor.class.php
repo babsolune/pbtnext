@@ -29,7 +29,7 @@ class FormFieldMailEditor extends FormFieldTextEditor
 	 * @param array $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
-	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
 	{
 		if (isset($field_options['multiple']))
 		{
@@ -54,7 +54,7 @@ class FormFieldMailEditor extends FormFieldTextEditor
 
 		$field = new FileTemplate('framework/builder/form/fieldelements/FormFieldMailEditor.tpl');
 
-		$field->put_all(array(
+		$field->put_all([
 			'SIZE' => $this->size,
 			'MAX_LENGTH' => $this->maxlength,
 			'NAME' => $this->get_html_id(),
@@ -68,13 +68,13 @@ class FormFieldMailEditor extends FormFieldTextEditor
 			'C_MULTIPLE' => $this->is_multiple(),
 			'C_PLACEHOLDER' => $this->has_placeholder(),
 			'PLACEHOLDER' => $this->placeholder
-		));
+		]);
 
 		$this->assign_common_template_variables($template);
 
-		$template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $field->render()
-		));
+		]);
 
 		return $template;
 	}

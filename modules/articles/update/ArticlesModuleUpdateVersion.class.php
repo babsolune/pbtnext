@@ -14,8 +14,8 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('articles');
 
-		$this->content_tables = array(PREFIX . 'articles');
-		self::$delete_old_files_list = array(
+		$this->content_tables = [PREFIX . 'articles'];
+		self::$delete_old_files_list = [
 			'/controllers/AdminArticlesConfigController.class.php',
 			'/controllers/ArticlesDeleteController.class.php',
 			'/controllers/ArticlesDisplayArticlesController.class.php',
@@ -43,18 +43,18 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 			'/templates/ArticlesDisplaySeveralArticlesController.tpl',
 			'/templates/ArticlesFormController.tpl',
 			'/templates/ArticlesFormFieldSelectSources.tpl'
-		);
-		self::$delete_old_folders_list = array(
+		];
+		self::$delete_old_folders_list = [
 			'/controllers/categories',
 			'/fields',
 			'/services',
 			'/util'
-		);
+		];
 
-		$this->database_columns_to_modify = array(
-			array(
+		$this->database_columns_to_modify = [
+			[
 				'table_name' => PREFIX . 'articles',
-				'columns' => array(
+				'columns' => [
 					'rewrited_title'        => 'rewrited_title VARCHAR(255) NOT NULL DEFAULT ""',
 					'contents'              => 'content MEDIUMTEXT',
 					'picture_url'           => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""',
@@ -63,24 +63,24 @@ class ArticlesModuleUpdateVersion extends ModuleUpdateVersion
 					'number_view'           => 'views_number INT(11) NOT NULL DEFAULT 0',
 					'date_created'          => 'creation_date INT(11) NOT NULL DEFAULT 0',
 					'date_updated'          => 'update_date INT(11) NOT NULL DEFAULT 0'
-				)
-			),
-			array(
+				]
+			],
+			[
 				'table_name' => PREFIX . 'articles_cats',
-				'columns' => array(
+				'columns' => [
 					'image' => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""'
-				)
-			)
-		);
+				]
+			]
+		];
 
-		$this->database_columns_to_delete = array(
-			array(
+		$this->database_columns_to_delete = [
+			[
 				'table_name' => PREFIX . 'articles',
-				'columns' => array(
+				'columns' => [
 					'author_name_displayed'
-				)
-			)
-		);
+				]
+			]
+		];
 	}
 }
 ?>

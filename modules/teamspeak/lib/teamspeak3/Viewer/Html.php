@@ -86,14 +86,14 @@ class TeamSpeak3_Viewer_Html implements TeamSpeak3_Viewer_Interface
    *
    * @var array
    */
-  protected $cachedIcons = array(100, 200, 300, 400, 500, 600);
+  protected $cachedIcons = [100, 200, 300, 400, 500, 600];
 
   /**
    * Stores an array of remote icon IDs.
    *
    * @var array
    */
-  protected $remoteIcons = array();
+  protected $remoteIcons = [];
 
   /**
    * The TeamSpeak3_Viewer_Html constructor.
@@ -123,12 +123,12 @@ class TeamSpeak3_Viewer_Html implements TeamSpeak3_Viewer_Interface
    * @param  array $siblings
    * @return string
    */
-  public function fetchObject(TeamSpeak3_Node_Abstract $node, array $siblings = array())
+  public function fetchObject(TeamSpeak3_Node_Abstract $node, array $siblings = [])
   {
     $this->currObj = $node;
     $this->currSib = $siblings;
 
-    $args = array(
+    $args = [
       $this->getContainerIdent(),
       $this->getContainerClass(),
       $this->getRowClass(),
@@ -141,7 +141,7 @@ class TeamSpeak3_Viewer_Html implements TeamSpeak3_Viewer_Interface
       $this->getSuffixClass(),
       $this->getSuffixIcon(),
       $this->getSuffixFlag(),
-    );
+    ];
 
     return TeamSpeak3_Helper_String::factory($this->pattern)->arg($args);
   }
@@ -332,8 +332,8 @@ class TeamSpeak3_Viewer_Html implements TeamSpeak3_Viewer_Interface
 
     if($this->currObj instanceof TeamSpeak3_Node_Client)
     {
-      $before = array();
-      $behind = array();
+      $before = [];
+      $behind = [];
 
       foreach($this->currObj->memberOf() as $group)
       {

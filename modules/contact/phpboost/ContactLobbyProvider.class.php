@@ -188,12 +188,12 @@ class ContactLobbyProvider extends DefaultModuleLobbyProvider
 
 		if ($recipients_field->is_displayed())
 		{
-			if (in_array($recipients_field->get_field_type(), array('ContactSimpleSelectField', 'ContactSimpleChoiceField')))
+			if (in_array($recipients_field->get_field_type(), ['ContactSimpleSelectField', 'ContactSimpleChoiceField']))
 				$recipients_mails = explode(';', $recipients[$form->get_value('f_recipients')->get_raw_value()]['email']);
 			else
 			{
 				$selected_recipients = $form->get_value('f_recipients');
-				$recipients_mails = array();
+				$recipients_mails = [];
 				foreach ($selected_recipients as $recipient)
 				{
 					$mails = explode(';', $recipients[$recipient->get_id()]['email']);

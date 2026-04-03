@@ -39,15 +39,15 @@ class AdminGoogleMapsConfigController extends DefaultAdminModuleController
 	{
 		$form = new HTMLForm(self::class);
 
-		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module()->get_configuration()->get_name()]));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('api_key', $this->lang['config.api.key'], $this->config->get_api_key(),
-			array('class' => 'half-field top-field', 'description' => $this->lang['config.api.key.desc'])
+			['class' => 'half-field top-field', 'description' => $this->lang['config.api.key.desc']]
 		));
 
 		$fieldset->add_field(new GoogleMapsFormFieldMapAddress('default_position', $this->lang['config.default_marker.position'], new GoogleMapsMarker($this->config->get_default_marker_address(), $this->config->get_default_marker_latitude(), $this->config->get_default_marker_longitude(), '', $this->config->get_default_zoom()),
-			array('class' => 'half-field', 'description' => $this->lang['config.default_marker.position.description'], 'always_display_marker' => true, 'hidden' => !$this->config->get_api_key())
+			['class' => 'half-field', 'description' => $this->lang['config.default_marker.position.description'], 'always_display_marker' => true, 'hidden' => !$this->config->get_api_key()]
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -78,7 +78,7 @@ class AdminGoogleMapsConfigController extends DefaultAdminModuleController
 
 		GoogleMapsConfig::save();
 
-		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
+		HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]), 'url' => ModulesUrlBuilder::configuration()->rel()]);
 	}
 
 	private function build_response(View $view)
@@ -89,7 +89,7 @@ class AdminGoogleMapsConfigController extends DefaultAdminModuleController
 		$response->set_title($title);
 		$response->add_link($title, GoogleMapsUrlBuilder::configuration());
 		$response->add_link($this->lang['form.documentation'], ModulesManager::get_module('GoogleMaps')->get_configuration()->get_documentation());
-		$response->get_graphical_environment()->set_page_title(StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$response->get_graphical_environment()->set_page_title(StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module()->get_configuration()->get_name()]));
 
 		return $response;
 	}

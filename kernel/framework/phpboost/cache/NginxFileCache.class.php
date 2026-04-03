@@ -218,7 +218,7 @@ class NginxFileCache implements CacheData
 	{
 		$this->add_section('User');
 
-		$rules = array('RewriteRule ^user/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})$ /user/pm.php?pm=$1&id=$2&p=$3&quote=$4 [L,QSA]');
+		$rules = ['RewriteRule ^user/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})$ /user/pm.php?pm=$1&id=$2&p=$3&quote=$4 [L,QSA]'];
 
 		$eps = AppContext::get_extension_provider_service();
 		$mappings = $eps->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT);
@@ -230,16 +230,16 @@ class NginxFileCache implements CacheData
 		$this->add_line('	rewrite ' . str_replace('^', '^/', $match) . ' ' . $this->general_config->get_site_path() . '/' . ltrim($path, '/') . ' break;');
 	}
 
-	private function add_url_mapping($mapping_list, $rules = array())
+	private function add_url_mapping($mapping_list, $rules = [])
     {
         if ($mapping_list instanceof UrlMappingsExtensionPoint)
             $mapping_list = $mapping_list->list_mappings();
 
-        $locations = array();
+        $locations = [];
         foreach ($mapping_list as $mapping)
         {
             preg_match('#([\w_-]*)/#', $mapping->from(), $matches);
-            $locations[$matches[0]][] = array('from' => $mapping->from(), 'to' => $mapping->to());
+            $locations[$matches[0]][] = ['from' => $mapping->from(), 'to' => $mapping->to()];
         }
 
         $first_location = true;
@@ -259,7 +259,7 @@ class NginxFileCache implements CacheData
             {
                 foreach ($rules as $rule)
                 {
-                    $this->add_line(str_replace(array('DIR', 'RewriteRule', '^', '[L,QSA]', '[L]'), array($this->general_config->get_site_path(), '	rewrite', '^/', 'break;', 'break;'), $rule));
+                    $this->add_line(str_replace(['DIR', 'RewriteRule', '^', '[L,QSA]', '[L]'], [$this->general_config->get_site_path(), '	rewrite', '^/', 'break;', 'break;'], $rule));
                 }
             }
             $first_location = false;

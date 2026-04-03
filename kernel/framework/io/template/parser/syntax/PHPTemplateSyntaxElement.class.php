@@ -24,7 +24,7 @@ class PHPTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	private function do_parse()
 	{
-		$matches = array();
+		$matches = [];
 		if ($this->input->consume_next('\?php\s*(?P<php>[^\s].*[^\*])\s*\?>', 'Us', $matches))
 		{
 			$this->process_php($matches['php']);

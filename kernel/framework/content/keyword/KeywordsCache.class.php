@@ -16,14 +16,14 @@ class KeywordsCache implements CacheData
 
 	public function synchronize()
 	{
-		$this->keywords = array();
+		$this->keywords = [];
 		$result = PersistenceContext::get_querier()->select('SELECT relation.id_in_module, relation.id_keyword, keyword.*
 			FROM ' . DB_TABLE_KEYWORDS_RELATIONS . ' relation
 			LEFT JOIN ' . DB_TABLE_KEYWORDS . ' keyword ON keyword.id = relation.id_keyword
 			WHERE relation.module_id = :module_id
-			ORDER BY relation.id_keyword', array(
+			ORDER BY relation.id_keyword', [
 				'module_id' => self::get_module_identifier()
-		));
+		]);
 		while ($row = $result->fetch())
 		{
 			$keyword = new Keyword();
@@ -44,7 +44,7 @@ class KeywordsCache implements CacheData
 		{
 			return $this->keywords[$id_in_module];
 		}
-		return array();
+		return [];
 	}
 
 	public function has_keywords($id)

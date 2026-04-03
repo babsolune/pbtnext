@@ -38,7 +38,7 @@ class CalendarSetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(self::$calendar_events_table, self::$calendar_events_content_table, self::$calendar_cats_table, self::$calendar_users_relation_table));
+		PersistenceContext::get_dbms_utils()->drop([self::$calendar_events_table, self::$calendar_events_content_table, self::$calendar_cats_table, self::$calendar_users_relation_table]);
 	}
 
 	private function create_tables()
@@ -51,55 +51,55 @@ class CalendarSetup extends DefaultModuleSetup
 
 	private function create_calendar_events_table()
 	{
-		$fields = array(
-			'id_event' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'content_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'parent_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id_event'),
-			'indexes' => array(
-				'content_id' => array('type' => 'key', 'fields' => 'content_id'),
-				'parent_id' => array('type' => 'key', 'fields' => 'parent_id')
-			)
-		);
+		$fields = [
+			'id_event' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'content_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'start_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'end_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'parent_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0]
+		];
+		$options = [
+			'primary' => ['id_event'],
+			'indexes' => [
+				'content_id' => ['type' => 'key', 'fields' => 'content_id'],
+				'parent_id' => ['type' => 'key', 'fields' => 'parent_id']
+			]
+		];
 		PersistenceContext::get_dbms_utils()->create_table(self::$calendar_events_table, $fields, $options);
 	}
 
 	private function create_calendar_events_content_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'thumbnail' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'title' => array('type' => 'string', 'length' => 150, 'notnull' => 1, 'default' => "''"),
-			'rewrited_title' => array('type' => 'string', 'length' => 250, 'default' => "''"),
-			'content' => array('type' => 'text', 'length' => 65000),
-			'location' => array('type' => 'text', 'length' => 65000),
-			'map_displayed' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'update_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'cancelled' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'approved' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'registration_authorized' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'registration_limit' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'max_registered_members' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => -1),
-			'last_registration_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'register_authorizations' => array('type' => 'text', 'length' => 65000),
-			'repeat_number' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'repeat_type' => array('type' => 'string', 'length' => 25, 'notnull' => 1, 'default' => '\'' . CalendarItemContent::NEVER . '\'')
-		);
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array(
-				'id_category' => array('type' => 'key', 'fields' => 'id_category'),
-				'title' => array('type' => 'fulltext', 'fields' => 'title'),
-				'content' => array('type' => 'fulltext', 'fields' => 'content')
-			)
-		);
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'id_category' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'thumbnail' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'title' => ['type' => 'string', 'length' => 150, 'notnull' => 1, 'default' => "''"],
+			'rewrited_title' => ['type' => 'string', 'length' => 250, 'default' => "''"],
+			'content' => ['type' => 'text', 'length' => 65000],
+			'location' => ['type' => 'text', 'length' => 65000],
+			'map_displayed' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0],
+			'creation_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'update_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'author_user_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'cancelled' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0],
+			'approved' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0],
+			'registration_authorized' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0],
+			'registration_limit' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0],
+			'max_registered_members' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => -1],
+			'last_registration_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'register_authorizations' => ['type' => 'text', 'length' => 65000],
+			'repeat_number' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'repeat_type' => ['type' => 'string', 'length' => 25, 'notnull' => 1, 'default' => '\'' . CalendarItemContent::NEVER . '\'']
+		];
+		$options = [
+			'primary' => ['id'],
+			'indexes' => [
+				'id_category' => ['type' => 'key', 'fields' => 'id_category'],
+				'title' => ['type' => 'fulltext', 'fields' => 'title'],
+				'content' => ['type' => 'fulltext', 'fields' => 'content']
+			]
+		];
 		PersistenceContext::get_dbms_utils()->create_table(self::$calendar_events_content_table, $fields, $options);
 	}
 
@@ -110,16 +110,16 @@ class CalendarSetup extends DefaultModuleSetup
 
 	private function create_calendar_users_relation_table()
 	{
-		$fields = array(
-			'event_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'indexes' => array(
-				'event_id' => array('type' => 'key', 'fields' => 'event_id'),
-				'user_id' => array('type' => 'key', 'fields' => 'user_id')
-			)
-		);
+		$fields = [
+			'event_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'user_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0]
+		];
+		$options = [
+			'indexes' => [
+				'event_id' => ['type' => 'key', 'fields' => 'event_id'],
+				'user_id' => ['type' => 'key', 'fields' => 'user_id']
+			]
+		];
 		PersistenceContext::get_dbms_utils()->create_table(self::$calendar_users_relation_table, $fields, $options);
 	}
 }

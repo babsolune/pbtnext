@@ -43,7 +43,7 @@ class TeamSpeak3_Helper_Signal
    *
    * @var array
    */
-  protected $sigslots = array();
+  protected $sigslots = [];
 
   /**
    * Emits a signal with a given set of parameters.
@@ -84,7 +84,7 @@ class TeamSpeak3_Helper_Signal
   {
     if(empty($this->sigslots[$signal]))
     {
-      $this->sigslots[$signal] = array();
+      $this->sigslots[$signal] = [];
     }
 
     $index = md5(serialize($callback));
@@ -162,7 +162,7 @@ class TeamSpeak3_Helper_Signal
       return $this->sigslots[$signal];
     }
 
-    return array();
+    return [];
   }
 
   /**

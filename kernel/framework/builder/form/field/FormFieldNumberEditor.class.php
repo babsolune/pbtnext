@@ -35,7 +35,7 @@ class FormFieldNumberEditor extends AbstractFormField
 	 * @param array $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
-	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 		$this->set_css_form_field_class('form-field-number');
@@ -50,7 +50,7 @@ class FormFieldNumberEditor extends AbstractFormField
 
 		$field = new FileTemplate('framework/builder/form/fieldelements/FormFieldNumberEditor.tpl');
 
-		$field->put_all(array(
+		$field->put_all([
 			'C_MIN' => $this->min !== null,
 			'MIN' => $this->min,
 			'C_MAX' => $this->max !== null,
@@ -70,13 +70,13 @@ class FormFieldNumberEditor extends AbstractFormField
 			'PATTERN' => $this->pattern,
 			'C_PLACEHOLDER' => $this->has_placeholder(),
 			'PLACEHOLDER' => $this->placeholder
-		));
+		]);
 
 		$this->assign_common_template_variables($template);
 
-		$template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $field->render()
-		));
+		]);
 
 		return $template;
 	}

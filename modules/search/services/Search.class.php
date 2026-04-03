@@ -14,7 +14,7 @@ define('CACHE_TIMES_USED', SearchConfig::load()->get_cache_max_uses());
 
 class Search
 {
-	public $id_search = array();
+	public $id_search = [];
 	private $cache;
 	private $search;
 	private $modules;
@@ -35,13 +35,13 @@ class Search
 	 * This argument is an array which keys are module id's and values are arrays
 	 * containing the specialized search arguments for a particular module.
 	 */
-	public function __construct($search = '', $modules = array())
+	public function __construct($search = '', $modules = [])
 	{
 		$this->errors = 0;
 		$this->search = md5($search); // Generating a search id;
 		$this->modules = $modules;
-		$this->id_search = array();
-		$this->cache = array();
+		$this->id_search = [];
+		$this->cache = [];
 
 		$this->id_user = AppContext::get_current_user()->get_id();
 		$this->modules_conditions = $this->get_modules_conditions($this->modules);
@@ -55,13 +55,13 @@ class Search
 
 		// Lists old results to delete
 		$nbIdsToDelete = 0;
-		$idsToDelete = array();
+		$idsToDelete = [];
 		$result = $this->db_querier->select('SELECT id_search
 		FROM ' . SearchSetup::$search_index_table . '
-		WHERE last_search_use <= :time OR times_used >= :times_used', array(
+		WHERE last_search_use <= :time OR times_used >= :times_used', [
 			'time' => (time() - (CACHE_TIME * 60)),
 			'times_used' => CACHE_TIMES_USED
-		));
+		]);
 		while ($row = $result->fetch())
 		{
 			$idsToDelete[] = $row['id_search'];
@@ -72,8 +72,8 @@ class Search
 		// Deletes old results
 		if ($nbIdsToDelete > 0)
 		{
-			$this->db_querier->delete(SearchSetup::$search_index_table, 'WHERE id_search IN :ids_list', array('ids_list' => $idsToDelete));
-			$this->db_querier->delete(SearchSetup::$search_results_table, 'WHERE id_search IN :ids_list', array('ids_list' => $idsToDelete));
+			$this->db_querier->delete(SearchSetup::$search_index_table, 'WHERE id_search IN :ids_list', ['ids_list' => $idsToDelete]);
+			$this->db_querier->delete(SearchSetup::$search_results_table, 'WHERE id_search IN :ids_list', ['ids_list' => $idsToDelete]);
 		}
 
 		// Don't compute anything if no text is searched
@@ -83,10 +83,10 @@ class Search
 			// Checks cache results meta-inf
 			$result = $this->db_querier->select("SELECT id_search, module
 			FROM " . SearchSetup::$search_index_table . "
-			WHERE search=:search AND id_user=:id_user" . ($this->modules_conditions != '' ? " AND " . $this->modules_conditions : ''), array(
+			WHERE search=:search AND id_user=:id_user" . ($this->modules_conditions != '' ? " AND " . $this->modules_conditions : ''), [
 				'search' => $this->search,
 				'id_user' => $this->id_user
-			));
+			]);
 			while ($row = $result->fetch())
 			{   // retrieves cache result meta-inf
 				array_push($this->cache, $row['module']);
@@ -136,10 +136,10 @@ class Search
 				// Checks and retrieves cache meta-informations
 				$result = $this->db_querier->select("SELECT id_search, module
 				FROM " . SearchSetup::$search_index_table . "
-				WHERE search=:search AND id_user=:id_user" . ($this->modules_conditions != '' ? " AND " . $this->modules_conditions : ''), array(
+				WHERE search=:search AND id_user=:id_user" . ($this->modules_conditions != '' ? " AND " . $this->modules_conditions : ''), [
 					'search' => $this->search,
 					'id_user' => $this->id_user
-				));
+				]);
 				while ($row = $result->fetch())
 				{   // Ajout des résultats s'ils font partie de la liste des modules à traiter
 					$this->id_search[$row['module']] = $row['id_search'];
@@ -162,7 +162,7 @@ class Search
 	 */
 	public function get_results_by_id(&$results, $id_search = 0, $nb_lines = 0, $offset = 0)
 	{
-		$results = array();
+		$results = [];
 
 		// Building request
 		$reqResults = "SELECT module, id_content, title, relevance, link
@@ -199,7 +199,7 @@ class Search
 	 */
 	public function get_results(&$results, $module_ids, $nb_lines = 0, $offset = 0 )
 	{
-		$results = array();
+		$results = [];
 		$num_modules = 0;
 		$modules_conditions = '';
 
@@ -257,7 +257,7 @@ class Search
 	{
 		$nbReqSEARCH = 0;
 		$reqSEARCH = "";
-		$results = array();
+		$results = [];
 
 		// Checks results in cache
 		foreach ($requestAndResults as $module_name => $request)
@@ -340,7 +340,7 @@ class Search
 			return true;
 		}
 
-		$id = $this->db_querier->count(SearchSetup::$search_index_table, 'WHERE id_search = :id_search AND id_user = :id_user', array('id_search' => $id_search, 'id_user' => $this->id_user));
+		$id = $this->db_querier->count(SearchSetup::$search_index_table, 'WHERE id_search = :id_search AND id_user = :id_user', ['id_search' => $id_search, 'id_user' => $this->id_user]);
 		if ($id == 1)
 		{
 			// Search is already in cache, we update it.

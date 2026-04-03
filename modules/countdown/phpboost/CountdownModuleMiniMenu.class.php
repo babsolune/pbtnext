@@ -45,7 +45,7 @@ class CountdownModuleMiniMenu extends ModuleMiniMenu
 		$countdown_config = CountdownConfig::load();
 		$event_date = $countdown_config->get_event_date();
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_DISABLED'        => $countdown_config->get_timer_disabled(),
 			'C_STOP_COUNTER'    => $countdown_config->get_stop_counter(),
 			'C_RELEASE_COUNTER' => !$countdown_config->get_hidden_counter(),
@@ -61,7 +61,7 @@ class CountdownModuleMiniMenu extends ModuleMiniMenu
 			'LAST_EVENT'        => FormatingHelper::second_parse($countdown_config->get_last_event()),
 			'STOPPED_EVENT'     => FormatingHelper::second_parse($countdown_config->get_stopped_event()),
 			'NO_EVENT'          => FormatingHelper::second_parse($countdown_config->get_no_event()),
-		));
+		]);
 
 		return $view->render();
 	}

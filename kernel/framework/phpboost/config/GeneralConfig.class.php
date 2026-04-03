@@ -102,7 +102,7 @@ class GeneralConfig extends AbstractConfigData
 		$site_url = self::get_default_site_url();
 		$site_path = self::get_default_site_path();
 
-		return array(
+		return [
 			self::SITE_URL          => $site_url,
 			self::SITE_PATH         => $site_path,
 			self::SITE_NAME         => '',
@@ -113,7 +113,7 @@ class GeneralConfig extends AbstractConfigData
 			self::PHPBOOST_VERSION  => '6.1',
 			self::SITE_INSTALL_DATE => new Date(Date::DATE_NOW, Timezone::SERVER_TIMEZONE),
 			self::SITE_TIMEZONE     => 'Europe/Paris',
-		);
+		];
 	}
 
 	public static function get_default_site_url()
@@ -133,10 +133,10 @@ class GeneralConfig extends AbstractConfigData
 
 	private static function remove_dirs_from_root($path)
 	{
-        $root_path_fragments = array();
+        $root_path_fragments = [];
         $path_fragments = explode('/', $path);
         $depth = 1;
-		if (!in_array(PATH_TO_ROOT, array('.', '', null)))
+		if (!in_array(PATH_TO_ROOT, ['.', '', null]))
 		{
 			$depth = count(explode('/', PATH_TO_ROOT)) + 1;
 		}

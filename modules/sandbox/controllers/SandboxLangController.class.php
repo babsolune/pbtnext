@@ -25,9 +25,9 @@ class SandboxLangController extends DefaultModuleController
 
 	private function build_view()
 	{
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu(),
-		));
+		]);
 		$this->build_general_lang_vars();
 		$this->build_modules_lang_vars();
 	}
@@ -40,35 +40,35 @@ class SandboxLangController extends DefaultModuleController
 		foreach($files as $file)
 		{
 			$filename = $file->get_name_without_extension();
-			if (!in_array($filename, array('config')))
+			if (!in_array($filename, ['config']))
 			{
-				$this->view->assign_block_vars('lang_file', array(
+				$this->view->assign_block_vars('lang_file', [
 					'LANG_FILE_ID' => str_replace('.', '-', $filename),
 					'LANG_FILE_NAME' => $filename,
-				));
+				]);
 				foreach(LangLoader::get($filename) as $var => $desc)
 				{
 					if(!is_array($desc))
-					$this->view->assign_block_vars('lang_file.items', array(
+					$this->view->assign_block_vars('lang_file.items', [
 						'VAR' => $var,
 						'DESC' => $desc
-					));
+					]);
 					else {
 						foreach($desc as $sub_var => $sub_desc)
 						{
 							if(!is_array($sub_desc))
-								$this->view->assign_block_vars('lang_file.items', array(
+								$this->view->assign_block_vars('lang_file.items', [
 									'VAR' => $sub_var,
 									'DESC' => $sub_desc
-								));
+								]);
 							else
 							{
 								foreach($sub_desc as $sub_sub_var => $sub_sub_desc)
 								{
-									$this->view->assign_block_vars('lang_file.items', array(
+									$this->view->assign_block_vars('lang_file.items', [
 										'VAR' => $sub_sub_var,
 										'DESC' => $sub_sub_desc
-									));
+									]);
 								}
 							}
 						}
@@ -89,43 +89,43 @@ class SandboxLangController extends DefaultModuleController
 
 			if (count($files) > 1)
 			{
-				$this->view->assign_block_vars('module', array(
+				$this->view->assign_block_vars('module', [
 					'MODULE_NAME' => $module->get_configuration()->get_name(),
 					'MODULE_ID' => $module_id
-				));
+				]);
 				foreach($files as $file)
 				{
 					$filename = $file->get_name_without_extension();
-					if (!in_array($filename, array('desc', 'install')))
+					if (!in_array($filename, ['desc', 'install']))
 					{
-						$this->view->assign_block_vars('module.module_file', array(
+						$this->view->assign_block_vars('module.module_file', [
 							'MODULE_FILE_ID' => str_replace('.', '-', $filename),
 							'MODULE_FILE_NAME' => $filename,
-						));
+						]);
 						foreach(LangLoader::get($filename, $module_id) as $var => $desc)
 						{
 							if(!is_array($desc))
-								$this->view->assign_block_vars('module.module_file.items', array(
+								$this->view->assign_block_vars('module.module_file.items', [
 									'VAR' => $var,
 									'DESC' => $desc
-								));
+								]);
 							else
 							{
 								foreach($desc as $sub_var => $sub_desc)
 								{
 									if(!is_array($sub_desc))
-										$this->view->assign_block_vars('module.module_file.items', array(
+										$this->view->assign_block_vars('module.module_file.items', [
 											'VAR' => $sub_var,
 											'DESC' => $sub_desc
-										));
+										]);
 									else
 									{
 										foreach($sub_desc as $sub_sub_var => $sub_sub_desc)
 										{
-											$this->view->assign_block_vars('module.module_file.items', array(
+											$this->view->assign_block_vars('module.module_file.items', [
 												'VAR' => $sub_sub_var,
 												'DESC' => $sub_sub_desc
-											));
+											]);
 										}
 									}
 								}

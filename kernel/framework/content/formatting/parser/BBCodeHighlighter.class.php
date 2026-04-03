@@ -61,7 +61,7 @@ class BBCodeHighlighter extends AbstractParser
 		$this->content = str_replace('[*]', '<span style="color:' . self::$bbcode_list_item_color . ';">[*]</span>', $this->content);
 
 		//Simple tags (whitout parameter)
-		$simple_tags = array('b', 'i', 'u', 's', 'p', 'sup', 'sub', 'pre', 'math', 'quote', 'block', 'fieldset', 'sound', 'url', 'img', 'mail', 'code',  'tr', 'html', 'row', 'indent', 'hide', 'mail', 'fa', 'emoji', 'member', 'teaser', 'moderator', 'container');
+		$simple_tags = ['b', 'i', 'u', 's', 'p', 'sup', 'sub', 'pre', 'math', 'quote', 'block', 'fieldset', 'sound', 'url', 'img', 'mail', 'code',  'tr', 'html', 'row', 'indent', 'hide', 'mail', 'fa', 'emoji', 'member', 'teaser', 'moderator', 'container'];
 
 		foreach ($simple_tags as $tag)
 		{
@@ -72,7 +72,7 @@ class BBCodeHighlighter extends AbstractParser
 		}
 
 		//Tags which take a parameter : [tag=parameter]content[/tag]
-		$tags_with_simple_property = array('img', 'color', 'bgcolor', 'size', 'font', 'align', 'float', 'anchor', 'acronym', 'abbr', 'title', 'stitle', 'style', 'url', 'mail', 'code', 'quote', 'movie', 'youtube', 'fa');
+		$tags_with_simple_property = ['img', 'color', 'bgcolor', 'size', 'font', 'align', 'float', 'anchor', 'acronym', 'abbr', 'title', 'stitle', 'style', 'url', 'mail', 'code', 'quote', 'movie', 'youtube', 'fa'];
 
 		foreach ($tags_with_simple_property as $tag)
 		{
@@ -83,13 +83,13 @@ class BBCodeHighlighter extends AbstractParser
 		}
 
 		//Tags which take several parameters. The syntax is the same as XML parameters
-		$tags_with_many_parameters = array('table', 'col', 'head', 'list', 'fieldset', 'block', 'wikipedia', 'container');
+		$tags_with_many_parameters = ['table', 'col', 'head', 'list', 'fieldset', 'block', 'wikipedia', 'container'];
 
 		foreach ($tags_with_many_parameters as $tag)
 		{
 			while (preg_match('`\[(' . $tag . ')([^\]]*)\](.*)\[/' . $tag . '\]`isuU', $this->content))
 			{
-				$this->content = preg_replace_callback('`\[(' . $tag . ')([^\]]*)\](.*)\[/' . $tag . '\]`isuU', array($this, 'highlight_bbcode_tag_with_many_parameters'), $this->content);
+				$this->content = preg_replace_callback('`\[(' . $tag . ')([^\]]*)\](.*)\[/' . $tag . '\]`isuU', [$this, 'highlight_bbcode_tag_with_many_parameters'], $this->content);
 			}
 		}
 
@@ -103,7 +103,7 @@ class BBCodeHighlighter extends AbstractParser
 		}
 
 		//Te be able to handle the nested tags, we replaced [ by /[/, we do the reverse replacement now
-		$this->content = str_replace(array('/[/', '/]/'), array('[', ']'), $this->content);
+		$this->content = str_replace(['/[/', '/]/'], ['[', ']'], $this->content);
 	}
 
 	/**

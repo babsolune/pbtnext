@@ -18,7 +18,7 @@ class ConstantTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
 	{
-		$matches = array();
+		$matches = [];
 		if ($input->consume_next('(?P<constant>(?:[0-9]+(?:\.[0-9]+)?)|(?:\'[^\']*\')|(?:true)|(?:false))', '', $matches))
 		{
 			$constant = $matches['constant'];

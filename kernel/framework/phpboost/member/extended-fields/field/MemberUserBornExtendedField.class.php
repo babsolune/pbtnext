@@ -16,7 +16,7 @@ class MemberUserBornExtendedField extends AbstractMemberExtendedField
 	public function __construct()
 	{
 		parent::__construct();
-		$this->set_disable_fields_configuration(array('regex', 'possible_values', 'default_value'));
+		$this->set_disable_fields_configuration(['regex', 'possible_values', 'default_value']);
 		$this->set_name(LangLoader::get_message('user.field.type.born','user-lang'));
 		$this->field_used_once = true;
 		$this->field_used_phpboost_config = true;
@@ -27,7 +27,7 @@ class MemberUserBornExtendedField extends AbstractMemberExtendedField
 		$fieldset = $member_extended_field->get_fieldset();
 
 		$fieldset->add_field(new FormFieldDate($member_extended_field->get_field_name(), $member_extended_field->get_name(), null,
-			array('description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required())
+			['description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required()]
 		));
 	}
 
@@ -37,7 +37,7 @@ class MemberUserBornExtendedField extends AbstractMemberExtendedField
 
 		$value = $member_extended_field->get_value() ? new Date($member_extended_field->get_value()) : null;
 		$fieldset->add_field(new FormFieldDate($member_extended_field->get_field_name(), $member_extended_field->get_name(), $value,
-			array('description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required())
+			['description' => $member_extended_field->get_description(), 'required' =>(bool)$member_extended_field->get_required()]
 		));
 	}
 
@@ -46,7 +46,7 @@ class MemberUserBornExtendedField extends AbstractMemberExtendedField
 		if ($member_extended_field->get_value())
 		{
 			$date = new Date($member_extended_field->get_value());
-			return array('name' => $member_extended_field->get_name(), 'field_name' => $member_extended_field->get_field_name(), 'value' => $date->format(Date::FORMAT_DAY_MONTH_YEAR));
+			return ['name' => $member_extended_field->get_name(), 'field_name' => $member_extended_field->get_field_name(), 'value' => $date->format(Date::FORMAT_DAY_MONTH_YEAR)];
 		}
 	}
 

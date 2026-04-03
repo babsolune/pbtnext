@@ -448,30 +448,30 @@ abstract class AbstractFormField implements FormField
 
 		foreach ($this->get_related_fields() as $field)
 		{
-			$js_tpl->assign_block_vars('related_field', array(
+			$js_tpl->assign_block_vars('related_field', [
 				'ID' => $field
-			));
+			]);
 			$has_js_validations = true;
 		}
 
 		foreach ($this->events as $event => $handler)
 		{
-			$js_tpl->assign_block_vars('event_handler', array(
+			$js_tpl->assign_block_vars('event_handler', [
 				'EVENT' => $event,
 				'HANDLER' => $handler
-			));
+			]);
 			$has_js_validations = true;
 		}
 
 		foreach ($this->get_js_validations() as $constraint)
 		{
-			$js_tpl->assign_block_vars('constraint', array(
+			$js_tpl->assign_block_vars('constraint', [
 				'CONSTRAINT' => $constraint
-			));
+			]);
 			$has_js_validations = true;
 		}
 
-		$js_tpl->put_all(array(
+		$js_tpl->put_all([
 			'C_DISABLED' => $this->is_disabled(),
 			'C_HAS_CONSTRAINTS' => $this->has_constraints(),
 			'ID' => $this->get_id(),
@@ -479,12 +479,12 @@ abstract class AbstractFormField implements FormField
 			'JS_SPECIALIZATION_CODE' => $this->get_js_specialization_code(),
 			'FORM_ID' => $this->form_id,
 			'FIELDSET_ID' => $this->fieldset_id
-		));
+		]);
 
 		$template->put('ADD_FIELD_JS', $js_tpl);
 
 		$description = $this->get_description();
-		$template->put_all(array(
+		$template->put_all([
 			'ID' => $this->get_id(),
 			'HTML_ID' => $this->get_html_id(),
 			'NAME' => $this->get_html_id(),
@@ -513,7 +513,7 @@ abstract class AbstractFormField implements FormField
 			'PATTERN' => $this->pattern,
 			'C_PLACEHOLDER' => $this->has_placeholder(),
 			'PLACEHOLDER' => $this->placeholder
-		));
+		]);
 	}
 
 	private function get_related_fields()

@@ -21,7 +21,7 @@ class SmalladsService
 	 * Count items number.
 	 * @param string $condition (optional) : Restriction to apply to the list of items
 	 */
-	public static function count($condition = '', $parameters = array())
+	public static function count($condition = '', $parameters = [])
 	{
 		return self::$db_querier->count(SmalladsSetup::$smallads_table, $condition, $parameters);
 	}
@@ -34,7 +34,7 @@ class SmalladsService
 
 	public static function update(SmalladsItem $item)
 	{
-		self::$db_querier->update(SmalladsSetup::$smallads_table, $item->get_properties(), 'WHERE id=:id', array('id', $item->get_id()));
+		self::$db_querier->update(SmalladsSetup::$smallads_table, $item->get_properties(), 'WHERE id=:id', ['id', $item->get_id()]);
 	}
 
 	public static function delete(int $id)
@@ -45,11 +45,11 @@ class SmalladsService
 			DispatchManager::redirect($controller);
 		}
 
-		self::$db_querier->delete(SmalladsSetup::$smallads_table, 'WHERE id=:id', array('id' => $id));
+		self::$db_querier->delete(SmalladsSetup::$smallads_table, 'WHERE id=:id', ['id' => $id]);
 
 		KeywordsService::get_keywords_manager()->delete_relations($id);
 
-		self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'smallads', 'id' => $id));
+		self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', ['module' => 'smallads', 'id' => $id]);
 
 		CommentsService::delete_comments_topic_module('smallads', $id);
 	}
@@ -59,9 +59,9 @@ class SmalladsService
 		$row = self::$db_querier->select_single_row_query('SELECT smallads.*, member.*
 		FROM ' . SmalladsSetup::$smallads_table . ' smallads
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = smallads.author_user_id
-		WHERE smallads.id=:id', array(
+		WHERE smallads.id=:id', [
 			'id' => $id
-		));
+		]);
 
 		$item = new SmalladsItem();
 		$item->set_properties($row);
@@ -78,7 +78,7 @@ class SmalladsService
 
 	public static function update_views_number(SmalladsItem $item)
 	{
-		self::$db_querier->update(SmalladsSetup::$smallads_table, array('views_number' => $item->get_views_number()), 'WHERE id=:id', array('id' => $item->get_id()));
+		self::$db_querier->update(SmalladsSetup::$smallads_table, ['views_number' => $item->get_views_number()], 'WHERE id=:id', ['id' => $item->get_id()]);
 	}
 }
 ?>

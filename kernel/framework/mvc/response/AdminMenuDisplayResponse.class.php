@@ -33,7 +33,7 @@ class AdminMenuDisplayResponse extends AbstractResponse
 		if (!empty($module_name)) {
 			$this->module = ModulesManager::get_module($module_name);
 			if ($this->module) {
-				$this->set_title(StringVars::replace_vars(LangLoader::get_message('form.module.title', 'form-lang'), array('module_name' => $this->module->get_configuration()->get_name())));
+				$this->set_title(StringVars::replace_vars(LangLoader::get_message('form.module.title', 'form-lang'), ['module_name' => $this->module->get_configuration()->get_name()]));
 
 				$home_page = $this->module->get_configuration()->get_home_page();
 				if (!empty($home_page)) {

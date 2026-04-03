@@ -266,28 +266,28 @@ class SqlitePlatform extends AbstractPlatform
      *                       The indexes of the array entries are the names of the fields of the table an
      *                       the array entry values are associative arrays like those that are meant to be
      *                       passed with the field definitions to get[Type]Declaration() functions.
-     *                          array(
-     *                              'id' => array(
+     *                          [
+     *                              'id' => [
      *                                  'type' => 'integer',
      *                                  'unsigned' => 1
      *                                  'notnull' => 1
      *                                  'default' => 0
-     *                              ),
-     *                              'name' => array(
+     *                              ],
+     *                              'name' => [
      *                                  'type' => 'text',
      *                                  'length' => 12
-     *                              ),
-     *                              'password' => array(
+     *                              ],
+     *                              'password' => [
      *                                  'type' => 'text',
      *                                  'length' => 12
-     *                              )
-     *                          );
+     *                              ]
+     *                          ];
      * @param array $options  An associative array of table options:
      *
      * @return void
      * @override
      */
-    public function getCreateTableSql($name, array $fields, array $options = array())
+    public function getCreateTableSql($name, array $fields, array $options = [])
     {
         if ( ! $name) {
             throw DoctrineException::invalidTableName($name);
@@ -308,7 +308,7 @@ class SqlitePlatform extends AbstractPlatform
 
         if ( ! $autoinc && isset($options['primary']) && ! empty($options['primary'])) {
             $keyColumns = array_unique(array_values($options['primary']));
-            $keyColumns = array_map(array($this, 'quoteIdentifier'), $keyColumns);
+            $keyColumns = array_map([$this, 'quoteIdentifier'], $keyColumns);
             $queryFields.= ', PRIMARY KEY('.implode(', ', $keyColumns).')';
         }
 

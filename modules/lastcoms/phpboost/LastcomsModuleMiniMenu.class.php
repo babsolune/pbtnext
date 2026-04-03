@@ -58,10 +58,10 @@ class LastcomsModuleMiniMenu extends ModuleMiniMenu
 			AND ct.module_id != :forbidden_module
 			ORDER BY c.timestamp DESC
 			LIMIT :lastcoms_number",
-			array(
+			[
 				'lastcoms_number' => (int)$lastcoms_config->get_lastcoms_number(),
 				'forbidden_module' => 'user'
-			)
+			]
 		);
 
 		$comments_number = 0;
@@ -75,7 +75,7 @@ class LastcomsModuleMiniMenu extends ModuleMiniMenu
 
 			$view->assign_block_vars('items', array_merge(
 				Date::get_array_tpl_vars(new Date($row['timestamp'], Timezone::SERVER_TIMEZONE), 'date'),
-				array(
+				[
 				'C_AUTHOR_GROUP_COLOR' => !empty($user_group_color),
 				'C_AUTHOR_EXISTS'      => $row['user_id'] !== User::VISITOR_LEVEL,
 
@@ -87,7 +87,7 @@ class LastcomsModuleMiniMenu extends ModuleMiniMenu
 				'MODULE_NAME'		  => $modules_config->get_module($row['module_id']) ? $modules_config->get_module($row['module_id'])->get_configuration()->get_name() : '',
 
 				'U_AUTHOR_PROFILE'   => UserUrlBuilder::profile($row['user_id'])->rel()
-				)
+				]
 			));
 		}
 
@@ -106,11 +106,11 @@ class LastcomsModuleMiniMenu extends ModuleMiniMenu
 				MenuService::assign_positions_conditions($template, $this->get_block());
 				$this->assign_common_template_variables($template);
 
-				$template->put_all(array(
+				$template->put_all([
 					'ID' => $this->get_menu_id(),
 					'TITLE' => $this->get_menu_title(),
 					'CONTENTS' => $this->get_menu_content()
-				));
+				]);
 
 				return $template->render();
 			}

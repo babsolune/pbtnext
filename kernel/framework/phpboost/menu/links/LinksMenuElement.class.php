@@ -103,14 +103,14 @@ abstract class LinksMenuElement extends Menu
                 else
                     $image = new Image(PATH_TO_ROOT . $this->image);
 
-                $view->put_all(array(
+                $view->put_all([
                     'C_IMG'        => !empty($this->image),
                     'ABSOLUTE_IMG' => $url->absolute(),
                     'RELATIVE_IMG' => $url->relative(),
                     'REL_IMG'      => $url->rel(),
                     'IMG_HEIGHT'   => $image->get_height(),
                     'IMG_WIDTH'    => $image->get_width()
-                ));
+                ]);
             }
         }
 
@@ -121,7 +121,7 @@ abstract class LinksMenuElement extends Menu
         else
             $url = new Url($this->url);
 
-        $view->put_all(array(
+        $view->put_all([
             'C_MENU'         => false,
             'C_DISPLAY_AUTH' => AppContext::get_current_user()->check_auth($this->get_auth(), Menu::MENU_AUTH_BIT),
             'C_URL'          => $this->url,
@@ -141,15 +141,15 @@ abstract class LinksMenuElement extends Menu
             'REL_URL'      => $url->rel(),
 
             'L_TITLE' => LangLoader::get_message('menu.link.to', 'menu-lang') . $this->title,
-        ));
+        ]);
 
         //Full displaying: we also show the authorization formulary
         if ($mode)
         {
-            $view->put_all(array(
-                'C_AUTH_MENU_HIDDEN' => $this->get_auth() == array('r-1' => Menu::MENU_AUTH_BIT, 'r0' => Menu::MENU_AUTH_BIT, 'r1' => Menu::MENU_AUTH_BIT),
-                'AUTH_FORM' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, $this->get_auth(), array(), 'menu_element_' . $this->uid . '_auth')
-            ));
+            $view->put_all([
+                'C_AUTH_MENU_HIDDEN' => $this->get_auth() == ['r-1' => Menu::MENU_AUTH_BIT, 'r0' => Menu::MENU_AUTH_BIT, 'r1' => Menu::MENU_AUTH_BIT],
+                'AUTH_FORM' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, $this->get_auth(), [], 'menu_element_' . $this->uid . '_auth')
+            ]);
         }
     }
 

@@ -61,9 +61,9 @@ class AuthenticationService
 
 	public static function get_user_types_authentication($user_id)
 	{
-		$result = PersistenceContext::get_querier()->select_rows(DB_TABLE_AUTHENTICATION_METHOD, array('method'), 'WHERE user_id=:user_id', array('user_id' => $user_id));
+		$result = PersistenceContext::get_querier()->select_rows(DB_TABLE_AUTHENTICATION_METHOD, ['method'], 'WHERE user_id=:user_id', ['user_id' => $user_id]);
 
-		$types = array();
+		$types = [];
 		foreach ($result as $row) {
 			$types[] = $row['method'];
 		}
@@ -92,7 +92,7 @@ class AuthenticationService
 	{
 		if (self::$external_authentications_actived == null)
 		{
-			self::$external_authentications_actived = array();
+			self::$external_authentications_actived = [];
 
 			$extension_point = AppContext::get_extension_provider_service()->get_extension_point(ExternalAuthenticationsExtensionPoint::EXTENSION_POINT);
 

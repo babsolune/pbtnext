@@ -13,7 +13,7 @@
 
 class FormFieldLabel extends AbstractFormField
 {
-	public function __construct($value, array $properties = array())
+	public function __construct($value, array $properties = [])
 	{
 		parent::__construct('', '', $value, $properties);
 	}

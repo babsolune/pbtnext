@@ -44,7 +44,7 @@ class SpotsCategoryController extends DefaultModuleController
 
 			if ($categories_number_displayed > $subcategories_pagination->get_display_from() && $categories_number_displayed <= ($subcategories_pagination->get_display_from() + $subcategories_pagination->get_number_items_per_page()))
 			{
-				$this->view->assign_block_vars('sub_categories_list', array(
+				$this->view->assign_block_vars('sub_categories_list', [
 					'C_SEVERAL_ITEMS' => $category->get_elements_number() > 1,
 
 					'CATEGORY_ID'         => $category->get_id(),
@@ -56,17 +56,17 @@ class SpotsCategoryController extends DefaultModuleController
 					'CATEGORY_INNER_ICON' => !empty($category->get_inner_icon()) ? $category->get_inner_icon() : $this->config->get_default_inner_icon(),
 
 					'U_CATEGORY' => SpotsUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel()
-				));
+				]);
 			}
 		}
 
 		$condition = 'WHERE id_category IN :authorised_categories AND published = 1';
 
-		$parameters = array(
+		$parameters = [
 			'authorised_categories' => $authorized_categories,
 			'id_category' => $this->get_category()->get_id(),
 			'timestamp_now' => $now->get_timestamp()
-		);
+		];
 
 		$pagination = $this->get_pagination($condition, $parameters, $page, $subcategories_page);
 
@@ -75,11 +75,11 @@ class SpotsCategoryController extends DefaultModuleController
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = spots.author_user_id
 		' . $condition . '
 		ORDER BY spots.title ASC
-		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
+		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, [
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
-		)));
+		]));
 
 		$root_category = $this->get_category()->get_id() == Category::ROOT_CATEGORY;
 
@@ -87,13 +87,13 @@ class SpotsCategoryController extends DefaultModuleController
         {
 			$category_address_values = TextHelper::deserialize($this->get_category()->get_category_address());
 
-			$this->view->put_all(array(
+			$this->view->put_all([
 				'CATEGORY_LATITUDE' => TextHelper::is_serialized($this->get_category()->get_category_address()) && !empty($this->get_category()->get_category_address()) ? $category_address_values['latitude'] : GoogleMapsConfig::load()->get_default_marker_latitude(),
 				'CATEGORY_LONGITUDE' => TextHelper::is_serialized($this->get_category()->get_category_address()) && !empty($this->get_category()->get_category_address()) ? $category_address_values['longitude'] : GoogleMapsConfig::load()->get_default_marker_longitude(),
-			));
+			]);
 		}
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_CATEGORY'                 => true,
 			'C_ITEMS'                    => $result->get_rows_count() > 0,
             'C_GMAP_ENABLED'             => SpotsService::is_gmap_enabled(),
@@ -123,7 +123,7 @@ class SpotsCategoryController extends DefaultModuleController
 			'CATEGORY_ID'              => $this->get_category()->get_id(),
 
 			'U_EDIT_CATEGORY' => $root_category ? SpotsUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->get_category()->get_id(), 'spots')->rel(),			
-			));
+			]);
 
 		while ($row = $result->fetch())
 		{
@@ -142,10 +142,10 @@ class SpotsCategoryController extends DefaultModuleController
 		$page = AppContext::get_request()->get_getint('page', 1);
 		$condition = 'WHERE id_category = :id_category AND published = 1';
 
-		$parameters = array(
+		$parameters = [
 			'id_category' => $this->get_category()->get_id(),
 			'timestamp_now' => $now->get_timestamp()
-		);
+		];
 
 		$pagination = $this->get_pagination($condition, $parameters, $page, '');
 
@@ -154,15 +154,15 @@ class SpotsCategoryController extends DefaultModuleController
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = spots.author_user_id
 		' . $condition . '
 		ORDER BY spots.title ASC
-		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
+		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, [
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
-		)));
+		]));
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_SELF_ITEMS' => $result->get_rows_count() > 0
-        ));
+        ]);
 
 		while ($row = $result->fetch())
 		{

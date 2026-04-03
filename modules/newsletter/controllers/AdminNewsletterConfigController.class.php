@@ -31,29 +31,29 @@ class AdminNewsletterConfigController extends DefaultAdminModuleController
 	{
 		$form = new HTMLForm(self::class);
 
-		$fieldset_config = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset_config = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module()->get_configuration()->get_name()]));
 		$form->add_fieldset($fieldset_config);
 
 		$fieldset_config->add_field(new FormFieldMailEditor('mail_sender', $this->lang['newsletter.email.sender'], $this->config->get_mail_sender(),
-			array('class' => 'third-field', 'description' => $this->lang['newsletter.email.sender.clue'], 'required' => true)
+			['class' => 'third-field', 'description' => $this->lang['newsletter.email.sender.clue'], 'required' => true]
 		));
 
 		$fieldset_config->add_field(new FormFieldTextEditor('newsletter_name', $this->lang['newsletter.name'], $this->config->get_newsletter_name(),
-			array('class' => 'third-field', 'maxlength' => 255, 'description' => $this->lang['newsletter.name.clue'], 'required' => true)
+			['class' => 'third-field', 'maxlength' => 255, 'description' => $this->lang['newsletter.name.clue'], 'required' => true]
 		));
 
 		$fieldset_config->add_field(new FormFieldNumberEditor('streams_number', $this->lang['newsletter.streams.per.page'], $this->config->get_streams_number_per_page(),
-			array('class' => 'third-field', 'min' => 1, 'max' => 50)
+			['class' => 'third-field', 'min' => 1, 'max' => 50]
 		));
 
 		$fieldset_config->add_field(new FormFieldRichTextEditor('default_content', $this->lang['newsletter.default.content'], $this->config->get_default_content(),
-			array('rows' => 8, 'cols' => 47, 'description' => $this->lang['newsletter.content.clue'])
+			['rows' => 8, 'cols' => 47, 'description' => $this->lang['newsletter.content.clue']]
 		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['form.authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 
-		$auth_settings = new AuthorizationsSettings(array(
+		$auth_settings = new AuthorizationsSettings([
 			new ActionAuthorization($this->lang['newsletter.authorizations.streams.read'], NewsletterAuthorizationsService::AUTH_READ),
 			new ActionAuthorization($this->lang['newsletter.authorizations.streams.subscribe'], NewsletterAuthorizationsService::AUTH_SUBSCRIBE),
 			new ActionAuthorization($this->lang['newsletter.authorizations.subscribers.read'], NewsletterAuthorizationsService::AUTH_READ_SUBSCRIBERS),
@@ -62,7 +62,7 @@ class AdminNewsletterConfigController extends DefaultAdminModuleController
 			new MemberDisabledActionAuthorization($this->lang['newsletter.authorizations.streams.manage'], NewsletterAuthorizationsService::AUTH_MANAGE_STREAMS),
 			new ActionAuthorization($this->lang['newsletter.authorizations.archives.manage'], NewsletterAuthorizationsService::AUTH_READ_ARCHIVES),
 			new MemberDisabledActionAuthorization($this->lang['newsletter.authorizations.archives.moderation'], NewsletterAuthorizationsService::AUTH_MODERATION_ARCHIVES),
-		));
+		]);
 
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
@@ -84,7 +84,7 @@ class AdminNewsletterConfigController extends DefaultAdminModuleController
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		NewsletterConfig::save();
 
-		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
+		HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]), 'url' => ModulesUrlBuilder::configuration()->rel()]);
 	}
 }
 ?>

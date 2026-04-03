@@ -11,15 +11,15 @@ class DevToolsAjaxDeactivateController extends AbstractController
     public function execute(HTTPRequestCustom $request)
     {
         if (!DevToolsAuthorizationsService::check_authorizations()->moderation())
-            return new JSONResponse(array('success' => false, 'error' => 'Unauthorized'), 403);
+            return new JSONResponse(['success' => false, 'error' => 'Unauthorized'], 403);
 
         $module_id = preg_replace('/[^a-zA-Z0-9_\-]/', '', $request->get_string('id', ''));
 
         if (!ModulesManager::is_module_installed($module_id))
-            return new JSONResponse(array('success' => false, 'error' => 'Module not installed'));
+            return new JSONResponse(['success' => false, 'error' => 'Module not installed']);
 
         ModulesManager::update_module($module_id, 0);
-        return new JSONResponse(array('success' => true));
+        return new JSONResponse(['success' => true]);
     }
 }
 ?>

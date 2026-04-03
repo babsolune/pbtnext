@@ -10,14 +10,14 @@
 
 class DownloadCache implements CacheData
 {
-	private $items = array();
+	private $items = [];
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{
-		$this->items = array();
+		$this->items = [];
 
 		$now = new Date();
 		$config = DownloadConfig::load();
@@ -30,11 +30,11 @@ class DownloadCache implements CacheData
 			WHERE (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
 			' . ($config->is_limit_oldest_file_day_in_menu_enabled() ? 'AND update_date > :oldest_file_date' : '') . '
 			ORDER BY ' . $config->get_sort_type() . ' DESC
-			LIMIT :files_number_in_menu OFFSET 0', array(
+			LIMIT :files_number_in_menu OFFSET 0', [
 				'timestamp_now' => $now->get_timestamp(),
 				'files_number_in_menu' => (int)$config->get_files_number_in_menu(),
 				'oldest_file_date' => $oldest_file_date->get_timestamp()
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{

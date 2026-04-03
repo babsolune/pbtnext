@@ -26,7 +26,7 @@ class StatsSaver
             $search_engine = $query_param = '';
             if (!empty($referer['host']))
             {
-                $engines = array(
+                $engines = [
                     'dmoz'		=> 'q',
                     'aol'		=> 'q',
                     'ask'		=> 'q',
@@ -41,7 +41,7 @@ class StatsSaver
                     'voila'		=> 'kw',
                     'baidu'		=> 'wd',
                     'yandex'	=> 'text'
-                );
+                ];
 
                 foreach ($engines as $engine => $param)
                 {
@@ -65,13 +65,13 @@ class StatsSaver
                     preg_match($pattern, $query, $matches);
                     $keyword = TextHelper::strprotect(mb_convert_encoding(urldecode(TextHelper::strtolower($matches[1])), 'ISO-8859-1', 'UTF-8'));
 
-                    $check_search_engine = PersistenceContext::get_querier()->count(StatsSetup::$stats_referer_table, 'WHERE url = :url AND relative_url = :keyword', array('url' => $search_engine, 'keyword' => $keyword));
+                    $check_search_engine = PersistenceContext::get_querier()->count(StatsSetup::$stats_referer_table, 'WHERE url = :url AND relative_url = :keyword', ['url' => $search_engine, 'keyword' => $keyword]);
                     if (!empty($keyword))
                     {
                         if (!empty($check_search_engine))
                             PersistenceContext::get_querier()->inject("UPDATE " . StatsSetup::$stats_referer_table . " SET total_visit = total_visit + 1, today_visit = today_visit + 1, last_update = '" . time() . "' WHERE url = '" . $search_engine . "' AND relative_url = '" . $keyword . "'");
                         else
-                            PersistenceContext::get_querier()->insert(StatsSetup::$stats_referer_table, array('url' => $search_engine, 'relative_url' => $keyword, 'total_visit' => 1, 'today_visit' => 1, 'yesterday_visit' => 0, 'nbr_day' => 1, 'last_update' => time(), 'type' => 1));
+                            PersistenceContext::get_querier()->insert(StatsSetup::$stats_referer_table, ['url' => $search_engine, 'relative_url' => $keyword, 'total_visit' => 1, 'today_visit' => 1, 'yesterday_visit' => 0, 'nbr_day' => 1, 'last_update' => time(), 'type' => 1]);
                     }
                 }
             }
@@ -85,11 +85,11 @@ class StatsSaver
                     $referer['path'] = !empty($referer['path']) ? $referer['path'] : '';
                     $relative_url = addslashes(((TextHelper::substr($referer['path'], 0, 1) == '/') ? $referer['path'] : ('/' . $referer['path'])) . (!empty($referer['query']) ? '?' . $referer['query'] : '') . (!empty($referer['fragment']) ? '#' . $referer['fragment'] : ''));
 
-                    $check_url = PersistenceContext::get_querier()->count(StatsSetup::$stats_referer_table, 'WHERE url = :url AND relative_url = :relative_url', array('url' => $url, 'relative_url' => $relative_url));
+                    $check_url = PersistenceContext::get_querier()->count(StatsSetup::$stats_referer_table, 'WHERE url = :url AND relative_url = :relative_url', ['url' => $url, 'relative_url' => $relative_url]);
                     if (!empty($check_url))
                         PersistenceContext::get_querier()->inject("UPDATE " . StatsSetup::$stats_referer_table . " SET total_visit = total_visit + 1, today_visit = today_visit + 1, last_update = '" . time() . "' WHERE url = '" . $url . "' AND relative_url = '" . $relative_url . "'");
                     else
-                        PersistenceContext::get_querier()->insert(StatsSetup::$stats_referer_table, array('url' => $url, 'relative_url' => $relative_url, 'total_visit' => 1, 'today_visit' => 1, 'yesterday_visit' => 0, 'nbr_day' => 1, 'last_update' => time(), 'type' => 0));
+                        PersistenceContext::get_querier()->insert(StatsSetup::$stats_referer_table, ['url' => $url, 'relative_url' => $relative_url, 'total_visit' => 1, 'today_visit' => 1, 'yesterday_visit' => 0, 'nbr_day' => 1, 'last_update' => time(), 'type' => 0]);
                 }
             }
         }
@@ -107,7 +107,7 @@ class StatsSaver
             return;
 
         // Delete images from cache
-        $array_stats_img = array('browsers.png', 'os.png', 'lang.png');
+        $array_stats_img = ['browsers.png', 'os.png', 'lang.png'];
         foreach ($array_stats_img as $key => $value)
         {
             if (file_exists(PATH_TO_ROOT . '/cache/' . $value))
@@ -115,7 +115,7 @@ class StatsSaver
         }
 
         // Browser detection
-        $array_browser = array(
+        $array_browser = [
             'opera'                  => 'opera',
             'firefox'                => 'firefox',
             'msie|internet explorer' => 'internetexplorer',
@@ -144,7 +144,7 @@ class StatsSaver
             'amiga-aweb'             => 'amiga-aweb',
             'ibrowse'                => 'ibrowse',
             'samsung|sony|nokia|blackberry|android|ipod|iphone|opera mini|palm|iemobile|smartphone|symbian' => 'phone'
-        );
+        ];
         if (!empty($_SERVER['HTTP_USER_AGENT']) ) // Ignore if user agent is empty.
         {
             $browser = 'other';
@@ -160,7 +160,7 @@ class StatsSaver
         }
 
         // O.S. detection
-        $array_os = array(
+        $array_os = [
             'android'                   => 'android',
             'iphone|ipad'               => 'ios',
             'windows nt 10.0'           => 'windows11',
@@ -171,7 +171,7 @@ class StatsSaver
             'linux|x11'                 => 'linux',
             'macintosh|mac|ppc|powerpc' => 'macintosh',
             'samsung|sony|nokia|blackberry|ipod|opera mini|palm|phone|iemobile|smartphone|symbian' => 'phone'
-        );
+        ];
         if (!empty($_SERVER['HTTP_USER_AGENT']) ) // Ignore if user agent is empty.
         {
             $os = 'other';
@@ -193,7 +193,7 @@ class StatsSaver
             $favorite_lang = !empty($user_lang[0]) ? TextHelper::strtolower($user_lang[0]) : '';
             if (TextHelper::strpos($favorite_lang, '-') !== false)
                 $favorite_lang = preg_replace('`[a-z]{2}\-([a-z]{2})`iu', '$1', $favorite_lang);
-            $lang = str_replace(array('en', 'cs', 'sv', 'fa', 'ja', 'ko', 'he', 'da', 'gb'), array('uk', 'cz', 'se', 'ir', 'jp', 'kr', 'il', 'dk', 'uk'), $favorite_lang);
+            $lang = str_replace(['en', 'cs', 'sv', 'fa', 'ja', 'ko', 'he', 'da', 'gb'], ['uk', 'cz', 'se', 'ir', 'jp', 'kr', 'il', 'dk', 'uk'], $favorite_lang);
             $lang = TextHelper::substr($lang, 0, 2);
 
             if (!empty($lang)) //On ignore ceux qui n'ont pas renseigné le champs.
@@ -273,10 +273,10 @@ class StatsSaver
             $stats_array = self::retrieve_stats('robots');
 
             // Build possible names for the same robot
-            $list = array(
+            $list = [
                 TextHelper::strtolower($current_robot),
                 TextHelper::ucfirst(TextHelper::strtolower($current_robot))
-            );
+            ];
 
             if (preg_match('`bot`iu', $current_robot) && !preg_match('`robot`iu', $current_robot))
             {
@@ -339,17 +339,17 @@ class StatsSaver
                 } else {
                     // Was a scalar counter; convert to array
                     $visits_number = (int)$stats_array[$current_robot] + 1;
-                    $stats_array[$current_robot] = array(
+                    $stats_array[$current_robot] = [
                         'visits_number' => $visits_number,
                         'last_seen'     => time()
-                    );
+                    ];
                 }
             } else {
                 // First time we see this robot
-                $stats_array[$current_robot] = array(
+                $stats_array[$current_robot] = [
                     'visits_number' => 1,
                     'last_seen'     => time()
-                );
+                ];
             }
 
             if ($delete_cache_file)

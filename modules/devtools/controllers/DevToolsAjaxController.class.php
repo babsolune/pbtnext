@@ -18,7 +18,7 @@ class DevToolsAjaxController extends AbstractController
         // All ajax endpoints require at least moderator level
         if (!DevToolsAuthorizationsService::check_authorizations()->read())
         {
-            return $this->json_response(array('success' => false, 'error' => 'Unauthorized'), 403);
+            return $this->json_response(['success' => false, 'error' => 'Unauthorized'], 403);
         }
 
         switch ($action)
@@ -30,7 +30,7 @@ class DevToolsAjaxController extends AbstractController
             case 'deactivate': return $this->action_deactivate($request);
             case 'uninstall':  return $this->action_uninstall($request);
             default:
-                return $this->json_response(array('success' => false, 'error' => 'Unknown action'));
+                return $this->json_response(['success' => false, 'error' => 'Unknown action']);
         }
     }
 
@@ -45,15 +45,15 @@ class DevToolsAjaxController extends AbstractController
         $repo  = $request->get_string('repo', '');
 
         if (!$owner || !$repo)
-            return $this->json_response(array('success' => false, 'error' => 'Missing owner or repo'));
+            return $this->json_response(['success' => false, 'error' => 'Missing owner or repo']);
 
         $branches = DevToolsGitHubService::get_branches($owner, $repo);
 
         if (!is_array($branches))
-            return $this->json_response(array('success' => false, 'error' => 'GitHub API error'));
+            return $this->json_response(['success' => false, 'error' => 'GitHub API error']);
 
         $names = array_map(function($b) { return $b['name']; }, $branches);
-        return $this->json_response(array('success' => true, 'branches' => $names));
+        return $this->json_response(['success' => true, 'branches' => $names]);
     }
 
     /** Returns module folders for a given repo + branch + path. */
@@ -65,17 +65,17 @@ class DevToolsAjaxController extends AbstractController
         $path   = $request->get_string('path', '');
 
         if (!$owner || !$repo || !$branch)
-            return $this->json_response(array('success' => false, 'error' => 'Missing parameters'));
+            return $this->json_response(['success' => false, 'error' => 'Missing parameters']);
 
         $folders = DevToolsGitHubService::get_module_folders($owner, $repo, $branch, $path);
 
         if (!is_array($folders))
-            return $this->json_response(array('success' => false, 'error' => 'GitHub API error'));
+            return $this->json_response(['success' => false, 'error' => 'GitHub API error']);
 
         // Get local state to mark already-installed modules
         $local = DevToolsLocalService::get_local_modules();
 
-        $result = array();
+        $result = [];
         foreach ($folders as $folder)
         {
             $name = $folder['name'];
@@ -88,16 +88,16 @@ class DevToolsAjaxController extends AbstractController
             $installed      = isset($local[$name]) ? $local[$name]['installed'] : false;
             $activated      = isset($local[$name]) ? $local[$name]['activated'] : false;
 
-            $result[] = array(
+            $result[] = [
                 'name'           => $name,
                 'remote_version' => $remote_version,
                 'local_version'  => $local_version,
                 'installed'      => $installed,
                 'activated'      => $activated,
-            );
+            ];
         }
 
-        return $this->json_response(array('success' => true, 'folders' => $result));
+        return $this->json_response(['success' => true, 'folders' => $result]);
     }
 
     /** Installs one or several modules by downloading the branch zip and extracting. */
@@ -109,12 +109,12 @@ class DevToolsAjaxController extends AbstractController
         $repo    = $request->get_string('repo', '');
         $branch  = $request->get_string('branch', '');
         $path    = $request->get_string('path', '');
-        $modules = $request->get_value('modules', array()); // array of module names
+        $modules = $request->get_value('modules', []); // array of module names
 
         if (!$owner || !$repo || !$branch || empty($modules))
-            return $this->json_response(array('success' => false, 'error' => 'Missing parameters'));
+            return $this->json_response(['success' => false, 'error' => 'Missing parameters']);
 
-        $errors = array();
+        $errors = [];
         foreach ((array)$modules as $module_name)
         {
             $module_name = preg_replace('/[^a-zA-Z0-9_\-]/', '', $module_name);
@@ -127,9 +127,9 @@ class DevToolsAjaxController extends AbstractController
         }
 
         if (empty($errors))
-            return $this->json_response(array('success' => true));
+            return $this->json_response(['success' => true]);
 
-        return $this->json_response(array('success' => false, 'errors' => $errors));
+        return $this->json_response(['success' => false, 'errors' => $errors]);
     }
 
     /** Activates a locally installed module using ModulesManager. */
@@ -139,10 +139,10 @@ class DevToolsAjaxController extends AbstractController
         $module_id = $this->safe_module_id($request);
 
         if (!ModulesManager::is_module_installed($module_id))
-            return $this->json_response(array('success' => false, 'error' => 'Module not installed'));
+            return $this->json_response(['success' => false, 'error' => 'Module not installed']);
 
         ModulesManager::activate_module($module_id, false);
-        return $this->json_response(array('success' => true));
+        return $this->json_response(['success' => true]);
     }
 
     /** Deactivates an active module. */
@@ -152,10 +152,10 @@ class DevToolsAjaxController extends AbstractController
         $module_id = $this->safe_module_id($request);
 
         if (!ModulesManager::is_module_installed($module_id))
-            return $this->json_response(array('success' => false, 'error' => 'Module not installed'));
+            return $this->json_response(['success' => false, 'error' => 'Module not installed']);
 
         ModulesManager::deactivate_module($module_id);
-        return $this->json_response(array('success' => true));
+        return $this->json_response(['success' => true]);
     }
 
     /** Uninstalls a module (runs its uninstall routine). */
@@ -166,13 +166,13 @@ class DevToolsAjaxController extends AbstractController
 
         // Safety: never uninstall devtools itself
         if ($module_id === 'devtools')
-            return $this->json_response(array('success' => false, 'error' => 'You cannot uninstall this module from within itself.'));
+            return $this->json_response(['success' => false, 'error' => 'You cannot uninstall this module from within itself.']);
 
         if (!ModulesManager::is_module_installed($module_id))
-            return $this->json_response(array('success' => false, 'error' => 'Module not installed'));
+            return $this->json_response(['success' => false, 'error' => 'Module not installed']);
 
         ModulesManager::uninstall_module($module_id);
-        return $this->json_response(array('success' => true));
+        return $this->json_response(['success' => true]);
     }
 
     // -------------------------------------------------------------------------
@@ -189,7 +189,7 @@ class DevToolsAjaxController extends AbstractController
         $token = $request->get_string('token', '');
         if (!AppContext::get_session()->csrf_token_valid($token))
         {
-            return $this->json_response(array('success' => false, 'error' => 'Invalid CSRF token'), 403);
+            return $this->json_response(['success' => false, 'error' => 'Invalid CSRF token'], 403);
             exit;
         }
     }

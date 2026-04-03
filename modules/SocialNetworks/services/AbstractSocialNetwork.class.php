@@ -89,10 +89,10 @@ abstract class AbstractSocialNetwork implements SocialNetwork
 	public function get_share_image_renderer_html()
 	{
 		$tpl = new FileTemplate('SocialNetworks/share_image_render.tpl');
-		$tpl->put_all(array(
+		$tpl->put_all([
 			'NAME' => $this->get_name(),
 			'ICON_NAME' => $this->get_icon_name(),
-		));
+		]);
 		return $tpl->render();
 	}
 

@@ -31,13 +31,13 @@ class GalleryCategoriesCache extends CategoriesCache
 
 	protected function get_category_elements_number($id_category)
 	{
-		$pics_aprob = GalleryService::count('WHERE id_category = :id_category AND aprob = 1', array('id_category' => $id_category));
-		$pics_unaprob = GalleryService::count('WHERE id_category = :id_category AND aprob = 0', array('id_category' => $id_category));
+		$pics_aprob = GalleryService::count('WHERE id_category = :id_category AND aprob = 1', ['id_category' => $id_category]);
+		$pics_unaprob = GalleryService::count('WHERE id_category = :id_category AND aprob = 0', ['id_category' => $id_category]);
 
-		return array(
+		return [
 			'pics_aprob' => $pics_aprob,
 			'pics_unaprob' => $pics_unaprob
-		);
+		];
 	}
 
 	public function get_root_category()
@@ -46,8 +46,8 @@ class GalleryCategoriesCache extends CategoriesCache
 		$root->set_authorizations(GalleryConfig::load()->get_authorizations());
 		$root->set_description(
 			StringVars::replace_vars(LangLoader::get_message('gallery.seo.description.root', 'common', 'gallery'),
-			array('site' => GeneralConfig::load()->get_site_name()
-		)));
+			['site' => GeneralConfig::load()->get_site_name()
+		]));
 		return $root;
 	}
 }

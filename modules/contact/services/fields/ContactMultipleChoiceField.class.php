@@ -13,7 +13,7 @@ class ContactMultipleChoiceField extends AbstractContactField
 	public function __construct()
 	{
 		parent::__construct();
-		$this->set_disable_fields_configuration(array('regex', 'default_value_small', 'default_value_medium'));
+		$this->set_disable_fields_configuration(['regex', 'default_value_small', 'default_value_medium']);
 		$this->set_name(LangLoader::get_message('user.field.type.multiple.check', 'user-lang'));
 	}
 
@@ -21,8 +21,8 @@ class ContactMultipleChoiceField extends AbstractContactField
 	{
 		$fieldset = $field->get_fieldset();
 
-		$options = array();
-		$default_values = array();
+		$options = [];
+		$default_values = [];
 		$i = 0;
 		foreach ($field->get_possible_values() as $name => $parameters)
 		{
@@ -37,18 +37,18 @@ class ContactMultipleChoiceField extends AbstractContactField
 		}
 
 		$fieldset->add_field(new FormFieldMultipleCheckbox($field->get_field_name(), $field->get_name(), $default_values, $options,
-			array(
+			[
 				'class' => 'mini-checkbox',
 				'required' => (bool)$field->is_required(),
 				'description' => $field->get_description()
-			)
+			]
 		));
 	}
 
 	public function get_value(HTMLForm $form, ContactField $field)
 	{
 		$field_name = $field->get_field_name();
-		$array = array();
+		$array = [];
 		if ($form->has_field($field_name))
 		{
 			foreach ($form->get_value($field_name) as $field => $value)

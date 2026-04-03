@@ -38,5 +38,5 @@ interface TeamSpeak3_Viewer_Interface
    * @param  array $siblings
    * @return string
    */
-  public function fetchObject(TeamSpeak3_Node_Abstract $node, array $siblings = array());
+  public function fetchObject(TeamSpeak3_Node_Abstract $node, array $siblings = []);
 }

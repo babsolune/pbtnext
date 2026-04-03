@@ -40,7 +40,7 @@ class SmalladsSetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(self::$smallads_table, self::$smallads_cats_table));
+		PersistenceContext::get_dbms_utils()->drop([self::$smallads_table, self::$smallads_cats_table]);
 	}
 
 	private function create_tables()
@@ -51,48 +51,48 @@ class SmalladsSetup extends DefaultModuleSetup
 
 	private function create_smallads_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'thumbnail_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'title' => array('type' => 'string', 'length' => 250, 'notnull' => 1, 'default' => "''"),
-			'rewrited_title' => array('type' => 'string', 'length' => 250, 'default' => "''"),
-			'summary' => array('type' => 'text', 'length' => 65000),
-			'content' => array('type' => 'text', 'length' => 65000),
-			'price' => array('type' => 'decimal', 'length' => 7, 'notnull' => 1, 'scale' => 2, 'default' => 0),
-			'max_weeks' => array('type' => 'integer', 'length' => 11),
-			'smallad_type' => array('type' => 'string', 'length' => 255),
-			'brand' => array('type' => 'string', 'length' => 255),
-			'completed' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'archived' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'views_number' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'location' => array('type' => 'text', 'length' => 65000),
-			'other_location' => array('type' => 'string', 'length' => 255),
-			'displayed_author_email' => array('type' => 'boolean', 'notnull' => 1, 'default' => 1),
-			'custom_author_email' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'displayed_author_pm' => array('type' => 'boolean', 'notnull' => 1, 'default' => 1),
-			'displayed_author_name' => array('type' => 'boolean', 'notnull' => 1, 'default' => 1),
-			'custom_author_name' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'displayed_author_phone' => array('type' => 'boolean', 'notnull' => 1, 'default' => 1),
-			'author_phone' => array('type' => 'string', 'length' => 25, 'default' => "''"),
-			'published' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'publishing_start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'publishing_end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'update_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'sources' => array('type' => 'text', 'length' => 65000),
-			'carousel' => array('type' => 'text', 'length' => 65000),
-		);
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array(
-				'id_category' => array('type' => 'key', 'fields' => 'id_category'),
-				'title' => array('type' => 'fulltext', 'fields' => 'title'),
-				'summary' => array('type' => 'fulltext', 'fields' => 'summary'),
-				'content' => array('type' => 'fulltext', 'fields' => 'content')
-			)
-		);
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'id_category' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'thumbnail_url' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'title' => ['type' => 'string', 'length' => 250, 'notnull' => 1, 'default' => "''"],
+			'rewrited_title' => ['type' => 'string', 'length' => 250, 'default' => "''"],
+			'summary' => ['type' => 'text', 'length' => 65000],
+			'content' => ['type' => 'text', 'length' => 65000],
+			'price' => ['type' => 'decimal', 'length' => 7, 'notnull' => 1, 'scale' => 2, 'default' => 0],
+			'max_weeks' => ['type' => 'integer', 'length' => 11],
+			'smallad_type' => ['type' => 'string', 'length' => 255],
+			'brand' => ['type' => 'string', 'length' => 255],
+			'completed' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0],
+			'archived' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0],
+			'views_number' => ['type' => 'integer', 'length' => 11, 'default' => 0],
+			'author_user_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'location' => ['type' => 'text', 'length' => 65000],
+			'other_location' => ['type' => 'string', 'length' => 255],
+			'displayed_author_email' => ['type' => 'boolean', 'notnull' => 1, 'default' => 1],
+			'custom_author_email' => ['type' => 'string', 'length' => 255, 'default' => "''"],
+			'displayed_author_pm' => ['type' => 'boolean', 'notnull' => 1, 'default' => 1],
+			'displayed_author_name' => ['type' => 'boolean', 'notnull' => 1, 'default' => 1],
+			'custom_author_name' => ['type' => 'string', 'length' => 255, 'default' => "''"],
+			'displayed_author_phone' => ['type' => 'boolean', 'notnull' => 1, 'default' => 1],
+			'author_phone' => ['type' => 'string', 'length' => 25, 'default' => "''"],
+			'published' => ['type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0],
+			'publishing_start_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'publishing_end_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'creation_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'update_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'sources' => ['type' => 'text', 'length' => 65000],
+			'carousel' => ['type' => 'text', 'length' => 65000],
+		];
+		$options = [
+			'primary' => ['id'],
+			'indexes' => [
+				'id_category' => ['type' => 'key', 'fields' => 'id_category'],
+				'title' => ['type' => 'fulltext', 'fields' => 'title'],
+				'summary' => ['type' => 'fulltext', 'fields' => 'summary'],
+				'content' => ['type' => 'fulltext', 'fields' => 'content']
+			]
+		];
 		PersistenceContext::get_dbms_utils()->create_table(self::$smallads_table, $fields, $options);
 	}
 
@@ -110,7 +110,7 @@ class SmalladsSetup extends DefaultModuleSetup
 
 	private function insert_smallads_cats_data()
 	{
-		PersistenceContext::get_querier()->insert(self::$smallads_cats_table, array(
+		PersistenceContext::get_querier()->insert(self::$smallads_cats_table, [
 			'id' => 1,
 			'id_parent' => 0,
 			'c_order' => 1,
@@ -119,13 +119,13 @@ class SmalladsSetup extends DefaultModuleSetup
 			'name' => $this->messages['default.category.name'],
 			'description' => $this->messages['default.category.description'],
 			'thumbnail' => '/templates/__default__/images/default_category.webp'
-		));
+		]);
 	}
 
 	private function insert_smallads_data()
 	{
 		$common_lang = langloader::get('common', 'smallads');
-		PersistenceContext::get_querier()->insert(self::$smallads_table, array(
+		PersistenceContext::get_querier()->insert(self::$smallads_table, [
 			'id' => 1,
 			'id_category' => 1,
 			'thumbnail_url' => '/templates/__default__/images/default_item.webp',
@@ -146,9 +146,9 @@ class SmalladsSetup extends DefaultModuleSetup
 			'publishing_end_date' => 0,
 			'creation_date' => time(),
 			'update_date' => 0,
-			'sources' => TextHelper::serialize(array()),
-			'carousel' => TextHelper::serialize(array())
-		));
+			'sources' => TextHelper::serialize([]),
+			'carousel' => TextHelper::serialize([])
+		]);
 	}
 }
 

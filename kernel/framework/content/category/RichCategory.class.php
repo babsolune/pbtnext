@@ -18,23 +18,23 @@ class RichCategory extends Category
 
 	protected function set_kernel_additional_attributes_list()
 	{
-		$this->add_additional_attribute('description', array('type' => 'text', 'length' => 65000, 'attribute_field_parameters' => array(
+		$this->add_additional_attribute('description', ['type' => 'text', 'length' => 65000, 'attribute_field_parameters' => [
 			'field_class' => 'FormFieldRichTextEditor',
 			'label'       => LangLoader::get_message('form.description', 'form-lang')
-			)
-		));
-		$this->add_additional_attribute('thumbnail', array(
+			]
+		]);
+		$this->add_additional_attribute('thumbnail', [
 			'type'    => 'string',
 			'length'  => 255,
 			'notnull' => 1,
 			'default' => "''",
-			'attribute_field_parameters' => array(
+			'attribute_field_parameters' => [
 				'field_class'     => 'FormFieldThumbnail',
 				'label'           => LangLoader::get_message('form.thumbnail', 'form-lang'),
 				'default_value'   => FormFieldThumbnail::DEFAULT_VALUE,
 				'default_picture' => self::THUMBNAIL_URL
-			)
-		));
+			]
+		]);
 	}
 
 	public function set_description($description)

@@ -61,11 +61,11 @@ class AdminLangDeleteController extends DefaultAdminController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldRadioChoice('drop_files', $this->multiple ? $this->lang['addon.langs.drop.multiple'] : $this->lang['addon.langs.drop'], '0',
-			array(
+			[
 				new FormFieldRadioChoiceOption($this->lang['common.yes'], '1'),
 				new FormFieldRadioChoiceOption($this->lang['common.no'], '0')
-			),
-			array('class' => 'inline-radio custom-radio')
+			],
+			['class' => 'inline-radio custom-radio']
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -81,7 +81,7 @@ class AdminLangDeleteController extends DefaultAdminController
 			foreach ($this->lang_id as $id)
 			{
 				$lang = LangsManager::get_lang($id);
-				HooksService::execute_hook_typed_action('uninstall', 'lang', $id, array_merge(array('title' => $lang->get_configuration()->get_name(), $lang->get_configuration()->get_properties())));
+				HooksService::execute_hook_typed_action('uninstall', 'lang', $id, array_merge(['title' => $lang->get_configuration()->get_name(), $lang->get_configuration()->get_properties()]));
                 LangsManager::uninstall($id, $drop_files);
             }
 			$this->file->delete();
@@ -89,7 +89,7 @@ class AdminLangDeleteController extends DefaultAdminController
 		else
 		{
 			$lang = LangsManager::get_lang($this->lang_id);
-            HooksService::execute_hook_typed_action('uninstall', 'lang', $this->lang_id, array_merge(array('title' => $lang->get_configuration()->get_name(), $lang->get_configuration()->get_properties())));
+            HooksService::execute_hook_typed_action('uninstall', 'lang', $this->lang_id, array_merge(['title' => $lang->get_configuration()->get_name(), $lang->get_configuration()->get_properties()]));
             LangsManager::uninstall($this->lang_id, $drop_files);
 		}
 	}

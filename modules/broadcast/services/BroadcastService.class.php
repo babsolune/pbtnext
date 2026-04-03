@@ -21,7 +21,7 @@ class BroadcastService
 	 * @desc Count items number.
 	 * @param string $condition (optional) : Restriction to apply to the list of items
 	 */
-	public static function count($condition = '', $parameters = array())
+	public static function count($condition = '', $parameters = [])
 	{
 		return self::$db_querier->count(BroadcastSetup::$broadcast_table, $condition, $parameters);
 	}
@@ -35,7 +35,7 @@ class BroadcastService
 
 	public static function update(BroadcastItem $item)
 	{
-		self::$db_querier->update(BroadcastSetup::$broadcast_table, $item->get_properties(), 'WHERE id=:id', array('id' => $item->get_id()));
+		self::$db_querier->update(BroadcastSetup::$broadcast_table, $item->get_properties(), 'WHERE id=:id', ['id' => $item->get_id()]);
 	}
 
 	public static function delete(int $id)
@@ -44,9 +44,9 @@ class BroadcastService
 			$controller = PHPBoostErrors::user_in_read_only();
 			DispatchManager::redirect($controller);
 		}
-		self::$db_querier->delete(BroadcastSetup::$broadcast_table, 'WHERE id=:id', array('id' => $id));
+		self::$db_querier->delete(BroadcastSetup::$broadcast_table, 'WHERE id=:id', ['id' => $id]);
 
-		self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'broadcast', 'id' => $id));
+		self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', ['module' => 'broadcast', 'id' => $id]);
 	}
 
 	public static function get_item(int $id)
@@ -54,11 +54,11 @@ class BroadcastService
 		$row = self::$db_querier->select_single_row_query('SELECT broadcast.*, member.*
 			FROM ' . BroadcastSetup::$broadcast_table . ' broadcast
 			LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = broadcast.author_user_id
-			WHERE ' . self::$module_id . '.id=:id', array(
+			WHERE ' . self::$module_id . '.id=:id', [
 				'module_id'       => self::$module_id,
 				'id'              => $id,
 				'current_user_id' => AppContext::get_current_user()->get_id()
-			)
+			]
 		);
 
 		$item = new BroadcastItem();

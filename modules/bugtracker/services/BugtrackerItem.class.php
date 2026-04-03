@@ -276,7 +276,7 @@ class BugtrackerItem
 
 	public function get_properties()
 	{
-		return array(
+		return [
 			'id' => $this->get_id(),
 			'title' => $this->get_title(),
 			'content' => $this->get_content(),
@@ -293,7 +293,7 @@ class BugtrackerItem
 			'detected_in' => $this->get_detected_in(),
 			'fixed_in' => $this->get_fixed_in(),
 			'assigned_to_id' => $this->get_assigned_to_id(),
-		);
+		];
 	}
 
 	public function set_properties(array $properties)
@@ -372,7 +372,7 @@ class BugtrackerItem
 		return array_merge(
 			Date::get_array_tpl_vars($this->submit_date, 'submit_date'),
 			Date::get_array_tpl_vars($this->fix_date, 'fix_date'),
-			array(
+			[
 			'C_PROGRESS'              => $config->is_progress_bar_displayed(),
 			'C_FIX_DATE'              => $this->fix_date != null,
 			'C_FIXED_IN'              => $this->detected_in,
@@ -406,7 +406,7 @@ class BugtrackerItem
 			'U_LINK'           => $this->get_item_url(),
 			'U_HISTORY'        => BugtrackerUrlBuilder::history($this->id)->rel(),
 			'U_COMMENTS'       => BugtrackerUrlBuilder::detail($this->id . '-' . $this->rewrited_title . '#comments-list')->rel()
-		));
+		]);
 	}
 }
 ?>

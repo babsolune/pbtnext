@@ -71,7 +71,7 @@ class TeamSpeak3_Helper_Signal_Handler
    * @param  array $args
    * @return mixed
    */
-  public function call(array $args = array())
+  public function call(array $args = [])
   {
     return call_user_func_array($this->callback, $args);
   }

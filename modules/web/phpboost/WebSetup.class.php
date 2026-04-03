@@ -41,7 +41,7 @@ class WebSetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(self::$web_table, self::$web_cats_table));
+		PersistenceContext::get_dbms_utils()->drop([self::$web_table, self::$web_cats_table]);
 	}
 
 	private function create_tables()
@@ -52,35 +52,35 @@ class WebSetup extends DefaultModuleSetup
 
 	private function create_web_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'title' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'rewrited_title' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'website_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'content' => array('type' => 'text', 'length' => 65000),
-			'summary' => array('type' => 'text', 'length' => 65000),
-			'published' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'publishing_start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'publishing_end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'update_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'views_number' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'thumbnail' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'partner' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'partner_thumbnail' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'privileged_partner' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array(
-				'id_category' => array('type' => 'key', 'fields' => 'id_category'),
-				'title' => array('type' => 'fulltext', 'fields' => 'title'),
-				'content' => array('type' => 'fulltext', 'fields' => 'content'),
-				'summary' => array('type' => 'fulltext', 'fields' => 'summary')
-			)
-		);
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'id_category' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'title' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'rewrited_title' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'website_url' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'content' => ['type' => 'text', 'length' => 65000],
+			'summary' => ['type' => 'text', 'length' => 65000],
+			'published' => ['type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0],
+			'publishing_start_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'publishing_end_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'creation_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'update_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'author_user_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'views_number' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'thumbnail' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'partner' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0],
+			'partner_thumbnail' => ['type' => 'string', 'length' => 255, 'default' => "''"],
+			'privileged_partner' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0]
+		];
+		$options = [
+			'primary' => ['id'],
+			'indexes' => [
+				'id_category' => ['type' => 'key', 'fields' => 'id_category'],
+				'title' => ['type' => 'fulltext', 'fields' => 'title'],
+				'content' => ['type' => 'fulltext', 'fields' => 'content'],
+				'summary' => ['type' => 'fulltext', 'fields' => 'summary']
+			]
+		];
 		PersistenceContext::get_dbms_utils()->create_table(self::$web_table, $fields, $options);
 	}
 
@@ -98,7 +98,7 @@ class WebSetup extends DefaultModuleSetup
 
 	private function insert_web_cats_data()
 	{
-		PersistenceContext::get_querier()->insert(self::$web_cats_table, array(
+		PersistenceContext::get_querier()->insert(self::$web_cats_table, [
 			'id' => 1,
 			'id_parent' => 0,
 			'c_order' => 1,
@@ -107,12 +107,12 @@ class WebSetup extends DefaultModuleSetup
 			'name' => $this->messages['default.category.name'],
 			'description' => $this->messages['default.category.description'],
 			'thumbnail' =>  FormFieldThumbnail::DEFAULT_VALUE
-		));
+		]);
 	}
 
 	private function insert_web_data()
 	{
-		PersistenceContext::get_querier()->insert(self::$web_table, array(
+		PersistenceContext::get_querier()->insert(self::$web_table, [
 			'id' => 1,
 			'id_category' => 1,
 			'title' => $this->messages['default.item.title'],
@@ -129,7 +129,7 @@ class WebSetup extends DefaultModuleSetup
 			'views_number' => 0,
 			'partner' => 1,
 			'partner_thumbnail' => '/modules/web/templates/images/phpboost_banner.png'
-		));
+		]);
 	}
 }
 ?>

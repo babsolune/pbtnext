@@ -10,16 +10,16 @@
 
 class QuotesCache implements CacheData
 {
-	private $items = array();
-	private $categories = array();
-	private $writers = array();
+	private $items = [];
+	private $categories = [];
+	private $writers = [];
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{
-		$this->items = array();
+		$this->items = [];
 
 		$result = PersistenceContext::get_querier()->select('SELECT id, id_category, writer, rewrited_writer, content
 			FROM ' . QuotesSetup::$quotes_table . '
@@ -32,12 +32,12 @@ class QuotesCache implements CacheData
 		{
 			$this->categories[] = $row['id_category'];
 
-			$this->items[$row['id_category']][] = array(
+			$this->items[$row['id_category']][] = [
 				'id' => $row['id'],
 				'writer' => $row['writer'],
 				'rewrited_writer' => $row['rewrited_writer'],
 				'content' => $row['content']
-			);
+			];
 		}
 		$result->dispose();
 

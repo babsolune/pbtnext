@@ -82,11 +82,11 @@ class AdminModuleDeleteController extends DefaultAdminController
 	// 	$form->add_fieldset($fieldset);
 
 	// 	$fieldset->add_field(new FormFieldRadioChoice('drop_files', $this->multiple ? $this->lang['addon.modules.drop.multiple'] : $this->lang['addon.modules.drop'], '0',
-	// 		array(
+	// 		[
 	// 			new FormFieldRadioChoiceOption($this->lang['common.yes'], '1'),
 	// 			new FormFieldRadioChoiceOption($this->lang['common.no'], '0')
-	// 		),
-	// 		array('class' => 'inline-radio custom-radio')
+	// 		],
+	// 		['class' => 'inline-radio custom-radio']
 	// 	));
 
 	// 	$this->submit_button = new FormButtonDefaultSubmit();

@@ -37,12 +37,12 @@ class SocialNetworksExtensionPointProvider extends ExtensionPointProvider
 
 	public function menus()
 	{
-		return new ModuleMenus(array(new SocialNetworksModuleMiniMenu()));
+		return new ModuleMenus([new SocialNetworksModuleMiniMenu()]);
 	}
 
 	public function url_mappings()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/SocialNetworks/index.php')));
+		return new UrlMappings([new DispatcherUrlMapping('/SocialNetworks/index.php')]);
 	}
 }
 ?>

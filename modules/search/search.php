@@ -31,12 +31,12 @@ $search = $request->get_value('q', '');
 $unsecure_search = stripslashes($request->get_value('q', ''));
 $search_in = $request->get_postvalue('search_in', 'all');
 $selected_modules = $request->get_postvalue('searched_modules', '');
-$selected_modules = !empty($selected_modules) ? explode(',', $selected_modules) : array();
+$selected_modules = !empty($selected_modules) ? explode(',', $selected_modules) : [];
 $query_mode = (bool)$request->get_postvalue('query_mode', true);
 
 if ($search_in !== 'all')
 {
-	$selected_modules = array($search_in);
+	$selected_modules = [$search_in];
 }
 else if (count($selected_modules) == 1)
 {
@@ -60,8 +60,8 @@ require_once('../modules/search/search.inc.php');
 
 //----------------------------------------------------------------------- Main
 $config = SearchConfig::load();
-$modules_args = array();
-$used_modules = array();
+$modules_args = [];
+$used_modules = [];
 
 // Génération des formulaires précomplétés et passage aux templates
 $provider_service = AppContext::get_extension_provider_service();
@@ -99,27 +99,27 @@ foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as
 					}
 				}
 
-				$view->assign_block_vars('forms', array(
+				$view->assign_block_vars('forms', [
 					'C_SEARCH_FORM' => true,
 					'C_SELECTED'    => count($selected_modules) == 1 ? in_array($module->get_id(), $selected_modules) : false,
 					'MODULE_NAME'   => $module->get_id(),
 					'SEARCH_FORM'   => $search_extensions_point[$module->get_id()]->get_search_form($modules_args[$module->get_id()]),
 					'L_MODULE_NAME' => TextHelper::ucfirst($module_configuration->get_name()),
-				));
+				]);
 			}
 			else
 			{
-				$view->assign_block_vars('forms', array(
+				$view->assign_block_vars('forms', [
 					'C_SEARCH_FORM' => false,
 					'C_SELECTED'    => count($selected_modules) == 1 ? in_array($module->get_id(), $selected_modules) : false,
 					'MODULE_NAME'   => $module->get_id(),
 					'SEARCH_FORM'   => $lang['search.no.options'],
 					'L_MODULE_NAME' => TextHelper::ucfirst($module_configuration->get_name()),
-				));
+				]);
 			}
 
 			// Récupération de la liste des modules à traiter
-			if ( ($selected_modules === array()) || ($search_in === $module->get_id()) ||
+			if ( ($selected_modules === []) || ($search_in === $module->get_id()) ||
 				(($search_in === 'all') && (in_array($module->get_id(), $selected_modules))) )
 			{
 				$selected = ' selected="selected"';
@@ -130,11 +130,11 @@ foreach (ModulesManager::get_installed_modules_map_sorted_by_localized_name() as
 				$selected = '';
 			}
 
-			$view->assign_block_vars('searched_modules', array(
+			$view->assign_block_vars('searched_modules', [
 				'MODULE'        => $module->get_id(),
 				'SELECTED'      => $selected,
 				'L_MODULE_NAME' => TextHelper::ucfirst($module_configuration->get_name()),
-			));
+			]);
 		}
 	}
 }
@@ -146,20 +146,20 @@ if (!empty($search))
 	$view = new FileTemplate('search/search_results.tpl');
 	$view->add_lang($lang);
 
-	$results = array();
-	$idsSearch = array();
+	$results = [];
+	$idsSearch = [];
 
 	if ( $search_in != 'all' ) // If we are searching in only one module
 	{
 		if (isset($used_modules[$search_in]) && isset($modules_args[$search_in]))
 		{
-			$used_modules = array($search_in => $used_modules[$search_in]);
-			$modules_args = array($search_in => $modules_args[$search_in]);
+			$used_modules = [$search_in => $used_modules[$search_in]];
+			$modules_args = [$search_in => $modules_args[$search_in]];
 		}
 		else
 		{
-			$used_modules = array();
-			$modules_args = array();
+			$used_modules = [];
+			$modules_args = [];
 		}
 	}
 	else
@@ -179,11 +179,11 @@ if (!empty($search))
 
 	foreach ($used_modules as $module_id => $extension_point)
 	{
-		$view->assign_block_vars('results', array(
+		$view->assign_block_vars('results', [
 			'MODULE_NAME' => $module_id,
 			'ID_SEARCH' => $idsSearch[$module_id],
 			'L_MODULE_NAME' => TextHelper::ucfirst(ModulesManager::get_module($module_id)->get_configuration()->get_name()),
-		));
+		]);
 	}
 
 	$all_html_result = '';

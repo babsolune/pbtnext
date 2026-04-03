@@ -45,11 +45,11 @@ class HistoryConfig extends AbstractConfigData
 
 	public function get_default_values()
 	{
-		return array(
-			self::HISTORY_TOPICS_DISABLED => array(),
-			self::DISABLED_MODULES        => array(),
+		return [
+			self::HISTORY_TOPICS_DISABLED => [],
+			self::DISABLED_MODULES        => [],
 			self::LOG_RETENTION_PERIOD    => 31557600
-		);
+		];
 	}
 
 	/**

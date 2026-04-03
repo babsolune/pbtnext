@@ -32,10 +32,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_BlogList
      */
-    public function listByUser($userId, $optParams = array()) {
-      $params = array('userId' => $userId);
+    public function listByUser($userId, $optParams = []) {
+      $params = ['userId' => $userId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('listByUser', array($params));
+      $data = $this->__call('listByUser', [$params]);
       if ($this->useObjects()) {
         return new Google_BlogList($data);
       } else {
@@ -50,10 +50,10 @@
      * @opt_param string url The URL of the blog to retrieve.
      * @return Google_Blog
      */
-    public function getByUrl($optParams = array()) {
-      $params = array();
+    public function getByUrl($optParams = []) {
+      $params = [];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('getByUrl', array($params));
+      $data = $this->__call('getByUrl', [$params]);
       if ($this->useObjects()) {
         return new Google_Blog($data);
       } else {
@@ -69,10 +69,10 @@
      * @opt_param string maxPosts Maximum number of posts to pull back with the blog.
      * @return Google_Blog
      */
-    public function get($blogId, $optParams = array()) {
-      $params = array('blogId' => $blogId);
+    public function get($blogId, $optParams = []) {
+      $params = ['blogId' => $blogId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Blog($data);
       } else {
@@ -100,10 +100,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Post
      */
-    public function insert($blogId, Google_Post $postBody, $optParams = array()) {
-      $params = array('blogId' => $blogId, 'postBody' => $postBody);
+    public function insert($blogId, Google_Post $postBody, $optParams = []) {
+      $params = ['blogId' => $blogId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_Post($data);
       } else {
@@ -119,10 +119,10 @@
      * @opt_param string q Query terms to search this blog for matching posts.
      * @return Google_PostList
      */
-    public function search($blogId, $optParams = array()) {
-      $params = array('blogId' => $blogId);
+    public function search($blogId, $optParams = []) {
+      $params = ['blogId' => $blogId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('search', array($params));
+      $data = $this->__call('search', [$params]);
       if ($this->useObjects()) {
         return new Google_PostList($data);
       } else {
@@ -139,10 +139,10 @@
      * @opt_param string maxComments Maximum number of comments to pull back on a post.
      * @return Google_Post
      */
-    public function get($blogId, $postId, $optParams = array()) {
-      $params = array('blogId' => $blogId, 'postId' => $postId);
+    public function get($blogId, $postId, $optParams = []) {
+      $params = ['blogId' => $blogId, 'postId' => $postId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Post($data);
       } else {
@@ -163,10 +163,10 @@
      * @opt_param bool fetchBodies Whether the body content of posts is included.
      * @return Google_PostList
      */
-    public function listPosts($blogId, $optParams = array()) {
-      $params = array('blogId' => $blogId);
+    public function listPosts($blogId, $optParams = []) {
+      $params = ['blogId' => $blogId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_PostList($data);
       } else {
@@ -182,10 +182,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Post
      */
-    public function update($blogId, $postId, Google_Post $postBody, $optParams = array()) {
-      $params = array('blogId' => $blogId, 'postId' => $postId, 'postBody' => $postBody);
+    public function update($blogId, $postId, Google_Post $postBody, $optParams = []) {
+      $params = ['blogId' => $blogId, 'postId' => $postId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('update', array($params));
+      $data = $this->__call('update', [$params]);
       if ($this->useObjects()) {
         return new Google_Post($data);
       } else {
@@ -202,10 +202,10 @@
      * @opt_param string maxComments Maximum number of comments to pull back on a post.
      * @return Google_Post
      */
-    public function getByPath($blogId, $optParams = array()) {
-      $params = array('blogId' => $blogId);
+    public function getByPath($blogId, $optParams = []) {
+      $params = ['blogId' => $blogId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('getByPath', array($params));
+      $data = $this->__call('getByPath', [$params]);
       if ($this->useObjects()) {
         return new Google_Post($data);
       } else {
@@ -221,10 +221,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Post
      */
-    public function patch($blogId, $postId, Google_Post $postBody, $optParams = array()) {
-      $params = array('blogId' => $blogId, 'postId' => $postId, 'postBody' => $postBody);
+    public function patch($blogId, $postId, Google_Post $postBody, $optParams = []) {
+      $params = ['blogId' => $blogId, 'postId' => $postId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('patch', array($params));
+      $data = $this->__call('patch', [$params]);
       if ($this->useObjects()) {
         return new Google_Post($data);
       } else {
@@ -238,10 +238,10 @@
      * @param string $postId The ID of the Post.
      * @param array $optParams Optional parameters.
      */
-    public function delete($blogId, $postId, $optParams = array()) {
-      $params = array('blogId' => $blogId, 'postId' => $postId);
+    public function delete($blogId, $postId, $optParams = []) {
+      $params = ['blogId' => $blogId, 'postId' => $postId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       return $data;
     }
   }
@@ -266,10 +266,10 @@
      * @opt_param bool fetchBodies Whether to retrieve the Page bodies.
      * @return Google_PageList
      */
-    public function listPages($blogId, $optParams = array()) {
-      $params = array('blogId' => $blogId);
+    public function listPages($blogId, $optParams = []) {
+      $params = ['blogId' => $blogId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_PageList($data);
       } else {
@@ -284,10 +284,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Page
      */
-    public function get($blogId, $pageId, $optParams = array()) {
-      $params = array('blogId' => $blogId, 'pageId' => $pageId);
+    public function get($blogId, $pageId, $optParams = []) {
+      $params = ['blogId' => $blogId, 'pageId' => $pageId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Page($data);
       } else {
@@ -321,10 +321,10 @@
      * @opt_param bool fetchBodies Whether the body content of the comments is included.
      * @return Google_CommentList
      */
-    public function listComments($blogId, $postId, $optParams = array()) {
-      $params = array('blogId' => $blogId, 'postId' => $postId);
+    public function listComments($blogId, $postId, $optParams = []) {
+      $params = ['blogId' => $blogId, 'postId' => $postId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_CommentList($data);
       } else {
@@ -340,10 +340,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Comment
      */
-    public function get($blogId, $postId, $commentId, $optParams = array()) {
-      $params = array('blogId' => $blogId, 'postId' => $postId, 'commentId' => $commentId);
+    public function get($blogId, $postId, $commentId, $optParams = []) {
+      $params = ['blogId' => $blogId, 'postId' => $postId, 'commentId' => $commentId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Comment($data);
       } else {
@@ -370,10 +370,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_User
      */
-    public function get($userId, $optParams = array()) {
-      $params = array('userId' => $userId);
+    public function get($userId, $optParams = []) {
+      $params = ['userId' => $userId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_User($data);
       } else {
@@ -520,7 +520,7 @@ class Google_BlogList extends Google_Model {
   protected $__itemsDataType = 'array';
   public $items;
   public $kind;
-  public function setItems(/* array(Google_Blog) */ $items) {
+  public function setItems(/* [Google_Blog] */ $items) {
     $this->assertIsArray($items, 'Google_Blog', __METHOD__);
     $this->items = $items;
   }
@@ -588,7 +588,7 @@ class Google_BlogPosts extends Google_Model {
   public function getTotalItems() {
     return $this->totalItems;
   }
-  public function setItems(/* array(Google_Post) */ $items) {
+  public function setItems(/* [Google_Post] */ $items) {
     $this->assertIsArray($items, 'Google_Post', __METHOD__);
     $this->items = $items;
   }
@@ -760,7 +760,7 @@ class Google_CommentList extends Google_Model {
   public function getNextPageToken() {
     return $this->nextPageToken;
   }
-  public function setItems(/* array(Google_Comment) */ $items) {
+  public function setItems(/* [Google_Comment] */ $items) {
     $this->assertIsArray($items, 'Google_Comment', __METHOD__);
     $this->items = $items;
   }
@@ -926,7 +926,7 @@ class Google_PageList extends Google_Model {
   protected $__itemsDataType = 'array';
   public $items;
   public $kind;
-  public function setItems(/* array(Google_Page) */ $items) {
+  public function setItems(/* [Google_Page] */ $items) {
     $this->assertIsArray($items, 'Google_Page', __METHOD__);
     $this->items = $items;
   }
@@ -988,7 +988,7 @@ class Google_Post extends Google_Model {
   public function getReplies() {
     return $this->replies;
   }
-  public function setLabels(/* array(Google_string) */ $labels) {
+  public function setLabels(/* [Google_string] */ $labels) {
     $this->assertIsArray($labels, 'Google_string', __METHOD__);
     $this->labels = $labels;
   }
@@ -1117,7 +1117,7 @@ class Google_PostList extends Google_Model {
   public function getNextPageToken() {
     return $this->nextPageToken;
   }
-  public function setItems(/* array(Google_Post) */ $items) {
+  public function setItems(/* [Google_Post] */ $items) {
     $this->assertIsArray($items, 'Google_Post', __METHOD__);
     $this->items = $items;
   }
@@ -1181,7 +1181,7 @@ class Google_PostReplies extends Google_Model {
   public function getTotalItems() {
     return $this->totalItems;
   }
-  public function setItems(/* array(Google_Comment) */ $items) {
+  public function setItems(/* [Google_Comment] */ $items) {
     $this->assertIsArray($items, 'Google_Comment', __METHOD__);
     $this->items = $items;
   }

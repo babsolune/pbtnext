@@ -33,7 +33,7 @@ class HTMLNewsletterMail extends AbstractNewsletterMail
 	private function clean_html($content)
 	{
 		$content = TextHelper::htmlspecialchars($content, ENT_NOQUOTES);
-		$content = str_replace(array('&amp;', '&lt;', '&gt;'), array('&', '<', '>'), $content);
+		$content = str_replace(['&amp;', '&lt;', '&gt;'], ['&', '<', '>'], $content);
 		return $content;
 	}
 }

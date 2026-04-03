@@ -42,10 +42,10 @@ class CalendarDeleteItemController extends DefaultModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldRadioChoice('delete_serie', $this->lang['common.delete'], 0,
-			array(
+			[
 				new FormFieldRadioChoiceOption($this->lang['calendar.delete.occurrence'], 0),
 				new FormFieldRadioChoiceOption($this->lang['calendar.delete.serie'], 1)
-			)
+			]
 		));
 
 		$fieldset->add_field(new FormFieldHidden('referrer', $request->get_url_referrer()));
@@ -84,7 +84,7 @@ class CalendarDeleteItemController extends DefaultModuleController
 			}
 
 			CalendarService::delete_all_serie_items($this->item->get_content()->get_id());
-			PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module = :module AND id_in_module = :id', array('module' => 'calendar', 'id' => !$this->item->get_parent_id() ? $this->item->get_id() : $this->item->get_parent_id()));
+			PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module = :module AND id_in_module = :id', ['module' => 'calendar', 'id' => !$this->item->get_parent_id() ? $this->item->get_id() : $this->item->get_parent_id()]);
 		}
 		else
 		{
@@ -118,9 +118,9 @@ class CalendarDeleteItemController extends DefaultModuleController
 	private function redirect(HTTPRequestCustom $request)
 	{
 		if ($this->item->belongs_to_a_serie())
-			AppContext::get_response()->redirect(($this->form->get_value('referrer') && !TextHelper::strstr($request->get_url_referrer(), CalendarUrlBuilder::display($this->item->get_content()->get_category()->get_id(), $this->item->get_content()->get_category()->get_rewrited_name(), $this->item->get_id(), $this->item->get_content()->get_rewrited_title())->rel()) ? $this->form->get_value('referrer') : CalendarUrlBuilder::home($this->item->get_start_date()->get_year(), $this->item->get_start_date()->get_month())), StringVars::replace_vars($this->lang['calendar.message.success.delete'], array('title' => $this->item->get_content()->get_title())));
+			AppContext::get_response()->redirect(($this->form->get_value('referrer') && !TextHelper::strstr($request->get_url_referrer(), CalendarUrlBuilder::display($this->item->get_content()->get_category()->get_id(), $this->item->get_content()->get_category()->get_rewrited_name(), $this->item->get_id(), $this->item->get_content()->get_rewrited_title())->rel()) ? $this->form->get_value('referrer') : CalendarUrlBuilder::home($this->item->get_start_date()->get_year(), $this->item->get_start_date()->get_month())), StringVars::replace_vars($this->lang['calendar.message.success.delete'], ['title' => $this->item->get_content()->get_title()]));
 		else
-			AppContext::get_response()->redirect(($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), CalendarUrlBuilder::display($this->item->get_content()->get_category()->get_id(), $this->item->get_content()->get_category()->get_rewrited_name(), $this->item->get_id(), $this->item->get_content()->get_rewrited_title())->rel()) ? $request->get_url_referrer() : CalendarUrlBuilder::home($this->item->get_start_date()->get_year(), $this->item->get_start_date()->get_month())), StringVars::replace_vars($this->lang['calendar.message.success.delete'], array('title' => $this->item->get_content()->get_title())));
+			AppContext::get_response()->redirect(($request->get_url_referrer() && !TextHelper::strstr($request->get_url_referrer(), CalendarUrlBuilder::display($this->item->get_content()->get_category()->get_id(), $this->item->get_content()->get_category()->get_rewrited_name(), $this->item->get_id(), $this->item->get_content()->get_rewrited_title())->rel()) ? $request->get_url_referrer() : CalendarUrlBuilder::home($this->item->get_start_date()->get_year(), $this->item->get_start_date()->get_month())), StringVars::replace_vars($this->lang['calendar.message.success.delete'], ['title' => $this->item->get_content()->get_title()]));
 	}
 
 	private function generate_response(View $view)

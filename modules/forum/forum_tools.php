@@ -46,11 +46,11 @@ if (!$is_guest) {
 		FROM " . PREFIX . "forum_topics t
 		LEFT JOIN " . PREFIX . "forum_cats c ON c.id = t.id_category
 		LEFT JOIN " . PREFIX . "forum_view v ON v.idtopic = t.id AND v.user_id = :user_id
-		WHERE t.last_timestamp >= :last_timestamp AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL)" . $clause_topic . " AND c.id IN :authorized_categories", array(
+		WHERE t.last_timestamp >= :last_timestamp AND (v.last_view_id != t.last_msg_id OR v.last_view_id IS NULL)" . $clause_topic . " AND c.id IN :authorized_categories", [
 			'authorized_categories' => $authorized_categories,
 			'last_timestamp' => $max_time_msg,
 			'user_id' => AppContext::get_current_user()->get_id()
-		));
+		]);
 		$nbr_msg_not_read = $row['nbr_msg_not_read'];
 	} catch (RowNotFoundException $e) {
 
@@ -59,15 +59,15 @@ if (!$is_guest) {
 
 //Formulaire de connexion sur le forum.
 if ($config->is_connexion_form_displayed()) {
-	$display_connexion = array(
+	$display_connexion = [
 		'C_USER_NOTCONNECTED' => !$is_connected,
 		'C_FORUM_CONNEXION'   => true,
-	);
+	];
 	$top_view->put_all($display_connexion);
 	$bottom_view->put_all($display_connexion);
 }
 
-$vars_tpl = array(
+$vars_tpl = [
 	'C_USER_CONNECTED'         => $is_connected,
 	'C_DISPLAY_UNREAD_DETAILS' => !$is_guest,
 	'C_MODERATION_PANEL'       => AppContext::get_current_user()->check_level(1),
@@ -81,7 +81,7 @@ $vars_tpl = array(
 	'U_UNREAD_MESSAGES'        => Url::to_rel('/forum/unread.php'),
 	'U_UNANSWERED_TOPICS'      => Url::to_rel('/forum/noanswer.php'),
 	'U_MARK_AS_READ'           => Url::to_rel('/forum/action' . url('.php?read=1', '')),
-);
+];
 
 $top_view->put_all($vars_tpl);
 $bottom_view->put_all($vars_tpl);

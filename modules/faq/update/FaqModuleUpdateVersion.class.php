@@ -15,8 +15,8 @@ class FaqModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('faq');
 
-		$this->content_tables = array(array('name' => PREFIX . 'faq', 'content_field' => 'answer'));
-		self::$delete_old_files_list = array(
+		$this->content_tables = [['name' => PREFIX . 'faq', 'content_field' => 'answer']];
+		self::$delete_old_files_list = [
 			'/controllers/ajax/FaqAjaxDeleteQuestionController.class.php',
 			'/controllers/FaqDeleteController.class.php',
 			'/controllers/FaqDisplayCategoryController.class.php',
@@ -35,27 +35,27 @@ class FaqModuleUpdateVersion extends ModuleUpdateVersion
 			'/templates/FaqDisplaySeveralFaqQuestionsController.tpl',
 			'/templates/faq-mini.css',
 			'/util/AdminFaqDisplayResponse.class.php'
-		);
-		self::$delete_old_folders_list = array(
+		];
+		self::$delete_old_folders_list = [
 			'/controllers/categories',
 			'/controllers/ajax'
-		);
+		];
 
-		$this->database_columns_to_modify = array(
-			array(
+		$this->database_columns_to_modify = [
+			[
 				'table_name' => PREFIX . 'faq_cats',
-				'columns' => array(
+				'columns' => [
 					'image'    => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""'
-				)
-			),
-			array(
+				]
+			],
+			[
 				'table_name' => PREFIX . 'faq',
-				'columns' => array(
+				'columns' => [
 					'question' => 'title VARCHAR(255) NOT NULL DEFAULT ""',
 					'answer'   => 'content MEDIUMTEXT',
-				)
-			)
-		);
+				]
+			]
+		];
 	}
 
 	protected function update_content()

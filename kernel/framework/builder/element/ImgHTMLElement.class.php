@@ -13,9 +13,9 @@
 class ImgHTMLElement extends AbstractHTMLElement
 {
 	private $url;
-	private $attributes = array();
+	private $attributes = [];
 
-	public function __construct($url, $attributes = array(), $css_class = '')
+	public function __construct($url, $attributes = [], $css_class = '')
 	{
 		if ($url instanceof Url)
 		{
@@ -31,18 +31,18 @@ class ImgHTMLElement extends AbstractHTMLElement
 	{
 		$tpl = new FileTemplate('framework/builder/element/ImgHTMLElement.tpl');
 
-		$tpl->put_all(array(
+		$tpl->put_all([
 			'C_HAS_CSS_CLASSES' => $this->has_css_class(),
 			'CSS_CLASSES' => $this->get_css_class(),
 			'URL' => $this->url
-		));
+		]);
 
 		foreach ($this->attributes as $type => $value)
 		{
-			$tpl->assign_block_vars('attributes', array(
+			$tpl->assign_block_vars('attributes', [
 				'TYPE' => $type,
 				'VALUE' => $value
-			));
+			]);
 		}
 
 		return $tpl->render();

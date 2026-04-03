@@ -28,11 +28,11 @@ class WebDeadLinkController extends AbstractController
 
 		if ($this->item !== null && $this->item->is_published())
 		{
-			if (!PersistenceContext::get_querier()->row_exists(PREFIX . 'events', 'WHERE id_in_module=:id_in_module AND module=\'web\' AND current_status = 0', array('id_in_module' => $this->item->get_id())))
+			if (!PersistenceContext::get_querier()->row_exists(PREFIX . 'events', 'WHERE id_in_module=:id_in_module AND module=\'web\' AND current_status = 0', ['id_in_module' => $this->item->get_id()]))
 			{
 				$contribution = new Contribution();
 				$contribution->set_id_in_module($this->item->get_id());
-				$contribution->set_entitled(StringVars::replace_vars(LangLoader::get_message('contribution.dead.link.name', 'contribution-lang'), array('link_name' => $this->item->get_title())));
+				$contribution->set_entitled(StringVars::replace_vars(LangLoader::get_message('contribution.dead.link.name', 'contribution-lang'), ['link_name' => $this->item->get_title()]));
 				$contribution->set_fixing_url(WebUrlBuilder::edit($this->item->get_id())->relative());
 				$contribution->set_description(LangLoader::get_message('contribution.dead.link.clue', 'contribution-lang'));
 				$contribution->set_poster_id(AppContext::get_current_user()->get_id());

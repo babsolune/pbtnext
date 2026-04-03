@@ -26,12 +26,12 @@ class BugtrackerCommentsTopicEvents extends CommentsTopicEvents
 		$now = new Date();
 
 		//New line in the bug history
-		BugtrackerService::add_history(array(
+		BugtrackerService::add_history([
 			'bug_id' => $bug_id,
 			'updater_id' => AppContext::get_current_user()->get_id(),
 			'update_date' => $now->get_timestamp(),
 			'change_comment' => $lang['notice.new_comment'],
-		));
+		]);
 
 		//Send a PM to the list of members who updated the bug if the send of PM is enabled
 		if ($config->are_pm_enabled() && $config->are_pm_comment_enabled())

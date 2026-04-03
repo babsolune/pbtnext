@@ -18,7 +18,7 @@
 
 class TinyMCEParser extends ContentFormattingParser
 {
-	private static $fonts_array = array(
+	private static $fonts_array = [
 	'\'andale mono\', monospace'           => 'andale mono',
 	'andale mono,monospace'                => 'andale mono',
 	'arial, helvetica, sans-serif'         => 'arial',
@@ -50,7 +50,7 @@ class TinyMCEParser extends ContentFormattingParser
 	'webdings'                             => 'webdings',
 	'wingdings, \'zapf dingbats\''         => 'wingdings',
 	'wingdings,zapf dingbats'              => 'wingdings'
-	);
+	];
 
 	/**
 	 * @desc Parses the content of the parser.
@@ -101,7 +101,7 @@ class TinyMCEParser extends ContentFormattingParser
 			$this->array_tags['html'] = array_map(function($string) {return str_replace("[html]", "<!-- START HTML -->\n", str_replace("[/html]", "\n<!-- END HTML -->", $string));}, $this->array_tags['html']);
 
 			//If we don't protect the HTML code inserted into the tags code and HTML TinyMCE will parse it!
-			$this->array_tags['html'] = array_map(array('TinyMCEParser', 'clear_html_and_code_tag'), $this->array_tags['html']);
+			$this->array_tags['html'] = array_map(['TinyMCEParser', 'clear_html_and_code_tag'], $this->array_tags['html']);
 
 			$this->reimplant_tag('html');
 		}
@@ -112,7 +112,7 @@ class TinyMCEParser extends ContentFormattingParser
 			$this->array_tags['code'] = array_map(function($string) {return preg_replace('`^\[code(=.+)?\](.+)\[/code\]$`isuU', '[[CODE$1]]$2[[/CODE]]', TextHelper::htmlspecialchars($string, ENT_NOQUOTES));}, $this->array_tags['code']);
 
 			//If we don't protect the HTML code inserted into the tags code and HTML TinyMCE will parse it!
-			$this->array_tags['code'] = array_map(array($this, 'clear_html_and_code_tag'), $this->array_tags['code']);
+			$this->array_tags['code'] = array_map([$this, 'clear_html_and_code_tag'], $this->array_tags['code']);
 
 			$this->reimplant_tag('code');
 		}
@@ -143,7 +143,7 @@ class TinyMCEParser extends ContentFormattingParser
 		$table_properties = $matches[1];
 		$style_properties = '';
 
-		$temp_array = array();
+		$temp_array = [];
 
 		//Border ?
 		if (preg_match('`border="([0-9]+)"`iuU', $table_properties, $temp_array))
@@ -197,7 +197,7 @@ class TinyMCEParser extends ContentFormattingParser
 		$col_new_properties = '';
 		$col_style = '';
 
-		$temp_array = array();
+		$temp_array = [];
 		//Alignment
 		if (preg_match('`align="([^"]+)"`iuU', $col_properties, $temp_array))
 		{
@@ -230,7 +230,7 @@ class TinyMCEParser extends ContentFormattingParser
 		$col_new_properties = '';
 		$col_style = '';
 
-		$temp_array = array();
+		$temp_array = [];
 
 		//Colspan ?
 		if (preg_match('`colspan="([0-9]+)"`iuU', $col_properties, $temp_array))
@@ -270,36 +270,36 @@ class TinyMCEParser extends ContentFormattingParser
 	{
 		//Modification de quelques tags HTML envoyés par TinyMCE
 		$this->content = str_replace(
-			array(
+			[
 				'&amp;nbsp;&amp;nbsp;&amp;nbsp;',
 				'&amp;gt;',
 				'&amp;lt;',
 				'&lt;br /&gt;',
 				'&lt;br&gt;',
 				'&amp;nbsp;'
-			), array(
+			], [
 				"\t",
 				'&gt;',
 				'&lt;',
 				"<br />",
 				"<br />",
 				' '
-			), $this->content);
+			], $this->content);
 
-		$array_preg = array(
+		$array_preg = [
 			'`&lt;p&gt;\s*&nbsp;\s*&lt;/p&gt;\s*`u',
 			'`&lt;p&gt;&nbsp;&lt;/p&gt;\s*`u',
 			'`&lt;p&gt;&nbsp;&nbsp;&lt;/p&gt;\s*`u',
 			'`&lt;div&gt;(.+)&lt;/div&gt;`isuU',
 			'`&lt;/p&gt;[\s]*`iu'
-		);
-		$array_preg_replace = array(
+		];
+		$array_preg_replace = [
 			'',
 			'',
 			'',
 			'$1' . "<br />",
 			'&lt;/p&gt;'
-		);
+		];
 
 		//Replacement
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
@@ -308,8 +308,8 @@ class TinyMCEParser extends ContentFormattingParser
 		$this->content = str_replace('\r\n', '\n', $this->content);
 		$this->content = preg_replace('`\s*\n+\s*`isuU', "\n", $this->content);
 
-		$array_preg = array();
-		$array_preg_replace = array();
+		$array_preg = [];
+		$array_preg_replace = [];
 
 		//Colors, underline and strike replacement
 		//Color tag
@@ -342,12 +342,12 @@ class TinyMCEParser extends ContentFormattingParser
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 
 		//On dissocie les styles des span et div
-		$this->content = preg_replace_callback('`&lt;span style="color: *([#a-f0-9]+); background-color: *([#a-f0-9]+);( text-decoration: line-through;| text-decoration: underline;)?"&gt;(.*)&lt;/span&gt;`isuU', array($this, 'parse_span_color_and_background_style'), $this->content );
-		$this->content = preg_replace_callback('`&lt;span style="([^;]*); ([^"]*)"&gt;(.*)&lt;/span&gt;`isuU', array($this, 'parse_span_style'), $this->content );
-		$this->content = preg_replace_callback('`&lt;div style="([^;]*); ([^"]*)"&gt;(.*)&lt;/div&gt;`isuU', array($this, 'parse_div_style'), $this->content );
+		$this->content = preg_replace_callback('`&lt;span style="color: *([#a-f0-9]+); background-color: *([#a-f0-9]+);( text-decoration: line-through;| text-decoration: underline;)?"&gt;(.*)&lt;/span&gt;`isuU', [$this, 'parse_span_color_and_background_style'], $this->content );
+		$this->content = preg_replace_callback('`&lt;span style="([^;]*); ([^"]*)"&gt;(.*)&lt;/span&gt;`isuU', [$this, 'parse_span_style'], $this->content );
+		$this->content = preg_replace_callback('`&lt;div style="([^;]*); ([^"]*)"&gt;(.*)&lt;/div&gt;`isuU', [$this, 'parse_div_style'], $this->content );
 
-		$array_preg = array();
-		$array_preg_replace = array();
+		$array_preg = [];
+		$array_preg_replace = [];
 
 		//Strong tag
 		if (!in_array('b', $this->forbidden_tags))
@@ -408,36 +408,36 @@ class TinyMCEParser extends ContentFormattingParser
 		//Youtube tag
 		if (!in_array('youtube', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`&lt;iframe src="/www.youtube.com/embed/([^"]+)" width="([^"]+)" height="([^"]+)" frameborder="0" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_youtube_tag'), $this->content);
-			$this->content = preg_replace_callback('`&lt;iframe src="/www.youtube.com/embed/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_youtube_tag'), $this->content);
-			$this->content = preg_replace_callback('`&lt;iframe src="//www.youtube.com/embed/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_youtube_tag'), $this->content);
-			$this->content = preg_replace_callback('`&lt;iframe src="https://www.youtube.com/embed/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_youtube_tag'), $this->content);
-			$this->content = preg_replace_callback('`&lt;iframe src="https://www.youtube.com/watch\?v=([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_youtube_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="/www.youtube.com/embed/([^"]+)" width="([^"]+)" height="([^"]+)" frameborder="0" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', [$this, 'parse_youtube_tag'], $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="/www.youtube.com/embed/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', [$this, 'parse_youtube_tag'], $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="//www.youtube.com/embed/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', [$this, 'parse_youtube_tag'], $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="https://www.youtube.com/embed/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', [$this, 'parse_youtube_tag'], $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="https://www.youtube.com/watch\?v=([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', [$this, 'parse_youtube_tag'], $this->content);
 		}
 		//Dailymotion tag
 		if (!in_array('dailymotion', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`&lt;iframe src="/www.dailymotion.com/embed/video/([^"]+)" width="([^"]+)" height="([^"]+)" frameborder="0" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_dailymotion_tag'), $this->content);
-			$this->content = preg_replace_callback('`&lt;iframe src="/www.dailymotion.com/video/([^"]+)" width="([^"]+)" height="([^"]+)" frameborder="0" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_dailymotion_tag'), $this->content);
-			$this->content = preg_replace_callback('`&lt;iframe src="//www.dailymotion.com/embed/video/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_dailymotion_tag'), $this->content);
-			$this->content = preg_replace_callback('`&lt;iframe src="//www.dailymotion.com/video/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_dailymotion_tag'), $this->content);
-			$this->content = preg_replace_callback('`&lt;iframe src="https://www.dailymotion.com/embed/video/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_dailymotion_tag'), $this->content);
-			$this->content = preg_replace_callback('`&lt;iframe src="https://www.dailymotion.com/video/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_dailymotion_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="/www.dailymotion.com/embed/video/([^"]+)" width="([^"]+)" height="([^"]+)" frameborder="0" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', [$this, 'parse_dailymotion_tag'], $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="/www.dailymotion.com/video/([^"]+)" width="([^"]+)" height="([^"]+)" frameborder="0" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', [$this, 'parse_dailymotion_tag'], $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="//www.dailymotion.com/embed/video/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', [$this, 'parse_dailymotion_tag'], $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="//www.dailymotion.com/video/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', [$this, 'parse_dailymotion_tag'], $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="https://www.dailymotion.com/embed/video/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', [$this, 'parse_dailymotion_tag'], $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="https://www.dailymotion.com/video/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', [$this, 'parse_dailymotion_tag'], $this->content);
 		}
 		//Vimeo tag
 		if (!in_array('vimeo', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`&lt;iframe src="/player.vimeo.com/video/([^"]+)" width="([^"]+)" height="([^"]+)" frameborder="0" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_vimeo_tag'), $this->content);
-			$this->content = preg_replace_callback('`&lt;iframe src="/vimeo.com/([^"]+)" width="([^"]+)" height="([^"]+)" frameborder="0" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_vimeo_tag'), $this->content);
-			$this->content = preg_replace_callback('`&lt;iframe src="//player.vimeo.com/video/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_vimeo_tag'), $this->content);
-			$this->content = preg_replace_callback('`&lt;iframe src="//vimeo.com/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_vimeo_tag'), $this->content);
-			$this->content = preg_replace_callback('`&lt;iframe src="https://player.vimeo.com/video/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_vimeo_tag'), $this->content);
-			$this->content = preg_replace_callback('`&lt;iframe src="https://vimeo.com/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', array($this, 'parse_vimeo_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="/player.vimeo.com/video/([^"]+)" width="([^"]+)" height="([^"]+)" frameborder="0" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', [$this, 'parse_vimeo_tag'], $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="/vimeo.com/([^"]+)" width="([^"]+)" height="([^"]+)" frameborder="0" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', [$this, 'parse_vimeo_tag'], $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="//player.vimeo.com/video/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', [$this, 'parse_vimeo_tag'], $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="//vimeo.com/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', [$this, 'parse_vimeo_tag'], $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="https://player.vimeo.com/video/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', [$this, 'parse_vimeo_tag'], $this->content);
+			$this->content = preg_replace_callback('`&lt;iframe src="https://vimeo.com/([^"]+)" width="([^"]+)" height="([^"]+)" allowfullscreen="allowfullscreen"&gt;&lt;/iframe&gt;`isuU', [$this, 'parse_vimeo_tag'], $this->content);
 		}
 		//Movie tag
 		if (!in_array('movie', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`&lt;video(?: style="([^"]+)")?(?: controls="([^"]+)")? width="([^"]+)" height="([^"]+)"(?: controls="([^"]+)")?&gt;\s?&lt;source src="(.*)" /&gt;&lt;/video&gt;`isu', array($this, 'parse_movie_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;video(?: style="([^"]+)")?(?: controls="([^"]+)")? width="([^"]+)" height="([^"]+)"(?: controls="([^"]+)")?&gt;\s?&lt;source src="(.*)" /&gt;&lt;/video&gt;`isu', [$this, 'parse_movie_tag'], $this->content);
 		}
 		//Anchor tag
 		if (!in_array('anchor', $this->forbidden_tags))
@@ -498,9 +498,9 @@ class TinyMCEParser extends ContentFormattingParser
 		}
 
 		//Tags which are useless
-		$array_str = array(
+		$array_str = [
 		'&lt;address&gt;', '&lt;/address&gt;', '&lt;caption&gt;', '&lt;/caption&gt;', '&lt;tbody&gt;', '&lt;/tbody&gt;', '&lt;thead&gt;', '&lt;/thead&gt;', '&lt;!DOCTYPE html&gt;', '&lt;html&gt;', '&lt;head&gt;', '&lt;/head&gt;', '&lt;body&gt;', '&lt;/body&gt;', '&lt;/html&gt;'
-		);
+		];
 
 		$this->content = str_replace($array_str, '', $this->content);
 
@@ -513,20 +513,20 @@ class TinyMCEParser extends ContentFormattingParser
 			$nbr_size_parsing = 0;
 			while (preg_match('`&lt;span style="font-size: ([0-9a-z-]+);"&gt;(.+)&lt;/span&gt;`isuU', $this->content) && $nbr_size_parsing++ < 10)
 			{
-				$this->content = preg_replace_callback('`&lt;span style="font-size: ([0-9a-z-]+);"&gt;(.+)&lt;/span&gt;`isuU', array($this, 'parse_size_tag'), $this->content);
+				$this->content = preg_replace_callback('`&lt;span style="font-size: ([0-9a-z-]+);"&gt;(.+)&lt;/span&gt;`isuU', [$this, 'parse_size_tag'], $this->content);
 			}
 		}
 
 		//image tag
 		if (!in_array('img', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`&lt;img(?: style="([^"]+)")?(?: title="([^"]+)?")? src="([^"]+)"(?: alt="([^"]+)?")?((?: ?[a-z]+="[^"]*")*) /&gt;`isu', array($this, 'parse_img'), $this->content);
+			$this->content = preg_replace_callback('`&lt;img(?: style="([^"]+)")?(?: title="([^"]+)?")? src="([^"]+)"(?: alt="([^"]+)?")?((?: ?[a-z]+="[^"]*")*) /&gt;`isu', [$this, 'parse_img'], $this->content);
 		}
 
 		//indent tag
 		if (!in_array('indent', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`&lt;p style="padding-left: ([0-9]+)px;"&gt;(.+)&lt;/p&gt;`isuU', array($this, 'parse_indent_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;p style="padding-left: ([0-9]+)px;"&gt;(.+)&lt;/p&gt;`isuU', [$this, 'parse_indent_tag'], $this->content);
 		}
 
 		//Line tag
@@ -550,7 +550,7 @@ class TinyMCEParser extends ContentFormattingParser
 			$nbr_font_parsing = 0;
 			while (preg_match('`&lt;span style="font-family: (.*);"&gt;(.*)&lt;/span&gt;`isuU', $this->content) && $nbr_font_parsing++ < 10)
 			{
-				$this->content = preg_replace_callback('`&lt;span style="font-family: (.*);"&gt;(.*)&lt;/span&gt;`isuU', array($this, 'parse_font_tag'), $this->content );
+				$this->content = preg_replace_callback('`&lt;span style="font-family: (.*);"&gt;(.*)&lt;/span&gt;`isuU', [$this, 'parse_font_tag'], $this->content );
 			}
 		}
 
@@ -564,7 +564,7 @@ class TinyMCEParser extends ContentFormattingParser
 		$content_contains_table = false;
 		while (preg_match('`&lt;table([^&]*)&gt;(.+)&lt;/table&gt;`isu', $this->content))
 		{
-			$this->content = preg_replace_callback('`&lt;table([^&]*)&gt;(.+)&lt;/table&gt;`isuU', array($this, 'parse_table_tag'), $this->content);
+			$this->content = preg_replace_callback('`&lt;table([^&]*)&gt;(.+)&lt;/table&gt;`isuU', [$this, 'parse_table_tag'], $this->content);
 			$content_contains_table = true;
 		}
 
@@ -573,14 +573,14 @@ class TinyMCEParser extends ContentFormattingParser
 			//Rows
 			while (preg_match('`&lt;tr([^&]*)&gt;(.+)&lt;/tr&gt;`isu', $this->content))
 			{
-				$this->content = preg_replace_callback('`&lt;tr([^&]*)&gt;(.+)&lt;/tr&gt;`isuU', array($this, 'parse_row_tag'), $this->content);
+				$this->content = preg_replace_callback('`&lt;tr([^&]*)&gt;(.+)&lt;/tr&gt;`isuU', [$this, 'parse_row_tag'], $this->content);
 			}
 
 			//Cols
 			while (preg_match('`&lt;td|h([^&]*)&gt;(.+)&lt;/td|h&gt;`isu', $this->content))
 			{
-				$this->content = preg_replace_callback('`&lt;(td)([^&]*)&gt;(.+)?&lt;/td&gt;`isuU', array($this, 'parse_col_tag'), $this->content);
-				$this->content = preg_replace_callback('`&lt;(th)([^&]*)&gt;(.+)?&lt;/th&gt;`isuU', array($this, 'parse_col_tag'), $this->content);
+				$this->content = preg_replace_callback('`&lt;(td)([^&]*)&gt;(.+)?&lt;/td&gt;`isuU', [$this, 'parse_col_tag'], $this->content);
+				$this->content = preg_replace_callback('`&lt;(th)([^&]*)&gt;(.+)?&lt;/th&gt;`isuU', [$this, 'parse_col_tag'], $this->content);
 			}
 		}
 	}
@@ -623,7 +623,7 @@ class TinyMCEParser extends ContentFormattingParser
 	 */
 	private function parse_bbcode_tags()
 	{
-		$array_preg = array(
+		$array_preg = [
 			'b'         => '`\[b\](.+)\[/b\]`isuU',
 			'i'         => '`\[i\](.+)\[/i\]`isuU',
 			'u'         => '`\[u\](.+)\[/u\]`isuU',
@@ -653,9 +653,9 @@ class TinyMCEParser extends ContentFormattingParser
 			'member'    => '`\[member\](.*)\[/member\]`isuU',
 			'moderator' => '`\[moderator\](.*)\[/moderator\]`isuU',
 			'teaser'    => '`\[teaser\](.*)\[/teaser\]`isuU',
-		);
+		];
 
-		$array_preg_replace = array(
+		$array_preg_replace = [
 			'b'         => "<strong>$1</strong>",
 			'i'         => "<em>$1</em>",
 			'u'         => "<span style=\"text-decoration: underline;\">$1</span>",
@@ -685,7 +685,7 @@ class TinyMCEParser extends ContentFormattingParser
 			'member'    => '[[MEMBER]]$1[[/MEMBER]]',
 			'moderator' => '[[MODERATOR]]$1[[/MODERATOR]]',
 			'teaser'    => '[[TEASER]]$1[[/TEASER]]',
-		);
+		];
 
 		//Suppression des remplacements des balises interdites.
 		if (!empty($this->forbidden_tags))
@@ -702,7 +702,7 @@ class TinyMCEParser extends ContentFormattingParser
 				$this->forbidden_tags[] = 'url7';
 			}
 
-			$other_tags = array('table', 'quote', 'hide', 'indent', 'list');
+			$other_tags = ['table', 'quote', 'hide', 'indent', 'list'];
 			foreach ($this->forbidden_tags as $key => $tag)
 			{
 				//Balise interdite : on la supprime
@@ -726,13 +726,13 @@ class TinyMCEParser extends ContentFormattingParser
 		//FA tag
 		if (!in_array('fa', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`\[fa(= ?[a-z0-9-, ]+)?(?: style="([^"]+)")?\]([a-z0-9-]+)\[/fa\]`iuU', array($this, 'parse_fa_tag'), $this->content);
+			$this->content = preg_replace_callback('`\[fa(= ?[a-z0-9-, ]+)?(?: style="([^"]+)")?\]([a-z0-9-]+)\[/fa\]`iuU', [$this, 'parse_fa_tag'], $this->content);
 		}
 
 		//HTML emoji tag
 		if (!in_array('emoji', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`([^-\p{L}\x00-\x7F]+)`iuU', array($this, 'parse_emoji_tag'), $this->content);
+			$this->content = preg_replace_callback('`([^-\p{L}\x00-\x7F]+)`iuU', [$this, 'parse_emoji_tag'], $this->content);
 		}
 
 		##Nested tags
@@ -765,7 +765,7 @@ class TinyMCEParser extends ContentFormattingParser
 		//Wikipedia tag
 		if (!in_array('wikipedia', $this->forbidden_tags))
 		{
-			$this->content = preg_replace_callback('`\[wikipedia(?: page="([^"]+)")?(?: lang="([a-z]+)")?\](.+)\[/wikipedia\]`isuU', array($this, 'parse_wikipedia_tag'), $this->content);
+			$this->content = preg_replace_callback('`\[wikipedia(?: page="([^"]+)")?(?: lang="([a-z]+)")?\](.+)\[/wikipedia\]`isuU', [$this, 'parse_wikipedia_tag'], $this->content);
 		}
 
 		//Quote tag (this tag is managed by TinyMCE but it can also be used in BBCode syntax)
@@ -799,7 +799,7 @@ class TinyMCEParser extends ContentFormattingParser
 	private function parse_span_style($matches)
 	{
 		$span = $matches[3];
-		$styles = array_merge(array($matches[1]), explode(';', $matches[2]));
+		$styles = array_merge([$matches[1]], explode(';', $matches[2]));
 
 		if (count($styles) > 1)
 		{
@@ -835,7 +835,7 @@ class TinyMCEParser extends ContentFormattingParser
 	private function parse_div_style($matches)
 	{
 		$span = $matches[3];
-		$styles = array_merge(array($matches[1]), explode(';', $matches[2]));
+		$styles = array_merge([$matches[1]], explode(';', $matches[2]));
 
 		if (count($styles) > 1)
 		{
@@ -1080,36 +1080,36 @@ class TinyMCEParser extends ContentFormattingParser
 	{
 		// Trim manuel
 		$this->content = preg_replace(
-			array(
+			[
 				'`^(\s|(?:<br />))*`iu',
 				'`(\s|(?:<br />))*$`iu',
 				// We delete the spaces which are at the begening of the line (inserted by TinyMCE to indent the HTML code)
 				"`(\n<br />)[\s]*`"
-			),
-			array(
+			],
+			[
 				'',
 				'',
 				'$1'
-			),
+			],
 			$this->content
 		);
 
 		$this->content = str_replace(
-			array("\n", "\r", '<br />'),
-			array(' ', ' ', "\n<br />"),
+			["\n", "\r", '<br />'],
+			[' ', ' ', "\n<br />"],
 			$this->content
 		);
 
 		//We delete all remaining HTML tags which are not recognized by the parser
 		$this->content = preg_replace(
-			array(
+			[
 				'`&lt;(?:p|span|div)[^&]*&gt;`isu',
 				'`&lt;/(?:p|span|div)*&gt;`isu'
-			),
-			array(
+			],
+			[
 				'',
 				''
-			),
+			],
 				$this->content
 		);
 	}

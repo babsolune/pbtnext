@@ -73,14 +73,14 @@ class DownloadItemController extends DefaultModuleController
 		$keywords = $item->get_keywords();
 		$has_keywords = count($keywords) > 0;
 
-		$this->view->put_all(array_merge($item->get_template_vars(), array(
+		$this->view->put_all(array_merge($item->get_template_vars(), [
 			'C_AUTHOR_DISPLAYED'      => $config->is_author_displayed(),
 			'C_ENABLED_COMMENTS'      => $comments_config->module_comments_is_enabled('download'),
 			'C_ENABLED_NOTATION'      => $content_management_config->module_notation_is_enabled('download'),
 			'C_KEYWORDS'              => $has_keywords,
 			'NOT_VISIBLE_MESSAGE'              => MessageHelper::display($this->lang['warning.element.not.visible'], MessageHelper::WARNING),
 			'UNAUTHORIZED_TO_DOWNLOAD_MESSAGE' => MessageHelper::display($this->lang['download.message.warning.unauthorized.download'], MessageHelper::WARNING)
-		)));
+		]));
 
 		if ($comments_config->module_comments_is_enabled('download'))
 		{
@@ -107,11 +107,11 @@ class DownloadItemController extends DefaultModuleController
 		$i = 1;
 		foreach ($keywords as $keyword)
 		{
-			$this->view->assign_block_vars('keywords', array(
+			$this->view->assign_block_vars('keywords', [
 				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
 				'URL'  => DownloadUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
-			));
+			]);
 			$i++;
 		}
 	}

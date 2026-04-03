@@ -10,14 +10,14 @@
 
 class WebCache implements CacheData
 {
-	private $partners_items = array();
+	private $partners_items = [];
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{
-		$this->partners_items = array();
+		$this->partners_items = [];
 
 		$now = new Date();
 		$config = WebConfig::load();
@@ -30,10 +30,10 @@ class WebCache implements CacheData
 			LEFT JOIN ' . WebSetup::$web_cats_table . ' cats ON cats.id = web.id_category
 			WHERE (partner = 1 OR privileged_partner = 1) AND (web.published = 1 OR (web.published = 2 AND (web.publishing_start_date > :timestamp_now OR (publishing_end_date != 0 AND publishing_end_date < :timestamp_now))))
 			ORDER BY web.privileged_partner DESC, ' . $config->get_partners_sort_field() . ' ' . $config->get_partners_sort_mode() . '
-			LIMIT :partners_number_in_menu OFFSET 0', array(
+			LIMIT :partners_number_in_menu OFFSET 0', [
 				'timestamp_now' => $now->get_timestamp(),
 				'partners_number_in_menu' => (int)$config->get_partners_number_in_menu()
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{

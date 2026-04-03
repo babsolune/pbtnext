@@ -37,10 +37,10 @@ class CalendarPendingItemsController extends DefaultModuleController
 		AND parent_id = 0
 		AND id_category IN :authorized_categories
 		' . (!CategoriesAuthorizationsService::check_authorizations()->moderation() ? ' AND event_content.author_user_id = :user_id' : '');
-		$parameters = array(
+		$parameters = [
 			'authorized_categories' => $authorized_categories,
 			'user_id' => AppContext::get_current_user()->get_id()
-		);
+		];
 
 		$page = $request->get_getint('page', 1);
 		$pagination = $this->get_pagination($condition, $parameters, $page);
@@ -52,15 +52,15 @@ class CalendarPendingItemsController extends DefaultModuleController
 		LEFT JOIN ' . DB_TABLE_COMMENTS_TOPIC . ' com ON com.id_in_module = event.id_event AND com.module_id = \'calendar\'
 		' . $condition . '
 		ORDER BY start_date DESC
-		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
+		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, [
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
-		)));
+		]));
 
-		$this->items_view->put_all(array(
+		$this->items_view->put_all([
 			'C_ITEMS'         => $result->get_rows_count() > 0,
 			'C_PENDING_ITEMS' => true,
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{
@@ -71,12 +71,12 @@ class CalendarPendingItemsController extends DefaultModuleController
 		}
 		$result->dispose();
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'EVENTS'          => $this->items_view,
 			'C_PENDING_ITEMS' => true,
 			'C_PAGINATION'    => $pagination->has_several_pages(),
 			'PAGINATION'      => $pagination->display()
-		));
+		]);
 
 		return $this->view;
 	}

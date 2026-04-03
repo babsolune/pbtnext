@@ -22,7 +22,7 @@ class BufferedFileReader implements FileReader
 	private $buffer_max_size;
 	private $offset_in_file = 0;
 	private $reached_end_of_file = false;
-	private $lines = array();
+	private $lines = [];
 
 	public function __construct(File $file, $buffer_size = self::DEFAULT_BUFFER_SIZE)
 	{

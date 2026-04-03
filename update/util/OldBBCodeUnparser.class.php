@@ -66,7 +66,7 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 	protected function unparse_smilies()
 	{
 		// Smilies
-		$smiley_img_url = $smiley_code = array();
+		$smiley_img_url = $smiley_code = [];
 		foreach (SmileysCache::load()->get_smileys() as $code => $infos)
 		{
 			$smiley_img_url[] = '`<img src="([^"]+)?/images/smileys/' . preg_quote($infos['url_smiley']) . '(.*) />`suU';
@@ -82,7 +82,7 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 	 */
 	protected function unparse_simple_tags()
 	{
-		$array_preg = array(
+		$array_preg = [
 			'`<span style="text-decoration: ?underline;?">(.*)</span>`isuU',
 			'`<span style="color: ?([^;]+);">(.*)</span>`isuU',
 			'`<span style="background-color: ?([^;]+);">(.*)</span>`isuU',
@@ -123,9 +123,9 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 			'`\[\[MODERATOR\]\](.+)\[\[/MODERATOR\]\]`suU',
 			'`\[\[TEASER\]\](.+)\[\[/TEASER\]\]`suU',
 			'`<span class="emoji-tag">(.*)</span>`isuU',
-		);
+		];
 
-		$array_preg_replace = array(
+		$array_preg_replace = [
 			"[u]$1[/u]",
 			"[color=$1]$2[/color]",
 			"[bgcolor=$1]$2[/bgcolor]",
@@ -166,16 +166,16 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 			"[moderator]$1[/moderator]",
 			"[teaser]$1[/teaser]",
 			"$1",
-		);
+		];
 		$this->content = preg_replace($array_preg, $array_preg_replace, $this->content);
 
-		$array_str = array(
+		$array_str = [
 			'<br />', '<strong>', '</strong>', '<em>', '</em>', '<strike>', '</strike>', '<s>', '</s>', '<p>', '</p>', '<sup>', '</sup>',
 			'<sub>', '</sub>', '<pre>', '</pre>'
-			);
-		$array_str_replace = array(
+			];
+		$array_str_replace = [
 			'&#13;', '[b]', '[/b]', '[i]', '[/i]', '[s]', '[/s]', '[s]', '[/s]',  '[p]', '[/p]', '[sup]', '[/sup]', '[sub]', '[/sub]', '[pre]', '[/pre]'
-		);
+		];
 		$this->content = str_replace($array_str, $array_str_replace, $this->content);
 
 		// Nested tags
@@ -194,24 +194,24 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 		// Container
 		while (preg_match('`<div id="([^"]*)" class="([^"]*)" style="([^"]*)">(.+)</div>`suU', $this->content))
 		{
-			$this->content = preg_replace_callback('`<div id="([^"]*)" class="([^"]*)" style="([^"]*)">(.+)</div>`suU', array($this, 'unparse_box'), $this->content);
+			$this->content = preg_replace_callback('`<div id="([^"]*)" class="([^"]*)" style="([^"]*)">(.+)</div>`suU', [$this, 'unparse_box'], $this->content);
 		}
 
 		// Callbacks
 		// Image
-		$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)?")?(?: style="([^"]+)?")?(?: class="([^"]+)?")? />`iuU', array($this, 'unparse_img'), $this->content);
+		$this->content = preg_replace_callback('`<img src="([^"]+)"(?: alt="([^"]+)?")?(?: style="([^"]+)?")?(?: class="([^"]+)?")? />`iuU', [$this, 'unparse_img'], $this->content);
 
 		// FA Icon
-		$this->content = preg_replace_callback('`<i class="fa([blrsdt])? fa-([a-z0-9-]+)( [a-z0-9- ]+)?"(?: style="([^"]+)?")?(?: aria-hidden="true")?></i>`iuU', array($this, 'unparse_fa_tag'), $this->content);
+		$this->content = preg_replace_callback('`<i class="fa([blrsdt])? fa-([a-z0-9-]+)( [a-z0-9- ]+)?"(?: style="([^"]+)?")?(?: aria-hidden="true")?></i>`iuU', [$this, 'unparse_fa_tag'], $this->content);
 
 		// Fieldset
 		while (preg_match('`<fieldset class="formatter-container formatter-fieldset" style="([^"]*)"><legend>(.*)</legend><div class="formatter-content">(.+)</div></fieldset>`suU', $this->content))
 		{
-			$this->content = preg_replace_callback('`<fieldset class="formatter-container formatter-fieldset" style="([^"]*)"><legend>(.*)</legend><div class="formatter-content">(.+)</div></fieldset>`suU', array($this, 'unparse_fieldset'), $this->content);
+			$this->content = preg_replace_callback('`<fieldset class="formatter-container formatter-fieldset" style="([^"]*)"><legend>(.*)</legend><div class="formatter-content">(.+)</div></fieldset>`suU', [$this, 'unparse_fieldset'], $this->content);
 		}
 
 		// Wikipedia link
-		$this->content = preg_replace_callback('`<a href="https?://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia-link offload">(.*)</a>`suU', array($this, 'unparse_wikipedia_tag'), $this->content);
+		$this->content = preg_replace_callback('`<a href="https?://([a-z]+).wikipedia.org/wiki/([^"]+)" class="wikipedia-link offload">(.*)</a>`suU', [$this, 'unparse_wikipedia_tag'], $this->content);
 
 		// Indentation
 		$this->_parse_imbricated('<div class="indent">', '`<div class="indent">(.+)</div>`suU', '[indent]$1[/indent]', $this->content);

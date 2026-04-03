@@ -15,7 +15,7 @@ class MemberHalfLongTextExtendedField extends AbstractMemberExtendedField
 	public function __construct()
 	{
 		parent::__construct();
-		$this->set_disable_fields_configuration(array('possible_values'));
+		$this->set_disable_fields_configuration(['possible_values']);
 		$this->set_name(LangLoader::get_message('user.field.type.half.text','user-lang'));
 	}
 
@@ -23,9 +23,9 @@ class MemberHalfLongTextExtendedField extends AbstractMemberExtendedField
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 
-		$fieldset->add_field(new FormFieldShortMultiLineTextEditor($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_default_value(), array(
-			'required' => (bool)$member_extended_field->get_required(), 'rows' => 4, 'cols' => 47, 'description' => $member_extended_field->get_description()),
-			array($this->constraint($member_extended_field->get_regex()))
+		$fieldset->add_field(new FormFieldShortMultiLineTextEditor($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_default_value(), [
+			'required' => (bool)$member_extended_field->get_required(), 'rows' => 4, 'cols' => 47, 'description' => $member_extended_field->get_description()],
+			[$this->constraint($member_extended_field->get_regex())]
 		));
 	}
 
@@ -33,9 +33,9 @@ class MemberHalfLongTextExtendedField extends AbstractMemberExtendedField
 	{
 		$fieldset = $member_extended_field->get_fieldset();
 
-		$fieldset->add_field(new FormFieldShortMultiLineTextEditor($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_value(), array(
-			'required' => (bool)$member_extended_field->get_required(), 'rows' => 4, 'cols' => 47, 'description' => $member_extended_field->get_description()),
-			array($this->constraint($member_extended_field->get_regex()))
+		$fieldset->add_field(new FormFieldShortMultiLineTextEditor($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_value(), [
+			'required' => (bool)$member_extended_field->get_required(), 'rows' => 4, 'cols' => 47, 'description' => $member_extended_field->get_description()],
+			[$this->constraint($member_extended_field->get_regex())]
 		));
 	}
 }

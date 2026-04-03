@@ -36,16 +36,16 @@ class GoogleAnalyticsModuleMiniMenu extends ModuleMiniMenu
 
 		if (!$config->get_identifier() && AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL))
 		{
-			$message_helper = StringVars::replace_vars(LangLoader::get_message('ga.warning','common', 'GoogleAnalytics'), array(
+			$message_helper = StringVars::replace_vars(LangLoader::get_message('ga.warning','common', 'GoogleAnalytics'), [
 				'link' => Url::to_absolute('/GoogleAnalytics/' . url('index.php?url=/admin', 'admin/'))
-			));
+			]);
 			return MessageHelper::display($message_helper, MessageHelper::WARNING)->render();
 		}
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_DISPLAY' => $config->get_identifier() && $cookiebar_config->is_cookiebar_enabled() && $cookiebar_config->get_cookiebar_tracking_mode() == CookieBarConfig::TRACKING_COOKIE && AppContext::get_request()->get_cookie('pbt-cookiebar-choice', 0) == 1,
 			'IDENTIFIER' => $config->get_identifier()
-		));
+		]);
 
 		return $view->render();
 	}

@@ -39,7 +39,7 @@ class ServerStatusModuleMiniMenu extends ModuleMiniMenu
 			{
 				if ($server->is_authorized() && $server->is_displayed())
 				{
-					$view->assign_block_vars('servers', array(
+					$view->assign_block_vars('servers', [
 						'C_NEW_LINE' => $i % 3 == 0,
 						'C_END_LINE' => $i % 3 == 2,
 						'C_ICON' => $server->has_medium_icon(),
@@ -49,17 +49,17 @@ class ServerStatusModuleMiniMenu extends ModuleMiniMenu
 						'PORT' => $server->get_port(),
 						'ICON' => $server->get_medium_icon(),
 						'U_DISPLAY_SERVER' => ServerStatusUrlBuilder::home(get_parent_class($server) == 'AbstractServerStatusServer' ? '#' . $server->get_rewrited_name() : $id . '#' . $server->get_rewrited_name())->rel()
-					));
+					]);
 					$i++;
 					$servers_number++;
 				}
 			}
 
-			$view->put_all(array(
+			$view->put_all([
 				'C_ADDRESS_DISPLAYED' => $config->is_address_displayed(),
 				'C_SEVERAL_SERVERS' => $servers_number > 1,
 				'C_SERVERS' => $servers_number
-			));
+			]);
 
 			return $view->render();
 		}

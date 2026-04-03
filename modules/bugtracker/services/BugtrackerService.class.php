@@ -32,7 +32,7 @@ class BugtrackerService
 	 */
 	public static function count_history($bug_id)
 	{
-		return self::$db_querier->count(BugtrackerSetup::$bugtracker_history_table, "WHERE bug_id=:id", array('id' => $bug_id));
+		return self::$db_querier->count(BugtrackerSetup::$bugtracker_history_table, "WHERE bug_id=:id", ['id' => $bug_id]);
 	}
 
 	/**
@@ -94,7 +94,7 @@ class BugtrackerService
 	 */
 	public static function update(BugtrackerItem $bug)
 	{
-		self::$db_querier->update(BugtrackerSetup::$bugtracker_table, $bug->get_properties(), 'WHERE id=:id', array('id' => $bug->get_id()));
+		self::$db_querier->update(BugtrackerSetup::$bugtracker_table, $bug->get_properties(), 'WHERE id=:id', ['id' => $bug->get_id()]);
 	}
 
 	/**
@@ -151,8 +151,8 @@ class BugtrackerService
 	public static function get_updaters_list($bug_id)
 	{
 		$current_user = AppContext::get_current_user();
-		$bug = self::get_bug('WHERE id=:id', array('id' => $bug_id));
-		$updaters_list = array();
+		$bug = self::get_bug('WHERE id=:id', ['id' => $bug_id]);
+		$updaters_list = [];
 
 		if ($bug->get_author_user()->get_id() != $current_user->get_id())
 			$updaters_list[] = $bug->get_author_user()->get_id();
@@ -160,14 +160,14 @@ class BugtrackerService
 		if ($bug->get_assigned_to_id() && $bug->get_assigned_to_id() != $bug->get_author_user()->get_id() && $bug->get_assigned_to_id() != $current_user->get_id())
 			$updaters_list[] = $bug->get_assigned_to_id();
 
-		$result = self::$db_querier->select_rows(BugtrackerSetup::$bugtracker_history_table, array('updater_id'), '
+		$result = self::$db_querier->select_rows(BugtrackerSetup::$bugtracker_history_table, ['updater_id'], '
 		WHERE bug_id = :id AND updater_id NOT IN (:current_user_id, :author_user_id, :assigned_user_id)
-		GROUP BY updater_id', array(
+		GROUP BY updater_id', [
 			'id' => $bug_id,
 			'current_user_id' => $current_user->get_id(),
 			'author_user_id' => $bug->get_author_user()->get_id(),
 			'assigned_user_id' => $bug->get_assigned_to_id(),
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{

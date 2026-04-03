@@ -14,7 +14,7 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 {
 	private $max_input = 50;
 
-	public function __construct($id, $label = '', array $value = array(), array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label = '', array $value = [], array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
@@ -39,10 +39,10 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 		{
 			if (!empty($options))
 			{
-				$view->assign_block_vars('recipients_list', array(
+				$view->assign_block_vars('recipients_list', [
 					'ID' => $id,
 					'NAME' => stripslashes($options['title'])
-				));
+				]);
 			}
 		}
 
@@ -53,20 +53,20 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 			if (!empty($options))
 			{
 				$has_default = $options['is_default'] ? true : $has_default;
-				$view->assign_block_vars('fieldelements', array(
+				$view->assign_block_vars('fieldelements', [
 					'ID' => $i,
 					'NAME' => stripslashes($options['title']),
 					'IS_DEFAULT' => (int) $options['is_default']
-				));
+				]);
 				foreach ($recipients_field->get_possible_values() as $id => $recipient_options)
 				{
 					if (!empty($recipient_options))
 					{
-						$view->assign_block_vars('fieldelements.recipients_list', array(
+						$view->assign_block_vars('fieldelements.recipients_list', [
 							'C_RECIPIENT_SELECTED' => $options['recipient'] == $id,
 							'ID' => $id,
 							'NAME' => stripslashes($recipient_options['title'])
-						));
+						]);
 					}
 				}
 				$i++;
@@ -75,36 +75,36 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 
 		if ($i == 0)
 		{
-			$view->assign_block_vars('fieldelements', array(
+			$view->assign_block_vars('fieldelements', [
 				'ID' => $i,
 				'NAME' => '',
 				'IS_DEFAULT' => 0,
-			));
+			]);
 			foreach ($recipients_field->get_possible_values() as $id => $options)
 			{
 				if (!empty($options))
 				{
-					$view->assign_block_vars('fieldelements.recipients_list', array(
+					$view->assign_block_vars('fieldelements.recipients_list', [
 						'ID' => $id,
 						'NAME' => stripslashes($options['title'])
-					));
+					]);
 				}
 			}
 			$i++;
 		}
 
-		$view->put_all(array(
+		$view->put_all([
 			'NAME' => $this->get_html_id(),
 			'HTML_ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->is_disabled(),
 			'MAX_INPUT' => $this->max_input,
 			'NBR_FIELDS' => $i,
 			'C_HAS_DEFAULT_VALUE' => $has_default
-		));
+		]);
 
-		$template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $view->render()
-		));
+		]);
 
 		return $template;
 	}
@@ -112,7 +112,7 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 	public function retrieve_value()
 	{
 		$request = AppContext::get_request();
-		$values = array();
+		$values = [];
 		for ($i = 0; $i <= $this->max_input; $i++)
 		{
 			$field_name = 'field_name_' . $this->get_html_id() . '_' . $i;
@@ -123,11 +123,11 @@ class ContactFormFieldObjectPossibleValues extends AbstractFormField
 				$field_recipient = 'field_recipient_' . $this->get_html_id() . '_' . $i;
 				if ($request->get_poststring($field_title))
 				{
-					$values[preg_replace('/\s+/u', '', $request->get_poststring($field_name))] = array(
+					$values[preg_replace('/\s+/u', '', $request->get_poststring($field_name))] = [
 						'is_default'	=> $request->get_postint($field_is_default, 0),
 						'title'	=> addslashes($request->get_poststring($field_title)),
 						'recipient'	=> $request->get_poststring($field_recipient)
-					);
+					];
 				}
 			}
 		}

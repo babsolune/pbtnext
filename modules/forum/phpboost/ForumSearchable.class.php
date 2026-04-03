@@ -151,12 +151,12 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 	 */
 	public function compute_search_results($args)
 	{
-		$results_data = array();
+		$results_data = [];
 
 		$results =& $args['results'];
 		$nb_results = count($results);
 
-		$ids = array();
+		$ids = [];
 		for ($i = 0; $i < $nb_results; $i++)
 		$ids[] = $results[$i]['id_content'];
 
@@ -201,7 +201,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 		$user_accounts_config = UserAccountsConfig::load();
 
 		$view->put_all(array_merge(
-			Date::get_array_tpl_vars($result_date, 'DATE'), array(
+			Date::get_array_tpl_vars($result_date, 'DATE'), [
 			'C_USER_ONLINE'      => !empty($result_data['connect']) && $result_data['user_id'] !== -1,
 			'C_USER_PSEUDO'      => !empty($result_data['display_name']),
 			'C_USER_AVATAR' 	 => $user_accounts_config->is_default_avatar_enabled() || !empty($result_data['avatar']),
@@ -215,7 +215,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 			'U_TOPIC'            => ModulesManager::get_module_path('forum') . '/topic' . url('.php?id=' . $result_data['topic_id'], '-' . $result_data['topic_id'] . $rewrited_title . '.php') . '#m' . $result_data['msg_id'],
 			'U_DEFAULT_AVATAR'   => $user_accounts_config->get_default_avatar(),
 			'U_USER_AVATAR'      => Url::to_rel($result_data['avatar'])
-		)));
+		]));
 
 		return $view->render();
 	}

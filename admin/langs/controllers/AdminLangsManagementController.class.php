@@ -39,7 +39,7 @@ class AdminLangsManagementController extends DefaultAdminController
 			$author_email = $configuration->get_author_mail();
 			$author_website = $configuration->get_author_link();
 
-			$this->view->assign_block_vars('langs_installed', array(
+			$this->view->assign_block_vars('langs_installed', [
 				'C_AUTHOR_EMAIL'       => !empty($author_email),
 				'C_AUTHOR_WEBSITE'     => !empty($author_website),
 				'C_COMPATIBLE'         => $configuration->get_addon_type() == 'lang' && $configuration->get_compatibility() == $phpboost_version,
@@ -58,8 +58,8 @@ class AdminLangsManagementController extends DefaultAdminController
 				'AUTHOR_EMAIL'   => $author_email,
 				'AUTHOR_WEBSITE' => $author_website,
 				'COMPATIBILITY'  => $configuration->get_compatibility(),
-				'AUTHORIZATIONS' => Authorizations::generate_select(Lang::ACCES_LANG, $authorizations, array(2 => true), $lang->get_id())
-			));
+				'AUTHORIZATIONS' => Authorizations::generate_select(Lang::ACCES_LANG, $authorizations, [2 => true], $lang->get_id())
+			]);
 			if ($lang->get_id() == LangsManager::get_default_lang())
 				$selected_lang_number = $lang_number;
 
@@ -67,12 +67,12 @@ class AdminLangsManagementController extends DefaultAdminController
 		}
 
 		$installed_langs_number = count($installed_langs);
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_SEVERAL_LANGS_INSTALLED' => $installed_langs_number > 1,
 
 			'LANGS_NUMBER'        => $installed_langs_number,
 			'DEFAULT_LANG_NUMBER' => $selected_lang_number
-		));
+		]);
 	}
 
 	public function save(HTTPRequestCustom $request)
@@ -81,7 +81,7 @@ class AdminLangsManagementController extends DefaultAdminController
 
 		if ($request->get_string('delete-selected-langs', false))
 		{
-			$lang_ids = array();
+			$lang_ids = [];
 			$lang_number = 1;
 			foreach ($installed_langs as $lang)
 			{

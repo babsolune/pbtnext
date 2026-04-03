@@ -29,9 +29,9 @@ class GoogleAnalyticsConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::IDENTIFIER => ''
-		);
+		];
 	}
 
 	/**

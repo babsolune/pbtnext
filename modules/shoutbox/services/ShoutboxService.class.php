@@ -30,12 +30,12 @@ class ShoutboxService
 
 	public static function update(ShoutboxItem $message)
 	{
-		self::$db_querier->update(ShoutboxSetup::$shoutbox_table, $message->get_properties(), 'WHERE id=:id', array('id' => $message->get_id()));
+		self::$db_querier->update(ShoutboxSetup::$shoutbox_table, $message->get_properties(), 'WHERE id=:id', ['id' => $message->get_id()]);
 	}
 
 	public static function delete(int $id)
 	{
-		self::$db_querier->delete(ShoutboxSetup::$shoutbox_table, 'WHERE id=:id', array('id' => $id));
+		self::$db_querier->delete(ShoutboxSetup::$shoutbox_table, 'WHERE id=:id', ['id' => $id]);
 	}
 
 	public static function get_item(int $id)
@@ -43,9 +43,9 @@ class ShoutboxService
 		$row = self::$db_querier->select_single_row_query('SELECT member.*, shoutbox.*
 		FROM ' . ShoutboxSetup::$shoutbox_table . ' shoutbox
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = shoutbox.user_id
-		WHERE shoutbox.id=:id', array(
+		WHERE shoutbox.id=:id', [
 			'id' => $id
-		));
+		]);
 
 		$message = new ShoutboxItem();
 		$message->set_properties($row);
@@ -54,9 +54,9 @@ class ShoutboxService
 
 	public static function get_last_message_timestamp_from_user($user_id)
 	{
-		return self::$db_querier->get_column_value(ShoutboxSetup::$shoutbox_table, 'MAX(timestamp) as timestamp', 'WHERE user_id=:user_id', array(
+		return self::$db_querier->get_column_value(ShoutboxSetup::$shoutbox_table, 'MAX(timestamp) as timestamp', 'WHERE user_id=:user_id', [
 			'user_id' => $user_id
-		));
+		]);
 	}
 }
 ?>

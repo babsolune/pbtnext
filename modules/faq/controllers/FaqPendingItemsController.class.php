@@ -34,12 +34,12 @@ class FaqPendingItemsController extends DefaultModuleController
 		WHERE approved = 0
 		AND faq.id_category IN :authorized_categories
 		' . (!CategoriesAuthorizationsService::check_authorizations()->moderation() ? ' AND faq.author_user_id = :user_id' : '') . '
-		ORDER BY q_order ASC', array(
+		ORDER BY q_order ASC', [
 			'authorized_categories' => $authorized_categories,
 			'user_id' => AppContext::get_current_user()->get_id()
-		));
+		]);
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_ITEMS'            => $result->get_rows_count() > 0,
 			'C_PENDING_ITEMS'    => true,
 			'C_SEVERAL_ITEMS'    => $result->get_rows_count() > 1,
@@ -47,7 +47,7 @@ class FaqPendingItemsController extends DefaultModuleController
 			'C_DISPLAY_CONTROLS' => $this->config->are_control_buttons_displayed(),
 
 			'ITEMS_NUMBER' => $result->get_rows_count()
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{

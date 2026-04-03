@@ -24,7 +24,7 @@ class APCDataStore implements DataStore
 
 	private static $apc_fields_id = '_apc_fields';
 
-	private $apc_fields = array();
+	private $apc_fields = [];
 
 	public function __construct($cache_id)
 	{
@@ -124,7 +124,7 @@ class APCDataStore implements DataStore
 		}
 		else
 		{
-			$this->apc_fields = array();
+			$this->apc_fields = [];
 		}
 	}
 

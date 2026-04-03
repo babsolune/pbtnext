@@ -18,9 +18,9 @@ class LangsConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		return array(
-			self::$langs_property => array()
-		);
+		return [
+			self::$langs_property => []
+		];
 	}
 
 	public function get_langs()

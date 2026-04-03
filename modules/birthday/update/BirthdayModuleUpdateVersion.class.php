@@ -14,15 +14,15 @@ class BirthdayModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('birthday');
 
-		self::$delete_old_files_list = array(
+		self::$delete_old_files_list = [
 			'/lang/english/config.php',
 			'/lang/french/config.php',
 			'/templates/birthday.css',
-		);
+		];
 
-		self::$delete_old_folders_list = array(
+		self::$delete_old_folders_list = [
 			'/util'
-		);
+		];
 	}
 }
 ?>

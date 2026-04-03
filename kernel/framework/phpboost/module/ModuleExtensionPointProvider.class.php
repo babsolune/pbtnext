@@ -30,7 +30,7 @@ class ModuleExtensionPointProvider extends ExtensionPointProvider
         if ($this->module && $this->module->get_configuration()->feature_is_enabled('comments'))
         {
             $class = $this->get_class('CommentsTopic');
-            return ($class !== false) ? new CommentsTopics(array($class)) : $class;
+            return ($class !== false) ? new CommentsTopics([$class]) : $class;
         }
         return false;
     }
@@ -62,7 +62,7 @@ class ModuleExtensionPointProvider extends ExtensionPointProvider
     public function menus()
     {
         if ($class = $this->get_class('ModuleMiniMenu'))
-            return new ModuleMenus(array($class));
+            return new ModuleMenus([$class]);
     }
 
     public function tree_links()
@@ -72,7 +72,7 @@ class ModuleExtensionPointProvider extends ExtensionPointProvider
 
     public function url_mappings()
     {
-        return new UrlMappings(array(new DispatcherUrlMapping('/' . $this->get_id() . '/index.php')));
+        return new UrlMappings([new DispatcherUrlMapping('/' . $this->get_id() . '/index.php')]);
     }
 }
 ?>

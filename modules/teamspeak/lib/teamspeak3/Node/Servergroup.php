@@ -224,7 +224,7 @@ class TeamSpeak3_Node_Servergroup extends TeamSpeak3_Node_Abstract
    */
   protected function fetchNodeList()
   {
-    $this->nodeList = array();
+    $this->nodeList = [];
 
     foreach($this->getParent()->clientList() as $client)
     {

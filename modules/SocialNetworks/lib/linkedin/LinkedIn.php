@@ -4,7 +4,7 @@ namespace LinkedIn;
 
 class LinkedIn
 {
-    private $_config = array();
+    private $_config = [];
     private $_state = null;
     private $_access_token = null;
     private $_access_token_expires = null;
@@ -63,7 +63,7 @@ class LinkedIn
      * @param string $state - a unique identifier for this user, if none is passed, one is generated via uniqid
      * @return string $url
      */
-    public function getLoginUrl(array $scope = array(), $state = null)
+    public function getLoginUrl(array $scope = [], $state = null)
     {
         if (!empty($scope)) {
             $scope = implode('%20', $scope);
@@ -97,18 +97,18 @@ class LinkedIn
             throw new \InvalidArgumentException('Invalid authorization code. Pass in the "code" parameter from your callback url');
         }
 
-        $params = array(
+        $params = [
             'grant_type' => 'authorization_code',
             'code' => $authorization_code,
             'client_id' => $this->_config['api_key'],
             'client_secret' => $this->_config['api_secret'],
             'redirect_uri' => $this->_config['callback_url']
-        );
+        ];
 
         /** Temp bug fix as per https://developer.linkedin.com/comment/28938#comment-28938 **/
         $tmp_params = http_build_query($params);
 
-        $data = $this->_makeRequest(self::OAUTH_BASE . '/accessToken?' . $tmp_params, array(), self::HTTP_METHOD_POST, array('x-li-format: json'));
+        $data = $this->_makeRequest(self::OAUTH_BASE . '/accessToken?' . $tmp_params, [], self::HTTP_METHOD_POST, ['x-li-format: json']);
         if (isset($data['error']) && !empty($data['error'])) {
             throw new \RuntimeException('Access Token Request Error: ' . $data['error'] . ' -- ' . $data['error_description']);
         }
@@ -195,7 +195,7 @@ class LinkedIn
      * @param array $payload
      * @return array
      */
-    public function post($endpoint, array $payload = array())
+    public function post($endpoint, array $payload = [])
     {
         return $this->fetch($endpoint, $payload, self::HTTP_METHOD_POST);
     }
@@ -207,7 +207,7 @@ class LinkedIn
      * @param array $payload
      * @return array
      */
-    public function get($endpoint, array $payload = array())
+    public function get($endpoint, array $payload = [])
     {
         return $this->fetch($endpoint, $payload);
     }
@@ -219,7 +219,7 @@ class LinkedIn
      * @param array $payload
      * @return array
      */
-    public function put($endpoint, array $payload = array())
+    public function put($endpoint, array $payload = [])
     {
         return $this->fetch($endpoint, $payload, self::HTTP_METHOD_PUT);
     }
@@ -236,7 +236,7 @@ class LinkedIn
      * @param array $curl_options
      * @return array
      */
-    public function fetch($endpoint, array $payload = array(), $method = 'GET', array $headers = array(), array $curl_options = array())
+    public function fetch($endpoint, array $payload = [], $method = 'GET', array $headers = [], array $curl_options = [])
     {
         $concat = (stristr($endpoint,'?') ? '&' : '?');
         $endpoint = self::API_BASE . '/' . trim($endpoint, '/\\') . $concat;
@@ -267,18 +267,18 @@ class LinkedIn
      * @throws \RuntimeException
      * @return array
      */
-    protected function _makeRequest($url, array $payload = array(), $method = 'GET', array $headers = array(), array $curl_options = array())
+    protected function _makeRequest($url, array $payload = [], $method = 'GET', array $headers = [], array $curl_options = [])
     {
         $ch = $this->_getCurlHandle();
 
-        $options = array(
+        $options = [
             CURLOPT_CUSTOMREQUEST => strtoupper($method),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_URL => $url,
             CURLOPT_HTTPHEADER => $headers,
             CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_FOLLOWLOCATION => true
-        );
+        ];
 
         if (!empty($payload)) {
             if ($options[CURLOPT_CUSTOMREQUEST] == self::HTTP_METHOD_POST || $options[CURLOPT_CUSTOMREQUEST] == self::HTTP_METHOD_PUT) {

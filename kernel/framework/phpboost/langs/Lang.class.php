@@ -20,7 +20,7 @@ class Lang
 
     const ACCES_LANG = 1;
 
-	public function __construct($id, array $authorizations = array(), $activated = false)
+	public function __construct($id, array $authorizations = [], $activated = false)
 	{
         $this->id = $id;
         $this->activated = $activated;

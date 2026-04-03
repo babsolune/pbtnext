@@ -85,7 +85,7 @@ abstract class ContentFormattingUnparser extends AbstractParser
 				{
 					$this->content = str_replace('[HTML_UNPARSE_TAG_' . $i . ']', '[html]' . $this->array_tags['html_unparse'][$i] . '[/html]', $this->content);
 				}
-				$this->array_tags['html_unparse'] = array();
+				$this->array_tags['html_unparse'] = [];
 			}
 			return true;
 		}
@@ -143,7 +143,7 @@ abstract class ContentFormattingUnparser extends AbstractParser
 			{
 				for ($i = 0; $i < $content_length; $i++)
 				$this->content = str_replace('[CODE_UNPARSE_TAG_' . $i . ']', $this->array_tags['code_unparse'][$i], $this->content);
-				$this->array_tags['code_unparse'] = array();
+				$this->array_tags['code_unparse'] = [];
 			}
 			return true;
 		}
@@ -167,7 +167,7 @@ abstract class ContentFormattingUnparser extends AbstractParser
 	protected function unparse_fa_tag($matches)
 	{
 		$fa_code = '';
-		$special_fa = in_array($matches[1], array('b', 'l', 'r', 's', 'd', 't'));
+		$special_fa = in_array($matches[1], ['b', 'l', 'r', 's', 'd', 't']);
 		$options_list = isset($matches[3]) ? $matches[3] : '';
 		$style = !empty($matches[4]) ? ' style="' . $matches[4] . '"' : '';
 

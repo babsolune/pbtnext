@@ -94,14 +94,14 @@ class CookieBarConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::COOKIEBAR_ENABLED             => true,
 			self::COOKIEBAR_DURATION            => 12,
 			self::COOKIEBAR_TRACKING_MODE       => self::NOTRACKING_COOKIE,
 			self::COOKIEBAR_CONTENT             => LangLoader::get_message('user.cookiebar.message.notracking', 'user-lang'),
 			self::COOKIEBAR_ABOUTCOOKIE_TITLE   => LangLoader::get_message('user.cookiebar.message.aboutcookie.title', 'user-lang'),
 			self::COOKIEBAR_ABOUTCOOKIE_CONTENT => LangLoader::get_message('user.cookiebar.message.aboutcookie', 'user-lang')
-		);
+		];
 	}
 
 	/**

@@ -14,7 +14,7 @@
 
 class FormFieldSelectChoiceGroupOption extends AbstractFormFieldEnumOption
 {
-	private $options = array();
+	private $options = [];
 
 	/**
 	 * @param string $label string The label
@@ -39,15 +39,15 @@ class FormFieldSelectChoiceGroupOption extends AbstractFormFieldEnumOption
 	{
 
 		$tpl = new FileTemplate('framework/builder/form/fieldelements/FormFieldSelectChoiceGroupOption.tpl');
-		$tpl->put_all(array(
+		$tpl->put_all([
 			'LABEL' => $this->get_label()
-		));
+		]);
 
 		foreach ($this->options as $option)
 		{
-			$tpl->assign_block_vars('options', array(), array(
+			$tpl->assign_block_vars('options', [], [
 				'OPTION' => $option->display()
-			));
+			]);
 		}
 
 		return $tpl;

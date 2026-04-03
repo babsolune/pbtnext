@@ -13,7 +13,7 @@
 
 class I18NMessages
 {
-	private $messages = array();
+	private $messages = [];
 
 	public function __construct($resources = null)
 	{

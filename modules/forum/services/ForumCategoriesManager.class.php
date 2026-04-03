@@ -21,7 +21,7 @@ class ForumCategoriesManager extends CategoriesManager
 			throw new CategoryNotFoundException($id);
 		}
 		
-		$result = PersistenceContext::get_querier()->select_rows(ForumSetup::$forum_topics_table, array('id'), 'WHERE id_category = :id_category', array('id_category' => $id));
+		$result = PersistenceContext::get_querier()->select_rows(ForumSetup::$forum_topics_table, ['id'], 'WHERE id_category = :id_category', ['id_category' => $id]);
 		while ($row = $result->fetch())
 		{
 			$Forumfct = new Forum();

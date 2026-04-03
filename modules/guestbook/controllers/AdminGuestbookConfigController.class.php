@@ -31,44 +31,44 @@ class AdminGuestbookConfigController extends DefaultAdminModuleController
 	{
 		$form = new HTMLForm(self::class);
 
-		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module()->get_configuration()->get_name()]));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldMultipleSelectChoice('forbidden_tags', $this->lang['form.forbidden.tags'], $this->config->get_forbidden_tags(), $this->generate_forbidden_tags_option(),
-			array('size' => 10)
+			['size' => 10]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->lang['form.items.per.page'], $this->config->get_items_per_page(),
-			array('class' => 'top-field', 'min' => 1, 'max' => 50, 'required' => true),
-			array(new FormFieldConstraintIntegerRange(1, 50))
+			['class' => 'top-field', 'min' => 1, 'max' => 50, 'required' => true],
+			[new FormFieldConstraintIntegerRange(1, 50)]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('max_links_number_per_message_enabled', $this->lang['guestbook.links.limit.in.item'], $this->config->is_max_links_number_per_message_enabled(),
-			array(
+			[
 				'class' => 'top-field custom-checkbox',
-				'events' => array('click' => '
+				'events' => ['click' => '
 					if (HTMLForms.getField("max_links_number_per_message_enabled").getValue()) {
 							HTMLForms.getField("max_links_number_per_message").enable();
 					} else {
 							HTMLForms.getField("max_links_number_per_message").disable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('max_links_number_per_message', $this->lang['guestbook.max.links'], $this->config->get_maximum_links_message(),
-			array('class' => 'top-field', 'min' => 1, 'max' => 20, 'required' => true, 'hidden' => !$this->config->is_max_links_number_per_message_enabled()),
-			array(new FormFieldConstraintIntegerRange(1, 20))
+			['class' => 'top-field', 'min' => 1, 'max' => 20, 'required' => true, 'hidden' => !$this->config->is_max_links_number_per_message_enabled()],
+			[new FormFieldConstraintIntegerRange(1, 20)]
 		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['form.authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 
-		$auth_settings = new AuthorizationsSettings(array(
+		$auth_settings = new AuthorizationsSettings([
 			new ActionAuthorization($this->lang['form.authorizations.read'], GuestbookAuthorizationsService::READ_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['form.authorizations.write'], GuestbookAuthorizationsService::WRITE_AUTHORIZATIONS),
 			new MemberDisabledActionAuthorization($this->lang['form.authorizations.moderation'], GuestbookAuthorizationsService::MODERATION_AUTHORIZATIONS)
-		));
+		]);
 
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());
 		$fieldset_authorizations->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
@@ -82,7 +82,7 @@ class AdminGuestbookConfigController extends DefaultAdminModuleController
 
 	private function generate_forbidden_tags_option()
 	{
-		$options = array();
+		$options = [];
 		foreach (AppContext::get_content_formatting_service()->get_available_tags() as $identifier => $name)
 		{
 			$options[] = new FormFieldSelectChoiceOption($name, $identifier);
@@ -94,7 +94,7 @@ class AdminGuestbookConfigController extends DefaultAdminModuleController
 	{
 		$this->config->set_items_per_page($this->form->get_value('items_per_page'));
 
-		$forbidden_tags = array();
+		$forbidden_tags = [];
 		foreach ($this->form->get_value('forbidden_tags') as $field => $option)
 		{
 			$forbidden_tags[] = $option->get_raw_value();
@@ -115,7 +115,7 @@ class AdminGuestbookConfigController extends DefaultAdminModuleController
 		GuestbookConfig::save();
 		GuestbookCache::invalidate();
 
-		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
+		HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]), 'url' => ModulesUrlBuilder::configuration()->rel()]);
 	}
 }
 ?>

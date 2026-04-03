@@ -18,12 +18,12 @@ class GoogleAnalyticsExtensionPointProvider extends ExtensionPointProvider
 
 	public function menus()
 	{
-		return new ModuleMenus(array(new GoogleAnalyticsModuleMiniMenu()));
+		return new ModuleMenus([new GoogleAnalyticsModuleMiniMenu()]);
 	}
 
 	public function url_mappings()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/GoogleAnalytics/index.php')));
+		return new UrlMappings([new DispatcherUrlMapping('/GoogleAnalytics/index.php')]);
 	}
 }
 ?>

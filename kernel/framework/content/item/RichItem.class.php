@@ -22,22 +22,22 @@ class RichItem extends Item
 
 	protected function set_kernel_additional_attributes_list()
 	{
-		$this->add_additional_attribute('views_number', array('type' => 'integer', 'length' => 11, 'default' => 0));
+		$this->add_additional_attribute('views_number', ['type' => 'integer', 'length' => 11, 'default' => 0]);
 
 		if ($this->content_field_enabled && $this->summary_field_enabled)
-			$this->add_additional_attribute('summary', array('type' => 'text', 'length' => 65000, 'fulltext' => true));
+			$this->add_additional_attribute('summary', ['type' => 'text', 'length' => 65000, 'fulltext' => true]);
 
 		if ($this->author_custom_name_field_enabled)
-			$this->add_additional_attribute('author_custom_name', array('type' => 'string', 'length' => 255, 'default' => "''"));
+			$this->add_additional_attribute('author_custom_name', ['type' => 'string', 'length' => 255, 'default' => "''"]);
 
 		if ($this->thumbnail_field_enabled)
-			$this->add_additional_attribute('thumbnail', array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''", 'attribute_options_field_parameters' => array(
+			$this->add_additional_attribute('thumbnail', ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''", 'attribute_options_field_parameters' => [
 				'field_class'     => 'FormFieldThumbnail',
 				'label'           => LangLoader::get_message('common.image', 'common-lang'),
 				'value'           => FormFieldThumbnail::DEFAULT_VALUE,
 				'default_picture' => self::THUMBNAIL_URL
-				)
-			));
+				]
+			]);
 	}
 
 	protected function disable_summary_field()
@@ -167,7 +167,7 @@ class RichItem extends Item
 
 	protected function get_kernel_additional_sorting_fields()
 	{
-		return array('views' => array('database_field' => 'views_number', 'label' => LangLoader::get_message('common.sort.by.views.number', 'common-lang'), 'icon' => 'fa fa-eye'));
+		return ['views' => ['database_field' => 'views_number', 'label' => LangLoader::get_message('common.sort.by.views.number', 'common-lang'), 'icon' => 'fa fa-eye']];
 	}
 
 	protected function get_kernel_additional_template_vars($parsed_content = '')
@@ -175,7 +175,7 @@ class RichItem extends Item
 		$content = $parsed_content ? $parsed_content : FormatingHelper::second_parse($this->content);
 		$summary = $this->content_field_enabled && $this->summary_field_enabled ? $this->get_real_summary($content) : '';
 
-		return array(
+		return [
 			// Conditions
 			'C_HAS_THUMBNAIL'      => $this->thumbnail_field_enabled && $this->has_thumbnail(),
 			'C_AUTHOR_CUSTOM_NAME' => $this->author_custom_name_field_enabled && $this->is_author_custom_name_enabled(),
@@ -189,7 +189,7 @@ class RichItem extends Item
 
 			// Links
 			'U_THUMBNAIL'          => $this->thumbnail_field_enabled ? $this->get_thumbnail()->rel() : ''
-		);
+		];
 	}
 }
 ?>

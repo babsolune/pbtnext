@@ -65,7 +65,7 @@ class CSSCacheManager
 	 */
 	public static function extract_css_urls($text)
 	{
-		$urls = array();
+		$urls = [];
 		
 		$url_pattern     = '(([^\\\\\'", \(\)]*(\\\\.)?)+)';
 		$urlfunc_pattern = 'url\(\s*[\'"]?' . $url_pattern . '[\'"]?\s*\)';

@@ -57,7 +57,7 @@ class TeamSpeak3_Helper_Profiler_Timer
    *
    * @var array
    */
-  protected $data = array();
+  protected $data = [];
 
   /**
    * The TeamSpeak3_Helper_Profiler_Timer constructor.

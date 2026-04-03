@@ -33,10 +33,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Operation
      */
-    public function get($project, $operation, $optParams = array()) {
-      $params = array('project' => $project, 'operation' => $operation);
+    public function get($project, $operation, $optParams = []) {
+      $params = ['project' => $project, 'operation' => $operation];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Operation($data);
       } else {
@@ -55,10 +55,10 @@
      * @opt_param string maxResults Optional. Maximum count of results to be returned. Maximum and default value is 100.
      * @return Google_OperationList
      */
-    public function listOperations($project, $optParams = array()) {
-      $params = array('project' => $project);
+    public function listOperations($project, $optParams = []) {
+      $params = ['project' => $project];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_OperationList($data);
       } else {
@@ -72,10 +72,10 @@
      * @param string $operation Name of the operation resource to delete.
      * @param array $optParams Optional parameters.
      */
-    public function delete($project, $operation, $optParams = array()) {
-      $params = array('project' => $project, 'operation' => $operation);
+    public function delete($project, $operation, $optParams = []) {
+      $params = ['project' => $project, 'operation' => $operation];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       return $data;
     }
   }
@@ -102,10 +102,10 @@
      * @opt_param string maxResults Optional. Maximum count of results to be returned. Maximum and default value is 100.
      * @return Google_KernelList
      */
-    public function listKernels($project, $optParams = array()) {
-      $params = array('project' => $project);
+    public function listKernels($project, $optParams = []) {
+      $params = ['project' => $project];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_KernelList($data);
       } else {
@@ -120,10 +120,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Kernel
      */
-    public function get($project, $kernel, $optParams = array()) {
-      $params = array('project' => $project, 'kernel' => $kernel);
+    public function get($project, $kernel, $optParams = []) {
+      $params = ['project' => $project, 'kernel' => $kernel];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Kernel($data);
       } else {
@@ -152,10 +152,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Operation
      */
-    public function insert($project, Google_Disk $postBody, $optParams = array()) {
-      $params = array('project' => $project, 'postBody' => $postBody);
+    public function insert($project, Google_Disk $postBody, $optParams = []) {
+      $params = ['project' => $project, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_Operation($data);
       } else {
@@ -170,10 +170,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Disk
      */
-    public function get($project, $disk, $optParams = array()) {
-      $params = array('project' => $project, 'disk' => $disk);
+    public function get($project, $disk, $optParams = []) {
+      $params = ['project' => $project, 'disk' => $disk];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Disk($data);
       } else {
@@ -192,10 +192,10 @@
      * @opt_param string maxResults Optional. Maximum count of results to be returned. Maximum and default value is 100.
      * @return Google_DiskList
      */
-    public function listDisks($project, $optParams = array()) {
-      $params = array('project' => $project);
+    public function listDisks($project, $optParams = []) {
+      $params = ['project' => $project];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_DiskList($data);
       } else {
@@ -210,10 +210,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Operation
      */
-    public function delete($project, $disk, $optParams = array()) {
-      $params = array('project' => $project, 'disk' => $disk);
+    public function delete($project, $disk, $optParams = []) {
+      $params = ['project' => $project, 'disk' => $disk];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       if ($this->useObjects()) {
         return new Google_Operation($data);
       } else {
@@ -242,10 +242,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Operation
      */
-    public function insert($project, Google_Snapshot $postBody, $optParams = array()) {
-      $params = array('project' => $project, 'postBody' => $postBody);
+    public function insert($project, Google_Snapshot $postBody, $optParams = []) {
+      $params = ['project' => $project, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_Operation($data);
       } else {
@@ -260,10 +260,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Snapshot
      */
-    public function get($project, $snapshot, $optParams = array()) {
-      $params = array('project' => $project, 'snapshot' => $snapshot);
+    public function get($project, $snapshot, $optParams = []) {
+      $params = ['project' => $project, 'snapshot' => $snapshot];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Snapshot($data);
       } else {
@@ -282,10 +282,10 @@
      * @opt_param string maxResults Optional. Maximum count of results to be returned. Maximum and default value is 100.
      * @return Google_SnapshotList
      */
-    public function listSnapshots($project, $optParams = array()) {
-      $params = array('project' => $project);
+    public function listSnapshots($project, $optParams = []) {
+      $params = ['project' => $project];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_SnapshotList($data);
       } else {
@@ -300,10 +300,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Operation
      */
-    public function delete($project, $snapshot, $optParams = array()) {
-      $params = array('project' => $project, 'snapshot' => $snapshot);
+    public function delete($project, $snapshot, $optParams = []) {
+      $params = ['project' => $project, 'snapshot' => $snapshot];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       if ($this->useObjects()) {
         return new Google_Operation($data);
       } else {
@@ -334,10 +334,10 @@
      * @opt_param string maxResults Optional. Maximum count of results to be returned. Maximum and default value is 100.
      * @return Google_ZoneList
      */
-    public function listZones($project, $optParams = array()) {
-      $params = array('project' => $project);
+    public function listZones($project, $optParams = []) {
+      $params = ['project' => $project];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_ZoneList($data);
       } else {
@@ -352,10 +352,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Zone
      */
-    public function get($project, $zone, $optParams = array()) {
-      $params = array('project' => $project, 'zone' => $zone);
+    public function get($project, $zone, $optParams = []) {
+      $params = ['project' => $project, 'zone' => $zone];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Zone($data);
       } else {
@@ -384,10 +384,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Operation
      */
-    public function insert($project, Google_Instance $postBody, $optParams = array()) {
-      $params = array('project' => $project, 'postBody' => $postBody);
+    public function insert($project, Google_Instance $postBody, $optParams = []) {
+      $params = ['project' => $project, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_Operation($data);
       } else {
@@ -404,10 +404,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Operation
      */
-    public function deleteAccessConfig($project, $instance, $access_config, $network_interface, $optParams = array()) {
-      $params = array('project' => $project, 'instance' => $instance, 'access_config' => $access_config, 'network_interface' => $network_interface);
+    public function deleteAccessConfig($project, $instance, $access_config, $network_interface, $optParams = []) {
+      $params = ['project' => $project, 'instance' => $instance, 'access_config' => $access_config, 'network_interface' => $network_interface];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('deleteAccessConfig', array($params));
+      $data = $this->__call('deleteAccessConfig', [$params]);
       if ($this->useObjects()) {
         return new Google_Operation($data);
       } else {
@@ -422,10 +422,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Instance
      */
-    public function get($project, $instance, $optParams = array()) {
-      $params = array('project' => $project, 'instance' => $instance);
+    public function get($project, $instance, $optParams = []) {
+      $params = ['project' => $project, 'instance' => $instance];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Instance($data);
       } else {
@@ -443,10 +443,10 @@
      * @opt_param string maxResults Optional. Maximum count of results to be returned. Maximum and default value is 100.
      * @return Google_InstanceList
      */
-    public function listInstances($project, $optParams = array()) {
-      $params = array('project' => $project);
+    public function listInstances($project, $optParams = []) {
+      $params = ['project' => $project];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_InstanceList($data);
       } else {
@@ -463,10 +463,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Operation
      */
-    public function addAccessConfig($project, $instance, $network_interface, Google_AccessConfig $postBody, $optParams = array()) {
-      $params = array('project' => $project, 'instance' => $instance, 'network_interface' => $network_interface, 'postBody' => $postBody);
+    public function addAccessConfig($project, $instance, $network_interface, Google_AccessConfig $postBody, $optParams = []) {
+      $params = ['project' => $project, 'instance' => $instance, 'network_interface' => $network_interface, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('addAccessConfig', array($params));
+      $data = $this->__call('addAccessConfig', [$params]);
       if ($this->useObjects()) {
         return new Google_Operation($data);
       } else {
@@ -481,10 +481,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Operation
      */
-    public function delete($project, $instance, $optParams = array()) {
-      $params = array('project' => $project, 'instance' => $instance);
+    public function delete($project, $instance, $optParams = []) {
+      $params = ['project' => $project, 'instance' => $instance];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       if ($this->useObjects()) {
         return new Google_Operation($data);
       } else {
@@ -516,10 +516,10 @@
      * @opt_param string maxResults Optional. Maximum count of results to be returned. Maximum and default value is 100.
      * @return Google_MachineTypeList
      */
-    public function listMachineTypes($project, $optParams = array()) {
-      $params = array('project' => $project);
+    public function listMachineTypes($project, $optParams = []) {
+      $params = ['project' => $project];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_MachineTypeList($data);
       } else {
@@ -534,10 +534,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_MachineType
      */
-    public function get($project, $machineType, $optParams = array()) {
-      $params = array('project' => $project, 'machineType' => $machineType);
+    public function get($project, $machineType, $optParams = []) {
+      $params = ['project' => $project, 'machineType' => $machineType];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_MachineType($data);
       } else {
@@ -566,10 +566,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Operation
      */
-    public function insert($project, Google_Image $postBody, $optParams = array()) {
-      $params = array('project' => $project, 'postBody' => $postBody);
+    public function insert($project, Google_Image $postBody, $optParams = []) {
+      $params = ['project' => $project, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_Operation($data);
       } else {
@@ -584,10 +584,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Image
      */
-    public function get($project, $image, $optParams = array()) {
-      $params = array('project' => $project, 'image' => $image);
+    public function get($project, $image, $optParams = []) {
+      $params = ['project' => $project, 'image' => $image];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Image($data);
       } else {
@@ -605,10 +605,10 @@
      * @opt_param string maxResults Optional. Maximum count of results to be returned. Maximum and default value is 100.
      * @return Google_ImageList
      */
-    public function listImages($project, $optParams = array()) {
-      $params = array('project' => $project);
+    public function listImages($project, $optParams = []) {
+      $params = ['project' => $project];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_ImageList($data);
       } else {
@@ -623,10 +623,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Operation
      */
-    public function delete($project, $image, $optParams = array()) {
-      $params = array('project' => $project, 'image' => $image);
+    public function delete($project, $image, $optParams = []) {
+      $params = ['project' => $project, 'image' => $image];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       if ($this->useObjects()) {
         return new Google_Operation($data);
       } else {
@@ -655,10 +655,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Operation
      */
-    public function insert($project, Google_Firewall $postBody, $optParams = array()) {
-      $params = array('project' => $project, 'postBody' => $postBody);
+    public function insert($project, Google_Firewall $postBody, $optParams = []) {
+      $params = ['project' => $project, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_Operation($data);
       } else {
@@ -673,10 +673,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Firewall
      */
-    public function get($project, $firewall, $optParams = array()) {
-      $params = array('project' => $project, 'firewall' => $firewall);
+    public function get($project, $firewall, $optParams = []) {
+      $params = ['project' => $project, 'firewall' => $firewall];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Firewall($data);
       } else {
@@ -694,10 +694,10 @@
      * @opt_param string maxResults Optional. Maximum count of results to be returned. Maximum and default value is 100.
      * @return Google_FirewallList
      */
-    public function listFirewalls($project, $optParams = array()) {
-      $params = array('project' => $project);
+    public function listFirewalls($project, $optParams = []) {
+      $params = ['project' => $project];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_FirewallList($data);
       } else {
@@ -713,10 +713,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Operation
      */
-    public function update($project, $firewall, Google_Firewall $postBody, $optParams = array()) {
-      $params = array('project' => $project, 'firewall' => $firewall, 'postBody' => $postBody);
+    public function update($project, $firewall, Google_Firewall $postBody, $optParams = []) {
+      $params = ['project' => $project, 'firewall' => $firewall, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('update', array($params));
+      $data = $this->__call('update', [$params]);
       if ($this->useObjects()) {
         return new Google_Operation($data);
       } else {
@@ -733,10 +733,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Operation
      */
-    public function patch($project, $firewall, Google_Firewall $postBody, $optParams = array()) {
-      $params = array('project' => $project, 'firewall' => $firewall, 'postBody' => $postBody);
+    public function patch($project, $firewall, Google_Firewall $postBody, $optParams = []) {
+      $params = ['project' => $project, 'firewall' => $firewall, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('patch', array($params));
+      $data = $this->__call('patch', [$params]);
       if ($this->useObjects()) {
         return new Google_Operation($data);
       } else {
@@ -751,10 +751,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Operation
      */
-    public function delete($project, $firewall, $optParams = array()) {
-      $params = array('project' => $project, 'firewall' => $firewall);
+    public function delete($project, $firewall, $optParams = []) {
+      $params = ['project' => $project, 'firewall' => $firewall];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       if ($this->useObjects()) {
         return new Google_Operation($data);
       } else {
@@ -783,10 +783,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Operation
      */
-    public function insert($project, Google_Network $postBody, $optParams = array()) {
-      $params = array('project' => $project, 'postBody' => $postBody);
+    public function insert($project, Google_Network $postBody, $optParams = []) {
+      $params = ['project' => $project, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_Operation($data);
       } else {
@@ -801,10 +801,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Network
      */
-    public function get($project, $network, $optParams = array()) {
-      $params = array('project' => $project, 'network' => $network);
+    public function get($project, $network, $optParams = []) {
+      $params = ['project' => $project, 'network' => $network];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Network($data);
       } else {
@@ -822,10 +822,10 @@
      * @opt_param string maxResults Optional. Maximum count of results to be returned. Maximum and default value is 100.
      * @return Google_NetworkList
      */
-    public function listNetworks($project, $optParams = array()) {
-      $params = array('project' => $project);
+    public function listNetworks($project, $optParams = []) {
+      $params = ['project' => $project];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_NetworkList($data);
       } else {
@@ -840,10 +840,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Operation
      */
-    public function delete($project, $network, $optParams = array()) {
-      $params = array('project' => $project, 'network' => $network);
+    public function delete($project, $network, $optParams = []) {
+      $params = ['project' => $project, 'network' => $network];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       if ($this->useObjects()) {
         return new Google_Operation($data);
       } else {
@@ -871,10 +871,10 @@
      * @param Google_Metadata $postBody
      * @param array $optParams Optional parameters.
      */
-    public function setCommonInstanceMetadata($project, Google_Metadata $postBody, $optParams = array()) {
-      $params = array('project' => $project, 'postBody' => $postBody);
+    public function setCommonInstanceMetadata($project, Google_Metadata $postBody, $optParams = []) {
+      $params = ['project' => $project, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('setCommonInstanceMetadata', array($params));
+      $data = $this->__call('setCommonInstanceMetadata', [$params]);
       return $data;
     }
     /**
@@ -884,10 +884,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Project
      */
-    public function get($project, $optParams = array()) {
-      $params = array('project' => $project);
+    public function get($project, $optParams = []) {
+      $params = ['project' => $project];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Project($data);
       } else {

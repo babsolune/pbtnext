@@ -11,7 +11,7 @@
 
 class TemplateSyntaxParserContext
 {
-	private $loops = array();
+	private $loops = [];
 
 	public function enter_loop($name)
 	{

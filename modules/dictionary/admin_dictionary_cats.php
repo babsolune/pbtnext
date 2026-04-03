@@ -41,11 +41,11 @@ if ($pagination->current_page_is_empty() && $page > 1)
 	DispatchManager::redirect($error_controller);
 }
 
-$view->put_all(array(
+$view->put_all([
 	'C_PAGINATION' => $pagination->has_several_pages(),
 
 	'PAGINATION' => $pagination->display(),
-));
+]);
 
 if (!empty($get_l_error))
 {
@@ -65,7 +65,7 @@ if ($request->get_getvalue('add', false))
 		if ($id = $request->get_getvalue('id_cat',false,TINTEGER))
 		{
 			try {
-				$row = PersistenceContext::get_querier()->select_single_row(DictionarySetup::$dictionary_cat_table, array('id', 'name', 'images'), 'WHERE id=:id', array('id' => $id));
+				$row = PersistenceContext::get_querier()->select_single_row(DictionarySetup::$dictionary_cat_table, ['id', 'name', 'images'], 'WHERE id=:id', ['id' => $id]);
 			} catch (RowNotFoundException $e) {}
 			$name = $row ? $row['name'] : '';
 		}
@@ -83,7 +83,7 @@ if ($request->get_getvalue('add', false))
 	}
 	elseif ($id = $request->get_getvalue('id',false,TINTEGER)){
 		try {
-			$row = PersistenceContext::get_querier()->select_single_row(DictionarySetup::$dictionary_cat_table, array('id', 'name', 'images'), 'WHERE id=:id', array('id' => $id));
+			$row = PersistenceContext::get_querier()->select_single_row(DictionarySetup::$dictionary_cat_table, ['id', 'name', 'images'], 'WHERE id=:id', ['id' => $id]);
 		} catch (RowNotFoundException $e) {}
 		$name = $row ? $row['name'] : '';
 	}
@@ -103,21 +103,21 @@ if ($request->get_getvalue('add', false))
 		$server_img .= '<option value="' . $file . '"' . $selected . '>' . $file . '</option>';
 	}
 
-	$view->assign_block_vars('add',array(
+	$view->assign_block_vars('add',[
 		'C_IS_PICTURE' => $row && !empty($row['images']),
 		'CATEGORIES_LIST' => false,
 		'CATEGORY_ID' => $id,
 		'CATEGORY_NAME' => stripslashes($name),
 		'U_CATEGORY_IMAGE' => $img,
 		'CATEGORY_IMAGES_LIST' => $server_img
-	));
+	]);
 
 	$view->display();
 
 	if ($request->get_postvalue('valid',false) && $id_cat = $request->get_postvalue('id_cat',false,TINTEGER))
 	{
 		try {
-			$row = PersistenceContext::get_querier()->select_single_row(DictionarySetup::$dictionary_cat_table, array('id', 'name', 'images'), 'WHERE id=:id', array('id' => $id_cat));
+			$row = PersistenceContext::get_querier()->select_single_row(DictionarySetup::$dictionary_cat_table, ['id', 'name', 'images'], 'WHERE id=:id', ['id' => $id_cat]);
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
@@ -161,10 +161,10 @@ if ($request->get_getvalue('add', false))
 		$cat_img = !empty($cat_img) ? $cat_img : (!empty($row['images']) ? $row['images'] : '');
 		$name_cat = $request->get_postvalue('name_cat','',TSTRING);
 
-		PersistenceContext::get_querier()->update(DictionarySetup::$dictionary_cat_table, array(
+		PersistenceContext::get_querier()->update(DictionarySetup::$dictionary_cat_table, [
 			'name' => addslashes(TextHelper::strtoupper($name_cat)),
 			'images' => addslashes($cat_img)
-		), 'WHERE id=:id', array('id' => $id_cat));
+		], 'WHERE id=:id', ['id' => $id_cat]);
 
 		AppContext::get_response()->redirect(HOST . SCRIPT);
 	}
@@ -208,10 +208,10 @@ if ($request->get_getvalue('add', false))
 		}
 		$name_cat = $request->get_postvalue('name_cat','',TSTRING);
 
-		PersistenceContext::get_querier()->insert(DictionarySetup::$dictionary_cat_table, array(
+		PersistenceContext::get_querier()->insert(DictionarySetup::$dictionary_cat_table, [
 			'name' => $name_cat,
 			'images' => $cat_img
-		));
+		]);
 
 		AppContext::get_response()->redirect(HOST . SCRIPT);
 	}
@@ -225,8 +225,8 @@ elseif ($request->get_postvalue('cat_to_del',0,TINTEGER) && $request->get_postva
 	$delete_content = ($action && $action == 'move') ? false : true;
 	if ($delete_content)
 	{
-		PersistenceContext::get_querier()->delete(DictionarySetup::$dictionary_table, 'WHERE cat=:id', array('id' => $id_del));
-		PersistenceContext::get_querier()->delete(DictionarySetup::$dictionary_cat_table, 'WHERE id=:id', array('id' => $id_del));
+		PersistenceContext::get_querier()->delete(DictionarySetup::$dictionary_table, 'WHERE cat=:id', ['id' => $id_del]);
+		PersistenceContext::get_querier()->delete(DictionarySetup::$dictionary_cat_table, 'WHERE id=:id', ['id' => $id_del]);
 		AppContext::get_response()->redirect(HOST . DIR . '/dictionary/admin_dictionary_cats.php');
 	}
 	else
@@ -241,11 +241,11 @@ elseif ($request->get_postvalue('cat_to_del',0,TINTEGER) && $request->get_postva
             );
 			while ($row = $result->fetch())
 			{
-				PersistenceContext::get_querier()->update(DictionarySetup::$dictionary_table, array('cat' => addslashes($id_move)), 'WHERE id=:id', array('id' => $row['id']));
+				PersistenceContext::get_querier()->update(DictionarySetup::$dictionary_table, ['cat' => addslashes($id_move)], 'WHERE id=:id', ['id' => $row['id']]);
 			}
 			$result->dispose();
 
-			PersistenceContext::get_querier()->delete(DictionarySetup::$dictionary_cat_table, 'WHERE id=:id', array('id' => $id_del));
+			PersistenceContext::get_querier()->delete(DictionarySetup::$dictionary_cat_table, 'WHERE id=:id', ['id' => $id_del]);
 		}
 		AppContext::get_response()->redirect(HOST . DIR . '/dictionary/admin_dictionary_cats.php');
 	}
@@ -254,19 +254,19 @@ elseif ($request->get_getvalue('del', false) && $id_del = $request->get_getvalue
 {
 	AppContext::get_session()->csrf_get_protect();
 	$categories_number = PersistenceContext::get_querier()->count(DictionarySetup::$dictionary_cat_table);
-	$items_number = PersistenceContext::get_querier()->count(DictionarySetup::$dictionary_table, "WHERE cat = :id", array('id' =>$id_del));
+	$items_number = PersistenceContext::get_querier()->count(DictionarySetup::$dictionary_table, "WHERE cat = :id", ['id' =>$id_del]);
 	if ($categories_number == 1 )
 	{
 		AppContext::get_response()->redirect(HOST . DIR . '/dictionary/admin_dictionary_cats' . url('.php?erroru=' . "del_cat") . '#errorh');
 	}
 	elseif ($items_number > 0)
 	{
-		$row_name = PersistenceContext::get_querier()->select_single_row(DictionarySetup::$dictionary_cat_table, array('id', 'name', 'images'), 'WHERE id=:id', array('id' => $id_del));
-		$view->put_all(array(
+		$row_name = PersistenceContext::get_querier()->select_single_row(DictionarySetup::$dictionary_cat_table, ['id', 'name', 'images'], 'WHERE id=:id', ['id' => $id_del]);
+		$view->put_all([
 			'C_DELETE_CATEGORY' => true,
 			'CATEGORY_ID' => $id_del,
 			'CATEGORY_NAME' => stripslashes($row_name['name']),
-		));
+		]);
 
 		$result = PersistenceContext::get_querier()->select("SELECT id, name
 		FROM ".PREFIX."dictionary_cat
@@ -274,10 +274,10 @@ elseif ($request->get_getvalue('del', false) && $id_del = $request->get_getvalue
 		ORDER BY name");
 		while ($row = $result->fetch())
 		{
-			$view->assign_block_vars('cat_list', array(
+			$view->assign_block_vars('cat_list', [
 				'CATEGORY_NAME' => stripslashes($row['name']),
 				'CATEGORY_ID' => $row['id']
-			));
+			]);
 		}
 		$result->dispose();
 
@@ -285,7 +285,7 @@ elseif ($request->get_getvalue('del', false) && $id_del = $request->get_getvalue
 	}
 	else
 	{
-		PersistenceContext::get_querier()->delete(DictionarySetup::$dictionary_cat_table, 'WHERE id=:id', array('id' => $id_del));
+		PersistenceContext::get_querier()->delete(DictionarySetup::$dictionary_cat_table, 'WHERE id=:id', ['id' => $id_del]);
 		AppContext::get_response()->redirect(HOST . SCRIPT);
 	}
 }
@@ -294,25 +294,25 @@ else
 	$result_cat = PersistenceContext::get_querier()->select("SELECT id, name,images
 	FROM ".PREFIX."dictionary_cat
 	ORDER BY name
-	LIMIT :number_items_per_page OFFSET :display_from", array(
+	LIMIT :number_items_per_page OFFSET :display_from", [
 		'number_items_per_page' => $pagination->get_number_items_per_page(),
 		'display_from' => $pagination->get_display_from()
-	));
+	]);
 
 	while ($row_cat = $result_cat->fetch())
 	{
 		$img = empty($row_cat['images']) ? '<i class="fa fa-folder"></i>' : '<img src="' . $row_cat['images'] . '" alt="' . $row_cat['images'] . '" />';
-		$view->assign_block_vars('cat', array(
+		$view->assign_block_vars('cat', [
 			'CATEGORY_NAME' => stripslashes($row_cat['name']),
 			'CATEGORY_IMAGE' => $img,
 			'CATEGORY_ID' => $row_cat['id']
-		));
+		]);
 	}
 	$result_cat->dispose();
 
-	$view->put_all( array(
+	$view->put_all( [
 		'CATEGORIES_LIST' => true,
-	));
+	]);
 
 	$view->display();
 }

@@ -21,7 +21,7 @@ class CalendarItem
 
 	private $parent_id;
 
-	private $participants = array();
+	private $participants = [];
 
 	public function set_id($id)
 	{
@@ -115,13 +115,13 @@ class CalendarItem
 
 	public function get_properties()
 	{
-		return array(
+		return [
 			'id_event' => $this->get_id(),
 			'content_id' => $this->content->get_id(),
 			'start_date' => ($this->get_start_date() !== null ? $this->get_start_date()->get_timestamp() : ''),
 			'end_date' => ($this->get_end_date() !== null ? $this->get_end_date()->get_timestamp() : ''),
 			'parent_id' => $this->get_parent_id()
-		);
+		];
 	}
 
 	public function set_properties(array $properties)
@@ -143,7 +143,7 @@ class CalendarItem
 		$this->start_date = new Date($this->round_to_five_minutes($date), Timezone::SERVER_TIMEZONE);
 		$this->end_date = new Date($this->round_to_five_minutes($date + 3600), Timezone::SERVER_TIMEZONE);
 		$this->parent_id = 0;
-		$this->participants = array();
+		$this->participants = [];
 	}
 
 	public function get_item_url()
@@ -191,7 +191,7 @@ class CalendarItem
 			Date::get_array_tpl_vars($this->content->get_update_date(), 'update_date'),
 			Date::get_array_tpl_vars($this->start_date, 'start_date'),
 			Date::get_array_tpl_vars($this->end_date, 'end_date'),
-			array(
+			[
 				'C_APPROVED'                 => $this->content->is_approved(),
 				'C_CONTROLS'                 => $this->is_authorized_to_edit() || $this->is_authorized_to_delete() || $this->is_authorized_to_duplicate(),
 				'C_EDIT'                     => $this->is_authorized_to_edit(),
@@ -241,8 +241,8 @@ class CalendarItem
 				'AUTHOR'                   => $author->get_display_name(),
 				'AUTHOR_LEVEL_CLASS'       => UserService::get_level_class($author->get_level()),
 				'AUTHOR_GROUP_COLOR'       => $author_group_color,
-				'L_MISSING_PARTICIPANTS'   => $missing_participants_number > 1 ? StringVars::replace_vars($lang['calendar.remaining.places'], array('missing_number' => $missing_participants_number)) : $lang['calendar.remaining.place'],
-				'L_REGISTRATION_DAYS_LEFT' => $registration_days_left > 1 ? StringVars::replace_vars($lang['calendar.remaining.days'], array('days_left' => $registration_days_left)) : $lang['calendar.remaining.day'],
+				'L_MISSING_PARTICIPANTS'   => $missing_participants_number > 1 ? StringVars::replace_vars($lang['calendar.remaining.places'], ['missing_number' => $missing_participants_number]) : $lang['calendar.remaining.place'],
+				'L_REGISTRATION_DAYS_LEFT' => $registration_days_left > 1 ? StringVars::replace_vars($lang['calendar.remaining.days'], ['days_left' => $registration_days_left]) : $lang['calendar.remaining.day'],
 
 				'U_SYNDICATION'    => SyndicationUrlBuilder::rss('calendar', $category->get_id())->rel(),
 				'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($author->get_id())->rel(),
@@ -255,7 +255,7 @@ class CalendarItem
 				'U_SUSCRIBE'       => CalendarUrlBuilder::suscribe_item($this->id)->rel(),
 				'U_UNSUSCRIBE'     => CalendarUrlBuilder::unsuscribe_item($this->id)->rel(),
 				'U_COMMENTS'       => CalendarUrlBuilder::display_item_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->content->get_rewrited_title())->rel()
-			)
+			]
 		);
 	}
 

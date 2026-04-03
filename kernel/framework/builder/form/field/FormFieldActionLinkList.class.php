@@ -38,7 +38,7 @@ class FormFieldActionLinkList extends AbstractFormField
 		$template = $this->get_template_to_use();
 
 		foreach ($this->actions as $action) {
-			$template->assign_block_vars('action', array(
+			$template->assign_block_vars('action', [
 				'C_IS_ACTIVE_MODULE' => ($action->get_active_module() == '') || (ModulesManager::is_module_installed($action->get_active_module()) & ModulesManager::is_module_activated($action->get_active_module())),
 				'C_PICTURE'          => $action->has_fa_icon() || $action->has_img(),
 				'C_IMG'              => $action->has_img(),
@@ -51,7 +51,7 @@ class FormFieldActionLinkList extends AbstractFormField
 
 				'U_LINK' => $action->get_url()->rel(),
 				'U_IMG'  => $action->has_img() ? $action->get_img()->rel() : '',
-			));
+			]);
 		}
 
 		return $template;

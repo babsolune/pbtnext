@@ -78,11 +78,11 @@ class SitemapConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		return array(
+		return [
 			'last_generation_date' => new Date(),
 			'sitemap_xml_life_time' => 3,
 			'enable_sitemap_xml' => false
-		);
+		];
 	}
 
 	/**

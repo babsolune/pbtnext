@@ -32,7 +32,7 @@ class HTMLTableLikeFromListSQLFilter extends HTMLTableEqualsFromListFilter imple
 		{
 			$parameter_name = $this->get_sql_value_parameter_prefix() . '_' . $this->db_field;
 			$query = $this->db_field . ' LIKE :' . $parameter_name;
-			$parameters = array($parameter_name => $this->get_like_value());
+			$parameters = [$parameter_name => $this->get_like_value()];
 			return new SQLFragment($query, $parameters);
 		}
 		return new SQLFragment();

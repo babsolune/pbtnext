@@ -332,7 +332,7 @@ class HtaccessFileCache implements CacheData
 		$this->add_line('RewriteRule ' . $match . ' ' . $this->general_config->get_site_path() . '/' . ltrim($path, '/') . ' [' . $options . ']');
 	}
 
-	private function add_url_mapping($mapping_list, $rules = array())
+	private function add_url_mapping($mapping_list, $rules = [])
     {
         if ($mapping_list instanceof UrlMappingsExtensionPoint)
             $mapping_list = $mapping_list->list_mappings();
@@ -344,7 +344,7 @@ class HtaccessFileCache implements CacheData
             if (!empty($matches[1]))
             {
                 $module_name = $matches[1];
-                static $processed_modules = array();
+                static $processed_modules = [];
 
                 // Only add once per module to avoid duplicates
                 if (!in_array($module_name, $processed_modules))
@@ -360,7 +360,7 @@ class HtaccessFileCache implements CacheData
                 {
                     $this->add_line(str_replace('DIR', $this->general_config->get_site_path(), $rule));
                 }
-                $rules = array();
+                $rules = [];
             }
 
             $this->add_rewrite_rule($mapping->from(), $mapping->to(), $mapping->options());

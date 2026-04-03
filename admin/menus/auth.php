@@ -54,14 +54,14 @@ $view->add_lang($lang);
 $editor = AppContext::get_content_formatting_service()->get_default_editor();
 $editor->set_identifier('contents');
 
-$view->put_all(array(
+$view->put_all([
 	'KERNEL_EDITOR' => $editor->display(),
 	'ACTION'        => 'save',
-));
+]);
 
 // Possible Locations.
 $block = $menu->get_block();
-$array_location = array(
+$array_location = [
 	Menu::BLOCK_POSITION__TOP_HEADER     => $lang['menu.top.header'],
 	Menu::BLOCK_POSITION__HEADER         => $lang['menu.header'],
 	Menu::BLOCK_POSITION__SUB_HEADER     => $lang['menu.sub.header'],
@@ -71,7 +71,7 @@ $array_location = array(
 	Menu::BLOCK_POSITION__RIGHT          => $lang['menu.right'],
 	Menu::BLOCK_POSITION__TOP_FOOTER     => $lang['menu.top.footer'],
 	Menu::BLOCK_POSITION__FOOTER         => $lang['menu.footer']
-);
+];
 
 $locations = '';
 foreach ($array_location as $key => $name)
@@ -79,7 +79,7 @@ foreach ($array_location as $key => $name)
 	$locations .= '<option value="' . $key . '" ' . (($block == $key) ? 'selected="selected"' : '') . '>' . $name . '</option>';
 }
 
-$view->put_all(array(
+$view->put_all([
 	'C_ENABLED'                        => $menu->is_enabled(),
 	'C_MENU_HIDDEN_WITH_SMALL_SCREENS' => $menu->is_hidden_with_small_screens(),
 
@@ -87,7 +87,7 @@ $view->put_all(array(
 	'NAME'       => $menu->get_formated_title(),
 	'LOCATIONS'  => $locations,
 	'AUTH_MENUS' => Authorizations::generate_select(Menu::MENU_AUTH_BIT, $menu->get_auth()),
-));
+]);
 
 // Filters
 MenuAdminService::add_filter_fieldset($menu, $view);

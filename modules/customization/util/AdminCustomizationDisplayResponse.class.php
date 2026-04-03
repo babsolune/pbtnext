@@ -17,7 +17,7 @@ class AdminCustomizationDisplayResponse extends AdminMenuDisplayResponse
 		parent::__construct($view);
 
 		$lang = LangLoader::get_all_langs('customization');
-		$this->set_title(StringVars::replace_vars($lang['form.module.title'], array('module_name' => $this->module->get_configuration()->get_name())));
+		$this->set_title(StringVars::replace_vars($lang['form.module.title'], ['module_name' => $this->module->get_configuration()->get_name()]));
 
 		$this->add_link($lang['customization.interface.title'], AdminCustomizeUrlBuilder::customize_interface());
 		$this->add_link($lang['customization.favicon.title'], AdminCustomizeUrlBuilder::customize_favicon());

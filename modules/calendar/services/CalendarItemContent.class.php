@@ -330,7 +330,7 @@ class CalendarItemContent
 
 	public function get_properties()
 	{
-		return array(
+		return [
 			'id' => $this->get_id(),
 			'id_category' => $this->get_id_category(),
 			'title' => $this->get_title(),
@@ -351,7 +351,7 @@ class CalendarItemContent
 			'register_authorizations' => TextHelper::serialize($this->get_register_authorizations()),
 			'repeat_number' => $this->get_repeat_number(),
 			'repeat_type' => $this->get_repeat_type()
-		);
+		];
 	}
 
 	public function set_properties(array $properties)
@@ -421,7 +421,7 @@ class CalendarItemContent
 		$this->registration_limit = false;
 		$this->max_registered_members = 0;
 		$this->last_registration_date_enabled = false;
-		$this->register_authorizations = array('r0' => 3, 'r1' => 3);
+		$this->register_authorizations = ['r0' => 3, 'r1' => 3];
 
 		$this->hide_map();
 

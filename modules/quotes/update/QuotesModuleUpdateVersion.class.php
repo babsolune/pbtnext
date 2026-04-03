@@ -15,8 +15,8 @@ class QuotesModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('quotes');
 
-		$this->content_tables = array(array('name' => PREFIX . 'quotes', 'content_field' => 'content'));
-		self::$delete_old_files_list = array(
+		$this->content_tables = [['name' => PREFIX . 'quotes', 'content_field' => 'content']];
+		self::$delete_old_files_list = [
 			'/controllers/ajax/AjaxQuoteAuthorAutoCompleteController.class.php',
 			'/controllers/AdminQuotesManageController.class.php',
 			'/controllers/QuotesDeleteController.class.php',
@@ -33,27 +33,27 @@ class QuotesModuleUpdateVersion extends ModuleUpdateVersion
 			'/services/QuotesAuthorizationsService.class.php',
 			'/templates/QuotesDisplaySeveralQuotesController.tpl',
 			'/util/AdminQuotesDisplayResponse.class.php'
-		);
-		self::$delete_old_folders_list = array(
+		];
+		self::$delete_old_folders_list = [
 			'/controllers/categories'
-		);
+		];
 
-		$this->database_columns_to_modify = array(
-			array(
+		$this->database_columns_to_modify = [
+			[
 				'table_name' => PREFIX . 'quotes',
-				'columns' => array(
+				'columns' => [
 					'author'          => 'writer TEXT',
 					'rewrited_author' => 'rewrited_writer TEXT',
 					'quote'           => 'content MEDIUMTEXT',
-				)
-			),
-			array(
+				]
+			],
+			[
 				'table_name' => PREFIX . 'quotes_cats',
-				'columns' => array(
+				'columns' => [
 					'image' => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""'
-				)
-			)
-		);
+				]
+			]
+		];
 	}
 }
 ?>

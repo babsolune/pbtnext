@@ -66,7 +66,7 @@ class DevToolsGitHubService
         $path = trim($path, '/');
 
         // 2. Find immediate subdirectories of $path (= module folders)
-        $modules = array();
+        $modules = [];
         foreach ($tree as $item)
         {
             if ($item['type'] !== 'tree')
@@ -86,7 +86,7 @@ class DevToolsGitHubService
             }
 
             if (strpos($relative, '/') === false && $relative !== '')
-                $modules[$relative] = array('name' => $relative, 'version' => null);
+                $modules[$relative] = ['name' => $relative, 'version' => null];
         }
 
         // 3. Find config.ini blobs and extract versions via raw URL (faster than blob API)
@@ -144,8 +144,8 @@ class DevToolsGitHubService
     {
         $modules = self::get_modules_with_versions($owner, $repo, $branch, $path);
         if (!is_array($modules))
-            return array();
-        return array_map(function($m) { return array('name' => $m['name'], 'type' => 'dir'); }, $modules);
+            return [];
+        return array_map(function($m) { return ['name' => $m['name'], 'type' => 'dir']; }, $modules);
     }
 
     /**
@@ -218,11 +218,11 @@ class DevToolsGitHubService
         $config  = DevToolsConfig::load();
         $token   = $config->get_github_token();
 
-        $headers = array(
+        $headers = [
             'User-Agent: PHPBoost-DevTools/1.0',
             'Accept: application/vnd.github+json',
             'X-GitHub-Api-Version: 2022-11-28',
-        );
+        ];
 
         if (!empty($token))
             $headers[] = 'Authorization: Bearer ' . $token;
@@ -231,14 +231,14 @@ class DevToolsGitHubService
         if (function_exists('curl_init'))
         {
             $ch = curl_init($url);
-            curl_setopt_array($ch, array(
+            curl_setopt_array($ch, [
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_TIMEOUT        => 120,
                 CURLOPT_SSL_VERIFYPEER => true,
                 CURLOPT_SSL_VERIFYHOST => 2,
                 CURLOPT_HTTPHEADER     => $headers,
-            ));
+            ]);
 
             $result   = curl_exec($ch);
             $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -258,19 +258,19 @@ class DevToolsGitHubService
         if (!ini_get('allow_url_fopen'))
             return false; // ni cURL ni allow_url_fopen : impossible
 
-        $ctx = stream_context_create(array(
-            'http' => array(
+        $ctx = stream_context_create([
+            'http' => [
                 'method'          => 'GET',
                 'header'          => implode("\r\n", $headers),
                 'timeout'         => 15,
                 'follow_location' => 1,
                 'ignore_errors'   => true,
-            ),
-            'ssl' => array(
+            ],
+            'ssl' => [
                 'verify_peer'      => true,
                 'verify_peer_name' => true,
-            ),
-        ));
+            ],
+        ]);
 
         $result = @file_get_contents($url, false, $ctx);
 

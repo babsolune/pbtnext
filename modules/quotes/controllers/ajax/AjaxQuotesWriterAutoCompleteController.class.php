@@ -13,7 +13,7 @@ class AjaxQuotesWriterAutoCompleteController extends AbstractController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
-		$suggestions = array();
+		$suggestions = [];
 
 		try {
 			$result = PersistenceContext::get_querier()->select("SELECT writer FROM " . QuotesSetup::$quotes_table . " WHERE writer LIKE '" . $request->get_value('value', '') . "%' GROUP BY writer");
@@ -26,7 +26,7 @@ class AjaxQuotesWriterAutoCompleteController extends AbstractController
 		} catch (Exception $e) {
 		}
 
-		return new JSONResponse(array('suggestions' => $suggestions));
+		return new JSONResponse(['suggestions' => $suggestions]);
 	}
 }
 ?>

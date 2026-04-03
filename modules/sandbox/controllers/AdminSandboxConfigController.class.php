@@ -25,67 +25,67 @@ class AdminSandboxConfigController extends DefaultAdminModuleController
 
 		$this->view->put('CONTENT', $this->form->display());
 
-		return new AdminSandboxDisplayResponse($this->view, StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		return new AdminSandboxDisplayResponse($this->view, StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module()->get_configuration()->get_name()]));
 	}
 
 	private function build_form()
 	{
 		$form = new HTMLForm(self::class);
 
-		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module()->get_configuration()->get_name()]));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('menu_opening_type', $this->lang['menu.push.opening.type'], $this->config->get_menu_opening_type(),
-			array(
-				new FormFieldSelectChoiceOption($this->lang['menu.push.opening.type.top'], SandboxConfig::TOP_MENU, array('data_option_icon' => 'fa fa-arrow-down')),
-				new FormFieldSelectChoiceOption($this->lang['menu.push.opening.type.right'], SandboxConfig::RIGHT_MENU, array('data_option_icon' => 'fa fa-arrow-left')),
-				new FormFieldSelectChoiceOption($this->lang['menu.push.opening.type.bottom'], SandboxConfig::BOTTOM_MENU, array('data_option_icon' => 'fa fa-arrow-up')),
-				new FormFieldSelectChoiceOption($this->lang['menu.push.opening.type.left'], SandboxConfig::LEFT_MENU, array('data_option_icon' => 'fa fa-arrow-right'))
-			),
-			array('select_to_list' => true)
+			[
+				new FormFieldSelectChoiceOption($this->lang['menu.push.opening.type.top'], SandboxConfig::TOP_MENU, ['data_option_icon' => 'fa fa-arrow-down']),
+				new FormFieldSelectChoiceOption($this->lang['menu.push.opening.type.right'], SandboxConfig::RIGHT_MENU, ['data_option_icon' => 'fa fa-arrow-left']),
+				new FormFieldSelectChoiceOption($this->lang['menu.push.opening.type.bottom'], SandboxConfig::BOTTOM_MENU, ['data_option_icon' => 'fa fa-arrow-up']),
+				new FormFieldSelectChoiceOption($this->lang['menu.push.opening.type.left'], SandboxConfig::LEFT_MENU, ['data_option_icon' => 'fa fa-arrow-right'])
+			],
+			['select_to_list' => true]
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('expansion_type', $this->lang['menu.push.expansion.type'], $this->config->get_expansion_type(),
-			array(
-				new FormFieldSelectChoiceOption($this->lang['menu.push.expansion.type.overlap'], SandboxConfig::OVERLAP, array('data_option_icon' => 'fa fa-sign-in-alt')),
-				new FormFieldSelectChoiceOption($this->lang['menu.push.expansion.type.expand'], SandboxConfig::EXPANSION, array('data_option_icon' => 'fa fa-chevron-down')),
-				new FormFieldSelectChoiceOption($this->lang['menu.push.expansion.type.none'], SandboxConfig::NO_EXPANSION, array('data_option_icon' => 'fa fa-times-circle'))
-			),
-			array('select_to_list' => true)
+			[
+				new FormFieldSelectChoiceOption($this->lang['menu.push.expansion.type.overlap'], SandboxConfig::OVERLAP, ['data_option_icon' => 'fa fa-sign-in-alt']),
+				new FormFieldSelectChoiceOption($this->lang['menu.push.expansion.type.expand'], SandboxConfig::EXPANSION, ['data_option_icon' => 'fa fa-chevron-down']),
+				new FormFieldSelectChoiceOption($this->lang['menu.push.expansion.type.none'], SandboxConfig::NO_EXPANSION, ['data_option_icon' => 'fa fa-times-circle'])
+			],
+			['select_to_list' => true]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('disabled_body', $this->lang['menu.push.disable.body'], $this->config->get_disabled_body(),
-			array('class' => 'custom-checkbox')
+			['class' => 'custom-checkbox']
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('pushed_content', $this->lang['menu.push.push.content'], $this->config->get_pushed_content(),
-			array('class' => 'custom-checkbox')
+			['class' => 'custom-checkbox']
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('superadmin_enabled', $this->lang['sandbox.superadmin.enabled'], $this->config->get_superadmin_enabled(),
-			array(
+			[
 				'class' => 'custom-checkbox',
-				'events' => array('click' => '
+				'events' => ['click' => '
 					if (HTMLForms.getField("superadmin_enabled").getValue()) {
 						HTMLForms.getField("superadmin_name").enable();
 					} else {
 						HTMLForms.getField("superadmin_name").disable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$fieldset->add_field(new FormFieldAjaxSearchUserAutoComplete('superadmin_name', $this->lang['sandbox.superadmin.id'], $this->config->get_superadmin_name(),
-			array('hidden' => !$this->config->get_superadmin_enabled()),
-			array(new SandboxConstraintUserIsAdmin)
+			['hidden' => !$this->config->get_superadmin_enabled()],
+			[new SandboxConstraintUserIsAdmin]
 		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', LangLoader::get_message('form.authorizations', 'form-lang'));
 		$form->add_fieldset($fieldset_authorizations);
 
-		$auth_settings = new AuthorizationsSettings(array(
+		$auth_settings = new AuthorizationsSettings([
 			new ActionAuthorization($this->lang['config.authorizations.read'], SandboxAuthorizationsService::READ_AUTHORIZATIONS)
-		));
+		]);
 
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());
 		$fieldset_authorizations->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
@@ -110,7 +110,7 @@ class AdminSandboxConfigController extends DefaultAdminModuleController
 
 		SandboxConfig::save();
 
-		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
+		HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]), 'url' => ModulesUrlBuilder::configuration()->rel()]);
 	}
 }
 ?>

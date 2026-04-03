@@ -202,7 +202,7 @@ class Category
 
 	public function get_properties()
 	{
-		return array_merge(array(
+		return array_merge([
 			'id' => $this->get_id(),
 			'name' => TextHelper::htmlspecialchars($this->get_name()),
 			'rewrited_name' => TextHelper::htmlspecialchars($this->get_rewrited_name()),
@@ -210,7 +210,7 @@ class Category
 			'special_authorizations' => (int)$this->has_special_authorizations(),
 			'auth' => !$this->auth_is_empty() ? TextHelper::serialize($this->get_authorizations()) : '',
 			'id_parent' => $this->get_id_parent()
-		), $this->get_additional_properties());
+		], $this->get_additional_properties());
 	}
 
 	protected function get_additional_properties()
@@ -277,7 +277,7 @@ class Category
 		$class_name = get_called_class();
 		$object = new $class_name();
 
-		$fields = array_merge(array(
+		$fields = array_merge([
 			'id'                     => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
 			'name'                   => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
 			'rewrited_name'          => ['type' => 'string', 'length' => 250, 'default' => "''"],
@@ -285,12 +285,12 @@ class Category
 			'special_authorizations' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0],
 			'auth'                   => ['type' => 'text', 'length' => 65000],
 			'id_parent'              => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0]
-		), $object->get_additional_attributes_categories_table_fields());
+		], $object->get_additional_attributes_categories_table_fields());
 
-		$options = array_merge(array(
+		$options = array_merge([
 			'primary'   => ['id'],
 			'id_parent' => ['type' => 'key', 'fields' => 'id_parent']
-		), $object->get_additional_attributes_categories_table_options());
+		], $object->get_additional_attributes_categories_table_options());
 
 		PersistenceContext::get_dbms_utils()->create_table($table_name, $fields, $options);
 	}

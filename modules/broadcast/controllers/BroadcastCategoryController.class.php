@@ -27,7 +27,7 @@ class BroadcastCategoryController extends DefaultModuleController
 
 	private function build_view()
 	{
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_CATEGORY' 	   	   => true,
 			'C_CATEGORY_THUMBNAIL' => !$this->get_category()->get_id() == Category::ROOT_CATEGORY && !empty($this->get_category()->get_thumbnail()->rel()),
 			'C_ROOT_CATEGORY'  	   => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
@@ -42,7 +42,7 @@ class BroadcastCategoryController extends DefaultModuleController
 
 			'U_EDIT_CATEGORY' 	   => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? BroadcastUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->get_category()->get_id(), 'broadcast')->rel(),
 			'U_CATEGORY_THUMBNAIL' => $this->get_category()->get_thumbnail()->rel()
-		));
+		]);
 
 		$this->build_day_view('monday');
 		$this->build_day_view('tuesday');
@@ -60,7 +60,7 @@ class BroadcastCategoryController extends DefaultModuleController
 
 		$authorized_categories = CategoriesService::get_authorized_categories($this->get_category()->get_id(), '', 'broadcast');
 		$condition = 'WHERE id_category IN :authorized_categories AND published = 1';
-		$parameters = array('authorized_categories' => $authorized_categories);
+		$parameters = ['authorized_categories' => $authorized_categories];
 
 		$result = PersistenceContext::get_querier()->select('SELECT broadcast.*, member.*,
 		time (from_unixtime(start_time)) AS hour
@@ -69,7 +69,7 @@ class BroadcastCategoryController extends DefaultModuleController
 		' . $condition . '
 		ORDER BY hour ASC', $parameters);
 
-		${$day . '_tpl'}->put_all(array(
+		${$day . '_tpl'}->put_all([
 			'C_ACCORDION_VIEW' => $this->config->get_display_type() == BroadcastConfig::ACCORDION_VIEW,
 			'C_TABLE_VIEW' 	   => $this->config->get_display_type() == BroadcastConfig::TABLE_VIEW,
 			'C_CALENDAR_VIEW'  => $this->config->get_display_type() == BroadcastConfig::CALENDAR_VIEW,
@@ -78,23 +78,23 @@ class BroadcastCategoryController extends DefaultModuleController
 
 			'DAY_ID' => $day,
 			'DAY'    => $this->lang['date.' . $day]
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{
 			$item = new BroadcastItem();
 			$item->set_properties($row);
 
-			$days_id = array();
+			$days_id = [];
 			if (!empty($item->get_release_days()))
 			{
 				foreach (TextHelper::unserialize($item->get_release_days()) as $id => $options) {
 					$days_id[] = $options->get_id();
 				}
 
-				${$day . '_tpl'}->assign_block_vars('items', array_merge($item->get_array_tpl_vars(), array(
+				${$day . '_tpl'}->assign_block_vars('items', array_merge($item->get_array_tpl_vars(), [
 					'C_SELECTED_DAY' => in_array($day, $days_id)
-				)));
+				]));
 			}
 		}
 		$result->dispose();

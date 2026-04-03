@@ -19,7 +19,7 @@ class DefaultModuleSetup implements ModuleSetup
 	protected $module_id;
 	protected $module_configuration;
 	protected $item_class_name;
-	protected $additional_tables = array();
+	protected $additional_tables = [];
 	private $id_category = 1;
 	private $id_item = 1;
 
@@ -178,7 +178,7 @@ class DefaultModuleSetup implements ModuleSetup
 
 	protected function get_default_category_additional_fields($lang, $category_id)
 	{
-		$additional_fields = array();
+		$additional_fields = [];
 		if (isset($lang['categories']) && is_array($lang['categories']) && isset($lang['categories'][$category_id]) && is_array($lang['categories'][$category_id]))
 		{
 			foreach($lang['categories'][$category_id] as $field_name => $field_value)
@@ -194,7 +194,7 @@ class DefaultModuleSetup implements ModuleSetup
 
 	protected function get_default_item_additional_fields($lang, $item_id)
 	{
-		$additional_fields = array();
+		$additional_fields = [];
 		if (isset($lang['items']) && is_array($lang['items']) && isset($lang['items'][$item_id]) && is_array($lang['items'][$item_id]))
 		{
 			foreach($lang['items'][$item_id] as $field_name => $field_value)
@@ -208,9 +208,9 @@ class DefaultModuleSetup implements ModuleSetup
 		return $additional_fields;
 	}
 
-	protected function add_category($name, $description = '', $thumbnail = FormFieldThumbnail::DEFAULT_VALUE, $id_parent = Category::ROOT_CATEGORY, $additional_fields = array(), $auth = '')
+	protected function add_category($name, $description = '', $thumbnail = FormFieldThumbnail::DEFAULT_VALUE, $id_parent = Category::ROOT_CATEGORY, $additional_fields = [], $auth = '')
 	{
-		self::$db_querier->insert($this->module_configuration->get_categories_table_name(), array_merge(array(
+		self::$db_querier->insert($this->module_configuration->get_categories_table_name(), array_merge([
 			'id' => $this->id_category,
 			'id_parent' => $id_parent,
 			'c_order' => $this->id_category,
@@ -219,15 +219,15 @@ class DefaultModuleSetup implements ModuleSetup
 			'rewrited_name' => Url::encode_rewrite($name),
 			'description' => $description,
 			'thumbnail' => $thumbnail
-		), $additional_fields));
+		], $additional_fields));
 		$this->id_category++;
 	}
 
-	protected function add_item($title, $content, $summary = '', $thumbnail = FormFieldThumbnail::DEFAULT_VALUE, $id_category = Category::ROOT_CATEGORY, $additional_fields = array())
+	protected function add_item($title, $content, $summary = '', $thumbnail = FormFieldThumbnail::DEFAULT_VALUE, $id_category = Category::ROOT_CATEGORY, $additional_fields = [])
 	{
 		$item = new $this->item_class_name();
 
-		$fields = array(
+		$fields = [
 			'id' => $this->id_item,
 			'title' => $title,
 			'rewrited_title' => Url::encode_rewrite($title),
@@ -235,7 +235,7 @@ class DefaultModuleSetup implements ModuleSetup
 			'creation_date' => time(),
 			'update_date' => 0,
 			'published' => Item::PUBLISHED
-		);
+		];
 
 		if ($item->content_field_enabled())
 			$fields['content'] = $content;
@@ -251,7 +251,7 @@ class DefaultModuleSetup implements ModuleSetup
 
 		if ($this->module_configuration->feature_is_enabled('sources'))
 		{
-			$fields['sources'] = TextHelper::serialize(array());
+			$fields['sources'] = TextHelper::serialize([]);
 		}
 
 		if ($this->module_configuration->has_rich_items())

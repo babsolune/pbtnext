@@ -32,7 +32,7 @@ class ItemsManager
 	public function __construct($module_id = '')
 	{
 		$called_module_id  = ClassLoader::get_module_id_from_class_name(get_called_class());
-		self::$module_id   = $module_id ? $module_id : ($called_module_id && !in_array($called_module_id, array('admin', 'kernel', 'user')) ? $called_module_id : Environment::get_running_module_name());
+		self::$module_id   = $module_id ? $module_id : ($called_module_id && !in_array($called_module_id, ['admin', 'kernel', 'user']) ? $called_module_id : Environment::get_running_module_name());
 		self::$module      = ModulesManager::get_module(self::$module_id);
 		self::$items_table = self::$module->get_configuration()->get_items_table_name();
 		
@@ -56,7 +56,7 @@ class ItemsManager
 	 * @param string $condition (optional) : Restriction to apply to the list of items
 	 * @param array $parameters (optional) : Parameters list to apply to the condition
 	 */
-	public function count($condition = '', $parameters = array())
+	public function count($condition = '', $parameters = [])
 	{
 		return self::$db_querier->count(self::$items_table, $condition, $parameters);
 	}
@@ -66,7 +66,7 @@ class ItemsManager
 	 * @param string $condition (optional) : Restriction to apply to the list of items
 	 * @param array $parameters (optional) : Parameters list to apply to the condition
 	 */
-	public function count_items_having_keyword($condition = '', $parameters = array())
+	public function count_items_having_keyword($condition = '', $parameters = [])
 	{
 		return self::$db_querier->select_single_row_query('SELECT COUNT(*) AS items_number
 		FROM ' . self::$items_table . ' ' . self::$module_id . '
@@ -90,7 +90,7 @@ class ItemsManager
 	 */
 	public function update(Item $item)
 	{
-		self::$db_querier->update(self::$items_table, $item->get_properties(), 'WHERE id=:id', array('id' => $item->get_id()));
+		self::$db_querier->update(self::$items_table, $item->get_properties(), 'WHERE id=:id', ['id' => $item->get_id()]);
 	}
 
 	/**
@@ -105,9 +105,9 @@ class ItemsManager
 			DispatchManager::redirect($controller);
 		}
 
-		self::$db_querier->delete(self::$items_table, 'WHERE id=:id', array('id' => $item->get_id()));
+		self::$db_querier->delete(self::$items_table, 'WHERE id=:id', ['id' => $item->get_id()]);
 
-		self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => self::$module_id, 'id' => $item->get_id()));
+		self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', ['module' => self::$module_id, 'id' => $item->get_id()]);
 
 		CommentsService::delete_comments_topic_module(self::$module_id, $item->get_id());
 		KeywordsService::get_keywords_manager()->delete_relations($item->get_id());
@@ -134,11 +134,11 @@ class ItemsManager
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = ' . self::$module_id . '.author_user_id
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' average_notes ON average_notes.module_name = :module_id AND average_notes.id_in_module = ' . self::$module_id . '.id
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.module_name = :module_id AND note.id_in_module = ' . self::$module_id . '.id AND note.user_id = :current_user_id
-		WHERE ' . self::$module_id . '.id=:id', array(
+		WHERE ' . self::$module_id . '.id=:id', [
 			'module_id'       => self::$module_id,
 			'id'              => $id,
 			'current_user_id' => AppContext::get_current_user()->get_id()
-		));
+		]);
 
 		$item = self::get_item_class();
 		$item->set_properties($row);
@@ -151,7 +151,7 @@ class ItemsManager
 	 */
 	public function update_views_number(Item $item)
 	{
-		self::$db_querier->update(self::$items_table, array('views_number' => $item->get_views_number() + 1), 'WHERE id=:id', array('id' => $item->get_id()));
+		self::$db_querier->update(self::$items_table, ['views_number' => $item->get_views_number() + 1], 'WHERE id=:id', ['id' => $item->get_id()]);
 	}
 
 	/**
@@ -164,10 +164,10 @@ class ItemsManager
 	 * @param string $sort_mode Sort mode (asc or desc)
 	 * @param bool $keywords Join keywords relations or not
 	 */
-	public function get_items($condition = '', array $parameters = array(), int $number_items_per_page = 0, int $display_from = 0, $sort_field = '', $sort_mode = 'DESC', $keywords = false)
+	public function get_items($condition = '', array $parameters = [], int $number_items_per_page = 0, int $display_from = 0, $sort_field = '', $sort_mode = 'DESC', $keywords = false)
 	{
 		$now = new Date();
-		$items = array();
+		$items = [];
 
 		$result = self::$db_querier->select('SELECT ' . self::$module_id . '.*, member.*, comments_topic.comments_number, average_notes.average_notes, average_notes.notes_number, note.note' . ($this->get_items_static_select ? ', ' . $this->get_items_static_select : '') . '
 		FROM ' . self::$items_table . ' ' . self::$module_id . '
@@ -179,13 +179,13 @@ class ItemsManager
 		' . $this->get_items_static_join_table . '
 		' . $condition . ($this->get_items_static_condition ? ($condition ? ' AND ' : 'WHERE ') . $this->get_items_static_condition : '') . '
 		' . ($this->get_items_static_sort_field || $sort_field ? 'ORDER BY ' : '') . ($this->get_items_static_sort_field ? $this->get_items_static_sort_field . ' ' . $this->get_items_static_sort_mode : '') . ($this->get_items_static_sort_field && $sort_field ? ', ' : '') . ($sort_field ? $sort_field . ' ' . $sort_mode : '') . '
-		' . ($number_items_per_page ? 'LIMIT :number_items_per_page OFFSET :display_from' : ''), array_merge($parameters, array(
+		' . ($number_items_per_page ? 'LIMIT :number_items_per_page OFFSET :display_from' : ''), array_merge($parameters, [
 			'module_id'             => self::$module_id,
 			'current_user_id'       => AppContext::get_current_user()->get_id(),
 			'timestamp_now'         => $now->get_timestamp(),
 			'number_items_per_page' => $number_items_per_page,
 			'display_from'          => $display_from
-		)));
+		]));
 
 		while ($row = $result->fetch())
 		{
@@ -217,7 +217,7 @@ class ItemsManager
 	 */
 	protected function clear_module_cache()
 	{
-		$cache_classes = array(ucfirst(self::$module_id) . 'Cache', ucfirst(self::$module_id) . 'MiniMenuCache');
+		$cache_classes = [ucfirst(self::$module_id) . 'Cache', ucfirst(self::$module_id) . 'MiniMenuCache'];
 		foreach ($cache_classes as $cache_class)
 		{
 			if (ClassLoader::is_class_registered_and_valid($cache_class) && is_subclass_of($cache_class, 'CacheData'))

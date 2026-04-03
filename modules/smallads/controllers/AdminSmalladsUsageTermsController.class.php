@@ -34,23 +34,23 @@ class AdminSmalladsUsageTermsController extends DefaultAdminModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('usage_terms_displayed', $this->lang['smallads.display.usage.terms'], $this->config->are_usage_terms_displayed(),
-			array(
+			[
 				'class' => 'custom-checkbox',
-				'events' => array('click' => '
+				'events' => ['click' => '
 					if (HTMLForms.getField("usage_terms_displayed").getValue()) {
 						HTMLForms.getField("usage_terms").enable();
 					} else {
 						HTMLForms.getField("usage_terms").disable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$fieldset->add_field(new FormFieldRichTextEditor('usage_terms', $this->lang['smallads.usage.terms.clue'], $this->config->get_usage_terms(),
-			array(
+			[
 				'rows' => 25,
 				'hidden' => !$this->config->are_usage_terms_displayed()
-			)
+			]
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -72,7 +72,7 @@ class AdminSmalladsUsageTermsController extends DefaultAdminModuleController
 
 		SmalladsConfig::save();
 		CategoriesService::get_categories_manager()->regenerate_cache();
-		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
+		HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]), 'url' => ModulesUrlBuilder::configuration()->rel()]);
 	}
 }
 ?>

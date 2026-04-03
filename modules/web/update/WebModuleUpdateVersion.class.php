@@ -14,8 +14,8 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('web');
 
-		$this->content_tables = array(PREFIX . 'web');
-		self::$delete_old_files_list = array(
+		$this->content_tables = [PREFIX . 'web'];
+		self::$delete_old_files_list = [
 			'/controllers/WebDeleteController.class.php',
 			'/controllers/WebDisplayCategoryController.class.php',
 			'/controllers/WebDisplayPendingWebLinksController.class.php',
@@ -37,15 +37,15 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 			'/templates/WebDisplaySeveralWebLinksController.tpl',
 			'/templates/WebDisplayWebLinkController.tpl',
 			'/util/AdminWebDisplayResponse.class.php'
-		);
-		self::$delete_old_folders_list = array(
+		];
+		self::$delete_old_folders_list = [
 			'/controllers/categories'
-		);
+		];
 
-		$this->database_columns_to_modify = array(
-			array(
+		$this->database_columns_to_modify = [
+			[
 				'table_name' => PREFIX . 'web',
-				'columns' => array(
+				'columns' => [
 					'name'            => 'title VARCHAR(255) NOT NULL DEFAULT ""',
 					'rewrited_name'   => 'rewrited_title VARCHAR(255) NOT NULL DEFAULT ""',
 					'contents'        => 'content MEDIUMTEXT',
@@ -57,24 +57,24 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 					'approbation_type' => 'published INT(1) NOT NULL DEFAULT 0',
 					'start_date'       => 'publishing_start_date INT(11) NOT NULL DEFAULT 0',
 					'end_date'         => 'publishing_end_date INT(11) NOT NULL DEFAULT 0',
-				)
-			),
-			array(
+				]
+			],
+			[
 				'table_name' => PREFIX . 'web_cats',
-				'columns' => array(
+				'columns' => [
 					'image' => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""'
-				)
-			)
-		);
+				]
+			]
+		];
 
-		$this->database_columns_to_add = array(
-			array(
+		$this->database_columns_to_add = [
+			[
 				'table_name' => PREFIX . 'web',
-				'columns' => array(
-					'update_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
-				)
-			)
-		);
+				'columns' => [
+					'update_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0]
+				]
+			]
+		];
 	}
 
 	protected function execute_module_specific_changes()
@@ -86,7 +86,7 @@ class WebModuleUpdateVersion extends ModuleUpdateVersion
 
 		while ($row = $new_date->fetch())
 		{
-			$this->querier->update(PREFIX . 'web', array('update_date' => $row['creation_date']), 'WHERE update_date = 0 AND id=:id', array('id' => $row['id']));
+			$this->querier->update(PREFIX . 'web', ['update_date' => $row['creation_date']], 'WHERE update_date = 0 AND id=:id', ['id' => $row['id']]);
 		}
 		$new_date->dispose();
 	}

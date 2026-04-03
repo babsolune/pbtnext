@@ -16,34 +16,34 @@ class NewsletterModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('newsletter');
 
-		self::$delete_old_files_list = array(
+		self::$delete_old_files_list = [
 			'/controllers/streams/NewsletterStreamsManageController.class.php',
 			'/phpboost/NewsletterHomePageExtensionPoint.class.php',
 			'/templates/NewsletterArchivesController.tpl',
 			'/templates/NewsletterSubscribersListController.tpl',
 			'/util/AdminNewsletterDisplayResponse.class.php'
-		);
+		];
 
-		$this->content_tables = array(PREFIX . 'newsletter_archives');
+		$this->content_tables = [PREFIX . 'newsletter_archives'];
 
-		$this->database_columns_to_add = array(
-			array(
+		$this->database_columns_to_add = [
+			[
 				'table_name' => PREFIX . 'newsletter_subscribers',
-				'columns' => array(
-					'subscription_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
-				)
-			)
-		);
+				'columns' => [
+					'subscription_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0]
+				]
+			]
+		];
 
-		$this->database_columns_to_modify = array(
-			array(
+		$this->database_columns_to_modify = [
+			[
 				'table_name' => PREFIX . 'newsletter_streams',
-				'columns' => array(
+				'columns' => [
 					'image' => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""',
 					'contents'    => 'content MEDIUMTEXT'
-				)
-			)
-		);
+				]
+			]
+		];
 	}
 
 	public function execute()
@@ -58,12 +58,12 @@ class NewsletterModuleUpdateVersion extends ModuleUpdateVersion
 
 	private function update_member_subscription_date_field()
 	{
-		$result = PersistenceContext::get_querier()->select_rows(PREFIX . 'member', array('user_id', 'registration_date'));
+		$result = PersistenceContext::get_querier()->select_rows(PREFIX . 'member', ['user_id', 'registration_date']);
 		while ($row = $result->fetch())
 		{
-			PersistenceContext::get_querier()->update(PREFIX . 'newsletter_subscribers', array(
+			PersistenceContext::get_querier()->update(PREFIX . 'newsletter_subscribers', [
 				'subscription_date' => $row['registration_date'],
-					), 'WHERE user_id = :user_id', array('user_id' => $row['user_id']));
+					], 'WHERE user_id = :user_id', ['user_id' => $row['user_id']]);
 		}
 
 		$result->dispose();
@@ -74,8 +74,8 @@ class NewsletterModuleUpdateVersion extends ModuleUpdateVersion
 		$now = new Date();
 		$result = PersistenceContext::get_querier()->update(
 			PREFIX . 'newsletter_subscribers', 
-			array('subscription_date' => $now->get_timestamp()), 
-			'WHERE user_id = :user_id', array('user_id' => -1)
+			['subscription_date' => $now->get_timestamp()], 
+			'WHERE user_id = :user_id', ['user_id' => -1]
 		);
 
 		$result->dispose();

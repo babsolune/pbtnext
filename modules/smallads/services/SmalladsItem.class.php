@@ -57,14 +57,14 @@ class SmalladsItem
 	const SORT_COMMENTS_NUMBER = 'comments_number';
 	const SORT_PRICE = 'price';
 
-	const SORT_FIELDS_URL_VALUES = array(
+	const SORT_FIELDS_URL_VALUES = [
 		self::SORT_ALPHABETIC => 'title',
 		self::SORT_DATE => 'date',
 		self::SORT_AUTHOR => 'author',
 		self::SORT_NUMBER_VIEWS => 'views',
 		self::SORT_COMMENTS_NUMBER => 'comments',
 		self::SORT_PRICE => 'price'
-	);
+	];
 
 	const ASC = 'ASC';
 	const DESC = 'DESC';
@@ -564,7 +564,7 @@ class SmalladsItem
 
 	public function get_properties()
 	{
-		return array(
+		return [
 			'id'                     => $this->get_id(),
 			'id_category'            => $this->get_id_category(),
 			'title'                  => $this->get_title(),
@@ -596,7 +596,7 @@ class SmalladsItem
 			'update_date'            => $this->get_update_date() !== null ? $this->get_update_date()->get_timestamp() : 0,
 			'sources'                => TextHelper::serialize($this->get_sources()),
 			'carousel'               => TextHelper::serialize($this->get_carousel())
-		);
+		];
 	}
 
 	public function set_properties(array $properties)
@@ -629,8 +629,8 @@ class SmalladsItem
 		$this->enabled_end_date = !empty($properties['publishing_end_date']);
 		$this->set_creation_date(new Date($properties['creation_date'], Timezone::SERVER_TIMEZONE));
 		$this->update_date = !empty($properties['update_date']) ? new Date($properties['update_date'], Timezone::SERVER_TIMEZONE) : null;
-		$this->set_sources(!empty($properties['sources']) ? TextHelper::unserialize($properties['sources']) : array());
-		$this->set_carousel(!empty($properties['carousel']) ? TextHelper::unserialize($properties['carousel']) : array());
+		$this->set_sources(!empty($properties['sources']) ? TextHelper::unserialize($properties['sources']) : []);
+		$this->set_carousel(!empty($properties['carousel']) ? TextHelper::unserialize($properties['carousel']) : []);
 
 		$user = new User();
 		if (!empty($properties['user_id']))
@@ -664,8 +664,8 @@ class SmalladsItem
 		$this->publishing_start_date = new Date();
 		$this->publishing_end_date = new Date();
 		$this->creation_date = new Date();
-		$this->sources = array();
-		$this->carousel = array();
+		$this->sources = [];
+		$this->carousel = [];
 		$this->thumbnail_url = FormFieldThumbnail::DEFAULT_VALUE;
 		$this->views_number = 0;
 		$this->price = 0;
@@ -738,7 +738,7 @@ class SmalladsItem
 			Date::get_array_tpl_vars($this->update_date, 'update_date'),
 			Date::get_array_tpl_vars($this->publishing_start_date, 'publishing_start_date'),
 			Date::get_array_tpl_vars($this->publishing_end_date, 'publishing_end_date'),
-			array(
+			[
                 // Conditions
                 'C_CONTROLS'					   => $this->is_authorized_to_edit() || $this->is_authorized_to_delete() || $this->is_authorized_to_duplicate(),
                 'C_EDIT'                           => $this->is_authorized_to_edit(),
@@ -819,7 +819,7 @@ class SmalladsItem
                 'U_SYNDICATION'    => SyndicationUrlBuilder::rss('smallads', $category->get_id())->rel(),
                 'U_PRINT_ITEM'     => SmalladsUrlBuilder::print_item($this->get_id(), $this->get_rewrited_title())->rel(),
                 'U_USAGE_TERMS'    => SmalladsUrlBuilder::usage_terms()->rel()
-			)
+			]
 		);
 	}
 }

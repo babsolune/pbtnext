@@ -39,7 +39,7 @@ abstract class PHPBoostFoldersPermissions
 	public static function get_permissions()
 	{
 		@clearstatcache();
-		$permissions = array();
+		$permissions = [];
 		foreach (self::$folders_path as $folder_path)
 		{
 			$folder = new Folder(PATH_TO_ROOT . $folder_path);

@@ -44,10 +44,10 @@ class SpotsFeedProvider implements FeedProvider
 				LEFT JOIN '. SpotsSetup::$spots_cats_table .' cat ON cat.id = spots.id_category
 				WHERE spots.id_category IN :ids_categories
 				AND published = 1
-				ORDER BY spots.creation_date DESC', array(
+				ORDER BY spots.creation_date DESC', [
 					'ids_categories' => $ids_categories,
 					'timestamp_now' => $now->get_timestamp()
-			));
+			]);
 
 			foreach ($results as $row)
 			{

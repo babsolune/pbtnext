@@ -21,7 +21,7 @@ class HistoryManager
 	 * @param string $condition (optional) : Restriction to apply to the history list
 	 * @param array $parameters (optional) : Parameters list to apply to the condition
 	 */
-	public static function count($condition = '', $parameters = array())
+	public static function count($condition = '', $parameters = [])
 	{
 		return self::$db_querier->count(HistorySetup::$history_table, $condition, $parameters);
 	}

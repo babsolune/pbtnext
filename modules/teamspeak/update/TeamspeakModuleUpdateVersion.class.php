@@ -14,10 +14,10 @@ class TeamspeakModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('teamspeak');
 		
-		self::$delete_old_files_list = array(
+		self::$delete_old_files_list = [
 			'/phpboost/TeamspeakHomePageExtensionPoint.class.php',
 			'/util/AdminTeamspeakDisplayResponse.class.php'
-		);
+		];
 	}
 }
 ?>

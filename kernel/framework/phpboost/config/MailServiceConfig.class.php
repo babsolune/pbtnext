@@ -113,7 +113,7 @@ class MailServiceConfig extends AbstractConfigData
 	public function get_default_values()
 	{
 		//TODO Add mail signature lang
-		return array(
+		return [
 			'use_smtp' => false,
 			'smtp_host' => '',
 			'smtp_port' => 25,
@@ -121,9 +121,9 @@ class MailServiceConfig extends AbstractConfigData
 			'smtp_password' => '',
 			'smtp_protocol' => 'none',
 			'default_mail_sender' => '',
-			'administrators_mails' => array(),
+			'administrators_mails' => [],
 			'mail_signature' => ''
-		);
+		];
 	}
 
 	/**

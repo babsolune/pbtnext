@@ -13,13 +13,13 @@ class LastcomsModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('lastcoms');
 
-		self::$delete_old_files_list = array(
+		self::$delete_old_files_list = [
             '/phpboost/LastcomsSetup.php'
-        );
+        ];
 
-		self::$delete_old_folders_list = array(
+		self::$delete_old_folders_list = [
 			'/util'
-		);
+		];
 	}
 }
 ?>

@@ -15,7 +15,7 @@ class CalendarExtensionPointProvider extends ItemsModuleExtensionPointProvider
 {
 	public function comments()
 	{
-		return new CommentsTopics(array(new CalendarCommentsTopic()));
+		return new CommentsTopics([new CalendarCommentsTopic()]);
 	}
 
 	public function home_page()
@@ -32,10 +32,10 @@ class CalendarExtensionPointProvider extends ItemsModuleExtensionPointProvider
 
 	public function url_mappings()
 	{
-		return new UrlMappings(array(
+		return new UrlMappings([
 			new DispatcherUrlMapping('/calendar/index.php', 'events_list/today/?$', '', 'events_list/&display_current_day_events=1', true),
 			new DispatcherUrlMapping('/calendar/index.php')
-		));
+		]);
 	}
 }
 ?>

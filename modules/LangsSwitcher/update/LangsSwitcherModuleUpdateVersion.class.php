@@ -12,12 +12,12 @@ class LangsSwitcherModuleUpdateVersion extends ModuleUpdateVersion
 	public function __construct()
 	{
 		parent::__construct('LangsSwitcher');
-		self::$delete_old_files_list = array(
+		self::$delete_old_files_list = [
 			'/lang/english/langswitcher_common.php',
 			'/lang/french/langswitcher_common.php',
 			'/templates/langswitcher.tpl',
 			'/templates/langsswitcher.css'
-		);
+		];
 	}
 }
 ?>

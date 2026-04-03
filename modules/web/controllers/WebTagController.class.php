@@ -50,17 +50,17 @@ class WebTagController extends DefaultModuleController
 		$condition = 'WHERE relation.id_keyword = :id_keyword
 		AND id_category IN :authorized_categories
 		AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))';
-		$parameters = array(
+		$parameters = [
 			'id_keyword' => $this->get_keyword()->get_id(),
 			'authorized_categories' => $authorized_categories,
 			'timestamp_now' => $now->get_timestamp()
-		);
+		];
 
 		$page = $request->get_getint('page', 1);
 		$pagination = $this->get_pagination($condition, $parameters, $field, TextHelper::strtolower($mode), $page);
 
 		$sort_mode = TextHelper::strtoupper($mode);
-		$sort_mode = (in_array($sort_mode, array(WebItem::ASC, WebItem::DESC)) ? $sort_mode : $this->config->get_items_default_sort_mode());
+		$sort_mode = (in_array($sort_mode, [WebItem::ASC, WebItem::DESC]) ? $sort_mode : $this->config->get_items_default_sort_mode());
 
 		if (in_array($field, WebItem::SORT_FIELDS_URL_VALUES))
 			$sort_field = array_search($field, WebItem::SORT_FIELDS_URL_VALUES);
@@ -76,13 +76,13 @@ class WebTagController extends DefaultModuleController
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = web.id AND note.module_name = \'web\' AND note.user_id = :user_id
 		' . $condition . '
 		ORDER BY web.privileged_partner DESC, ' . $sort_field . ' ' . $sort_mode . '
-		LIMIT :items_per_page OFFSET :display_from', array_merge($parameters, array(
+		LIMIT :items_per_page OFFSET :display_from', array_merge($parameters, [
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
-		)));
+		]));
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_ITEMS'             => $result->get_rows_count() > 0,
 			'C_SEVERAL_ITEMS'     => $result->get_rows_count() > 1,
 			'C_GRID_VIEW'         => $this->config->get_display_type() == WebConfig::GRID_VIEW,
@@ -98,7 +98,7 @@ class WebTagController extends DefaultModuleController
 			'ITEMS_PER_ROW' => $this->config->get_items_per_row(),
 			'PAGINATION'    => $pagination->display(),
 			'CATEGORY_NAME' => $this->get_keyword()->get_name()
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{
@@ -108,9 +108,9 @@ class WebTagController extends DefaultModuleController
 			$keywords = $item->get_keywords();
 			$has_keywords = count($keywords) > 0;
 
-			$this->view->assign_block_vars('items', array_merge($item->get_template_vars(), array(
+			$this->view->assign_block_vars('items', array_merge($item->get_template_vars(), [
 				'C_KEYWORDS' => $has_keywords
-			)));
+			]));
 
 			if ($has_keywords)
 				$this->build_keywords_view($keywords);
@@ -124,14 +124,14 @@ class WebTagController extends DefaultModuleController
 		$form = new HTMLForm(self::class, '', false);
 		$form->set_css_class('options');
 
-		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $this->lang['common.sort.by']));
+		$fieldset = new FormFieldsetHorizontal('filters', ['description' => $this->lang['common.sort.by']]);
 		$form->add_fieldset($fieldset);
 
-		$sort_options = array(
+		$sort_options = [
 			new FormFieldSelectChoiceOption($this->lang['common.creation.date'], WebItem::SORT_FIELDS_URL_VALUES[WebItem::SORT_DATE]),
 			new FormFieldSelectChoiceOption($this->lang['common.title'], WebItem::SORT_FIELDS_URL_VALUES[WebItem::SORT_ALPHABETIC]),
 			new FormFieldSelectChoiceOption($this->lang['web.config.sort.type.visits'], WebItem::SORT_FIELDS_URL_VALUES[WebItem::SORT_NUMBER_VISITS])
-		);
+		];
 
 		if ($this->comments_config->module_comments_is_enabled('web'))
 			$sort_options[] = new FormFieldSelectChoiceOption($this->lang['common.sort.by.comments.number'], WebItem::SORT_FIELDS_URL_VALUES[WebItem::SORT_COMMENTS_NUMBER]);
@@ -140,15 +140,15 @@ class WebTagController extends DefaultModuleController
 			$sort_options[] = new FormFieldSelectChoiceOption($this->lang['common.sort.by.best.note'], WebItem::SORT_FIELDS_URL_VALUES[WebItem::SORT_NOTATION]);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_options,
-			array('events' => array('change' => 'document.location = "'. WebUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			['events' => ['change' => 'document.location = "'. WebUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();']]
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
-			array(
+			[
 				new FormFieldSelectChoiceOption($this->lang['common.sort.asc'], 'asc'),
 				new FormFieldSelectChoiceOption($this->lang['common.sort.desc'], 'desc')
-			),
-			array('events' => array('change' => 'document.location = "' . WebUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			],
+			['events' => ['change' => 'document.location = "' . WebUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();']]
 		));
 
 		$this->view->put('SORT_FORM', $form->display());
@@ -162,7 +162,7 @@ class WebTagController extends DefaultModuleController
 			if (!empty($rewrited_name))
 			{
 				try {
-					$this->keyword = KeywordsService::get_keywords_manager()->get_keyword('WHERE rewrited_name=:rewrited_name', array('rewrited_name' => $rewrited_name));
+					$this->keyword = KeywordsService::get_keywords_manager()->get_keyword('WHERE rewrited_name=:rewrited_name', ['rewrited_name' => $rewrited_name]);
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
 					DispatchManager::redirect($error_controller);
@@ -203,11 +203,11 @@ class WebTagController extends DefaultModuleController
 		$i = 1;
 		foreach ($keywords as $keyword)
 		{
-			$this->view->assign_block_vars('items.keywords', array(
+			$this->view->assign_block_vars('items.keywords', [
 				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
 				'URL' => WebUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
-			));
+			]);
 			$i++;
 		}
 	}
@@ -230,7 +230,7 @@ class WebTagController extends DefaultModuleController
 
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->get_keyword()->get_name(), $this->lang['web.module.title'], $page);
-		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['web.seo.description.tag'], array('subject' => $this->get_keyword()->get_name())), $page);
+		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['web.seo.description.tag'], ['subject' => $this->get_keyword()->get_name()]), $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(WebUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $sort_field, $sort_mode, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();

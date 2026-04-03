@@ -17,7 +17,7 @@
 
 class FormFieldSpacer extends AbstractFormField
 {
-	public function __construct($id, $value, array $properties = array())
+	public function __construct($id, $value, array $properties = [])
 	{
 		parent::__construct($id, '', $value, $properties);
 	}
@@ -31,9 +31,9 @@ class FormFieldSpacer extends AbstractFormField
 
 		$this->assign_common_template_variables($template);
 
-		$template->put_all(array(
+		$template->put_all([
 			'HTML' => $this->get_value()
-		));
+		]);
 
 		return $template;
 	}

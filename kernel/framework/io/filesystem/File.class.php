@@ -266,7 +266,7 @@ class File extends FileSystemElement
 	 */
 	public static function get_formated_size($file_size)
 	{
-		$units = array(LangLoader::get_message('common.unit.bytes', 'common-lang'), LangLoader::get_message('common.unit.kilobytes', 'common-lang'), LangLoader::get_message('common.unit.megabytes', 'common-lang'), LangLoader::get_message('common.unit.gigabytes', 'common-lang'));
+		$units = [LangLoader::get_message('common.unit.bytes', 'common-lang'), LangLoader::get_message('common.unit.kilobytes', 'common-lang'), LangLoader::get_message('common.unit.megabytes', 'common-lang'), LangLoader::get_message('common.unit.gigabytes', 'common-lang')];
 		$power = $file_size > 0 ? floor(log($file_size, 1024)) : 0;
 		return NumberHelper::round($file_size / pow(1024, $power), 2) . ' ' . $units[$power];
 	}

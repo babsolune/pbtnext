@@ -13,8 +13,8 @@
 
 class CSSFileOptimizer
 {
-	protected $files = array();
-	protected $scripts = array();
+	protected $files = [];
+	protected $scripts = [];
 	protected $content = '';
 	protected $regex_search_files_path = '';
 	protected $replace_value_files_path = '';
@@ -65,14 +65,14 @@ class CSSFileOptimizer
 		if ($intensity == self::LOW_OPTIMIZATION)
 		{
 			$cleared_file_content = $this->delete_comments($this->content);
-			$content = str_replace(array("\t", "  "), '', $cleared_file_content);
+			$content = str_replace(["\t", "  "], '', $cleared_file_content);
 		}
 		else
 		{
 			$cleared_file_content = $this->delete_comments($this->content);
-			$content = str_replace(array("\r\n", "\n", "\r", "\t", "  "), ' ', $cleared_file_content);
-			$content = str_replace(array("( ", " )", ", "), array("(", ")", ","), $content);
-			$content = preg_replace(array('`\s*{\s*`', '`\s*}\s*`u', '`\s*:\s*`', '`\s*;\s*`u'), array('{', '}', ':', ';'), $content);
+			$content = str_replace(["\r\n", "\n", "\r", "\t", "  "], ' ', $cleared_file_content);
+			$content = str_replace(["( ", " )", ", "], ["(", ")", ","], $content);
+			$content = preg_replace(['`\s*{\s*`', '`\s*}\s*`u', '`\s*:\s*`', '`\s*;\s*`u'], ['{', '}', ':', ';'], $content);
 		}
 
 		$this->content = trim($content);
@@ -134,7 +134,7 @@ class CSSFileOptimizer
 				$content_file = php_strip_whitespace($file);
 				if (!empty($this->regex_search_files_path) && !empty($this->replace_value_files_path))
 				{
-					$replace_path = StringVars::replace_vars($this->replace_value_files_path, array('path' => GeneralConfig::load()->get_site_path() . '/' . Path::get_package($file)));
+					$replace_path = StringVars::replace_vars($this->replace_value_files_path, ['path' => GeneralConfig::load()->get_site_path() . '/' . Path::get_package($file)]);
 					$content .= preg_replace($this->regex_search_files_path, $replace_path, $content_file);
 				}
 				else

@@ -26,7 +26,7 @@ class GoogleMapsFormFieldMultipleMarkers extends AbstractFormField
 	 * @param string[] $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
-	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 		$this->set_css_form_field_class('form-field-map multiple-markers');
@@ -58,21 +58,21 @@ class GoogleMapsFormFieldMultipleMarkers extends AbstractFormField
 					{
 						$marker = new GoogleMapsMarker();
 
-						$marker->set_properties(array(
+						$marker->set_properties([
 							'name' => isset($m['name']) ? $m['name'] : '',
 							'address' => isset($m['address']) ? $m['address'] : '',
 							'latitude' => isset($m['latitude']) ? $m['latitude'] : '',
 							'longitude' => isset($m['longitude']) ? $m['longitude'] : '',
 							'zoom' => isset($m['zoom']) ? $m['zoom'] : 0,
 							'address_displayed_on_label' => isset($m['address_displayed_on_label']) ? $m['address_displayed_on_label'] : ''
-						));
+						]);
 					}
 					else
 						$marker = $m;
 
-					$field_tpl->assign_block_vars('fieldelements', array_merge($marker->get_array_tpl_vars(), array(
+					$field_tpl->assign_block_vars('fieldelements', array_merge($marker->get_array_tpl_vars(), [
 						'ID' => $i
-					)));
+					]));
 
 					$i++;
 				}
@@ -83,21 +83,21 @@ class GoogleMapsFormFieldMultipleMarkers extends AbstractFormField
 				{
 					$marker = new GoogleMapsMarker();
 
-					$marker->set_properties(array(
+					$marker->set_properties([
 						'name' => isset($markers['name']) ? $markers['name'] : '',
 						'address' => isset($markers['address']) ? $markers['address'] : '',
 						'latitude' => isset($markers['latitude']) ? $markers['latitude'] : '',
 						'longitude' => isset($markers['longitude']) ? $markers['longitude'] : '',
 						'zoom' => isset($markers['zoom']) ? $markers['zoom'] : '',
 						'address_displayed_on_label' => isset($markers['address_displayed_on_label']) ? $markers['address_displayed_on_label'] : ''
-					));
+					]);
 				}
 				else
 					$marker = $markers;
 
-				$field_tpl->assign_block_vars('fieldelements', array_merge($marker->get_array_tpl_vars(), array(
+				$field_tpl->assign_block_vars('fieldelements', array_merge($marker->get_array_tpl_vars(), [
 					'ID' => $i
-				)));
+				]));
 
 				$i++;
 			}
@@ -112,14 +112,14 @@ class GoogleMapsFormFieldMultipleMarkers extends AbstractFormField
 			else
 				$marker = $markers;
 
-			$field_tpl->assign_block_vars('fieldelements', array_merge($marker->get_array_tpl_vars(), array(
+			$field_tpl->assign_block_vars('fieldelements', array_merge($marker->get_array_tpl_vars(), [
 				'ID' => $i
-			)));
+			]));
 
 			$i++;
 		}
 
-		$field_tpl->put_all(array(
+		$field_tpl->put_all([
 			'C_INCLUDE_API' => $this->include_api,
 			'C_CLASS' => !empty($this->get_css_class()),
 			'API_KEY' => $config->get_api_key(),
@@ -132,11 +132,11 @@ class GoogleMapsFormFieldMultipleMarkers extends AbstractFormField
 			'C_DISABLED' => $this->is_disabled(),
 			'MAX_INPUT' => $this->max_input,
 			'NBR_FIELDS' => $i
-		));
+		]);
 
-		$template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $field_tpl->render()
-		));
+		]);
 
 		return $template;
 	}
@@ -144,7 +144,7 @@ class GoogleMapsFormFieldMultipleMarkers extends AbstractFormField
 	public function retrieve_value()
 	{
 		$request = AppContext::get_request();
-		$values = array();
+		$values = [];
 		for ($i = 0; $i <= $this->max_input; $i++)
 		{
 			$field_address_id = $this->get_html_id() . '-' . $i;

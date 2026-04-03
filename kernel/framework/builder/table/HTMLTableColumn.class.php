@@ -16,7 +16,7 @@ class HTMLTableColumn extends HTMLTableRowCell
 	private $sortable_parameter = '';
 	private $name_sr_only = false;
 
-	public function __construct($name, $sortable_parameter = '', $options = array())
+	public function __construct($name, $sortable_parameter = '', $options = [])
 	{
 		$this->sortable_parameter = $sortable_parameter;
 		$css_class = isset($options['css_class']) ? $options['css_class'] : '';

@@ -51,12 +51,12 @@ class AddNewsletterController extends DefaultModuleController
 		if (NewsletterConfig::load()->get_mail_sender())
 		{
 			$streams = $this->get_streams();
-			$fieldset->add_field(new FormFieldMultipleCheckbox('newsletter_choice', $this->lang['newsletter.choose.streams'], (count($streams) == 1 ? array('1') : array()), $streams,
-				array('required' => true)
+			$fieldset->add_field(new FormFieldMultipleCheckbox('newsletter_choice', $this->lang['newsletter.choose.streams'], (count($streams) == 1 ? ['1'] : []), $streams,
+				['required' => true]
 			));
 
-			$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['newsletter.title'], $this->config->get_newsletter_name(), array(
-				'required' => true)
+			$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['newsletter.title'], $this->config->get_newsletter_name(), [
+				'required' => true]
 			));
 
 			$fieldset->add_field($this->return_editor($type));
@@ -79,7 +79,7 @@ class AddNewsletterController extends DefaultModuleController
 
 	private function send_mail($type)
 	{
-		$streams = array();
+		$streams = [];
 		foreach ($this->form->get_value('newsletter_choice') as $field => $option)
 		{
 			$streams[] = $option->get_id();
@@ -95,7 +95,7 @@ class AddNewsletterController extends DefaultModuleController
 
 	private function send_test($type)
 	{
-		$subscribers[] = array('user_id' => AppContext::get_current_user()->get_id(), 'display_name' => AppContext::get_current_user()->get_display_name());
+		$subscribers[] = ['user_id' => AppContext::get_current_user()->get_id(), 'display_name' => AppContext::get_current_user()->get_display_name()];
 		NewsletterMailFactory::send_mail(
 			$subscribers,
 			$type,
@@ -121,7 +121,7 @@ class AddNewsletterController extends DefaultModuleController
 
 	private function get_streams()
 	{
-		$streams = array();
+		$streams = [];
 		$newsletter_streams = NewsletterStreamsCache::load()->get_streams();
 		foreach ($newsletter_streams as $id => $stream)
 		{
@@ -135,14 +135,14 @@ class AddNewsletterController extends DefaultModuleController
 	{
 		if ($type == 'bbcode')
 		{
-			return new FormFieldRichTextEditor('content', $this->lang['newsletter.content'], $this->config->get_default_content(), array(
-				'rows' => 10, 'cols' => 47, 'description' => $this->lang['newsletter.content.clue'], 'required' => true)
+			return new FormFieldRichTextEditor('content', $this->lang['newsletter.content'], $this->config->get_default_content(), [
+				'rows' => 10, 'cols' => 47, 'description' => $this->lang['newsletter.content.clue'], 'required' => true]
 			);
 		}
 		else
 		{
-			return new FormFieldMultiLineTextEditor('content', $this->lang['newsletter.content'], ($type == 'html' ? $this->config->get_default_content() : ''), array(
-				'rows' => 10, 'cols' => 47, 'description' => $this->lang['newsletter.content.clue'], 'required' => true)
+			return new FormFieldMultiLineTextEditor('content', $this->lang['newsletter.content'], ($type == 'html' ? $this->config->get_default_content() : ''), [
+				'rows' => 10, 'cols' => 47, 'description' => $this->lang['newsletter.content.clue'], 'required' => true]
 			);
 		}
 	}

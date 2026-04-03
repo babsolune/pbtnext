@@ -32,7 +32,7 @@ class FormFieldTextEditor extends AbstractFormField
 	 * @param array $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
-	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 		$this->set_css_form_field_class('form-field-text');
@@ -47,7 +47,7 @@ class FormFieldTextEditor extends AbstractFormField
 
 		$field = new FileTemplate('framework/builder/form/fieldelements/FormFieldTextEditor.tpl');
 
-		$field->put_all(array(
+		$field->put_all([
 			'SIZE' => $this->size,
 			'MAX_LENGTH' => $this->maxlength,
 			'NAME' => $this->get_html_id(),
@@ -62,13 +62,13 @@ class FormFieldTextEditor extends AbstractFormField
 			'PATTERN' => $this->pattern,
 			'C_PLACEHOLDER' => $this->has_placeholder(),
 			'PLACEHOLDER' => $this->placeholder
-		));
+		]);
 
 		$this->assign_common_template_variables($template);
 
-		$template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $field->render()
-		));
+		]);
 
 		return $template;
 	}

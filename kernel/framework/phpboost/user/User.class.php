@@ -29,7 +29,7 @@ class User
 	protected $id = -1;
 	protected $level = -1;
 	protected $is_admin;
-	protected $groups = array();
+	protected $groups = [];
 
 	protected $display_name;
 	protected $email;
@@ -295,7 +295,7 @@ class User
 
 	public function get_properties()
 	{
-		return array(
+		return [
 			'id'                 => $this->id,
 			'level'              => $this->level,
 			'locale'             => $this->locale,
@@ -308,7 +308,7 @@ class User
 			'warning_percentage' => $this->warning_percentage,
 			'display_name'       => $this->display_name,
 			'groups'             => $this->groups
-		);
+		];
 	}
 
 	public function init_robot_user($robot_name)
@@ -323,7 +323,7 @@ class User
 
 	public static function get_visitor_properties($display_name = null, $level = self::VISITOR_LEVEL)
 	{
-		return array(
+		return [
 			'user_id'              => Session::VISITOR_SESSION_ID,
 			'display_name'         => $display_name !== null ? $display_name : LangLoader::get_message('user.guest', 'user-lang'),
 			'level'                => $level,
@@ -340,7 +340,7 @@ class User
 			'warning_percentage'   => 0,
 			'delay_banned'         => 0,
 			'delay_readonly'       => 0
-		);
+		];
 	}
 }
 ?>

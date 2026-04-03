@@ -35,7 +35,7 @@ class QaptchaItem
 
 	public function get_formated_answers()
 	{
-		$answers = array();
+		$answers = [];
 
 		foreach ($this->answers as $answer)
 		{
@@ -48,10 +48,10 @@ class QaptchaItem
 
 	public function get_properties()
 	{
-		return array(
+		return [
 			'label' => $this->label,
 			'answers' => implode(';', $this->answers)
-		);
+		];
 	}
 
 	public function set_properties(array $properties)

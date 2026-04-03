@@ -48,7 +48,7 @@ class UserLostPasswordController extends AbstractController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldMailEditor('email', $this->lang['user.email'], '',
-			array('required' => true)
+			['required' => true]
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -80,12 +80,12 @@ class UserLostPasswordController extends AbstractController
 		PHPBoostAuthenticationMethod::update_auth_infos($user->get_id(), null, null, null, null, $change_password_pass);
 
 		$general_config = GeneralConfig::load();
-		$parameters = array(
+		$parameters = [
 			'pseudo'               => $user->get_display_name(),
 			'host'                 => $general_config->get_complete_site_url(),
 			'change_password_link' => UserUrlBuilder::change_password($change_password_pass)->absolute(),
 			'signature'            => MailServiceConfig::load()->get_mail_signature()
-		);
+		];
 		$subject = $general_config->get_site_name() . ' : ' . $this->lang['user.forgotten.password'];
 		$content = StringVars::replace_vars($this->lang['user.forgotten.password.email.content'], $parameters);
 		AppContext::get_mail_service()->send_from_properties($user->get_email(), $subject, $content);
@@ -96,7 +96,7 @@ class UserLostPasswordController extends AbstractController
 	private function get_user()
 	{
 		$email = $this->form->get_value('email');
-		$user_id = UserService::user_exists('WHERE email=:email', array('email' => $email));
+		$user_id = UserService::user_exists('WHERE email=:email', ['email' => $email]);
 
 		if (!$user_id)
 		{

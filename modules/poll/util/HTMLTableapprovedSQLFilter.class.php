@@ -30,7 +30,7 @@ class HTMLTableapprovedSQLFilter extends HTMLTableCheckboxFilter implements SQLF
 	{
 		$parameter_name = $this->get_sql_value_parameter_prefix() . '_' . $this->db_field;
 		$query = $this->db_field . ' = :' . $parameter_name;
-		$parameters = array($parameter_name => $this->parameter_value);
+		$parameters = [$parameter_name => $this->parameter_value];
 		
 		return new SQLFragment($query, $parameters);
 	}

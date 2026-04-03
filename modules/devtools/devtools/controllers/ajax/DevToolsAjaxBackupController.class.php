@@ -14,19 +14,19 @@ class DevToolsAjaxBackupController extends AbstractController
     public function execute(HTTPRequestCustom $request)
     {
         if (!DevToolsAuthorizationsService::check_authorizations()->moderation())
-            return new JSONResponse(array('success' => false, 'error' => 'Unauthorized'), 403);
+            return new JSONResponse(['success' => false, 'error' => 'Unauthorized'], 403);
 
         $module_id = preg_replace('/[^a-zA-Z0-9_\-]/', '', $request->get_string('id', ''));
 
         if (empty($module_id))
-            return new JSONResponse(array('success' => false, 'error' => 'Missing module identifier'));
+            return new JSONResponse(['success' => false, 'error' => 'Missing module identifier']);
 
         $result = DevToolsBackupService::backup_module($module_id);
 
         if (isset($result['error']))
-            return new JSONResponse(array('success' => false, 'error' => '[' . $result['error'] . '] ' . $result['detail']));
+            return new JSONResponse(['success' => false, 'error' => '[' . $result['error'] . '] ' . $result['detail']]);
 
-        return new JSONResponse(array('success' => true, 'filepath' => $result['filepath'], 'tables' => $result['tables']));
+        return new JSONResponse(['success' => true, 'filepath' => $result['filepath'], 'tables' => $result['tables']]);
     }
 }
 ?>

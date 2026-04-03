@@ -41,7 +41,7 @@ class FaqCategoryController extends DefaultModuleController
 
 			if ($categories_number > $subcategories_pagination->get_display_from() && $categories_number <= ($subcategories_pagination->get_display_from() + $subcategories_pagination->get_number_items_per_page()))
 			{
-				$this->view->assign_block_vars('sub_categories_list', array(
+				$this->view->assign_block_vars('sub_categories_list', [
 					'C_CATEGORY_THUMBNAIL' => !empty($category->get_thumbnail()),
 					'C_SEVERAL_ITEMS'      => $category->get_elements_number() > 1,
 
@@ -53,7 +53,7 @@ class FaqCategoryController extends DefaultModuleController
 
 					'U_CATEGORY_THUMBNAIL' => $category->get_thumbnail()->rel(),
 					'U_CATEGORY'           => FaqUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel()
-				));
+				]);
 			}
 		}
 
@@ -65,13 +65,13 @@ class FaqCategoryController extends DefaultModuleController
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = faq.author_user_id
 		WHERE approved = 1
 		AND faq.id_category = :id_category
-		ORDER BY q_order ASC', array(
+		ORDER BY q_order ASC', [
 			'id_category' => $this->get_category()->get_id()
-		));
+		]);
 
 		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_CATEGORY'                 => true,
 			'C_CATEGORY_THUMBNAIL' 		 => !$this->get_category()->get_id() == Category::ROOT_CATEGORY && !empty($this->get_category()->get_thumbnail()->rel()),
 			'C_ROOT_CATEGORY'            => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
@@ -97,7 +97,7 @@ class FaqCategoryController extends DefaultModuleController
 			'U_CATEGORY_THUMBNAIL' => $this->get_category()->get_thumbnail()->rel(),
 			'U_EDIT_CATEGORY'      => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? FaqUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->get_category()->get_id(), 'faq')->rel(),
 			'U_REORDER_ITEMS'      => FaqUrlBuilder::reorder_items($this->get_category()->get_id(), $this->get_category()->get_rewrited_name())->rel(),
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{
@@ -166,7 +166,7 @@ class FaqCategoryController extends DefaultModuleController
 
 		$description = $this->get_category()->get_description();
 		if (empty($description))
-			$description = StringVars::replace_vars($this->lang['faq.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->get_category()->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category.category', 'category-lang') . ' ' . $this->get_category()->get_name() : '');
+			$description = StringVars::replace_vars($this->lang['faq.seo.description.root'], ['site' => GeneralConfig::load()->get_site_name()]) . ($this->get_category()->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category.category', 'category-lang') . ' ' . $this->get_category()->get_name() : '');
 		$graphical_environment->get_seo_meta_data()->set_description($description, $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $page));
 

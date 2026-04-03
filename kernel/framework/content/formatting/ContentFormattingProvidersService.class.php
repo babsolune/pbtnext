@@ -27,7 +27,7 @@ class ContentFormattingProvidersService
 
 	public static function get_editors()
 	{
-		$editors = array();
+		$editors = [];
 		foreach (self::get_extensions_point() as $id => $provider)
 		{
 			$editors[$id] = $provider;

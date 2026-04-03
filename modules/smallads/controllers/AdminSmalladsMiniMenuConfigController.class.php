@@ -35,20 +35,20 @@ class AdminSmalladsMiniMenuConfigController extends DefaultAdminModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldNumberEditor('mini_menu_items_nb', $this->lang['smallads.mini.items.number'], $this->config->get_mini_menu_items_nb(),
-			array('min' => 1, 'max' => 10,),
-			array(new FormFieldConstraintIntegerRange(1, 10))
+			['min' => 1, 'max' => 10,],
+			[new FormFieldConstraintIntegerRange(1, 10)]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('mini_menu_animation_speed', $this->lang['smallads.mini.animation.speed'], $this->config->get_mini_menu_animation_speed(),
-			array('description' => $this->lang['smallads.mini.speed.clue'])
+			['description' => $this->lang['smallads.mini.speed.clue']]
 		));
 
 		$fieldset->add_field(new FormFieldSpacer('1_separator', ''));
 
 		$fieldset->add_field(new FormFieldCheckbox('mini_menu_autoplay', $this->lang['smallads.mini.autoplay'], $this->config->is_slideshow_autoplayed(),
-			array(
+			[
 				'class' => 'custom-checkbox',
-				'events' => array('click' => '
+				'events' => ['click' => '
 					if (HTMLForms.getField("mini_menu_autoplay").getValue()) {
 						HTMLForms.getField("mini_menu_autoplay_speed").enable();
 						HTMLForms.getField("mini_menu_autoplay_hover").enable();
@@ -56,21 +56,21 @@ class AdminSmalladsMiniMenuConfigController extends DefaultAdminModuleController
 						HTMLForms.getField("mini_menu_autoplay_speed").disable();
 						HTMLForms.getField("mini_menu_autoplay_hover").disable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('mini_menu_autoplay_speed', $this->lang['smallads.mini.autoplay.speed'], $this->config->get_mini_menu_autoplay_speed(),
-			array(
+			[
 				'description' => $this->lang['smallads.mini.speed.clue'],
 				'hidden' => !$this->config->is_slideshow_autoplayed()
-			)
+			]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('mini_menu_autoplay_hover', $this->lang['smallads.mini.autoplay.hover'], $this->config->is_slideshow_hover_enabled(),
-			array(
+			[
 				'class' => 'custom-checkbox',
-				'hidden' => !$this->config->is_slideshow_autoplayed())
+				'hidden' => !$this->config->is_slideshow_autoplayed()]
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -104,7 +104,7 @@ class AdminSmalladsMiniMenuConfigController extends DefaultAdminModuleController
 		SmalladsConfig::save();
 		CategoriesService::get_categories_manager()->regenerate_cache();
 		SmalladsCache::invalidate();
-		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())) . ' - ' . $this->lang['smallads.mini.config'], 'url' => ModulesUrlBuilder::configuration()->rel()));
+		HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]) . ' - ' . $this->lang['smallads.mini.config'], 'url' => ModulesUrlBuilder::configuration()->rel()]);
 	}
 }
 ?>

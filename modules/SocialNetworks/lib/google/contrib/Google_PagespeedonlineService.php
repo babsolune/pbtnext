@@ -37,10 +37,10 @@
      * @opt_param string strategy The analysis strategy to use
      * @return Google_Result
      */
-    public function runpagespeed($url, $optParams = array()) {
-      $params = array('url' => $url);
+    public function runpagespeed($url, $optParams = []) {
+      $params = ['url' => $url];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('runpagespeed', array($params));
+      $data = $this->__call('runpagespeed', [$params]);
       if ($this->useObjects()) {
         return new Google_Result($data);
       } else {
@@ -133,7 +133,7 @@ class Google_Result extends Google_Model {
   public function getResponseCode() {
     return $this->responseCode;
   }
-  public function setInvalidRules(/* array(Google_string) */ $invalidRules) {
+  public function setInvalidRules(/* [Google_string] */ $invalidRules) {
     $this->assertIsArray($invalidRules, 'Google_string', __METHOD__);
     $this->invalidRules = $invalidRules;
   }
@@ -186,7 +186,7 @@ class Google_ResultFormattedResultsRuleResults extends Google_Model {
   public function getLocalizedRuleName() {
     return $this->localizedRuleName;
   }
-  public function setUrlBlocks(/* array(Google_ResultFormattedResultsRuleResultsUrlBlocks) */ $urlBlocks) {
+  public function setUrlBlocks(/* [Google_ResultFormattedResultsRuleResultsUrlBlocks] */ $urlBlocks) {
     $this->assertIsArray($urlBlocks, 'Google_ResultFormattedResultsRuleResultsUrlBlocks', __METHOD__);
     $this->urlBlocks = $urlBlocks;
   }
@@ -220,7 +220,7 @@ class Google_ResultFormattedResultsRuleResultsUrlBlocks extends Google_Model {
   public function getHeader() {
     return $this->header;
   }
-  public function setUrls(/* array(Google_ResultFormattedResultsRuleResultsUrlBlocksUrls) */ $urls) {
+  public function setUrls(/* [Google_ResultFormattedResultsRuleResultsUrlBlocksUrls] */ $urls) {
     $this->assertIsArray($urls, 'Google_ResultFormattedResultsRuleResultsUrlBlocksUrls', __METHOD__);
     $this->urls = $urls;
   }
@@ -234,7 +234,7 @@ class Google_ResultFormattedResultsRuleResultsUrlBlocksHeader extends Google_Mod
   protected $__argsDataType = 'array';
   public $args;
   public $format;
-  public function setArgs(/* array(Google_ResultFormattedResultsRuleResultsUrlBlocksHeaderArgs) */ $args) {
+  public function setArgs(/* [Google_ResultFormattedResultsRuleResultsUrlBlocksHeaderArgs] */ $args) {
     $this->assertIsArray($args, 'Google_ResultFormattedResultsRuleResultsUrlBlocksHeaderArgs', __METHOD__);
     $this->args = $args;
   }
@@ -273,7 +273,7 @@ class Google_ResultFormattedResultsRuleResultsUrlBlocksUrls extends Google_Model
   protected $__resultType = 'Google_ResultFormattedResultsRuleResultsUrlBlocksUrlsResult';
   protected $__resultDataType = '';
   public $result;
-  public function setDetails(/* array(Google_ResultFormattedResultsRuleResultsUrlBlocksUrlsDetails) */ $details) {
+  public function setDetails(/* [Google_ResultFormattedResultsRuleResultsUrlBlocksUrlsDetails] */ $details) {
     $this->assertIsArray($details, 'Google_ResultFormattedResultsRuleResultsUrlBlocksUrlsDetails', __METHOD__);
     $this->details = $details;
   }
@@ -293,7 +293,7 @@ class Google_ResultFormattedResultsRuleResultsUrlBlocksUrlsDetails extends Googl
   protected $__argsDataType = 'array';
   public $args;
   public $format;
-  public function setArgs(/* array(Google_ResultFormattedResultsRuleResultsUrlBlocksUrlsDetailsArgs) */ $args) {
+  public function setArgs(/* [Google_ResultFormattedResultsRuleResultsUrlBlocksUrlsDetailsArgs] */ $args) {
     $this->assertIsArray($args, 'Google_ResultFormattedResultsRuleResultsUrlBlocksUrlsDetailsArgs', __METHOD__);
     $this->args = $args;
   }
@@ -330,7 +330,7 @@ class Google_ResultFormattedResultsRuleResultsUrlBlocksUrlsResult extends Google
   protected $__argsDataType = 'array';
   public $args;
   public $format;
-  public function setArgs(/* array(Google_ResultFormattedResultsRuleResultsUrlBlocksUrlsResultArgs) */ $args) {
+  public function setArgs(/* [Google_ResultFormattedResultsRuleResultsUrlBlocksUrlsResultArgs] */ $args) {
     $this->assertIsArray($args, 'Google_ResultFormattedResultsRuleResultsUrlBlocksUrlsResultArgs', __METHOD__);
     $this->args = $args;
   }

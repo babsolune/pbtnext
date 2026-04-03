@@ -33,7 +33,7 @@ class SteamAuthenticationMethod extends AbstractSocialNetworkAuthenticationMetho
 		if ($data)
 		{
 			try {
-				$user_id = $querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', 'WHERE method=:method AND identifier=:identifier',  array('method' => $this->get_external_authentication()->get_authentication_id(), 'identifier' => $data['id']));
+				$user_id = $querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', 'WHERE method=:method AND identifier=:identifier',  ['method' => $this->get_external_authentication()->get_authentication_id(), 'identifier' => $data['id']]);
 			} catch (RowNotFoundException $e) {
 
 				if (!empty($data['id']) && !empty($data['name']))
@@ -45,7 +45,7 @@ class SteamAuthenticationMethod extends AbstractSocialNetworkAuthenticationMetho
 					$user->set_email($data['email']);
 
 					$auth_method = new static();
-					$fields_data = !empty($data['picture_url']) ? array('user_avatar' => $data['picture_url']) : array();
+					$fields_data = !empty($data['picture_url']) ? ['user_avatar' => $data['picture_url']] : [];
 
 					return UserService::create($user, $auth_method, $fields_data, $data);
 				}
@@ -100,12 +100,12 @@ class SteamAuthenticationMethod extends AbstractSocialNetworkAuthenticationMetho
 		$url = file_get_contents("https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=" . SocialNetworksConfig::load()->get_client_id(SteamSocialNetwork::SOCIAL_NETWORK_ID) . "&steamids=" . $_SESSION['steam_token']);
 		$content = json_decode($url, true);
 
-		return array(
+		return [
 			'id' => $content['response']['players'][0]['steamid'],
 			'email' => '',
 			'name' => $content['response']['players'][0]['personaname'],
 			'picture_url' => $content['response']['players'][0]['avatarfull']
-		);
+		];
 	}
 }
 ?>

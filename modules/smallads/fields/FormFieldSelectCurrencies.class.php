@@ -170,7 +170,7 @@ class FormFieldSelectCurrencies extends FormFieldSimpleSelectChoice
 		const ZMW = 'ZK';
 		const ZWD = '$';
 
-		public function __construct($sym, $label, $value = 0, $field_options = array(), array $constraints = array())
+		public function __construct($sym, $label, $value = 0, $field_options = [], array $constraints = [])
 		{
 			parent::__construct($sym, $label, $value, $this->generate_options(), $field_options, $constraints);
 		}
@@ -178,7 +178,7 @@ class FormFieldSelectCurrencies extends FormFieldSimpleSelectChoice
 		private function generate_options()
 		{
 			$lang = LangLoader::get('currencies');
-			$options = array();
+			$options = [];
             $options[] = new FormFieldSelectChoiceOption($lang['EUR'], self::EUR);
 			$options[] = new FormFieldSelectChoiceOption($lang['GBP'], self::GBP);
 			$options[] = new FormFieldSelectChoiceOption($lang['USD'], self::USD);

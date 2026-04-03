@@ -13,8 +13,8 @@
 class ShoutboxHomeController extends DefaultModuleController
 {
 	private $elements_number = 0;
-	private $ids = array();
-	private $hide_delete_input = array();
+	private $ids = [];
+	private $hide_delete_input = [];
 	private $display_multiple_delete = true;
 
 	protected function get_template_to_use()
@@ -48,10 +48,10 @@ class ShoutboxHomeController extends DefaultModuleController
 		LEFT JOIN ' . DB_TABLE_MEMBER_EXTENDED_FIELDS . ' ext_field ON ext_field.user_id = member.user_id
 		ORDER BY shoutbox.timestamp DESC
 		LIMIT :number_items_per_page OFFSET :display_from',
-			array(
+			[
 				'number_items_per_page' => $pagination->get_number_items_per_page(),
 				'display_from' => $pagination->get_display_from()
-			)
+			]
 		);
 
 		$delete_link_number = 0;
@@ -69,13 +69,13 @@ class ShoutboxHomeController extends DefaultModuleController
 			else
 				$this->hide_delete_input[] = $message->get_id();
 
-			$this->view->assign_block_vars('messages', array_merge($message->get_template_vars($page), array(
+			$this->view->assign_block_vars('messages', array_merge($message->get_template_vars($page), [
 				'C_CURRENT_USER_MESSAGE' => AppContext::get_current_user()->get_display_name() == $row['login'],
 				'C_AVATAR'               => $row['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),
 				'C_USER_GROUPS'          => array_filter($message->get_author_user()->get_groups()),
 				'MESSAGE_NUMBER'         => $this->elements_number,
 				'U_AVATAR'               => $row['user_avatar'] ? Url::to_rel($row['user_avatar']) : $user_accounts_config->get_default_avatar()
-			)));
+			]));
 
 			// user's groups
 			if ($message->get_author_user()->get_groups())
@@ -87,12 +87,12 @@ class ShoutboxHomeController extends DefaultModuleController
 					if ($groups_cache->group_exists($user_group_id))
 					{
 						$group = $groups_cache->get_group($user_group_id);
-						$this->view->assign_block_vars('messages.usergroups', array(
+						$this->view->assign_block_vars('messages.usergroups', [
 							'C_GROUP_PICTURE' => !empty($group['img']),
 							'GROUP_PICTURE'   => $group['img'],
 							'GROUP_NAME'      => $group['name'],
 							'GROUP_ID'        => $user_group_id
-						));
+						]);
 					}
 				}
 			}
@@ -102,29 +102,29 @@ class ShoutboxHomeController extends DefaultModuleController
 		if (empty($delete_link_number))
 			$this->display_multiple_delete = false;
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_NO_MESSAGE'                => $result->get_rows_count() == 0,
 			'C_MULTIPLE_DELETE_DISPLAYED' => $this->display_multiple_delete,
 			'C_PAGINATION'                => $messages_number > ShoutboxConfig::load()->get_items_per_page(),
 			'PAGINATION'                  => $pagination->display(),
 			'MESSAGES_NUMBER'             => $this->elements_number
-		));
+		]);
 
 		if (ShoutboxAuthorizationsService::check_authorizations()->write() && !AppContext::get_current_user()->is_readonly())
 		{
-			$this->view->put_all(array(
+			$this->view->put_all([
 				'FORM' => ShoutboxFormController::get_view(),
 				'C_WRITE' => true
-			));
+			]);
 		}
 		else
 		{
 			$forbidden_to_write = ShoutboxConfig::load()->is_no_write_authorization_message_displayed();
 			if ($forbidden_to_write)
-				$this->view->put_all(array(
+				$this->view->put_all([
 					'C_FORBIDDEN_TO_WRITE' => $forbidden_to_write,
 					'MESSAGE_HELPER' => MessageHelper::display($this->lang['shoutbox.error.post.unauthorized'], MessageHelper::WARNING)
-				));
+				]);
 		}
 
 		return $this->view;
@@ -187,7 +187,7 @@ class ShoutboxHomeController extends DefaultModuleController
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['shoutbox.module.title'], '', $page);
-		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['shoutbox.seo.description'], array('site' => GeneralConfig::load()->get_site_name())), $page);
+		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['shoutbox.seo.description'], ['site' => GeneralConfig::load()->get_site_name()]), $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(ShoutboxUrlBuilder::home($page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();

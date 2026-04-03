@@ -67,14 +67,14 @@ class NewsletterStreamsFormController extends AbstractCategoriesFormController
 	{
 		$lang = LangLoader::get_all_langs('newsletter');
 
-		return array(
+		return [
 			new ActionAuthorization($lang['newsletter.authorizations.streams.read'], NewsletterAuthorizationsService::AUTH_READ),
 			new ActionAuthorization($lang['newsletter.authorizations.streams.subscribe'], NewsletterAuthorizationsService::AUTH_SUBSCRIBE),
 			new ActionAuthorization($lang['newsletter.authorizations.subscribers.read'], NewsletterAuthorizationsService::AUTH_READ_SUBSCRIBERS),
 			new MemberDisabledActionAuthorization($lang['newsletter.authorizations.subscribers.moderation'], NewsletterAuthorizationsService::AUTH_MODERATION_SUBSCRIBERS),
 			new VisitorDisabledActionAuthorization($lang['newsletter.authorizations.item.write'], NewsletterAuthorizationsService::AUTH_CREATE_NEWSLETTERS),
 			new ActionAuthorization($lang['newsletter.authorizations.archives.manage'], NewsletterAuthorizationsService::AUTH_READ_ARCHIVES)
-		);
+		];
 	}
 
 	protected function check_authorizations()

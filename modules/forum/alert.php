@@ -26,7 +26,7 @@ $alert_post = $request->get_postint('id', 0);
 $topic_id = !empty($alert) ? $alert : $alert_post;
 
 try {
-	$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id_category', 'title', 'subtitle'), 'WHERE id = :id', array('id' => $topic_id));
+	$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', ['id_category', 'title', 'subtitle'], 'WHERE id = :id', ['id' => $topic_id]);
 } catch (RowNotFoundException $e) {
 	$error_controller = PHPBoostErrors::unexisting_page();
 	DispatchManager::redirect($error_controller);
@@ -59,43 +59,43 @@ $view->add_lang($lang);
 if (!empty($alert) && empty($alert_post))
 {
 	//On vérifie qu'une alerte sur le même sujet n'ait pas été postée
-	$nbr_alert = PersistenceContext::get_querier()->count(PREFIX . 'forum_alerts', 'WHERE idtopic=:idtopic AND status = 0', array('idtopic' => $alert));
+	$nbr_alert = PersistenceContext::get_querier()->count(PREFIX . 'forum_alerts', 'WHERE idtopic=:idtopic AND status = 0', ['idtopic' => $alert]);
 	if (empty($nbr_alert)) //On affiche le formulaire
 	{
 		$editor = AppContext::get_content_formatting_service()->get_default_editor();
 		$editor->set_identifier('content');
 
-		$view->put_all(array(
+		$view->put_all([
 			'KERNEL_EDITOR' => $editor->display()
-		));
+		]);
 
-		$view->assign_block_vars('alert_form', array(
+		$view->assign_block_vars('alert_form', [
 			'TITLE'     => $topic_name,
 			'U_TOPIC'   => 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . Url::encode_rewrite($topic_name) . '.php'),
 			'REPORT_ID' => $alert
-		));
+		]);
 	}
 	else //Une alerte a déjà été postée
 	{
-		$view->put_all(array(
+		$view->put_all([
 			'URL_TOPIC'    => 'topic' . url('.php?id=' . $alert, '-' . $alert . '-' . Url::encode_rewrite($topic_name) . '.php'),
-		));
+		]);
 
-		$view->assign_block_vars('alert_confirm', array(
+		$view->assign_block_vars('alert_confirm', [
 			'L_CONFIRM_MESSAGE' => $lang['forum.report.topic.already.done']
-		));
+		]);
 	}
 }
 
 //Si on enregistre une alerte
 if (!empty($alert_post))
 {
-	$view->put_all(array(
+	$view->put_all([
 		'URL_TOPIC'    => 'topic' . url('.php?id=' . $alert_post, '-' . $alert_post . '-' . Url::encode_rewrite($topic_name) . '.php'),
-	));
+	]);
 
 	//On vérifie qu'une alerte sur le même sujet n'ait pas été postée
-	$nbr_alert = PersistenceContext::get_querier()->count(PREFIX . 'forum_alerts', 'WHERE idtopic=:idtopic AND status = 0', array('idtopic' => $alert_post));
+	$nbr_alert = PersistenceContext::get_querier()->count(PREFIX . 'forum_alerts', 'WHERE idtopic=:idtopic AND status = 0', ['idtopic' => $alert_post]);
 	if (empty($nbr_alert)) //On enregistre
 	{
 		$alert_title   = $request->get_poststring('title', '');
@@ -106,15 +106,15 @@ if (!empty($alert_post))
 
 		$Forumfct->Alert_topic($alert_post, $alert_title, $alert_content);
 
-		$view->assign_block_vars('alert_confirm', array(
+		$view->assign_block_vars('alert_confirm', [
 			'L_CONFIRM_MESSAGE' => str_replace('%title', $topic_name, $lang['forum.report.success'])
-		));
+		]);
 	}
 	else //Une alerte a déjà été postée
 	{
-		$view->assign_block_vars('alert_confirm', array(
+		$view->assign_block_vars('alert_confirm', [
 			'L_CONFIRM_MESSAGE' => $lang['forum.report.topic.already.done']
-		));
+		]);
 	}
 
 }
@@ -122,7 +122,7 @@ if (!empty($alert_post))
 //Listes les utilisateurs en ligne.
 list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '/forum/%'");
 
-$vars_tpl = array(
+$vars_tpl = [
 	'C_USER_CONNECTED'      => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 	'C_NO_USER_ONLINE'      => (($total_online - $total_visit) == 0),
 
@@ -146,7 +146,7 @@ $vars_tpl = array(
 	'L_MODO'                => ($total_modo > 1) ? $lang['user.moderators'] : $lang['user.moderator'],
 	'L_MEMBER'              => ($total_member > 1) ? $lang['user.members'] : $lang['user.member'],
 	'L_GUEST'               => ($total_visit > 1) ? $lang['user.guests'] : $lang['user.guest'],
-);
+];
 
 $view->put_all($vars_tpl);
 $top_view->put_all($vars_tpl);

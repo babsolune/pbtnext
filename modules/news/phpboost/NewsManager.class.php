@@ -26,18 +26,18 @@ class NewsManager extends ItemsManager
 	public function get_suggested_news(Item $item)
 	{
 		$now = new Date();
-		$suggested_news = array();
+		$suggested_news = [];
 
 		$result = self::$db_querier->select('SELECT id, title, id_category, rewrited_title, thumbnail, creation_date, update_date, (2 * FT_SEARCH_RELEVANCE(title, :search_content) + FT_SEARCH_RELEVANCE(content, :search_content) / 3) AS relevance
 		FROM ' . self::$items_table . '
 		WHERE (FT_SEARCH(title, :search_content) OR FT_SEARCH(content, :search_content)) AND id <> :excluded_id
 		AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
 		ORDER BY relevance DESC
-		LIMIT 0, 10', array(
+		LIMIT 0, 10', [
 			'excluded_id' => $item->get_id(),
 			'search_content' => $item->get_title() . ',' . $item->get_content(),
 			'timestamp_now' => $now->get_timestamp()
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{
@@ -55,7 +55,7 @@ class NewsManager extends ItemsManager
 	public function get_navigation_links(Item $item)
 	{
 		$now = new Date();
-		$navigation_links = array();
+		$navigation_links = [];
 
 		$result = self::$db_querier->select('(SELECT id, title, id_category, rewrited_title, thumbnail, \'PREVIOUS\' as type
 		FROM '. self::$items_table .'
@@ -69,11 +69,11 @@ class NewsManager extends ItemsManager
 		WHERE (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))) AND update_date > :timestamp AND id_category IN :authorized_categories
 		ORDER BY update_date ASC, top_list_enabled ASC
 		LIMIT 1
-		OFFSET 0)', array(
+		OFFSET 0)', [
 			'timestamp_now' => $now->get_timestamp(),
 			'timestamp' => $item->has_update_date() ? $item->get_update_date()->get_timestamp() : $item->get_creation_date()->get_timestamp(),
-			'authorized_categories' => array($item->get_id_category())
-		));
+			'authorized_categories' => [$item->get_id_category()]
+		]);
 
 		while ($row = $result->fetch())
 		{

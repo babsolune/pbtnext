@@ -22,7 +22,7 @@ abstract class BusinessObject implements PropertiesMapInterface
 
     public function get_raw_value($properties_list)
     {
-        $properties_map = array();
+        $properties_map = [];
         foreach ($properties_list as $property)
         {
             $getter = 'get_' . $property;

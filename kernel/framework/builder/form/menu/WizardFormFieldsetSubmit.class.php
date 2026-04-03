@@ -16,7 +16,7 @@ class WizardFormFieldsetSubmit extends FormFieldsetHTML
 	 */
 	private $buttons;
 
-	public function __construct($id, $options = array())
+	public function __construct($id, $options = [])
 	{
 		if (!isset($options['css_class']))
 		{

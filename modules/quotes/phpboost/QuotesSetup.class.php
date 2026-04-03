@@ -37,7 +37,7 @@ class QuotesSetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(self::$quotes_table, self::$quotes_cats_table));
+		PersistenceContext::get_dbms_utils()->drop([self::$quotes_table, self::$quotes_cats_table]);
 	}
 
 	private function create_tables()
@@ -48,24 +48,24 @@ class QuotesSetup extends DefaultModuleSetup
 
 	private function create_quotes_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'writer' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'rewrited_writer' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'content' => array('type' => 'text', 'length' => 65000),
-			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'approved' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array(
-				'id_category' => array('type' => 'key', 'fields' => 'id_category'),
-				'writer' => array('type' => 'fulltext', 'fields' => 'writer'),
-				'content' => array('type' => 'fulltext', 'fields' => 'content')
-			)
-		);
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'id_category' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'writer' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'rewrited_writer' => ['type' => 'string', 'length' => 255, 'default' => "''"],
+			'content' => ['type' => 'text', 'length' => 65000],
+			'creation_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'author_user_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'approved' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0]
+		];
+		$options = [
+			'primary' => ['id'],
+			'indexes' => [
+				'id_category' => ['type' => 'key', 'fields' => 'id_category'],
+				'writer' => ['type' => 'fulltext', 'fields' => 'writer'],
+				'content' => ['type' => 'fulltext', 'fields' => 'content']
+			]
+		];
 		PersistenceContext::get_dbms_utils()->create_table(self::$quotes_table, $fields, $options);
 	}
 
@@ -78,7 +78,7 @@ class QuotesSetup extends DefaultModuleSetup
 	{
 		$this->messages = LangLoader::get('install', 'quotes');
 
-		PersistenceContext::get_querier()->insert(self::$quotes_table, array(
+		PersistenceContext::get_querier()->insert(self::$quotes_table, [
 			'id' => 1,
 			'id_category' => 0,
 			'content' => $this->messages['quotes.1.content'],
@@ -87,9 +87,9 @@ class QuotesSetup extends DefaultModuleSetup
 			'creation_date' => time(),
 			'author_user_id' => 1,
 			'approved' => 1
-		));
+		]);
 
-		PersistenceContext::get_querier()->insert(self::$quotes_table, array(
+		PersistenceContext::get_querier()->insert(self::$quotes_table, [
 			'id' => 2,
 			'id_category' => 0,
 			'content' => $this->messages['quotes.2.content'],
@@ -98,9 +98,9 @@ class QuotesSetup extends DefaultModuleSetup
 			'creation_date' => time(),
 			'author_user_id' => 1,
 			'approved' => 1
-		));
+		]);
 
-		PersistenceContext::get_querier()->insert(self::$quotes_table, array(
+		PersistenceContext::get_querier()->insert(self::$quotes_table, [
 			'id' => 3,
 			'id_category' => 0,
 			'content' => $this->messages['quotes.3.content'],
@@ -109,9 +109,9 @@ class QuotesSetup extends DefaultModuleSetup
 			'creation_date' => time(),
 			'author_user_id' => 1,
 			'approved' => 1
-		));
+		]);
 
-		PersistenceContext::get_querier()->insert(self::$quotes_table, array(
+		PersistenceContext::get_querier()->insert(self::$quotes_table, [
 			'id' => 4,
 			'id_category' => 0,
 			'content' => $this->messages['quotes.4.content'],
@@ -120,9 +120,9 @@ class QuotesSetup extends DefaultModuleSetup
 			'creation_date' => time(),
 			'author_user_id' => 1,
 			'approved' => 1
-		));
+		]);
 
-		PersistenceContext::get_querier()->insert(self::$quotes_table, array(
+		PersistenceContext::get_querier()->insert(self::$quotes_table, [
 			'id' => 5,
 			'id_category' => 0,
 			'content' => $this->messages['quotes.5.content'],
@@ -131,7 +131,7 @@ class QuotesSetup extends DefaultModuleSetup
 			'creation_date' => time(),
 			'author_user_id' => 1,
 			'approved' => 1
-		));
+		]);
 	}
 }
 ?>

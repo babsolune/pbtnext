@@ -13,10 +13,10 @@ class SearchModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('search');
 
-		self::$delete_old_files_list = array(
+		self::$delete_old_files_list = [
 			'/lang/english/search_english.php',
 			'/lang/french/search_french.php'
-		);
+		];
 	}
 }
 ?>

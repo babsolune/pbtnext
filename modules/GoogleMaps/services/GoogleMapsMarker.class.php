@@ -101,14 +101,14 @@ class GoogleMapsMarker
 
 	public function get_properties()
 	{
-		return array(
+		return [
 			'name' => $this->get_name(),
 			'address' => $this->get_address(),
 			'latitude' => $this->get_latitude(),
 			'longitude' => $this->get_longitude(),
 			'zoom' => $this->get_zoom(),
 			'address_displayed_on_label' => (int)$this->is_address_displayed_on_label()
-		);
+		];
 	}
 
 	public function set_properties(array $properties)
@@ -134,7 +134,7 @@ class GoogleMapsMarker
 
 	public function get_array_tpl_vars()
 	{
-		return array(
+		return [
 			'C_ADDRESS' => $this->get_address(),
 			'C_COORDONATES' => $this->get_latitude() && $this->get_longitude(),
 			'C_ZOOM' => $this->get_zoom() > 0,
@@ -144,7 +144,7 @@ class GoogleMapsMarker
 			'LATITUDE' => $this->get_latitude(),
 			'LONGITUDE' => $this->get_longitude(),
 			'ZOOM' => $this->get_zoom()
-		);
+		];
 	}
 }
 ?>

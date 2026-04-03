@@ -32,7 +32,7 @@ abstract class AbstractNewsletterMail implements NewsletterMailType
 				$mail = new Mail();
 				$mail->set_sender($sender);
 				$mail->set_subject($subject);
-				$mail->set_content(StringVars::replace_vars($content, array('user_display_name' => $properties['display_name'])));
+				$mail->set_content(StringVars::replace_vars($content, ['user_display_name' => $properties['display_name']]));
 
 				$mail->add_recipient($mail_subscriber);
 

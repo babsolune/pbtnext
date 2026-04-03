@@ -149,7 +149,7 @@ class ItemsUrlBuilder
 	/**
 	 * @return Url
 	 */
-	public static function specific_page($page_id, $module_id = '', $additional_parameters = array())
+	public static function specific_page($page_id, $module_id = '', $additional_parameters = [])
 	{
 		$additional_parameters = (!empty($additional_parameters) ? implode('/', $additional_parameters) . '/' : '');
 		return DispatchManager::get_url(self::get_dispatcher($module_id), '/' . $page_id . '/' . $additional_parameters);

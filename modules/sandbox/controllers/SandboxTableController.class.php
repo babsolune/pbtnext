@@ -30,18 +30,18 @@ class SandboxTableController extends DefaultModuleController
 
 	private function build_table()
 	{
-		$table_model = new SQLHTMLTableModel(DB_TABLE_MEMBER, '', array(
+		$table_model = new SQLHTMLTableModel(DB_TABLE_MEMBER, '', [
 			new HTMLTableColumn($this->lang['sandbox.table.header.login'], 'display_name','col-large'),
 			new HTMLTableColumn($this->lang['sandbox.table.header.email']),
 			new HTMLTableColumn($this->lang['sandbox.table.header.registred'], 'registration_date'),
 			new HTMLTableColumn($this->lang['sandbox.table.header.messages']),
 			new HTMLTableColumn($this->lang['sandbox.table.header.connected']),
 			new HTMLTableColumn($this->lang['sandbox.table.header.messaging'])
-		), new HTMLTableSortingRule('user_id', HTMLTableSortingRule::ASC));
+		], new HTMLTableSortingRule('user_id', HTMLTableSortingRule::ASC));
 
 		$table_model->set_layout_title($this->lang['sandbox.table.member.list']);
 
-		$options = array('jod' => 'John Doe', 'jad' => 'Jane Doe', 'jid' => 'Jim Doe');
+		$options = ['jod' => 'John Doe', 'jad' => 'Jane Doe', 'jid' => 'Jim Doe'];
 		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('display_name', 'filter1', $this->lang['sandbox.table.login.equals'], $options));
 		$table_model->add_filter(new HTMLTableBeginsWithTextSQLFilter('display_name', 'filter2', $this->lang['sandbox.table.login.beguin.regex'], '`^(?!%).+$`u'));
 		$table_model->add_filter(new HTMLTableBeginsWithTextSQLFilter('display_name', 'filter3', $this->lang['sandbox.table.login.beguin']));
@@ -62,18 +62,18 @@ class SandboxTableController extends DefaultModuleController
 		$table->set_filters_fieldset_class_HTML();
 		$table->hide_multiple_delete();
 
-		$results = array();
+		$results = [];
 		$result = $table_model->get_sql_results();
 		foreach ($result as $row)
 		{
-			$results[] = new HTMLTableRow(array(
+			$results[] = new HTMLTableRow([
 				new HTMLTableRowCell($row['display_name']),
 				new HTMLTableRowCell(($row['show_email'] == 1) ? '<a href="mailto:' . $row['email'] . '" class="button alt-button smaller">Mail</a>' : '&nbsp;'),
 				new HTMLTableRowCell(Date::to_format($row['registration_date'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
 				new HTMLTableRowCell(!empty($row['posted_msg']) ? $row['posted_msg'] : '0'),
 				new HTMLTableRowCell(!empty($row['last_connection_date']) ? Date::to_format($row['last_connection_date'], Date::FORMAT_DAY_MONTH_YEAR) : LangLoader::get_message('common.never', 'common-lang')),
 				new HTMLTableRowCell('<a href="' . Url::to_rel('/user/pm.php?pm=' . $row['user_id']) . '" class="button alt-button smaller offload">MP</a>')
-			));
+			]);
 		}
 		$table->set_rows($table_model->get_number_of_matching_rows(), $results);
 

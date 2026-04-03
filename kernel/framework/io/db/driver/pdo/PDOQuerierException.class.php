@@ -13,7 +13,7 @@ class PDOQuerierException extends SQLQuerierException
 {
 	public function __construct($message, PDOStatement $statement)
 	{
-		$infos = array();
+		$infos = [];
 		foreach ($statement->errorInfo() as $key => $info)
 		{
 			$infos[] = $key . ': ' . $info;

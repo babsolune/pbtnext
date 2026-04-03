@@ -12,7 +12,7 @@
 
 class FeedsList
 {
-	private $list = array();
+	private $list = [];
 
     /**
      * Adds the FeedsCat $cat_tree to the current feeds list

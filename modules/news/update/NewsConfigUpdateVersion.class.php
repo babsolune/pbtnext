@@ -14,7 +14,7 @@ class NewsConfigUpdateVersion extends ConfigUpdateVersion
 	{
 		parent::__construct('news');
 
-		$this->config_parameters_to_modify = array(
+		$this->config_parameters_to_modify = [
 			'number_news_per_page'             => 'items_per_page',
 			'number_columns_display_news'      => 'items_per_row',
 			'display_condensed_enabled'        => 'full_item_display',
@@ -22,18 +22,18 @@ class NewsConfigUpdateVersion extends ConfigUpdateVersion
 			'number_character_to_cut'          => 'auto_cut_characters_number',
 			'news_suggestions_enabled'         => 'items_suggestions_enabled',
 			'nb_view_enabled'                  => 'views_number_enabled',
-			'display_type'                     => array(
+			'display_type'                     => [
 				'parameter_name' => 'display_type',
-				'values'         => array(
+				'values'         => [
 					'block' => 'grid_view',
 					'list'  => 'list_view'
-				)
-			),
-			'root_category_description' => array(
+				]
+			],
+			'root_category_description' => [
 				'parameter_name' => 'root_category_description',
 				'value' => $this->get_parsed_old_content('NewsConfig', 'root_category_description')
-			)
-		);
+			]
+		];
 	}
 }
 ?>

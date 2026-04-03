@@ -49,10 +49,10 @@ class NewsletterHomeController extends DefaultModuleController
 			) AS subscribers_number
 		FROM ' . NewsletterSetup::$newsletter_table_streams . ' newsletter_streams
 		LIMIT :number_items_per_page OFFSET :display_from',
-			array(
+			[
 				'number_items_per_page' => $pagination->get_number_items_per_page(),
 				'display_from' => $pagination->get_display_from()
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{
@@ -62,7 +62,7 @@ class NewsletterHomeController extends DefaultModuleController
 				$category->set_properties($row);
 				$category_thumbnail = $category->get_thumbnail()->rel();
 
-				$this->view->assign_block_vars('streams_list', array(
+				$this->view->assign_block_vars('streams_list', [
 					'C_THUMBNAIL' => !empty($category_thumbnail),
 					'C_VIEW_ARCHIVES' => NewsletterAuthorizationsService::id_stream($row['id'])->read_archives(),
 					'C_VIEW_SUBSCRIBERS' => NewsletterAuthorizationsService::id_stream($row['id'])->read_subscribers(),
@@ -72,16 +72,16 @@ class NewsletterHomeController extends DefaultModuleController
 					'SUBSCRIBERS_NUMBER' => $row['subscribers_number'],
 					'U_VIEW_ARCHIVES' => NewsletterUrlBuilder::archives($row['id'], $row['rewrited_name'])->absolute(),
 					'U_VIEW_SUBSCRIBERS' => NewsletterUrlBuilder::subscribers($row['id'], $row['rewrited_name'])->absolute(),
-				));
+				]);
 			}
 		}
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_SUSCRIBE' => NewsletterAuthorizationsService::check_authorizations()->subscribe(),
 			'C_STREAMS' => $result->get_rows_count() != 0,
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display()
-		));
+		]);
 
 		$result->dispose();
 
@@ -124,7 +124,7 @@ class NewsletterHomeController extends DefaultModuleController
 
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['newsletter.items.list'], $this->lang['newsletter.module.title'], $page);
-		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['newsletter.seo.home'], array('site' => GeneralConfig::load()->get_site_name())));
+		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['newsletter.seo.home'], ['site' => GeneralConfig::load()->get_site_name()]));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsletterUrlBuilder::home($page));
 
 		return $response;

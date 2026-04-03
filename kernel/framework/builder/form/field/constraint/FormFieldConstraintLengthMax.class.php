@@ -23,7 +23,7 @@ class FormFieldConstraintLengthMax extends AbstractFormFieldConstraint
 		{
 			$js_message = LangLoader::get_message('warning.length.max', 'warning-lang');
 		}
-		$this->error_message = StringVars::replace_vars($js_message, array('upper_bound' => $upper_bound));
+		$this->error_message = StringVars::replace_vars($js_message, ['upper_bound' => $upper_bound]);
 		$this->set_validation_error_message($this->error_message);
 		$this->upper_bound = $upper_bound;
 	}

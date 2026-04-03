@@ -21,7 +21,7 @@ class DevToolsAjaxReviewController extends AbstractController
     {
         // Review tab requires at least moderator level
         if (!DevToolsAuthorizationsService::check_authorizations()->moderation())
-            return new JSONResponse(array('success' => false, 'error' => 'Unauthorized'), 403);
+            return new JSONResponse(['success' => false, 'error' => 'Unauthorized'], 403);
 
         $action = $request->get_string('action', '');
 
@@ -43,7 +43,7 @@ class DevToolsAjaxReviewController extends AbstractController
                 return $this->action_lang_analyze($request);
 
             default:
-                return new JSONResponse(array('success' => false, 'error' => 'Unknown action'));
+                return new JSONResponse(['success' => false, 'error' => 'Unknown action']);
         }
     }
 
@@ -60,10 +60,10 @@ class DevToolsAjaxReviewController extends AbstractController
         }
         catch (Exception $e)
         {
-            return new JSONResponse(array('success' => false, 'error' => $e->getMessage()));
+            return new JSONResponse(['success' => false, 'error' => $e->getMessage()]);
         }
 
-        return new JSONResponse(array('success' => true));
+        return new JSONResponse(['success' => true]);
     }
 
     // -------------------------------------------------------------------------
@@ -96,7 +96,7 @@ class DevToolsAjaxReviewController extends AbstractController
             $unused_with_users = ReviewService::get_unused_files_with_users();
             $orphan            = ReviewService::get_orphan_files();
 
-            $counters = array(
+            $counters = [
                 'files_on_server'           => count($files_on_server),
                 'files_in_upload'           => count($files_in_upload),
                 'files_in_content'          => count($files_in_content),
@@ -108,17 +108,17 @@ class DevToolsAjaxReviewController extends AbstractController
                 'files_in_gallery_table'    => count(ReviewService::get_files_in_table('gallery')),
                 'not_in_gallery_folder'     => count(ReviewService::get_count_files_not_in_gallery_folder()),
                 'not_in_gallery_table'      => count(ReviewService::get_count_files_not_in_gallery_table()),
-            );
+            ];
         }
         catch (Exception $e)
         {
-            return new JSONResponse(array('success' => false, 'error' => $e->getMessage()));
+            return new JSONResponse(['success' => false, 'error' => $e->getMessage()]);
         }
 
-        return new JSONResponse(array(
+        return new JSONResponse([
             'success'  => true,
             'counters' => $counters,
-        ));
+        ]);
     }
 
     // -------------------------------------------------------------------------
@@ -130,35 +130,35 @@ class DevToolsAjaxReviewController extends AbstractController
     private function action_section(HTTPRequestCustom $request)
     {
         $section = $request->get_string('section', '');
-        $rows    = array();
+        $rows    = [];
 
         switch ($section)
         {
             case 'onserver':
                 foreach (ReviewService::get_files_on_server('/upload') as $file)
-                    $rows[] = array(
+                    $rows[] = [
                         'file'       => $file,
                         'is_picture' => ReviewService::is_picture_file($file, '/upload'),
                         'is_pdf'     => ReviewService::is_pdf_file($file, '/upload'),
                         'folder'     => 'upload',
-                    );
+                    ];
                 break;
 
             case 'inupload':
                 foreach (ReviewService::get_files_in_table('upload') as $file)
-                    $rows[] = array(
+                    $rows[] = [
                         'file'       => $file,
                         'is_picture' => ReviewService::is_picture_file($file, '/upload'),
                         'is_pdf'     => ReviewService::is_pdf_file($file, '/upload'),
                         'folder'     => 'upload',
-                    );
+                    ];
                 break;
 
             case 'incontent':
                 foreach (ReviewService::get_files_in_content() as $file)
                 {
                     $link  = ReviewService::get_file_link($file);
-                    $rows[] = array(
+                    $rows[] = [
                         'file'          => $file['file_path'],
                         'is_picture'    => ReviewService::is_picture_file($file['file_path'], '/upload'),
                         'is_pdf'        => ReviewService::is_pdf_file($file['file_path'], '/upload'),
@@ -166,31 +166,31 @@ class DevToolsAjaxReviewController extends AbstractController
                         'item_title'    => $file['item_title'],
                         'item_link'     => $link ?: '',
                         'folder'        => 'upload',
-                    );
+                    ];
                 }
                 break;
 
             case 'allunused':
                 foreach (ReviewService::get_all_unused_files() as $file)
-                    $rows[] = array(
+                    $rows[] = [
                         'file'       => $file,
                         'is_picture' => ReviewService::is_picture_file($file, '/upload'),
                         'is_pdf'     => ReviewService::is_pdf_file($file, '/upload'),
                         'folder'     => 'upload',
-                    );
+                    ];
                 break;
 
             case 'usednoserver':
                 foreach (ReviewService::get_data_used_files_not_on_server() as $file)
                 {
-                    $rows[] = array(
+                    $rows[] = [
                         'file'          => $file['file_path'],
                         'module_source' => $file['module_source'],
                         'item_title'    => $file['item_title'],
                         'item_link'     => $file['file_link'] ?: '',
                         'edit_link'     => $file['edit_link'] ?: '',
                         'file_context'  => $file['file_context'] ?: '',
-                    );
+                    ];
                 }
                 break;
 
@@ -202,7 +202,7 @@ class DevToolsAjaxReviewController extends AbstractController
                         ? NumberHelper::round($file['file_size'] / 1024, 2) . ' ' . LangLoader::get_message('common.unit.megabytes', 'common-lang')
                         : NumberHelper::round($file['file_size'], 0)        . ' ' . LangLoader::get_message('common.unit.kilobytes', 'common-lang');
 
-                    $rows[] = array(
+                    $rows[] = [
                         'file'        => $file['file_path'],
                         'is_picture'  => ReviewService::is_picture_file($file['file_path'], '/upload'),
                         'is_pdf'      => ReviewService::is_pdf_file($file['file_path'], '/upload'),
@@ -210,55 +210,55 @@ class DevToolsAjaxReviewController extends AbstractController
                         'upload_date' => $upload_date,
                         'file_size'   => $file_size,
                         'folder'      => 'upload',
-                    );
+                    ];
                 }
                 break;
 
             case 'orphan':
                 foreach (ReviewService::get_orphan_files() as $file)
-                    $rows[] = array(
+                    $rows[] = [
                         'file'       => $file,
                         'is_picture' => ReviewService::is_picture_file($file, '/upload'),
                         'is_pdf'     => ReviewService::is_pdf_file($file, '/upload'),
                         'folder'     => 'upload',
-                    );
+                    ];
                 break;
 
             case 'ingalleryfolder':
                 foreach (ReviewService::get_files_on_server('/gallery/pics') as $file)
-                    $rows[] = array(
+                    $rows[] = [
                         'file'       => $file,
                         'is_picture' => ReviewService::is_picture_file($file, '/gallery/pics'),
                         'is_pdf'     => ReviewService::is_pdf_file($file, '/gallery/pics'),
                         'folder'     => 'gallery/pics',
-                    );
+                    ];
                 break;
 
             case 'ingallerytable':
                 foreach (ReviewService::get_files_in_table('gallery') as $file)
-                    $rows[] = array(
+                    $rows[] = [
                         'file'       => $file,
                         'is_picture' => ReviewService::is_picture_file($file, '/gallery/pics'),
                         'is_pdf'     => ReviewService::is_pdf_file($file, '/gallery/pics'),
                         'folder'     => 'gallery/pics',
-                    );
+                    ];
                 break;
 
             case 'nogalleryfolder':
                 foreach (ReviewService::get_files_not_in_gallery_folder() as $file)
-                    $rows[] = array('file' => $file);
+                    $rows[] = ['file' => $file];
                 break;
 
             case 'nogallerytable':
                 foreach (ReviewService::get_files_not_in_gallery_table() as $file)
-                    $rows[] = array('file' => $file);
+                    $rows[] = ['file' => $file];
                 break;
 
             default:
-                return new JSONResponse(array('success' => false, 'error' => 'Unknown section: ' . $section));
+                return new JSONResponse(['success' => false, 'error' => 'Unknown section: ' . $section]);
         }
 
-        return new JSONResponse(array('success' => true, 'rows' => $rows));
+        return new JSONResponse(['success' => true, 'rows' => $rows]);
     }
 
     // -------------------------------------------------------------------------
@@ -277,24 +277,24 @@ class DevToolsAjaxReviewController extends AbstractController
 
         if (!in_array($table, $dbms->list_tables()))
         {
-            $fields = array(
-                'id'                 => array('type' => 'integer', 'length' => 11,       'autoincrement' => true, 'notnull' => 1),
-                'file_path'          => array('type' => 'text',    'length' => 16777215),
-                'file_link'          => array('type' => 'text',    'length' => 16777215),
-                'edit_link'          => array('type' => 'text',    'length' => 16777215),
-                'module_source'      => array('type' => 'string',  'length' => 255,      'notnull' => 1),
-                'id_module_category' => array('type' => 'integer', 'length' => 11,       'notnull' => 1),
-                'category_name'      => array('type' => 'string',  'length' => 255),
-                'item_id'            => array('type' => 'integer', 'length' => 11,       'notnull' => 1),
-                'item_title'         => array('type' => 'string',  'length' => 255,      'notnull' => 1),
-                'id_in_module'       => array('type' => 'integer', 'length' => 11,       'notnull' => 1),
-            );
-            $dbms->create_table($table, $fields, array('primary' => array('id')));
+            $fields = [
+                'id'                 => ['type' => 'integer', 'length' => 11,       'autoincrement' => true, 'notnull' => 1],
+                'file_path'          => ['type' => 'text',    'length' => 16777215],
+                'file_link'          => ['type' => 'text',    'length' => 16777215],
+                'edit_link'          => ['type' => 'text',    'length' => 16777215],
+                'module_source'      => ['type' => 'string',  'length' => 255,      'notnull' => 1],
+                'id_module_category' => ['type' => 'integer', 'length' => 11,       'notnull' => 1],
+                'category_name'      => ['type' => 'string',  'length' => 255],
+                'item_id'            => ['type' => 'integer', 'length' => 11,       'notnull' => 1],
+                'item_title'         => ['type' => 'string',  'length' => 255,      'notnull' => 1],
+                'id_in_module'       => ['type' => 'integer', 'length' => 11,       'notnull' => 1],
+            ];
+            $dbms->create_table($table, $fields, ['primary' => ['id']]);
             return;
         }
 
         // Table exists — add edit_link column if missing (migration)
-        $existing_cols = array();
+        $existing_cols = [];
         try
         {
             $res = PersistenceContext::get_querier()->select('SHOW COLUMNS FROM `' . $table . '`');
@@ -343,7 +343,7 @@ class DevToolsAjaxReviewController extends AbstractController
                 continue;
 
             // Build WHERE clause: at least one column contains /upload
-            $where_parts = array();
+            $where_parts = [];
             foreach ($values['columns'] as $col)
                 $where_parts[] = $col . ' LIKE "%/upload%"';
 
@@ -353,7 +353,7 @@ class DevToolsAjaxReviewController extends AbstractController
             $wiki_latest_ids = null;
             if ($values['table'] === PREFIX . 'wiki_contents')
             {
-                $wiki_latest_ids = array();
+                $wiki_latest_ids = [];
                 try
                 {
                     $r = PersistenceContext::get_querier()->select(
@@ -436,7 +436,7 @@ class DevToolsAjaxReviewController extends AbstractController
 
                     PersistenceContext::get_querier()->insert(
                         ReviewService::get_table_name(),
-                        array(
+                        [
                             'file_path'          => $file_path,
                             'file_link'          => $file_link ?: '',
                             'edit_link'          => $edit_link ?: '',
@@ -447,7 +447,7 @@ class DevToolsAjaxReviewController extends AbstractController
                             'item_title'         => isset($data['title']) ? $data['title'] : (isset($data['name']) ? $data['name'] : ''),
                             'id_in_module'       => $id_list[0],
                             'file_context'       => $context,
-                        )
+                        ]
                     );
                 }
             }
@@ -460,15 +460,15 @@ class DevToolsAjaxReviewController extends AbstractController
 
     private function action_lang_modules()
     {
-        $modules = array();
+        $modules = [];
         $modules_path = PATH_TO_ROOT . '/modules';
 
         if (!is_dir($modules_path))
-            return new JSONResponse(array('success' => true, 'modules' => array()));
+            return new JSONResponse(['success' => true, 'modules' => []]);
 
         $entries = @scandir($modules_path);
         if (!$entries)
-            return new JSONResponse(array('success' => true, 'modules' => array()));
+            return new JSONResponse(['success' => true, 'modules' => []]);
 
         foreach ($entries as $entry)
         {
@@ -478,56 +478,56 @@ class DevToolsAjaxReviewController extends AbstractController
         }
 
         sort($modules);
-        return new JSONResponse(array('success' => true, 'modules' => $modules));
+        return new JSONResponse(['success' => true, 'modules' => $modules]);
     }
 
     private function action_lang_analyze(HTTPRequestCustom $request)
     {
         $module = $request->get_string('module', '');
         if (!$module || !preg_match('`^[a-z0-9_-]+$`i', $module))
-            return new JSONResponse(array('success' => false, 'error' => 'Invalid module'));
+            return new JSONResponse(['success' => false, 'error' => 'Invalid module']);
 
         $module_path = PATH_TO_ROOT . '/modules/' . $module;
         if (!is_dir($module_path))
-            return new JSONResponse(array('success' => false, 'error' => 'Module not found'));
+            return new JSONResponse(['success' => false, 'error' => 'Module not found']);
 
         $keys_fr = $this->lang_extract_keys($module_path . '/lang/french/common.php');
         $keys_en = $this->lang_extract_keys($module_path . '/lang/english/common.php');
 
-        $all_keys = array();
-        foreach ($keys_fr as $k => $d) $all_keys[$k] = array('fr' => $d['value'], 'en' => isset($keys_en[$k]) ? $keys_en[$k]['value'] : null);
+        $all_keys = [];
+        foreach ($keys_fr as $k => $d) $all_keys[$k] = ['fr' => $d['value'], 'en' => isset($keys_en[$k]) ? $keys_en[$k]['value'] : null];
         foreach ($keys_en as $k => $d)
-            if (!isset($all_keys[$k])) $all_keys[$k] = array('fr' => null, 'en' => $d['value']);
+            if (!isset($all_keys[$k])) $all_keys[$k] = ['fr' => null, 'en' => $d['value']];
 
         if (empty($all_keys))
-            return new JSONResponse(array('success' => false, 'error' => 'No lang keys found'));
+            return new JSONResponse(['success' => false, 'error' => 'No lang keys found']);
 
         $source = $this->lang_scan_sources($module_path);
 
-        $unused = array();
+        $unused = [];
         foreach ($all_keys as $key => $vals)
             if (!$this->lang_is_used($key, $source))
-                $unused[] = array(
+                $unused[] = [
                     'key'  => $key,
                     'fr'   => $vals['fr'],
                     'en'   => $vals['en'],
                     'file' => isset($keys_fr[$key]) ? $keys_fr[$key]['file'] : (isset($keys_en[$key]) ? $keys_en[$key]['file'] : ''),
                     'line' => isset($keys_fr[$key]) ? $keys_fr[$key]['line'] : (isset($keys_en[$key]) ? $keys_en[$key]['line'] : 0),
-                );
+                ];
 
-        return new JSONResponse(array(
+        return new JSONResponse([
             'success'             => true,
             'module'              => $module,
             'total_keys'          => count($all_keys),
             'unused'              => $unused,
             'duplicates_internal' => $this->lang_dup_internal($keys_fr, $keys_en),
             'duplicates_external' => $this->lang_dup_external($keys_fr, $module),
-        ));
+        ]);
     }
 
     private function lang_extract_keys($file)
     {
-        $keys = array();
+        $keys = [];
         if (!is_file($file)) return $keys;
         $content = file_get_contents($file);
         $lines   = explode("\n", $content);
@@ -538,7 +538,7 @@ class DevToolsAjaxReviewController extends AbstractController
             $value  = isset($r[2][0]) ? $r[2][0] : '';
             $offset = $r[0][1];
             $line   = substr_count(substr($content, 0, $offset), "\n") + 1;
-            $keys[$key] = array('value' => $value, 'line' => $line, 'file' => $file);
+            $keys[$key] = ['value' => $value, 'line' => $line, 'file' => $file];
         }
         return $keys;
     }
@@ -550,7 +550,7 @@ class DevToolsAjaxReviewController extends AbstractController
         foreach ($it as $f)
         {
             $ext = strtolower(pathinfo($f->getFilename(), PATHINFO_EXTENSION));
-            if (!in_array($ext, array('php', 'tpl'))) continue;
+            if (!in_array($ext, ['php', 'tpl'])) continue;
             if (strpos($f->getPathname(), DIRECTORY_SEPARATOR . 'lang' . DIRECTORY_SEPARATOR) !== false) continue;
             $c = @file_get_contents($f->getPathname());
             if ($c) $out .= $c;
@@ -568,26 +568,26 @@ class DevToolsAjaxReviewController extends AbstractController
 
     private function lang_dup_internal($keys_fr, $keys_en)
     {
-        $dups = array();
-        foreach (array('fr' => $keys_fr, 'en' => $keys_en) as $lang => $keys)
+        $dups = [];
+        foreach (['fr' => $keys_fr, 'en' => $keys_en] as $lang => $keys)
         {
-            $by_val = array();
+            $by_val = [];
             foreach ($keys as $k => $d)
             {
                 $n = trim(mb_strtolower($d['value'], 'UTF-8'));
-                if ($n) $by_val[$n][] = array('key' => $k, 'line' => $d['line'], 'file' => $d['file']);
+                if ($n) $by_val[$n][] = ['key' => $k, 'line' => $d['line'], 'file' => $d['file']];
             }
             foreach ($by_val as $v => $entries)
-                if (count($entries) > 1) $dups[] = array('lang' => $lang, 'value' => $v, 'keys' => $entries);
+                if (count($entries) > 1) $dups[] = ['lang' => $lang, 'value' => $v, 'keys' => $entries];
         }
         return $dups;
     }
 
     private function lang_dup_external($keys_fr, $current)
     {
-        if (empty($keys_fr)) return array();
-        $other = array();
-        foreach (@scandir(PATH_TO_ROOT . '/modules') ?: array() as $mod)
+        if (empty($keys_fr)) return [];
+        $other = [];
+        foreach (@scandir(PATH_TO_ROOT . '/modules') ?: [] as $mod)
         {
             if ($mod === '.' || $mod === '..' || $mod === $current) continue;
             $f = PATH_TO_ROOT . '/modules/' . $mod . '/lang/french/common.php';
@@ -597,12 +597,12 @@ class DevToolsAjaxReviewController extends AbstractController
                 $n = trim(mb_strtolower($d['value'], 'UTF-8'));
             }
         }
-        $dups = array();
+        $dups = [];
         foreach ($keys_fr as $key => $d)
         {
             $n = trim(mb_strtolower($d['value'], 'UTF-8'));
             if ($n && isset($other[$n]))
-                $dups[] = array('key' => $key, 'value' => $d['value'], 'line' => $d['line'], 'file' => $d['file'], 'matches' => $other[$n]);
+                $dups[] = ['key' => $key, 'value' => $d['value'], 'line' => $d['line'], 'file' => $d['file'], 'matches' => $other[$n]];
         }
         return $dups;
     }

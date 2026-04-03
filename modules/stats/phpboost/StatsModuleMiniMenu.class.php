@@ -43,7 +43,7 @@ class StatsModuleMiniMenu extends ModuleMiniMenu
 
 		$group_color = User::get_group_color($stats_cache->get_stats_properties('last_member_groups'), $stats_cache->get_stats_properties('last_member_level'));
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_SEVERAL_REGISTERED_USERS' => $stats_cache->get_stats_properties('nbr_members') > 1,
 			'C_LAST_USER_GROUP_COLOR'    => !empty($group_color),
 
@@ -53,7 +53,7 @@ class StatsModuleMiniMenu extends ModuleMiniMenu
 			'LAST_USER_DISPLAY_NAME'  => $stats_cache->get_stats_properties('last_member_login'),
 
 			'U_LAST_USER_PROFILE' => UserUrlBuilder::profile($stats_cache->get_stats_properties('last_member_id'))->rel(),
-		));
+		]);
 
 		return $view->render();
 	}

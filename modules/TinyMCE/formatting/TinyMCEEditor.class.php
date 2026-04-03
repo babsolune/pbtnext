@@ -15,11 +15,11 @@
 class TinyMCEEditor extends ContentEditor
 {
 	private static $js_included = false;
-	private $array_tags = array('undo' => 'undo', 'redo' => 'redo', '|1' => '|', 'b' => 'bold', 'i' => 'italic', 'u' => 'underline', 's' => 'strikethrough', '|2' => '|', 'color1' => 'forecolor', 'color2' => 'backcolor', '|3' => '|',
+	private $array_tags = ['undo' => 'undo', 'redo' => 'redo', '|1' => '|', 'b' => 'bold', 'i' => 'italic', 'u' => 'underline', 's' => 'strikethrough', '|2' => '|', 'color1' => 'forecolor', 'color2' => 'backcolor', '|3' => '|',
 	'align1' => 'alignleft', 'align2' => 'aligncenter', 'align3' => 'alignright', 'align4' => 'alignjustify', '|4' => '|', 'size' => 'fontsizeselect', 'font' => 'fontselect', '|5' => '|', 'list1' => 'bullist', 'list2' => 'numlist', '|6' => '|',
 	'indent1' => 'outdent', 'indent2' => 'indent', 'quote' => 'blockquote', '|7' => '|', 'cut' => 'cut', 'copy' => 'copy', 'paste' => 'paste', '_search' => 'searchreplace', 
 	'|8' => '|', 'url1' => 'link', 'url2' => 'unlink', 'img' => 'image', 'movie' => 'media', 'insertfile' => 'insertfile', '|9' => '|', 'emotions' => 'emoticons', 'table' => 'table', '|10' => '|', 'title' => 'formatselect', 'style' => 'styleselect', '|11' => '|', 'sub' => 'subscript', 'sup' => 'superscript', 'line' => 'hr',
-	'|12' => '|', 'anchor' => 'anchor', 'charmap' => 'charmap', 'removeformat' => 'removeformat', 'visualchars' => 'visualchars', 'visualblocks' => 'visualblocks');
+	'|12' => '|', 'anchor' => 'anchor', 'charmap' => 'charmap', 'removeformat' => 'removeformat', 'visualchars' => 'visualchars', 'visualblocks' => 'visualblocks'];
 
 	public function get_template()
 	{
@@ -40,7 +40,7 @@ class TinyMCEEditor extends ContentEditor
 		$template = $this->get_template();
 
 		$displayed_icons_number = 0;
-		$toolbar = array();
+		$toolbar = [];
 		foreach ($this->array_tags as $tag => $tinymce_tag) //Balises autorisées.
 		{
 			$tag = preg_replace('`[0-9]`u', '', $tag);
@@ -72,7 +72,7 @@ class TinyMCEEditor extends ContentEditor
 		unset($form_field_infos[0]);
 		$field_name = implode('_', $form_field_infos);
 
-		$template->put_all(array(
+		$template->put_all([
 			'C_NOT_JS_INCLUDED' => self::$js_included,
 			'C_HTMLFORM'        => !empty($form_name) && !empty($field_name),
 			'PAGE_PATH'         => $_SERVER['PHP_SELF'],
@@ -83,7 +83,7 @@ class TinyMCEEditor extends ContentEditor
 			'C_TOOLBAR'         => !empty($toolbar),
 			'TOOLBAR'           => $toolbar,
 			'LANGUAGE'          => $language
-		));
+		]);
 
 		self::$js_included = true;
 

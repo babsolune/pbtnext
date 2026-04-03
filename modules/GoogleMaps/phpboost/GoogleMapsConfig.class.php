@@ -70,13 +70,13 @@ class GoogleMapsConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::API_KEY => '',
 			self::DEFAULT_MARKER_ADDRESS => '',
 			self::DEFAULT_MARKER_LATITUDE => '48.85339964950244',
 			self::DEFAULT_MARKER_LONGITUDE => '2.3487655397918843',
 			self::DEFAULT_ZOOM => 14
-		);
+		];
 	}
 
 	/**

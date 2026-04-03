@@ -17,7 +17,7 @@ class LastcomsExtensionPointProvider extends ExtensionPointProvider
 
     public function menus()
     {
-        return new ModuleMenus(array(new LastcomsModuleMiniMenu()));
+        return new ModuleMenus([new LastcomsModuleMiniMenu()]);
     }
 
     public function css_files()
@@ -29,7 +29,7 @@ class LastcomsExtensionPointProvider extends ExtensionPointProvider
 
 	public function url_mappings()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/lastcoms/index.php')));
+		return new UrlMappings([new DispatcherUrlMapping('/lastcoms/index.php')]);
 	}
 }
 ?>

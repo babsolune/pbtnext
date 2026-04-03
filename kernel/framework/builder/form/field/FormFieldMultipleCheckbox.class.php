@@ -25,7 +25,7 @@ class FormFieldMultipleCheckbox extends AbstractFormField
 	 * @param array $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
-	public function __construct($id, $label, array $selected_options, array $available_options, array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, array $selected_options, array $available_options, array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, null, $field_options, $constraints);
 		$this->set_css_form_field_class('form-field-multiple-checkbox');
@@ -35,7 +35,7 @@ class FormFieldMultipleCheckbox extends AbstractFormField
 
 	private function set_selected_options(array $selected_options)
 	{
-		$value = array();
+		$value = [];
 		foreach ($selected_options as $option)
 		{
 			if (is_string($option))
@@ -75,9 +75,9 @@ class FormFieldMultipleCheckbox extends AbstractFormField
 
 		$this->assign_common_template_variables($template);
 
-		$template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $this->generate_html_code()->render()
-		));
+		]);
 
 		$template->put('C_HIDE_FOR_ATTRIBUTE', true);
 
@@ -90,7 +90,7 @@ class FormFieldMultipleCheckbox extends AbstractFormField
 	public function retrieve_value()
 	{
 		$request = AppContext::get_request();
-		$value = array();
+		$value = [];
 		foreach ($this->available_options as $option)
 		{
 			$option_id = $this->get_option_id($option);
@@ -111,18 +111,18 @@ class FormFieldMultipleCheckbox extends AbstractFormField
 	private function generate_html_code()
 	{
 
-		$rows = array();
+		$rows = [];
 		foreach ($this->available_options as $option)
 		{
-			$rows[] = array(
+			$rows[] = [
 				'NAME' => $option->get_label(),
 				'HTML_ID' => $this->get_option_id($option),
 				'C_CHECKED' => $this->is_selected($option)
-			);
+			];
 		}
 
 		$tpl = new FileTemplate('framework/builder/form/fieldelements/FormFieldMultipleCheckbox.tpl');
-		$tpl->put_all(array('choice' => $rows));
+		$tpl->put_all(['choice' => $rows]);
 
 		return $tpl;
 	}

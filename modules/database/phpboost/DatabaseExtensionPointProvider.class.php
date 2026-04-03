@@ -18,7 +18,7 @@ class DatabaseExtensionPointProvider extends ExtensionPointProvider
 
 	public function commands()
 	{
-		return new CLICommandsList(array('dump' => 'CLIDumpCommand', 'restoredb' => 'CLIRestoreDBCommand'));
+		return new CLICommandsList(['dump' => 'CLIDumpCommand', 'restoredb' => 'CLIRestoreDBCommand']);
 	}
 
 	public function css_files()
@@ -35,7 +35,7 @@ class DatabaseExtensionPointProvider extends ExtensionPointProvider
 
 	public function url_mappings()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/database/index.php')));
+		return new UrlMappings([new DispatcherUrlMapping('/database/index.php')]);
 	}
 }
 ?>

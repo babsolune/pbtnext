@@ -62,13 +62,13 @@ class FeedMenu extends Menu
 		else
 			$tpl = new FileTemplate('framework/menus/feed.tpl');
 
-		$tpl->put_all(array(
+		$tpl->put_all([
 			'NAME' => $name,
 			'ID' => $id,
 			'C_NAME' => !empty($name),
 			'C_VERTICAL_BLOCK' => ($block_position == Menu::BLOCK_POSITION__LEFT || $block_position == Menu::BLOCK_POSITION__RIGHT),
 			'C_HIDDEN_WITH_SMALL_SCREENS' => $hidden_with_small_screens
-		));
+		]);
 
 		return $tpl;
 	}

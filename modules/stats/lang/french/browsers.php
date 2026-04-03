@@ -12,34 +12,34 @@
 ####################################################
 
 // Browsers
-$lang = array(
-	'brave'            => array('Brave', 'brave.png'),
-	'chrome'           => array('Chrome', 'chrome.png'),
-	'chromium'         => array('Chromium', 'chromium.png'),
-	'edge'             => array('Edge', 'edge.png'),
-	'firefox'          => array('Firefox', 'firefox.png'),
-	'opera'            => array('Opera', 'opera.png'),
-	'safari'           => array('Safari', 'safari.png'),
-	'tor'              => array('Tor', 'tor.png'),
+$lang = [
+	'brave'            => ['Brave', 'brave.png'],
+	'chrome'           => ['Chrome', 'chrome.png'],
+	'chromium'         => ['Chromium', 'chromium.png'],
+	'edge'             => ['Edge', 'edge.png'],
+	'firefox'          => ['Firefox', 'firefox.png'],
+	'opera'            => ['Opera', 'opera.png'],
+	'safari'           => ['Safari', 'safari.png'],
+	'tor'              => ['Tor', 'tor.png'],
 
-	'epic'             => array('Epic Privacy', 'epic.png'),
-	'falcon'           => array('Falcon', 'falcon.png'),
-	'internetexplorer' => array('Internet Explorer', 'internetexplorer.png'),
-	'icab'             => array('Icab', 'icab.png'),
-	'iron'             => array('SRWare Iron', 'iron.png'),
-	'konqueror'        => array('Konqueror', 'konqueror.png'),
-	'lynx'             => array('Lynx', 'lynx.png'),
-	'links'            => array('Links', 'links.png'),
-	'lunascape'        => array('Lunascape', 'lunascape.png'),
-	'maxthon'          => array('Maxthon', 'maxthon.png'),
-	'phoenix'          => array('Phoenix', 'phoenix.png'),
-	'silk'             => array('Amazone Silk', 'silk.png'),
-	'seamonkey'        => array('SeaMonkey', 'seamonkey.png'),
-	'uc'               => array('UC Browser', 'uc.png'),
-	'vivaldi'          => array('Vivaldi', 'vivaldi.png'),
-	'yandex'           => array('Yandex', 'yandex.png'),
+	'epic'             => ['Epic Privacy', 'epic.png'],
+	'falcon'           => ['Falcon', 'falcon.png'],
+	'internetexplorer' => ['Internet Explorer', 'internetexplorer.png'],
+	'icab'             => ['Icab', 'icab.png'],
+	'iron'             => ['SRWare Iron', 'iron.png'],
+	'konqueror'        => ['Konqueror', 'konqueror.png'],
+	'lynx'             => ['Lynx', 'lynx.png'],
+	'links'            => ['Links', 'links.png'],
+	'lunascape'        => ['Lunascape', 'lunascape.png'],
+	'maxthon'          => ['Maxthon', 'maxthon.png'],
+	'phoenix'          => ['Phoenix', 'phoenix.png'],
+	'silk'             => ['Amazone Silk', 'silk.png'],
+	'seamonkey'        => ['SeaMonkey', 'seamonkey.png'],
+	'uc'               => ['UC Browser', 'uc.png'],
+	'vivaldi'          => ['Vivaldi', 'vivaldi.png'],
+	'yandex'           => ['Yandex', 'yandex.png'],
 
-	'phone'            => array('Mobile', 'phone.png'),
-	'other'            => array('Autres', 'other.png')
-);
+	'phone'            => ['Mobile', 'phone.png'],
+	'other'            => ['Autres', 'other.png']
+];
 ?>

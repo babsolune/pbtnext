@@ -66,22 +66,22 @@ class LangsSwitcherModuleMiniMenu extends ModuleMiniMenu
 
 		$current_url = AppContext::get_request()->get_site_url() . $_SERVER['SCRIPT_NAME'] . '?' . rtrim($query_string, '&');
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_HAS_PICTURE'  => $item->get_configuration()->has_picture(),
 			'DEFAULT_ITEM'   => UserAccountsConfig::load()->get_default_lang(),
 			'ITEM_NAME'      => $item->get_configuration()->get_name(),
 			'U_ITEM_PICTURE' => $item->get_configuration()->get_picture_url()->rel(),
 			'U_ITEM'         => $current_url . (strstr($current_url, '?') ? '&' : '?') . 'switchlang='
-		));
+		]);
 
 		foreach(LangsManager::get_activated_and_authorized_langs_map_sorted_by_localized_name() as $item)
 		{
-			$view->assign_block_vars('items', array(
+			$view->assign_block_vars('items', [
 				'C_SELECTED'     => $user->get_locale() == $item->get_id(),
 				'ITEM_NAME'      => $item->get_configuration()->get_name(),
 				'U_ITEM_PICTURE' => $item->get_configuration()->get_picture_url()->rel(),
 				'ITEM_ID'        => $item->get_id()
-			));
+			]);
 		}
 
 		return $view->render();
@@ -97,11 +97,11 @@ class LangsSwitcherModuleMiniMenu extends ModuleMiniMenu
 				MenuService::assign_positions_conditions($template, $this->get_block());
 				$this->assign_common_template_variables($template);
 
-				$template->put_all(array(
+				$template->put_all([
 					'ID'       => $this->get_menu_id(),
 					'TITLE'    => $this->get_menu_title(),
 					'CONTENTS' => $this->get_menu_content()
-				));
+				]);
 
 				return $template->render();
 			}

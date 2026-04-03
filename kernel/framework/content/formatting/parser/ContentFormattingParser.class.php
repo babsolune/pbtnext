@@ -19,11 +19,11 @@ abstract class ContentFormattingParser extends AbstractParser
 	/**
 	 * @var array Authorization of the HTML BBCode tag.
 	 */
-	protected $html_auth = array();
+	protected $html_auth = [];
 	/**
 	 * @var array List of the BBCode forbidden tags
 	 */
-	protected $forbidden_tags = array();
+	protected $forbidden_tags = [];
 
 	/**
 	 * Buils a ContentFormattingParser object.
@@ -119,7 +119,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	 * It returns an array
 	 * For example, il you have this: $my_str = '[tag=1]test1[/tag]test2[tag=2]test3[tag=3]test4[/tag]test5[/tag]?est6';
 	 * You call it like that: ContentFormattingParser::preg_split_safe_recurse($my_str, 'tag', '[0-9]');
-	 * It will return you array('', '1', 'test1', 'test2', '2', array('test3', '3', 'test4', 'test5'), 'test6').
+	 * It will return you ['', '1', 'test1', 'test2', '2', ['test3', '3', 'test4', 'test5'], 'test6'].
 	 * @param $content string Content into which you want to search the pattern
 	 * @param $tag string BBCode tage name
 	 * @param $attributes string The regular expression (PCRE syntax) corresponding to the arguments which you want to match.
@@ -131,7 +131,7 @@ abstract class ContentFormattingParser extends AbstractParser
 		// Définitions des index de position de début des tags valides
 		$index_tags = self::index_tags($content, $tag, $attributes);
 		$size = count($index_tags);
-		$parsed = array();
+		$parsed = [];
 
 		// Stockage de la chaîne avant le premier tag dans le cas ou il y a au moins une balise ouvrante
 		if ($size >= 1)
@@ -200,7 +200,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	{
 		$pos = -1;
 		$nb_open_tags = 0;
-		$tag_pos = array();
+		$tag_pos = [];
 
 		while (($pos = strpos($content, '[' . $tag, $pos + 1)) !== false)
 		{
@@ -286,7 +286,7 @@ abstract class ContentFormattingParser extends AbstractParser
 		}
 
 		//On efface tout ce qu'on a prélevé du array
-		$this->array_tags[$tag] = array();
+		$this->array_tags[$tag] = [];
 
 		return true;
 	}
@@ -303,9 +303,9 @@ abstract class ContentFormattingParser extends AbstractParser
 
 	protected function parse_feed_tag()
 	{
-		$this->content = str_replace(array('[[FEED', '[[/FEED]]'), array('\[\[FEED', '\[\[/FEED\]\]'), $this->content);
+		$this->content = str_replace(['[[FEED', '[[/FEED]]'], ['\[\[FEED', '\[\[/FEED\]\]'], $this->content);
 		$this->content = preg_replace('`\[feed((?: [a-z]+="[^"]+")*)\]([a-z]+)\[/feed\]`uU', '[[FEED$1]]$2[[/FEED]]', $this->content);
-		$this->content = str_replace(array('\[\[FEED', '\[\[/FEED\]\]'), array('[[FEED', '[[/FEED]]'), $this->content);
+		$this->content = str_replace(['\[\[FEED', '\[\[/FEED\]\]'], ['[[FEED', '[[/FEED]]'], $this->content);
 	}
 
 	/**
@@ -321,7 +321,7 @@ abstract class ContentFormattingParser extends AbstractParser
 		if ( !empty($matches[1]) ) {
 			$options = str_replace('=', '', explode(',', $matches[1]));
 			foreach ($options as $option) {
-				if ( array_search(ltrim($option), array('fa', 'fas', 'far', 'fat', 'fab', 'fal', 'fad')) ) {
+				if ( array_search(ltrim($option), ['fa', 'fas', 'far', 'fat', 'fab', 'fal', 'fad']) ) {
 					$fa_prefix = ltrim($option);
 				} else {
 					$fa_code = $fa_code . ' ' . ltrim($option);

@@ -42,7 +42,7 @@ if ($submit)
 	AppContext::get_session()->csrf_get_protect();
 
 	$action = $request->get_array('action');
-	$show = $hide = $disapproved = $delete = array();
+	$show = $hide = $disapproved = $delete = [];
 
 	if (!empty($action))
 	{
@@ -62,7 +62,7 @@ if ($submit)
 		{
 			foreach ($show as $key)
 			{
-				PersistenceContext::get_querier()->update(PREFIX . 'media', array('published' => MEDIA_STATUS_APPROVED), 'WHERE id=:id', array('id' => $key));
+				PersistenceContext::get_querier()->update(PREFIX . 'media', ['published' => MEDIA_STATUS_APPROVED], 'WHERE id=:id', ['id' => $key]);
 			}
 		}
 
@@ -70,7 +70,7 @@ if ($submit)
 		{
 			foreach ($hide as $key)
 			{
-				PersistenceContext::get_querier()->update(PREFIX . 'media', array('published' => MEDIA_STATUS_INVISIBLE), 'WHERE id=:id', array('id' => $key));
+				PersistenceContext::get_querier()->update(PREFIX . 'media', ['published' => MEDIA_STATUS_INVISIBLE], 'WHERE id=:id', ['id' => $key]);
 			}
 		}
 
@@ -78,7 +78,7 @@ if ($submit)
 		{
 			foreach ($disapproved as $key)
 			{
-				PersistenceContext::get_querier()->update(PREFIX . 'media', array('published' => MEDIA_STATUS_DISAPPROVED), 'WHERE id=:id', array('id' => $key));
+				PersistenceContext::get_querier()->update(PREFIX . 'media', ['published' => MEDIA_STATUS_DISAPPROVED], 'WHERE id=:id', ['id' => $key]);
 			}
 		}
 
@@ -86,7 +86,7 @@ if ($submit)
 		{
 			foreach ($delete as $key)
 			{
-				PersistenceContext::get_querier()->delete(PREFIX . 'media', 'WHERE id=:id', array('id' => $key));
+				PersistenceContext::get_querier()->delete(PREFIX . 'media', 'WHERE id=:id', ['id' => $key]);
 				CommentsService::delete_comments_topic_module('media', $key);
 				NotationService::delete_notes_id_in_module('media', $key);
 			}
@@ -105,7 +105,7 @@ if ($submit)
 else
 {
 	// Filters
-	$js_array = array();
+	$js_array = [];
 	$authorized_categories = CategoriesService::get_authorized_categories(!empty($id_category) ? $id_category : Category::ROOT_CATEGORY);
 
 	if ($filter)
@@ -130,7 +130,7 @@ else
 		$sub_cats = true;
 	}
 
-	$items_number = PersistenceContext::get_querier()->count(PREFIX . "media", 'WHERE ' . ($sub_cats && !empty($authorized_categories) ? 'id_category IN :authorized_categories' : 'id_category = :id_category') . (is_null($db_where) ? '' : ' AND published = :published'), array('authorized_categories' => $authorized_categories, 'id_category' => (!empty($id_category) ? $id_category : 0), 'published' => $db_where));
+	$items_number = PersistenceContext::get_querier()->count(PREFIX . "media", 'WHERE ' . ($sub_cats && !empty($authorized_categories) ? 'id_category IN :authorized_categories' : 'id_category = :id_category') . (is_null($db_where) ? '' : ' AND published = :published'), ['authorized_categories' => $authorized_categories, 'id_category' => (!empty($id_category) ? $id_category : 0), 'published' => $db_where]);
 
 	$categories_cache = CategoriesService::get_categories_manager('media')->get_categories_cache();
 
@@ -150,19 +150,19 @@ else
 		LEFT JOIN " . MediaSetup::$media_cats_table . " media_cats ON media_cats.id = media.id_category
 		WHERE " . ($sub_cats && !empty($authorized_categories) ? 'id_category IN :authorized_categories' : 'id_category = :id_category') . (is_null($db_where) ? '' : ' AND published = :published') . "
 		ORDER BY :published ASC, creation_date DESC
-		LIMIT :items_per_page OFFSET :display_from", array(
+		LIMIT :items_per_page OFFSET :display_from", [
 			'authorized_categories' => $authorized_categories,
 			'id_category' => (!empty($id_category) ? $id_category : 0),
 			'published' => $db_where,
 			'items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
-	));
+	]);
 
 	while ($row = $result->fetch())
 	{
 		$js_array[] = $row['id'];
 
-		$view->assign_block_vars('items', array(
+		$view->assign_block_vars('items', [
 			'CATEGORY_NAME' => $categories_cache->category_exists($row['id_category']) ? $row['name'] : LangLoader::get_message('common.unknown', 'common-lang'),
 
 			'ID'          => $row['id'],
@@ -175,11 +175,11 @@ else
 			'U_CATEGORY' => url('media.php?cat=' . $row['id_category']),
 			'U_ITEM' 	 => url('media.php?id=' . $row['id'], 'media-' . $row['id'] . '-' . $row['id_category'] . '-' . Url::encode_rewrite($row['title']) . '.php'),
 			'U_EDIT' 	 => url('media_action.php?edit=' . $row['id']),
-		));
+		]);
 	}
 	$result->dispose();
 
-	$view->put_all(array(
+	$view->put_all([
 		'C_DISPLAY'    => true,
 		'C_PAGINATION' => $pagination->has_several_pages(),
 		'C_NO_ITEM'    => $items_number > 0 ? 0 : 1,
@@ -191,7 +191,7 @@ else
 		'SUB_CATS'             => is_null($sub_cats) ? ' checked  ="checked"' : ($sub_cats ? ' checked="checked"' : ''),
 		'PAGINATION'           => $pagination->display(),
 		'JS_ARRAY'             => '"' . implode('", "', $js_array) . '"'
-	));
+	]);
 }
 
 $view->display();

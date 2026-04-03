@@ -11,18 +11,18 @@
 
 class GuestbookCache implements CacheData
 {
-	private $messages = array();
+	private $messages = [];
 
 	public function synchronize()
 	{
-		$this->messages = array();
+		$this->messages = [];
 		$items_number_per_page = GuestbookConfig::load()->get_items_per_page();
 
 		$result = PersistenceContext::get_querier()->select('SELECT id
 		FROM ' . GuestbookSetup::$guestbook_table . ' guestbook
 		ORDER BY guestbook.timestamp DESC');
 
-		$messages_pages = array();
+		$messages_pages = [];
 		$page = $i = 1;
 		while ($row = $result->fetch())
 		{
@@ -44,7 +44,7 @@ class GuestbookCache implements CacheData
 
 		while ($row = $result->fetch())
 		{
-			$this->messages[$row['id']] = array(
+			$this->messages[$row['id']] = [
 				'id' => $row['id'],
 				'content' => strip_tags(FormatingHelper::second_parse($row['content'])),
 				'user_id' => $row['user_id'],
@@ -53,7 +53,7 @@ class GuestbookCache implements CacheData
 				'user_groups' => $row['user_groups'],
 				'timestamp' => $row['timestamp'],
 				'page' => $messages_pages[$row['id']]
-			);
+			];
 		}
 		$result->dispose();
 	}

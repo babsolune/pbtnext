@@ -26,14 +26,14 @@ class SandboxBBCodeController extends DefaultModuleController
 
 	private function build_view()
 	{
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'TYPOGRAPHY'      => self::build_markup('sandbox/pagecontent/bbcode/typography.tpl'),
 			'BLOCKS'          => self::build_markup('sandbox/pagecontent/bbcode/blocks.tpl'),
 			'CODE'            => self::build_markup('sandbox/pagecontent/bbcode/code.tpl'),
 			'LIST'            => self::build_markup('sandbox/pagecontent/bbcode/list.tpl'),
 			'TABLE'           => self::build_markup('sandbox/pagecontent/bbcode/table.tpl'),
 			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
-		));
+		]);
 	}
 
 	private function build_markup($tpl)

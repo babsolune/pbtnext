@@ -34,7 +34,7 @@ class DoctrineException extends Exception
      * @var array Lazy initialized array of error messages
      * @static
      */
-    private static $_messages = array();
+    private static $_messages = [];
 
     /**
      * Initializes a new DoctrineException.
@@ -81,7 +81,7 @@ class DoctrineException extends Exception
      * @param array $arguments Optional arguments to be translated in placeholders
      * @throws DoctrineException
      */
-    public static function __callStatic($method, $arguments = array())
+    public static function __callStatic($method, $arguments = [])
     {
         $class = get_called_class();
         $messageKey = TextHelper::substr($class, TextHelper::strrpos($class, '\\') + 1) . "#$method";
@@ -116,14 +116,14 @@ class DoctrineException extends Exception
     {
         if ( ! self::$_messages) {
             // Lazy-init messages
-            self::$_messages = array(
+            self::$_messages = [
                 'DoctrineException#partialObjectsAreDangerous' =>
                         "Loading partial objects is dangerous. Fetch full objects or consider " .
                         "using a different fetch mode. If you really want partial objects, " .
                         "set the doctrine.forcePartialLoad query hint to TRUE.",
                 'QueryException#nonUniqueResult' =>
                         "The query contains more than one result."
-            );
+            ];
         }
 
         if (isset(self::$_messages[$messageKey])) {

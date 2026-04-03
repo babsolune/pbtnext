@@ -24,7 +24,7 @@ class FormFieldSearch extends FormFieldTextEditor
 	 * @param array $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
-	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
 	{
 		$this->placeholder = LangLoader::get_message('form.search', 'form-lang') . '...';
 		parent::__construct($id, $label, $value, $field_options, $constraints);

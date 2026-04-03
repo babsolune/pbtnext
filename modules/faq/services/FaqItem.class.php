@@ -145,7 +145,7 @@ class FaqItem
 
 	public function get_properties()
 	{
-		return array(
+		return [
 			'id' => $this->get_id(),
 			'id_category' => $this->get_id_category(),
 			'q_order' => $this->get_q_order(),
@@ -154,7 +154,7 @@ class FaqItem
 			'creation_date' => $this->get_creation_date()->get_timestamp(),
 			'author_user_id' => $this->get_author_user()->get_id(),
 			'approved' => (int)$this->is_approved()
-		);
+		];
 	}
 
 	public function set_properties(array $properties)
@@ -205,7 +205,7 @@ class FaqItem
 
 		return array_merge(
 			Date::get_array_tpl_vars($this->creation_date, 'date'),
-			array(
+			[
 			// Conditions
 			'C_APPROVED'         => $this->is_approved(),
 			'C_DUPLICATE'        => $this->is_authorized_to_duplicate(),
@@ -240,7 +240,7 @@ class FaqItem
 			'U_DUPLICATE'      => FaqUrlBuilder::duplicate($this->id)->rel(),
 			'U_EDIT'           => FaqUrlBuilder::edit($this->id)->rel(),
 			'U_DELETE'         => FaqUrlBuilder::delete($this->id)->rel()
-		));
+		]);
 	}
 }
 ?>

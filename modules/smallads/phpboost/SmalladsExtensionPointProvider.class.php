@@ -13,7 +13,7 @@ class SmalladsExtensionPointProvider extends ItemsModuleExtensionPointProvider
 {
 	public function comments()
 	{
-		return new CommentsTopics(array(new SmalladsCommentsTopic()));
+		return new CommentsTopics([new SmalladsCommentsTopic()]);
 	}
 
 	public function home_page()

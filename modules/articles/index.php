@@ -14,14 +14,14 @@ require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = [
 	//Items form
-	new UrlControllerMapper('ArticlesItemFormController', '`^/add/?([0-9]+)?/?$`', array('id_category')),
-	new UrlControllerMapper('ArticlesItemFormController', '`^(?:/([0-9]+))/edit/?([0-9]+)?/?$`', array('id', 'page')),
+	new UrlControllerMapper('ArticlesItemFormController', '`^/add/?([0-9]+)?/?$`', ['id_category']),
+	new UrlControllerMapper('ArticlesItemFormController', '`^(?:/([0-9]+))/edit/?([0-9]+)?/?$`', ['id', 'page']),
 
 	//Display articles
-	new UrlControllerMapper('ArticlesItemController', '`^(?:/([0-9]+)-([a-z0-9-_]+)/([0-9]+)-([a-z0-9-_]+))/?([0-9]+)?/?$`', array('id_category', 'rewrited_name_category', 'id', 'rewrited_title', 'page')),
+	new UrlControllerMapper('ArticlesItemController', '`^(?:/([0-9]+)-([a-z0-9-_]+)/([0-9]+)-([a-z0-9-_]+))/?([0-9]+)?/?$`', ['id_category', 'rewrited_name_category', 'id', 'rewrited_title', 'page']),
 
 	//Utilities
-	new UrlControllerMapper('ArticlesPrintItemController', '`^/print/([0-9]+)-([a-z0-9-_]+)/?$`', array('id', 'rewrited_title'))
+	new UrlControllerMapper('ArticlesPrintItemController', '`^/print/([0-9]+)-([a-z0-9-_]+)/?$`', ['id', 'rewrited_title'])
 ];
 
 ModuleDispatchManager::dispatch($url_controller_mappers);

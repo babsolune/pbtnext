@@ -92,7 +92,7 @@ class TeamSpeak3_Helper_Uri
    *
    * @var array
    */
-  protected $regex = array();
+  protected $regex = [];
 
   /**
    * The TeamSpeak3_Helper_Uri constructor.
@@ -493,7 +493,7 @@ class TeamSpeak3_Helper_Uri
    * @param  mixed $default
    * @return array
    */
-  public function getQuery($default = array())
+  public function getQuery($default = [])
   {
     if(!$this->hasQuery())
     {

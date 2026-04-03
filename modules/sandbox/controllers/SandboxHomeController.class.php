@@ -19,10 +19,10 @@ class SandboxHomeController extends DefaultModuleController
 	{
 		$this->check_authorizations();
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'WELCOME_MESSAGE' => FormatingHelper::second_parse($this->lang['sandbox.welcome.message']),
 			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
-		));
+		]);
 
 		return $this->generate_response();
 	}

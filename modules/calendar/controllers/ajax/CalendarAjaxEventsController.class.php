@@ -50,20 +50,20 @@ class CalendarAjaxEventsController extends AbstractController
 	{
 		$db_querier = PersistenceContext::get_querier();
 
-		$items_list = $participants = array();
+		$items_list = $participants = [];
 
 		$config = CalendarConfig::load();
 		$comments_config = CommentsConfig::load();
 		$id_category = $this->id_category ? $this->id_category : $request->get_int('id_category', 0);
-		$authorized_categories = $id_category == Category::ROOT_CATEGORY ? CategoriesService::get_authorized_categories($id_category) : array($id_category);
+		$authorized_categories = $id_category == Category::ROOT_CATEGORY ? CategoriesService::get_authorized_categories($id_category) : [$id_category];
 
 		$year = $this->year ? $this->year : $request->get_int('calendar_ajax_year', date('Y'));
 		$month = $this->month ? $this->month : $request->get_int('calendar_ajax_month', date('n'));
 		$day = $this->day ? $this->day : $request->get_int('calendar_ajax_day', 0);
 		$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
 
-		$array_month = array(31, $bissextile, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
-		$array_l_month = array($this->lang['date.january'], $this->lang['date.february'], $this->lang['date.march'], $this->lang['date.april'], $this->lang['date.may'], $this->lang['date.june'], $this->lang['date.july'], $this->lang['date.august'], $this->lang['date.september'], $this->lang['date.october'], $this->lang['date.november'], $this->lang['date.december']);
+		$array_month = [31, $bissextile, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+		$array_l_month = [$this->lang['date.january'], $this->lang['date.february'], $this->lang['date.march'], $this->lang['date.april'], $this->lang['date.may'], $this->lang['date.june'], $this->lang['date.july'], $this->lang['date.august'], $this->lang['date.september'], $this->lang['date.october'], $this->lang['date.november'], $this->lang['date.december']];
 
 		$month_days = $array_month[$month - 1];
 
@@ -80,11 +80,11 @@ class CalendarAjaxEventsController extends AbstractController
 		WHERE approved = 1
 		AND ((start_date BETWEEN :first_day_hour AND :last_day_hour) OR (end_date BETWEEN :first_day_hour AND :last_day_hour) OR (:first_day_hour BETWEEN start_date AND end_date))
 		AND id_category IN :authorized_categories
-		ORDER BY start_date ASC", array(
+		ORDER BY start_date ASC", [
 			'first_day_hour' => $first_day_hour->getTimestamp(),
 			'last_day_hour' => $last_day_hour->getTimestamp(),
 			'authorized_categories' => $authorized_categories
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{
@@ -102,9 +102,9 @@ class CalendarAjaxEventsController extends AbstractController
 		}
 		$result->dispose();
 
-		$alt_title_label = (isset($this->lang['calendar.items.of.month.alt']) && in_array(Url::encode_rewrite(TextHelper::mb_substr($array_l_month[$month - 1], 0, 1)), array('a', 'e', 'i', 'o', 'u', 'y')));
+		$alt_title_label = (isset($this->lang['calendar.items.of.month.alt']) && in_array(Url::encode_rewrite(TextHelper::mb_substr($array_l_month[$month - 1], 0, 1)), ['a', 'e', 'i', 'o', 'u', 'y']));
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_CONTROLS'		  => $controls_displayed,
 			'C_TABLE_VIEW'        => $config->get_display_type() == CalendarConfig::TABLE_VIEW,
 			'C_LIST_VIEW'         => $config->get_display_type() == CalendarConfig::LIST_VIEW,
@@ -118,16 +118,16 @@ class CalendarAjaxEventsController extends AbstractController
 			'ITEMS_PER_ROW' => $config->get_items_per_row(),
 			'DATE_LABEL'    => ($day ? $this->lang['calendar.items.of.day'] : $this->lang['calendar.items.of.month' . ($alt_title_label ? '.alt' : '')]) . (!$alt_title_label ? ' ' : '') . ($day ? ' ' . $day . ' ' : '') . $array_l_month[$month - 1] . ' ' . $year,
 			'ITEMS_NUMBER'  => $items_number,
-		));
+		]);
 
 		if (!empty($items_list))
 		{
 			$result = $db_querier->select('SELECT event_id, member.user_id, display_name, level, user_groups
 			FROM ' . CalendarSetup::$calendar_users_relation_table . ' participants
 			LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = participants.user_id
-			WHERE event_id IN :events_list', array(
+			WHERE event_id IN :events_list', [
 				'events_list' => array_keys($items_list)
-			));
+			]);
 
 			while($row = $result->fetch())
 			{
@@ -152,9 +152,9 @@ class CalendarAjaxEventsController extends AbstractController
 				foreach ($item->get_participants() as $participant)
 				{
 					$i++;
-					$this->view->assign_block_vars('items.participant', array_merge($participant->get_template_vars(), array(
+					$this->view->assign_block_vars('items.participant', array_merge($participant->get_template_vars(), [
 						'C_LAST_PARTICIPANT' => $i == $participants_number
-					)));
+					]));
 				}
 			}
 		}

@@ -20,7 +20,7 @@ class MediaService
 	 * Count items number.
 	 * @param string $condition (optional) : Restriction to apply to the list of items
 	 */
-	public static function count($condition = '', $parameters = array())
+	public static function count($condition = '', $parameters = [])
 	{
 		return self::$db_querier->count(MediaSetup::$media_table, $condition, $parameters);
 	}

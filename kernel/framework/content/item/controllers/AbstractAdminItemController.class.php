@@ -34,7 +34,7 @@ abstract class AbstractAdminItemController extends DefaultAdminModuleController
 
 	protected function get_additional_view_parameters()
 	{
-		return array();
+		return [];
 	}
 	
 	protected function init_lang()

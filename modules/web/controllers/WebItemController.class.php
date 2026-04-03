@@ -56,13 +56,13 @@ class WebItemController extends DefaultModuleController
 		$keywords = $this->item->get_keywords();
 		$has_keywords = count($keywords) > 0;
 
-		$this->view->put_all(array_merge($this->item->get_template_vars(), array(
+		$this->view->put_all(array_merge($this->item->get_template_vars(), [
 			'C_ENABLED_COMMENTS' => $comments_config->module_comments_is_enabled('web'),
 			'C_ENABLED_NOTATION' => $content_management_config->module_notation_is_enabled('web'),
 			'C_KEYWORDS'         => $has_keywords,
 
 			'NOT_VISIBLE_MESSAGE' => MessageHelper::display($this->lang['warning.element.not.visible'], MessageHelper::WARNING)
-		)));
+		]));
 
 		if ($comments_config->module_comments_is_enabled('web'))
 		{
@@ -84,11 +84,11 @@ class WebItemController extends DefaultModuleController
 		$i = 1;
 		foreach ($keywords as $keyword)
 		{
-			$this->view->assign_block_vars('keywords', array(
+			$this->view->assign_block_vars('keywords', [
 				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
 				'URL' => WebUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
-			));
+			]);
 			$i++;
 		}
 	}

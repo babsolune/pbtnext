@@ -14,7 +14,7 @@ class BugtrackerBugSubmitSuccessController extends UserErrorController
 	{
 		$lang = LangLoader::get_all_langs('bugtracker');
 
-		parent::__construct(StringVars::replace_vars($lang['success.add'], array('id' => $id)), $lang['success.add.details'], self::SUCCESS);
+		parent::__construct(StringVars::replace_vars($lang['success.add'], ['id' => $id]), $lang['success.add.details'], self::SUCCESS);
 
 		$this->set_correction_link(LangLoader::get_message('common.back', 'common-lang'), PATH_TO_ROOT);
 	}

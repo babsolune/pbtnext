@@ -12,17 +12,17 @@
 #                       English                    #
 ####################################################
 
-$lang['categories'] = $lang['items'] = array();
+$lang['categories'] = $lang['items'] = [];
 
-$lang['categories'][] = array(
+$lang['categories'][] = [
 	'category.name'        => 'Test',
 	'category.description' => 'Test category'
-);
+];
 
-$lang['items'][] = array(
+$lang['items'][] = [
 	'item.title'   => 'A first page',
 	'item.content' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem vel odio eligendi, esse nostrum quo sunt consectetur ea earum laudantium voluptate sequi harum,
     sint voluptates cumque, minima a in sit. Accusantium eum a, rerum libero fugiat quae vero sequi officia!',
 	'item.summary' => ''
-);
+];
 ?>

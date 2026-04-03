@@ -121,14 +121,14 @@ class AdminEasyCssEditController extends ModuleController
         $tpls = [];
         foreach ($forms_tpl as $tpl)
         {
-            $tpls[] = array('SUBTEMPLATE' => $tpl);
+            $tpls[] = ['SUBTEMPLATE' => $tpl];
         }
 
         // Templates des erreurs
         $error_tpls = [];
         foreach (self::$errors as $error_tpl)
         {
-            $error_tpls[] = array('SUBTEMPLATE' => $error_tpl);
+            $error_tpls[] = ['SUBTEMPLATE' => $error_tpl];
         }
 
         // Pousse à la vue

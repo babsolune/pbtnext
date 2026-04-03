@@ -78,12 +78,12 @@ class ReCaptcha extends Captcha
 	{
 		$view = new FileTemplate('ReCaptcha/ReCaptcha.tpl');
 		$view->add_lang(LangLoader::get_all_langs('ReCaptcha'));
-		$view->put_all(array(
+		$view->put_all([
 			'C_INVISIBLE' => $this->config->is_invisible_mode_enabled(),
 			'SITE_KEY'    => $this->config->get_site_key(),
 			'FORM_ID'     => $this->get_form_id(),
 			'HTML_ID'     => $this->get_html_id()
-		));
+		]);
 		return $view->render();
 	}
 

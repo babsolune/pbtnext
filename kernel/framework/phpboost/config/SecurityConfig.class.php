@@ -71,12 +71,12 @@ class SecurityConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::INTERNAL_PASSWORD_MIN_LENGTH => 6,
 			self::INTERNAL_PASSWORD_STRENGTH => self::PASSWORD_STRENGTH_WEAK,
 			self::LOGIN_AND_EMAIL_FORBIDDEN_IN_PASSWORD => false,
-			self::FORBIDDEN_MAIL_DOMAINS => array()
-		);
+			self::FORBIDDEN_MAIL_DOMAINS => []
+		];
 	}
 
 	/**

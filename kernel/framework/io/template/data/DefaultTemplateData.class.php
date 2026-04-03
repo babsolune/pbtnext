@@ -16,7 +16,7 @@
 class DefaultTemplateData implements TemplateData
 {
 	private $strict = false;
-	private $vars = array();
+	private $vars = [];
 
 	/**
 	 * {@inheritdoc}
@@ -41,7 +41,7 @@ class DefaultTemplateData implements TemplateData
 	{
 		$session = AppContext::get_session();
 		$user = AppContext::get_current_user();
-		$this->put_all(array(
+		$this->put_all([
 			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
 			'IS_USER_CONNECTED'   => $user->check_level(User::MEMBER_LEVEL),
 			'IS_ADMIN'            => $user->check_level(User::ADMINISTRATOR_LEVEL),
@@ -57,7 +57,7 @@ class DefaultTemplateData implements TemplateData
 			'PATH_TO_ROOT'     => TPL_PATH_TO_ROOT,
 			'PHP_PATH_TO_ROOT' => PATH_TO_ROOT,
 			'U_SITE'	       => GeneralConfig::load()->get_site_url(),
-		));
+		]);
 
 		foreach (ContentFormattingProvidersService::get_editors() as $id => $provider)
 		{
@@ -86,7 +86,7 @@ class DefaultTemplateData implements TemplateData
 
 					if ($display)
 					{
-						$this->put_all(array(
+						$this->put_all([
 							'C_HAS_TOP_HEADER_MENUS'  => !$columns_disabled->top_header_is_disabled(),
 							'C_HAS_HEADER_MENUS'      => !$columns_disabled->header_is_disabled(),
 							'C_HAS_SUB_HEADER_MENUS'  => !$columns_disabled->sub_header_is_disabled(),
@@ -105,7 +105,7 @@ class DefaultTemplateData implements TemplateData
 
 							'C_HAS_TOP_FOOTER_MENUS' => !$columns_disabled->top_footer_is_disabled(),
 							'C_HAS_FOOTER_MENUS'     => !$columns_disabled->footer_is_disabled(),
-						));
+						]);
 					}
 				}
 			}
@@ -131,7 +131,7 @@ class DefaultTemplateData implements TemplateData
 	/**
 	 * {@inheritdoc}
 	 */
-	public function assign_block_vars($block_name, array $array_vars, array $subtemplates = array())
+	public function assign_block_vars($block_name, array $array_vars, array $subtemplates = [])
 	{
 		$current_block = null;
 		if (TextHelper::strpos($block_name, '.') !== false) // nested block
@@ -175,7 +175,7 @@ class DefaultTemplateData implements TemplateData
 		{
 			throw new TemplateRenderingException('Undefined block \'' . $blockname . '\'');
 		}
-		return array();
+		return [];
 	}
 
 	/**

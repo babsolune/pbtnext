@@ -37,32 +37,32 @@ class AdminBroadcastConfigController extends DefaultAdminModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('broadcast_name', $this->lang['broadcast.name'], $this->config->get_broadcast_name(),
-			array('class' => 'top-field third-field')
+			['class' => 'top-field third-field']
 		));
 
 		$fieldset->add_field(new FormFieldUploadPictureFile('broadcast_logo', $this->lang['broadcast.img'], $this->config->get_broadcast_logo()->relative(),
-			array('class' => 'top-field third-field')
+			['class' => 'top-field third-field']
 		));
 		
 		$fieldset->add_field(new FormFieldSpacer('broadcast_details', ''));
 
 		$fieldset->add_field(new FormFieldNumberEditor('player_width', $this->lang['broadcast.width'], $this->config->get_player_width(),
-			array('min' => '0')
+			['min' => '0']
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('player_height', $this->lang['broadcast.height'], $this->config->get_player_height(),
-			array('min' => '0')
+			['min' => '0']
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('player_type', $this->lang['broadcast.type'], $this->config->get_player_type(),
-			array(
-				new FormFieldSelectChoiceOption($this->lang['broadcast.type.url'], BroadcastConfig::BROADCAST_URL, array('data_option_icon' => 'far fa-file-audio')),
-				new FormFieldSelectChoiceOption($this->lang['broadcast.type.widget'], BroadcastConfig::BROADCAST_WIDGET, array('data_option_icon' => 'fa fa-code')),
-				new FormFieldSelectChoiceOption($this->lang['broadcast.type.combo'], BroadcastConfig::BROADCAST_COMBO, array('data_option_icon' => 'fa fa-code')),
-			),
-			array(
+			[
+				new FormFieldSelectChoiceOption($this->lang['broadcast.type.url'], BroadcastConfig::BROADCAST_URL, ['data_option_icon' => 'far fa-file-audio']),
+				new FormFieldSelectChoiceOption($this->lang['broadcast.type.widget'], BroadcastConfig::BROADCAST_WIDGET, ['data_option_icon' => 'fa fa-code']),
+				new FormFieldSelectChoiceOption($this->lang['broadcast.type.combo'], BroadcastConfig::BROADCAST_COMBO, ['data_option_icon' => 'fa fa-code']),
+			],
+			[
 				'select_to_list' => true,
-				'events' => array('change' => '
+				'events' => ['change' => '
 					if (HTMLForms.getField("player_type").getValue() == \'' . BroadcastConfig::BROADCAST_URL . '\') {
 						HTMLForms.getField("broadcast_url").enable();
 						HTMLForms.getField("broadcast_widget").disable();
@@ -73,39 +73,39 @@ class AdminBroadcastConfigController extends DefaultAdminModuleController
 						HTMLForms.getField("broadcast_url").enable();
 						HTMLForms.getField("broadcast_widget").enable();						
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$fieldset->add_field(new FormFieldUploadFile('broadcast_url', $this->lang['broadcast.url'], $this->config->get_broadcast_url()->relative(),
-			array(
+			[
 				'class' => 'top-field',
 				'hidden' => $this->config->get_player_type() == BroadcastConfig::BROADCAST_WIDGET
-			)
+			]
 		));
 
 		$fieldset->add_field(new FormFieldRichTextEditor('broadcast_widget', $this->lang['broadcast.widget'], $this->config->get_broadcast_widget(),
-			array(
+			[
 				'class' => 'top-field',
 				'description' => $this->lang['broadcast.widget.tag'],
 				'placeholder' => $this->lang['broadcast.widget.tag'],
 				'hidden' => $this->config->get_player_type() == BroadcastConfig::BROADCAST_URL
-			)
+			]
 		));
 
 		$module_fieldset = new FormFieldsetHTML('module_configuration', $this->lang['broadcast.module.config']);
 		$form->add_fieldset($module_fieldset);
 
 		$module_fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['form.display.type'], $this->config->get_display_type(),
-			array(
+			[
 				new FormFieldSelectChoiceOption($this->lang['broadcast.display.type.accordion'], BroadcastConfig::ACCORDION_VIEW),
 				new FormFieldSelectChoiceOption($this->lang['form.display.type.table'], BroadcastConfig::TABLE_VIEW),
 				new FormFieldSelectChoiceOption($this->lang['broadcast.display.type.calendar'], BroadcastConfig::CALENDAR_VIEW),
-			)
+			]
 		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $this->lang['form.authorizations'], 
-			array('description' => $this->lang['form.authorizations.clue']) 
+			['description' => $this->lang['form.authorizations.clue']] 
 		);
 		$form->add_fieldset($fieldset_authorizations);
 
@@ -143,7 +143,7 @@ class AdminBroadcastConfigController extends DefaultAdminModuleController
 		BroadcastConfig::save();
 		CategoriesService::get_categories_manager()->regenerate_cache();
 
-		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
+		HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]), 'url' => ModulesUrlBuilder::configuration()->rel()]);
 	}
 }
 ?>

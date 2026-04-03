@@ -120,7 +120,7 @@ class Event
 	 */
 	public function set_status($new_current_status)
 	{
-		if (in_array($new_current_status, array(self::EVENT_STATUS_UNREAD, self::EVENT_STATUS_BEING_PROCESSED, self::EVENT_STATUS_PROCESSED), TRUE))
+		if (in_array($new_current_status, [self::EVENT_STATUS_UNREAD, self::EVENT_STATUS_BEING_PROCESSED, self::EVENT_STATUS_PROCESSED], TRUE))
 		{
 			$this->current_status = $new_current_status;
 		}
@@ -316,7 +316,7 @@ class Event
 	 */
 	public function get_properties()
 	{
-		return array(
+		return [
 			'id'            => $this->get_id(),
 			'entitled'      => $this->get_entitled(),
 			'fixing_url'    => $this->get_fixing_url(),
@@ -326,7 +326,7 @@ class Event
 			'id_in_module'  => $this->get_id_in_module(),
 			'identifier'    => $this->get_identifier(),
 			'type'          => $this->get_type()
-		);
+		];
 	}
 }
 ?>

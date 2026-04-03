@@ -25,7 +25,7 @@ class AdminContactFieldsListController extends DefaultAdminModuleController
 			$field = new ContactField();
 			$field->set_properties($properties);
 
-			$this->view->assign_block_vars('fields_list', array(
+			$this->view->assign_block_vars('fields_list', [
 				'C_DELETE'   => $field->is_deletable(),
 				'C_READONLY' => $field->is_readonly(),
 				'C_DISPLAY'  => $field->is_displayed(),
@@ -33,14 +33,14 @@ class AdminContactFieldsListController extends DefaultAdminModuleController
 				'ID'         => $id,
 				'NAME'       => $field->get_name(),
 				'U_EDIT'     => ContactUrlBuilder::edit_field($id)->rel()
-			));
+			]);
 			$fields_number++;
 		}
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_FIELDS'         => $fields_number,
 			'C_SEVERAL_FIELDS' => $fields_number > 1
-		));
+		]);
 
 		return new AdminContactDisplayResponse($this->view, $this->lang['form.fields.management']);
 	}
@@ -57,7 +57,7 @@ class AdminContactFieldsListController extends DefaultAdminModuleController
 	private function update_position(HTTPRequestCustom $request)
 	{
 		$fields = $this->config->get_fields();
-		$sorted_fields = array();
+		$sorted_fields = [];
 
 		$fields_list = json_decode(TextHelper::html_entity_decode($request->get_value('tree')));
 		foreach($fields_list as $position => $tree)

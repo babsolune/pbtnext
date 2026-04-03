@@ -106,7 +106,7 @@ class TeamSpeak3_Node_Client extends TeamSpeak3_Node_Abstract
    */
   public function message($msg)
   {
-    $this->execute("sendtextmessage", array("msg" => $msg, "target" => $this->getId(), "targetmode" => TeamSpeak3::TEXTMSG_CLIENT));
+    $this->execute("sendtextmessage", ["msg" => $msg, "target" => $this->getId(), "targetmode" => TeamSpeak3::TEXTMSG_CLIENT]);
   }
 
   /**
@@ -175,7 +175,7 @@ class TeamSpeak3_Node_Client extends TeamSpeak3_Node_Abstract
    */
   public function permOverview($cid)
   {
-    return $this->execute("permoverview", array("cldbid" => $this["client_database_id"], "cid" => $cid, "permid" => 0))->toArray();
+    return $this->execute("permoverview", ["cldbid" => $this["client_database_id"], "cid" => $cid, "permid" => 0])->toArray();
   }
 
   /**
@@ -300,7 +300,7 @@ class TeamSpeak3_Node_Client extends TeamSpeak3_Node_Abstract
    */
   public function getClones()
   {
-    return $this->execute("clientgetids", array("cluid" => $this["client_unique_identifier"]))->toAssocArray("clid");
+    return $this->execute("clientgetids", ["cluid" => $this["client_unique_identifier"]])->toAssocArray("clid");
   }
 
   /**
@@ -320,7 +320,7 @@ class TeamSpeak3_Node_Client extends TeamSpeak3_Node_Abstract
    */
   public function memberOf()
   {
-    $groups = array($this->getParent()->channelGroupGetById($this["client_channel_group_id"]));
+    $groups = [$this->getParent()->channelGroupGetById($this["client_channel_group_id"])];
 
     foreach(explode(",", $this["client_servergroups"]) as $sgid)
     {
@@ -352,7 +352,7 @@ class TeamSpeak3_Node_Client extends TeamSpeak3_Node_Abstract
   {
     if($this["client_type"] == 1) return;
 
-    $this->nodeInfo = array_merge($this->nodeInfo, $this->execute("clientinfo", array("clid" => $this->getId()))->toList());
+    $this->nodeInfo = array_merge($this->nodeInfo, $this->execute("clientinfo", ["clid" => $this->getId()])->toList());
   }
 
   /**

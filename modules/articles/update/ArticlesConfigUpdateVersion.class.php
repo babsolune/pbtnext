@@ -14,42 +14,42 @@ class ArticlesConfigUpdateVersion extends ConfigUpdateVersion
 	{
 		parent::__construct('articles');
 
-		$this->config_parameters_to_modify = array(
+		$this->config_parameters_to_modify = [
 			'number_articles_per_page'         => 'items_per_page',
 			'number_categories_per_page'       => 'categories_per_page',
 			'number_cols_display_per_line'     => 'items_per_row',
 			'number_character_to_cut'          => 'auto_cut_characters_number',
 			'descriptions_displayed_to_guests' => 'summary_displayed_to_guests',
 			'date_updated_displayed'           => 'update_date_displayed',
-			'items_default_sort_field'         => array(
+			'items_default_sort_field'         => [
 				'parameter_name' => 'items_default_sort_field',
-				'values'         => array(
+				'values'         => [
 					'date_created'    => 'date',
 					'display_name'    => 'author',
 					'number_view'     => 'views',
 					'average_notes'   => 'notes',
 					'comments_number' => 'comments'
-				)
-			),
-			'items_default_sort_mode' => array(
+				]
+			],
+			'items_default_sort_mode' => [
 				'parameter_name' => 'items_default_sort_mode',
-				'values'         => array(
+				'values'         => [
 					Item::ASC  => TextHelper::strtolower(Item::ASC),
 					Item::DESC => TextHelper::strtolower(Item::DESC)
-				)
-			),
-			'display_type' => array(
+				]
+			],
+			'display_type' => [
 				'parameter_name' => 'display_type',
-				'values'         => array(
+				'values'         => [
 					'mosaic' => 'grid_view',
 					'list'   => 'list_view'
-				)
-			),
-			'root_category_description' => array(
+				]
+			],
+			'root_category_description' => [
 				'parameter_name' => 'root_category_description',
 				'value' => $this->get_parsed_old_content('ArticlesConfig', 'root_category_description')
-			)
-		);
+			]
+		];
 	}
 }
 ?>

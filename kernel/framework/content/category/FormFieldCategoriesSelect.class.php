@@ -13,7 +13,7 @@
 
 class FormFieldCategoriesSelect extends FormFieldSimpleSelectChoice
 {
-	private static $options = array();
+	private static $options = [];
 
 	/**
      * Constructs a FormFieldCategoriesSelect.
@@ -22,7 +22,7 @@ class FormFieldCategoriesSelect extends FormFieldSimpleSelectChoice
      * @param mixed $value Default value (either a FormFieldEnumOption object or a string corresponding to the FormFieldEnumOption's raw value)
      * @param array $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
      */
-    public function __construct($id, $label, $value, SearchCategoryChildrensOptions $search_category_children_options, $field_options, CategoriesCache $categories_cache, array $select_options = array())
+    public function __construct($id, $label, $value, SearchCategoryChildrensOptions $search_category_children_options, $field_options, CategoriesCache $categories_cache, array $select_options = [])
     {
 		parent::__construct($id, $label, $value, ($select_options ? $select_options : self::generate_options($value, $search_category_children_options, false, $categories_cache)), $field_options);
     }
@@ -33,9 +33,9 @@ class FormFieldCategoriesSelect extends FormFieldSimpleSelectChoice
 		$root_category = $categories[Category::ROOT_CATEGORY];
 
 		if (($search_category_children_options->is_excluded_categories_recursive() && $search_category_children_options->category_is_excluded($root_category)) || !$search_category_children_options->check_authorizations($root_category))
-			return array();
+			return [];
 
-		self::$options = array();
+		self::$options = [];
 		if ($all_categories_option)
 			self::$options[] = new FormFieldSelectChoiceOption(LangLoader::get_message('category.all.categories', 'category-lang'), 'all');
 

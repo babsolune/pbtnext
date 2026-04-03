@@ -13,10 +13,10 @@
 
 class Countries
 {
-	private static $countries = array();
+	private static $countries = [];
 	private static $pictures_path = '/images/stats/countries/';
 	private static $pictures_extension = '.png';
-	private static $countries_identifier = array(
+	private static $countries_identifier = [
 		'ad', 'ae', 'af', 'ag', 'ai', 'al', 'am', 'an', 'ao', 'aq', 'ar', 'as', 'at', 'au', 'aw', 'az',
         'ba', 'bb', 'bd', 'be', 'bf', 'bg', 'bh', 'bi', 'bj', 'bm', 'bn', 'bo', 'br', 'bs', 'bt', 'bv', 'bw', 'by', 'bz',
         'ca', 'cc', 'cd', 'cf', 'cg', 'ch', 'ci', 'ck', 'cl', 'cm', 'cn', 'co', 'cr', 'cu', 'cv', 'cx', 'cy', 'cz',
@@ -43,7 +43,7 @@ class Countries
         'ye', 'yt',
         'za', 'zm', 'zw',
         'other'
-	);
+	];
 
 	public static function __static()
 	{
@@ -80,10 +80,10 @@ class Countries
 		$lang = LangLoader::get_all_langs();
 		foreach (self::$countries_identifier as $country_identifier)
 		{
-			self::$countries[$country_identifier] = array(
+			self::$countries[$country_identifier] = [
 				'name' => $lang[$country_identifier],
 				'picture' => self::$pictures_path . $country_identifier . self::$pictures_extension
-			);
+			];
 		}
 	}
 }

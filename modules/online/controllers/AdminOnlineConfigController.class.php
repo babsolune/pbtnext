@@ -30,37 +30,37 @@ class AdminOnlineConfigController extends DefaultAdminModuleController
 	{
 		$form = new HTMLForm(self::class);
 
-		$fieldset_config = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset_config = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module()->get_configuration()->get_name()]));
 		$form->add_fieldset($fieldset_config);
 
 		$fieldset_config->add_field(new FormFieldNumberEditor('number_member_displayed', $this->lang['form.items.in.menu'], $this->config->get_members_number_displayed(),
-			array('min' => 1, 'max' => 1000, 'required' => true),
-			array(new FormFieldConstraintIntegerRange(1, 1000))
+			['min' => 1, 'max' => 1000, 'required' => true],
+			[new FormFieldConstraintIntegerRange(1, 1000)]
 		));
 
 		$fieldset_config->add_field(new FormFieldNumberEditor('number_members_per_page', $this->lang['form.items.per.page'], $this->config->get_number_members_per_page(),
-			array('min' => 1, 'max' => 50, 'required' => true),
-			array(new FormFieldConstraintIntegerRange(1, 50))
+			['min' => 1, 'max' => 50, 'required' => true],
+			[new FormFieldConstraintIntegerRange(1, 50)]
 		));
 
-		$fieldset_config->add_field(new FormFieldSimpleSelectChoice('display_order', $this->lang['form.items.default.sort'], $this->config->get_display_order(), array(
+		$fieldset_config->add_field(new FormFieldSimpleSelectChoice('display_order', $this->lang['form.items.default.sort'], $this->config->get_display_order(), [
 				new FormFieldSelectChoiceOption($this->lang['user.ranks'], OnlineConfig::LEVEL_DISPLAY_ORDER),
 				new FormFieldSelectChoiceOption($this->lang['user.last.connection'], OnlineConfig::SESSION_TIME_DISPLAY_ORDER),
 				new FormFieldSelectChoiceOption($this->lang['user.ranks'] . ' + ' . $this->lang['user.last.connection'], OnlineConfig::LEVEL_AND_SESSION_TIME_DISPLAY_ORDER)
-			)
+			]
 		));
 
 		$fieldset_config->add_field(new FormFieldCheckbox('display_robots', $this->lang['online.display.robots'], $this->config->are_robots_displayed(),
-			array('class' => 'custom-checkbox')
+			['class' => 'custom-checkbox']
 		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['form.authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 
 		//Authorizations list
-		$auth_settings = new AuthorizationsSettings(array(
+		$auth_settings = new AuthorizationsSettings([
 			new ActionAuthorization($this->lang['form.authorizations.read'], OnlineAuthorizationsService::READ_AUTHORIZATIONS)
-		));
+		]);
 
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());
 		$fieldset_authorizations->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
@@ -86,7 +86,7 @@ class AdminOnlineConfigController extends DefaultAdminModuleController
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		OnlineConfig::save();
 
-		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
+		HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]), 'url' => ModulesUrlBuilder::configuration()->rel()]);
 	}
 }
 ?>

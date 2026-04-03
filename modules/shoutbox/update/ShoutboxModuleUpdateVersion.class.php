@@ -14,23 +14,23 @@ class ShoutboxModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('shoutbox');
 
-		self::$delete_old_files_list = array(
+		self::$delete_old_files_list = [
 			'/phpboost/ShoutboxHomePageExtensionPoint.class.php',
 			'/phpboost/ShoutboxTreeLinks.class.php',
 			'/services/ShoutboxMessage.class.php',
 			'/util/AdminShoutboxDisplayResponse.class.php'
-		);
+		];
 
-		$this->content_tables = array(PREFIX . 'shoutbox');
+		$this->content_tables = [PREFIX . 'shoutbox'];
 
-		$this->database_columns_to_modify = array(
-			array(
+		$this->database_columns_to_modify = [
+			[
 				'table_name' => PREFIX . 'shoutbox',
-				'columns' => array(
+				'columns' => [
 					'contents'    => 'content MEDIUMTEXT'
-				)
-			)
-		);
+				]
+			]
+		];
 	}
 }
 ?>

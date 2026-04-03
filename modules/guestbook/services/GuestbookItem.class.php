@@ -91,13 +91,13 @@ class GuestbookItem
 
 	public function get_properties()
 	{
-		return array(
+		return [
 			'id' => $this->get_id(),
 			'content' => $this->get_content(),
 			'login' => $this->get_login(),
 			'user_id' => $this->get_author_user()->get_id(),
 			'timestamp' => $this->get_creation_date()->get_timestamp()
-		);
+		];
 	}
 
 	public function set_properties(array $properties)
@@ -134,7 +134,7 @@ class GuestbookItem
 
 		return array_merge(
 			Date::get_array_tpl_vars($this->creation_date, 'date'),
-			array(
+			[
 				'C_EDIT'               => $this->is_authorized_to_edit(),
 				'C_DELETE'             => $this->is_authorized_to_delete(),
 				'C_AUTHOR_GROUP_COLOR' => !empty($user_group_color),
@@ -151,7 +151,7 @@ class GuestbookItem
 				'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
 				'U_EDIT'           => GuestbookUrlBuilder::edit($this->id, $page)->rel(),
 				'U_DELETE'         => GuestbookUrlBuilder::delete($this->id)->rel()
-			)
+			]
 		);
 	}
 }

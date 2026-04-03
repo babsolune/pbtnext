@@ -15,7 +15,7 @@ class WebExtensionPointProvider extends ItemsModuleExtensionPointProvider
 {
     public function comments()
     {
-        return new CommentsTopics(array(new WebCommentsTopic()));
+        return new CommentsTopics([new WebCommentsTopic()]);
     }
 
     public function home_page()

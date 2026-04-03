@@ -38,38 +38,38 @@ class AdminServerStatusConfigController extends DefaultAdminModuleController
 	{
 		$form = new HTMLForm(self::class);
 
-		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => $this->lang['server.module.title'])));
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => $this->lang['server.module.title']]));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldNumberEditor('refresh_delay', $this->lang['server.refresh.delay'], $this->config->get_refresh_delay(),
-			array(
+			[
 				'min' => 0,
 				'required' => true,
 				'description' => $this->lang['server.refresh.delay.clue']
-			),
-			array(new FormFieldConstraintRegex('`^[0-9]+$`iu'))
+			],
+			[new FormFieldConstraintRegex('`^[0-9]+$`iu')]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('timeout', $this->lang['server.timeout'], $this->config->get_timeout(),
-			array(
+			[
 				'required' => true,
 				'description' => $this->lang['server.timeout.clue']
-			)
+			]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('address_displayed', $this->lang['server.display.address'], $this->config->is_address_displayed(),
-			array(
+			[
 				'class' => 'custom-checkbox',
 				'description' => $this->lang['server.display.address.clue']
-			)
+			]
 		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['form.authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 
-		$auth_settings = new AuthorizationsSettings(array(
+		$auth_settings = new AuthorizationsSettings([
 			new ActionAuthorization($this->lang['form.authorizations.read'], ServerStatusAuthorizationsService::READ_AUTHORIZATIONS),
-		));
+		]);
 
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());
 		$fieldset_authorizations->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));

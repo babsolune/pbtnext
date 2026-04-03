@@ -16,22 +16,22 @@ class DevToolsAjaxInstallController extends AbstractController
         if (!DevToolsAuthorizationsService::check_authorizations()->moderation())
         {
             error_reporting($prev_error_reporting);
-            return new JSONResponse(array('success' => false, 'error' => 'Unauthorized'), 403);
+            return new JSONResponse(['success' => false, 'error' => 'Unauthorized'], 403);
         }
 
         $owner   = $request->get_string('owner', '');
         $repo    = $request->get_string('repo', '');
         $branch  = $request->get_string('branch', '');
         $path    = $request->get_string('path', '');
-        $modules = $request->get_value('modules', array());
+        $modules = $request->get_value('modules', []);
 
         if (!$owner || !$repo || !$branch || empty($modules))
         {
             error_reporting($prev_error_reporting);
-            return new JSONResponse(array('success' => false, 'error' => 'Missing parameters'));
+            return new JSONResponse(['success' => false, 'error' => 'Missing parameters']);
         }
 
-        $errors = array();
+        $errors = [];
         foreach ((array)$modules as $module_name)
         {
             $module_name = preg_replace('/[^a-zA-Z0-9_\-]/', '', $module_name);
@@ -45,9 +45,9 @@ class DevToolsAjaxInstallController extends AbstractController
         error_reporting($prev_error_reporting);
 
         if (empty($errors))
-            return new JSONResponse(array('success' => true));
+            return new JSONResponse(['success' => true]);
 
-        return new JSONResponse(array('success' => false, 'errors' => $errors));
+        return new JSONResponse(['success' => false, 'errors' => $errors]);
     }
 }
 ?>

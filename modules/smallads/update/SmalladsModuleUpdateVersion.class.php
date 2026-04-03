@@ -15,8 +15,8 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('smallads');
 
-		$this->content_tables = array(PREFIX . 'smallads');
-		self::$delete_old_files_list = array(
+		$this->content_tables = [PREFIX . 'smallads'];
+		self::$delete_old_files_list = [
 			'/controllers/AdminSmalladsConfigController.class.php',
 			'/controllers/SmalladsHomeController.class.php',
 			'/controllers/SmalladsDisplayCategoryController.class.php',
@@ -55,62 +55,62 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 			'/smallads.class.php',
 			'/smallads.php',
 			'/smallads_begin.php'
-		);
-		self::$delete_old_folders_list = array(
+		];
+		self::$delete_old_folders_list = [
 			'/controllers/categories'
-		);
+		];
 
-		$this->database_columns_to_add = array(
-			array(
+		$this->database_columns_to_add = [
+			[
 				'table_name' => PREFIX . 'smallads',
-				'columns' => array(
-					'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-					'rewrited_title' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-					'summary' => array('type' => 'text', 'length' => 65000),
-					'brand' => array('type' => 'string', 'length' => 255),
-					'completed' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-					'archived' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-					'location' => array('type' => 'text', 'length' => 65000),
-					'other_location' => array('type' => 'string', 'length' => 255),
-					'views_number' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-					'displayed_author_email' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-					'custom_author_email' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-					'displayed_author_pm' => array('type' => 'boolean', 'notnull' => 1, 'default' => 1),
-					'displayed_author_name' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-					'custom_author_name' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-					'displayed_author_phone' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-					'author_phone' => array('type' => 'string', 'length' => 25, 'default' => "''"),
-					'publishing_start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-					'publishing_end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-					'sources' => array('type' => 'text', 'length' => 65000),
-					'carousel' => array('type' => 'text', 'length' => 65000)
-				)
-			)
-		);
+				'columns' => [
+					'id_category' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+					'rewrited_title' => ['type' => 'string', 'length' => 255, 'default' => "''"],
+					'summary' => ['type' => 'text', 'length' => 65000],
+					'brand' => ['type' => 'string', 'length' => 255],
+					'completed' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0],
+					'archived' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0],
+					'location' => ['type' => 'text', 'length' => 65000],
+					'other_location' => ['type' => 'string', 'length' => 255],
+					'views_number' => ['type' => 'integer', 'length' => 11, 'default' => 0],
+					'displayed_author_email' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0],
+					'custom_author_email' => ['type' => 'string', 'length' => 255, 'default' => "''"],
+					'displayed_author_pm' => ['type' => 'boolean', 'notnull' => 1, 'default' => 1],
+					'displayed_author_name' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0],
+					'custom_author_name' => ['type' => 'string', 'length' => 255, 'default' => "''"],
+					'displayed_author_phone' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0],
+					'author_phone' => ['type' => 'string', 'length' => 25, 'default' => "''"],
+					'publishing_start_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+					'publishing_end_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+					'sources' => ['type' => 'text', 'length' => 65000],
+					'carousel' => ['type' => 'text', 'length' => 65000]
+				]
+			]
+		];
 
-		$this->database_columns_to_delete = array(
-			array(
+		$this->database_columns_to_delete = [
+			[
 				'table_name' => PREFIX . 'smallads',
-				'columns' => array('cat_id', 'links_flag', 'shipping', 'vid', 'id_updated', 'date_approved')
-			)
-		);
+				'columns' => ['cat_id', 'links_flag', 'shipping', 'vid', 'id_updated', 'date_approved']
+			]
+		];
 
-		$this->database_keys_to_add = array(
-			array(
+		$this->database_keys_to_add = [
+			[
 				'table_name' => PREFIX . 'smallads',
-				'keys' => array(
+				'keys' => [
 					'title'       => true,
 					'content'     => true,
 					'summary'     => true,
 					'id_category' => true
-				)
-			)
-		);
+				]
+			]
+		];
 
-		$this->database_columns_to_modify = array(
-			array(
+		$this->database_columns_to_modify = [
+			[
 				'table_name' => PREFIX . 'smallads',
-				'columns' => array(
+				'columns' => [
 					'contents'     => 'content MEDIUMTEXT',
 					'description'  => 'summary TEXT',
 					'picture'      => 'thumbnail_url VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 0',
@@ -122,15 +122,15 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 					'publication_end_date' => 'publishing_end_date INT(11) NOT NULL DEFAULT 0',
 					'date_updated' => 'update_date INT(11) NOT NULL DEFAULT 0',
 					'updated_date' => 'update_date INT(11) NOT NULL DEFAULT 0'
-				)
-			),
-			array(
+				]
+			],
+			[
 				'table_name' => PREFIX . 'smallads_cats',
-				'columns' => array(
+				'columns' => [
 					'image' => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""'
-				)
-			)
-		);
+				]
+			]
+		];
 	}
 
 	public function execute()
@@ -162,7 +162,7 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 	private function insert_smallads_cats_data()
 	{
 		$messages = LangLoader::get('install', 'smallads');
-		$this->querier->insert(PREFIX . 'smallads_cats', array(
+		$this->querier->insert(PREFIX . 'smallads_cats', [
 			'id' => 1,
 			'id_parent' => 0,
 			'c_order' => 1,
@@ -171,7 +171,7 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 			'name' => $messages['default.category.name'],
 			'description' => $messages['default.category.description'],
 			'image' => '/smallads/smallads.png'
-		));
+		]);
 	}
 
 	private function update_smallads_table()
@@ -180,13 +180,13 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 		if ($folder->exists())
 		{
 			$messages = LangLoader::get('install', 'smallads');
-			$result = $this->querier->select_rows(PREFIX . 'smallads', array('id', 'title'));
+			$result = $this->querier->select_rows(PREFIX . 'smallads', ['id', 'title']);
 			while ($row = $result->fetch()) {
-				$this->querier->update(PREFIX . 'smallads', array(
+				$this->querier->update(PREFIX . 'smallads', [
 					'rewrited_title' => Url::encode_rewrite($row['title']),
 					'smallad_type' => Url::encode_rewrite($messages['default.smallad.type']),
 					'id_category' => 1,
-				), 'WHERE id = :id', array('id' => $row['id']));
+				], 'WHERE id = :id', ['id' => $row['id']]);
 			}
 			$result->dispose();
 		}
@@ -228,16 +228,16 @@ class SmalladsModuleUpdateVersion extends ModuleUpdateVersion
 			$folder->delete();
 
 			// update thumbnail_url files to /upload/files
-			$result = PersistenceContext::get_querier()->select_rows(PREFIX . 'smallads', array('id', 'thumbnail_url'));
+			$result = PersistenceContext::get_querier()->select_rows(PREFIX . 'smallads', ['id', 'thumbnail_url']);
 			while ($row = $result->fetch()) {
 				if ($row['thumbnail_url'] != "") {
-					PersistenceContext::get_querier()->update(PREFIX . 'smallads', array(
+					PersistenceContext::get_querier()->update(PREFIX . 'smallads', [
 						'thumbnail_url' => '/upload/' . $row['thumbnail_url'],
-					), 'WHERE id = :id', array('id' => $row['id']));
+					], 'WHERE id = :id', ['id' => $row['id']]);
 				} else {
-					PersistenceContext::get_querier()->update(PREFIX . 'smallads', array(
+					PersistenceContext::get_querier()->update(PREFIX . 'smallads', [
 						'thumbnail_url' => '/smallads/templates/images/no-thumb.webp',
-					), 'WHERE id = :id', array('id' => $row['id']));
+					], 'WHERE id = :id', ['id' => $row['id']]);
 				}
 			}
 			$result->dispose();

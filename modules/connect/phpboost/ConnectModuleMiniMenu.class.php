@@ -81,7 +81,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 
 				$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 
-				$view->put_all(array(
+				$view->put_all([
 					'C_UNREAD_CONTRIBUTIONS'  => $contribution_number != 0,
 					'C_SEVERAL_CONTRIBUTIONS' => $contribution_number > 1,
 					'C_UNREAD_ALERTS'         => (bool)AdministratorAlertService::get_number_unread_alerts(),
@@ -102,7 +102,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 					'U_USER_PROFILE'      => UserUrlBuilder::profile($user->get_id())->rel(),
 					'U_USER_PM'           => UserUrlBuilder::personnal_message($user->get_id())->rel(),
 					'U_USER_AVATAR'       => $user_avatar ? Url::to_rel($user_avatar) : $user_accounts_config->get_default_avatar(),
-				));
+				]);
 
 				$this->display_additional_menus($view, $user);
 			}
@@ -112,24 +112,24 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 
 				foreach (AuthenticationService::get_external_auths_activated() as $id => $authentication)
 				{
-					$view->assign_block_vars('external_auth', array(
+					$view->assign_block_vars('external_auth', [
 						'U_SIGN_IN'  => UserUrlBuilder::connect($id)->rel(),
 						'ID'         => $id,
 						'NAME'       => $authentication->get_authentication_name(),
 						'IMAGE_HTML' => $authentication->get_image_renderer_html(),
 						'CSS_CLASS'  => $authentication->get_css_class()
-					));
+					]);
 					$external_authentication++;
 				}
 
-				$view->put_all(array(
+				$view->put_all([
 					'C_REGISTRATION_ENABLED' => UserAccountsConfig::load()->is_registration_enabled(),
 					'C_REGISTRATION_DISPLAYED' => $external_authentication || UserAccountsConfig::load()->is_registration_enabled(),
 
 					'SITE_REWRITED_SCRIPT' => TextHelper::substr(REWRITED_SCRIPT, TextHelper::strlen(GeneralConfig::load()->get_site_path())),
 
 					'U_SIGN_IN' => UserUrlBuilder::connect()->rel(),
-				));
+				]);
 			}
 
 			return $view->render();
@@ -143,7 +143,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 		{
 			if ($provider && $provider instanceof ConnectMenuLink)
 			{
-				$view->assign_block_vars('additional_menus', array(
+				$view->assign_block_vars('additional_menus', [
 					'C_DISPLAY'              => $user->get_level() >= $provider->get_display_level(),
 					'C_UNREAD_ELEMENTS'      => $provider->get_unread_elements_number() > 0,
 					'C_ICON'                 => $provider->get_icon() != '',
@@ -153,7 +153,7 @@ class ConnectModuleMiniMenu extends ModuleMiniMenu
 					'MENU_NAME'              => $provider->get_menu_name(),
 					'UNREAD_ELEMENTS_NUMBER' => $provider->get_unread_elements_number(),
 					'URL'                    => $provider->get_url() instanceof Url ? $provider->get_url()->rel() : Url::to_rel($provider->get_url())
-				));
+				]);
 			}
 		}
 	}

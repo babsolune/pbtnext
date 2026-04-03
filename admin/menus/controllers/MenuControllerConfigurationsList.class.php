@@ -25,22 +25,22 @@ class MenuControllerConfigurationsList extends AdminController
 		$this->load_env();
 
 		$menu_configurations = MenuConfigurationDAO::instance()->find_by_criteria(
-		'WHERE id!=:default_config_id ORDER BY priority DESC;', array('default_config_id' => 1));
+		'WHERE id!=:default_config_id ORDER BY priority DESC;', ['default_config_id' => 1]);
 
 		foreach ($menu_configurations as $menu_config)
 		{
-			$this->view->assign_block_vars('menu_configuration', array(
+			$this->view->assign_block_vars('menu_configuration', [
                 'NAME' => $menu_config->get_name(),
                 'MATCH_REGEX' => $menu_config->get_match_regex(),
                 'U_EDIT' => MenuUrlBuilder::menu_configuration_edit($menu_config->get_id())->rel(),
 				'U_CONFIGURE' => MenuUrlBuilder::menu_configuration_configure($menu_config->get_id())->rel()
-			));
+			]);
 		}
 
 		$default_menu_config = MenuConfigurationDAO::instance()->find_by_id(1);
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'U_DEFAULT_MENU_CONFIG_CONFIGURE' => MenuUrlBuilder::menu_configuration_configure($default_menu_config->get_id())->rel()
-		));
+		]);
 
 		return $this->response;
 	}

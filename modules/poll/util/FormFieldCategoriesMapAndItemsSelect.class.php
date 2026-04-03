@@ -11,7 +11,7 @@ class FormFieldCategoriesMapAndItemsSelect extends FormFieldMultipleSelectChoice
 {
 	private $categories_cache;
 	private $search_category_children_options;
-	private $options = array();
+	private $options = [];
 	private $selected_options;
 
     public function __construct($id, $label, $value, SearchCategoryChildrensOptions $search_category_children_options, array $selected_options, array $field_options, CategoriesCache $categories_cache)
@@ -19,7 +19,7 @@ class FormFieldCategoriesMapAndItemsSelect extends FormFieldMultipleSelectChoice
 		$this->categories_cache = $categories_cache;
 		$this->search_category_children_options = $search_category_children_options;
 		$this->selected_options = $selected_options;
-        parent::__construct($id, $label, $selected_options, $this->generate_options($value), $field_options, $constraints = array());
+        parent::__construct($id, $label, $selected_options, $this->generate_options($value), $field_options, $constraints = []);
     }
 
     private function generate_options($id_category)
@@ -29,7 +29,7 @@ class FormFieldCategoriesMapAndItemsSelect extends FormFieldMultipleSelectChoice
 
 		if (($this->search_category_children_options->is_excluded_categories_recursive() && $this->search_category_children_options->category_is_excluded($root_category)) || !$this->search_category_children_options->check_authorizations($root_category))
 		{
-			return array();
+			return [];
 		}
 
 		if (!$this->search_category_children_options->category_is_excluded($root_category))
@@ -60,13 +60,13 @@ class FormFieldCategoriesMapAndItemsSelect extends FormFieldMultipleSelectChoice
 	
 	protected function get_items_from_category_form_field(int $id_category)
 	{
-		$items = ItemsService::get_items_manager('poll')->get_items('WHERE id_category =:id_category', array('id_category' => $id_category));
+		$items = ItemsService::get_items_manager('poll')->get_items('WHERE id_category =:id_category', ['id_category' => $id_category]);
 	
-		$form_field = array();
+		$form_field = [];
 		foreach ($items as $item)
 		{
 			$selected = in_array($item->get_id(), $this->selected_options);
-			$form_field[] = new FormFieldSelectChoiceOption('&#128202; ' . $item->get_title(), $item->get_id(), array('selected' => $selected));
+			$form_field[] = new FormFieldSelectChoiceOption('&#128202; ' . $item->get_title(), $item->get_id(), ['selected' => $selected]);
 		}
 	
 		return $form_field;

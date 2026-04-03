@@ -16,7 +16,7 @@ class NewsletterSubscribersListController extends DefaultModuleController
 	private $stream;
 
 	private $elements_number = 0;
-	private $ids = array();
+	private $ids = [];
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -48,14 +48,14 @@ class NewsletterSubscribersListController extends DefaultModuleController
 	{
 		$moderation_authorization = NewsletterAuthorizationsService::id_stream($this->stream->get_id())->moderation_subscribers();
 
-		$columns = array(
+		$columns = [
 			new HTMLTableColumn($this->lang['user.display.name'], 'name'),
 			new HTMLTableColumn($this->lang['user.email'], 'user_mail'),
 			new HTMLTableColumn($this->lang['user.registration.date'], 'subscription_date')
-		);
+		];
 
 		if ($moderation_authorization)
-			$columns[] = new HTMLTableColumn($this->lang['common.moderation'], '', array('sr-only' => true));
+			$columns[] = new HTMLTableColumn($this->lang['common.moderation'], '', ['sr-only' => true]);
 
 		$table_model = new SQLHTMLTableModel(NewsletterSetup::$newsletter_table_subscribers, 'subscribers-list', $columns, new HTMLTableSortingRule('name', HTMLTableSortingRule::ASC));
 
@@ -67,8 +67,8 @@ class NewsletterSubscribersListController extends DefaultModuleController
 
 		$table = new HTMLTable($table_model);
 
-		$results = array();
-		$result = $table_model->get_sql_results('subscribers LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON subscribers.user_id = member.user_id', array('*', 'COALESCE(NULLIF(subscribers.mail, \'\'), member.email) AS user_mail', 'COALESCE(NULLIF(member.display_name, \'\'), "' . $this->lang['user.guest'] . '") AS name'));
+		$results = [];
+		$result = $table_model->get_sql_results('subscribers LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON subscribers.user_id = member.user_id', ['*', 'COALESCE(NULLIF(subscribers.mail, \'\'), member.email) AS user_mail', 'COALESCE(NULLIF(member.display_name, \'\'), "' . $this->lang['user.guest'] . '") AS name']);
 		foreach ($result as $row)
 		{
 			if ($row['user_mail'])
@@ -83,13 +83,13 @@ class NewsletterSubscribersListController extends DefaultModuleController
 				$this->ids[$this->elements_number] = $row['id'];
 
 				$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
-				$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $row['name'];
+				$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? ['style' => 'color: ' . $user_group_color] : []), UserService::get_level_class($user->get_level())) : $row['name'];
 
-				$table_row = array(
+				$table_row = [
 					new HTMLTableRowCell($author),
 					new HTMLTableRowCell($row['user_mail']),
 					new HTMLTableRowCell(Date::to_format($row['subscription_date'], Date::FORMAT_DAY_MONTH_YEAR))
-				);
+				];
 
 				if ($moderation_authorization)
 				{
@@ -118,10 +118,10 @@ class NewsletterSubscribersListController extends DefaultModuleController
 				{
 					if (isset($this->ids[$i]) && NewsletterAuthorizationsService::id_stream($this->stream->get_id())->moderation_subscribers())
 					{
-						$parameters = array(
+						$parameters = [
 							'id' => $this->ids[$i],
 							'id_stream' => $this->stream->get_id()
-						);
+						];
 						PersistenceContext::get_querier()->delete(NewsletterSetup::$newsletter_table_subscriptions, 'WHERE subscriber_id = :id AND stream_id = :id_stream', $parameters);
 
 						if (PersistenceContext::get_querier()->count(NewsletterSetup::$newsletter_table_subscriptions, 'WHERE subscriber_id = :id', $parameters) == 0)
@@ -142,7 +142,7 @@ class NewsletterSubscribersListController extends DefaultModuleController
 	{
 		$body_view = new FileTemplate('newsletter/NewsletterBody.tpl');
 		$body_view->add_lang($this->lang);
-		$body_view->put_all(array(
+		$body_view->put_all([
 			'C_SUBTITLE' => true,
 			'C_STREAM_TITLE' => $this->stream->get_id() != Category::ROOT_CATEGORY,
 
@@ -150,7 +150,7 @@ class NewsletterSubscribersListController extends DefaultModuleController
 			'STREAM_TITLE' => $this->stream->get_name(),
 
 			'TEMPLATE'   => $this->view
-		));
+		]);
 		$response = new SiteDisplayResponse($body_view);
 
 		$graphical_environment = $response->get_graphical_environment();
@@ -161,7 +161,7 @@ class NewsletterSubscribersListController extends DefaultModuleController
 		$breadcrumb->add($page_name, NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name()));
 
 		$graphical_environment->set_page_title($page_name, $this->lang['newsletter.module.title'], $page);
-		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['newsletter.seo.suscribers.list'], array('name' => $this->stream->get_name())), $page);
+		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['newsletter.seo.suscribers.list'], ['name' => $this->stream->get_name()]), $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsletterUrlBuilder::subscribers($this->stream->get_id(), $this->stream->get_rewrited_name()));
 
 		return $response;

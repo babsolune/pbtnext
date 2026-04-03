@@ -15,27 +15,27 @@
 
 class GroupsCache implements CacheData
 {
-	private static $default_groups_value = array();
+	private static $default_groups_value = [];
 
-	private $groups = array();
+	private $groups = [];
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{
-		$this->groups = array();
-		$columns = array('id', 'name', 'img', 'color', 'auth', 'members');
+		$this->groups = [];
+		$columns = ['id', 'name', 'img', 'color', 'auth', 'members'];
 		$result = PersistenceContext::get_querier()->select_rows(DB_TABLE_GROUP, $columns, 'ORDER BY id');
 		while ($row = $result->fetch())
 		{
-			$this->groups[$row['id']] = array(
+			$this->groups[$row['id']] = [
 				'name' => stripslashes($row['name']),
 				'img' => $row['img'],
 				'color' => $row['color'],
 				'auth' => TextHelper::unserialize(stripslashes($row['auth'])),
 				'members' => explode('|', $row['members'])
-			);
+			];
 		}
 		$result->dispose();
 	}

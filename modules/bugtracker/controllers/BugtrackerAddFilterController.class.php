@@ -17,12 +17,12 @@ class BugtrackerAddFilterController extends ModuleController
 		$filter_id = $request->get_value('filter_id', '');
 
 		//Add filter
-		BugtrackerService::add_filter(array(
+		BugtrackerService::add_filter([
 			'user_id'		=> AppContext::get_current_user()->get_id(),
 			'page'			=> $page,
 			'filters'		=> $filter,
 			'filters_ids'	=> $filter_id
-		));
+		]);
 
 		AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : BugtrackerUrlBuilder::unsolved()), LangLoader::get_message('success.add.filter', 'common', 'bugtracker'));
 	}

@@ -14,7 +14,7 @@
 class FaqItemsManagerController extends DefaultModuleController
 {
 	private $elements_number = 0;
-    private $ids = array();
+    private $ids = [];
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -31,14 +31,14 @@ class FaqItemsManagerController extends DefaultModuleController
 	{
 		$display_categories = CategoriesService::get_categories_manager()->get_categories_cache()->has_categories();
 
-		$columns = array(
+		$columns = [
 			new HTMLTableColumn($this->lang['faq.form.question'], 'title'),
 			new HTMLTableColumn($this->lang['common.category'], 'id_category'),
 			new HTMLTableColumn($this->lang['common.author'], 'display_name'),
 			new HTMLTableColumn($this->lang['common.creation.date'], 'creation_date'),
 			new HTMLTableColumn($this->lang['common.status'], 'approved'),
-			new HTMLTableColumn($this->lang['common.actions'], '', array('sr-only' => true))
-		);
+			new HTMLTableColumn($this->lang['common.actions'], '', ['sr-only' => true])
+		];
 
 		if (!$display_categories)
 			unset($columns[1]);
@@ -53,13 +53,13 @@ class FaqItemsManagerController extends DefaultModuleController
 		if ($display_categories)
 			$table_model->add_filter(new HTMLTableCategorySQLFilter('filter4'));
 
-		$status_list = array(Item::PUBLISHED => $this->lang['common.status.published'], Item::NOT_PUBLISHED => $this->lang['common.status.draft']);
+		$status_list = [Item::PUBLISHED => $this->lang['common.status.published'], Item::NOT_PUBLISHED => $this->lang['common.status.draft']];
 		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('published', 'filter5', $this->lang['common.status.publication'], $status_list));
 
 		$table = new HTMLTable($table_model);
 		$table->set_filters_fieldset_class_HTML();
 
-		$results = array();
+		$results = [];
 		$result = $table_model->get_sql_results('faq LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = faq.author_user_id');
 		foreach ($result as $row)
 		{
@@ -75,16 +75,16 @@ class FaqItemsManagerController extends DefaultModuleController
             $delete_link = new DeleteLinkHTMLElement(FaqUrlBuilder::delete($faq_question->get_id()));
 
             $user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
-            $author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
+            $author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? ['style' => 'color: ' . $user_group_color] : []), UserService::get_level_class($user->get_level())) : $user->get_display_name();
 
-			$row = array(
+			$row = [
 				new HTMLTableRowCell(new LinkHTMLElement(FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $faq_question->get_id()), $faq_question->get_title()), 'align-left'),
 				new HTMLTableRowCell(new LinkHTMLElement(FaqUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), ($category->get_id() == Category::ROOT_CATEGORY ? $this->lang['common.none.alt'] : $category->get_name()))),
 				new HTMLTableRowCell($author),
 				new HTMLTableRowCell($faq_question->get_creation_date()->format(Date::FORMAT_DAY_MONTH_YEAR)),
 				new HTMLTableRowCell($faq_question->is_approved() ? $this->lang['common.status.published.alt'] : $this->lang['common.status.draft']),
 				new HTMLTableRowCell($edit_link->display() . $delete_link->display(), 'controls')
-			);
+			];
 
 			if (!$display_categories)
 				unset($row[1]);

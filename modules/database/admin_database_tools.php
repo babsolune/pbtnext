@@ -50,7 +50,7 @@ if (!empty($table) && $action == 'data')
 		DispatchManager::redirect($error_controller);
 	}
 
-	$table_structure = $backup->extract_table_structure(array($table)); //Extraction de la structure de la table.
+	$table_structure = $backup->extract_table_structure([$table]); //Extraction de la structure de la table.
 
 	// Primary key detection
 	$primary_key = '';
@@ -73,15 +73,15 @@ if (!empty($table) && $action == 'data')
 	$i = 1;
 	while ($row = $result->fetch())
 	{
-		$view->assign_block_vars('line', array());
+		$view->assign_block_vars('line', []);
 		// First parse: list of selected field names
 		if ($i == 1)
 		{
 			foreach ($row as $field_name => $field_value)
 			{
-				$view->assign_block_vars('head', array(
+				$view->assign_block_vars('head', [
 					'FIELD_NAME' => $field_name
-				));
+				]);
 			}
 		}
 
@@ -91,30 +91,30 @@ if (!empty($table) && $action == 'data')
 		{
 			if ($j == 0)
 			{
-				$view->assign_block_vars('line.field', array(
+				$view->assign_block_vars('line.field', [
 					'FIELD_NAME' => '<span class="text-strong"><a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value . '&amp;action=update&amp;token=' . AppContext::get_session()->get_token() . '" aria-label="' . $lang['common.edit'] . '"><i class="far fa-fw fa-edit" aria-hidden="true"></i></a> <a href="admin_database_tools.php?table=' . $table . '&amp;field=' . $field_name . '&amp;value=' . $field_value .  '&amp;action=delete&amp;token=' . AppContext::get_session()->get_token() . '" aria-label="' . $lang['common.delete'] . '" data-confirmation ="delete-element"><i class="far fa-fw fa-trash-alt" aria-hidden="true"></i></a></span>',
 					'STYLE'      => ''
-				));
+				]);
 			}
 
-			$view->assign_block_vars('line.field', array(
+			$view->assign_block_vars('line.field', [
 				'FIELD_NAME' => str_replace("\n", '<br />', TextHelper::strprotect($field_value, TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE)),
 				'STYLE'      => is_numeric($field_value) ? 'text-align:right;' : ''
-			));
+			]);
 			$j++;
 		}
 		$i++;
 	}
 	$result->dispose();
 
-	$view->put_all(array(
+	$view->put_all([
 		'C_DATABASE_TABLE_DATA'      => true,
 		'C_DATABASE_TABLE_STRUCTURE' => false,
 		'C_PAGINATION'               => $pagination->has_several_pages(),
 		'PAGINATION'                 => $pagination->display(),
 		'QUERY'                      => DatabaseService::indent_query($query),
 		'QUERY_HIGHLIGHT'            => DatabaseService::highlight_query($query)
-	));
+	]);
 }
 elseif (!empty($table) && $action == 'delete')
 {
@@ -124,7 +124,7 @@ elseif (!empty($table) && $action == 'delete')
 	$value = $request->get_getvalue('value', '');
 
 	if (!empty($value) && !empty($field))
-		PersistenceContext::get_querier()->delete($table, 'WHERE '.$field.'=:value', array('value' => $value));
+		PersistenceContext::get_querier()->delete($table, 'WHERE '.$field.'=:value', ['value' => $value]);
 
 	AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table . '&action=data');
 }
@@ -132,50 +132,50 @@ elseif (!empty($table) && $action == 'update') // Update
 {
 	AppContext::get_session()->csrf_get_protect(); // CSRF protection
 
-	$table_structure = $backup->extract_table_structure(array($table)); // Build table structure
+	$table_structure = $backup->extract_table_structure([$table]); // Build table structure
 
 	$value  = $request->get_getvalue('value', '');
 	$field  = $request->get_getvalue('field', '');
 	$submit = $request->get_postvalue('submit', '');
 	if (!empty($submit)) // On query execute
 	{
-		$infos = array();
+		$infos = [];
 		foreach ($table_structure['fields'] as $fields_info)
 			$infos[$fields_info['name']] = $request->get_postvalue($fields_info['name'], '', TSTRING_HTML);
 
-		PersistenceContext::get_querier()->update($table, $infos, 'WHERE ' . $field . ' = :value', array('value' => $value));
+		PersistenceContext::get_querier()->update($table, $infos, 'WHERE ' . $field . ' = :value', ['value' => $value]);
 		AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table . '&action=data');
 	}
 	elseif (!empty($field) && !empty($value))
 	{
-		$view->put_all(array(
+		$view->put_all([
 			'C_DATABASE_UPDATE_FORM' => true,
 			'FIELD_NAME'             => $field,
 			'FIELD_VALUE'            => $value,
 			'ACTION'                 => 'update'
-		));
+		]);
 
 		// On query execute
-		$row = PersistenceContext::get_querier()->select_single_row($table, array('*'), 'WHERE '. $field .'=:value', array('value' => $value));
+		$row = PersistenceContext::get_querier()->select_single_row($table, ['*'], 'WHERE '. $field .'=:value', ['value' => $value]);
 
 		// Parsing output values
 		$i = 0;
 		foreach ($row as $field_name => $field_value)
 		{
-			$view->assign_block_vars('fields', array(
+			$view->assign_block_vars('fields', [
 				'FIELD_NAME'          => $field_name,
 				'FIELD_TYPE'          => $table_structure['fields'][$i]['type'],
 				'FIELD_NULL'          => $table_structure['fields'][$i]['null'] ? $lang['common.yes'] : $lang['common.no'],
 				'FIELD_VALUE'         => TextHelper::strprotect($field_value, TextHelper::HTML_PROTECT, TextHelper::ADDSLASHES_NONE),
 				'C_FIELD_FORM_EXTEND' => ($table_structure['fields'][$i]['type'] == 'text' || $table_structure['fields'][$i]['type'] == 'mediumtext') ? true : false
-			));
+			]);
 			$i++;
 		}
 	}
 }
 elseif (!empty($table) && $action == 'insert') // Update
 {
-	$table_structure = $backup->extract_table_structure(array($table)); // Build table structure
+	$table_structure = $backup->extract_table_structure([$table]); // Build table structure
 
 	$submit = $request->get_postvalue('submit', '');
 	if (!empty($submit)) // On query execute
@@ -196,7 +196,7 @@ elseif (!empty($table) && $action == 'insert') // Update
 			}
 		}
 
-		$infos = array();
+		$infos = [];
 		foreach ($table_structure['fields'] as $fields_info)
 		{
 			if ($fields_info['name'] == $primary_key  && empty($field_value)) // Ignore if primary key is empty
@@ -209,28 +209,28 @@ elseif (!empty($table) && $action == 'insert') // Update
 	}
 	else
 	{
-		$view->put_all(array(
+		$view->put_all([
 			'C_DATABASE_UPDATE_FORM' => true,
 			'FIELD_NAME'             => '',
 			'FIELD_VALUE'            => '',
 			'ACTION'                 => 'insert'
-		));
+		]);
 
 		foreach ($table_structure['fields'] as $fields_info)
 		{
-			$view->assign_block_vars('fields', array(
+			$view->assign_block_vars('fields', [
 				'FIELD_NAME'          => $fields_info['name'],
 				'FIELD_TYPE'          => $fields_info['type'],
 				'FIELD_NULL'          => $fields_info['null'] ? $lang['common.yes'] : $lang['common.no'],
 				'FIELD_VALUE'         => TextHelper::strprotect($fields_info['default']),
 				'C_FIELD_FORM_EXTEND' => ($fields_info['type'] == 'text' || $fields_info['type'] == 'mediumtext') ? true : false
-			));
+			]);
 		}
 	}
 }
 elseif (!empty($table) && $action == 'optimize')
 {
-	PersistenceContext::get_dbms_utils()->optimize(array($table));
+	PersistenceContext::get_dbms_utils()->optimize([$table]);
 
 	AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table);
 }
@@ -238,7 +238,7 @@ elseif (!empty($table) && $action == 'truncate')
 {
 	AppContext::get_session()->csrf_get_protect(); // CSRF protection
 
-	PersistenceContext::get_dbms_utils()->truncate(array($table));
+	PersistenceContext::get_dbms_utils()->truncate([$table]);
 
 	AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table);
 }
@@ -246,7 +246,7 @@ elseif (!empty($table) && $action == 'drop')
 {
 	AppContext::get_session()->csrf_get_protect(); // CSRF protection
 
-	PersistenceContext::get_dbms_utils()->drop(array($table));
+	PersistenceContext::get_dbms_utils()->drop([$table]);
 
 	AppContext::get_response()->redirect('/database/admin_database_tools.php?table=' . $table);
 }
@@ -270,21 +270,21 @@ elseif (!empty($table) && $action == 'query')
 			$i = 1;
 			while ($row = $result->fetch())
 			{
-				$view->assign_block_vars('line', array());
+				$view->assign_block_vars('line', []);
 				// First parse: list the selected field names
 				if ($i == 1)
 				{
 					foreach ($row as $field_name => $field_value)
-						$view->assign_block_vars('head', array(
+						$view->assign_block_vars('head', [
 							'FIELD_NAME' => $field_name
-						));
+						]);
 				}
 				// Parsing output values
 				foreach ($row as $field_name => $field_value)
-				$view->assign_block_vars('line.field', array(
+				$view->assign_block_vars('line.field', [
 					'FIELD_NAME' => TextHelper::strprotect($field_value),
 					'STYLE' => is_numeric($field_value) ? 'text-align:right;' : ''
-				));
+				]);
 
 				$i++;
 			}
@@ -299,14 +299,14 @@ elseif (!empty($table) && $action == 'query')
 	elseif (!empty($table))
 		$query = "SELECT * FROM " . $table . " WHERE 1";
 
-	$view->put_all(array(
+	$view->put_all([
 		'QUERY'           => DatabaseService::indent_query($query),
 		'QUERY_HIGHLIGHT' => DatabaseService::highlight_query($query)
-	));
+	]);
 }
 elseif (!empty($table))
 {
-	$table_structure = $backup->extract_table_structure(array($table)); // build table structure
+	$table_structure = $backup->extract_table_structure([$table]); // build table structure
 	if (!isset($backup->tables[$table])) // If table does not exist
 		AppContext::get_response()->redirect('/database/admin_database.php');
 
@@ -323,24 +323,24 @@ elseif (!empty($table))
 		}
 
 		// fields
-		$view->assign_block_vars('field', array(
+		$view->assign_block_vars('field', [
 			'FIELD_NAME'      => ($primary_key) ? '<span style ="text-decoration: underline">' . $fields_info['name'] . '<span>' : $fields_info['name'],
 			'FIELD_TYPE'      => $fields_info['type'],
 			'FIELD_ATTRIBUTE' => $fields_info['attribute'],
 			'FIELD_NULL'      => $fields_info['null'] ? '<strong>' . $lang['common.yes'] . '</strong>' : $lang['common.no'],
 			'FIELD_DEFAULT'   => $fields_info['default'],
 			'FIELD_EXTRA'     => $fields_info['extra']
-		));
+		]);
 	}
 
 	// Index
 	foreach ($table_structure['index'] as $index_info)
 	{
-		$view->assign_block_vars('index', array(
+		$view->assign_block_vars('index', [
 			'INDEX_NAME'   => $index_info['name'],
 			'INDEX_TYPE'   => $index_info['type'],
 			'INDEX_FIELDS' => str_replace(',', '<br />', $index_info['fields'])
-		));
+		]);
 	}
 
 	// Table informations
@@ -353,7 +353,7 @@ elseif (!empty($table))
 	$data = ($data > 1024) ? NumberHelper::round($data/1024, 1) . ' MB' : $data . ' kB';
 	$index = ($index > 1024) ? NumberHelper::round($index/1024, 1) . ' MB' : $index . ' kB';
 
-	$view->put_all(array(
+	$view->put_all([
 		'C_DATABASE_TABLE_STRUCTURE' => true,
 		'C_DATABASE_TABLE_DATA'      => false,
 		'C_AUTOINDEX'                => !empty($backup->tables[$table]['auto_increment']) ? true : false,
@@ -368,7 +368,7 @@ elseif (!empty($table))
 		'TABLE_AUTOINCREMENT'        => $backup->tables[$table]['auto_increment'],
 		'TABLE_CREATION_DATE'        => Date::to_format(strtotime($backup->tables[$table]['create_time'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE)),
 		'TABLE_LAST_UPDATE'          => Date::to_format(strtotime($backup->tables[$table]['update_time'], Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE))
-	));
+	]);
 }
 else
 	AppContext::get_response()->redirect('/database/admin_database.php');

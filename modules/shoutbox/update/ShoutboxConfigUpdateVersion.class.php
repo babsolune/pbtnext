@@ -13,9 +13,9 @@ class ShoutboxConfigUpdateVersion extends ConfigUpdateVersion
 	{
 		parent::__construct('shoutbox');
 
-		$this->config_parameters_to_modify = array(
+		$this->config_parameters_to_modify = [
 			'items_number_per_page' => 'items_per_page'
-		);
+		];
 	}
 }
 ?>

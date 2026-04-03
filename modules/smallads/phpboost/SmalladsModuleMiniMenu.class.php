@@ -50,7 +50,7 @@ class SmalladsModuleMiniMenu extends ModuleMiniMenu
 		$items = $smallads_cache->get_items();
 		$items_number = SmalladsService::count('WHERE published != 0');
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_ITEMS'         => !empty($items),
 			'C_ONE_ITEM'      => $items_number == 1,
 			'ITEMS_TOTAL_NB'  => $items_number,
@@ -59,7 +59,7 @@ class SmalladsModuleMiniMenu extends ModuleMiniMenu
 			'AUTOPLAY'        => $config->is_slideshow_autoplayed(),
 			'AUTOPLAY_SPEED'  => $config->get_mini_menu_autoplay_speed(),
 			'AUTOPLAY_HOVER'  => $config->is_slideshow_hover_enabled(),
-		));
+		]);
 
 		foreach ($items as $smallad)
 		{
@@ -82,11 +82,11 @@ class SmalladsModuleMiniMenu extends ModuleMiniMenu
 				MenuService::assign_positions_conditions($template, $this->get_block());
 				$this->assign_common_template_variables($template);
 
-				$template->put_all(array(
+				$template->put_all([
 					'ID' 	   => $this->get_menu_id(),
 					'TITLE'    => $this->get_menu_title(),
 					'CONTENTS' => $this->get_menu_content()
-				));
+				]);
 
 				return $template->render();
 			}

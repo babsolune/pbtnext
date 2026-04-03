@@ -260,7 +260,7 @@ class BroadcastItem
 
 	public function get_properties()
 	{
-		return array(
+		return [
 			'id' => $this->get_id(),
 			'id_category' => $this->get_id_category(),
 			'title' => $this->get_title(),
@@ -277,7 +277,7 @@ class BroadcastItem
 			'author_custom_name' => $this->get_author_custom_name(),
 			'author_user_id' => $this->get_author_user()->get_id(),
 			'thumbnail_url' => $this->get_thumbnail()->relative()
-		);
+		];
 	}
 
 	public function set_properties(array $properties)
@@ -318,7 +318,7 @@ class BroadcastItem
 		$this->end_time           = 0;
 		$this->start_time         = new Date();
 		$this->end_time           = new Date();
-		$this->release_days       = TextHelper::serialize(array());
+		$this->release_days       = TextHelper::serialize([]);
 		$this->thumbnail_url      = FormFieldThumbnail::DEFAULT_VALUE;
 		$this->author_custom_name = $this->author_user->get_display_name();
 	}
@@ -333,7 +333,7 @@ class BroadcastItem
 		return array_merge(
 			Date::get_array_tpl_vars($this->creation_date, 'date'),
 			Date::get_array_tpl_vars($this->update_date, 'update_date'),
-			array(
+			[
 				// conditions
 				'C_CONTROLS'      => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
 				'C_VISIBLE'       => $this->is_published(),
@@ -369,22 +369,22 @@ class BroadcastItem
 				'U_EDIT'        => BroadcastUrlBuilder::edit($this->id)->rel(),
 				'U_DELETE'      => BroadcastUrlBuilder::delete($this->id)->rel(),
 				'U_THUMBNAIL'   => $this->get_thumbnail()->rel()
-			)
+			]
 		);
 	}
 
 	public function get_weekly_planner_vars($label)
 	{
-		$vars = $days_list = array();
+		$vars = $days_list = [];
 		foreach (TextHelper::unserialize($this->release_days) as $id => $options)
 		{
 			$days_list[] = $options->get_label();
 		}
 
-		$vars = array(
+		$vars = [
 			'C_SEPARATOR' => array_search($label, array_keys($days_list)) < count($days_list) - 1,
 			'DAY' => $days_list[$label]
-		);
+		];
 		return $vars;
 	}
 }

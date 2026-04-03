@@ -37,7 +37,7 @@ class HTMLTableLikeTextSQLFilter extends HTMLTableTextFilter implements SQLFragm
 		else
 			$value = $this->get_value();
 		
-		$parameters = array($parameter_name => $value);
+		$parameters = [$parameter_name => $value];
 		return new SQLFragment($query, $parameters);
 	}
 

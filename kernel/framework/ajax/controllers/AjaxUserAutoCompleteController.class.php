@@ -14,7 +14,7 @@ class AjaxUserAutoCompleteController extends AbstractController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
-		$suggestions = array();
+		$suggestions = [];
 
 		try {
 			$result = PersistenceContext::get_querier()->select("SELECT display_name, level, user_groups FROM " . DB_TABLE_MEMBER . " WHERE display_name LIKE '" . str_replace('*', '%', $request->get_value('value', '')) . "%'");
@@ -23,7 +23,7 @@ class AjaxUserAutoCompleteController extends AbstractController
 			{
 				$user_group_color = User::get_group_color($row['user_groups'], $row['level']);
 
-				$profile_link = new LinkHTMLElement('', $row['display_name'], array('onclick' => 'return false;', 'style' => (!empty($user_group_color) ? 'color:' . $user_group_color : '')), UserService::get_level_class($row['level']));
+				$profile_link = new LinkHTMLElement('', $row['display_name'], ['onclick' => 'return false;', 'style' => (!empty($user_group_color) ? 'color:' . $user_group_color : '')], UserService::get_level_class($row['level']));
 
 				$suggestions[] = $profile_link->display();
 			}
@@ -31,7 +31,7 @@ class AjaxUserAutoCompleteController extends AbstractController
 		} catch (Exception $e) {
 		}
 
-		return new JSONResponse(array('suggestions' => $suggestions));
+		return new JSONResponse(['suggestions' => $suggestions]);
 	}
 }
 ?>

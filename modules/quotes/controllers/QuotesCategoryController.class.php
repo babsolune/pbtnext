@@ -46,7 +46,7 @@ class QuotesCategoryController extends DefaultModuleController
 			{
 				$category_thumbnail = $category->get_thumbnail()->rel();
 
-				$this->view->assign_block_vars('sub_categories_list', array(
+				$this->view->assign_block_vars('sub_categories_list', [
 					'C_CATEGORY_THUMBNAIL' 	  => !empty($category_thumbnail),
 					'C_MORE_THAN_ONE_ELEMENT' => $category->get_elements_number() > 1,
 
@@ -58,14 +58,14 @@ class QuotesCategoryController extends DefaultModuleController
 
 					'U_CATEGORY_THUMBNAIL' => $category_thumbnail,
 					'U_CATEGORY' 		   => QuotesUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel()
-				));
+				]);
 			}
 		}
 
 		$condition = 'WHERE id_category = :id_category AND approved = 1';
-		$parameters = array(
+		$parameters = [
 			'id_category' => $this->get_category()->get_id()
-		);
+		];
 
 		//Category content
 		$pagination = $this->get_pagination($condition, $parameters, $page, $subcategories_page);
@@ -75,14 +75,14 @@ class QuotesCategoryController extends DefaultModuleController
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = quotes.author_user_id
 		' . $condition . '
 		ORDER BY quotes.creation_date DESC
-		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
+		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, [
 			'number_items_per_page' => (int)$pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
-		)));
+		]));
 
 		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_ITEMS'                    => $result->get_rows_count() > 0,
 			'C_CATEGORY_DESCRIPTION'     => !empty($category_description),
 			'C_CATEGORY'                 => true,
@@ -104,7 +104,7 @@ class QuotesCategoryController extends DefaultModuleController
 
 			'U_CATEGORY_THUMBNAIL' => $this->get_category()->get_thumbnail()->rel(),
 			'U_EDIT_CATEGORY' 	   => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? QuotesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->get_category()->get_id(), 'quotes')->rel()
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{
@@ -119,7 +119,7 @@ class QuotesCategoryController extends DefaultModuleController
 	private function get_authorized_categories()
 	{
 		$category = $this->get_category();
-		$authorized_categories = array();
+		$authorized_categories = [];
 		if ($category->get_id() !== Category::ROOT_CATEGORY)
 		{
 			$authorized_categories[] = $category->get_id();
@@ -209,7 +209,7 @@ class QuotesCategoryController extends DefaultModuleController
 
 		$description = $this->get_category()->get_description();
 		if (empty($description))
-			$description = StringVars::replace_vars($this->lang['quotes.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->get_category()->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category.category', 'category-lang') . ' ' . $this->get_category()->get_name() : '');
+			$description = StringVars::replace_vars($this->lang['quotes.seo.description.root'], ['site' => GeneralConfig::load()->get_site_name()]) . ($this->get_category()->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category.category', 'category-lang') . ' ' . $this->get_category()->get_name() : '');
 		$graphical_environment->get_seo_meta_data()->set_description($description, $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(QuotesUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $page));
 

@@ -12,7 +12,7 @@ class VideoExtensionPointProvider extends ItemsModuleExtensionPointProvider
 {
 	public function comments()
 	{
-		return new CommentsTopics(array(new VideoCommentsTopic()));
+		return new CommentsTopics([new VideoCommentsTopic()]);
 	}
 
 	public function home_page()

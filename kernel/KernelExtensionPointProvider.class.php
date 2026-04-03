@@ -20,12 +20,12 @@ class KernelExtensionPointProvider extends ExtensionPointProvider
 
     public function commands()
     {
-        return new CLICommandsList(array('help' => 'CLIHelpCommand', 'cache' => 'CLICacheCommand', 'htaccess' => 'CLIHtaccessCommand'));
+        return new CLICommandsList(['help' => 'CLIHelpCommand', 'cache' => 'CLICacheCommand', 'htaccess' => 'CLIHtaccessCommand']);
     }
 
     public function url_mappings()
     {
-        return new UrlMappings(array(
+        return new UrlMappings([
             new DispatcherUrlMapping('/admin/cache/index.php'),
             new DispatcherUrlMapping('/admin/config/index.php'),
             new DispatcherUrlMapping('/admin/content/index.php'),
@@ -39,12 +39,12 @@ class KernelExtensionPointProvider extends ExtensionPointProvider
             new DispatcherUrlMapping('/admin/smileys/index.php'),
             new DispatcherUrlMapping('/admin/themes/index.php'),
             new DispatcherUrlMapping('/syndication/index.php')
-        ));
+        ]);
     }
 
     public function extended_field()
     {
-        return new ExtendedFields(array(
+        return new ExtendedFields([
             new MemberShortTextExtendedField(),
             new MemberHalfLongTextExtendedField(),
             new MemberLongTextExtendedField(),
@@ -57,13 +57,13 @@ class KernelExtensionPointProvider extends ExtensionPointProvider
             new MemberUserBornExtendedField(),
             new MemberUserPMToMailExtendedField(),
             new MemberUserSexExtendedField()
-        ));
+        ]);
     }
 
     public function content_sharing_actions_menu_links()
     {
         $config = ContentManagementConfig::load();
-        $links = array();
+        $links = [];
 
         if ($config->is_content_sharing_email_enabled())
             $links[] = new ContentSharingActionsMenuLink('mail', LangLoader::get_message('common.share.email', 'common-lang'), new Url('mailto:?'. (defined('TITLE') ? 'subject=' . rawurlencode(TITLE) . '&' : '') . 'body=' . (rawurlencode(HOST . REWRITED_SCRIPT))), (new FileTemplate('framework/content/share/share_email_image_render.tpl'))->render(), null, '', true);

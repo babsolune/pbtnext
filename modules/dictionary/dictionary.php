@@ -47,10 +47,10 @@ if (retrieve(GET, 'add', false) || retrieve(POST, 'preview', false) || retrieve(
 	ORDER BY id");
 	while ($row_cat = $result_cat->fetch())
 	{
-		$view->assign_block_vars('cat_list_add', array(
+		$view->assign_block_vars('cat_list_add', [
 			'VALUE' => $row_cat['id'],
 			'NAME'  => stripslashes($row_cat['name']),
-		));
+		]);
 	}
 	$result_cat->dispose();
 
@@ -60,22 +60,22 @@ if (retrieve(GET, 'add', false) || retrieve(POST, 'preview', false) || retrieve(
 	$counterpart_editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$counterpart_editor->set_identifier('counterpart');
 
-	$view->put_all(array(
+	$view->put_all([
 		'C_EDIT'     => DictionaryAuthorizationsService::check_authorizations()->write() || DictionaryAuthorizationsService::check_authorizations()->contribution(),
 		'C_ADD_ITEM' => true,
 
 		'KERNEL_EDITOR' => $contents_editor->display(),
-	));
+	]);
 
 	$c_contrib = !DictionaryAuthorizationsService::check_authorizations()->write() && DictionaryAuthorizationsService::check_authorizations()->contribution();
 
-	$view->put_all(array(
+	$view->put_all([
 		'C_CONTRIBUTION' => $c_contrib,
 		'C_APPROVED'     => true,
 
 		'CONTRIBUTION_EDITOR' => $counterpart_editor->display(),
 		'REWRITE'             => (int)ServerEnvironmentConfig::load()->is_url_rewriting_enabled(),
-	));
+	]);
 
 	if (retrieve(POST, 'preview', false)) // prévisualisation
 	{
@@ -89,7 +89,7 @@ if (retrieve(GET, 'add', false) || retrieve(POST, 'preview', false) || retrieve(
 		try {
 			$cat_name = PersistenceContext::get_querier()->get_column_value(DictionarySetup::$dictionary_cat_table, 'name', 'WHERE id = ' . $category_id);
 		} catch (RowNotFoundException $e) {}
-		$view->put_all(array(
+		$view->put_all([
 			'C_ITEM_PREVIEW' => true,
 
 			'WORD'            => stripslashes($word),
@@ -98,7 +98,7 @@ if (retrieve(GET, 'add', false) || retrieve(POST, 'preview', false) || retrieve(
 			'CONTENT'         => $contents_preview,
 			'CATEGORY_NAME'   => $cat_name,
 			'CATEGORY_ID'     => $category_id,
-		));
+		]);
 	}
 	elseif (retrieve(POST, 'valid', false)) // Add
 	{
@@ -111,22 +111,22 @@ if (retrieve(GET, 'add', false) || retrieve(POST, 'preview', false) || retrieve(
 
 		$row = $row1 = '';
 		try {
-			$row = PersistenceContext::get_querier()->select_single_row(DictionarySetup::$dictionary_table, array('id', 'word', 'description'), 'WHERE id=:id', array('id' => $id));
+			$row = PersistenceContext::get_querier()->select_single_row(DictionarySetup::$dictionary_table, ['id', 'word', 'description'], 'WHERE id=:id', ['id' => $id]);
 		} catch (RowNotFoundException $e) {}
 
 		try {
-			$row1 = PersistenceContext::get_querier()->select_single_row(DictionarySetup::$dictionary_table, array('id', 'word', 'description', 'approved'), 'WHERE word=:word', array('word' => $word));
+			$row1 = PersistenceContext::get_querier()->select_single_row(DictionarySetup::$dictionary_table, ['id', 'word', 'description', 'approved'], 'WHERE word=:word', ['word' => $word]);
 		} catch (RowNotFoundException $e) {}
 
 		if ($row && $row['id'] != '')
 		{
-			PersistenceContext::get_querier()->update(DictionarySetup::$dictionary_table, array(
+			PersistenceContext::get_querier()->update(DictionarySetup::$dictionary_table, [
 				'cat' => addslashes($contents_cat),
 				'description' => addslashes($contents),
 				'word' => $word,
 				'approved' => (int)DictionaryAuthorizationsService::check_authorizations()->write(),
 				'timestamp' => $timestamp
-			), 'WHERE id=:id', array('id' => $row['id']));
+			], 'WHERE id=:id', ['id' => $row['id']]);
 
 			$contributions = ContributionService::find_by_criteria('dictionary', $row['id']);
 
@@ -153,14 +153,14 @@ if (retrieve(GET, 'add', false) || retrieve(POST, 'preview', false) || retrieve(
 		}
 		else
 		{
-			$result = PersistenceContext::get_querier()->insert(DictionarySetup::$dictionary_table, array(
+			$result = PersistenceContext::get_querier()->insert(DictionarySetup::$dictionary_table, [
 				'word' => $word,
 				'cat' => addslashes($contents_cat),
 				'description' => addslashes($contents),
 				'user_id' => $user_id,
 				'approved' => (int)DictionaryAuthorizationsService::check_authorizations()->write(),
 				'timestamp' => $timestamp
-			));
+			]);
 
 			$last_msg_id = $result->get_last_inserted_id();
 
@@ -195,14 +195,14 @@ if (retrieve(GET, 'add', false) || retrieve(POST, 'preview', false) || retrieve(
 		FROM ".PREFIX."dictionary q
 		LEFT JOIN ".PREFIX."member m ON m.user_id = q.user_id
 		LEFT JOIN ".PREFIX."dictionary_cat c ON q.cat = c.id
-		WHERE q.id = :id", array('id' => $id_get));
+		WHERE q.id = :id", ['id' => $id_get]);
 
 		if (empty($row)) {
 			$error_controller = PHPBoostErrors::unexisting_page();
 			DispatchManager::redirect($error_controller);
 		}
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_EDIT'         => true,
 			'C_ADD_ITEM'     => false,
 			'C_CONTRIBUTION' => false,
@@ -214,7 +214,7 @@ if (retrieve(GET, 'add', false) || retrieve(POST, 'preview', false) || retrieve(
 			'APPROVED'      => '',
 			'CATEGORY_ID'   => $row['cat'],
 			'CATEGORY_NAME' => !empty($row['cat_name']) ? stripslashes($row['cat_name']) : '',
-		));
+		]);
 	}
 	DictionaryCache::invalidate(); // Refresh cache
 	$view->display();
@@ -234,7 +234,7 @@ elseif ($id_get = retrieve(GET, 'del', 0, TINTEGER)) // Delete
 			$error_controller = PHPBoostErrors::user_not_authorized();
 			DispatchManager::redirect($error_controller);
 		}
-		PersistenceContext::get_querier()->delete(DictionarySetup::$dictionary_table, 'WHERE id=:id', array('id' => $id_get));
+		PersistenceContext::get_querier()->delete(DictionarySetup::$dictionary_table, 'WHERE id=:id', ['id' => $id_get]);
 		DictionaryCache::invalidate(); // Refresh mini-module cache.
 		AppContext::get_response()->redirect(HOST . DIR . '/dictionary/dictionary.php');
 	}

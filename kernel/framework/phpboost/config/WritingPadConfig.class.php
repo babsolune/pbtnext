@@ -44,9 +44,9 @@ class WritingPadConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		return array(
+		return [
 			'content' => LangLoader::get_message('admin.writing.pad.clue', 'admin-lang')
-		);
+		];
 	}
 
 	/**

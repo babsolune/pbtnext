@@ -16,7 +16,7 @@ class HTTPResponseCustom
 {
 	const PROTOCOL = 'HTTP/2';
 
-	private static $status_list = array(
+	private static $status_list = [
 		'101' => 'Switching Protocols',
 		'200' => 'OK',
 		'201' => 'Created',
@@ -56,7 +56,7 @@ class HTTPResponseCustom
 		'502' => 'Bad Gateway',
 		'503' => 'Service Unavailable',
 		'504' => 'Gateway Timeout',
-		'505' => 'HTTP Version Not Supported');
+		'505' => 'HTTP Version Not Supported'];
 
 	private $last_ob_content_before_clean = '';
 

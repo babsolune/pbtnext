@@ -17,7 +17,7 @@ class ServerStatusExtensionPointProvider extends ExtensionPointProvider
 
 	public function commands()
 	{
-		return new CLICommandsList(array('check-servers-status' => 'CLIServerStatusCheckServersStatusCommand'));
+		return new CLICommandsList(['check-servers-status' => 'CLIServerStatusCheckServersStatusCommand']);
 	}
 
 	public function css_files()
@@ -30,7 +30,7 @@ class ServerStatusExtensionPointProvider extends ExtensionPointProvider
 
 	public function menus()
 	{
-		return new ModuleMenus(array(new ServerStatusModuleMiniMenu()));
+		return new ModuleMenus([new ServerStatusModuleMiniMenu()]);
 	}
 
 	public function tree_links()
@@ -40,7 +40,7 @@ class ServerStatusExtensionPointProvider extends ExtensionPointProvider
 
 	public function url_mappings()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/ServerStatus/index.php')));
+		return new UrlMappings([new DispatcherUrlMapping('/ServerStatus/index.php')]);
 	}
 }
 ?>

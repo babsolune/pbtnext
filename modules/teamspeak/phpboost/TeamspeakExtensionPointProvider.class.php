@@ -31,7 +31,7 @@ class TeamspeakExtensionPointProvider extends ExtensionPointProvider
 
 	public function menus()
 	{
-		return new ModuleMenus(array(new TeamspeakModuleMiniMenu()));
+		return new ModuleMenus([new TeamspeakModuleMiniMenu()]);
 	}
 
 	public function tree_links()
@@ -41,7 +41,7 @@ class TeamspeakExtensionPointProvider extends ExtensionPointProvider
 
 	public function url_mappings()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/teamspeak/index.php')));
+		return new UrlMappings([new DispatcherUrlMapping('/teamspeak/index.php')]);
 	}
 }
 ?>

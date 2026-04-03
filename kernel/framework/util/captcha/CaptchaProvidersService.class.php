@@ -28,7 +28,7 @@ class CaptchaProvidersService
 
 	public static function get_captchas()
 	{
-		$captchas = array();
+		$captchas = [];
 		foreach (self::get_extensions_point() as $id => $provider)
 		{
 			$captchas[$id] = $provider;

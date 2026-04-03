@@ -10,24 +10,24 @@
 
 class ForumRanksCache implements CacheData
 {
-	private $ranks = array();
+	private $ranks = [];
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{
-		$this->ranks = array();
+		$this->ranks = [];
 
-		$result = PersistenceContext::get_querier()->select_rows(PREFIX . 'forum_ranks', array('id', 'name', 'msg', 'icon', 'special'), 'ORDER BY msg ASC');
+		$result = PersistenceContext::get_querier()->select_rows(PREFIX . 'forum_ranks', ['id', 'name', 'msg', 'icon', 'special'], 'ORDER BY msg ASC');
 		while ($row = $result->fetch())
 		{
-			$this->ranks[$row['msg']] = array(
+			$this->ranks[$row['msg']] = [
 				'id'      => $row['id'],
 				'name'    => $row['name'],
 				'icon'    => $row['icon'],
 				'special' => $row['special']
-			);
+			];
 		}
 		$result->dispose();
 	}

@@ -37,7 +37,7 @@ abstract class AbstractFormButton implements FormButton
 	public function display()
 	{
 		$template = $this->get_template();
-		$template->put_all(array(
+		$template->put_all([
 			'LABEL' => $this->label,
 			'HTML_NAME' => $this->get_html_name(),
 			'CSS_CLASS' => $this->css_class,
@@ -45,7 +45,7 @@ abstract class AbstractFormButton implements FormButton
 			'DATA_CONFIRMATION' => $this->data_confirmation,
 			'TYPE' => $this->type,
 			'ONCLICK_ACTION' => $this->onclick_action
-		));
+		]);
 		return $template;
 	}
 

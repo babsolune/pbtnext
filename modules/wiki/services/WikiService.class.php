@@ -78,7 +78,7 @@ class WikiService
      */
     public static function update(WikiItem $item)
     {
-        self::$db_querier->update(WikiSetup::$wiki_articles_table, $item->get_properties(), 'WHERE id=:id', array('id' => $item->get_id()));
+        self::$db_querier->update(WikiSetup::$wiki_articles_table, $item->get_properties(), 'WHERE id=:id', ['id' => $item->get_id()]);
     }
 
     /**
@@ -87,7 +87,7 @@ class WikiService
      */
     public static function update_content(WikiItemContent $item_content)
     {
-        self::$db_querier->update(WikiSetup::$wiki_contents_table, $item_content->get_properties(), 'WHERE content_id=:id', array('id' => $item_content->get_content_id()));
+        self::$db_querier->update(WikiSetup::$wiki_contents_table, $item_content->get_properties(), 'WHERE content_id=:id', ['id' => $item_content->get_content_id()]);
     }
 
     /**
@@ -97,12 +97,12 @@ class WikiService
      */
     public static function update_position($id, $position)
     {
-        self::$db_querier->update(WikiSetup::$wiki_articles_table, array('i_order' => $position), 'WHERE id=:id', array('id' => $id));
+        self::$db_querier->update(WikiSetup::$wiki_articles_table, ['i_order' => $position], 'WHERE id=:id', ['id' => $id]);
     }
 
     public static function update_views_number(WikiItem $item)
     {
-        self::$db_querier->update(WikiSetup::$wiki_articles_table, array('views_number' => $item->get_views_number()), 'WHERE id=:id', array('id' => $item->get_id()));
+        self::$db_querier->update(WikiSetup::$wiki_articles_table, ['views_number' => $item->get_views_number()], 'WHERE id=:id', ['id' => $item->get_id()]);
     }
 
     /**
@@ -120,14 +120,14 @@ class WikiService
 
         if ($content_id == 0)
         {
-            self::$db_querier->delete(WikiSetup::$wiki_articles_table, 'WHERE id=:id', array('id' => $id));
+            self::$db_querier->delete(WikiSetup::$wiki_articles_table, 'WHERE id=:id', ['id' => $id]);
         }
         else
         {
-            self::$db_querier->delete(WikiSetup::$wiki_contents_table, 'WHERE item_id=:id AND content_id = :content_id', array('id' => $id, 'content_id' => $content_id));
+            self::$db_querier->delete(WikiSetup::$wiki_contents_table, 'WHERE item_id=:id AND content_id = :content_id', ['id' => $id, 'content_id' => $content_id]);
         }
 
-        self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'wiki', 'id' => $id));
+        self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', ['module' => 'wiki', 'id' => $id]);
 
         self::delete_tracked_item($id);
 
@@ -148,7 +148,7 @@ class WikiService
             $controller = PHPBoostErrors::user_in_read_only();
             DispatchManager::redirect($controller);
         }
-        self::$db_querier->update(WikiSetup::$wiki_contents_table, array('active_content' => '1'), 'WHERE item_id = :id AND content_id = :content_id', array('id' => $id, 'content_id' => $content_id));
+        self::$db_querier->update(WikiSetup::$wiki_contents_table, ['active_content' => '1'], 'WHERE item_id = :id AND content_id = :content_id', ['id' => $id, 'content_id' => $content_id]);
     }
 
     /**
@@ -163,11 +163,11 @@ class WikiService
         LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = c.author_user_id
         LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = i.id AND notes.module_name = :module_id
         LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = i.id AND note.module_name = :module_id AND note.user_id = :current_user_id
-        WHERE i.id = :id AND i.id = c.item_id AND c.active_content = 1', array(
+        WHERE i.id = :id AND i.id = c.item_id AND c.active_content = 1', [
             'module_id'       => self::$module_id,
             'id'              => $id,
             'current_user_id' => AppContext::get_current_user()->get_id()
-        ));
+        ]);
 
         $item = new WikiItem();
         $item->set_properties($row);
@@ -176,7 +176,7 @@ class WikiService
 
     public static function get_item_content($item_id)
     {
-        $content_items = array();
+        $content_items = [];
 
         $result = self::$db_querier->select('SELECT *
         FROM ' . WikiSetup::$wiki_articles_table .' i
@@ -184,11 +184,11 @@ class WikiService
         LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = c.author_user_id
         LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = i.id AND notes.module_name = :module_id
         LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = i.id AND note.module_name = :module_id AND note.user_id = :current_user_id
-        WHERE c.item_id = :id', array(
+        WHERE c.item_id = :id', [
             'module_id'       => self::$module_id,
             'id'              => $item_id,
             'current_user_id' => AppContext::get_current_user()->get_id()
-        ));
+        ]);
 
         while ($row = $result->fetch()) {
             $content_item = new WikiItemContent();
@@ -212,12 +212,12 @@ class WikiService
         LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = c.author_user_id
         LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = i.id AND notes.module_name = :module_id
         LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = i.id AND note.module_name = :module_id AND note.user_id = :current_user_id
-        WHERE i.id = :id AND i.id = c.item_id AND c.content_id = :content_id', array(
+        WHERE i.id = :id AND i.id = c.item_id AND c.content_id = :content_id', [
             'module_id'       => self::$module_id,
             'id'              => $id,
             'content_id'      => $content_id,
             'current_user_id' => AppContext::get_current_user()->get_id()
-        ));
+        ]);
 
         $item = new WikiItem();
         $item->set_properties($row);
@@ -232,13 +232,13 @@ class WikiService
         LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = c.author_user_id
         LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = i.id AND notes.module_name = :module_id
         LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = i.id AND note.module_name = :module_id AND note.user_id = :current_user_id
-        WHERE i.id = :id AND i.id = c.item_id', array(
+        WHERE i.id = :id AND i.id = c.item_id', [
             'module_id'       => self::$module_id,
             'id'              => $id,
             'current_user_id' => AppContext::get_current_user()->get_id()
-        ));
+        ]);
 
-        $all_content_ids = array();
+        $all_content_ids = [];
         while ($row = $result->fetch())
         {
             $all_content_ids[] = $row['content_id'];
@@ -250,12 +250,12 @@ class WikiService
         LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = c.author_user_id
         LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = i.id AND notes.module_name = :module_id
         LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = i.id AND note.module_name = :module_id AND note.user_id = :current_user_id
-        WHERE i.id = :id AND i.id = c.item_id AND c.content_id = :content_id', array(
+        WHERE i.id = :id AND i.id = c.item_id AND c.content_id = :content_id', [
             'module_id'       => self::$module_id,
             'id'              => $id,
             'content_id'      => min($all_content_ids),
             'current_user_id' => AppContext::get_current_user()->get_id()
-        ));
+        ]);
 
         $content_item = new WikiItemContent();
         $content_item->set_properties($row);
@@ -269,10 +269,10 @@ class WikiService
      */
     public static function track_item($item_id, $user_id)
     {
-        $result = self::$db_querier->insert(WikiSetup::$wiki_favorites_table, array(
+        $result = self::$db_querier->insert(WikiSetup::$wiki_favorites_table, [
             'track_item_id' => $item_id,
             'track_user_id' => $user_id
-        ));
+        ]);
         return $result->get_last_inserted_id();
     }
 
@@ -283,10 +283,10 @@ class WikiService
      */
     public static function untrack_item($item_id, $user_id)
     {
-        self::$db_querier->delete(WikiSetup::$wiki_favorites_table, 'WHERE track_item_id = :item_id AND track_user_id = :user_id', array(
+        self::$db_querier->delete(WikiSetup::$wiki_favorites_table, 'WHERE track_item_id = :item_id AND track_user_id = :user_id', [
             'item_id' => $item_id,
             'user_id' => $user_id
-        ));
+        ]);
     }
 
     /**
@@ -295,9 +295,9 @@ class WikiService
      */
     public static function delete_tracked_item($item_id)
     {
-        self::$db_querier->delete(WikiSetup::$wiki_favorites_table, 'WHERE track_item_id = :track_item_id', array(
+        self::$db_querier->delete(WikiSetup::$wiki_favorites_table, 'WHERE track_item_id = :track_item_id', [
             'track_item_id' => $item_id
-        ));
+        ]);
     }
 
     public static function get_tracked_items($id)
@@ -306,11 +306,11 @@ class WikiService
             FROM ' . WikiSetup::$wiki_favorites_table . ' f'
         );
 
-        $all_tracked_ids = array();
+        $all_tracked_ids = [];
         while ($row = $result->fetch())
         {
             if($row['track_item_id'] == $id)
-                $all_tracked_ids[] = array($row['track_item_id'], $row['track_user_id']);
+                $all_tracked_ids[] = [$row['track_item_id'], $row['track_user_id']];
         }
         return $all_tracked_ids;
     }

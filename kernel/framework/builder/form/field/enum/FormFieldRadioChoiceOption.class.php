@@ -15,7 +15,7 @@
 
 class FormFieldRadioChoiceOption extends AbstractFormFieldEnumOption
 {
-	public function __construct($label, $raw_value, $field_choice_options = array())
+	public function __construct($label, $raw_value, $field_choice_options = [])
 	{
 		parent::__construct($label, $raw_value, $field_choice_options);
 	}
@@ -28,14 +28,14 @@ class FormFieldRadioChoiceOption extends AbstractFormFieldEnumOption
 
 		$tpl = new FileTemplate('framework/builder/form/fieldelements/FormFieldRadioChoiceOption.tpl');
 
-		$tpl->put_all(array(
+		$tpl->put_all([
 			'ID' => $this->get_option_id(),
 			'NAME' => $this->get_field_id(),
 			'VALUE' => $this->get_raw_value(),
 			'C_CHECKED' => $this->is_active(),
 			'C_DISABLE' => $this->is_disable(),
 			'LABEL' => $this->get_label()
-		));
+		]);
 
 		return $tpl;
 	}

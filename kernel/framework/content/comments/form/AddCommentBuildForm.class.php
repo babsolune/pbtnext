@@ -57,27 +57,27 @@ class AddCommentBuildForm extends AbstractCommentsBuildForm
 		if (!$this->user->check_level(User::MEMBER_LEVEL))
 		{
 			$fieldset->add_field(new FormFieldTextEditor('name', $lang['form.name'], '',
-				array(
+				[
 					'maxlength' => 25, 'required' => true,
 					'placeholder' => $lang['comment.form.visitor.name']
-				)
+				]
 			));
 
 			if($this->comments_configuration->is_visitor_email_enabled())
 				$fieldset->add_field(new FormFieldMailEditor('visitor_email', $lang['form.email'], '',
-					array(
+					[
 						'maxlength' => 25, 'required' => true,
 						'placeholder' => $lang['comment.form.visitor.email'],
-						'description' => $lang['comment.form.visitor.email.clue'])
+						'description' => $lang['comment.form.visitor.email.clue']]
 				));
 		}
 
-		$fieldset->add_field(new FormFieldRichTextEditor('message', $lang['form.content'], '', array(
+		$fieldset->add_field(new FormFieldRichTextEditor('message', $lang['form.content'], '', [
 			'formatter' => $this->get_formatter(),
-			'rows' => 10, 'cols' => 47, 'required' => true),
-			array((!$this->user->is_moderator() && !$this->user->is_admin() ? new FormFieldConstraintMaxLinks($this->comments_configuration->get_max_links_comment(), true) : ''),
+			'rows' => 10, 'cols' => 47, 'required' => true],
+			[(!$this->user->is_moderator() && !$this->user->is_admin() ? new FormFieldConstraintMaxLinks($this->comments_configuration->get_max_links_comment(), true) : ''),
 				new FormFieldConstraintAntiFlood(CommentsManager::get_last_comment_added($this->user->get_id()))
-			)
+			]
 		));
 
 		$form->add_button($submit_button = new FormButtonDefaultSubmit());

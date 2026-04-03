@@ -71,7 +71,7 @@ class DictionarySetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(self::$dictionary_table, self::$dictionary_cat_table));
+		PersistenceContext::get_dbms_utils()->drop([self::$dictionary_table, self::$dictionary_cat_table]);
 	}
 
 	private function delete_configuration()
@@ -88,35 +88,35 @@ class DictionarySetup extends DefaultModuleSetup
 
 	private function create_dictionary_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'word' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'cat' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'description' => array('type' => 'text', 'length' => 65000, 'notnull' => 1),
-			'approved' => array('type' => 'integer', 'length' => 1, 'default' => 0),
-			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array(
-				'description' => array('type' => 'fulltext', 'fields' => 'description'),
-				'word' => array('type' => 'fulltext', 'fields' => 'word')
-			)
-		);
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'word' => ['type' => 'string', 'length' => 255, 'default' => "''"],
+			'cat' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'description' => ['type' => 'text', 'length' => 65000, 'notnull' => 1],
+			'approved' => ['type' => 'integer', 'length' => 1, 'default' => 0],
+			'user_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'timestamp' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0]
+		];
+		$options = [
+			'primary' => ['id'],
+			'indexes' => [
+				'description' => ['type' => 'fulltext', 'fields' => 'description'],
+				'word' => ['type' => 'fulltext', 'fields' => 'word']
+			]
+		];
 		PersistenceContext::get_dbms_utils()->create_table(self::$dictionary_table, $fields, $options);
 	}
 
 	private function create_dictionary_cat_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'name' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'images' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''")
-		);
-		$options = array(
-			'primary' => array('id')
-		);
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'name' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'images' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"]
+		];
+		$options = [
+			'primary' => ['id']
+		];
 
 		PersistenceContext::get_dbms_utils()->create_table(self::$dictionary_cat_table, $fields, $options);
 	}
@@ -130,26 +130,26 @@ class DictionarySetup extends DefaultModuleSetup
 
 	private function insert_dictionary_cat_data()
 	{
-		$this->querier->insert(self::$dictionary_cat_table, array(
+		$this->querier->insert(self::$dictionary_cat_table, [
 			'id' => 1,
 			'name' => $this->messages['category.1.name'],
 			'images' => ''
-		));
-		$this->querier->insert(self::$dictionary_cat_table, array(
+		]);
+		$this->querier->insert(self::$dictionary_cat_table, [
 			'id' => 2,
 			'name' => $this->messages['category.2.name'],
 			'images' => ''
-		));
-		$this->querier->insert(self::$dictionary_cat_table, array(
+		]);
+		$this->querier->insert(self::$dictionary_cat_table, [
 			'id' => 3,
 			'name' => $this->messages['category.3.name'],
 			'images' => ''
-		));
+		]);
 	}
 
 	private function insert_dictionary_data()
 	{
-		$this->querier->insert(self::$dictionary_table, array(
+		$this->querier->insert(self::$dictionary_table, [
 			'id' => 1,
 			'word' => $this->messages['word.1.name'],
 			'cat' => 1,
@@ -157,8 +157,8 @@ class DictionarySetup extends DefaultModuleSetup
 			'approved' => 1,
 			'user_id' => 1,
 			'timestamp' => time()
-		));
-		$this->querier->insert(self::$dictionary_table, array(
+		]);
+		$this->querier->insert(self::$dictionary_table, [
 			'id' => 2,
 			'word' => $this->messages['word.2.name'],
 			'cat' => 1,
@@ -166,8 +166,8 @@ class DictionarySetup extends DefaultModuleSetup
 			'approved' => 1,
 			'user_id' => 1,
 			'timestamp' => time()
-		));
-		$this->querier->insert(self::$dictionary_table, array(
+		]);
+		$this->querier->insert(self::$dictionary_table, [
 			'id' => 3,
 			'word' => $this->messages['word.3.name'],
 			'cat' => 2,
@@ -175,8 +175,8 @@ class DictionarySetup extends DefaultModuleSetup
 			'approved' => 1,
 			'user_id' => 1,
 			'timestamp' => time()
-		));
-		$this->querier->insert(self::$dictionary_table, array(
+		]);
+		$this->querier->insert(self::$dictionary_table, [
 			'id' => 4,
 			'word' => $this->messages['word.4.name'],
 			'cat' => 2,
@@ -184,8 +184,8 @@ class DictionarySetup extends DefaultModuleSetup
 			'approved' => 1,
 			'user_id' => 1,
 			'timestamp' => time()
-		));
-		$this->querier->insert(self::$dictionary_table, array(
+		]);
+		$this->querier->insert(self::$dictionary_table, [
 			'id' => 5,
 			'word' => $this->messages['word.5.name'],
 			'cat' => 3,
@@ -193,7 +193,7 @@ class DictionarySetup extends DefaultModuleSetup
 			'approved' => 1,
 			'user_id' => 1,
 			'timestamp' => time()
-		));
+		]);
 	}
 }
 ?>

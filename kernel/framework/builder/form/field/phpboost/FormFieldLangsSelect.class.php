@@ -23,14 +23,14 @@ class FormFieldLangsSelect extends FormFieldSimpleSelectChoice
      * @param array $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
      * @param FormFieldConstraint List of the constraints
      */
-    public function __construct($id, $label, $value = 0, $field_options = array(), array $constraints = array())
+    public function __construct($id, $label, $value = 0, $field_options = [], array $constraints = [])
     {
         parent::__construct($id, $label, $value, $this->generate_options(), $field_options, $constraints);
     }
 
     private function generate_options()
 	{
-		$options = array();
+		$options = [];
 		foreach (LangsManager::get_activated_langs_map_sorted_by_localized_name() as $lang)
 		{
 			if ($this->check_authorizations)

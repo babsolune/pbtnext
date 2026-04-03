@@ -21,7 +21,7 @@ class SEOMetaData
 	private $canonical_url;
 	private $picture_url;
 	private $page_type = 'website';
-	private $additionnal_properties = array();
+	private $additionnal_properties = [];
 
 	public function set_title($title, $section = '', $page = 1)
 	{

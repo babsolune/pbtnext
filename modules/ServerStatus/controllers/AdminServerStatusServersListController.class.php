@@ -28,21 +28,21 @@ class AdminServerStatusServersListController extends DefaultAdminModuleControlle
 		$servers_number = 0;
 		foreach ($this->config->get_servers_list() as $id => $server)
 		{
-			$this->view->assign_block_vars('servers', array(
+			$this->view->assign_block_vars('servers', [
 				'C_ICON'    => $server->has_medium_icon(),
 				'C_DISPLAY' => $server->is_displayed(),
 				'ID'        => $id,
 				'NAME'      => $server->get_name(),
 				'ICON'      => $server->get_medium_icon(),
 				'U_EDIT'    => ServerStatusUrlBuilder::edit_server($id)->rel()
-			));
+			]);
 			$servers_number++;
 		}
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_SERVERS' => $servers_number,
 			'C_SEVERAL_SERVERS' => $servers_number > 1
-		));
+		]);
 
 		return new AdminServerStatusDisplayResponse($this->view, $this->lang['server.management']);
 	}
@@ -59,7 +59,7 @@ class AdminServerStatusServersListController extends DefaultAdminModuleControlle
 	private function update_position(HTTPRequestCustom $request)
 	{
 		$servers = $this->config->get_servers_list();
-		$sorted_servers_list = array();
+		$sorted_servers_list = [];
 
 		$servers_list = json_decode(TextHelper::html_entity_decode($request->get_value('tree')));
 		foreach($servers_list as $position => $tree)

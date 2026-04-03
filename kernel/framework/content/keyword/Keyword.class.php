@@ -47,11 +47,11 @@ class Keyword
 
 	public function get_properties()
 	{
-		return array(
+		return [
 			'id' => $this->get_id(),
 			'name' => $this->get_name(),
 			'rewrited_name' => $this->get_rewrited_name(),
-		);
+		];
 	}
 
 	public function set_properties(array $properties)

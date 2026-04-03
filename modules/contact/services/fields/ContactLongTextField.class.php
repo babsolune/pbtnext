@@ -13,7 +13,7 @@ class ContactLongTextField extends AbstractContactField
 	public function __construct()
 	{
 		parent::__construct();
-		$this->set_disable_fields_configuration(array('possible_values', 'default_value_small'));
+		$this->set_disable_fields_configuration(['possible_values', 'default_value_small']);
 		$this->set_name(LangLoader::get_message('user.field.type.long.text', 'user-lang'));
 	}
 
@@ -21,9 +21,9 @@ class ContactLongTextField extends AbstractContactField
 	{
 		$fieldset = $field->get_fieldset();
 
-		$fieldset->add_field(new FormFieldRichTextEditor($field->get_field_name(), $field->get_name(), $field->get_default_value(), array(
-			'required' => (bool)$field->is_required(), 'rows' => 10, 'cols' => 47, 'description' => $field->get_description()),
-			array($this->constraint($field->get_regex()))
+		$fieldset->add_field(new FormFieldRichTextEditor($field->get_field_name(), $field->get_name(), $field->get_default_value(), [
+			'required' => (bool)$field->is_required(), 'rows' => 10, 'cols' => 47, 'description' => $field->get_description()],
+			[$this->constraint($field->get_regex())]
 		));
 	}
 

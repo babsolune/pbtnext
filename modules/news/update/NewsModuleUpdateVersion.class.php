@@ -15,8 +15,8 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('news');
 
-		$this->content_tables = array(PREFIX . 'news');
-		self::$delete_old_files_list = array(
+		$this->content_tables = [PREFIX . 'news'];
+		self::$delete_old_files_list = [
 			'/phpboost/NewsComments.class.php',
 			'/phpboost/NewsCommentsTopic.class.php',
 			'/phpboost/NewsExtensionPointProvider.class.php',
@@ -31,18 +31,18 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 			'/templates/NewsFormFieldSelectSources.tpl',
 			'/templates/NewsDisplayNewsController.tpl',
 			'/templates/NewsDisplaySeveralNewsController.tpl',
-		);
-		self::$delete_old_folders_list = array(
+		];
+		self::$delete_old_folders_list = [
 			'/controllers',
 			'/fields',
 			'/services',
 			'/util'
-		);
+		];
 
-		$this->database_columns_to_modify = array(
-			array(
+		$this->database_columns_to_modify = [
+			[
 				'table_name' => PREFIX . 'news',
-				'columns' => array(
+				'columns' => [
 					'name'             => 'title VARCHAR(255) NOT NULL DEFAULT ""',
 					'rewrited_name'    => 'rewrited_title VARCHAR(255) NOT NULL DEFAULT ""',
 					'contents'         => 'content MEDIUMTEXT',
@@ -53,24 +53,24 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 					'end_date'         => 'publishing_end_date INT(11) NOT NULL DEFAULT 0',
 					'approbation_type' => 'published INT(1) NOT NULL DEFAULT 0',
 					'number_view'      => 'views_number INT(11) NOT NULL DEFAULT 0',
-				)
-			),
-			array(
+				]
+			],
+			[
 				'table_name' => PREFIX . 'news_cats',
-				'columns' => array(
+				'columns' => [
 					'image' => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""'
-				)
-			)
-		);
+				]
+			]
+		];
 
-		$this->database_columns_to_delete = array(
-			array(
+		$this->database_columns_to_delete = [
+			[
 				'table_name' => PREFIX . 'news',
-				'columns' => array(
+				'columns' => [
 					'archive'
-				)
-			)
-		); 
+				]
+			]
+		]; 
 	}
 
 	protected function execute_module_specific_changes()
@@ -82,7 +82,7 @@ class NewsModuleUpdateVersion extends ModuleUpdateVersion
 
 		while ($row = $new_date->fetch())
 		{
-			$this->querier->update(PREFIX . 'news', array('update_date' => $row['creation_date']), 'WHERE update_date = 0 AND id = :id', array('id' => $row['id']));
+			$this->querier->update(PREFIX . 'news', ['update_date' => $row['creation_date']], 'WHERE update_date = 0 AND id = :id', ['id' => $row['id']]);
 		}
 		$new_date->dispose();
 	}

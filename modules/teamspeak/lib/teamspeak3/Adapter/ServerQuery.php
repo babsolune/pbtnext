@@ -57,7 +57,7 @@ class TeamSpeak3_Adapter_ServerQuery extends TeamSpeak3_Adapter_Abstract
    *
    * @var array
    */
-  protected $block = array("help");
+  protected $block = ["help"];
 
   /**
    * Connects the TeamSpeak3_Transport_Abstract object and performs initial actions on the remote
@@ -128,7 +128,7 @@ class TeamSpeak3_Adapter_ServerQuery extends TeamSpeak3_Adapter_Abstract
 
     TeamSpeak3_Helper_Signal::getInstance()->emit("serverqueryCommandStarted", $cmd);
 
-    $rpl = array();
+    $rpl = [];
 
     do {
       $str = $this->getTransport()->readLine();
@@ -171,10 +171,10 @@ class TeamSpeak3_Adapter_ServerQuery extends TeamSpeak3_Adapter_Abstract
    * @param  array  $params
    * @return string
    */
-  public function prepare($cmd, array $params = array())
+  public function prepare($cmd, array $params = [])
   {
-    $args = array();
-    $cells = array();
+    $args = [];
+    $cells = [];
 
     foreach($params as $ident => $value)
     {

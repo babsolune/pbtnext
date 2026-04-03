@@ -23,7 +23,7 @@ class WebService
 	 * @desc Count items number.
 	 * @param string $condition (optional) : Restriction to apply to the list of items
 	 */
-	public static function count($condition = '', $parameters = array())
+	public static function count($condition = '', $parameters = [])
 	{
 		return self::$db_querier->count(WebSetup::$web_table, $condition, $parameters);
 	}
@@ -45,7 +45,7 @@ class WebService
 	 */
 	public static function update(WebItem $item)
 	{
-		self::$db_querier->update(WebSetup::$web_table, $item->get_properties(), 'WHERE id=:id', array('id' => $item->get_id()));
+		self::$db_querier->update(WebSetup::$web_table, $item->get_properties(), 'WHERE id=:id', ['id' => $item->get_id()]);
 	}
 
 	/**
@@ -54,7 +54,7 @@ class WebService
 	 */
 	public static function update_views_number(WebItem $item)
 	{
-		self::$db_querier->update(WebSetup::$web_table, array('views_number' => $item->get_views_number()), 'WHERE id=:id', array('id' => $item->get_id()));
+		self::$db_querier->update(WebSetup::$web_table, ['views_number' => $item->get_views_number()], 'WHERE id=:id', ['id' => $item->get_id()]);
 	}
 
 	/**
@@ -69,9 +69,9 @@ class WebService
             $controller = PHPBoostErrors::user_in_read_only();
             DispatchManager::redirect($controller);
         }
-			self::$db_querier->delete(WebSetup::$web_table, 'WHERE id=:id', array('id' => $id));
+			self::$db_querier->delete(WebSetup::$web_table, 'WHERE id=:id', ['id' => $id]);
 
-			self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'web', 'id' => $id));
+			self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', ['module' => 'web', 'id' => $id]);
 
 			CommentsService::delete_comments_topic_module('web', $id);
 			KeywordsService::get_keywords_manager()->delete_relations($id);
@@ -89,11 +89,11 @@ class WebService
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = ' . self::$module_id . '.author_user_id
 		LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = ' . self::$module_id . '.id AND notes.module_name = :module_id
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = ' . self::$module_id . '.id AND note.module_name = :module_id AND note.user_id = :current_user_id
-		WHERE ' . self::$module_id . '.id=:id', array(
+		WHERE ' . self::$module_id . '.id=:id', [
 			'module_id'       => self::$module_id,
 			'id'              => $id,
 			'current_user_id' => AppContext::get_current_user()->get_id()
-		));
+		]);
 
 		$item = new WebItem();
 		$item->set_properties($row);

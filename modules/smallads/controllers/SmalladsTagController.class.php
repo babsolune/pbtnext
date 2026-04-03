@@ -45,7 +45,7 @@ class SmalladsTagController extends DefaultModuleController
 			if (!empty($rewrited_name))
 			{
 				try {
-					$this->keyword = KeywordsService::get_keywords_manager()->get_keyword('WHERE rewrited_name=:rewrited_name', array('rewrited_name' => $rewrited_name));
+					$this->keyword = KeywordsService::get_keywords_manager()->get_keyword('WHERE rewrited_name=:rewrited_name', ['rewrited_name' => $rewrited_name]);
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
 					DispatchManager::redirect($error_controller);
@@ -69,11 +69,11 @@ class SmalladsTagController extends DefaultModuleController
 		$condition = 'WHERE relation.id_keyword = :id_keyword
 		AND id_category IN :authorized_categories
 		AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))';
-		$parameters = array(
+		$parameters = [
 			'id_keyword' => $this->get_keyword()->get_id(),
 			'authorized_categories' => $authorized_categories,
 			'timestamp_now' => $now->get_timestamp()
-		);
+		];
 
 		$result = PersistenceContext::get_querier()->select('SELECT smallads.*, member.*, com.comments_number
 			FROM ' . SmalladsSetup::$smallads_table . ' smallads
@@ -87,7 +87,7 @@ class SmalladsTagController extends DefaultModuleController
 
 		$this->build_sorting_smallad_type();
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_TAG'				 => true,
 			'C_ENABLED_FILTERS'	 => $this->config->are_sort_filters_enabled(),
 			'C_ITEMS'            => $result->get_rows_count() > 0,
@@ -105,7 +105,7 @@ class SmalladsTagController extends DefaultModuleController
 			'ITEMS_PER_PAGE' => $this->config->get_items_per_page(),
 
 			'U_USAGE_TERMS' => SmalladsUrlBuilder::usage_terms()->rel()
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{
@@ -131,11 +131,11 @@ class SmalladsTagController extends DefaultModuleController
 			$i = 1;
 			foreach ($smallad_types as $name)
 			{
-				$this->view->assign_block_vars('types', array(
+				$this->view->assign_block_vars('types', [
 					'C_SEPARATOR' => $i < $type_nbr,
 					'TYPE_NAME'        => $name,
 					'TYPE_NAME_FILTER' => Url::encode_rewrite(TextHelper::strtolower($name)),
-				));
+				]);
 				$i++;
 			}
 		}
@@ -152,11 +152,11 @@ class SmalladsTagController extends DefaultModuleController
 			$i = 1;
 			foreach ($sources as $name => $url)
 			{
-				$this->view->assign_block_vars('items.sources', array(
+				$this->view->assign_block_vars('items.sources', [
 					'C_SEPARATOR' => $i < $nbr_sources,
 					'NAME' => $name,
 					'URL'  => $url,
-				));
+				]);
 				$i++;
 			}
 		}
@@ -171,11 +171,11 @@ class SmalladsTagController extends DefaultModuleController
 		$i = 1;
 		foreach ($keywords as $keyword)
 		{
-			$this->view->assign_block_vars('keywords', array(
+			$this->view->assign_block_vars('keywords', [
 				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
 				'URL'  => SmalladsUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
-			));
+			]);
 			$i++;
 		}
 	}
@@ -195,7 +195,7 @@ class SmalladsTagController extends DefaultModuleController
 
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->get_keyword()->get_name(), $this->lang['smallads.module.title']);
-		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['smallads.seo.description.tag'], array('subject' => $this->get_keyword()->get_name())));
+		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['smallads.seo.description.tag'], ['subject' => $this->get_keyword()->get_name()]));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(SmalladsUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name()));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();

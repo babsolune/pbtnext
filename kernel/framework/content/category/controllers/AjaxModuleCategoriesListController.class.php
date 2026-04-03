@@ -27,7 +27,7 @@ class AjaxModuleCategoriesListController extends AbstractController
 			}
 		}
 
-		return new JSONResponse(array('options' => $options));
+		return new JSONResponse(['options' => $options]);
 	}
 }
 ?>

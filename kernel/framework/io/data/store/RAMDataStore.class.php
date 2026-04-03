@@ -16,7 +16,7 @@
 
 class RAMDataStore implements DataStore
 {
-	private $data = array();
+	private $data = [];
 
 	/**
 	 * {@inheritdoc}
@@ -59,7 +59,7 @@ class RAMDataStore implements DataStore
 	 */
 	public function clear()
 	{
-		$this->data = array();
+		$this->data = [];
 	}
 }
 ?>

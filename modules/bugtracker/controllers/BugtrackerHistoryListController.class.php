@@ -43,11 +43,11 @@ class BugtrackerHistoryListController extends DefaultModuleController
 		$history_lines_number = BugtrackerService::count_history($this->bug->get_id());
 		$pagination = $this->get_pagination($history_lines_number, $current_page);
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_PAGINATION'	=> $pagination->has_several_pages(),
 			'C_HISTORY'		=> $history_lines_number,
 			'PAGINATION'	=> $pagination->display()
-		));
+		]);
 
 		$result = PersistenceContext::get_querier()->select("SELECT *
 		FROM " . BugtrackerSetup::$bugtracker_table . " b
@@ -56,10 +56,10 @@ class BugtrackerHistoryListController extends DefaultModuleController
 		WHERE b.id = '" . $this->bug->get_id() . "'
 		ORDER BY update_date DESC
 		LIMIT :number_items_per_page OFFSET :display_from",
-			array(
+			[
 				'number_items_per_page' => $pagination->get_number_items_per_page(),
 				'display_from' => $pagination->get_display_from()
-			)
+			]
 		);
 
 		while ($row = $result->fetch())
@@ -119,7 +119,7 @@ class BugtrackerHistoryListController extends DefaultModuleController
 
 			$this->view->assign_block_vars('history', array_merge(
 				Date::get_array_tpl_vars($update_date,'update_date'),
-				array(
+				[
 				'C_UPDATER_GROUP_COLOR'	=> !empty($user_group_color),
 				'C_UPDATER_EXIST'		=> $user->get_id() !== User::VISITOR_LEVEL,
 				'UPDATED_FIELD'			=> (!empty($row['updated_field']) ? $this->lang['labels.fields.' . $row['updated_field']] : $this->lang['notice.none']),
@@ -130,7 +130,7 @@ class BugtrackerHistoryListController extends DefaultModuleController
 				'UPDATER_LEVEL_CLASS'	=> UserService::get_level_class($user->get_level()),
 				'UPDATER_GROUP_COLOR'	=> $user_group_color,
 				'LINK_UPDATER_PROFILE'	=> UserUrlBuilder::profile($user->get_id())->rel()
-				)
+				]
 			));
 		}
 		$result->dispose();
@@ -141,7 +141,7 @@ class BugtrackerHistoryListController extends DefaultModuleController
 		$id = $request->get_int('id', 0);
 
 		try {
-			$this->bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
+			$this->bug = BugtrackerService::get_bug('WHERE id=:id', ['id' => $id]);
 		} catch (RowNotFoundException $e) {
 			$controller = new UserErrorController($this->lang['warning.error'], $this->lang['error.e_unexist_bug']);
 			DispatchManager::redirect($controller);
@@ -183,7 +183,7 @@ class BugtrackerHistoryListController extends DefaultModuleController
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['titles.history'] . ' #' . $this->bug->get_id(), $this->lang['bugtracker.module.title'], $page);
-		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['seo.history'], array('id' => $this->bug->get_id())), $page);
+		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['seo.history'], ['id' => $this->bug->get_id()]), $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::history($this->bug->get_id(), $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();

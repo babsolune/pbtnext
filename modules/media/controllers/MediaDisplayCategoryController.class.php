@@ -64,7 +64,7 @@ class MediaDisplayCategoryController extends DefaultModuleController
 			{
 				$category_thumbnail = $category->get_thumbnail()->rel();
 
-				$this->view->assign_block_vars('sub_categories_list', array(
+				$this->view->assign_block_vars('sub_categories_list', [
 					'C_CATEGORY_THUMBNAIL' => !empty($category_thumbnail),
 					'C_SEVERAL_ITEMS'      => $category->get_elements_number() > 1,
 
@@ -76,13 +76,13 @@ class MediaDisplayCategoryController extends DefaultModuleController
 
 					'U_CATEGORY_THUMBNAIL' => $category_thumbnail,
 					'U_CATEGORY'           => MediaUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name())->rel()
-				));
+				]);
 			}
 		}
 
 		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_ROOT_CATEGORY'            => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
 			'C_CATEGORY_DESCRIPTION'     => $category_description,
 			'C_SUB_CATEGORIES'           => $categories_number > 0,
@@ -99,9 +99,9 @@ class MediaDisplayCategoryController extends DefaultModuleController
 			'CATEGORY_ID'              => $this->get_category()->get_id(),
 
 			'U_EDIT_CATEGORY' => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? MediaUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->get_category()->get_id(), 'media')->rel(),
-		));
+		]);
 
-		$selected_fields = array('date' => '', 'alpha' => '', 'views' => '', 'note' => '', 'com' => '', 'asc' => '', 'desc' => '');
+		$selected_fields = ['date' => '', 'alpha' => '', 'views' => '', 'note' => '', 'com' => '', 'asc' => '', 'desc' => ''];
 
 		switch ($get_sort)
 		{
@@ -133,7 +133,7 @@ class MediaDisplayCategoryController extends DefaultModuleController
 		else
 			$selected_fields['asc'] = ' selected="selected"';
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_ENABLED_NOTATION' => $content_management_config->module_notation_is_enabled('media'),
 			'C_ENABLED_COMMENTS' => $comments_config->module_comments_is_enabled('media'),
 
@@ -144,13 +144,13 @@ class MediaDisplayCategoryController extends DefaultModuleController
 			'SELECTED_COM'   => $selected_fields['com'],
 			'SELECTED_ASC'   => $selected_fields['asc'],
 			'SELECTED_DESC'  => $selected_fields['desc']
-		));
+		]);
 
 		$condition = 'WHERE id_category = :id_category AND published = :status';
-		$parameters = array(
+		$parameters = [
 			'id_category' => $this->get_category()->get_id(),
 			'status' => MEDIA_STATUS_APPROVED
-		);
+		];
 
 		// Pagination creation for a too big amount of items
 		$mediafiles_number = MediaService::count($condition, $parameters);
@@ -174,12 +174,12 @@ class MediaDisplayCategoryController extends DefaultModuleController
 			LEFT JOIN " . DB_TABLE_COMMENTS_TOPIC . " com ON v.id = com.id_in_module AND com.module_id = 'media'
 			" . $condition . "
 			ORDER BY " . $sort . " " . $mode . "
-			LIMIT :number_items_per_page OFFSET :display_from", array_merge($parameters, array(
+			LIMIT :number_items_per_page OFFSET :display_from", array_merge($parameters, [
 				'number_items_per_page' => $pagination->get_number_items_per_page(),
 				'display_from' => $pagination->get_display_from()
-		)));
+		]));
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_ITEMS'         => $result->get_rows_count() > 0,
 			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
 			'C_NO_ITEM'       => $result->get_rows_count() == 0 && $this->get_category()->get_id() != Category::ROOT_CATEGORY,
@@ -188,7 +188,7 @@ class MediaDisplayCategoryController extends DefaultModuleController
 			'C_PAGINATION'    => $pagination->has_several_pages(),
 			'PAGINATION'      => $pagination->display(),
 			'CHANGE_ORDER'    => ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'media-0-' . $this->get_category()->get_id() . '.php?' : 'media.php?cat=' . $this->get_category()->get_id() . '&',
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{
@@ -201,16 +201,16 @@ class MediaDisplayCategoryController extends DefaultModuleController
 
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
-			$poster_infos = array();
+			$poster_infos = [];
 			if (!empty($row['thumbnail']))
 			{
 				$poster_type = new FileType(new File($row['thumbnail']));
 				$picture_url = new Url($row['thumbnail']);
 
-				$poster_infos = array(
+				$poster_infos = [
 					'C_HAS_THUMBNAIL' => $poster_type->is_picture(),
 					'U_THUMBNAIL'       => $picture_url->rel()
-				);
+				];
 			}
 
 			$date = new Date($row['creation_date'], Timezone::SERVER_TIMEZONE);
@@ -220,7 +220,7 @@ class MediaDisplayCategoryController extends DefaultModuleController
 			$this->view->assign_block_vars('items', array_merge(
 				$poster_infos,
 				Date::get_array_tpl_vars($date, 'date'),
-				array(
+				[
 				'C_NEW_CONTENT'        => ContentManagementConfig::load()->module_new_content_is_enabled_and_check_date('media', $row['creation_date']),
 				'C_CONTENT'            => !empty($row['content']),
 				'C_AUTHOR_DISPLAYED'   => $this->config->is_author_displayed(),
@@ -243,7 +243,7 @@ class MediaDisplayCategoryController extends DefaultModuleController
 				'U_STATUS'         => '../media/media_action.php?invisible=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token(),
 				'U_EDIT'           => '../media/media_action.php?edit=' . $row['id'],
 				'U_DELETE'         => '../media/media_action.php?del=' . $row['id'] . '&amp;token=' . AppContext::get_session()->get_token()
-			)));
+			]));
 		}
 		$result->dispose();
 	}
@@ -294,7 +294,7 @@ class MediaDisplayCategoryController extends DefaultModuleController
 
 		$description = $this->get_category()->get_description();
 		if (empty($description))
-			$description = StringVars::replace_vars($this->lang['media.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->get_category()->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category.category', 'category-lang') . ' ' . $this->get_category()->get_name() : '');
+			$description = StringVars::replace_vars($this->lang['media.seo.description.root'], ['site' => GeneralConfig::load()->get_site_name()]) . ($this->get_category()->get_id() != Category::ROOT_CATEGORY ? ' ' . LangLoader::get_message('category.category', 'category-lang') . ' ' . $this->get_category()->get_name() : '');
 		$graphical_environment->get_seo_meta_data()->set_description($description, $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(MediaUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), $page));
 

@@ -43,7 +43,7 @@ class DefaultUserModule implements UserExtensionPoint
 
 	public function get_publications_number($user_id)
 	{
-		return ItemsService::get_items_manager($this->module_id)->count('WHERE author_user_id = :user_id', array('user_id' => $user_id));
+		return ItemsService::get_items_manager($this->module_id)->count('WHERE author_user_id = :user_id', ['user_id' => $user_id]);
 	}
 }
 ?>

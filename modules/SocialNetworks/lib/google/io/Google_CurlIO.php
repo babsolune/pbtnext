@@ -28,19 +28,19 @@ class Google_CurlIO implements Google_IO {
   const CONNECTION_ESTABLISHED = "HTTP/1.0 200 Connection established\r\n\r\n";
   const FORM_URLENCODED = 'application/x-www-form-urlencoded';
 
-  private static $ENTITY_HTTP_METHODS = array("POST" => null, "PUT" => null);
-  private static $HOP_BY_HOP = array(
+  private static $ENTITY_HTTP_METHODS = ["POST" => null, "PUT" => null];
+  private static $HOP_BY_HOP = [
       'connection', 'keep-alive', 'proxy-authenticate', 'proxy-authorization',
-      'te', 'trailers', 'transfer-encoding', 'upgrade');
+      'te', 'trailers', 'transfer-encoding', 'upgrade'];
 
-  private $curlParams = array (
+  private $curlParams = [
       CURLOPT_RETURNTRANSFER => true,
       CURLOPT_FOLLOWLOCATION => 0,
       CURLOPT_FAILONERROR => false,
       CURLOPT_SSL_VERIFYPEER => true,
       CURLOPT_HEADER => true,
       CURLOPT_VERBOSE => false,
-  );
+  ];
 
   /**
    * Perform an authenticated / signed apiHttpRequest.
@@ -70,7 +70,7 @@ class Google_CurlIO implements Google_IO {
     $cached = $this->getCachedRequest($request);
     if ($cached !== false) {
       if (Google_CacheParser::mustRevalidate($cached)) {
-        $addHeaders = array();
+        $addHeaders = [];
         if ($cached->getResponseHeader('etag')) {
           // [13.3.4] If an entity tag has been provided by the origin server,
           // we must use that entity tag in any cache-conditional request.
@@ -100,7 +100,7 @@ class Google_CurlIO implements Google_IO {
 
     $requestHeaders = $request->getRequestHeaders();
     if ($requestHeaders && is_array($requestHeaders)) {
-      $parsed = array();
+      $parsed = [];
       foreach ($requestHeaders as $k => $v) {
         $parsed[] = "$k: $v";
       }
@@ -141,7 +141,7 @@ class Google_CurlIO implements Google_IO {
           explode(',', $responseHeaders['connection'])
         );
 
-        $endToEnd = array();
+        $endToEnd = [];
         foreach($hopByHop as $key) {
           if (isset($responseHeaders[$key])) {
             $endToEnd[$key] = $responseHeaders[$key];
@@ -212,11 +212,11 @@ class Google_CurlIO implements Google_IO {
     }
 
     $responseHeaders = self::parseResponseHeaders($responseHeaders);
-    return array($responseHeaders, $responseBody);
+    return [$responseHeaders, $responseBody];
   }
 
   public static function parseResponseHeaders($rawHeaders) {
-    $responseHeaders = array();
+    $responseHeaders = [];
 
     $responseHeaderLines = explode("\r\n", $rawHeaders);
     foreach ($responseHeaderLines as $headerLine) {
@@ -246,7 +246,7 @@ class Google_CurlIO implements Google_IO {
     // Set the default content-type as application/x-www-form-urlencoded.
     if (false == $contentType) {
       $contentType = self::FORM_URLENCODED;
-      $request->setRequestHeaders(array('content-type' => $contentType));
+      $request->setRequestHeaders(['content-type' => $contentType]);
     }
 
     // Force the payload to match the content-type asserted in the header.
@@ -258,7 +258,7 @@ class Google_CurlIO implements Google_IO {
     // Make sure the content-length header is set.
     if (!$postBody || is_string($postBody)) {
       $postsLength = strlen($postBody);
-      $request->setRequestHeaders(array('content-length' => $postsLength));
+      $request->setRequestHeaders(['content-length' => $postsLength]);
     }
 
     return $request;

@@ -21,7 +21,7 @@ class FaqService
 	 * @desc Count items number.
 	 * @param string $condition (optional) : Restriction to apply to the list of items
 	 */
-	public static function count($condition = '', $parameters = array())
+	public static function count($condition = '', $parameters = [])
 	{
 		return self::$db_querier->count(FaqSetup::$faq_table, $condition, $parameters);
 	}
@@ -43,7 +43,7 @@ class FaqService
 	 */
 	public static function update(FaqItem $item)
 	{
-		self::$db_querier->update(FaqSetup::$faq_table, $item->get_properties(), 'WHERE id=:id', array('id' => $item->get_id()));
+		self::$db_querier->update(FaqSetup::$faq_table, $item->get_properties(), 'WHERE id=:id', ['id' => $item->get_id()]);
 	}
 
 	/**
@@ -58,9 +58,9 @@ class FaqService
 			DispatchManager::redirect($controller);
 		}
 
-		self::$db_querier->delete(FaqSetup::$faq_table, 'WHERE id=:id', array('id' => $id));
+		self::$db_querier->delete(FaqSetup::$faq_table, 'WHERE id=:id', ['id' => $id]);
 
-		self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'faq', 'id' => $id));
+		self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', ['module' => 'faq', 'id' => $id]);
 	}
 
 	/**
@@ -72,9 +72,9 @@ class FaqService
 		$row = self::$db_querier->select_single_row_query('SELECT *
 		FROM ' . FaqSetup::$faq_table . ' faq
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = faq.author_user_id
-		WHERE faq.id=:id', array(
+		WHERE faq.id=:id', [
 			'id' => $id
-		));
+		]);
 
 		$item = new FaqItem();
 		$item->set_properties($row);
@@ -95,7 +95,7 @@ class FaqService
 	 */
 	public static function update_position($id_question, $position)
 	{
-		self::$db_querier->update(FaqSetup::$faq_table, array('q_order' => $position), 'WHERE id=:id', array('id' => $id_question));
+		self::$db_querier->update(FaqSetup::$faq_table, ['q_order' => $position], 'WHERE id=:id', ['id' => $id_question]);
 	}
 }
 ?>

@@ -41,11 +41,11 @@ class ArticlesPrintItemController extends AbstractItemController
 	private function build_view()
 	{
 		$content = preg_replace('`\[page\](.*)\[/page\]`u', '<h2>$1</h2>', $this->item->get_content());
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'PAGE_TITLE' => $this->lang['articles.print.item'] . ' - ' . $this->item->get_title() . ' - ' . GeneralConfig::load()->get_site_name(),
 			'TITLE' 	 => $this->item->get_title(),
 			'CONTENT' 	 => FormatingHelper::second_parse($content)
-        ));
+        ]);
 	}
 
 	protected function get_template_to_use()

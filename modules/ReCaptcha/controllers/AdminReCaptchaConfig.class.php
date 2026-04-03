@@ -74,20 +74,20 @@ class AdminReCaptchaConfig extends DefaultAdminModuleController
 		$fieldset->add_field(new FormFieldFree('explain', '', $this->lang['config.recaptcha-explain']));
 
 		$fieldset->add_field(new FormFieldTextEditor('site_key', $this->lang['config.site_key'], $this->config->get_site_key(),
-			array('required' => true),
-			array(new FormFieldConstraintLengthMin(30))
+			['required' => true],
+			[new FormFieldConstraintLengthMin(30)]
 		));
 
 		$fieldset->add_field(new FormFieldPasswordEditor('secret_key', $this->lang['config.secret_key'], $this->config->get_secret_key(),
-			array('required' => true),
-			array(new FormFieldConstraintLengthMin(30))
+			['required' => true],
+			[new FormFieldConstraintLengthMin(30)]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('invisible_mode_enabled', $this->lang['config.invisible_mode_enabled'], $this->config->is_invisible_mode_enabled(),
-			array(
+			[
 				'class' => 'custom-checkbox',
 				'description' => $this->lang['config.invisible_mode_enabled.explain']
-			)
+			]
 		));
 	}
 
@@ -105,7 +105,7 @@ class AdminReCaptchaConfig extends DefaultAdminModuleController
 
 	protected function execute_edit_config_hook()
 	{
-		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
+		HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]), 'url' => ModulesUrlBuilder::configuration()->rel()]);
 	}
 
 	private function build_response(View $view)

@@ -28,7 +28,7 @@ abstract class AbstractServerStatusServer
 	protected $port;
 	protected $status = self::OFFLINE;
 	protected $displayed = true;
-	protected $authorizations = array('r-1' => 1, 'r0' => 1, 'r1' => 1);
+	protected $authorizations = ['r-1' => 1, 'r0' => 1, 'r1' => 1];
 	protected $last_check_time = 0;
 
 	protected $id;
@@ -266,7 +266,7 @@ abstract class AbstractServerStatusServer
 		$tpl = new FileTemplate('ServerStatus/ServerStatusServer.tpl');
 		$tpl->add_lang($lang);
 
-		$tpl->put_all(array(
+		$tpl->put_all([
 			'C_ICON' => $this->has_large_icon(),
 			'C_ADDRESS_DISPLAYED' => $config->is_address_displayed(),
 			'C_ONLINE' => $this->is_online(),
@@ -277,7 +277,7 @@ abstract class AbstractServerStatusServer
 			'DESCRIPTION' => FormatingHelper::second_parse($this->description),
 			'ADDRESS' => $this->address,
 			'PORT' => $this->port
-		));
+		]);
 
 		return $tpl->render();
 	}

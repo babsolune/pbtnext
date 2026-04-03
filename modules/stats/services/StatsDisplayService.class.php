@@ -33,12 +33,12 @@ class StatsDisplayService
 
 		$sign = $today_visit < $average ? '-' : '+';
 
-		return array (
+		return [
 			'average' => NumberHelper::round($average, 1),
 			'trend' => $trend,
 			'sign' => $sign,
 			'picture' => ($trend != 0 ? ($sign == '+' ? 'up' : 'down') : '')
-		);
+		];
 	}
 }
 ?>

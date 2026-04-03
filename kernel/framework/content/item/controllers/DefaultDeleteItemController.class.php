@@ -54,7 +54,7 @@ class DefaultDeleteItemController extends AbstractItemController
 
 	protected function display_response()
 	{
-		AppContext::get_response()->redirect(($this->request->get_url_referrer() && !TextHelper::strstr($this->request->get_url_referrer(), $this->get_display_item_url()) ? $this->request->get_url_referrer() : ModulesUrlBuilder::home()), StringVars::replace_vars($this->lang['items.message.success.delete'], array('title' => $this->item->get_title())));
+		AppContext::get_response()->redirect(($this->request->get_url_referrer() && !TextHelper::strstr($this->request->get_url_referrer(), $this->get_display_item_url()) ? $this->request->get_url_referrer() : ModulesUrlBuilder::home()), StringVars::replace_vars($this->lang['items.message.success.delete'], ['title' => $this->item->get_title()]));
 	}
 
 	/**

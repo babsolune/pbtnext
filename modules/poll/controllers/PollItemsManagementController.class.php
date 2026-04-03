@@ -11,18 +11,18 @@ class PollItemsManagementController extends DefaultItemsManagementController
 {
 	protected function get_additional_html_table_columns()
 	{
-		return array(new HTMLTableColumn($this->lang['poll.manage.status'], 'close_poll'));
+		return [new HTMLTableColumn($this->lang['poll.manage.status'], 'close_poll')];
 	}
 
 	protected function get_additional_html_table_row_cells(&$item)
 	{
-		return array(new HTMLTableRowCell(!$item->is_closed() ? $this->lang['poll.manage.in.progress'] : $this->lang['common.status.finished']));
+		return [new HTMLTableRowCell(!$item->is_closed() ? $this->lang['poll.manage.in.progress'] : $this->lang['common.status.finished'])];
 	}
 
 	protected function get_additional_html_table_filters()
 	{
-		$map = array($this->lang['poll.manage.in.progress'], $this->lang['poll.manage.completed']);
-		return array(new HTMLTableEqualsFromListSQLFilter('close_poll', 'filter6', $this->lang['poll.manage.status'], $map));
+		$map = [$this->lang['poll.manage.in.progress'], $this->lang['poll.manage.completed']];
+		return [new HTMLTableEqualsFromListSQLFilter('close_poll', 'filter6', $this->lang['poll.manage.status'], $map)];
 	}
 }
 ?>

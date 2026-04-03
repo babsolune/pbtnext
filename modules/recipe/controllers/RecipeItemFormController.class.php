@@ -34,7 +34,7 @@ class RecipeItemFormController extends DefaultModuleController
 		$fieldset = new FormFieldsetHTML('recipe', $this->lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['form.title'], $this->get_item()->get_title(), array('required' => true)));
+		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['form.title'], $this->get_item()->get_title(), ['required' => true]));
 
 		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 		{
@@ -45,7 +45,7 @@ class RecipeItemFormController extends DefaultModuleController
 		}
 
 		$fieldset->add_field(new FormFieldNumberEditor('persons_number', $this->lang['recipe.persons.number'], $this->get_item()->get_persons_number(),
-			array('min' => 0)
+			['min' => 0]
 		));
 		
 		$fieldset->add_field(new RecipeFormFieldIngredient('ingredients', $this->lang['recipe.ingredients.list'], $this->get_item()->get_ingredients()));
@@ -53,42 +53,42 @@ class RecipeItemFormController extends DefaultModuleController
 		$fieldset->add_field(new RecipeFormFieldStep('steps', $this->lang['recipe.steps'], $this->get_item()->get_steps()));
 
 		$fieldset->add_field(new FormFieldRichTextEditor('content', $this->lang['form.description'], $this->get_item()->get_content(), 
-			array('rows' => 15)
+			['rows' => 15]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('summary_enabled', $this->lang['form.enable.summary'], $this->get_item()->is_summary_enabled(),
-			array(
-				'description' => StringVars::replace_vars($this->lang['form.summary.clue'], array('number' => $this->config->get_auto_cut_characters_number())),
-				'events' => array('click' => '
+			[
+				'description' => StringVars::replace_vars($this->lang['form.summary.clue'], ['number' => $this->config->get_auto_cut_characters_number()]),
+				'events' => ['click' => '
 					if (HTMLForms.getField("summary_enabled").getValue()) {
 						HTMLForms.getField("summary").enable();
 					} else {
 						HTMLForms.getField("summary").disable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$fieldset->add_field(new FormFieldRichTextEditor('summary', $this->lang['form.summary'], $this->get_item()->get_summary(),
-			array('hidden' => ($request->is_post_method() ? !$request->get_postbool(self::class . '_summary_enabled', false) : !$this->get_item()->is_summary_enabled()))
+			['hidden' => ($request->is_post_method() ? !$request->get_postbool(self::class . '_summary_enabled', false) : !$this->get_item()->is_summary_enabled())]
 		));
 
 		if ($this->config->is_author_displayed())
 		{
 			$fieldset->add_field(new FormFieldCheckbox('author_custom_name_enabled', $this->lang['form.enable.author.custom.name'], $this->get_item()->is_author_custom_name_enabled(),
-				array(
-					'events' => array('click' => '
+				[
+					'events' => ['click' => '
 						if (HTMLForms.getField("author_custom_name_enabled").getValue()) {
 							HTMLForms.getField("author_custom_name").enable();
 						} else {
 							HTMLForms.getField("author_custom_name").disable();
 						}'
-					)
-				)
+					]
+				]
 			));
 
 			$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->lang['form.author.custom.name'], $this->get_item()->get_author_custom_name(),
-				array('hidden' => ($request->is_post_method() ? !$request->get_postbool(self::class . '_author_custom_name_enabled', false) : !$this->get_item()->is_author_custom_name_enabled()))
+				['hidden' => ($request->is_post_method() ? !$request->get_postbool(self::class . '_author_custom_name_enabled', false) : !$this->get_item()->is_author_custom_name_enabled())]
 			));
 		}
 
@@ -98,7 +98,7 @@ class RecipeItemFormController extends DefaultModuleController
 		$options_fieldset->add_field(new FormFieldThumbnail('thumbnail', $this->lang['form.thumbnail'], $this->get_item()->get_thumbnail()->relative(), RecipeItem::THUMBNAIL_URL));
 
 		$options_fieldset->add_field(KeywordsService::get_keywords_manager()->get_form_field($this->get_item()->get_id(), 'keywords', $this->lang['form.keywords'],
-			array('description' => $this->lang['form.keywords.clue'])
+			['description' => $this->lang['form.keywords.clue']]
 		));
 
 		if (CategoriesAuthorizationsService::check_authorizations($this->get_item()->get_id_category())->moderation())
@@ -107,24 +107,24 @@ class RecipeItemFormController extends DefaultModuleController
 			$form->add_fieldset($publication_fieldset);
 
 			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $this->lang['form.creation.date'], $this->get_item()->get_creation_date(),
-				array('required' => true)
+				['required' => true]
 			));
 
 			if (!$this->get_item()->is_published())
 			{
 				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->lang['form.update.creation.date'], false,
-					array('hidden' => $this->get_item()->get_publishing_state() != RecipeItem::NOT_PUBLISHED)
+					['hidden' => $this->get_item()->get_publishing_state() != RecipeItem::NOT_PUBLISHED]
 				));
 			}
 
 			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('published', $this->lang['form.publication'], $this->get_item()->get_publishing_state(),
-				array(
+				[
 					new FormFieldSelectChoiceOption($this->lang['form.publication.draft'], RecipeItem::NOT_PUBLISHED),
 					new FormFieldSelectChoiceOption($this->lang['form.publication.now'], RecipeItem::PUBLISHED),
 					new FormFieldSelectChoiceOption($this->lang['form.publication.deffered'], RecipeItem::DEFERRED_PUBLICATION),
-				),
-				array(
-					'events' => array('change' => '
+				],
+				[
+					'events' => ['change' => '
 						if (HTMLForms.getField("published").getValue() == 2) {
 							jQuery("#' . self::class . '_publishing_start_date_field").show();
 							HTMLForms.getField("end_date_enabled").enable();
@@ -136,29 +136,29 @@ class RecipeItemFormController extends DefaultModuleController
 							HTMLForms.getField("end_date_enabled").disable();
 							HTMLForms.getField("publishing_end_date").disable();
 						}'
-					)
-				)
+					]
+				]
 			));
 
 			$publication_fieldset->add_field($publishing_start_date = new FormFieldDateTime('publishing_start_date', $this->lang['form.start.date'], ($this->get_item()->get_publishing_start_date() === null ? new Date() : $this->get_item()->get_publishing_start_date()),
-				array('hidden' => ($request->is_post_method() ? ($request->get_postint(self::class . '_publication_state', 0) != RecipeItem::DEFERRED_PUBLICATION) : ($this->get_item()->get_publishing_state() != RecipeItem::DEFERRED_PUBLICATION)))
+				['hidden' => ($request->is_post_method() ? ($request->get_postint(self::class . '_publication_state', 0) != RecipeItem::DEFERRED_PUBLICATION) : ($this->get_item()->get_publishing_state() != RecipeItem::DEFERRED_PUBLICATION))]
 			));
 
 			$publication_fieldset->add_field(new FormFieldCheckbox('end_date_enabled', $this->lang['form.enable.end.date'], $this->get_item()->is_end_date_enabled(),
-				array(
+				[
 					'hidden' => ($request->is_post_method() ? ($request->get_postint(self::class . '_publication_state', 0) != RecipeItem::DEFERRED_PUBLICATION) : ($this->get_item()->get_publishing_state() != RecipeItem::DEFERRED_PUBLICATION)),
-					'events' => array('click' => '
+					'events' => ['click' => '
 						if (HTMLForms.getField("end_date_enabled").getValue()) {
 							HTMLForms.getField("publishing_end_date").enable();
 						} else {
 							HTMLForms.getField("publishing_end_date").disable();
 						}'
-					)
-				)
+					]
+				]
 			));
 
 			$publication_fieldset->add_field($publishing_end_date = new FormFieldDateTime('publishing_end_date', $this->lang['form.end.date'], ($this->get_item()->get_publishing_end_date() === null ? new Date() : $this->get_item()->get_publishing_end_date()),
-				array('hidden' => ($request->is_post_method() ? !$request->get_postbool(self::class . '_end_date_enabled', false) : !$this->get_item()->is_end_date_enabled()))
+				['hidden' => ($request->is_post_method() ? !$request->get_postbool(self::class . '_end_date_enabled', false) : !$this->get_item()->is_end_date_enabled())]
 			));
 
 			$publishing_end_date->add_form_constraint(new FormConstraintFieldsDifferenceSuperior($publishing_start_date, $publishing_end_date));
@@ -184,7 +184,7 @@ class RecipeItemFormController extends DefaultModuleController
 			$form->add_fieldset($fieldset);
 
 			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $this->lang['contribution.description'], '',
-				array('description' => $this->lang['contribution.description.clue'])
+				['description' => $this->lang['contribution.description.clue']]
 			));
 		}
 		elseif ($this->get_item()->is_published() && $this->get_item()->is_authorized_to_edit() && $this->is_contributor_member())
@@ -194,7 +194,7 @@ class RecipeItemFormController extends DefaultModuleController
 			$form->add_fieldset($fieldset);
 
 			$fieldset->add_field(new FormFieldRichTextEditor('edition_description', $this->lang['contribution.edition.description'], '',
-				array('description' => $this->lang['contribution.edition.description.clue'])
+				['description' => $this->lang['contribution.edition.description.clue']]
 			));
 		}
 	}
@@ -341,7 +341,7 @@ class RecipeItemFormController extends DefaultModuleController
 			$item->set_id($id);
 
 			if (!$this->is_contributor_member())
-				HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
+				HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), ['item_url' => $item->get_item_url()]));
 		}
 		else
 		{
@@ -349,7 +349,7 @@ class RecipeItemFormController extends DefaultModuleController
 			RecipeService::update($item);
 
 			if (!$this->is_contributor_member())
-				HooksService::execute_hook_action('edit', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
+				HooksService::execute_hook_action('edit', self::$module_id, array_merge($item->get_properties(), ['item_url' => $item->get_item_url()]));
 		}
 
 		$this->contribution_actions($item);
@@ -381,7 +381,7 @@ class RecipeItemFormController extends DefaultModuleController
 				)
 			);
 			ContributionService::save_contribution($contribution);
-			HooksService::execute_hook_action($this->is_new_item ? 'add_contribution' : 'edit_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), array('item_url' => $item->get_item_url())));
+			HooksService::execute_hook_action($this->is_new_item ? 'add_contribution' : 'edit_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), ['item_url' => $item->get_item_url()]));
 		}
 		else
 		{
@@ -393,7 +393,7 @@ class RecipeItemFormController extends DefaultModuleController
 					$contribution->set_status(Event::EVENT_STATUS_PROCESSED);
 					ContributionService::save_contribution($contribution);
 				}
-				HooksService::execute_hook_action('process_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), array('item_url' => $item->get_item_url())));
+				HooksService::execute_hook_action('process_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), ['item_url' => $item->get_item_url()]));
 			}
 		}
 	}
@@ -410,16 +410,16 @@ class RecipeItemFormController extends DefaultModuleController
 		elseif ($item->is_published())
 		{
 			if ($this->is_new_item)
-				AppContext::get_response()->redirect(RecipeUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()), StringVars::replace_vars($this->lang['recipe.message.success.add'], array('title' => $item->get_title())));
+				AppContext::get_response()->redirect(RecipeUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()), StringVars::replace_vars($this->lang['recipe.message.success.add'], ['title' => $item->get_title()]));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : RecipeUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title())), StringVars::replace_vars($this->lang['recipe.message.success.edit'], array('title' => $item->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : RecipeUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title())), StringVars::replace_vars($this->lang['recipe.message.success.edit'], ['title' => $item->get_title()]));
 		}
 		else
 		{
 			if ($this->is_new_item)
-				AppContext::get_response()->redirect(RecipeUrlBuilder::display_pending(), StringVars::replace_vars($this->lang['recipe.message.success.add'], array('title' => $item->get_title())));
+				AppContext::get_response()->redirect(RecipeUrlBuilder::display_pending(), StringVars::replace_vars($this->lang['recipe.message.success.add'], ['title' => $item->get_title()]));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : RecipeUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['recipe.message.success.edit'], array('title' => $item->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : RecipeUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['recipe.message.success.edit'], ['title' => $item->get_title()]));
 		}
 	}
 

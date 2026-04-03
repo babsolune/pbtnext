@@ -141,15 +141,15 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 
 		foreach (ThemesManager::get_activated_and_authorized_themes_map_sorted_by_localized_name() as $theme)
 		{
-			$view->assign_block_vars('themes', array(
+			$view->assign_block_vars('themes', [
 				'C_SELECTED' => $user->get_theme() == $theme->get_id(),
 				'NAME' => $theme->get_configuration()->get_name(),
 				'IDNAME' => $theme->get_id()
-			));
+			]);
 		}
 
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_CSS_CACHE_ENABLED' => CSSCacheConfig::load()->is_enabled(),
 			'C_LEFT_ENABLED'      => !$menus_status->left_columns_is_disabled(),
 			'C_RIGHT_ENABLED'     => !$menus_status->right_columns_is_disabled(),
@@ -187,14 +187,14 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 			'ENABLE_RIGHT_COL'  => $this->enable_right_menu->display(),
 			'DISABLE_RIGHT_COL' => $this->disable_right_menu->display(),
 			'DEFAULT_THEME'     => UserAccountsConfig::load()->get_default_theme()
-		));
+		]);
 
 		return $view->render();
 	}
 
 	private function get_logged_errors_nb()
 	{
-		$array_errinfo = array();
+		$array_errinfo = [];
 		$file_path = PATH_TO_ROOT . '/cache/error.log';
 
 		if (is_file($file_path) && is_readable($file_path)) //Fichier accessible en lecture
@@ -220,12 +220,12 @@ class SandboxModuleMiniMenu extends ModuleMiniMenu
 						case 4:
 						$errinfo['errstacktrace'] = $buffer;
 						$i = 0;
-						$array_errinfo[] = array(
+						$array_errinfo[] = [
 							'errclass' => ErrorHandler::get_errno_class($errinfo['errno']),
 							'errmsg' => $errinfo['errmsg'],
 							'errstacktrace'=> $errinfo['errstacktrace'],
 							'errdate' => $errinfo['errdate']
-						);
+						];
 						break;
 					}
 					$i++;

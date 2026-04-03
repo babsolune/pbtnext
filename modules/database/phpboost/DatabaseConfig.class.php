@@ -34,10 +34,10 @@ class DatabaseConfig extends AbstractConfigData
 
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::DATABASE_TABLES_OPTIMIZATION_ENABLED => true,
 			self::DATABASE_TABLES_OPTIMIZATION_DAY => 0
-		);
+		];
 	}
 
 	/**

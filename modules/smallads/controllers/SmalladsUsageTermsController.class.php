@@ -26,7 +26,7 @@ class SmalladsUsageTermsController extends DefaultModuleController
 
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['smallads.module.title']);
-		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['smallads.seo.description.usage.terms'], array('site' => GeneralConfig::load()->get_site_name())));
+		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['smallads.seo.description.usage.terms'], ['site' => GeneralConfig::load()->get_site_name()]));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(SmalladsUrlBuilder::usage_terms());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();

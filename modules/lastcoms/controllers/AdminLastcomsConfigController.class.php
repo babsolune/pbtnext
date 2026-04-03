@@ -29,21 +29,21 @@ class AdminLastcomsConfigController extends DefaultAdminModuleController
 	{
 		$form = new HTMLForm('lastcoms');
 
-		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module()->get_configuration()->get_name()]));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldNumberEditor('lastcoms_number', $this->lang['lastcoms.number'], $this->config->get_lastcoms_number(),
-			array('description' => $this->lang['lastcoms.number.clue'])
+			['description' => $this->lang['lastcoms.number.clue']]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('lastcoms_char', $this->lang['lastcoms.char'], $this->config->get_lastcoms_char(),
-			array('description' => $this->lang['lastcoms.char.clue'])
+			['description' => $this->lang['lastcoms.char.clue']]
 		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['form.authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 
-		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization($this->lang['form.authorizations.read'], LastcomsAuthorizationsService::READ_AUTHORIZATIONS)));
+		$auth_settings = new AuthorizationsSettings([new ActionAuthorization($this->lang['form.authorizations.read'], LastcomsAuthorizationsService::READ_AUTHORIZATIONS)]);
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());
 		$fieldset_authorizations->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
 
@@ -60,7 +60,7 @@ class AdminLastcomsConfigController extends DefaultAdminModuleController
 		$this->config->set_lastcoms_char($this->form->get_value('lastcoms_char'));
 		$this->config->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		LastcomsConfig::save();
-		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
+		HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]), 'url' => ModulesUrlBuilder::configuration()->rel()]);
 	}
 }
 ?>

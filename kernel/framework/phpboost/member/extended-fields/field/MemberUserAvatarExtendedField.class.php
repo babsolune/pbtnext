@@ -21,7 +21,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 	public function __construct()
 	{
 		parent::__construct();
-		$this->set_disable_fields_configuration(array('regex', 'possible_values', 'default_value', 'description'));
+		$this->set_disable_fields_configuration(['regex', 'possible_values', 'default_value', 'description']);
 		$this->set_name(LangLoader::get_message('user.field.type.avatar','user-lang'));
 		$this->field_used_once = true;
 		$this->field_used_phpboost_config = true;
@@ -36,12 +36,12 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		if (UserAccountsConfig::load()->is_avatar_upload_enabled())
 		{
 			$fieldset->add_field(new FormFieldFilePicker('upload_avatar', $this->lang['user.extended.field.upload.avatar'],
-				array('description' => $this->lang['user.extended.field.upload.avatar.clue'], 'max_file_size' => $this->user_accounts_config->get_max_avatar_weight_in_kb(), 'authorized_extensions' => implode('|', $this->authorized_pictures_extensions)),
-				array(new FormFieldConstraintPictureFile())
+				['description' => $this->lang['user.extended.field.upload.avatar.clue'], 'max_file_size' => $this->user_accounts_config->get_max_avatar_weight_in_kb(), 'authorized_extensions' => implode('|', $this->authorized_pictures_extensions)],
+				[new FormFieldConstraintPictureFile()]
 			));
 		}
 		$fieldset->add_field(new FormFieldTextEditor('link_avatar', $this->lang['user.extended.field.avatar.link'], '',
-			array('description' => $this->lang['user.extended.field.avatar.link.clue'], 'required' =>(bool)$member_extended_field->get_required())
+			['description' => $this->lang['user.extended.field.avatar.link.clue'], 'required' =>(bool)$member_extended_field->get_required()]
 		));
 	}
 
@@ -56,13 +56,13 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 		if (UserAccountsConfig::load()->is_avatar_upload_enabled())
 		{
 			$fieldset->add_field(new FormFieldFilePicker('upload_avatar', $this->lang['user.extended.field.upload.avatar'],
-				array('description' => $this->lang['user.extended.field.upload.avatar.clue'], 'max_file_size' => $this->user_accounts_config->get_max_avatar_weight_in_kb(), 'authorized_extensions' => implode('|', $this->authorized_pictures_extensions)),
-				array(new FormFieldConstraintPictureFile())
+				['description' => $this->lang['user.extended.field.upload.avatar.clue'], 'max_file_size' => $this->user_accounts_config->get_max_avatar_weight_in_kb(), 'authorized_extensions' => implode('|', $this->authorized_pictures_extensions)],
+				[new FormFieldConstraintPictureFile()]
 			));
 		}
 
 		$fieldset->add_field(new FormFieldTextEditor('link_avatar', $this->lang['user.extended.field.avatar.link'], '',
-			array('description' => $this->lang['user.extended.field.avatar.link.clue'], 'required' =>(bool)$member_extended_field->get_required())
+			['description' => $this->lang['user.extended.field.avatar.link.clue'], 'required' =>(bool)$member_extended_field->get_required()]
 		));
 		$fieldset->add_field(new FormFieldCheckbox('delete_avatar', $this->lang['user.extended.field.avatar.delete'], FormFieldCheckbox::UNCHECKED));
 	}
@@ -85,7 +85,7 @@ class MemberUserAvatarExtendedField extends AbstractMemberExtendedField
 
 		if (!empty($avatar))
 		{
-			return array('name' => $member_extended_field->get_name(), 'field_name' => $member_extended_field->get_field_name(), 'value' => $avatar);
+			return ['name' => $member_extended_field->get_name(), 'field_name' => $member_extended_field->get_field_name(), 'value' => $avatar];
 		}
 	}
 

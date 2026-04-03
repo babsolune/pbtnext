@@ -127,15 +127,15 @@ class MaintenanceConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::ENABLED => false,
 			self::UNLIMITED_DURATION => false,
 			self::END_DATE => new Date(),
 			self::MESSAGE => LangLoader::get_message('admin.maintenance', 'admin-lang'),
-			self::AUTH => array(),
+			self::AUTH => [],
 			self::DISPLAY_DURATION => true,
 			self::DISPLAY_DURATION_FOR_ADMIN => true
-		);
+		];
 	}
 
 	/**

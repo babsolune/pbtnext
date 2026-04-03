@@ -26,7 +26,7 @@ class BugtrackerDeleteBugController extends DefaultModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$this->save();
-			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : BugtrackerUrlBuilder::unsolved()), StringVars::replace_vars($this->lang['success.delete'], array('id' => $this->bug->get_id())));
+			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : BugtrackerUrlBuilder::unsolved()), StringVars::replace_vars($this->lang['success.delete'], ['id' => $this->bug->get_id()]));
 		}
 
 		$this->view->put('CONTENT', $this->form->display());
@@ -38,7 +38,7 @@ class BugtrackerDeleteBugController extends DefaultModuleController
 		$id = $request->get_int('id', 0);
 
 		try {
-			$this->bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
+			$this->bug = BugtrackerService::get_bug('WHERE id=:id', ['id' => $id]);
 		} catch (RowNotFoundException $e) {
 			$error_controller = new UserErrorController($this->lang['warning.error'], $this->lang['error.e_unexist_bug']);
 			DispatchManager::redirect($error_controller);
@@ -66,9 +66,9 @@ class BugtrackerDeleteBugController extends DefaultModuleController
 		$fieldset = new FormFieldsetHTML('delete_bug');
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldRichTextEditor('comments_message', $this->lang['comment.comment'], '', array(
+		$fieldset->add_field(new FormFieldRichTextEditor('comments_message', $this->lang['comment.comment'], '', [
 			'description' => $this->lang['explain.delete_comment'], 'hidden' => !$this->config->are_pm_enabled() || !$this->config->are_pm_delete_enabled()
-		)));
+		]));
 
 		$fieldset->add_field(new FormFieldHidden('referrer', $request->get_url_referrer()));
 
@@ -94,10 +94,10 @@ class BugtrackerDeleteBugController extends DefaultModuleController
 		}
 
 		//Delete bug
-		BugtrackerService::delete("WHERE id=:id", array('id' => $this->bug->get_id()));
+		BugtrackerService::delete("WHERE id=:id", ['id' => $this->bug->get_id()]);
 
 		//Delete bug history
-		BugtrackerService::delete_history("WHERE bug_id=:id", array('id' => $this->bug->get_id()));
+		BugtrackerService::delete_history("WHERE bug_id=:id", ['id' => $this->bug->get_id()]);
 
 		//Delete comments
 		CommentsService::delete_comments_topic_module('bugtracker', $this->bug->get_id());

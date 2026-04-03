@@ -31,18 +31,18 @@ class AdminGoogleAnalyticsController extends DefaultAdminModuleController
 	{
 		$form = new HTMLForm('GoogleAnalytics');
 
-		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module()->get_configuration()->get_name()]));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('identifier', $this->lang['ga.identifier'], $this->config->get_identifier(),
-			array(
+			[
 				'class' => 'half-field', 'required' => true,
 				'description' => $this->lang['ga.identifier.clue']
-			)
+			]
 		));
 
-		$fieldset->add_field(new FormFieldFree('login', $this->lang['user.sign.in'], StringVars::replace_vars($this->lang['ga.analytics.login'], array('link' => 'https://www.google.com/analytics/')),
-			array('class' => 'half-field')
+		$fieldset->add_field(new FormFieldFree('login', $this->lang['user.sign.in'], StringVars::replace_vars($this->lang['ga.analytics.login'], ['link' => 'https://www.google.com/analytics/']),
+			['class' => 'half-field']
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -56,7 +56,7 @@ class AdminGoogleAnalyticsController extends DefaultAdminModuleController
 	{
 		$this->config->set_identifier($this->form->get_value('identifier'));
 		GoogleAnalyticsConfig::save();
-		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
+		HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]), 'url' => ModulesUrlBuilder::configuration()->rel()]);
 	}
 }
 ?>

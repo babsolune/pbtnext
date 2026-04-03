@@ -10,13 +10,13 @@
 
 class BugtrackerStatsCache implements CacheData
 {
-	private $bugs_number = array();
-	private $bugs_number_per_version = array();
-	private $top_posters = array();
+	private $bugs_number = [];
+	private $bugs_number_per_version = [];
+	private $top_posters = [];
 
 	public function synchronize()
 	{
-		$this->bugs_number = array('total' => 0);
+		$this->bugs_number = ['total' => 0];
 		$db_querier = PersistenceContext::get_querier();
 
 		$config = BugtrackerConfig::load();
@@ -45,11 +45,11 @@ class BugtrackerStatsCache implements CacheData
 		foreach ($result as $row)
 		{
 			if (!empty($row['fixed_in']) && isset($versions[$row['fixed_in']]))
-				$this->bugs_number_per_version[$row['fixed_in']] = array(
+				$this->bugs_number_per_version[$row['fixed_in']] = [
 					'all' => $row['bugs_number'],
 					BugtrackerItem::FIXED => $row['fixed_bugs_number'],
 					BugtrackerItem::IN_PROGRESS => $row['in_progress_bugs_number'],
-				);
+				];
 		}
 		$result->dispose();
 
@@ -70,10 +70,10 @@ class BugtrackerStatsCache implements CacheData
 			else
 				$author->init_visitor_user();
 
-			$this->top_posters[$i] = array(
+			$this->top_posters[$i] = [
 				'user'			=> $author,
 				'bugs_number'	=> $row['bugs_number']
-			);
+			];
 
 			$i++;
 		}

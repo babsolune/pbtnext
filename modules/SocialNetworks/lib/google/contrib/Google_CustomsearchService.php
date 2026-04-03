@@ -65,10 +65,10 @@
      * @opt_param string siteSearchFilter Controls whether to include or exclude results from the site named in the as_sitesearch parameter
      * @return Google_Search
      */
-    public function listCse($q, $optParams = array()) {
-      $params = array('q' => $q);
+    public function listCse($q, $optParams = []) {
+      $params = ['q' => $q];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_Search($data);
       } else {
@@ -114,7 +114,7 @@ class Google_Context extends Google_Model {
   protected $__facetsDataType = 'array';
   public $facets;
   public $title;
-  public function setFacets(/* array(Google_ContextFacets) */ $facets) {
+  public function setFacets(/* [Google_ContextFacets] */ $facets) {
     $this->assertIsArray($facets, 'Google_ContextFacets', __METHOD__);
     $this->facets = $facets;
   }
@@ -181,7 +181,7 @@ class Google_Promotion extends Google_Model {
   public function getLink() {
     return $this->link;
   }
-  public function setBodyLines(/* array(Google_PromotionBodyLines) */ $bodyLines) {
+  public function setBodyLines(/* [Google_PromotionBodyLines] */ $bodyLines) {
     $this->assertIsArray($bodyLines, 'Google_PromotionBodyLines', __METHOD__);
     $this->bodyLines = $bodyLines;
   }
@@ -545,7 +545,7 @@ class Google_Result extends Google_Model {
   public function getKind() {
     return $this->kind;
   }
-  public function setLabels(/* array(Google_ResultLabels) */ $labels) {
+  public function setLabels(/* [Google_ResultLabels] */ $labels) {
     $this->assertIsArray($labels, 'Google_ResultLabels', __METHOD__);
     $this->labels = $labels;
   }
@@ -718,7 +718,7 @@ class Google_Search extends Google_Model {
   protected $__searchInformationType = 'Google_SearchSearchInformation';
   protected $__searchInformationDataType = '';
   public $searchInformation;
-  public function setPromotions(/* array(Google_Promotion) */ $promotions) {
+  public function setPromotions(/* [Google_Promotion] */ $promotions) {
     $this->assertIsArray($promotions, 'Google_Promotion', __METHOD__);
     $this->promotions = $promotions;
   }
@@ -737,7 +737,7 @@ class Google_Search extends Google_Model {
   public function getUrl() {
     return $this->url;
   }
-  public function setItems(/* array(Google_Result) */ $items) {
+  public function setItems(/* [Google_Result] */ $items) {
     $this->assertIsArray($items, 'Google_Result', __METHOD__);
     $this->items = $items;
   }

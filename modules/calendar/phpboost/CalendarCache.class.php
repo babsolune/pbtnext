@@ -10,14 +10,14 @@
 
 class CalendarCache implements CacheData
 {
-	private $items = array();
+	private $items = [];
 
 	public function synchronize()
 	{
 		$year = date('Y');
 		$month = date('n');
 		$bissextile = (date("L", mktime(0, 0, 0, 1, 1, $year)) == 1) ? 29 : 28;
-		$array_month = array(31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31);
+		$array_month = [31, $bissextile, 31, 30, 31, 30 , 31, 31, 30, 31, 30, 31];
 		$month_days = $array_month[$month - 1];
 
 		$this->items = CalendarService::get_all_current_month_items($month, $year, $month_days);

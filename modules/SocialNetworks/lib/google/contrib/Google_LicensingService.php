@@ -34,10 +34,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_LicenseAssignment
      */
-    public function insert($productId, $skuId, Google_LicenseAssignmentInsert $postBody, $optParams = array()) {
-      $params = array('productId' => $productId, 'skuId' => $skuId, 'postBody' => $postBody);
+    public function insert($productId, $skuId, Google_LicenseAssignmentInsert $postBody, $optParams = []) {
+      $params = ['productId' => $productId, 'skuId' => $skuId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_LicenseAssignment($data);
       } else {
@@ -53,10 +53,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_LicenseAssignment
      */
-    public function get($productId, $skuId, $userId, $optParams = array()) {
-      $params = array('productId' => $productId, 'skuId' => $skuId, 'userId' => $userId);
+    public function get($productId, $skuId, $userId, $optParams = []) {
+      $params = ['productId' => $productId, 'skuId' => $skuId, 'userId' => $userId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_LicenseAssignment($data);
       } else {
@@ -76,10 +76,10 @@
      * @opt_param string maxResults Maximum number of campaigns to return at one time. Must be positive. Optional. Default value is 100.
      * @return Google_LicenseAssignmentList
      */
-    public function listForProductAndSku($productId, $skuId, $customerId, $optParams = array()) {
-      $params = array('productId' => $productId, 'skuId' => $skuId, 'customerId' => $customerId);
+    public function listForProductAndSku($productId, $skuId, $customerId, $optParams = []) {
+      $params = ['productId' => $productId, 'skuId' => $skuId, 'customerId' => $customerId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('listForProductAndSku', array($params));
+      $data = $this->__call('listForProductAndSku', [$params]);
       if ($this->useObjects()) {
         return new Google_LicenseAssignmentList($data);
       } else {
@@ -97,10 +97,10 @@
      * @opt_param string maxResults Maximum number of campaigns to return at one time. Must be positive. Optional. Default value is 100.
      * @return Google_LicenseAssignmentList
      */
-    public function listForProduct($productId, $customerId, $optParams = array()) {
-      $params = array('productId' => $productId, 'customerId' => $customerId);
+    public function listForProduct($productId, $customerId, $optParams = []) {
+      $params = ['productId' => $productId, 'customerId' => $customerId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('listForProduct', array($params));
+      $data = $this->__call('listForProduct', [$params]);
       if ($this->useObjects()) {
         return new Google_LicenseAssignmentList($data);
       } else {
@@ -117,10 +117,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_LicenseAssignment
      */
-    public function update($productId, $skuId, $userId, Google_LicenseAssignment $postBody, $optParams = array()) {
-      $params = array('productId' => $productId, 'skuId' => $skuId, 'userId' => $userId, 'postBody' => $postBody);
+    public function update($productId, $skuId, $userId, Google_LicenseAssignment $postBody, $optParams = []) {
+      $params = ['productId' => $productId, 'skuId' => $skuId, 'userId' => $userId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('update', array($params));
+      $data = $this->__call('update', [$params]);
       if ($this->useObjects()) {
         return new Google_LicenseAssignment($data);
       } else {
@@ -137,10 +137,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_LicenseAssignment
      */
-    public function patch($productId, $skuId, $userId, Google_LicenseAssignment $postBody, $optParams = array()) {
-      $params = array('productId' => $productId, 'skuId' => $skuId, 'userId' => $userId, 'postBody' => $postBody);
+    public function patch($productId, $skuId, $userId, Google_LicenseAssignment $postBody, $optParams = []) {
+      $params = ['productId' => $productId, 'skuId' => $skuId, 'userId' => $userId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('patch', array($params));
+      $data = $this->__call('patch', [$params]);
       if ($this->useObjects()) {
         return new Google_LicenseAssignment($data);
       } else {
@@ -155,10 +155,10 @@
      * @param string $userId email id or unique Id of the user
      * @param array $optParams Optional parameters.
      */
-    public function delete($productId, $skuId, $userId, $optParams = array()) {
-      $params = array('productId' => $productId, 'skuId' => $skuId, 'userId' => $userId);
+    public function delete($productId, $skuId, $userId, $optParams = []) {
+      $params = ['productId' => $productId, 'skuId' => $skuId, 'userId' => $userId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       return $data;
     }
   }
@@ -263,7 +263,7 @@ class Google_LicenseAssignmentList extends Google_Model {
   public function getNextPageToken() {
     return $this->nextPageToken;
   }
-  public function setItems(/* array(Google_LicenseAssignment) */ $items) {
+  public function setItems(/* [Google_LicenseAssignment] */ $items) {
     $this->assertIsArray($items, 'Google_LicenseAssignment', __METHOD__);
     $this->items = $items;
   }

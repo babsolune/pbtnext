@@ -57,22 +57,22 @@ class Mail
 	/**
 	 * @var array Recipients of the mail. If they are more than one, a comma separates their addresses.
 	 */
-	var $recipients = array();
+	var $recipients = [];
 
 	/**
 	 * @var array Cc recipients of the mail. If they are more than one, a comma separates their addresses.
 	 */
-	var $cc_recipients = array();
+	var $cc_recipients = [];
 
 	/**
 	 * @var array Bcc recipients of the mail. If they are more than one, a comma separates their addresses.
 	 */
-	var $bcc_recipients = array();
+	var $bcc_recipients = [];
 
 	/**
 	 * @var array Attachments of the mail. If they are more than one, a comma separates their addresses.
 	 */
-	var $attachments = array();
+	var $attachments = [];
 
 	/**
 	 * @var string Tells whether the content contains HTML code
@@ -138,7 +138,7 @@ class Mail
 
 	public function clear_recipients()
 	{
-		$this->recipients = array();
+		$this->recipients = [];
 	}
 
 	/**
@@ -156,7 +156,7 @@ class Mail
 
 	public function clear_cc_recipients()
 	{
-		$this->cc_recipients = array();
+		$this->cc_recipients = [];
 	}
 
 	/**
@@ -174,7 +174,7 @@ class Mail
 
 	public function clear_bcc_recipients()
 	{
-		$this->bcc_recipients = array();
+		$this->bcc_recipients = [];
 	}
 
 	private static function check_mail($mail)

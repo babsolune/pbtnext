@@ -36,7 +36,7 @@ class Util
     /**
      * This function takes a input like a=b&a=c&d=e and returns the parsed
      * parameters like this
-     * array('a' => array('b','c'), 'd' => 'e')
+     * ['a' => ['b','c'], 'd' => 'e']
      *
      * @param string $input
      *

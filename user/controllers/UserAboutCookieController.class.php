@@ -37,10 +37,10 @@ class UserAboutCookieController extends AbstractController
 		$graphical_environment->get_seo_meta_data()->set_description($this->lang['user.seo.about.cookie']);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(UserUrlBuilder::aboutcookie());
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'ABOUTCOOKIE_TITLE'   => $config->get_cookiebar_aboutcookie_title(),
 			'ABOUTCOOKIE_CONTENT' => FormatingHelper::second_parse($config->get_cookiebar_aboutcookie_content())
-		));
+		]);
 
 		return $response;
 	}

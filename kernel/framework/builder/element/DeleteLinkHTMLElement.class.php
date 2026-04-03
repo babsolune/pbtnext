@@ -12,9 +12,9 @@
 
 class DeleteLinkHTMLElement extends LinkHTMLElement
 {
-	public function __construct($url, $content = '', $attributes = array(), $css_class = '')
+	public function __construct($url, $content = '', $attributes = [], $css_class = '')
 	{
-		$local_attributes = array();
+		$local_attributes = [];
 
 		if (isset($attributes['disabled']) && $attributes['disabled'] == true)
 		{
@@ -24,7 +24,7 @@ class DeleteLinkHTMLElement extends LinkHTMLElement
 		else
 			$local_attributes['data-confirmation'] = 'delete-element';
 
-		parent::__construct($url, $content, array_merge(array('aria-label' => LangLoader::get_message('common.delete', 'common-lang')), $local_attributes, $attributes), 'far fa-fw fa-trash-alt' . ($css_class ? ' ' . $css_class : ''), true);
+		parent::__construct($url, $content, array_merge(['aria-label' => LangLoader::get_message('common.delete', 'common-lang')], $local_attributes, $attributes), 'far fa-fw fa-trash-alt' . ($css_class ? ' ' . $css_class : ''), true);
 	}
 }
 ?>

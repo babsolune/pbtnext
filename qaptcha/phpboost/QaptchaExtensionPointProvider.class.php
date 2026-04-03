@@ -28,7 +28,7 @@ class QaptchaExtensionPointProvider extends ExtensionPointProvider
 
 	public function url_mappings()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/qaptcha/index.php')));
+		return new UrlMappings([new DispatcherUrlMapping('/qaptcha/index.php')]);
 	}
 }
 ?>

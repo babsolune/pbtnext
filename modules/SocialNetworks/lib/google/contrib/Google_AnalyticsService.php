@@ -48,10 +48,10 @@
      * @opt_param int start-index An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
      * @return Google_Webproperties
      */
-    public function listManagementWebproperties($accountId, $optParams = array()) {
-      $params = array('accountId' => $accountId);
+    public function listManagementWebproperties($accountId, $optParams = []) {
+      $params = ['accountId' => $accountId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_Webproperties($data);
       } else {
@@ -79,10 +79,10 @@
      * @opt_param int start-index An index of the first advanced segment to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
      * @return Google_Segments
      */
-    public function listManagementSegments($optParams = array()) {
-      $params = array();
+    public function listManagementSegments($optParams = []) {
+      $params = [];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_Segments($data);
       } else {
@@ -110,10 +110,10 @@
      * @opt_param int start-index An index of the first account to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
      * @return Google_Accounts
      */
-    public function listManagementAccounts($optParams = array()) {
-      $params = array();
+    public function listManagementAccounts($optParams = []) {
+      $params = [];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_Accounts($data);
       } else {
@@ -144,10 +144,10 @@
      * @opt_param int start-index An index of the first goal to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
      * @return Google_Goals
      */
-    public function listManagementGoals($accountId, $webPropertyId, $profileId, $optParams = array()) {
-      $params = array('accountId' => $accountId, 'webPropertyId' => $webPropertyId, 'profileId' => $profileId);
+    public function listManagementGoals($accountId, $webPropertyId, $profileId, $optParams = []) {
+      $params = ['accountId' => $accountId, 'webPropertyId' => $webPropertyId, 'profileId' => $profileId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_Goals($data);
       } else {
@@ -177,10 +177,10 @@
      * @opt_param int start-index An index of the first entity to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
      * @return Google_Profiles
      */
-    public function listManagementProfiles($accountId, $webPropertyId, $optParams = array()) {
-      $params = array('accountId' => $accountId, 'webPropertyId' => $webPropertyId);
+    public function listManagementProfiles($accountId, $webPropertyId, $optParams = []) {
+      $params = ['accountId' => $accountId, 'webPropertyId' => $webPropertyId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_Profiles($data);
       } else {
@@ -229,10 +229,10 @@
      * @opt_param string filters A comma-separated list of dimension or metric filters to be applied to the Analytics data.
      * @return Google_McfData
      */
-    public function get($ids, $start_date, $end_date, $metrics, $optParams = array()) {
-      $params = array('ids' => $ids, 'start-date' => $start_date, 'end-date' => $end_date, 'metrics' => $metrics);
+    public function get($ids, $start_date, $end_date, $metrics, $optParams = []) {
+      $params = ['ids' => $ids, 'start-date' => $start_date, 'end-date' => $end_date, 'metrics' => $metrics];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_McfData($data);
       } else {
@@ -268,10 +268,10 @@
      * @opt_param string filters A comma-separated list of dimension or metric filters to be applied to Analytics data.
      * @return Google_GaData
      */
-    public function get($ids, $start_date, $end_date, $metrics, $optParams = array()) {
-      $params = array('ids' => $ids, 'start-date' => $start_date, 'end-date' => $end_date, 'metrics' => $metrics);
+    public function get($ids, $start_date, $end_date, $metrics, $optParams = []) {
+      $params = ['ids' => $ids, 'start-date' => $start_date, 'end-date' => $end_date, 'metrics' => $metrics];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_GaData($data);
       } else {
@@ -418,7 +418,7 @@ class Google_Accounts extends Google_Model {
   public function getKind() {
     return $this->kind;
   }
-  public function setItems(/* array(Google_Account) */ $items) {
+  public function setItems(/* [Google_Account] */ $items) {
     $this->assertIsArray($items, 'Google_Account', __METHOD__);
     $this->items = $items;
   }
@@ -483,7 +483,7 @@ class Google_GaData extends Google_Model {
   public function getKind() {
     return $this->kind;
   }
-  public function setRows(/* array(Google_string) */ $rows) {
+  public function setRows(/* [Google_string] */ $rows) {
     $this->assertIsArray($rows, 'Google_string', __METHOD__);
     $this->rows = $rows;
   }
@@ -544,7 +544,7 @@ class Google_GaData extends Google_Model {
   public function getProfileInfo() {
     return $this->profileInfo;
   }
-  public function setColumnHeaders(/* array(Google_GaDataColumnHeaders) */ $columnHeaders) {
+  public function setColumnHeaders(/* [Google_GaDataColumnHeaders] */ $columnHeaders) {
     $this->assertIsArray($columnHeaders, 'Google_GaDataColumnHeaders', __METHOD__);
     $this->columnHeaders = $columnHeaders;
   }
@@ -645,7 +645,7 @@ class Google_GaDataQuery extends Google_Model {
   public function getMax_results() {
     return $this->max_results;
   }
-  public function setSort(/* array(Google_string) */ $sort) {
+  public function setSort(/* [Google_string] */ $sort) {
     $this->assertIsArray($sort, 'Google_string', __METHOD__);
     $this->sort = $sort;
   }
@@ -682,7 +682,7 @@ class Google_GaDataQuery extends Google_Model {
   public function getIds() {
     return $this->ids;
   }
-  public function setMetrics(/* array(Google_string) */ $metrics) {
+  public function setMetrics(/* [Google_string] */ $metrics) {
     $this->assertIsArray($metrics, 'Google_string', __METHOD__);
     $this->metrics = $metrics;
   }
@@ -847,7 +847,7 @@ class Google_GoalEventDetails extends Google_Model {
   protected $__eventConditionsDataType = 'array';
   public $eventConditions;
   public $useEventValue;
-  public function setEventConditions(/* array(Google_GoalEventDetailsEventConditions) */ $eventConditions) {
+  public function setEventConditions(/* [Google_GoalEventDetailsEventConditions] */ $eventConditions) {
     $this->assertIsArray($eventConditions, 'Google_GoalEventDetailsEventConditions', __METHOD__);
     $this->eventConditions = $eventConditions;
   }
@@ -943,7 +943,7 @@ class Google_GoalUrlDestinationDetails extends Google_Model {
   public function getMatchType() {
     return $this->matchType;
   }
-  public function setSteps(/* array(Google_GoalUrlDestinationDetailsSteps) */ $steps) {
+  public function setSteps(/* [Google_GoalUrlDestinationDetailsSteps] */ $steps) {
     $this->assertIsArray($steps, 'Google_GoalUrlDestinationDetailsSteps', __METHOD__);
     $this->steps = $steps;
   }
@@ -1039,7 +1039,7 @@ class Google_Goals extends Google_Model {
   public function getKind() {
     return $this->kind;
   }
-  public function setItems(/* array(Google_Goal) */ $items) {
+  public function setItems(/* [Google_Goal] */ $items) {
     $this->assertIsArray($items, 'Google_Goal', __METHOD__);
     $this->items = $items;
   }
@@ -1106,7 +1106,7 @@ class Google_McfData extends Google_Model {
   public function getKind() {
     return $this->kind;
   }
-  public function setRows(/* array(Google_McfDataRows) */ $rows) {
+  public function setRows(/* [Google_McfDataRows] */ $rows) {
     $this->assertIsArray($rows, 'Google_McfDataRows', __METHOD__);
     $this->rows = $rows;
   }
@@ -1167,7 +1167,7 @@ class Google_McfData extends Google_Model {
   public function getProfileInfo() {
     return $this->profileInfo;
   }
-  public function setColumnHeaders(/* array(Google_McfDataColumnHeaders) */ $columnHeaders) {
+  public function setColumnHeaders(/* [Google_McfDataColumnHeaders] */ $columnHeaders) {
     $this->assertIsArray($columnHeaders, 'Google_McfDataColumnHeaders', __METHOD__);
     $this->columnHeaders = $columnHeaders;
   }
@@ -1268,7 +1268,7 @@ class Google_McfDataQuery extends Google_Model {
   public function getMax_results() {
     return $this->max_results;
   }
-  public function setSort(/* array(Google_string) */ $sort) {
+  public function setSort(/* [Google_string] */ $sort) {
     $this->assertIsArray($sort, 'Google_string', __METHOD__);
     $this->sort = $sort;
   }
@@ -1305,7 +1305,7 @@ class Google_McfDataQuery extends Google_Model {
   public function getIds() {
     return $this->ids;
   }
-  public function setMetrics(/* array(Google_string) */ $metrics) {
+  public function setMetrics(/* [Google_string] */ $metrics) {
     $this->assertIsArray($metrics, 'Google_string', __METHOD__);
     $this->metrics = $metrics;
   }
@@ -1337,7 +1337,7 @@ class Google_McfDataRows extends Google_Model {
   public function getPrimitiveValue() {
     return $this->primitiveValue;
   }
-  public function setConversionPathValue(/* array(Google_McfDataRowsConversionPathValue) */ $conversionPathValue) {
+  public function setConversionPathValue(/* [Google_McfDataRowsConversionPathValue] */ $conversionPathValue) {
     $this->assertIsArray($conversionPathValue, 'Google_McfDataRowsConversionPathValue', __METHOD__);
     $this->conversionPathValue = $conversionPathValue;
   }
@@ -1546,7 +1546,7 @@ class Google_Profiles extends Google_Model {
   public function getKind() {
     return $this->kind;
   }
-  public function setItems(/* array(Google_Profile) */ $items) {
+  public function setItems(/* [Google_Profile] */ $items) {
     $this->assertIsArray($items, 'Google_Profile', __METHOD__);
     $this->items = $items;
   }
@@ -1667,7 +1667,7 @@ class Google_Segments extends Google_Model {
   public function getKind() {
     return $this->kind;
   }
-  public function setItems(/* array(Google_Segment) */ $items) {
+  public function setItems(/* [Google_Segment] */ $items) {
     $this->assertIsArray($items, 'Google_Segment', __METHOD__);
     $this->items = $items;
   }
@@ -1729,7 +1729,7 @@ class Google_Webproperties extends Google_Model {
   public function getKind() {
     return $this->kind;
   }
-  public function setItems(/* array(Google_Webproperty) */ $items) {
+  public function setItems(/* [Google_Webproperty] */ $items) {
     $this->assertIsArray($items, 'Google_Webproperty', __METHOD__);
     $this->items = $items;
   }

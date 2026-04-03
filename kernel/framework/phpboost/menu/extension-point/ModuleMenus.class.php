@@ -11,7 +11,7 @@
 
 class ModuleMenus implements MenusExtensionPoint
 {
-	private $menus = array();
+	private $menus = [];
 
 	public function __construct(Array $menus)
 	{

@@ -27,7 +27,7 @@ class UrlControllerMapper extends AbstractUrlMapper
 	 * @param string $module_id id of the current module (optional).
 	 * @throws NoSuchControllerException
 	 */
-	public function __construct($classname, $capture_regex = '`^/?$`u', $parameters_names = array(), $module_id = '')
+	public function __construct($classname, $capture_regex = '`^/?$`u', $parameters_names = [], $module_id = '')
 	{
 		$this->classname =& $classname;
 		$this->parameters_names = $parameters_names;

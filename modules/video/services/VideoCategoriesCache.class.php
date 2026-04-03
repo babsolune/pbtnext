@@ -18,10 +18,10 @@ class VideoCategoriesCache extends DefaultRichCategoriesCache
 	{
 		$now = new Date();
 		return VideoService::count('WHERE id_category = :id_category AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))',
-			array(
+			[
 				'timestamp_now' => $now->get_timestamp(),
 				'id_category' => $id_category
-			)
+			]
 		);
 	}
 
@@ -34,7 +34,7 @@ class VideoCategoriesCache extends DefaultRichCategoriesCache
 	{
 		$description = VideoConfig::load()->get_root_category_description();
 		if (empty($description))
-			$description = StringVars::replace_vars(LangLoader::get_message('video.seo.description.root', 'common', 'video'), array('site' => GeneralConfig::load()->get_site_name()));
+			$description = StringVars::replace_vars(LangLoader::get_message('video.seo.description.root', 'common', 'video'), ['site' => GeneralConfig::load()->get_site_name()]);
 		return $description;
 	}
 }

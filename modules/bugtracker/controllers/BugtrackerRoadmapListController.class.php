@@ -110,13 +110,13 @@ class BugtrackerRoadmapListController extends DefaultModuleController
 			" . ($roadmap_status != 'all' ? ($roadmap_status == BugtrackerItem::IN_PROGRESS ? "AND (b.status = '" . BugtrackerItem::IN_PROGRESS . "' OR b.status = '" . BugtrackerItem::REOPEN . "')" : "AND b.status = '" . BugtrackerItem::FIXED . "'") : "") . "
 			ORDER BY " . $field_bdd . " " . $mode . "
 			LIMIT :number_items_per_page OFFSET :display_from",
-				array(
+				[
 					'number_items_per_page' => $pagination->get_number_items_per_page(),
 					'display_from' => $pagination->get_display_from()
-				)
+				]
 			);
 
-			$displayed_severities = array();
+			$displayed_severities = [];
 
 			while ($row = $result->fetch())
 			{
@@ -125,10 +125,10 @@ class BugtrackerRoadmapListController extends DefaultModuleController
 
 				if (!in_array($bug->get_severity(), $displayed_severities)) $displayed_severities[] = $bug->get_severity();
 
-				$this->view->assign_block_vars('bug', array_merge($bug->get_template_vars(), array(
+				$this->view->assign_block_vars('bug', array_merge($bug->get_template_vars(), [
 					'C_LINE_COLOR'	=> !empty($row['severity']) && isset($severities[$row['severity']]),
 					'LINE_COLOR' 	=> stripslashes($severities[$row['severity']]['color'])
-				)));
+				]));
 			}
 			$result->dispose();
 
@@ -138,7 +138,7 @@ class BugtrackerRoadmapListController extends DefaultModuleController
 			if ($this->config->is_priority_column_displayed()) $bugs_colspan++;
 			if ($this->config->is_detected_in_column_displayed()) $bugs_colspan++;
 
-			$this->view->put_all(array(
+			$this->view->put_all([
 				'C_VERSIONS_AVAILABLE'			=> true,
 				'C_BUGS'						=> $roadmap_status_bugs_number,
 				'C_STATUS_IN_PROGRESS'			=> $roadmap_status == BugtrackerItem::IN_PROGRESS,
@@ -161,7 +161,7 @@ class BugtrackerRoadmapListController extends DefaultModuleController
 				'LINK_BUG_STATUS_BOTTOM'		=> BugtrackerUrlBuilder::roadmap($roadmap_version, $roadmap_version_name, $roadmap_status, 'status', 'bottom', $current_page)->rel(),
 				'LINK_BUG_DATE_TOP' 			=> BugtrackerUrlBuilder::roadmap($roadmap_version, $roadmap_version_name, $roadmap_status, 'date', 'top', $current_page)->rel(),
 				'LINK_BUG_DATE_BOTTOM'			=> BugtrackerUrlBuilder::roadmap($roadmap_version, $roadmap_version_name, $roadmap_status, 'date', 'bottom', $current_page)->rel()
-			));
+			]);
 		}
 
 		return $this->view;
@@ -175,19 +175,19 @@ class BugtrackerRoadmapListController extends DefaultModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('roadmap_version', $this->lang['titles.choose_version'], $requested_version_id . '-' . $requested_version_name, $this->build_select_versions(),
-			array('events' => array('change' => 'document.location = "'. BugtrackerUrlBuilder::roadmap()->rel() .'" + HTMLForms.getField("roadmap_version").getValue()' . ($requested_status != 'all' ? ' + "/" + HTMLForms.getField("status").getValue()' : '') . ';')
-		)));
+			['events' => ['change' => 'document.location = "'. BugtrackerUrlBuilder::roadmap()->rel() .'" + HTMLForms.getField("roadmap_version").getValue()' . ($requested_status != 'all' ? ' + "/" + HTMLForms.getField("status").getValue()' : '') . ';']
+		]));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('status', $this->lang['labels.fields.status'], $requested_status, $this->build_select_status(),
-			array('events' => array('change' => 'document.location = "'. BugtrackerUrlBuilder::roadmap($requested_version_id, $requested_version_name)->rel() .'" + "/" + HTMLForms.getField("status").getValue();')
-		)));
+			['events' => ['change' => 'document.location = "'. BugtrackerUrlBuilder::roadmap($requested_version_id, $requested_version_name)->rel() .'" + "/" + HTMLForms.getField("status").getValue();']
+		]));
 
 		$release_date = !empty($requested_version_release_date) && is_numeric($requested_version_release_date) ? new Date($requested_version_release_date, Timezone::SERVER_TIMEZONE) : null;
 
 		// $fieldset = new FormFieldsetHorizontal('informations');
 		// $form->add_fieldset($fieldset);
 
-		$fieldset_infos =  new FormFieldsetHorizontal('informations', array('css_class' => 'flex-between'));
+		$fieldset_infos =  new FormFieldsetHorizontal('informations', ['css_class' => 'flex-between']);
 		$form->add_fieldset($fieldset_infos);
 		$fieldset_infos->add_field(new FormFieldHTML('informations_date', !empty($release_date) ? $this->lang['labels.fields.version_release_date'] . ': ' . $release_date->format(Date::FORMAT_DAY_MONTH_YEAR) : ''));
 
@@ -200,7 +200,7 @@ class BugtrackerRoadmapListController extends DefaultModuleController
 	{
 		$versions = array_reverse($this->config->get_versions(), true);
 
-		$array_versions = array();
+		$array_versions = [];
 		//Versions
 		foreach ($versions as $key => $version)
 		{
@@ -249,8 +249,8 @@ class BugtrackerRoadmapListController extends DefaultModuleController
 
 		$response = new SiteDisplayResponse($body_view);
 		$graphical_environment = $response->get_graphical_environment();
-		$graphical_environment->set_page_title(StringVars::replace_vars($this->lang['titles.roadmap.version'], array('version' => $versions[key($versions)]['name'])), $this->lang['bugtracker.module.title'], $page);
-		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['seo.roadmap'], array('version' => $versions[key($versions)]['name'])), $page);
+		$graphical_environment->set_page_title(StringVars::replace_vars($this->lang['titles.roadmap.version'], ['version' => $versions[key($versions)]['name']]), $this->lang['bugtracker.module.title'], $page);
+		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['seo.roadmap'], ['version' => $versions[key($versions)]['name']]), $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(BugtrackerUrlBuilder::roadmap($roadmap_id_version, $roadmap_version, $roadmap_status, $field, $sort, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();

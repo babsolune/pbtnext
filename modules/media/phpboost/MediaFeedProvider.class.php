@@ -45,10 +45,10 @@ class MediaFeedProvider implements FeedProvider
 				LEFT JOIN '. MediaSetup::$media_cats_table .' cat ON cat.id = media.id_category
 				WHERE media.id_category IN :ids_categories
 				AND published = :status_approved
-				ORDER BY creation_date DESC', array(
+				ORDER BY creation_date DESC', [
 					'ids_categories' => $ids_categories,
 					'status_approved' => MEDIA_STATUS_APPROVED
-			));
+			]);
 
 			foreach ($results as $row)
 			{

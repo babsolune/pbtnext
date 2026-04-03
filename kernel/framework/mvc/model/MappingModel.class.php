@@ -16,10 +16,10 @@ class MappingModel
 	private $primary_key;
 	private $fields;
 	private $joins;
-	private $properties_list = array();
+	private $properties_list = [];
 
 	public function __construct($classname, $table_name, MappingModelField $primary_key, $fields,
-	$joins = array())
+	$joins = [])
 	{
 		$this->classname = $classname;
 		$this->table_name = $table_name;
@@ -40,7 +40,7 @@ class MappingModel
 	 * @param mixed[] $properties_map
 	 * @return PropertiesMapInterface
 	 */
-	public function new_instance($properties_map = array())
+	public function new_instance($properties_map = [])
 	{
 		/* @var PropertiesMapInterface */
 		$instance = new $this->classname();

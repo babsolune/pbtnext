@@ -26,7 +26,7 @@ interface SQLQuerier
 	 * @param string[] $parameters the query_var map
 	 * @return SelectQueryResult the query result set
 	 */
-	function select($query, $parameters = array(), $fetch_mode = SelectQueryResult::FETCH_ASSOC);
+	function select($query, $parameters = [], $fetch_mode = SelectQueryResult::FETCH_ASSOC);
 
 	/**
 	 * executes the <code>$query</code> sql request.
@@ -40,7 +40,7 @@ interface SQLQuerier
 	 * @param string[] $parameters the query_var map
 	 * @return InjectQueryResult the query result
 	 */
-	function inject($query, $parameters = array());
+	function inject($query, $parameters = []);
 
 	function enable_query_translator();
 

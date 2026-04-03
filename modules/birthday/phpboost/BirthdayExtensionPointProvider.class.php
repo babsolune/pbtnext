@@ -24,7 +24,7 @@ class BirthdayExtensionPointProvider extends ExtensionPointProvider
 
 	public function menus()
 	{
-		return new ModuleMenus(array(new BirthdayModuleMiniMenu()));
+		return new ModuleMenus([new BirthdayModuleMiniMenu()]);
 	}
 
 	public function scheduled_jobs()
@@ -34,7 +34,7 @@ class BirthdayExtensionPointProvider extends ExtensionPointProvider
 
 	public function url_mappings()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/birthday/index.php')));
+		return new UrlMappings([new DispatcherUrlMapping('/birthday/index.php')]);
 	}
 }
 ?>

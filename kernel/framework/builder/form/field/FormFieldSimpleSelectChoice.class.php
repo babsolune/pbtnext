@@ -31,7 +31,7 @@ class FormFieldSimpleSelectChoice extends AbstractFormFieldChoice
 	 * @param array $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
 	 * @param FormFieldConstraint List of the constraints
 	 */
-	public function __construct($id, $label, $value, array $options, array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, $value, array $options, array $field_options = [], array $constraints = [])
 	{
 		$this->default_value = $value;
 		parent::__construct($id, $label, $value, $options, $field_options, $constraints);
@@ -47,9 +47,9 @@ class FormFieldSimpleSelectChoice extends AbstractFormFieldChoice
 
 		$this->assign_common_template_variables($template);
 
-		$template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $this->get_html_code()->render(),
-		));
+		]);
 
 		return $template;
 	}
@@ -59,20 +59,20 @@ class FormFieldSimpleSelectChoice extends AbstractFormFieldChoice
 
 		$tpl = new FileTemplate('framework/builder/form/fieldelements/FormFieldSimpleSelectChoice.tpl');
 
-		$tpl->put_all(array(
+		$tpl->put_all([
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_id(),
 			'HTML_ID' => $this->get_html_id(),
 			'CSS_CLASS' => $this->get_css_class(),
 			'C_DISABLED' => $this->is_disabled(),
 			'C_SELECT_TO_LIST' => $this->is_select_to_list()
-		));
+		]);
 
 		foreach ($this->get_options() as $option)
 		{
-			$tpl->assign_block_vars('options', array(), array(
+			$tpl->assign_block_vars('options', [], [
 				'OPTION' => $option->display()
-			));
+			]);
 		}
 
 		return $tpl;

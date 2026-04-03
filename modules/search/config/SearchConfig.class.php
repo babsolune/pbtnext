@@ -44,7 +44,7 @@ class SearchConfig extends AbstractConfigData
 	public function get_weightings_sorted_by_localized_name()
 	{
 		$modules_weighting = self::get_weightings()->get_modules_weighting();
-		$weightings_sorted_by_localized_name = array();
+		$weightings_sorted_by_localized_name = [];
 
 		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $id => $module)
 		{
@@ -133,7 +133,7 @@ class SearchConfig extends AbstractConfigData
 	 */
 	public function get_all_unauthorized_providers()
 	{
-		$modules_without_read_authorization[] = array();
+		$modules_without_read_authorization[] = [];
 
 		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $id => $module)
 		{
@@ -168,14 +168,14 @@ class SearchConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		return array(
-			self::weightings => array(),
+		return [
+			self::weightings => [],
 			self::nb_results_per_page => 15,
 			self::cache_lifetime => 30,
 			self::cache_max_uses => 200,
-			self::unauthorized_providers => array(),
-			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 1, 'r1' => 1)
-		);
+			self::unauthorized_providers => [],
+			self::AUTHORIZATIONS => ['r-1' => 1, 'r0' => 1, 'r1' => 1]
+		];
 	}
 
 	/**

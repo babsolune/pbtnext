@@ -14,7 +14,7 @@ class AjaxKeywordsAutoCompleteController extends AbstractController
 {
 	public function execute(HTTPRequestCustom $request)
 	{
-		$suggestions = array();
+		$suggestions = [];
 
 		try {
 			$result = PersistenceContext::get_querier()->select("SELECT name, rewrited_name FROM " . DB_TABLE_KEYWORDS . " WHERE name LIKE '" . $request->get_value('value', '') . "%'");
@@ -27,7 +27,7 @@ class AjaxKeywordsAutoCompleteController extends AbstractController
 		} catch (Exception $e) {
 		}
 
-		return new JSONResponse(array('suggestions' => $suggestions));
+		return new JSONResponse(['suggestions' => $suggestions]);
 	}
 }
 ?>

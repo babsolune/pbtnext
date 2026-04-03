@@ -18,13 +18,13 @@ class ContactField
 	private $description;
 	private $field_type;
 	private $default_value;
-	private $possible_values = array();
+	private $possible_values = [];
 	private $required = false;
 	private $displayed = true;
 	private $regex;
 	private $readonly = false;
 	private $deletable = true;
-	private $authorization = array('r-1' => 1, 'r0' => 1, 'r1' => 1);
+	private $authorization = ['r-1' => 1, 'r0' => 1, 'r1' => 1];
 
 	private $fieldset;
 
@@ -203,7 +203,7 @@ class ContactField
 
 	public function get_properties()
 	{
-		return array(
+		return [
 			'name' => $this->get_name(),
 			'field_name' => $this->get_field_name(),
 			'description' => $this->get_description(),
@@ -216,7 +216,7 @@ class ContactField
 			'readonly' => (int)$this->is_readonly(),
 			'deletable' => (int)$this->is_deletable(),
 			'authorization' => TextHelper::serialize($this->get_authorization())
-		);
+		];
 	}
 
 	public function set_properties(array $properties)
@@ -226,13 +226,13 @@ class ContactField
 		$this->description = $properties['description'];
 		$this->field_type = $properties['field_type'];
 		$this->default_value = $properties['default_value'];
-		$this->possible_values = !empty($properties['possible_values']) ? TextHelper::unserialize($properties['possible_values']) : array();
+		$this->possible_values = !empty($properties['possible_values']) ? TextHelper::unserialize($properties['possible_values']) : [];
 		$this->required = (bool)$properties['required'];
 		$this->displayed = (bool)$properties['displayed'];
 		$this->regex = $properties['regex'];
 		$this->readonly = (bool)$properties['readonly'];
 		$this->deletable = (bool)$properties['deletable'];
-		$this->authorization = !empty($properties['authorization']) ? TextHelper::unserialize($properties['authorization']) : array();
+		$this->authorization = !empty($properties['authorization']) ? TextHelper::unserialize($properties['authorization']) : [];
 	}
 }
 ?>

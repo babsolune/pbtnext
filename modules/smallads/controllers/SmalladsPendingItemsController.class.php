@@ -41,11 +41,11 @@ class SmalladsPendingItemsController extends DefaultModuleController
 		' . (!CategoriesAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
 		AND (published = 0 OR (published = 2 AND (publishing_start_date > :timestamp_now OR (publishing_end_date != 0 AND publishing_end_date < :timestamp_now))))
 		AND archived = 0';
-		$parameters = array(
+		$parameters = [
 			'authorized_categories' => $authorized_categories,
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'timestamp_now' => $now->get_timestamp()
-		);
+		];
 
 		$result = PersistenceContext::get_querier()->select('SELECT smallads.*, member.*, com.comments_number
 			FROM '. SmalladsSetup::$smallads_table .' smallads
@@ -60,7 +60,7 @@ class SmalladsPendingItemsController extends DefaultModuleController
 
 		$this->build_sorting_smallad_type();
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_PENDING'         => true,
 			'C_ENABLED_FILTERS'	=> $this->config->are_sort_filters_enabled(),
 			'C_ITEMS'           => $result->get_rows_count() > 0,
@@ -75,7 +75,7 @@ class SmalladsPendingItemsController extends DefaultModuleController
 			'ITEMS_PER_PAGE' => $this->config->get_items_per_page(),
 
 			'U_USAGE_TERMS' => SmalladsUrlBuilder::usage_terms()->rel()
-		));
+		]);
 
 		if ($pending_items_number > 0)
 		{
@@ -106,11 +106,11 @@ class SmalladsPendingItemsController extends DefaultModuleController
 			$i = 1;
 			foreach ($smallad_types as $name)
 			{
-				$this->view->assign_block_vars('types', array(
+				$this->view->assign_block_vars('types', [
 					'C_SEPARATOR' => $i < $type_nbr,
 					'TYPE_NAME'        => $name,
 					'TYPE_NAME_FILTER' => Url::encode_rewrite(TextHelper::strtolower($name)),
-				));
+				]);
 				$i++;
 			}
 		}
@@ -127,11 +127,11 @@ class SmalladsPendingItemsController extends DefaultModuleController
 			$i = 1;
 			foreach ($sources as $name => $url)
 			{
-				$this->view->assign_block_vars('items.sources', array(
+				$this->view->assign_block_vars('items.sources', [
 					'C_SEPARATOR' => $i < $nbr_sources,
 					'NAME' => $name,
 					'URL'  => $url,
-				));
+				]);
 				$i++;
 			}
 		}
@@ -146,11 +146,11 @@ class SmalladsPendingItemsController extends DefaultModuleController
 		$i = 1;
 		foreach ($keywords as $keyword)
 		{
-			$this->view->assign_block_vars('keywords', array(
+			$this->view->assign_block_vars('keywords', [
 				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
 				'URL'  => SmalladsUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
-			));
+			]);
 			$i++;
 		}
 	}

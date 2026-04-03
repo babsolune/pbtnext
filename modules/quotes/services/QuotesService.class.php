@@ -22,7 +22,7 @@ class QuotesService
 	 * @desc Count items number.
 	 * @param string $condition (optional) : Restriction to apply to the list of items
 	 */
-	public static function count($condition = '', $parameters = array())
+	public static function count($condition = '', $parameters = [])
 	{
 		return self::$db_querier->count(QuotesSetup::$quotes_table, $condition, $parameters);
 	}
@@ -44,7 +44,7 @@ class QuotesService
 	 */
 	public static function update(QuotesItem $item)
 	{
-		self::$db_querier->update(QuotesSetup::$quotes_table, $item->get_properties(), 'WHERE id=:id', array('id' => $item->get_id()));
+		self::$db_querier->update(QuotesSetup::$quotes_table, $item->get_properties(), 'WHERE id=:id', ['id' => $item->get_id()]);
 	}
 
 	 /**
@@ -59,9 +59,9 @@ class QuotesService
 			DispatchManager::redirect($controller);
 		}
 
-		self::$db_querier->delete(QuotesSetup::$quotes_table, 'WHERE id=:id', array('id' => $id));
+		self::$db_querier->delete(QuotesSetup::$quotes_table, 'WHERE id=:id', ['id' => $id]);
 
-		self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'quotes', 'id' => $id));
+		self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', ['module' => 'quotes', 'id' => $id]);
 	}
 
 	 /**
@@ -73,9 +73,9 @@ class QuotesService
 		$row = self::$db_querier->select_single_row_query('SELECT quotes.*, member.*
 		FROM ' . QuotesSetup::$quotes_table . ' quotes
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = quotes.author_user_id
-		WHERE quotes.id=:id', array(
+		WHERE quotes.id=:id', [
 			'id' => $id
-		));
+		]);
 
 		$item = new QuotesItem();
 		$item->set_properties($row);

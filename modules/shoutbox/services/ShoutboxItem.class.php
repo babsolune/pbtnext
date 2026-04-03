@@ -91,13 +91,13 @@ class ShoutboxItem
 
 	public function get_properties()
 	{
-		return array(
+		return [
 			'id' => $this->get_id(),
 			'content' => $this->get_content(),
 			'login' => $this->get_login(),
 			'user_id' => $this->get_author_user()->get_id(),
 			'timestamp' => $this->get_creation_date()->get_timestamp()
-		);
+		];
 	}
 
 	public function set_properties(array $properties)
@@ -134,7 +134,7 @@ class ShoutboxItem
 		$user = $this->get_author_user();
 		$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
 
-		return array_merge(Date::get_array_tpl_vars($this->creation_date, 'date'),array(
+		return array_merge(Date::get_array_tpl_vars($this->creation_date, 'date'),[
 			'C_EDIT'             => $this->is_authorized_to_edit(),
 			'C_DELETE'           => $this->is_authorized_to_delete(),
 			'C_AUTHOR_EXISTS'    => $user->get_id() != User::VISITOR_LEVEL,
@@ -151,7 +151,7 @@ class ShoutboxItem
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($this->get_author_user()->get_id())->rel(),
 			'U_EDIT'           => ShoutboxUrlBuilder::edit($this->id, $page)->rel(),
 			'U_DELETE'         => ShoutboxUrlBuilder::delete($this->id)->rel()
-		));
+		]);
 	}
 }
 ?>

@@ -75,8 +75,8 @@ class FileTemplateLoader implements TemplateLoader
             mkdir(PATH_TO_ROOT . '/cache/tpl/' . AppContext::get_current_user()->get_theme());
 
         $this->cache_filepath = PATH_TO_ROOT . '/cache/tpl/' . AppContext::get_current_user()->get_theme() . '/' . trim(str_replace(
-        array('/', '.', '..', 'tpl', 'templates'),
-        array('_', '', '', '', 'tpl'),
+        ['/', '.', '..', 'tpl', 'templates'],
+        ['_', '', '', '', 'tpl'],
         $this->real_filepath
         ), '_') . '.php';
 
@@ -148,7 +148,7 @@ class FileTemplateLoader implements TemplateLoader
             // (Not overlaodable)
             if (file_exists(PATH_TO_ROOT . $this->filepath))
             {
-                $this->get_template_real_filepaths_and_data_path(array(PATH_TO_ROOT . $this->filepath));
+                $this->get_template_real_filepaths_and_data_path([PATH_TO_ROOT . $this->filepath]);
                 return;
             }
         }
@@ -176,7 +176,7 @@ class FileTemplateLoader implements TemplateLoader
         {
             $this->get_template_paths();
         }
-        else if (!in_array($this->module, array('__default__', 'admin', 'framework')))
+        else if (!in_array($this->module, ['__default__', 'admin', 'framework']))
         {
             // Module - Templates priority order
             //      /templates/$theme/modules/$module/$file.tpl
@@ -195,30 +195,30 @@ class FileTemplateLoader implements TemplateLoader
 
     private function get_template_paths()
     {
-        $this->get_template_real_filepaths_and_data_path(array(
+        $this->get_template_real_filepaths_and_data_path([
             $this->theme_templates_folder . $this->filepath,
             $this->parent_theme_templates_folder . $this->filepath,
             $this->default_templates_folder . $this->filepath
-        ));
+        ]);
     }
 
     private function get_kernel_paths()
     {
-        $this->get_template_real_filepaths_and_data_path(array(
+        $this->get_template_real_filepaths_and_data_path([
             $this->theme_templates_folder . $this->filepath,
             $this->parent_theme_templates_folder . $this->filepath,
             ($this->module == '__default__' ? $this->templates_folder : $this->default_templates_folder) . $this->filepath
-        ));
+        ]);
     }
 
     private function get_module_paths()
     {
-        $this->get_template_real_filepaths_and_data_path(array(
+        $this->get_template_real_filepaths_and_data_path([
             $this->theme_templates_folder . 'modules/' . $this->module . '/' . $this->file,
             $this->parent_theme_templates_folder . 'modules/' . $this->module . '/' . $this->file,
             PATH_TO_ROOT . '/modules/' . $this->module . '/templates/' . $this->file,
             PATH_TO_ROOT . '/' . $this->module . '/templates/' . $this->file
-        ));
+        ]);
     }
 
     private function get_template_real_filepaths_and_data_path($paths)

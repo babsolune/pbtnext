@@ -71,7 +71,7 @@ class Google_MediaFileUpload {
    * @return array|bool
    */
   public static function process($meta, &$params) {
-    $payload = array();
+    $payload = [];
     $meta = is_string($meta) ? json_decode($meta, true) : $meta;
     $uploadType = self::getUploadType($meta, $payload, $params);
     if (!$uploadType) {
@@ -80,11 +80,11 @@ class Google_MediaFileUpload {
     }
 
     // Process as a media upload request.
-    $params['uploadType'] = array(
+    $params['uploadType'] = [
         'type' => 'string',
         'location' => 'query',
         'value' => $uploadType,
-    );
+    ];
 
     if (isset($params['file'])) {
       // This is a standard file upload with curl.
@@ -139,13 +139,13 @@ class Google_MediaFileUpload {
    * @visible For testing.
    */
   public static function processFileUpload($file) {
-    if (!$file) return array();
+    if (!$file) return [];
     if (substr($file, 0, 1) != '@') {
       $file = '@' . $file;
     }
 
     // This is a standard file upload with curl.
-    return array('postBody' => array('file' => $file));
+    return ['postBody' => ['file' => $file]];
   }
 
   /**
@@ -202,12 +202,12 @@ class Google_MediaFileUpload {
 
     $data = substr($this->data, $this->progress, $this->chunkSize);
     $lastBytePos = $this->progress + strlen($data) - 1;
-    $headers = array(
+    $headers = [
       'content-range' => "bytes $this->progress-$lastBytePos/$this->size",
       'content-type' => $req->getRequestHeader('content-type'),
       'content-length' => $this->chunkSize,
       'expect' => '',
-    );
+    ];
 
     $httpRequest = new Google_HttpRequest($this->resumeUri, 'PUT', $headers, $data);
     $response = Google_Client::$io->authenticatedRequest($httpRequest);
@@ -225,12 +225,12 @@ class Google_MediaFileUpload {
     $result = null;
     $body = $httpRequest->getPostBody();
     if ($body) {
-      $httpRequest->setRequestHeaders(array(
+      $httpRequest->setRequestHeaders([
         'content-type' => 'application/json; charset=UTF-8',
         'content-length' => Google_Utils::getStrLen($body),
         'x-upload-content-type' => $this->mimeType,
         'expect' => '',
-      ));
+      ]);
     }
 
     $response = Google_Client::$io->makeRequest($httpRequest);

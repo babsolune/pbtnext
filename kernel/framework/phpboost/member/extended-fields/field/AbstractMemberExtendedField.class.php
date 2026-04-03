@@ -20,7 +20,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 	protected $form;
 	protected $field_used_once;
 	protected $field_used_phpboost_config;
-	protected $disable_fields_configuration = array();
+	protected $disable_fields_configuration = [];
 	protected $name;
 
 	/**
@@ -64,7 +64,7 @@ abstract class AbstractMemberExtendedField implements MemberExtendedFieldType
 	{
 		if ($member_extended_field->get_value())
 		{
-			return array('name' => $member_extended_field->get_name(), 'field_name' => $member_extended_field->get_field_name(), 'value' => $member_extended_field->get_value());
+			return ['name' => $member_extended_field->get_name(), 'field_name' => $member_extended_field->get_field_name(), 'value' => $member_extended_field->get_value()];
 		}
 	}
 

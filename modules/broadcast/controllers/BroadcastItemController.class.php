@@ -48,9 +48,9 @@ class BroadcastItemController extends DefaultModuleController
 	private function build_view()
 	{
 		$this->category = $this->item->get_category();
-		$this->view->put_all(array_merge($this->item->get_array_tpl_vars(), array(
+		$this->view->put_all(array_merge($this->item->get_array_tpl_vars(), [
 			'NOT_VISIBLE_MESSAGE' => MessageHelper::display($this->lang['warning.element.not.visible'], MessageHelper::WARNING)
-		)));
+		]));
 
 		foreach (TextHelper::unserialize($this->item->get_release_days()) as $id => $options)
 		{

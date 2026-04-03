@@ -50,7 +50,7 @@ class PollItemFormController extends DefaultItemFormController
 
 		parent::build_pre_content_fields($fieldset);
 
-		$fieldset->add_field(new FormFieldCheckbox('close_poll', $this->lang['poll.form.close.poll'], $this->is_new_item ? FormFieldCheckbox::UNCHECKED : $this->get_item()->get_close_poll(), array('hidden' => $this->is_new_item ? true : false)));
+		$fieldset->add_field(new FormFieldCheckbox('close_poll', $this->lang['poll.form.close.poll'], $this->is_new_item ? FormFieldCheckbox::UNCHECKED : $this->get_item()->get_close_poll(), ['hidden' => $this->is_new_item ? true : false]));
 		$fieldset->add_field(new FormFieldCheckbox('display_poll_in_mini_module', $this->lang['poll.form.display.poll.in.mini'], $this->is_new_item ? FormFieldCheckbox::CHECKED : $this->get_item()->is_in_mini_module_map()));
 	}
 
@@ -61,15 +61,15 @@ class PollItemFormController extends DefaultItemFormController
 		'countdown_display',
 		$this->lang['poll.form.countdown.parameters'],
 		(string) $this->get_item()->get_countdown_display(),
-		array(
+		[
 			new FormFieldRadioChoiceOption($this->lang['poll.form.countdown.without.seconds'], $this->get_item()::COUNTDOWN_DISPLAY_WITHOUT_S),
 			new FormFieldRadioChoiceOption($this->lang['poll.form.countdown.with.seconds'], $this->get_item()::COUNTDOWN_DISPLAY_WITH_S),
 			new FormFieldRadioChoiceOption($this->lang['poll.form.countdown.not.displaying'], $this->get_item()::COUNTDOWN_NO_DISPLAY)
-		),
-		array(
+		],
+		[
 			'hidden' 		=> !($this->get_item()->get_publishing_state() == Item::DEFERRED_PUBLICATION && $this->get_item()->get_publishing_end_date()),
 			'description' 	=> $this->lang['poll.form.countdown.parameters.clue']
-		)
+		]
 		));
 
 		$publication_publishing_state_field = $this->form->get_field_by_id('publishing_state');
@@ -114,7 +114,7 @@ class PollItemFormController extends DefaultItemFormController
 			|| $this->form->get_value('answers_type')->get_raw_value() !== $answers_type_saved
 			|| $this->form->get_value('answers') !== $answers_saved)
 		{
-			self::get_items_manager()->update_votes(array(), -1,  $this->get_item()->get_id());
+			self::get_items_manager()->update_votes([], -1,  $this->get_item()->get_id());
 			self::get_items_manager()->delete_voters($this->get_item()->get_id());
 		}
 	}

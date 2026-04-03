@@ -28,17 +28,17 @@ class OnlineHomeController extends DefaultModuleController
 	public function build_view()
 	{
 		$active_sessions_start_time = time() - SessionsConfig::load()->get_active_session_duration();
-		$number_users_online = OnlineService::get_number_users_connected('WHERE timestamp > :time', array('time' => $active_sessions_start_time), true);
+		$number_users_online = OnlineService::get_number_users_connected('WHERE timestamp > :time', ['time' => $active_sessions_start_time], true);
 		$pagination = $this->get_pagination($number_users_online);
 
 		$users = OnlineService::get_online_users('WHERE s.timestamp > :time
 		ORDER BY '. $this->config->get_display_order_request() .'
 		LIMIT :number_items_per_page OFFSET :display_from',
-			array(
+			[
 				'number_items_per_page' => $pagination->get_number_items_per_page(),
 				'display_from' => $pagination->get_display_from(),
 				'time' => $active_sessions_start_time
-			),
+			],
 			true
 		);
 
@@ -57,7 +57,7 @@ class OnlineHomeController extends DefaultModuleController
 
 				$this->view->assign_block_vars('items', array_merge(
 					Date::get_array_tpl_vars($user->get_last_update(), 'date'),
-					array(
+					[
 					'C_AVATAR'      => $user->has_avatar(),
 					'C_GROUP_COLOR' => !empty($group_color),
 					'C_ROBOT'       => $user->get_level() == User::ROBOT_LEVEL,
@@ -71,16 +71,16 @@ class OnlineHomeController extends DefaultModuleController
 					'U_PROFILE'  => UserUrlBuilder::profile($user->get_id())->rel(),
 					'U_LOCATION' => $user->get_location_script(),
 					'U_AVATAR'   => $user->get_avatar()
-					)
+					]
 				));
 			}
 		}
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'C_USERS' => count($users),
 			'PAGINATION' => $pagination->display()
-		));
+		]);
 
 		return $this->view;
 	}

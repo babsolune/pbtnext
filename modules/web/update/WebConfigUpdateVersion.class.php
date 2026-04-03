@@ -14,50 +14,50 @@ class WebConfigUpdateVersion extends ConfigUpdateVersion
 	{
 		parent::__construct('web');
 
-		$this->config_parameters_to_modify = array(
+		$this->config_parameters_to_modify = [
 			'items_number_per_page'            => 'items_per_page',
 			'categories_number_per_page'       => 'categories_per_page',
 			'columns_number_per_line'          => 'items_per_row',
-			'items_default_sort_field'         => array(
+			'items_default_sort_field'         => [
 				'parameter_name' => 'items_default_sort_field',
-				'values'         => array(
+				'values'         => [
 					'name'         => 'title',
 					'number_views' => 'views_number'
-				)
-			),
-			'items_default_sort_mode' => array(
+				]
+			],
+			'items_default_sort_mode' => [
 				'parameter_name' => 'items_default_sort_mode',
-				'values'         => array(
+				'values'         => [
 					Item::ASC  => TextHelper::strtolower(Item::ASC),
 					Item::DESC => TextHelper::strtolower(Item::DESC)
-				)
-			),
-			'category_display_type' => array(
+				]
+			],
+			'category_display_type' => [
 				'parameter_name' => 'display_type',
-				'values'         => array(
+				'values'         => [
 					'summary'     => 'list_view',
 					'all_content' => 'list_view',
 					'table'       => 'table_view'
-				)
-			),
-			'partners_sort_field' => array(
+				]
+			],
+			'partners_sort_field' => [
 				'parameter_name' => 'partners_sort_field',
-				'values'         => array(
+				'values'         => [
 					'name' => 'title'
-				)
-			),
-			'partners_sort_mode' => array(
+				]
+			],
+			'partners_sort_mode' => [
 				'parameter_name' => 'partners_sort_mode',
-				'values'         => array(
+				'values'         => [
 					Item::ASC  => TextHelper::strtolower(Item::ASC),
 					Item::DESC => TextHelper::strtolower(Item::DESC)
-				)
-			),
-			'root_category_description' => array(
+				]
+			],
+			'root_category_description' => [
 				'parameter_name' => 'root_category_description',
 				'value' => $this->get_parsed_old_content('WebConfig', 'root_category_description')
-			)
-		);
+			]
+		];
 	}
 }
 ?>

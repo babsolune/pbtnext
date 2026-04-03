@@ -13,16 +13,16 @@ class MediaConfigUpdateVersion extends ConfigUpdateVersion
 	{
 		parent::__construct('media');
 
-		$this->config_parameters_to_modify = array(
+		$this->config_parameters_to_modify = [
 			'items_number_per_page' => 'items_per_page',
 			'items_number_per_row' => 'items_per_row',
 			'categories_number_per_page' => 'categories_per_page',
 			'categories_number_per_row' => 'categories_per_row',
-			'root_category_description' => array(
+			'root_category_description' => [
 				'parameter_name' => 'root_category_description',
 				'value' => $this->get_parsed_old_content('MediaConfig', 'root_category_description')
-			)
-		);
+			]
+		];
 	}
 }
 ?>

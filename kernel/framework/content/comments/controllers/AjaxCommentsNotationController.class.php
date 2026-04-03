@@ -26,24 +26,24 @@ class AjaxCommentsNotationController extends AbstractCommentsController
 		{
 			$this->register_note($note_type, $comment_id);
 
-			$object = array(
+			$object = [
 				'success' => true,
 				'message' => $lang['comment.note.success']
-			);
+			];
 		}
 		else if (!$this->is_access_authorizations())
 		{
-			$object = array(
+			$object = [
 				'success' => false,
 				'message' => $lang['comment.note.unauthorized']
-			);
+			];
 		}
 		else
 		{
-			$object = array(
+			$object = [
 				'success' => false,
 				'message' => $lang['comment.note.error']
-			);
+			];
 		}
 
 		return new JSONResponse($object);
@@ -63,9 +63,9 @@ class AjaxCommentsNotationController extends AbstractCommentsController
 			break;
 		}
 
-		$columns = array('note' => $note);
+		$columns = ['note' => $note];
 		$condition = "WHERE id = :id";
-		$parameters = array('id' => $comment_id);
+		$parameters = ['id' => $comment_id];
 		PersistenceContext::get_querier()->update(DB_TABLE_COMMENTS, $columns, $condition, $parameters);
 
 		$this->regenerate_cache();

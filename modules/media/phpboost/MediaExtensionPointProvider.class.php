@@ -22,7 +22,7 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 
 	public function comments()
 	{
-		return new CommentsTopics(array(new MediaCommentsTopic()));
+		return new CommentsTopics([new MediaCommentsTopic()]);
 	}
 
 	public function css_files()
@@ -66,7 +66,7 @@ class MediaExtensionPointProvider extends ExtensionPointProvider
 
 	public function url_mappings()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/media/index.php')));
+		return new UrlMappings([new DispatcherUrlMapping('/media/index.php')]);
 	}
 }
 ?>

@@ -30,7 +30,7 @@ class FormFieldMultiLineTextEditor extends AbstractFormField
      * @param array $field_options Options
      * @param FormFieldConstraint[] $constraints List of the constraints
      */
-    public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
+    public function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
     {
         parent::__construct($id, $label, $value, $field_options, $constraints);
     }
@@ -50,10 +50,10 @@ class FormFieldMultiLineTextEditor extends AbstractFormField
 
     private function assign_textarea_template_variables(Template $template)
     {
-        $template->put_all(array(
+        $template->put_all([
             'ROWS' => $this->rows,
             'COLS' => $this->cols
-        ));
+        ]);
     }
 
     protected function compute_options(array &$field_options)

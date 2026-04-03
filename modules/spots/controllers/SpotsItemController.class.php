@@ -25,11 +25,11 @@ class SpotsItemController extends DefaultModuleController
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
 			$new_location = new GoogleMapsMarker(TextHelper::unserialize($this->form->get_value('new_gps')));
-			$this->view->put_all(array(
+			$this->view->put_all([
 				'C_NEW_ADDRESS' => !empty($this->form->get_value('new_gps')),
 				'NEW_LAT' => $new_location->get_properties()['address']['latitude'],
 				'NEW_LNG' => $new_location->get_properties()['address']['longitude'],
-			));
+			]);
 		}
 
 		return $this->generate_response();
@@ -43,13 +43,13 @@ class SpotsItemController extends DefaultModuleController
 
 		$this->build_new_address_form($request);
 
-		$this->view->put_all(array_merge($item->get_template_vars(), array(
+		$this->view->put_all(array_merge($item->get_template_vars(), [
 			'C_ENABLED_COMMENTS' => $comments_config->module_comments_is_enabled('download'),
 			'FORM' => $this->form->display(),
 			'NOT_VISIBLE_MESSAGE' => MessageHelper::display(LangLoader::get_message('warning.element.not.visible', 'warning-lang'), MessageHelper::WARNING),
 			'MODULE_NAME' => $this->config->get_module_name(),
 			'DEFAULT_ADDRESS' => GoogleMapsConfig::load()->get_default_marker_address()
-		)));
+		]));
 
 		if ($comments_config->module_comments_is_enabled('spots'))
 		{
@@ -86,11 +86,11 @@ class SpotsItemController extends DefaultModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldSpacer('change_address', $this->lang['spots.route.infos'],
-			array('class' => 'message-helper bgc notice')
+			['class' => 'message-helper bgc notice']
 		));
 
         $fieldset->add_field(new GoogleMapsFormFieldMapAddress('new_gps', $this->lang['spots.new.location'], '',
-			array('description' => $this->lang['spots.new.location.clue'])
+			['description' => $this->lang['spots.new.location.clue']]
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();

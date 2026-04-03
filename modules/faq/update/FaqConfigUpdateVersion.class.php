@@ -13,12 +13,12 @@ class FaqConfigUpdateVersion extends ConfigUpdateVersion
 	{
 		parent::__construct('faq');
 
-		$this->config_parameters_to_modify = array(
-			'root_category_description' => array(
+		$this->config_parameters_to_modify = [
+			'root_category_description' => [
 				'parameter_name' => 'root_category_description',
 				'value' => $this->get_parsed_old_content('FaqConfig', 'root_category_description')
-			)
-		);
+			]
+		];
 	}
 }
 ?>

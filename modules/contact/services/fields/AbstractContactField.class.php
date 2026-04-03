@@ -13,7 +13,7 @@
 abstract class AbstractContactField implements ContactFieldType
 {
 	protected $form;
-	protected $disable_fields_configuration = array();
+	protected $disable_fields_configuration = [];
 	protected $name;
 
 	/**

@@ -26,20 +26,20 @@ class ServerStatusService
 
 	public static function get_types()
 	{
-		$types = array();
+		$types = [];
 
 		$folder = new Folder(PATH_TO_ROOT . '/modules/ServerStatus/services/types');
 		if ($folder->exists())
 		{
 			foreach ($folder->get_folders() as $f)
 			{
-				$type = $names = array();
+				$type = $names = [];
 				foreach ($f->get_files() as $file)
 				{
 					$name_class = str_replace('.class', '', $file->get_name_without_extension());
 
 					$instance_class = new $name_class();
-					$type[$name_class] = array('name' => $instance_class->get_name(), 'default_port' => $instance_class->get_default_port(), 'icon' => $instance_class->get_medium_icon());
+					$type[$name_class] = ['name' => $instance_class->get_name(), 'default_port' => $instance_class->get_default_port(), 'icon' => $instance_class->get_medium_icon()];
 					$names[$name_class] = $instance_class->get_name();
 				}
 

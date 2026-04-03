@@ -21,7 +21,7 @@ class ServerStatusAjaxDeleteServerController extends AbstractController
 			if (isset($servers[$id]))
 			{
 				unset($servers[$id]);
-				$new_servers_list = array();
+				$new_servers_list = [];
 
 				$position = 0;
 				foreach ($servers as $key => $server)
@@ -37,7 +37,7 @@ class ServerStatusAjaxDeleteServerController extends AbstractController
 			}
 		}
 
-		return new JSONResponse(array('code' => $code));
+		return new JSONResponse(['code' => $code]);
 	}
 }
 ?>

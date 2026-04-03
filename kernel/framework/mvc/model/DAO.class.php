@@ -28,7 +28,7 @@ interface DAO
      * @param string $where the part of the query that came just after the from
      * @param string[] $parameters the query vars to inject into the <code>$where</code>
      */
-    function update(array $fields, $where = DAO::WHERE_ALL, array $parameters = array());
+    function update(array $fields, $where = DAO::WHERE_ALL, array $parameters = []);
 
     /**
      * Deletes <code>$object</code> from the table.
@@ -42,14 +42,14 @@ interface DAO
      * @param string $where the part of the query that came just after the from
      * @param string[] $parameters the query vars to inject into the <code>$where</code>
      */
-    function delete_all($where = DAO::WHERE_ALL, array $parameters = array());
+    function delete_all($where = DAO::WHERE_ALL, array $parameters = []);
 
     /**
      * Count the number of object in the table matching the <code>$where</code> clause
      * @param string $where the part of the query that came just after the from
      * @param string[] $parameters the query vars to inject into the <code>$where</code>
      */
-    function count($where = DAO::WHERE_ALL, array $parameters = array());
+    function count($where = DAO::WHERE_ALL, array $parameters = []);
 
 	/**
 	 * retrieves the object with the <code>$id</code> primary identifier
@@ -66,12 +66,12 @@ interface DAO
 	 * @param int $offset the offset from which retrieves objects
 	 * @param string[mixed][] $order_by the column(s) on which sort will be done.
 	 * This parameter is an array with nested associative subarrays for each column:
-	 * <code>array(array('column' => $column1, 'way' => $way1), ...)</code>
+	 * <code>[['column' => $column1, 'way' => $way1], ...]</code>
 	 * <code>$column1</code> must be a column name or an alias and <code>$way</code> could be
 	 * ascending (<code>SQLQuerier::ORDER_BY_ASC</code>) or descending (<code>SQLQuerier::ORDER_BY_DESC</code>)
 	 * @return QueryResultMapper the objects list
 	 */
-	function find_all($limit = 100, $offset = 0, $order_by = array());
+	function find_all($limit = 100, $offset = 0, $order_by = []);
 
 	/**
 	 * retrieves all the objects in the table matching the <code>$criteria</code>
@@ -79,6 +79,6 @@ interface DAO
 	 * @param string[] $parameters the query vars to inject into the <code>$criteria</code>
 	 * @return QueryResultMapper the objects list
 	 */
-	function find_by_criteria($criteria, $parameters = array());
+	function find_by_criteria($criteria, $parameters = []);
 }
 ?>

@@ -27,7 +27,7 @@ abstract class AbstractFormFieldEnumOption implements FormFieldEnumOption
 	 */
 	private $field;
 
-	public function __construct($label, $raw_value, $field_choice_options = array())
+	public function __construct($label, $raw_value, $field_choice_options = [])
 	{
 		$this->set_label($label);
 		$this->set_raw_value($raw_value);

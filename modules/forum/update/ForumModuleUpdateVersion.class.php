@@ -15,7 +15,7 @@ class ForumModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('forum');
 
-		self::$delete_old_files_list = array(
+		self::$delete_old_files_list = [
 			'/controllers/categories/ForumCategoriesManageController.class.php',
 			'/controllers/categories/ForumDeleteCategoryController.class.php',
 			'/lang/english/config.php',
@@ -24,48 +24,48 @@ class ForumModuleUpdateVersion extends ModuleUpdateVersion
 			'/lang/french/forum_french.php',
 			'/phpboost/ForumHomePageExtensionPoint.class.php',
 			'/phpboost/ForumSitemapExtensionPoint.class.php'
-		);
+		];
 
-		$this->database_columns_to_add = array(
-			array(
+		$this->database_columns_to_add = [
+			[
 				'table_name' => PREFIX . 'forum_cats',
-				'columns' => array(
-					'thumbnail' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-					'icon' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-					'color' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-				)
-			),
-			array(
+				'columns' => [
+					'thumbnail' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+					'icon' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+					'color' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+				]
+			],
+			[
 				'table_name' => PREFIX . 'forum_msg',
-				'columns' => array(
-					'selected' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-				)
-			),
-		);
+				'columns' => [
+					'selected' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0],
+				]
+			],
+		];
 
-		$this->database_columns_to_modify = array(
-			array(
+		$this->database_columns_to_modify = [
+			[
 				'table_name' => PREFIX . 'forum_alerts',
-				'columns' => array(
+				'columns' => [
 					'idcat'    => 'id_category INT(11) NOT NULL DEFAULT 0',
 					'contents' => 'content MEDIUMTEXT',
-				)
-			),
-			array(
+				]
+			],
+			[
 				'table_name' => PREFIX . 'forum_msg',
-				'columns' => array(
+				'columns' => [
 					'contents' => 'content MEDIUMTEXT',
-				)
-			),
-			array(
+				]
+			],
+			[
 				'table_name' => PREFIX . 'forum_topics',
-				'columns' => array(
+				'columns' => [
 					'idcat'    => 'id_category INT(11) NOT NULL DEFAULT 0',
 					'title'    => 'title VARCHAR(255) NOT NULL DEFAULT ""',
 					'subtitle' => 'subtitle VARCHAR(255) NOT NULL DEFAULT ""'
-				)
-			)
-		);
+				]
+			]
+		];
 	}
 
 	protected function update_content()

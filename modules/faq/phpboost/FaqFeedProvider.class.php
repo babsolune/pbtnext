@@ -44,9 +44,9 @@ class FaqFeedProvider implements FeedProvider
 				LEFT JOIN '. FaqSetup::$faq_cats_table .' cat ON cat.id = faq.id_category
 				WHERE approved = 1
 				AND faq.id_category IN :ids_categories
-				ORDER BY faq.creation_date DESC', array(
+				ORDER BY faq.creation_date DESC', [
 				'ids_categories' => $ids_categories
-			));
+			]);
 
 			foreach ($results as $row)
 			{

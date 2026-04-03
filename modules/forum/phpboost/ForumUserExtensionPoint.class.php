@@ -49,7 +49,7 @@ class ForumUserExtensionPoint implements UserExtensionPoint
 	 */
 	public function get_publications_number($user_id)
 	{
-		return PersistenceContext::get_querier()->count(PREFIX . 'forum_msg', 'WHERE user_id = :user_id', array('user_id' => $user_id));
+		return PersistenceContext::get_querier()->count(PREFIX . 'forum_msg', 'WHERE user_id = :user_id', ['user_id' => $user_id]);
 	}
 }
 ?>

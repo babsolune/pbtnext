@@ -12,25 +12,25 @@
 
 class SmileysCache implements CacheData
 {
-	private $smileys = array();
+	private $smileys = [];
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{
-		$this->smileys = array();
+		$this->smileys = [];
 
 		$querier = PersistenceContext::get_querier();
 
-		$columns = array('idsmiley', 'code_smiley', 'url_smiley');
+		$columns = ['idsmiley', 'code_smiley', 'url_smiley'];
 		$result = $querier->select_rows(PREFIX . 'smileys', $columns);
 		while ($row = $result->fetch())
 		{
-			$this->smileys[$row['code_smiley']] = array(
+			$this->smileys[$row['code_smiley']] = [
 				'idsmiley' => $row['idsmiley'],
 				'url_smiley' => $row['url_smiley']
-			);
+			];
 		}
 		$result->dispose();
 	}

@@ -36,10 +36,10 @@
      * @opt_param string previous Previous sibling task identifier. If the task is created at the first position among its siblings, this parameter is omitted. Optional.
      * @return Google_Task
      */
-    public function insert($tasklist, Google_Task $postBody, $optParams = array()) {
-      $params = array('tasklist' => $tasklist, 'postBody' => $postBody);
+    public function insert($tasklist, Google_Task $postBody, $optParams = []) {
+      $params = ['tasklist' => $tasklist, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_Task($data);
       } else {
@@ -54,10 +54,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Task
      */
-    public function get($tasklist, $task, $optParams = array()) {
-      $params = array('tasklist' => $tasklist, 'task' => $task);
+    public function get($tasklist, $task, $optParams = []) {
+      $params = ['tasklist' => $tasklist, 'task' => $task];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Task($data);
       } else {
@@ -72,10 +72,10 @@
      * @param string $tasklist Task list identifier.
      * @param array $optParams Optional parameters.
      */
-    public function clear($tasklist, $optParams = array()) {
-      $params = array('tasklist' => $tasklist);
+    public function clear($tasklist, $optParams = []) {
+      $params = ['tasklist' => $tasklist];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('clear', array($params));
+      $data = $this->__call('clear', [$params]);
       return $data;
     }
     /**
@@ -91,10 +91,10 @@
      * @opt_param string previous New previous sibling task identifier. If the task is moved to the first position among its siblings, this parameter is omitted. Optional.
      * @return Google_Task
      */
-    public function move($tasklist, $task, $optParams = array()) {
-      $params = array('tasklist' => $tasklist, 'task' => $task);
+    public function move($tasklist, $task, $optParams = []) {
+      $params = ['tasklist' => $tasklist, 'task' => $task];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('move', array($params));
+      $data = $this->__call('move', [$params]);
       if ($this->useObjects()) {
         return new Google_Task($data);
       } else {
@@ -119,10 +119,10 @@
      * @opt_param string dueMin Lower bound for a task's due date (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by due date.
      * @return Google_Tasks
      */
-    public function listTasks($tasklist, $optParams = array()) {
-      $params = array('tasklist' => $tasklist);
+    public function listTasks($tasklist, $optParams = []) {
+      $params = ['tasklist' => $tasklist];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_Tasks($data);
       } else {
@@ -138,10 +138,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Task
      */
-    public function update($tasklist, $task, Google_Task $postBody, $optParams = array()) {
-      $params = array('tasklist' => $tasklist, 'task' => $task, 'postBody' => $postBody);
+    public function update($tasklist, $task, Google_Task $postBody, $optParams = []) {
+      $params = ['tasklist' => $tasklist, 'task' => $task, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('update', array($params));
+      $data = $this->__call('update', [$params]);
       if ($this->useObjects()) {
         return new Google_Task($data);
       } else {
@@ -157,10 +157,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Task
      */
-    public function patch($tasklist, $task, Google_Task $postBody, $optParams = array()) {
-      $params = array('tasklist' => $tasklist, 'task' => $task, 'postBody' => $postBody);
+    public function patch($tasklist, $task, Google_Task $postBody, $optParams = []) {
+      $params = ['tasklist' => $tasklist, 'task' => $task, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('patch', array($params));
+      $data = $this->__call('patch', [$params]);
       if ($this->useObjects()) {
         return new Google_Task($data);
       } else {
@@ -174,10 +174,10 @@
      * @param string $task Task identifier.
      * @param array $optParams Optional parameters.
      */
-    public function delete($tasklist, $task, $optParams = array()) {
-      $params = array('tasklist' => $tasklist, 'task' => $task);
+    public function delete($tasklist, $task, $optParams = []) {
+      $params = ['tasklist' => $tasklist, 'task' => $task];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       return $data;
     }
   }
@@ -200,10 +200,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_TaskList
      */
-    public function insert(Google_TaskList $postBody, $optParams = array()) {
-      $params = array('postBody' => $postBody);
+    public function insert(Google_TaskList $postBody, $optParams = []) {
+      $params = ['postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_TaskList($data);
       } else {
@@ -217,10 +217,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_TaskList
      */
-    public function get($tasklist, $optParams = array()) {
-      $params = array('tasklist' => $tasklist);
+    public function get($tasklist, $optParams = []) {
+      $params = ['tasklist' => $tasklist];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_TaskList($data);
       } else {
@@ -236,10 +236,10 @@
      * @opt_param string maxResults Maximum number of task lists returned on one page. Optional. The default is 100.
      * @return Google_TaskLists
      */
-    public function listTasklists($optParams = array()) {
-      $params = array();
+    public function listTasklists($optParams = []) {
+      $params = [];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_TaskLists($data);
       } else {
@@ -254,10 +254,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_TaskList
      */
-    public function update($tasklist, Google_TaskList $postBody, $optParams = array()) {
-      $params = array('tasklist' => $tasklist, 'postBody' => $postBody);
+    public function update($tasklist, Google_TaskList $postBody, $optParams = []) {
+      $params = ['tasklist' => $tasklist, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('update', array($params));
+      $data = $this->__call('update', [$params]);
       if ($this->useObjects()) {
         return new Google_TaskList($data);
       } else {
@@ -273,10 +273,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_TaskList
      */
-    public function patch($tasklist, Google_TaskList $postBody, $optParams = array()) {
-      $params = array('tasklist' => $tasklist, 'postBody' => $postBody);
+    public function patch($tasklist, Google_TaskList $postBody, $optParams = []) {
+      $params = ['tasklist' => $tasklist, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('patch', array($params));
+      $data = $this->__call('patch', [$params]);
       if ($this->useObjects()) {
         return new Google_TaskList($data);
       } else {
@@ -289,10 +289,10 @@
      * @param string $tasklist Task list identifier.
      * @param array $optParams Optional parameters.
      */
-    public function delete($tasklist, $optParams = array()) {
-      $params = array('tasklist' => $tasklist);
+    public function delete($tasklist, $optParams = []) {
+      $params = ['tasklist' => $tasklist];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       return $data;
     }
   }
@@ -373,7 +373,7 @@ class Google_Task extends Google_Model {
   public function getParent() {
     return $this->parent;
   }
-  public function setLinks(/* array(Google_TaskLinks) */ $links) {
+  public function setLinks(/* [Google_TaskLinks] */ $links) {
     $this->assertIsArray($links, 'Google_TaskLinks', __METHOD__);
     $this->links = $links;
   }
@@ -524,7 +524,7 @@ class Google_TaskLists extends Google_Model {
   public function getNextPageToken() {
     return $this->nextPageToken;
   }
-  public function setItems(/* array(Google_TaskList) */ $items) {
+  public function setItems(/* [Google_TaskList] */ $items) {
     $this->assertIsArray($items, 'Google_TaskList', __METHOD__);
     $this->items = $items;
   }
@@ -558,7 +558,7 @@ class Google_Tasks extends Google_Model {
   public function getNextPageToken() {
     return $this->nextPageToken;
   }
-  public function setItems(/* array(Google_Task) */ $items) {
+  public function setItems(/* [Google_Task] */ $items) {
     $this->assertIsArray($items, 'Google_Task', __METHOD__);
     $this->items = $items;
   }

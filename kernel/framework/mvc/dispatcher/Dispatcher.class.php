@@ -19,7 +19,7 @@ class Dispatcher
 	// To avoid this, also replace "?url=" by "?YourNewValue=" in config files
 	const URL_PARAM_NAME = 'url';
 
-	private $url_controller_mappers = array();
+	private $url_controller_mappers = [];
 
 	/**
 	 * build a new Dispatcher from a UrlDispatcherItem List

@@ -20,7 +20,7 @@ abstract class HTMLTableEqualsFromListFilter extends AbstractHTMLTableFilter
 	{
 		$this->allowed_values = array_keys($allowed_values);
 		$default_value = new FormFieldSelectChoiceOption(LangLoader::get_message('common.all' . ($alt_all_label ? '.alt' : ''), 'common-lang'), 'all');
-		$this->options = array($default_value);
+		$this->options = [$default_value];
 		foreach ($allowed_values as $option_value => $option_label)
 		{
 			$this->options[] = new FormFieldSelectChoiceOption($option_label, $option_value);

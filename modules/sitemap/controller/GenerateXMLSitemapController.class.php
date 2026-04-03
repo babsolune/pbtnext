@@ -24,13 +24,13 @@ class GenerateXMLSitemapController extends DefaultAdminModuleController
 		catch(IOException $ex)
 		{
 			$this->view->put_all(
-				array('C_GOT_ERROR' => true)
+				['C_GOT_ERROR' => true]
 			);
 		}
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'U_GENERATE' => SitemapUrlBuilder::get_xml_file_generation()->rel()
-		));
+		]);
 
 		$response = new AdminSitemapResponse($this->view);
 		$response->get_graphical_environment()->set_page_title($this->lang['sitemap.generate.xml'], $this->lang['sitemap.module.title']);

@@ -41,7 +41,7 @@ class FileUploadService
 		}
 		else
 		{
-			$files = array();
+			$files = [];
 			foreach ($properties['name'] as $id => $element)
 			{
 				if ($properties['error'][$id] == UPLOAD_ERR_OK)

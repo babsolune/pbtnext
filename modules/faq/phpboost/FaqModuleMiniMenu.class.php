@@ -66,11 +66,11 @@ class FaqModuleMiniMenu extends ModuleMiniMenu
 			{
 				$category = CategoriesService::get_categories_manager($module_id)->get_categories_cache()->get_category($id_category);
 
-				$view->put_all(array(
+				$view->put_all([
 					'C_ITEMS' => true,
 					'TITLE'   => $random_question['title'],
 					'U_ITEM'  => FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $random_question['id'])->rel()
-				));
+				]);
 			}
 		}
 

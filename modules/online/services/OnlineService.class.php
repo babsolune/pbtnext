@@ -47,7 +47,7 @@ class OnlineService
 
 	public static function get_online_users($condition, $parameters, $hide_visitors = false)
 	{
-		$users = array();
+		$users = [];
 
 		$result = self::$querier->select("SELECT
 		s.user_id, s.timestamp, s.location_script, s.location_title, s.cached_data,

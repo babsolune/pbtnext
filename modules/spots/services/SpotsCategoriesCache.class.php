@@ -18,10 +18,10 @@ class SpotsCategoriesCache extends DefaultRichCategoriesCache
 	{
 		$now = new Date();
 		return SpotsService::count('WHERE id_category = :id_category AND published = 1',
-			array(
+			[
 				'timestamp_now' => $now->get_timestamp(),
 				'id_category' => $id_category
-			)
+			]
 		);
 	}
 
@@ -34,7 +34,7 @@ class SpotsCategoriesCache extends DefaultRichCategoriesCache
 	{
 		$description = SpotsConfig::load()->get_root_category_description();
 		if (empty($description))
-			$description = StringVars::replace_vars(LangLoader::get_message('spots.seo.description.root', 'common', 'spots'), array('site' => GeneralConfig::load()->get_site_name()));
+			$description = StringVars::replace_vars(LangLoader::get_message('spots.seo.description.root', 'common', 'spots'), ['site' => GeneralConfig::load()->get_site_name()]);
 		return $description;
 	}
 }

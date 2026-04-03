@@ -36,7 +36,7 @@ class FaqItemFormController extends DefaultModuleController
 		$fieldset = new FormFieldsetHTML('faq', $this->lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['faq.form.question'], $this->get_item()->get_title(), array('required' => true)));
+		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['faq.form.question'], $this->get_item()->get_title(), ['required' => true]));
 
 		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
 		{
@@ -46,7 +46,7 @@ class FaqItemFormController extends DefaultModuleController
 			$fieldset->add_field(CategoriesService::get_categories_manager()->get_select_categories_form_field('id_category', $this->lang['form.category'], $this->get_item()->get_id_category(), $search_category_children_options));
 		}
 
-		$fieldset->add_field(new FormFieldRichTextEditor('answer', $this->lang['faq.form.answer'], $this->get_item()->get_content(), array('rows' => 15, 'required' => true)));
+		$fieldset->add_field(new FormFieldRichTextEditor('answer', $this->lang['faq.form.answer'], $this->get_item()->get_content(), ['rows' => 15, 'required' => true]));
 
 		if (CategoriesAuthorizationsService::check_authorizations($this->get_item()->get_id_category())->moderation())
 		{
@@ -72,7 +72,7 @@ class FaqItemFormController extends DefaultModuleController
 			$fieldset->set_description(MessageHelper::display($this->lang['contribution.warning'], MessageHelper::WARNING)->render());
 			$form->add_fieldset($fieldset);
 
-			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $this->lang['contribution.description'], '', array('description' => $this->lang['contribution.description.clue'])));
+			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $this->lang['contribution.description'], '', ['description' => $this->lang['contribution.description.clue']]));
 		}
 		elseif ($this->get_item()->is_approved() && $this->get_item()->is_authorized_to_edit() && $this->is_contributor_member())
 		{
@@ -81,7 +81,7 @@ class FaqItemFormController extends DefaultModuleController
 			$form->add_fieldset($fieldset);
 
 			$fieldset->add_field(new FormFieldRichTextEditor('edition_description', $this->lang['contribution.edition.description'], '',
-				array('description' => $this->lang['contribution.edition.description.clue'])
+				['description' => $this->lang['contribution.edition.description.clue']]
 			));
 		}
 	}
@@ -158,7 +158,7 @@ class FaqItemFormController extends DefaultModuleController
 
 		if ($item->get_q_order() === null)
 		{
-			$number_questions_in_category = FaqService::count('WHERE id_category = :id_category', array('id_category' => $item->get_id_category()));
+			$number_questions_in_category = FaqService::count('WHERE id_category = :id_category', ['id_category' => $item->get_id_category()]);
 			$item->set_q_order($number_questions_in_category + 1);
 		}
 
@@ -178,7 +178,7 @@ class FaqItemFormController extends DefaultModuleController
 			$item->set_id($id);
 
 			if (!$this->is_contributor_member())
-				HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
+				HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), ['item_url' => $item->get_item_url()]));
 		}
 		elseif ($this->is_duplication)
 		{
@@ -189,14 +189,14 @@ class FaqItemFormController extends DefaultModuleController
 			$item->set_id($id);
 
 			if (!$this->is_contributor_member())
-				HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
+				HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), ['item_url' => $item->get_item_url()]));
 		}
 		else
 		{
 			FaqService::update($item);
 
 			if (!$this->is_contributor_member())
-				HooksService::execute_hook_action('edit', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
+				HooksService::execute_hook_action('edit', self::$module_id, array_merge($item->get_properties(), ['item_url' => $item->get_item_url()]));
 		}
 
 		$this->contribution_actions($item);
@@ -233,7 +233,7 @@ class FaqItemFormController extends DefaultModuleController
 				)
 			);
 			ContributionService::save_contribution($contribution);
-			HooksService::execute_hook_action($this->is_new_item || $this->is_duplication ? 'add_contribution' : 'edit_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), array('item_url' => $item->get_item_url())));
+			HooksService::execute_hook_action($this->is_new_item || $this->is_duplication ? 'add_contribution' : 'edit_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), ['item_url' => $item->get_item_url()]));
 		}
 		else
 		{
@@ -245,7 +245,7 @@ class FaqItemFormController extends DefaultModuleController
 					$contribution->set_status(Event::EVENT_STATUS_PROCESSED);
 					ContributionService::save_contribution($contribution);
 				}
-				HooksService::execute_hook_action('process_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), array('item_url' => $item->get_item_url())));
+				HooksService::execute_hook_action('process_contribution', self::$module_id, array_merge($contribution->get_properties(), $item->get_properties(), ['item_url' => $item->get_item_url()]));
 			}
 		}
 	}
@@ -262,16 +262,16 @@ class FaqItemFormController extends DefaultModuleController
 		elseif ($item->is_approved())
 		{
 			if ($this->is_new_item || $this->is_duplication)
-				AppContext::get_response()->redirect(FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id()), StringVars::replace_vars($this->lang['faq.message.success.add'], array('title' => $item->get_title())));
+				AppContext::get_response()->redirect(FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id()), StringVars::replace_vars($this->lang['faq.message.success.add'], ['title' => $item->get_title()]));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id())), StringVars::replace_vars($this->lang['faq.message.success.edit'], array('title' => $item->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : FaqUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id())), StringVars::replace_vars($this->lang['faq.message.success.edit'], ['title' => $item->get_title()]));
 		}
 		else
 		{
 			if ($this->is_new_item || $this->is_duplication)
-				AppContext::get_response()->redirect(FaqUrlBuilder::display_pending_items(), StringVars::replace_vars($this->lang['faq.message.success.add'], array('title' => $item->get_title())));
+				AppContext::get_response()->redirect(FaqUrlBuilder::display_pending_items(), StringVars::replace_vars($this->lang['faq.message.success.add'], ['title' => $item->get_title()]));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : FaqUrlBuilder::display_pending_items()), StringVars::replace_vars($this->lang['faq.message.success.edit'], array('title' => $item->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : FaqUrlBuilder::display_pending_items()), StringVars::replace_vars($this->lang['faq.message.success.edit'], ['title' => $item->get_title()]));
 		}
 	}
 

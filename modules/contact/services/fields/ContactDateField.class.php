@@ -13,7 +13,7 @@ class ContactDateField extends AbstractContactField
 	public function __construct()
 	{
 		parent::__construct();
-		$this->set_disable_fields_configuration(array('regex', 'possible_values', 'default_value_small', 'default_value_medium'));
+		$this->set_disable_fields_configuration(['regex', 'possible_values', 'default_value_small', 'default_value_medium']);
 		$this->set_name(LangLoader::get_message('user.field.type.date', 'user-lang'));
 	}
 
@@ -22,7 +22,7 @@ class ContactDateField extends AbstractContactField
 		$fieldset = $field->get_fieldset();
 
 		$fieldset->add_field(new FormFieldDate($field->get_field_name(), $field->get_name(), null,
-			array('description' => $field->get_description(), 'required' =>(bool)$field->is_required())
+			['description' => $field->get_description(), 'required' =>(bool)$field->is_required()]
 		));
 	}
 

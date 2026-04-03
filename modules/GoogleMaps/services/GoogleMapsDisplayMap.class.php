@@ -10,7 +10,7 @@
 
 class GoogleMapsDisplayMap
 {
-	private $markers = array();
+	private $markers = [];
 	private $map_id;
 	private $default_marker_label;
 	private $hide_address_on_label;
@@ -35,14 +35,14 @@ class GoogleMapsDisplayMap
 					{
 						$marker = new GoogleMapsMarker();
 
-						$marker->set_properties(array(
+						$marker->set_properties([
 							'name' => isset($m['name']) ? $m['name'] : $default_marker_label,
 							'address' => isset($m['address']) ? $m['address'] : '',
 							'latitude' => isset($m['latitude']) ? $m['latitude'] : '',
 							'longitude' => isset($m['longitude']) ? $m['longitude'] : '',
 							'zoom' => isset($m['zoom']) ? $m['zoom'] : 0,
 							'address_displayed_on_label' => isset($m['address_displayed_on_label']) ? $m['address_displayed_on_label'] : ''
-						));
+						]);
 					}
 					else
 						$marker = $m;
@@ -56,14 +56,14 @@ class GoogleMapsDisplayMap
 				{
 					$marker = new GoogleMapsMarker();
 
-					$marker->set_properties(array(
+					$marker->set_properties([
 						'name' => isset($markers['name']) ? $markers['name'] : $default_marker_label,
 						'address' => isset($markers['address']) ? $markers['address'] : '',
 						'latitude' => isset($markers['latitude']) ? $markers['latitude'] : '',
 						'longitude' => isset($markers['longitude']) ? $markers['longitude'] : '',
 						'zoom' => isset($markers['zoom']) ? $markers['zoom'] : '',
 						'address_displayed_on_label' => isset($markers['address_displayed_on_label']) ? $markers['address_displayed_on_label'] : ''
-					));
+					]);
 				}
 				else
 					$marker = $markers;
@@ -107,7 +107,7 @@ class GoogleMapsDisplayMap
 			$default_zoom = ($marker->get_zoom() > $default_zoom) ? $marker->get_zoom() : $default_zoom;
 		}
 
-		$template->put_all(array(
+		$template->put_all([
 			'C_INCLUDE_API' => $this->include_api,
 			'C_MULTIPLE_MARKERS' => count($this->markers) > 1,
 			'DEFAULT_ZOOM' => $default_zoom,
@@ -115,7 +115,7 @@ class GoogleMapsDisplayMap
 			'DEFAULT_LONGITUDE' => $config->get_default_marker_longitude(),
 			'API_KEY' => $config->get_api_key(),
 			'MAP_ID' => $this->map_id
-		));
+		]);
 
 		return $template->render();
 	}

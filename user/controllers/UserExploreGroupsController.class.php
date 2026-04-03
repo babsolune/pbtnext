@@ -60,7 +60,7 @@ class UserExploreGroupsController extends AbstractController
 			if (!empty($group_users_id))
 				$this->display_group_user($group_users_id, 'members_list');
 
-			$this->view->put_all(array(
+			$this->view->put_all([
 				'C_ONE_GROUP'    => true,
 				'C_NO_MEMBERS'   => $number_member == 0,
 				'U_GROUP_LIST'   => UserUrlBuilder::groups()->rel(),
@@ -68,7 +68,7 @@ class UserExploreGroupsController extends AbstractController
 				'U_ADMIN_GROUPS' => TPL_PATH_TO_ROOT .'/admin/admin_groups.php?id=' . $group_id,
 				'GROUP_NAME'     => $group['name'],
 				'NUMBER_MEMBERS' => $number_member,
-			));
+			]);
 
 		}
 		else
@@ -123,7 +123,7 @@ class UserExploreGroupsController extends AbstractController
 
 				// Display of groups for selection
 				$group_color = User::get_group_color($key);
-				$this->view->assign_block_vars('group', array(
+				$this->view->assign_block_vars('group', [
 					'GROUP_ID'        => $key,
 					'GROUP_NAME'      => $group['name'],
 					'U_GROUP'         => UserUrlBuilder::groups()->rel() . $key,
@@ -135,21 +135,21 @@ class UserExploreGroupsController extends AbstractController
 					'NUMBER_MEMBERS'  => $number_member,
 					'C_ADMIN'         => AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL),
 					'U_ADMIN_GROUPS'  => TPL_PATH_TO_ROOT .'/admin/admin_groups.php?id=' . $group_id,
-				));
+				]);
 
 				// Display of members
 				if (!empty($group_users_id))
 					$this->display_group_user($group_users_id, 'group.group_members_list');
 			}
 
-			$this->view->put_all(array(
+			$this->view->put_all([
 				'C_ONE_GROUP'   => false,
 				'C_HAS_ADMINS'  => $number_admins > 0,
 				'NUMBER_ADMINS' => $number_admins,
 				'C_HAS_MODOS'   => $number_modos > 0,
 				'NUMBER_MODOS'  => $number_modos,
 				'C_HAS_GROUP'   => !empty($this->groups_cache->get_groups())
-			));
+			]);
 		}
 	}
 
@@ -181,7 +181,7 @@ class UserExploreGroupsController extends AbstractController
 		$user_accounts_config = UserAccountsConfig::load();
 
 		$group_color = User::get_group_color($user['user_groups'], $user['level']);
-		$this->view->assign_block_vars($list_name, array(
+		$this->view->assign_block_vars($list_name, [
 			'C_AVATAR'      => $user['user_avatar'] || $user_accounts_config->is_default_avatar_enabled(),
 			'C_GROUP_COLOR' => !empty($group_color),
 			'PSEUDO'        => $user['display_name'],
@@ -190,24 +190,24 @@ class UserExploreGroupsController extends AbstractController
 			'GROUP_COLOR'   => $group_color,
 			'U_PROFILE'     => UserUrlBuilder::profile($user['user_id'])->rel(),
 			'U_AVATAR'      => $user['user_avatar'] ? Url::to_rel($user['user_avatar']) : $user_accounts_config->get_default_avatar()
-		));
+		]);
 
 		foreach (MemberExtendedFieldsService::display_profile_fields($user['user_id']) as $field)
 		{
 			if ($field['name'] != 'Avatar')
 			{
-				$this->view->assign_block_vars($list_name . '.extended_fields', array(
+				$this->view->assign_block_vars($list_name . '.extended_fields', [
 					'NAME' => $field['name'],
 					'REWRITED_NAME' => Url::encode_rewrite($field['name']),
 					'VALUE' => $field['value']
-				));
+				]);
 			}
 			$this->extended_fields_number++;
 		}
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_EXTENDED_FIELDS' => $this->extended_fields_number
-		));
+		]);
 	}
 
 	private function get_members_group($group_id_selected)
@@ -222,7 +222,7 @@ class UserExploreGroupsController extends AbstractController
 
 	private function get_all_members()
 	{
-		$members = array();
+		$members = [];
 		foreach ($this->groups_cache->get_groups() as $groups)
 		{
 			foreach ($groups['members'] as $user_id)

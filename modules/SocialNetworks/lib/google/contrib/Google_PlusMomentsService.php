@@ -36,10 +36,10 @@
      * @opt_param bool debug Return the moment as written. Should be used only for debugging.
      * @return Google_Moment
      */
-    public function insert($userId, $collection, Google_Moment $postBody, $optParams = array()) {
-      $params = array('userId' => $userId, 'collection' => $collection, 'postBody' => $postBody);
+    public function insert($userId, $collection, Google_Moment $postBody, $optParams = []) {
+      $params = ['userId' => $userId, 'collection' => $collection, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_Moment($data);
       } else {
@@ -221,7 +221,7 @@ class Google_ItemScope extends Google_Model {
   public function getDuration() {
     return $this->duration;
   }
-  public function setAdditionalName(/* array(Google_string) */ $additionalName) {
+  public function setAdditionalName(/* [Google_string] */ $additionalName) {
     $this->assertIsArray($additionalName, 'Google_string', __METHOD__);
     $this->additionalName = $additionalName;
   }
@@ -234,7 +234,7 @@ class Google_ItemScope extends Google_Model {
   public function getWorstRating() {
     return $this->worstRating;
   }
-  public function setContributor(/* array(Google_ItemScope) */ $contributor) {
+  public function setContributor(/* [Google_ItemScope] */ $contributor) {
     $this->assertIsArray($contributor, 'Google_ItemScope', __METHOD__);
     $this->contributor = $contributor;
   }
@@ -259,21 +259,21 @@ class Google_ItemScope extends Google_Model {
   public function getPostOfficeBoxNumber() {
     return $this->postOfficeBoxNumber;
   }
-  public function setAttendees(/* array(Google_ItemScope) */ $attendees) {
+  public function setAttendees(/* [Google_ItemScope] */ $attendees) {
     $this->assertIsArray($attendees, 'Google_ItemScope', __METHOD__);
     $this->attendees = $attendees;
   }
   public function getAttendees() {
     return $this->attendees;
   }
-  public function setAuthor(/* array(Google_ItemScope) */ $author) {
+  public function setAuthor(/* [Google_ItemScope] */ $author) {
     $this->assertIsArray($author, 'Google_ItemScope', __METHOD__);
     $this->author = $author;
   }
   public function getAuthor() {
     return $this->author;
   }
-  public function setAssociated_media(/* array(Google_ItemScope) */ $associated_media) {
+  public function setAssociated_media(/* [Google_ItemScope] */ $associated_media) {
     $this->assertIsArray($associated_media, 'Google_ItemScope', __METHOD__);
     $this->associated_media = $associated_media;
   }
@@ -448,7 +448,7 @@ class Google_ItemScope extends Google_Model {
   public function getName() {
     return $this->name;
   }
-  public function setPerformers(/* array(Google_ItemScope) */ $performers) {
+  public function setPerformers(/* [Google_ItemScope] */ $performers) {
     $this->assertIsArray($performers, 'Google_ItemScope', __METHOD__);
     $this->performers = $performers;
   }

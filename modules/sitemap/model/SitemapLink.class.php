@@ -40,11 +40,11 @@ class SitemapLink extends SitemapElement
 	/**
 	 * @var mixed[] list of the accepted change freq values
 	 */
-	private static $change_freq_list = array(Sitemap::FREQ_ALWAYS, Sitemap::FREQ_HOURLY, Sitemap::FREQ_DAILY, Sitemap::FREQ_WEEKLY, Sitemap::FREQ_MONTHLY, Sitemap::FREQ_YEARLY, Sitemap::FREQ_NEVER, Sitemap::FREQ_DEFAULT);
+	private static $change_freq_list = [Sitemap::FREQ_ALWAYS, Sitemap::FREQ_HOURLY, Sitemap::FREQ_DAILY, Sitemap::FREQ_WEEKLY, Sitemap::FREQ_MONTHLY, Sitemap::FREQ_YEARLY, Sitemap::FREQ_NEVER, Sitemap::FREQ_DEFAULT];
 	/**
 	 * @var mixed[] list of the accepted priority values
 	 */
-	private static $priority_list = array(Sitemap::PRIORITY_MAX, Sitemap::PRIORITY_HIGH, Sitemap::PRIORITY_AVERAGE, Sitemap::PRIORITY_LOW, Sitemap::PRIORITY_MIN);
+	private static $priority_list = [Sitemap::PRIORITY_MAX, Sitemap::PRIORITY_HIGH, Sitemap::PRIORITY_AVERAGE, Sitemap::PRIORITY_LOW, Sitemap::PRIORITY_MIN];
 
 	/**
 	 * @desc Builds a SitemapLink object
@@ -217,7 +217,7 @@ class SitemapLink extends SitemapElement
 		//We get the stream in which we are going to write
 		$template = $export_config->get_link_stream();
 
-		$template->put_all(array(
+		$template->put_all([
 			'LOC' => $this->get_url(),
 			'TEXT' => TextHelper::htmlspecialchars($this->name, ENT_QUOTES),
 			'C_DISPLAY_DATE' => $display_date,
@@ -225,7 +225,7 @@ class SitemapLink extends SitemapElement
 			'ACTUALIZATION_FREQUENCY' => $this->change_freq,
 			'PRIORITY' => $this->priority,
             'C_LINK' => true
-		));
+		]);
 
 		return $template;
 	}

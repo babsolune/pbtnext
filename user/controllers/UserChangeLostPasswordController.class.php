@@ -60,16 +60,16 @@ class UserChangeLostPasswordController extends AbstractController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field($password = new FormFieldPasswordEditor('password', $this->lang['user.password.new'], '',
-			array(
+			[
 				'required' => true, 'autocomplete' => false,
-				'description' => StringVars::replace_vars($this->lang['user.password.clue'], array('number' => $security_config->get_internal_password_min_length()))
-			),
-			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
+				'description' => StringVars::replace_vars($this->lang['user.password.clue'], ['number' => $security_config->get_internal_password_min_length()])
+			],
+			[new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength()]
 		));
 
 		$fieldset->add_field($password_bis = new FormFieldPasswordEditor('password_bis', $this->lang['user.password.confirm'], '',
-			array('required' => true, 'autocomplete' => false),
-			array(new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength())
+			['required' => true, 'autocomplete' => false],
+			[new FormFieldConstraintLengthMin($security_config->get_internal_password_min_length()), new FormFieldConstraintPasswordStrength()]
 		));
 
 		$fieldset->add_field($email = new FormFieldHidden('email', $user->get_email()));
@@ -94,7 +94,7 @@ class UserChangeLostPasswordController extends AbstractController
 
 		PHPBoostAuthenticationMethod::update_auth_infos($user_id, null, null, KeyGenerator::string_hash($password), null, '');
 
-		$auth_infos = array();
+		$auth_infos = [];
 		try {
 			$auth_infos = PHPBoostAuthenticationMethod::get_auth_infos($user_id);
 		} catch (RowNotFoundException $e) {

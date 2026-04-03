@@ -72,15 +72,15 @@ class ForumHomeController extends DefaultModuleController
 		LEFT JOIN ' . ForumSetup::$forum_view_table . ' v ON v.user_id = :user_id AND v.idtopic = t.id
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' m ON m.user_id = t.last_user_id
 		WHERE ' . ($display_cat ? 'c.id_parent = :id_cat AND ' : '') . 'c.id IN :authorized_categories
-		ORDER BY c.id_parent, c.c_order', array(
+		ORDER BY c.id_parent, c.c_order', [
 			'id_cat' => $id_get,
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'authorized_categories' => $authorized_categories
-		));
+		]);
 
 		$this->view->put('C_THUMBNAILS_DISPLAYED', $this->config->are_thumbnails_displayed());
 
-		$categories = array();
+		$categories = [];
 		while ($row = $result->fetch())
 		{
 			$category = $categories_cache->get_category($row['cid']);
@@ -96,20 +96,20 @@ class ForumHomeController extends DefaultModuleController
 			$categories = parentChildSort_r('cid', 'id_parent', $categories);
 
 		$display_sub_cats = false;
-		$is_sub_forum = array();
+		$is_sub_forum = [];
 		foreach ($categories as $row)
 		{
-			$this->view->assign_block_vars('forums_list', array());
+			$this->view->assign_block_vars('forums_list', []);
 			if ($row['id_parent'] == Category::ROOT_CATEGORY && $i > 0 && $display_sub_cats) //Fermeture de la catégorie racine.
 			{
-				$this->view->assign_block_vars('forums_list.endcats', array(
-				));
+				$this->view->assign_block_vars('forums_list.endcats', [
+				]);
 			}
 			$i++;
 
 			if ($row['id_parent'] == Category::ROOT_CATEGORY) //Si c'est une catégorie
 			{
-				$this->view->assign_block_vars('forums_list.cats', array(
+				$this->view->assign_block_vars('forums_list.cats', [
 					'C_HAS_THUMBNAIL'      => !empty($row['thumbnail']),
 					'C_HAS_CATEGORY_ICON'  => !empty($row['icon']),
 					'C_HAS_CATEGORY_COLOR' => !empty($row['color']),
@@ -123,7 +123,7 @@ class ForumHomeController extends DefaultModuleController
 
 					'U_CATEGORY'           => ForumUrlBuilder::display_category($row['cid'], $row['rewrited_name'])->rel(),
 					'U_CATEGORY_THUMBNAIL' => Url::to_rel($categories_cache->get_category($row['cid'])->get_thumbnail()),
-				));
+				]);
 				$display_sub_cats = $row['cat_status'] == ForumCategory::STATUS_UNLOCKED;
 			}
 			else //On liste les sous-catégories
@@ -135,7 +135,7 @@ class ForumHomeController extends DefaultModuleController
 				{
 					if ($display_cat) //Affichage des forums d'une catégorie, ajout de la catégorie.
 					{
-						$this->view->assign_block_vars('forums_list.cats', array(
+						$this->view->assign_block_vars('forums_list.cats', [
 							'C_HAS_THUMBNAIL'     => !empty($this->category->get_thumbnail()->rel()),
 							'C_HAS_CATEGORY_ICON' => !empty($this->category->get_icon()),
 
@@ -148,16 +148,16 @@ class ForumHomeController extends DefaultModuleController
 
 							'U_CATEGORY'           => PATH_TO_ROOT . '/modules/forum/' . url('index.php?id=' . $this->category->get_id(), 'cat-' . $this->category->get_id() . '-' . $this->category->get_rewrited_name() . '.php'),
 							'U_CATEGORY_THUMBNAIL' => Url::to_rel($this->category->get_thumbnail()),
-						));
+						]);
 						$display_cat = false;
 					}
 
 					$subforums = '';
-					$this->view->put_all(array(
+					$this->view->put_all([
 						'C_FORUM_ROOT_CAT'  => false,
 						'C_FORUM_CHILD_CAT' => true,
 						'C_END_S_CATS'      => false
-					));
+					]);
 
 					$children = CategoriesService::get_categories_manager(self::$module_id)->get_categories_cache()->get_children($row['cid']);
 					if ($children)
@@ -218,7 +218,7 @@ class ForumHomeController extends DefaultModuleController
 					$last_msg_date = new Date($row['last_timestamp'], Timezone::SERVER_TIMEZONE);
 
 					$this->view->assign_block_vars('forums_list.subcats', array_merge(
-						Date::get_array_tpl_vars($last_msg_date, 'LAST_MESSAGE_DATE'), array(
+						Date::get_array_tpl_vars($last_msg_date, 'LAST_MESSAGE_DATE'), [
 						'C_BLINK'                 => $blink,
 						'C_SUBFORUMS'             => !empty($subforums),
 						'C_LAST_USER_GROUP_COLOR' => !empty($last_group_color),
@@ -250,7 +250,7 @@ class ForumHomeController extends DefaultModuleController
 						'U_LINK'               => Url::to_rel($row['url']),
 						'U_CATEGORY_THUMBNAIL' => Url::to_rel($categories_cache->get_category($row['cid'])->get_thumbnail()),
 						'U_CATEGORY'           => ForumUrlBuilder::display_forum($row['cid'], $row['rewrited_name'])->rel(),
-					)));
+					]));
 				}
 			}
 		}
@@ -259,10 +259,10 @@ class ForumHomeController extends DefaultModuleController
 
 		if ($i > 0) //Fermeture de la catégorie racine.
 		{
-			$this->view->assign_block_vars('forums_list', array(
-			));
-			$this->view->assign_block_vars('forums_list.endcats', array(
-			));
+			$this->view->assign_block_vars('forums_list', [
+			]);
+			$this->view->assign_block_vars('forums_list.endcats', [
+			]);
 		}
 
 		$site_path = GeneralConfig::get_default_site_path();
@@ -299,7 +299,7 @@ class ForumHomeController extends DefaultModuleController
 			}
 		}
 
-		$vars_tpl = array(
+		$vars_tpl = [
 			'C_TOTAL_POST'     => true,
 			'C_USER_CONNECTED' => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 			'C_NO_USER_ONLINE' => (($total_online - $total_visit) == 0),
@@ -325,7 +325,7 @@ class ForumHomeController extends DefaultModuleController
 			'L_MODO'    => ($total_modo > 1) ? $this->lang['user.moderators'] : $this->lang['user.moderator'],
 			'L_MEMBER'  => ($total_member > 1) ? $this->lang['user.members'] : $this->lang['user.member'],
 			'L_GUEST'   => ($total_visit > 1) ? $this->lang['user.guests'] : $this->lang['user.guest'],
-		);
+		];
 
 		$this->view->put_all($vars_tpl);
 		$top_view->put_all($vars_tpl);
@@ -353,7 +353,7 @@ class ForumHomeController extends DefaultModuleController
 
 		$description = $this->category !== false ? $this->category->get_description() : '';
 		if (empty($description))
-			$description = StringVars::replace_vars($this->lang['forum.root.description.seo'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->category !== false && $this->category->get_name() && $this->category->get_id() != Category::ROOT_CATEGORY ? ' ' . $this->lang['category.category'] . ' ' . $this->category->get_name() : '');
+			$description = StringVars::replace_vars($this->lang['forum.root.description.seo'], ['site' => GeneralConfig::load()->get_site_name()]) . ($this->category !== false && $this->category->get_name() && $this->category->get_id() != Category::ROOT_CATEGORY ? ' ' . $this->lang['category.category'] . ' ' . $this->category->get_name() : '');
 
 		$graphical_environment->get_seo_meta_data()->set_description($description);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(ForumUrlBuilder::home());

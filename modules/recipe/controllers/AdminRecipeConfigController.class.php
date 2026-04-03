@@ -42,36 +42,36 @@ class AdminRecipeConfigController extends DefaultAdminModuleController
 	{
 		$form = new HTMLForm(self::class);
 
-		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module()->get_configuration()->get_name()]));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldNumberEditor('categories_per_page', $this->lang['form.categories.per.page'], $this->config->get_categories_per_page(),
-			array('min' => 1, 'max' => 50, 'required' => true),
-			array(new FormFieldConstraintIntegerRange(1, 50))
+			['min' => 1, 'max' => 50, 'required' => true],
+			[new FormFieldConstraintIntegerRange(1, 50)]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('categories_per_row', $this->lang['form.categories.per.row'], $this->config->get_categories_per_row(),
-			array('min' => 1, 'max' => 4, 'required' => true),
-			array(new FormFieldConstraintIntegerRange(1, 4))
+			['min' => 1, 'max' => 4, 'required' => true],
+			[new FormFieldConstraintIntegerRange(1, 4)]
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort', $this->lang['form.items.default.sort'], $this->config->get_items_default_sort_field() . '-' . TextHelper::strtoupper($this->config->get_items_default_sort_mode()), $this->get_sort_options()));
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->lang['form.items.per.page'], $this->config->get_items_per_page(),
-			array('min' => 1, 'max' => 50, 'required' => true),
-			array(new FormFieldConstraintIntegerRange(1, 50))
+			['min' => 1, 'max' => 50, 'required' => true],
+			[new FormFieldConstraintIntegerRange(1, 50)]
 		));
 
 		$fieldset->add_field(new FormFieldSpacer('display', ''));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['form.display.type'], $this->config->get_display_type(),
-			array(
-				new FormFieldSelectChoiceOption($this->lang['form.display.type.grid'], RecipeConfig::GRID_VIEW, array('data_option_icon' => 'fa fa-th-large')),
-				new FormFieldSelectChoiceOption($this->lang['form.display.type.table'], RecipeConfig::TABLE_VIEW, array('data_option_icon' => 'fa fa-table'))
-			),
-			array(
+			[
+				new FormFieldSelectChoiceOption($this->lang['form.display.type.grid'], RecipeConfig::GRID_VIEW, ['data_option_icon' => 'fa fa-th-large']),
+				new FormFieldSelectChoiceOption($this->lang['form.display.type.table'], RecipeConfig::TABLE_VIEW, ['data_option_icon' => 'fa fa-table'])
+			],
+			[
 				'select_to_list' => true,
-				'events' => array('change' => '
+				'events' => ['change' => '
 				if (HTMLForms.getField("display_type").getValue() == \'' . RecipeConfig::GRID_VIEW . '\') {
 					HTMLForms.getField("items_per_row").enable();
 					HTMLForms.getField("display_summary_to_guests").enable();
@@ -83,47 +83,47 @@ class AdminRecipeConfigController extends DefaultAdminModuleController
 					HTMLForms.getField("full_item_display").disable();
 					HTMLForms.getField("auto_cut_characters_number").disable();
 				}'
-			))
+			]]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->lang['form.items.per.row'], $this->config->get_items_per_row(),
-			array(
+			[
 				'hidden' => $this->config->get_display_type() !== RecipeConfig::GRID_VIEW,
-				'min' => 1, 'max' => 4, 'required' => true),
-				array(new FormFieldConstraintIntegerRange(1, 4))
+				'min' => 1, 'max' => 4, 'required' => true],
+				[new FormFieldConstraintIntegerRange(1, 4)]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('auto_cut_characters_number', $this->lang['form.characters.number.to.cut'], $this->config->get_auto_cut_characters_number(),
-			array(
+			[
 				'min' => 20, 'max' => 1000, 'required' => true,
 				'hidden' => $this->config->get_display_type() == RecipeConfig::TABLE_VIEW
-			),
-			array(new FormFieldConstraintIntegerRange(20, 1000)
-		)));
+			],
+			[new FormFieldConstraintIntegerRange(20, 1000)
+		]));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_summary_to_guests', $this->lang['form.display.summary.to.guests'], $this->config->is_summary_displayed_to_guests(),
-			array(
+			[
 				'class' => 'custom-checkbox',
 				'hidden' => $this->config->get_display_type() == RecipeConfig::TABLE_VIEW
-			)
+			]
 		));$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->lang['form.root.category.description'], $this->config->get_root_category_description(),
-			array('rows' => 8, 'cols' => 47)
+			['rows' => 8, 'cols' => 47]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('author_displayed', $this->lang['form.display.author'], $this->config->is_author_displayed(),
-			array('class' => 'custom-checkbox')
+			['class' => 'custom-checkbox']
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('views_nb_enabled', $this->lang['form.display.views.number'], $this->config->get_enabled_views_number(),
-			array('class' => 'custom-checkbox')
+			['class' => 'custom-checkbox']
 		));
 
         $fieldset->add_field(new FormFieldRichTextEditor('default_content', $this->lang['form.item.default.content'], $this->config->get_default_content(),
-			array('rows' => 8, 'cols' => 47)
+			['rows' => 8, 'cols' => 47]
 		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $this->lang['form.authorizations'],
-			array('description' => $this->lang['form.authorizations.clue'])
+			['description' => $this->lang['form.authorizations.clue']]
 		);
 		$form->add_fieldset($fieldset_authorizations);
 
@@ -140,7 +140,7 @@ class AdminRecipeConfigController extends DefaultAdminModuleController
 
 	private function get_sort_options()
 	{
-		$sort_options = array(
+		$sort_options = [
 			new FormFieldSelectChoiceOption($this->lang['common.sort.by.update'] . ' - ' . $this->lang['common.sort.asc'], RecipeItem::SORT_UPDATE_DATE . '-' . RecipeItem::ASC),
 			new FormFieldSelectChoiceOption($this->lang['common.sort.by.update'] . ' - ' . $this->lang['common.sort.desc'], RecipeItem::SORT_UPDATE_DATE . '-' . RecipeItem::DESC),
 			new FormFieldSelectChoiceOption($this->lang['common.sort.by.date'] . ' - ' . $this->lang['common.sort.asc'], RecipeItem::SORT_DATE . '-' . RecipeItem::ASC),
@@ -151,7 +151,7 @@ class AdminRecipeConfigController extends DefaultAdminModuleController
 			new FormFieldSelectChoiceOption($this->lang['common.sort.by.author'] . ' - ' . $this->lang['common.sort.desc'], RecipeItem::SORT_AUTHOR . '-' . RecipeItem::DESC),
 			new FormFieldSelectChoiceOption($this->lang['common.sort.by.views.number'] . ' - ' . $this->lang['common.sort.asc'], RecipeItem::SORT_VIEWS_NUMBER . '-' . RecipeItem::ASC),
 			new FormFieldSelectChoiceOption($this->lang['common.sort.by.views.number'] . ' - ' . $this->lang['common.sort.desc'], RecipeItem::SORT_VIEWS_NUMBER . '-' . RecipeItem::DESC)
-		);
+		];
 
 		if ($this->comments_config->module_comments_is_enabled('recipe'))
 		{
@@ -206,7 +206,7 @@ class AdminRecipeConfigController extends DefaultAdminModuleController
 		RecipeConfig::save();
 		CategoriesService::get_categories_manager()->regenerate_cache();
 		
-		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
+		HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]), 'url' => ModulesUrlBuilder::configuration()->rel()]);
 	}
 }
 ?>

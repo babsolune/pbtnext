@@ -40,7 +40,7 @@ class DefaultDeleteCategoryController extends AbstractDeleteCategoryController
 	protected function clear_cache()
 	{
 		$module_id = Environment::get_running_module_name();
-		$cache_classes = array(ucfirst($module_id) . 'Cache', ucfirst($module_id) . 'MiniMenuCache');
+		$cache_classes = [ucfirst($module_id) . 'Cache', ucfirst($module_id) . 'MiniMenuCache'];
 		foreach ($cache_classes as $cache_class)
 		{
 			if (ClassLoader::is_class_registered_and_valid($cache_class) && is_subclass_of($cache_class, 'CacheData'))

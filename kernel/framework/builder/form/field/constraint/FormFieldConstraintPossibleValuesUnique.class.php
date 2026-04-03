@@ -26,7 +26,7 @@ class FormFieldConstraintPossibleValuesUnique extends AbstractFormFieldConstrain
 	public function validate(FormField $field)
 	{
 		$value = $field->get_value();
-		$this->set_validation_error_message(StringVars::replace_vars($this->error_message, array('name' => TextHelper::strtolower($field->get_label()))));
+		$this->set_validation_error_message(StringVars::replace_vars($this->error_message, ['name' => TextHelper::strtolower($field->get_label())]));
 
     if (is_array($value) && !empty($value))
     {
@@ -42,7 +42,7 @@ class FormFieldConstraintPossibleValuesUnique extends AbstractFormFieldConstrain
 	public function get_js_validation(FormField $field)
 	{
 		return 'UniquePossibleValuesFormFieldValidator(' . TextHelper::to_js_string($field->get_html_id()) .
-			', ' . TextHelper::to_js_string(StringVars::replace_vars($this->error_message, array('name' => TextHelper::strtolower($field->get_label())))) .')';
+			', ' . TextHelper::to_js_string(StringVars::replace_vars($this->error_message, ['name' => TextHelper::strtolower($field->get_label())])) .')';
 	}
 }
 

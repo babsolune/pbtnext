@@ -11,7 +11,7 @@ class VideoFormFieldPlayer extends AbstractFormField
 {
 	private $max_input = 200;
 
-	public function __construct($id, $label, array $value = array(), array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, array $value = [], array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
@@ -23,45 +23,45 @@ class VideoFormFieldPlayer extends AbstractFormField
 		$view = new FileTemplate('video/fields/VideoFormFieldPlayer.tpl');
 		$view->add_lang(LangLoader::get_all_langs('video'));
 
-		$view->put_all(array(
+		$view->put_all([
 			'NAME'       => $this->get_html_id(),
 			'ID'         => $this->get_html_id()
-		));
+		]);
 
 		$this->assign_common_template_variables($template);
 
 		$i = 0;
 		foreach ($this->get_value() as $id => $options)
 		{
-			$view->assign_block_vars('fieldelements', array(
+			$view->assign_block_vars('fieldelements', [
 				'ID'   => $i,
 				'PLATFORM' => $options['platform'],
 				'DOMAIN' => $options['domain'],
 				'PLAYER' => $options['player']
-			));
+			]);
 			$i++;
 		}
 
 		if ($i == 0)
 		{
-			$view->assign_block_vars('fieldelements', array(
+			$view->assign_block_vars('fieldelements', [
 				'ID'   => $i,
 				'PLATFORM' => '',
 				'DOMAIN' => '',
 				'PLAYER' => ''
-			));
+			]);
 		}
 
-		$view->put_all(array(
+		$view->put_all([
 			'NAME'          => $this->get_html_id(),
 			'ID'            => $this->get_html_id(),
 			'MAX_INPUT'     => $this->max_input,
 			'FIELDS_NUMBER' => $i == 0 ? 1 : $i
-		));
+		]);
 
-		$template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $view->render()
-		));
+		]);
 
 		return $template;
 	}
@@ -69,7 +69,7 @@ class VideoFormFieldPlayer extends AbstractFormField
 	public function retrieve_value()
 	{
 		$request = AppContext::get_request();
-		$values = array();
+		$values = [];
 		for ($i = 0; $i < $this->max_input; $i++)
 		{
 			$field_domain_id = 'field_domain_' . $this->get_html_id() . '_' . $i;
@@ -81,7 +81,7 @@ class VideoFormFieldPlayer extends AbstractFormField
 				$field_player_id = 'field_player_' . $this->get_html_id() . '_' . $i;
 				$field_player = $request->get_poststring($field_player_id);
 				if(!empty($field_platform) && !empty($field_domain) && !empty($field_player))
-					$values[] = array('platform' => $field_platform, 'domain' => $field_domain, 'player' => $field_player);
+					$values[] = ['platform' => $field_platform, 'domain' => $field_domain, 'player' => $field_player];
 			}
 		}
 		$this->set_value($values);

@@ -46,17 +46,17 @@ class AdminCalendarConfigController extends DefaultAdminModuleController
 	{
 		$form = new HTMLForm(self::class);
 
-		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module()->get_configuration()->get_name()]));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->lang['form.items.per.page'], $this->config->get_items_per_page(),
-			array('min' => 1, 'max' => 50, 'required' => true, 'class' => 'top-field'),
-			array(new FormFieldConstraintIntegerRange(1, 50))
+			['min' => 1, 'max' => 50, 'required' => true, 'class' => 'top-field'],
+			[new FormFieldConstraintIntegerRange(1, 50)]
 		));
 
 		$fieldset->add_field(new FormFieldColorPicker('event_color', $this->lang['calendar.config.event.color'], $this->config->get_event_color(),
-			array('class' => 'top-field'),
-			array(new FormFieldConstraintRegex('`^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$`iu'))
+			['class' => 'top-field'],
+			[new FormFieldConstraintRegex('`^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$`iu')]
 		));
 
 		if (!empty($this->user_born_field) && !$this->user_born_field['display'])
@@ -66,35 +66,35 @@ class AdminCalendarConfigController extends DefaultAdminModuleController
 		else
 		{
 			$fieldset->add_field(new FormFieldCheckbox('members_birthday_enabled', $this->lang['calendar.config.display.birthdays'], $this->config->is_members_birthday_enabled(),
-				array(
+				[
 					'class' => 'custom-checkbox',
-					'events' => array('click' => '
+					'events' => ['click' => '
 						if (HTMLForms.getField("members_birthday_enabled").getValue()) {
 							HTMLForms.getField("birthday_color").enable();
 						} else {
 							HTMLForms.getField("birthday_color").disable();
 						}'
-					)
-				)
+					]
+				]
 			));
 
 			$fieldset->add_field(new FormFieldColorPicker('birthday_color', $this->lang['calendar.config.birthday.color'], $this->config->get_birthday_color(),
-				array('hidden' => !$this->config->is_members_birthday_enabled()),
-				array(new FormFieldConstraintRegex('`^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$`iu'))
+				['hidden' => !$this->config->is_members_birthday_enabled()],
+				[new FormFieldConstraintRegex('`^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$`iu')]
 			));
 		}
 
 		$fieldset->add_field(new FormFieldSpacer('display', ''));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['form.display.type'], $this->config->get_display_type(),
-			array(
-				new FormFieldSelectChoiceOption($this->lang['form.display.type.grid'], CalendarConfig::GRID_VIEW, array('data_option_icon' => 'fa fa-th-large')),
-				new FormFieldSelectChoiceOption($this->lang['form.display.type.list'], CalendarConfig::LIST_VIEW, array('data_option_icon' => 'fa fa-list')),
-				new FormFieldSelectChoiceOption($this->lang['form.display.type.table'], CalendarConfig::TABLE_VIEW, array('data_option_icon' => 'fa fa-table'))
-			),
-			array(
+			[
+				new FormFieldSelectChoiceOption($this->lang['form.display.type.grid'], CalendarConfig::GRID_VIEW, ['data_option_icon' => 'fa fa-th-large']),
+				new FormFieldSelectChoiceOption($this->lang['form.display.type.list'], CalendarConfig::LIST_VIEW, ['data_option_icon' => 'fa fa-list']),
+				new FormFieldSelectChoiceOption($this->lang['form.display.type.table'], CalendarConfig::TABLE_VIEW, ['data_option_icon' => 'fa fa-table'])
+			],
+			[
 				'select_to_list' => true,
-				'events' => array('change' => '
+				'events' => ['change' => '
 					if (HTMLForms.getField("display_type").getValue() == \'' . CalendarConfig::GRID_VIEW . '\') {
 						HTMLForms.getField("items_per_row").enable();
 						HTMLForms.getField("characters_number_to_cut").enable();
@@ -112,45 +112,45 @@ class AdminCalendarConfigController extends DefaultAdminModuleController
 						HTMLForms.getField("full_item_display").disable();
 						HTMLForms.getField("characters_number_to_cut").disable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->lang['form.items.per.row'], $this->config->get_items_per_row(),
-			array(
+			[
 				'hidden' => $this->config->get_display_type() !== CalendarConfig::GRID_VIEW,
-				'min' => 1, 'max' => 4, 'required' => true),
-				array(new FormFieldConstraintIntegerRange(1, 4))
+				'min' => 1, 'max' => 4, 'required' => true],
+				[new FormFieldConstraintIntegerRange(1, 4)]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('full_item_display', $this->lang['form.display.full.item'], $this->config->is_full_item_displayed(),
-			array(
+			[
 				'class' => 'custom-checkbox',
 				'hidden' => $this->config->get_display_type() !== CalendarConfig::LIST_VIEW,
-				'events' => array('click' => '
+				'events' => ['click' => '
 					if (HTMLForms.getField("full_item_display").getValue()) {
 						HTMLForms.getField("characters_number_to_cut").disable();
 					} else {
 						HTMLForms.getField("characters_number_to_cut").enable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('characters_number_to_cut', $this->lang['form.characters.number.to.cut'], $this->config->get_characters_number_to_cut(),
-			array(
+			[
 				'min' => 20, 'max' => 1000, 'required' => true,
 				'hidden' => $this->config->get_display_type() == CalendarConfig::TABLE_VIEW || ($this->config->get_display_type() == CalendarConfig::LIST_VIEW && $this->config->is_full_item_displayed())
-			),
-			array(new FormFieldConstraintIntegerRange(20, 1000)
-		)));
+			],
+			[new FormFieldConstraintIntegerRange(20, 1000)
+		]));
 
         $fieldset->add_field(new FormFieldRichTextEditor('default_content', $this->lang['form.item.default.content'], $this->config->get_default_content(),
-			array('rows' => 8, 'cols' => 47)
+			['rows' => 8, 'cols' => 47]
 		));
 
 		$fieldset = new FormFieldsetHTML('authorizations_fieldset', $this->lang['form.authorizations'],
-			array('description' => $this->lang['form.authorizations.clue'])
+			['description' => $this->lang['form.authorizations.clue']]
 		);
 		$form->add_fieldset($fieldset);
 
@@ -203,7 +203,7 @@ class AdminCalendarConfigController extends DefaultAdminModuleController
 		CategoriesService::get_categories_manager()->regenerate_cache();
 		CalendarService::clear_cache();
 
-		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
+		HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]), 'url' => ModulesUrlBuilder::configuration()->rel()]);
 	}
 }
 ?>

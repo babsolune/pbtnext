@@ -15,7 +15,7 @@ class GalleryModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('gallery');
 
-		self::$delete_old_files_list = array(
+		self::$delete_old_files_list = [
 			'/lang/english/gallery_english.php',
 			'/lang/french/gallery_french.php',
 			'/phpboost/GalleryComments.class.php',
@@ -24,25 +24,25 @@ class GalleryModuleUpdateVersion extends ModuleUpdateVersion
 			'/phpboost/GallerySitemapExtensionPoint.class.php',
 			'/phpboost/GalleryHomePageExtensionPoint.class.php',
 			'/services/GalleryAuthorizationsService.class.php'
-		);
-		self::$delete_old_folders_list = array(
+		];
+		self::$delete_old_folders_list = [
 			'/controllers/categories'
-		);
+		];
 
-		$this->database_columns_to_modify = array(
-			array(
+		$this->database_columns_to_modify = [
+			[
 				'table_name' => PREFIX . 'gallery',
-				'columns' => array(
+				'columns' => [
 					'idcat' => 'id_category INT(11) NOT NULL DEFAULT 0'
-				)
-			),
-			array(
+				]
+			],
+			[
 				'table_name' => PREFIX . 'gallery_cats',
-				'columns' => array(
+				'columns' => [
 					'image' => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""'
-				)
-			)
-		);
+				]
+			]
+		];
 	}
 
 	protected function execute_module_specific_changes()

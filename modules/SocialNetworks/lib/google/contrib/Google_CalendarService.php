@@ -32,10 +32,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_FreeBusyResponse
      */
-    public function query(Google_FreeBusyRequest $postBody, $optParams = array()) {
-      $params = array('postBody' => $postBody);
+    public function query(Google_FreeBusyRequest $postBody, $optParams = []) {
+      $params = ['postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('query', array($params));
+      $data = $this->__call('query', [$params]);
       if ($this->useObjects()) {
         return new Google_FreeBusyResponse($data);
       } else {
@@ -61,10 +61,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Settings
      */
-    public function listSettings($optParams = array()) {
-      $params = array();
+    public function listSettings($optParams = []) {
+      $params = [];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_Settings($data);
       } else {
@@ -78,10 +78,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Setting
      */
-    public function get($setting, $optParams = array()) {
-      $params = array('setting' => $setting);
+    public function get($setting, $optParams = []) {
+      $params = ['setting' => $setting];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Setting($data);
       } else {
@@ -110,10 +110,10 @@
      * @opt_param bool colorRgbFormat Whether to use the 'frontendColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'color' field will be set to the best matching option automatically. Optional. The default is False.
      * @return Google_CalendarListEntry
      */
-    public function insert(Google_CalendarListEntry $postBody, $optParams = array()) {
-      $params = array('postBody' => $postBody);
+    public function insert(Google_CalendarListEntry $postBody, $optParams = []) {
+      $params = ['postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_CalendarListEntry($data);
       } else {
@@ -127,10 +127,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_CalendarListEntry
      */
-    public function get($calendarId, $optParams = array()) {
-      $params = array('calendarId' => $calendarId);
+    public function get($calendarId, $optParams = []) {
+      $params = ['calendarId' => $calendarId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_CalendarListEntry($data);
       } else {
@@ -148,10 +148,10 @@
      * @opt_param string minAccessRole The minimum access role for the user in the returned entires. Optional. The default is no restriction.
      * @return Google_CalendarList
      */
-    public function listCalendarList($optParams = array()) {
-      $params = array();
+    public function listCalendarList($optParams = []) {
+      $params = [];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_CalendarList($data);
       } else {
@@ -168,10 +168,10 @@
      * @opt_param bool colorRgbFormat Whether to use the 'frontendColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'color' field will be set to the best matching option automatically. Optional. The default is False.
      * @return Google_CalendarListEntry
      */
-    public function update($calendarId, Google_CalendarListEntry $postBody, $optParams = array()) {
-      $params = array('calendarId' => $calendarId, 'postBody' => $postBody);
+    public function update($calendarId, Google_CalendarListEntry $postBody, $optParams = []) {
+      $params = ['calendarId' => $calendarId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('update', array($params));
+      $data = $this->__call('update', [$params]);
       if ($this->useObjects()) {
         return new Google_CalendarListEntry($data);
       } else {
@@ -189,10 +189,10 @@
      * @opt_param bool colorRgbFormat Whether to use the 'frontendColor' and 'backgroundColor' fields to write the calendar colors (RGB). If this feature is used, the index-based 'color' field will be set to the best matching option automatically. Optional. The default is False.
      * @return Google_CalendarListEntry
      */
-    public function patch($calendarId, Google_CalendarListEntry $postBody, $optParams = array()) {
-      $params = array('calendarId' => $calendarId, 'postBody' => $postBody);
+    public function patch($calendarId, Google_CalendarListEntry $postBody, $optParams = []) {
+      $params = ['calendarId' => $calendarId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('patch', array($params));
+      $data = $this->__call('patch', [$params]);
       if ($this->useObjects()) {
         return new Google_CalendarListEntry($data);
       } else {
@@ -205,10 +205,10 @@
      * @param string $calendarId Calendar identifier.
      * @param array $optParams Optional parameters.
      */
-    public function delete($calendarId, $optParams = array()) {
-      $params = array('calendarId' => $calendarId);
+    public function delete($calendarId, $optParams = []) {
+      $params = ['calendarId' => $calendarId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       return $data;
     }
   }
@@ -231,10 +231,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Calendar
      */
-    public function insert(Google_Calendar $postBody, $optParams = array()) {
-      $params = array('postBody' => $postBody);
+    public function insert(Google_Calendar $postBody, $optParams = []) {
+      $params = ['postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_Calendar($data);
       } else {
@@ -248,10 +248,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Calendar
      */
-    public function get($calendarId, $optParams = array()) {
-      $params = array('calendarId' => $calendarId);
+    public function get($calendarId, $optParams = []) {
+      $params = ['calendarId' => $calendarId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Calendar($data);
       } else {
@@ -265,10 +265,10 @@
      * @param string $calendarId Calendar identifier.
      * @param array $optParams Optional parameters.
      */
-    public function clear($calendarId, $optParams = array()) {
-      $params = array('calendarId' => $calendarId);
+    public function clear($calendarId, $optParams = []) {
+      $params = ['calendarId' => $calendarId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('clear', array($params));
+      $data = $this->__call('clear', [$params]);
       return $data;
     }
     /**
@@ -279,10 +279,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Calendar
      */
-    public function update($calendarId, Google_Calendar $postBody, $optParams = array()) {
-      $params = array('calendarId' => $calendarId, 'postBody' => $postBody);
+    public function update($calendarId, Google_Calendar $postBody, $optParams = []) {
+      $params = ['calendarId' => $calendarId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('update', array($params));
+      $data = $this->__call('update', [$params]);
       if ($this->useObjects()) {
         return new Google_Calendar($data);
       } else {
@@ -297,10 +297,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Calendar
      */
-    public function patch($calendarId, Google_Calendar $postBody, $optParams = array()) {
-      $params = array('calendarId' => $calendarId, 'postBody' => $postBody);
+    public function patch($calendarId, Google_Calendar $postBody, $optParams = []) {
+      $params = ['calendarId' => $calendarId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('patch', array($params));
+      $data = $this->__call('patch', [$params]);
       if ($this->useObjects()) {
         return new Google_Calendar($data);
       } else {
@@ -313,10 +313,10 @@
      * @param string $calendarId Calendar identifier.
      * @param array $optParams Optional parameters.
      */
-    public function delete($calendarId, $optParams = array()) {
-      $params = array('calendarId' => $calendarId);
+    public function delete($calendarId, $optParams = []) {
+      $params = ['calendarId' => $calendarId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       return $data;
     }
   }
@@ -340,10 +340,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_AclRule
      */
-    public function insert($calendarId, Google_AclRule $postBody, $optParams = array()) {
-      $params = array('calendarId' => $calendarId, 'postBody' => $postBody);
+    public function insert($calendarId, Google_AclRule $postBody, $optParams = []) {
+      $params = ['calendarId' => $calendarId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_AclRule($data);
       } else {
@@ -358,10 +358,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_AclRule
      */
-    public function get($calendarId, $ruleId, $optParams = array()) {
-      $params = array('calendarId' => $calendarId, 'ruleId' => $ruleId);
+    public function get($calendarId, $ruleId, $optParams = []) {
+      $params = ['calendarId' => $calendarId, 'ruleId' => $ruleId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_AclRule($data);
       } else {
@@ -375,10 +375,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Acl
      */
-    public function listAcl($calendarId, $optParams = array()) {
-      $params = array('calendarId' => $calendarId);
+    public function listAcl($calendarId, $optParams = []) {
+      $params = ['calendarId' => $calendarId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_Acl($data);
       } else {
@@ -394,10 +394,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_AclRule
      */
-    public function update($calendarId, $ruleId, Google_AclRule $postBody, $optParams = array()) {
-      $params = array('calendarId' => $calendarId, 'ruleId' => $ruleId, 'postBody' => $postBody);
+    public function update($calendarId, $ruleId, Google_AclRule $postBody, $optParams = []) {
+      $params = ['calendarId' => $calendarId, 'ruleId' => $ruleId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('update', array($params));
+      $data = $this->__call('update', [$params]);
       if ($this->useObjects()) {
         return new Google_AclRule($data);
       } else {
@@ -413,10 +413,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_AclRule
      */
-    public function patch($calendarId, $ruleId, Google_AclRule $postBody, $optParams = array()) {
-      $params = array('calendarId' => $calendarId, 'ruleId' => $ruleId, 'postBody' => $postBody);
+    public function patch($calendarId, $ruleId, Google_AclRule $postBody, $optParams = []) {
+      $params = ['calendarId' => $calendarId, 'ruleId' => $ruleId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('patch', array($params));
+      $data = $this->__call('patch', [$params]);
       if ($this->useObjects()) {
         return new Google_AclRule($data);
       } else {
@@ -430,10 +430,10 @@
      * @param string $ruleId ACL rule identifier.
      * @param array $optParams Optional parameters.
      */
-    public function delete($calendarId, $ruleId, $optParams = array()) {
-      $params = array('calendarId' => $calendarId, 'ruleId' => $ruleId);
+    public function delete($calendarId, $ruleId, $optParams = []) {
+      $params = ['calendarId' => $calendarId, 'ruleId' => $ruleId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       return $data;
     }
   }
@@ -455,10 +455,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Colors
      */
-    public function get($optParams = array()) {
-      $params = array();
+    public function get($optParams = []) {
+      $params = [];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Colors($data);
       } else {
@@ -488,10 +488,10 @@
      * @opt_param bool sendNotifications Whether to send notifications about the creation of the new event. Optional. The default is False.
      * @return Google_Event
      */
-    public function insert($calendarId, Google_Event $postBody, $optParams = array()) {
-      $params = array('calendarId' => $calendarId, 'postBody' => $postBody);
+    public function insert($calendarId, Google_Event $postBody, $optParams = []) {
+      $params = ['calendarId' => $calendarId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_Event($data);
       } else {
@@ -510,10 +510,10 @@
      * @opt_param int maxAttendees The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.
      * @return Google_Event
      */
-    public function get($calendarId, $eventId, $optParams = array()) {
-      $params = array('calendarId' => $calendarId, 'eventId' => $eventId);
+    public function get($calendarId, $eventId, $optParams = []) {
+      $params = ['calendarId' => $calendarId, 'eventId' => $eventId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Event($data);
       } else {
@@ -531,10 +531,10 @@
      * @opt_param bool sendNotifications Whether to send notifications about the change of the event's organizer. Optional. The default is False.
      * @return Google_Event
      */
-    public function move($calendarId, $eventId, $destination, $optParams = array()) {
-      $params = array('calendarId' => $calendarId, 'eventId' => $eventId, 'destination' => $destination);
+    public function move($calendarId, $eventId, $destination, $optParams = []) {
+      $params = ['calendarId' => $calendarId, 'eventId' => $eventId, 'destination' => $destination];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('move', array($params));
+      $data = $this->__call('move', [$params]);
       if ($this->useObjects()) {
         return new Google_Event($data);
       } else {
@@ -563,10 +563,10 @@
      * @opt_param int maxAttendees The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.
      * @return Google_Events
      */
-    public function listEvents($calendarId, $optParams = array()) {
-      $params = array('calendarId' => $calendarId);
+    public function listEvents($calendarId, $optParams = []) {
+      $params = ['calendarId' => $calendarId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_Events($data);
       } else {
@@ -585,10 +585,10 @@
      * @opt_param bool sendNotifications Whether to send notifications about the event update (e.g. attendee's responses, title changes, etc.). Optional. The default is False.
      * @return Google_Event
      */
-    public function update($calendarId, $eventId, Google_Event $postBody, $optParams = array()) {
-      $params = array('calendarId' => $calendarId, 'eventId' => $eventId, 'postBody' => $postBody);
+    public function update($calendarId, $eventId, Google_Event $postBody, $optParams = []) {
+      $params = ['calendarId' => $calendarId, 'eventId' => $eventId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('update', array($params));
+      $data = $this->__call('update', [$params]);
       if ($this->useObjects()) {
         return new Google_Event($data);
       } else {
@@ -607,10 +607,10 @@
      * @opt_param bool sendNotifications Whether to send notifications about the event update (e.g. attendee's responses, title changes, etc.). Optional. The default is False.
      * @return Google_Event
      */
-    public function patch($calendarId, $eventId, Google_Event $postBody, $optParams = array()) {
-      $params = array('calendarId' => $calendarId, 'eventId' => $eventId, 'postBody' => $postBody);
+    public function patch($calendarId, $eventId, Google_Event $postBody, $optParams = []) {
+      $params = ['calendarId' => $calendarId, 'eventId' => $eventId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('patch', array($params));
+      $data = $this->__call('patch', [$params]);
       if ($this->useObjects()) {
         return new Google_Event($data);
       } else {
@@ -633,10 +633,10 @@
      * @opt_param int maxAttendees The maximum number of attendees to include in the response. If there are more than the specified number of attendees, only the participant is returned. Optional.
      * @return Google_Events
      */
-    public function instances($calendarId, $eventId, $optParams = array()) {
-      $params = array('calendarId' => $calendarId, 'eventId' => $eventId);
+    public function instances($calendarId, $eventId, $optParams = []) {
+      $params = ['calendarId' => $calendarId, 'eventId' => $eventId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('instances', array($params));
+      $data = $this->__call('instances', [$params]);
       if ($this->useObjects()) {
         return new Google_Events($data);
       } else {
@@ -651,10 +651,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Event
      */
-    public function import($calendarId, Google_Event $postBody, $optParams = array()) {
-      $params = array('calendarId' => $calendarId, 'postBody' => $postBody);
+    public function import($calendarId, Google_Event $postBody, $optParams = []) {
+      $params = ['calendarId' => $calendarId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('import', array($params));
+      $data = $this->__call('import', [$params]);
       if ($this->useObjects()) {
         return new Google_Event($data);
       } else {
@@ -671,10 +671,10 @@
      * @opt_param bool sendNotifications Whether to send notifications about the creation of the event. Optional. The default is False.
      * @return Google_Event
      */
-    public function quickAdd($calendarId, $text, $optParams = array()) {
-      $params = array('calendarId' => $calendarId, 'text' => $text);
+    public function quickAdd($calendarId, $text, $optParams = []) {
+      $params = ['calendarId' => $calendarId, 'text' => $text];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('quickAdd', array($params));
+      $data = $this->__call('quickAdd', [$params]);
       if ($this->useObjects()) {
         return new Google_Event($data);
       } else {
@@ -690,10 +690,10 @@
      *
      * @opt_param bool sendNotifications Whether to send notifications about the deletion of the event. Optional. The default is False.
      */
-    public function delete($calendarId, $eventId, $optParams = array()) {
-      $params = array('calendarId' => $calendarId, 'eventId' => $eventId);
+    public function delete($calendarId, $eventId, $optParams = []) {
+      $params = ['calendarId' => $calendarId, 'eventId' => $eventId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       return $data;
     }
   }
@@ -755,7 +755,7 @@ class Google_Acl extends Google_Model {
   public function getNextPageToken() {
     return $this->nextPageToken;
   }
-  public function setItems(/* array(Google_AclRule) */ $items) {
+  public function setItems(/* [Google_AclRule] */ $items) {
     $this->assertIsArray($items, 'Google_AclRule', __METHOD__);
     $this->items = $items;
   }
@@ -898,7 +898,7 @@ class Google_CalendarList extends Google_Model {
   public function getNextPageToken() {
     return $this->nextPageToken;
   }
-  public function setItems(/* array(Google_CalendarListEntry) */ $items) {
+  public function setItems(/* [Google_CalendarListEntry] */ $items) {
     $this->assertIsArray($items, 'Google_CalendarListEntry', __METHOD__);
     $this->items = $items;
   }
@@ -949,7 +949,7 @@ class Google_CalendarListEntry extends Google_Model {
   public function getForegroundColor() {
     return $this->foregroundColor;
   }
-  public function setDefaultReminders(/* array(Google_EventReminder) */ $defaultReminders) {
+  public function setDefaultReminders(/* [Google_EventReminder] */ $defaultReminders) {
     $this->assertIsArray($defaultReminders, 'Google_EventReminder', __METHOD__);
     $this->defaultReminders = $defaultReminders;
   }
@@ -1176,7 +1176,7 @@ class Google_Event extends Google_Model {
   public function getId() {
     return $this->id;
   }
-  public function setAttendees(/* array(Google_EventAttendee) */ $attendees) {
+  public function setAttendees(/* [Google_EventAttendee] */ $attendees) {
     $this->assertIsArray($attendees, 'Google_EventAttendee', __METHOD__);
     $this->attendees = $attendees;
   }
@@ -1189,7 +1189,7 @@ class Google_Event extends Google_Model {
   public function getHtmlLink() {
     return $this->htmlLink;
   }
-  public function setRecurrence(/* array(Google_string) */ $recurrence) {
+  public function setRecurrence(/* [Google_string] */ $recurrence) {
     $this->assertIsArray($recurrence, 'Google_string', __METHOD__);
     $this->recurrence = $recurrence;
   }
@@ -1617,7 +1617,7 @@ class Google_EventReminders extends Google_Model {
   protected $__overridesDataType = 'array';
   public $overrides;
   public $useDefault;
-  public function setOverrides(/* array(Google_EventReminder) */ $overrides) {
+  public function setOverrides(/* [Google_EventReminder] */ $overrides) {
     $this->assertIsArray($overrides, 'Google_EventReminder', __METHOD__);
     $this->overrides = $overrides;
   }
@@ -1659,7 +1659,7 @@ class Google_Events extends Google_Model {
   public function getKind() {
     return $this->kind;
   }
-  public function setDefaultReminders(/* array(Google_EventReminder) */ $defaultReminders) {
+  public function setDefaultReminders(/* [Google_EventReminder] */ $defaultReminders) {
     $this->assertIsArray($defaultReminders, 'Google_EventReminder', __METHOD__);
     $this->defaultReminders = $defaultReminders;
   }
@@ -1672,7 +1672,7 @@ class Google_Events extends Google_Model {
   public function getDescription() {
     return $this->description;
   }
-  public function setItems(/* array(Google_Event) */ $items) {
+  public function setItems(/* [Google_Event] */ $items) {
     $this->assertIsArray($items, 'Google_Event', __METHOD__);
     $this->items = $items;
   }
@@ -1718,14 +1718,14 @@ class Google_FreeBusyCalendar extends Google_Model {
   protected $__errorsType = 'Google_Error';
   protected $__errorsDataType = 'array';
   public $errors;
-  public function setBusy(/* array(Google_TimePeriod) */ $busy) {
+  public function setBusy(/* [Google_TimePeriod] */ $busy) {
     $this->assertIsArray($busy, 'Google_TimePeriod', __METHOD__);
     $this->busy = $busy;
   }
   public function getBusy() {
     return $this->busy;
   }
-  public function setErrors(/* array(Google_Error) */ $errors) {
+  public function setErrors(/* [Google_Error] */ $errors) {
     $this->assertIsArray($errors, 'Google_Error', __METHOD__);
     $this->errors = $errors;
   }
@@ -1739,14 +1739,14 @@ class Google_FreeBusyGroup extends Google_Model {
   protected $__errorsDataType = 'array';
   public $errors;
   public $calendars;
-  public function setErrors(/* array(Google_Error) */ $errors) {
+  public function setErrors(/* [Google_Error] */ $errors) {
     $this->assertIsArray($errors, 'Google_Error', __METHOD__);
     $this->errors = $errors;
   }
   public function getErrors() {
     return $this->errors;
   }
-  public function setCalendars(/* array(Google_string) */ $calendars) {
+  public function setCalendars(/* [Google_string] */ $calendars) {
     $this->assertIsArray($calendars, 'Google_string', __METHOD__);
     $this->calendars = $calendars;
   }
@@ -1782,7 +1782,7 @@ class Google_FreeBusyRequest extends Google_Model {
   public function getTimeMax() {
     return $this->timeMax;
   }
-  public function setItems(/* array(Google_FreeBusyRequestItem) */ $items) {
+  public function setItems(/* [Google_FreeBusyRequestItem] */ $items) {
     $this->assertIsArray($items, 'Google_FreeBusyRequestItem', __METHOD__);
     $this->items = $items;
   }
@@ -1892,7 +1892,7 @@ class Google_Settings extends Google_Model {
   public $items;
   public $kind;
   public $etag;
-  public function setItems(/* array(Google_Setting) */ $items) {
+  public function setItems(/* [Google_Setting] */ $items) {
     $this->assertIsArray($items, 'Google_Setting', __METHOD__);
     $this->items = $items;
   }

@@ -16,12 +16,12 @@
 
 $lang['categories'] = $lang['items'] = [];
 
-$lang['categories'][] = array(
+$lang['categories'][] = [
 	'category.name'        => 'Test category',
 	'category.description' => 'Demonstration news'
-);
+];
 
-$lang['items'][] = array(
+$lang['items'][] = [
 	'item.title'   => 'How to begin with the News module',
 	'item.content' => '
 		<p>This brief news will give you some simple tips to take control of this module.</p>
@@ -38,5 +38,5 @@ $lang['items'][] = array(
 		<br />
 		Enjoy using this module.',
 	'item.summary' => ''
-);
+];
 ?>

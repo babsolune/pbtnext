@@ -31,7 +31,7 @@ class GuestbookSetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(self::$guestbook_table));
+		PersistenceContext::get_dbms_utils()->drop([self::$guestbook_table]);
 	}
 
 	private function delete_configuration()
@@ -46,19 +46,19 @@ class GuestbookSetup extends DefaultModuleSetup
 
 	private function create_guestbook_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'content' => array('type' => 'text', 'length' => 65000),
-			'login' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array(
-				'timestamp' => array('type' => 'key', 'fields' => 'timestamp')
-			)
-		);
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'content' => ['type' => 'text', 'length' => 65000],
+			'login' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'user_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'timestamp' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0]
+		];
+		$options = [
+			'primary' => ['id'],
+			'indexes' => [
+				'timestamp' => ['type' => 'key', 'fields' => 'timestamp']
+			]
+		];
 		PersistenceContext::get_dbms_utils()->create_table(self::$guestbook_table, $fields, $options);
 	}
 }

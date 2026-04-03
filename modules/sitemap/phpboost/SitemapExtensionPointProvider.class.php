@@ -24,7 +24,7 @@ class SitemapExtensionPointProvider extends ExtensionPointProvider
 
 	public function commands()
 	{
-		return new CLICommandsList(array('generate-sitemap' => 'CLIGenerateSitemapCommand'));
+		return new CLICommandsList(['generate-sitemap' => 'CLIGenerateSitemapCommand']);
 	}
 
 	public function home_page()
@@ -44,7 +44,7 @@ class SitemapExtensionPointProvider extends ExtensionPointProvider
 
 	public function url_mappings()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/sitemap/index.php')));
+		return new UrlMappings([new DispatcherUrlMapping('/sitemap/index.php')]);
 	}
 }
 ?>

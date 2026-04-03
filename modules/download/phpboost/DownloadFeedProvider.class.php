@@ -45,10 +45,10 @@ class DownloadFeedProvider implements FeedProvider
 				LEFT JOIN '. DownloadSetup::$download_cats_table .' cat ON cat.id = download.id_category
 				WHERE download.id_category IN :ids_categories
 				AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
-				ORDER BY download.update_date DESC', array(
+				ORDER BY download.update_date DESC', [
 					'ids_categories' => $ids_categories,
 					'timestamp_now' => $now->get_timestamp()
-			));
+			]);
 
 			foreach ($results as $row)
 			{

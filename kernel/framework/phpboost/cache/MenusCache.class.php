@@ -11,14 +11,14 @@
 
 class MenusCache implements CacheData
 {
-	private $menus = array();
+	private $menus = [];
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{
-		$this->menus = array();
+		$this->menus = [];
 
 		$menus = MenuService::get_menu_list();
 		foreach ($menus as $menu)

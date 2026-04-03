@@ -23,7 +23,7 @@ class ShoutboxAjaxDeleteMessageController extends AbstractController
 		else
 			$code = -1;
 
-		return new JSONResponse(array('code' => $code));
+		return new JSONResponse(['code' => $code]);
 	}
 
 	private function delete_message()

@@ -18,7 +18,7 @@ class DevToolsAjaxLangController extends AbstractController
     public function execute(HTTPRequestCustom $request)
     {
         if (!DevToolsAuthorizationsService::check_authorizations()->moderation())
-            return new JSONResponse(array('success' => false, 'error' => 'Unauthorized'), 403);
+            return new JSONResponse(['success' => false, 'error' => 'Unauthorized'], 403);
 
         $action = $request->get_string('action', '');
 
@@ -33,7 +33,7 @@ class DevToolsAjaxLangController extends AbstractController
                 return $this->action_analyze($request);
 
             default:
-                return new JSONResponse(array('success' => false, 'error' => 'Unknown action'));
+                return new JSONResponse(['success' => false, 'error' => 'Unknown action']);
         }
     }
 
@@ -42,15 +42,15 @@ class DevToolsAjaxLangController extends AbstractController
     // -------------------------------------------------------------------------
     private function action_modules()
     {
-        $modules = array();
+        $modules = [];
         $modules_path = is_dir(PATH_TO_ROOT . '/modules') ? PATH_TO_ROOT . '/modules' : PATH_TO_ROOT;
 
         if (!is_dir($modules_path))
-            return new JSONResponse(array('success' => true, 'modules' => array(), 'debug' => 'modules dir not found: ' . $modules_path));
+            return new JSONResponse(['success' => true, 'modules' => [], 'debug' => 'modules dir not found: ' . $modules_path]);
 
         $entries = @scandir($modules_path);
         if (!$entries)
-            return new JSONResponse(array('success' => true, 'modules' => array(), 'debug' => 'scandir failed'));
+            return new JSONResponse(['success' => true, 'modules' => [], 'debug' => 'scandir failed']);
 
         foreach ($entries as $entry)
         {
@@ -60,11 +60,11 @@ class DevToolsAjaxLangController extends AbstractController
 
             $langs = $this->detect_languages($lang_path);
             if (!empty($langs))
-                $modules[] = array('name' => $entry, 'languages' => $langs);
+                $modules[] = ['name' => $entry, 'languages' => $langs];
         }
 
         usort($modules, function($a, $b) { return strcmp($a['name'], $b['name']); });
-        return new JSONResponse(array('success' => true, 'modules' => $modules));
+        return new JSONResponse(['success' => true, 'modules' => $modules]);
     }
 
     // -------------------------------------------------------------------------
@@ -72,7 +72,7 @@ class DevToolsAjaxLangController extends AbstractController
     // -------------------------------------------------------------------------
     private function detect_languages($lang_path)
     {
-        $langs = array();
+        $langs = [];
         $entries = @scandir($lang_path);
         if (!$entries) return $langs;
         foreach ($entries as $entry)
@@ -96,33 +96,33 @@ class DevToolsAjaxLangController extends AbstractController
     {
         $module = $request->get_string('module', '');
         if (!$module || !preg_match('`^[a-z0-9_-]+$`i', $module))
-            return new JSONResponse(array('success' => false, 'error' => 'Invalid module'));
+            return new JSONResponse(['success' => false, 'error' => 'Invalid module']);
 
         $lang = $request->get_string('lang', 'french');
         if (!preg_match('`^[a-z0-9_-]+$`i', $lang))
-            return new JSONResponse(array('success' => false, 'error' => 'Invalid lang'));
+            return new JSONResponse(['success' => false, 'error' => 'Invalid lang']);
 
         $modules_root = is_dir(PATH_TO_ROOT . '/modules') ? PATH_TO_ROOT . '/modules' : PATH_TO_ROOT;
         $module_path = $modules_root . '/' . $module;
         if (!is_dir($module_path))
-            return new JSONResponse(array('success' => false, 'error' => 'Module not found'));
+            return new JSONResponse(['success' => false, 'error' => 'Module not found']);
 
         // 1. Extract keys for the requested language
         $keys_lang = $this->extract_lang_keys($module_path . '/lang/' . $lang . '/common.php');
 
         if (empty($keys_lang))
-            return new JSONResponse(array('success' => false, 'error' => 'No lang keys found for ' . $lang));
+            return new JSONResponse(['success' => false, 'error' => 'No lang keys found for ' . $lang]);
 
         // 2. Scan all .php + .tpl files in the module for key usage
         $source_files = $this->scan_source_files($module_path);
         $source_content = implode("\n", $source_files);
 
         // 3. Find unused keys
-        $unused = array();
+        $unused = [];
         foreach ($keys_lang as $key => $value)
         {
             if (!$this->is_key_used($key, $source_content))
-                $unused[] = array('key' => $key, 'value' => $value);
+                $unused[] = ['key' => $key, 'value' => $value];
         }
 
         // 4. Find internal duplicates (same value, different key) for this lang
@@ -131,9 +131,9 @@ class DevToolsAjaxLangController extends AbstractController
         // 5. External duplicates only for french (reference lang)
         $duplicates_external = ($lang === 'french')
             ? $this->find_external_duplicates($keys_lang, $module)
-            : array();
+            : [];
 
-        return new JSONResponse(array(
+        return new JSONResponse([
             'success'             => true,
             'module'              => $module,
             'lang'                => $lang,
@@ -141,7 +141,7 @@ class DevToolsAjaxLangController extends AbstractController
             'unused'              => $unused,
             'duplicates_internal' => $duplicates_internal,
             'duplicates_external' => $duplicates_external,
-        ));
+        ]);
     }
 
     // -------------------------------------------------------------------------
@@ -149,7 +149,7 @@ class DevToolsAjaxLangController extends AbstractController
     // -------------------------------------------------------------------------
     private function extract_lang_keys($file_path)
     {
-        $keys = array();
+        $keys = [];
         if (!is_file($file_path)) return $keys;
 
         $content = file_get_contents($file_path);
@@ -171,7 +171,7 @@ class DevToolsAjaxLangController extends AbstractController
     // -------------------------------------------------------------------------
     private function scan_source_files($module_path)
     {
-        $contents = array();
+        $contents = [];
         $iterator = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($module_path, RecursiveDirectoryIterator::SKIP_DOTS)
         );
@@ -179,7 +179,7 @@ class DevToolsAjaxLangController extends AbstractController
         foreach ($iterator as $file)
         {
             $ext = strtolower(pathinfo($file->getFilename(), PATHINFO_EXTENSION));
-            if (!in_array($ext, array('php', 'tpl'))) continue;
+            if (!in_array($ext, ['php', 'tpl'])) continue;
             // Skip lang files themselves
             if (strpos($file->getPathname(), '/lang/') !== false) continue;
 
@@ -214,8 +214,8 @@ class DevToolsAjaxLangController extends AbstractController
     // -------------------------------------------------------------------------
     private function find_internal_duplicates_for_lang($keys, $lang)
     {
-        $duplicates = array();
-        $by_value = array();
+        $duplicates = [];
+        $by_value = [];
         foreach ($keys as $key => $value)
         {
             $norm = trim(mb_strtolower($value, 'UTF-8'));
@@ -224,7 +224,7 @@ class DevToolsAjaxLangController extends AbstractController
         }
         foreach ($by_value as $value => $dup_keys)
             if (count($dup_keys) > 1)
-                $duplicates[] = array('lang' => $lang, 'value' => $value, 'keys' => $dup_keys);
+                $duplicates[] = ['lang' => $lang, 'value' => $value, 'keys' => $dup_keys];
 
         return $duplicates;
     }
@@ -234,13 +234,13 @@ class DevToolsAjaxLangController extends AbstractController
     // -------------------------------------------------------------------------
     private function find_external_duplicates($keys_fr, $current_module)
     {
-        if (empty($keys_fr)) return array();
+        if (empty($keys_fr)) return [];
 
-        $duplicates = array();
+        $duplicates = [];
         $modules_path = is_dir(PATH_TO_ROOT . '/modules') ? PATH_TO_ROOT . '/modules' : PATH_TO_ROOT;
 
         // Build a map: value → array of [module, key] from other modules
-        $other_values = array();
+        $other_values = [];
         foreach (scandir($modules_path) as $mod)
         {
             if ($mod === '.' || $mod === '..' || $mod === $current_module) continue;
@@ -252,7 +252,7 @@ class DevToolsAjaxLangController extends AbstractController
             {
                 $norm = trim(strtolower($v));
                 if ($norm === '') continue;
-                $other_values[$norm][] = array('module' => $mod, 'key' => $k);
+                $other_values[$norm][] = ['module' => $mod, 'key' => $k];
             }
         }
 
@@ -261,11 +261,11 @@ class DevToolsAjaxLangController extends AbstractController
         {
             $norm = trim(strtolower($value));
             if ($norm === '' || !isset($other_values[$norm])) continue;
-            $duplicates[] = array(
+            $duplicates[] = [
                 'key'     => $key,
                 'value'   => $value,
                 'matches' => $other_values[$norm],
-            );
+            ];
         }
 
         return $duplicates;

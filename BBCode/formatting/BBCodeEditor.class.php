@@ -50,53 +50,53 @@ class BBCodeEditor extends ContentEditor
 		$countries = LangLoader::get('languages');
 		foreach ($countries as $id => $name)
 		{
-			$template->assign_block_vars('countries', array(
+			$template->assign_block_vars('countries', [
 				'ID'   => $id,
 				'NAME' => $name,
-			));
+			]);
 		}
 
 		$lang = LangLoader::get_all_langs('BBCode');
 		$template->add_lang($lang);
 
-		$template->put_all(array(
+		$template->put_all([
 			'PAGE_PATH'                     => $_SERVER['PHP_SELF'],
 			'C_EDITOR_NOT_ALREADY_INCLUDED' => !self::$editor_already_included,
 			'FIELD'                         => $this->identifier,
 			'FORBIDDEN_TAGS'                => !empty($this->forbidden_tags) ? implode(',', $this->forbidden_tags) : '',
 			'C_UPLOAD_MANAGEMENT'           => AppContext::get_current_user()->check_auth(FileUploadConfig::load()->get_authorization_enable_interface_files(), FileUploadConfig::AUTH_FILES_BIT)
-		));
+		]);
 
 		foreach ($this->forbidden_tags as $forbidden_tag) //Balises interdite.
 		{
-			$template->put_all(array(
+			$template->put_all([
 				'AUTH_' . TextHelper::strtoupper($forbidden_tag) 	   => ' bbcode-forbidden',
 				'C_DISABLED_' . TextHelper::strtoupper($forbidden_tag) => true
-			));
+			]);
 		}
 
 		if (in_array('float', $this->forbidden_tags) && in_array('indent', $this->forbidden_tags) && in_array('sup', $this->forbidden_tags) && in_array('sub', $this->forbidden_tags))
 		{
-			$template->put_all(array(
+			$template->put_all([
 				'AUTH_POSITIONS' => ' bbcode-forbidden',
 				'C_DISABLED_POSITIONS' => true
-			));
+			]);
 		}
 
 		if (in_array('hide', $this->forbidden_tags) && in_array('member', $this->forbidden_tags) && in_array('teaser', $this->forbidden_tags) && in_array('moderator', $this->forbidden_tags))
 		{
-			$template->put_all(array(
+			$template->put_all([
 				'AUTH_HIDDEN' => ' bbcode-forbidden',
 				'C_DISABLED_HIDDEN' => true
-			));
+			]);
 		}
 
 		foreach ($smileys_cache->get_smileys() as $code_smile => $infos)
 		{
-			$template->assign_block_vars('smileys', array(
+			$template->assign_block_vars('smileys', [
 				'URL'  => TPL_PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley'],
 				'CODE' => addslashes($code_smile),
-			));
+			]);
 		}
 
 		$emojis = LangLoader::get('emojis');
@@ -111,7 +111,7 @@ class BBCodeEditor extends ContentEditor
 				{
 					$name = TextHelper::strtolower($name);
 					$name = TextHelper::ucfirst($name);
-					$template->assign_block_vars('emojis', array(
+					$template->assign_block_vars('emojis', [
 						'C_CATEGORY'     => $is_category,
 						'C_SUB_CATEGORY' => $is_sub,
 						'C_NAME'  		 => !empty($name),
@@ -120,7 +120,7 @@ class BBCodeEditor extends ContentEditor
 						'SUB_CATEGORY_NAME' => $name,
 						'NAME'              => $name,
 						'DECIMAL'           => $decimal
-					));
+					]);
 				}
 			}
 		}
@@ -128,11 +128,11 @@ class BBCodeEditor extends ContentEditor
         $fa_icons = LangLoader::get('fa-icons', 'BBCode');
         foreach($fa_icons as $key => $values)
         {
-            $template->assign_block_vars('code_fa', array(
+            $template->assign_block_vars('code_fa', [
                 'C_CUSTOM_PREFIX' => $values[0] != 'fa',
                 'PREFIX'          => $values[0],
                 'CODE'            => $values[1]
-            ));
+            ]);
         }
 
 		$feeds_modules = AppContext::get_extension_provider_service()->get_providers(FeedProvider::EXTENSION_POINT);
@@ -140,10 +140,10 @@ class BBCodeEditor extends ContentEditor
 		{
 			if (array_key_exists($module->get_id(), $feeds_modules))
 			{
-				$template->assign_block_vars('feeds_modules', array(
+				$template->assign_block_vars('feeds_modules', [
 					'NAME'  => $module->get_configuration()->get_name(),
 					'VALUE' => $module->get_id()
-				));
+				]);
 			}
 		}
 

@@ -34,14 +34,14 @@ class UpdateDisplayResponse extends AbstractResponse
 		$this->init_steps($step_number);
 		$this->update_progress_bar();
 
-		$this->full_view->put_all(array(
+		$this->full_view->put_all([
 			'RESTART' => UpdateUrlBuilder::introduction()->rel(),
 			'STEP_TITLE' => $step_title,
 			'C_HAS_PREVIOUS_STEP' => false,
 			'C_HAS_NEXT_STEP' => false,
 			'L_XML_LANGUAGE' => $this->lang['common.xml.lang'],
 			'PROGRESSION' => floor(100 * $this->current_step / $this->steps_number)
-		));
+		]);
 
 		parent::__construct($env, $this->full_view);
 	}
@@ -63,18 +63,18 @@ class UpdateDisplayResponse extends AbstractResponse
 	{
 		$lang = AppContext::get_request()->get_string('lang', self::UPDATE_DEFAULT_LANGUAGE);
 		$lang_dir = new Folder(PATH_TO_ROOT . '/lang');
-		$langs = array();
+		$langs = [];
 		foreach ($lang_dir->get_folders('`^[a-z_-]+$`i') as $folder)
 		{
 			$info_lang = load_ini_file(PATH_TO_ROOT . '/lang/', $folder->get_name());
 			if (!empty($info_lang['name']))
 			{
-				$langs[] = array(
+				$langs[] = [
 					'LANG'				=> $folder->get_name(),
 					'LANG_NAME'			=> $info_lang['name'],
 					'LANG_IDENTIFIER'	=> $info_lang['identifier'],
 					'SELECTED'			=> $folder->get_name() == $lang ? 'selected="selected"' : ''
-				);
+				];
 			}
 		}
 		$this->full_view->put('lang', $langs);
@@ -118,11 +118,11 @@ class UpdateDisplayResponse extends AbstractResponse
 			else
 				$row_class = 'row-next';
 
-			$this->full_view->assign_block_vars('step', array(
+			$this->full_view->assign_block_vars('step', [
 				'CSS_CLASS' => $row_class,
 				'IMG'       => $step['img'],
 				'NAME'      => $step['name']
-			));
+			]);
 
 			$i++;
 		}
@@ -132,7 +132,7 @@ class UpdateDisplayResponse extends AbstractResponse
 	{
 		for ($i = 1; $i <= floor(($this->current_step / $this->steps_number) * 24); $i++)
 		{
-			$this->full_view->assign_block_vars('progress_bar', array());
+			$this->full_view->assign_block_vars('progress_bar', []);
 		}
 	}
 }

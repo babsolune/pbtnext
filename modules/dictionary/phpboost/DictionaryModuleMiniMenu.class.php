@@ -45,11 +45,11 @@ class DictionaryModuleMiniMenu extends ModuleMiniMenu
 		$description = stripslashes($random_def['description']);
 		$word = Url::encode_rewrite(TextHelper::strtolower($random_def['word']));
 
-		$view->put_all(array(
+		$view->put_all([
 			'RANDOM_NAME' => stripslashes($random_def['word']),
 			'RANDOM_DEF' => (TextHelper::strlen($description) > 149) ? TextHelper::substr($description, 0, 150) . "..." : $description,
 			'U_ITEM'=> Url::to_rel('/dictionary/' . url('dictionary.php?l=' . $word . '&amp;cat=' . $random_def['cat'] . '#' . $word, 'dictionary-' . $word . '-' . $random_def['cat'] . '.php' . '#' . $word))
-		));
+		]);
 
 		return $view->render();
 	}

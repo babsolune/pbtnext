@@ -16,24 +16,24 @@ class PollSetup extends DefaultModuleSetup
 
 	protected function create_additional_tables()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'poll_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'voter_user_id' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'voter_ip' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"),
-			'vote_timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id')
-		);
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'poll_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'voter_user_id' => ['type' => 'integer', 'length' => 11, 'default' => 0],
+			'voter_ip' => ['type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"],
+			'vote_timestamp' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0]
+		];
+		$options = [
+			'primary' => ['id']
+		];
 		self::$dbms_utils->create_table(PREFIX . 'poll_voters', $fields, $options);
-		self::$db_querier->insert(PREFIX . 'poll_voters', array(
+		self::$db_querier->insert(PREFIX . 'poll_voters', [
 			'id' => 1,
 			'poll_id' => 1,
 			'voter_user_id' => -1,
 			'voter_ip' => '0.0.0.0',
 			'vote_timestamp' => time()
-		));
+		]);
 	}
 }
 ?>

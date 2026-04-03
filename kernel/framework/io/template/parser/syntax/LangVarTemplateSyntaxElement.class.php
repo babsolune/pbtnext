@@ -19,7 +19,7 @@ class LangVarTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
     public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
     {
-        $matches = array();
+        $matches = [];
         if ($input->consume_next('@(?P<html>H\|)?(?P<msg>[a-z0-9A-Z_][\w_.]*)', '', $matches))
         {
             $is_html = $matches['html'];

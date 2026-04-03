@@ -11,7 +11,7 @@
 
 class ExtendedFields implements ExtendedFieldExtensionPoint
 {
-	private $extended_fields = array();
+	private $extended_fields = [];
 
 	public function __construct(Array $extended_fields)
 	{

@@ -68,14 +68,14 @@ class ContentSharingActionsMenuLink
 
 	public function export()
 	{
-		$this->tpl->put_all(array(
+		$this->tpl->put_all([
 			'C_ONCLICK_TAG'   	=> !empty($this->onclick_tag),
 			'ID'              	=> $this->id,
 			'U_LINK'          	=> $this->get_url()->rel(),
 			'NAME'            	=> (!$this->kernel_element ? LangLoader::get_message('common.share.on', 'common-lang') . ' ' : '') . $this->name,
 			'IMG_RENDER_HTML' 	=> $this->image_render_html,
 			'ONCLICK_TAG' 		=> $this->onclick_tag,
-		));
+		]);
 
 		return $this->tpl;
 	}

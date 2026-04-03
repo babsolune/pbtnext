@@ -30,7 +30,7 @@ class SpotsExtensionPointProvider extends ItemsModuleExtensionPointProvider
 
 	public function comments()
 	{
-		return new CommentsTopics(array(new SpotsCommentsTopic()));
+		return new CommentsTopics([new SpotsCommentsTopic()]);
 	}
 }
 ?>

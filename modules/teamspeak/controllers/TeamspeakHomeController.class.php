@@ -26,10 +26,10 @@ class TeamspeakHomeController extends DefaultModuleController
 
 	private function build_view()
 	{
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_REFRESH_ENABLED' => $this->config->get_refresh_delay(),
 			'REFRESH_DELAY'     => $this->config->get_refresh_delay() * 60000
-		));
+		]);
 	}
 
 	private function check_authorizations()

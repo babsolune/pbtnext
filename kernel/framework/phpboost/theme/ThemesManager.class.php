@@ -18,7 +18,7 @@ class ThemesManager
 
 	public static function get_installed_themes_map()
 	{
-		$themes = array();
+		$themes = [];
 		foreach (ThemesConfig::load()->get_themes() as $theme) {
 			$themes[$theme->get_id()] = $theme;
 		}
@@ -34,7 +34,7 @@ class ThemesManager
 	{
 		$themes = self::get_installed_themes_map();
 		try {
-			uasort($themes, array(self::class, 'callback_sort_themes_by_name'));
+			uasort($themes, [self::class, 'callback_sort_themes_by_name']);
 		} catch (IOException $ex) {
 		}
 		return $themes;
@@ -42,7 +42,7 @@ class ThemesManager
 
 	public static function get_activated_themes_map()
 	{
-		$activated_themes = array();
+		$activated_themes = [];
 		foreach (ThemesConfig::load()->get_themes() as $theme) {
 			if ($theme->is_activated()) {
 				$activated_themes[$theme->get_id()] = $theme;
@@ -60,7 +60,7 @@ class ThemesManager
 	{
 		$themes = self::get_activated_themes_map();
 		try {
-			uasort($themes, array(self::class, 'callback_sort_themes_by_name'));
+			uasort($themes, [self::class, 'callback_sort_themes_by_name']);
 		} catch (IOException $ex) {
 		}
 		return $themes;
@@ -68,7 +68,7 @@ class ThemesManager
 
 	public static function get_activated_and_authorized_themes_map()
 	{
-		$themes = array();
+		$themes = [];
 		foreach (ThemesConfig::load()->get_themes() as $theme) {
 			if ($theme->is_activated() && $theme->check_auth()) {
 				$themes[$theme->get_id()] = $theme;
@@ -86,7 +86,7 @@ class ThemesManager
 	{
 		$themes = self::get_activated_and_authorized_themes_map();
 		try {
-			uasort($themes, array(self::class, 'callback_sort_themes_by_name'));
+			uasort($themes, [self::class, 'callback_sort_themes_by_name']);
 		} catch (IOException $ex) {
 		}
 		return $themes;
@@ -120,7 +120,7 @@ class ThemesManager
 		return false;
 	}
 
-	public static function install($theme_id, $authorizations = array(), $enable_theme = true)
+	public static function install($theme_id, $authorizations = [], $enable_theme = true)
 	{
 		if (!file_exists(PATH_TO_ROOT . '/templates/' . $theme_id . '/config.ini'))
 		{
@@ -141,7 +141,7 @@ class ThemesManager
 			}
 			else if (!in_array($configuration->get_parent_theme(), self::get_themes_list()))
 			{
-				self::$error = StringVars::replace_vars(LangLoader::get_message('addon.themes.parent.theme.not.installed', 'addon-lang'), array('id_parent' => $configuration->get_parent_theme()));
+				self::$error = StringVars::replace_vars(LangLoader::get_message('addon.themes.parent.theme.not.installed', 'addon-lang'), ['id_parent' => $configuration->get_parent_theme()]);
 			}
 			else
 			{
@@ -164,9 +164,9 @@ class ThemesManager
 			{
 				$theme_childs_list = self::get_theme_childs_list($theme_id);
 
-				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('theme' => $default_theme),
-					'WHERE theme IN :old_theme', array('old_theme' => array_merge(array($theme_id), $theme_childs_list)
-				));
+				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, ['theme' => $default_theme],
+					'WHERE theme IN :old_theme', ['old_theme' => array_merge([$theme_id], $theme_childs_list)
+				]);
 
 				foreach ($theme_childs_list as $id)
 				{
@@ -216,7 +216,7 @@ class ThemesManager
 		}
 	}
 
-	public static function change_informations($theme_id, $visibility, Array $authorizations = array(), $columns_disabled = null)
+	public static function change_informations($theme_id, $visibility, Array $authorizations = [], $columns_disabled = null)
 	{
 		if (!empty($theme_id) && self::get_theme_existed($theme_id))
 		{
@@ -262,7 +262,7 @@ class ThemesManager
 
 	private static function get_themes_list()
 	{
-		$themes_list = array();
+		$themes_list = [];
 		$folder_containing_phpboost_themes = new Folder(PATH_TO_ROOT .'/templates/');
 		foreach ($folder_containing_phpboost_themes->get_folders() as $folder)
 		{
@@ -274,7 +274,7 @@ class ThemesManager
 
 	public static function get_theme_childs_list($theme_id)
 	{
-		$themes_childs_list = array();
+		$themes_childs_list = [];
 		$folder_containing_phpboost_themes = new Folder(PATH_TO_ROOT .'/templates/');
 		if (self::get_theme_existed($theme_id))
 		{

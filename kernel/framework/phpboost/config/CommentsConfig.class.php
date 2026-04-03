@@ -133,16 +133,16 @@ class CommentsConfig extends AbstractConfigData
 
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::COMMENTS_ENABLED             => true,
 			self::VISITOR_EMAIL_ENABLED        => true,
-			self::COMMENTS_UNAUTHORIZED_MODULE => array(),
-			self::AUTHORIZATIONS               => array('r1' => 7, 'r0' => 3, 'r-1' => 3),
+			self::COMMENTS_UNAUTHORIZED_MODULE => [],
+			self::AUTHORIZATIONS               => ['r1' => 7, 'r0' => 3, 'r-1' => 3],
 			self::COMMENTS_NUMBER_DISPLAY      => 15,
-			self::FORBIDDEN_TAGS               => array(),
+			self::FORBIDDEN_TAGS               => [],
 			self::MAX_LINKS_COMMENT            => 2,
 			self::ORDER_DISPLAY_COMMENTS       => self::DESC_ORDER
-		);
+		];
 	}
 
 	/**

@@ -19,7 +19,7 @@ class LoopVarTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 	public function parse(TemplateSyntaxParserContext $context, StringInputStream $input, StringOutputStream $output)
 	{
 		$this->register($context, $input, $output);
-		$matches = array();
+		$matches = [];
 		if ($input->consume_next('(?P<loop>\w+(?:\.\w+)*)\.(?P<var>\w+)', '', $matches))
 		{
 			$loop_name =  $matches['loop'];

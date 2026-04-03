@@ -65,7 +65,7 @@ class ForumSetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(
+		PersistenceContext::get_dbms_utils()->drop([
 			self::$forum_alerts_table,
 			self::$forum_cats_table,
 			self::$forum_history_table,
@@ -75,7 +75,7 @@ class ForumSetup extends DefaultModuleSetup
 			self::$forum_track_table,
 			self::$forum_view_table,
 			self::$forum_ranks_table
-		));
+		]);
 	}
 
 	private function create_tables()
@@ -93,21 +93,21 @@ class ForumSetup extends DefaultModuleSetup
 
 	private function create_forum_alerts_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'idtopic' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'title' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'content' => array('type' => 'text', 'length' => 65000),
-			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'status' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'idmodo' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id'),
-			'idtopic' => array('type' => 'key', 'fields' => array('idtopic', 'user_id', 'idmodo'))
-		);
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'id_category' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'idtopic' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'title' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'content' => ['type' => 'text', 'length' => 65000],
+			'user_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'status' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0],
+			'idmodo' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'timestamp' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0]
+		];
+		$options = [
+			'primary' => ['id'],
+			'idtopic' => ['type' => 'key', 'fields' => ['idtopic', 'user_id', 'idmodo']]
+		];
 		PersistenceContext::get_dbms_utils()->create_table(self::$forum_alerts_table, $fields, $options);
 	}
 
@@ -118,135 +118,135 @@ class ForumSetup extends DefaultModuleSetup
 
 	private function create_forum_history_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'action' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"),
-			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'user_id_action' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'url' => array('type' => 'text', 'length' => 2048),
-			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id'),
-			'user_id' => array('type' => 'key', 'fields' => 'user_id')
-		);
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'action' => ['type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"],
+			'user_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'user_id_action' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'url' => ['type' => 'text', 'length' => 2048],
+			'timestamp' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0]
+		];
+		$options = [
+			'primary' => ['id'],
+			'user_id' => ['type' => 'key', 'fields' => 'user_id']
+		];
 		PersistenceContext::get_dbms_utils()->create_table(self::$forum_history_table, $fields, $options);
 	}
 
 	private function create_forum_message_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'idtopic' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'content' => array('type' => 'text', 'length' => 65000),
-			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'timestamp_edit' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'user_id_edit' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'user_ip' => array('type' => 'string', 'length' => 128, 'notnull' => 1, 'default' => "''"),
-			'selected' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-		);
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array(
-				'idtopic' => array('type' => 'key', 'fields' => 'idtopic'),
-				'content' => array('type' => 'fulltext', 'fields' => 'content')
-		));
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'idtopic' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'user_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'content' => ['type' => 'text', 'length' => 65000],
+			'timestamp' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'timestamp_edit' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'user_id_edit' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'user_ip' => ['type' => 'string', 'length' => 128, 'notnull' => 1, 'default' => "''"],
+			'selected' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0],
+		];
+		$options = [
+			'primary' => ['id'],
+			'indexes' => [
+				'idtopic' => ['type' => 'key', 'fields' => 'idtopic'],
+				'content' => ['type' => 'fulltext', 'fields' => 'content']
+		]];
 		PersistenceContext::get_dbms_utils()->create_table(self::$forum_message_table, $fields, $options);
 	}
 
 	private function create_forum_poll_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'idtopic' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'question' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'answers' => array('type' => 'text', 'length' => 65000),
-			'voter_id' => array('type' => 'text', 'length' => 65000),
-			'votes' => array('type' => 'text', 'length' => 65000),
-			'type' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id'),
-			'idtopic' => array('type' => 'unique', 'fields' => 'idtopic')
-		);
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'idtopic' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'question' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'answers' => ['type' => 'text', 'length' => 65000],
+			'voter_id' => ['type' => 'text', 'length' => 65000],
+			'votes' => ['type' => 'text', 'length' => 65000],
+			'type' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0]
+		];
+		$options = [
+			'primary' => ['id'],
+			'idtopic' => ['type' => 'unique', 'fields' => 'idtopic']
+		];
 		PersistenceContext::get_dbms_utils()->create_table(self::$forum_poll_table, $fields, $options);
 	}
 
 	private function create_forum_topics_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'title' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'subtitle' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'nbr_msg' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
-			'nbr_views' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0),
-			'last_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'last_msg_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'last_timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'first_msg_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'type' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'status' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'aprob' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'display_msg' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array(
-				'id_category' => array('type' => 'key', 'fields' => array('id_category', 'last_user_id', 'last_timestamp', 'type')),
-				'title' => array('type' => 'fulltext', 'fields' => 'title')
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'id_category' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'title' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'subtitle' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'user_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'nbr_msg' => ['type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0],
+			'nbr_views' => ['type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 0],
+			'last_user_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'last_msg_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'last_timestamp' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'first_msg_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'type' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0],
+			'status' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0],
+			'aprob' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0],
+			'display_msg' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0]
+		];
+		$options = [
+			'primary' => ['id'],
+			'indexes' => [
+				'id_category' => ['type' => 'key', 'fields' => ['id_category', 'last_user_id', 'last_timestamp', 'type']],
+				'title' => ['type' => 'fulltext', 'fields' => 'title']
 
-		));
+		]];
 		PersistenceContext::get_dbms_utils()->create_table(self::$forum_topics_table, $fields, $options);
 	}
 
 	private function create_forum_track_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'idtopic' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'track' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'pm' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-			'mail' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id'),
-			'idtopic' => array('type' => 'unique', 'fields' => array('idtopic', 'user_id'))
-		);
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'idtopic' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'user_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'track' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0],
+			'pm' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0],
+			'mail' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0]
+		];
+		$options = [
+			'primary' => ['id'],
+			'idtopic' => ['type' => 'unique', 'fields' => ['idtopic', 'user_id']]
+		];
 		PersistenceContext::get_dbms_utils()->create_table(self::$forum_track_table, $fields, $options);
 	}
 
 	private function create_forum_view_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'idtopic' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'last_view_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id'),
-			'idv' => array('type' => 'key', 'fields' => array('idtopic', 'user_id'))
-		);
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'idtopic' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'last_view_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'user_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'timestamp' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0]
+		];
+		$options = [
+			'primary' => ['id'],
+			'idv' => ['type' => 'key', 'fields' => ['idtopic', 'user_id']]
+		];
 		PersistenceContext::get_dbms_utils()->create_table(self::$forum_view_table, $fields, $options);
 	}
 
 	private function create_forum_ranks_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'name' => array('type' => 'string', 'length' => 150, 'notnull' => 1, 'default' => "''"),
-			'msg' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'icon' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'special' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id')
-		);
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'name' => ['type' => 'string', 'length' => 150, 'notnull' => 1, 'default' => "''"],
+			'msg' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'icon' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'special' => ['type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0]
+		];
+		$options = [
+			'primary' => ['id']
+		];
 		PersistenceContext::get_dbms_utils()->create_table(self::$forum_ranks_table, $fields, $options);
 	}
 
@@ -306,7 +306,7 @@ class ForumSetup extends DefaultModuleSetup
 
 	private function insert_forum_cats_data()
 	{
-		$this->querier->insert(self::$forum_cats_table, array(
+		$this->querier->insert(self::$forum_cats_table, [
 			'id'            => 1,
 			'name'          => $this->install_lang['forum.default.category.name'],
 			'rewrited_name' => Url::encode_rewrite($this->install_lang['forum.default.category.name']),
@@ -316,9 +316,9 @@ class ForumSetup extends DefaultModuleSetup
 			'id_parent'     => 0,
 			'last_topic_id' => 1,
 			'url'           => ''
-		));
+		]);
 
-		$this->querier->insert(self::$forum_cats_table, array(
+		$this->querier->insert(self::$forum_cats_table, [
 			'id'            => 2,
 			'name'          => $this->install_lang['forum.default.forum.name'],
 			'rewrited_name' => Url::encode_rewrite($this->install_lang['forum.default.forum.name']),
@@ -328,12 +328,12 @@ class ForumSetup extends DefaultModuleSetup
 			'id_parent'     => 1,
 			'last_topic_id' => 1,
 			'url'           => ''
-		));
+		]);
 	}
 
 	private function insert_forum_topics_data()
 	{
-		$this->querier->insert(self::$forum_topics_table, array(
+		$this->querier->insert(self::$forum_topics_table, [
 			'id'             => 1,
 			'id_category'    => 2,
 			'title'          => $this->install_lang['forum.sample.topic.title'],
@@ -349,12 +349,12 @@ class ForumSetup extends DefaultModuleSetup
 			'status'         => 1,
 			'aprob'          => 0,
 			'display_msg'    => 0
-		));
+		]);
 	}
 
 	private function insert_forum_msg_data()
 	{
-		$this->querier->insert(self::$forum_message_table, array(
+		$this->querier->insert(self::$forum_message_table, [
 			'id'             => 1,
 		 	'idtopic'        => 1,
 			'user_id'        => 1,
@@ -364,7 +364,7 @@ class ForumSetup extends DefaultModuleSetup
 			'user_id_edit'   => 0,
 			'user_ip'        => AppContext::get_request()->get_ip_address(),
 			'selected'       => 0,
-		));
+		]);
 
 		//Mise à jour du nombre de messages du membre.
 		$this->querier->inject("UPDATE " . DB_TABLE_MEMBER . " SET posted_msg = posted_msg + 1 WHERE user_id = '1'");
@@ -372,83 +372,83 @@ class ForumSetup extends DefaultModuleSetup
 
 	private function insert_forum_ranks_data()
 	{
-		$this->querier->insert(self::$forum_ranks_table, array(
+		$this->querier->insert(self::$forum_ranks_table, [
 			'id'      => 1,
 			'name'    => $this->install_lang['forum.rank.administrator'],
 			'msg'     => -2,
 			'icon'    => 'rank_admin.png',
 			'special' => 1
-		));
-		$this->querier->insert(self::$forum_ranks_table, array(
+		]);
+		$this->querier->insert(self::$forum_ranks_table, [
 			'id'      => 2,
 			'name'    => $this->install_lang['forum.rank.moderator'],
 			'msg'     => -1,
 			'icon'    => 'rank_modo.png',
 			'special' => 1
-		));
-		$this->querier->insert(self::$forum_ranks_table, array(
+		]);
+		$this->querier->insert(self::$forum_ranks_table, [
 			'id'      => 3,
 			'name'    => $this->install_lang['forum.rank.inactiv'],
 			'msg'     => 0,
 			'icon'    => 'rank_0.png',
 			'special' => 0
-		));
-		$this->querier->insert(self::$forum_ranks_table, array(
+		]);
+		$this->querier->insert(self::$forum_ranks_table, [
 			'id'      => 4,
 			'name'    => $this->install_lang['forum.rank.slingshot'],
 			'msg'     => 1,
 			'icon'    => 'rank_0.png',
 			'special' => 0
-		));
-		$this->querier->insert(self::$forum_ranks_table, array(
+		]);
+		$this->querier->insert(self::$forum_ranks_table, [
 			'id'      => 5,
 			'name'    => $this->install_lang['forum.rank.minigun'],
 			'msg'     => 25,
 			'icon'    => 'rank_1.png',
 			'special' => 0
-		));
-		$this->querier->insert(self::$forum_ranks_table, array(
+		]);
+		$this->querier->insert(self::$forum_ranks_table, [
 			'id'      => 6,
 			'name'    => $this->install_lang['forum.rank.fuzil'],
 			'msg'     => 50,
 			'icon'    => 'rank_2.png',
 			'special' => 0
-		));
-		$this->querier->insert(self::$forum_ranks_table, array(
+		]);
+		$this->querier->insert(self::$forum_ranks_table, [
 			'id'      => 7,
 			'name'    => $this->install_lang['forum.rank.bazooka'],
 			'msg'     => 100,
 			'icon'    => 'rank_3.png',
 			'special' => 0
-		));
-		$this->querier->insert(self::$forum_ranks_table, array(
+		]);
+		$this->querier->insert(self::$forum_ranks_table, [
 			'id'      => 8,
 			'name'    => $this->install_lang['forum.rank.rocket'],
 			'msg'     => 250,
 			'icon'    => 'rank_4.png',
 			'special' => 0
-		));
-		$this->querier->insert(self::$forum_ranks_table, array(
+		]);
+		$this->querier->insert(self::$forum_ranks_table, [
 			'id'      => 9,
 			'name'    => $this->install_lang['forum.rank.mortar'],
 			'msg'     => 500,
 			'icon'    => 'rank_5.png',
 			'special' => 0
-		));
-		$this->querier->insert(self::$forum_ranks_table, array(
+		]);
+		$this->querier->insert(self::$forum_ranks_table, [
 			'id'      => 10,
 			'name'    => $this->install_lang['forum.rank.missile'],
 			'msg'     => 1000,
 			'icon'    => 'rank_6.png',
 			'special' => 0
-		));
-		$this->querier->insert(self::$forum_ranks_table, array(
+		]);
+		$this->querier->insert(self::$forum_ranks_table, [
 			'id'      => 11,
 			'name'    => $this->install_lang['forum.rank.spaceship'],
 			'msg'     => 1500,
 			'icon'    => 'rank_special.png',
 			'special' => 0
-		));
+		]);
 
 	}
 }

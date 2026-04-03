@@ -27,9 +27,9 @@ class EasyCssTitleField extends EasyCssAbstractField
     public function get_form($label)
     {
         $tpl = new FileTemplate('EasyCss/fields/EasyCssTitleField.tpl');
-        $tpl->put_all(array(
+        $tpl->put_all([
             'VALUE' => $this->title,
-        ));
+        ]);
         return $tpl;
     }
 

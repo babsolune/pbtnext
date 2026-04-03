@@ -32,8 +32,8 @@ abstract class AbstractTemplateParser implements TemplateParser
 	protected function clean()
 	{
 		$this->content = preg_replace(
-		array('`# START [\w\.]+ #(.*)# END [\w\.]+ #`su', '`# START [\w\.]+ #`', '`# END [\w\.]+ #`', '`{[\w\.]+}`'),
-		array('', '', '', ''),
+		['`# START [\w\.]+ #(.*)# END [\w\.]+ #`su', '`# START [\w\.]+ #`', '`# END [\w\.]+ #`', '`{[\w\.]+}`'],
+		['', '', '', ''],
 		$this->content
 		);
 	}
@@ -76,7 +76,7 @@ abstract class AbstractTemplateParser implements TemplateParser
 			}
 		}
 
-		return array('method' => 'get_' . $method, 'varname' => $tiny_varname);
+		return ['method' => 'get_' . $method, 'varname' => $tiny_varname];
 	}
 }
 ?>

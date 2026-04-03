@@ -26,7 +26,7 @@ class DevToolsLocalService
     public static function get_local_modules()
     {
         $modules_dir = (is_dir(PATH_TO_ROOT . '/modules') ? PATH_TO_ROOT . '/modules/' : PATH_TO_ROOT . '/');
-        $result      = array();
+        $result      = [];
 
         if (!is_dir($modules_dir))
             return $result;
@@ -64,13 +64,13 @@ class DevToolsLocalService
                 }
             }
 
-            $result[$module_id] = array(
+            $result[$module_id] = [
                 'id'        => $module_id,
                 'name'      => $name,
                 'version'   => $version,
                 'installed' => $installed,
                 'activated' => $activated,
-            );
+            ];
         }
 
         // Sort alphabetically by id

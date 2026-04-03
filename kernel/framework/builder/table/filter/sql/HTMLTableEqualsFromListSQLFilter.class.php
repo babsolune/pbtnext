@@ -32,7 +32,7 @@ class HTMLTableEqualsFromListSQLFilter extends HTMLTableEqualsFromListFilter imp
 		{
 			$parameter_name = $this->get_sql_value_parameter_prefix() . '_' . $this->db_field;
 			$query = $this->db_field . '=:' . $parameter_name;
-			$parameters = array($parameter_name => $choice_option->get_raw_value());
+			$parameters = [$parameter_name => $choice_option->get_raw_value()];
 			return new SQLFragment($query, $parameters);
 		}
 		return new SQLFragment();

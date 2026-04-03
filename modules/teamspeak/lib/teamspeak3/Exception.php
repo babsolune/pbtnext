@@ -36,7 +36,7 @@ class TeamSpeak3_Exception extends Exception
    *
    * @var array
    */
-  protected static $messages = array();
+  protected static $messages = [];
 
   /**
    * The TeamSpeak3_Exception constructor.
@@ -65,12 +65,12 @@ class TeamSpeak3_Exception extends Exception
    */
   protected function prepareCustomMessage(TeamSpeak3_Helper_String $mesg)
   {
-    $args = array(
+    $args = [
       "code" => $this->getCode(),
       "mesg" => $this->getMessage(),
       "line" => $this->getLine(),
       "file" => $this->getFile(),
-    );
+    ];
 
     return $mesg->arg($args)->toString();
   }

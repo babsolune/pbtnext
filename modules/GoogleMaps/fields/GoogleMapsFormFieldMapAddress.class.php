@@ -29,7 +29,7 @@ class GoogleMapsFormFieldMapAddress extends AbstractFormField
 	 * @param string[] $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
-	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 		$this->set_css_form_field_class('form-field-map map-address');
@@ -53,17 +53,17 @@ class GoogleMapsFormFieldMapAddress extends AbstractFormField
 		if (!($value instanceof GoogleMapsMarker))
 		{
 			$marker = new GoogleMapsMarker();
-			$marker->set_properties(array(
+			$marker->set_properties([
 				'address' => !is_array($value) ? $value : (isset($value['address']) ? $value['address'] : ''),
 				'latitude' => is_array($value) && isset($value['latitude']) ? $value['latitude'] : '',
 				'longitude' => is_array($value) && isset($value['longitude']) ? $value['longitude'] : '',
 				'zoom' => is_array($value) && isset($value['zoom']) ? $value['zoom'] : 0
-			));
+			]);
 		}
 		else
 			$marker = $value;
 
-		$field_tpl->put_all(array_merge($marker->get_array_tpl_vars(), array(
+		$field_tpl->put_all(array_merge($marker->get_array_tpl_vars(), [
 			'C_INCLUDE_API' => $this->include_api,
 			'C_ALWAYS_DISPLAY_MARKER' => $this->always_display_marker,
 			'C_HIDE_MARKER' => !$this->always_display_marker ? !$marker->get_address() : false,
@@ -77,11 +77,11 @@ class GoogleMapsFormFieldMapAddress extends AbstractFormField
 			'CLASS' => $this->get_css_class(),
 			'C_READONLY' => $this->is_readonly(),
 			'C_DISABLED' => $this->is_disabled()
-		)));
+		]));
 
-		$template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $field_tpl->render()
-		));
+		]);
 
 		return $template;
 	}
@@ -97,12 +97,12 @@ class GoogleMapsFormFieldMapAddress extends AbstractFormField
 			$field_longitude_id = 'longitude-' . $this->get_html_id();
 			$field_zoom_id = 'zoom-' . $this->get_html_id();
 
-			$marker->set_properties(array(
+			$marker->set_properties([
 				'address' => $request->get_poststring($field_address_id),
 				'latitude' => $request->get_poststring($field_latitude_id),
 				'longitude' => $request->get_poststring($field_longitude_id),
 				'zoom' => $request->get_poststring($field_zoom_id)
-			));
+			]);
 		}
 
 		$this->set_value(TextHelper::serialize($marker->get_properties()));

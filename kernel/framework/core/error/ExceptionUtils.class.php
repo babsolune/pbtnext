@@ -49,7 +49,7 @@ class ExceptionUtils
 
 	private static function get_args_types($call)
 	{
-		$types = array();
+		$types = [];
 		if (empty($call['args']))
 		{
 			return $types;

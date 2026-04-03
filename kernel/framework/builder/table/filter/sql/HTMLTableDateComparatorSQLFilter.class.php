@@ -30,7 +30,7 @@ abstract class HTMLTableDateComparatorSQLFilter extends AbstractHTMLTableFilter 
 	{
 		$parameter_name = $this->get_sql_value_parameter_prefix() . '_' . $this->db_field;
 		$query = $this->db_field . ' ' . $this->get_sql_comparator_symbol() . ' :' . $parameter_name;
-		$parameters = array($parameter_name => $this->get_value()->get_timestamp());
+		$parameters = [$parameter_name => $this->get_value()->get_timestamp()];
 		return new SQLFragment($query, $parameters);
 	}
 

@@ -40,12 +40,12 @@ class AdminBugtrackerAuthorizationsController extends DefaultAdminModuleControll
 		$form->add_fieldset($fieldset_authorizations);
 
 		// Authorizations list
-		$auth_settings = new AuthorizationsSettings(array(
+		$auth_settings = new AuthorizationsSettings([
 			new ActionAuthorization($this->lang['config.auth.read'], BugtrackerAuthorizationsService::READ_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['config.auth.create'], BugtrackerAuthorizationsService::WRITE_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['config.auth.create_advanced'], BugtrackerAuthorizationsService::ADVANCED_WRITE_AUTHORIZATIONS, $this->lang['config.auth.create_advanced_explain']),
 			new MemberDisabledActionAuthorization($this->lang['config.auth.moderate'], BugtrackerAuthorizationsService::MODERATION_AUTHORIZATIONS)
-		));
+		]);
 
 		//Load the authorizations in the configuration
 		$auth_settings->build_from_auth_array(BugtrackerConfig::load()->get_authorizations());
@@ -65,7 +65,7 @@ class AdminBugtrackerAuthorizationsController extends DefaultAdminModuleControll
 		BugtrackerConfig::load()->set_authorizations($this->form->get_value('authorizations')->build_auth_array());
 		BugtrackerConfig::save();
 
-		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => $this->lang['bugtracker.authorizations.module.title'], 'url' => BugtrackerUrlBuilder::authorizations()->rel()));
+		HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => $this->lang['bugtracker.authorizations.module.title'], 'url' => BugtrackerUrlBuilder::authorizations()->rel()]);
 	}
 }
 ?>

@@ -15,7 +15,7 @@ class StatsModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('stats');
 
-		self::$delete_old_files_list = array(
+		self::$delete_old_files_list = [
             '/controllers/StatsGraphsController.class.php',
 			'/lang/french/stats_french.php',
 			'/lang/english/stats_english.php',
@@ -28,7 +28,7 @@ class StatsModuleUpdateVersion extends ModuleUpdateVersion
 			'/stats.php',
 			'/stats_begin.php',
 			'/stats_functions.php',
-		);
+		];
 
         self::$delete_old_folders_list = [
             '/templates/images'
@@ -61,7 +61,7 @@ class StatsModuleUpdateVersion extends ModuleUpdateVersion
 				$stats_array = TextHelper::unserialize($line[0]);
 				foreach ($stats_array as $id => $value)
 				{
-					if (in_array($id, array('aix', 'irix', 'hp-ux', 'os2', 'playstation3', 'psp', 'wii', 'sunos', 'freebsd', 'netbsd', 'windowsold', 'windowsxp', 'windowsserver2003', 'windowsvista', 'windowsphone')))
+					if (in_array($id, ['aix', 'irix', 'hp-ux', 'os2', 'playstation3', 'psp', 'wii', 'sunos', 'freebsd', 'netbsd', 'windowsold', 'windowsxp', 'windowsserver2003', 'windowsvista', 'windowsphone']))
 						unset($stats_array[$id]);
 				}
 

@@ -19,7 +19,7 @@ Environment::set_graphical_environment($env);
 $view = new FileTemplate('broadcast/BroadcastPlayer.tpl');
 $config = BroadcastConfig::load();
 
-$view->put_all(array(
+$view->put_all([
     'C_HAS_LOGO'   => !empty($config->get_broadcast_logo()),
     'C_IS_WIDGET'  => $config->get_player_type() == BroadcastConfig::BROADCAST_WIDGET,
     'C_HAS_WIDGET' => $config->get_player_type() == BroadcastConfig::BROADCAST_COMBO,
@@ -29,7 +29,7 @@ $view->put_all(array(
 
     'U_STREAM' => $config->get_broadcast_url()->rel(),
     'U_LOGO'   => $config->get_broadcast_logo()->rel()
-));
+]);
 $view->display();
 
 require_once(PATH_TO_ROOT . '/kernel/footer_no_display.php');

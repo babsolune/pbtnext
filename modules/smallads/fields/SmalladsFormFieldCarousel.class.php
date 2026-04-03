@@ -11,7 +11,7 @@ class SmalladsFormFieldCarousel extends AbstractFormField
 {
 	private $max_input = 20;
 
-	public function __construct($id, $label, array $value = array(), array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, array $value = [], array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
@@ -23,42 +23,42 @@ class SmalladsFormFieldCarousel extends AbstractFormField
 		$view = new FileTemplate('smallads/fields/SmalladsFormFieldCarousel.tpl');
 		$view->add_lang(LangLoader::get_all_langs('smallads'));
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_DISABLED' => $this->is_disabled(),
 			'NAME' => $this->get_html_id(),
 			'ID'   => $this->get_html_id()
-		));
+		]);
 
 		$this->assign_common_template_variables($template);
 
 		$i = 0;
 		foreach ($this->get_value() as $id => $options)
 		{
-			$view->assign_block_vars('fieldelements', array(
+			$view->assign_block_vars('fieldelements', [
 				'ID'          => $i,
 				'PICTURE_URL' => $options['picture_url'],
 				'DESCRIPTION' => $options['description']
-			));
+			]);
 			$i++;
 		}
 
 		if ($i == 0)
 		{
-			$view->assign_block_vars('fieldelements', array(
+			$view->assign_block_vars('fieldelements', [
 				'ID'          => $i,
 				'PICTURE_URL' => '',
 				'DESCRIPTION' => ''
-			));
+			]);
 		}
 
-		$view->put_all(array(
+		$view->put_all([
 			'MAX_INPUT'     => $this->max_input,
 			'FIELDS_NUMBER' => $i == 0 ? 1 : $i
-		));
+		]);
 
-		$template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $view->render()
-		));
+		]);
 
 		return $template;
 	}
@@ -66,7 +66,7 @@ class SmalladsFormFieldCarousel extends AbstractFormField
 	public function retrieve_value()
 	{
 		$request = AppContext::get_request();
-		$values = array();
+		$values = [];
 		for ($i = 0; $i < $this->max_input; $i++)
 		{
 			$field_picture_url_id = 'field_picture_url_' . $this->get_html_id() . '_' . $i;
@@ -77,7 +77,7 @@ class SmalladsFormFieldCarousel extends AbstractFormField
 				$field_picture_url = $request->get_poststring($field_picture_url_id);
 
 				if (!empty($field_picture_url))
-					$values[] = array('description' => $field_description, 'picture_url' => $field_picture_url);
+					$values[] = ['description' => $field_description, 'picture_url' => $field_picture_url];
 			}
 		}
 		$this->set_value($values);

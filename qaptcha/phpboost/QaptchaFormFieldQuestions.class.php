@@ -13,7 +13,7 @@ class QaptchaFormFieldQuestions extends AbstractFormField
 {
 	private $max_input = 100;
 
-	public function __construct($id, $label, array $value = array(), array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, array $value = [], array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
@@ -30,26 +30,26 @@ class QaptchaFormFieldQuestions extends AbstractFormField
 		$i = 1;
 		foreach ($this->get_value() as $id => $options)
 		{
-			$view->assign_block_vars('fieldelements', array(
+			$view->assign_block_vars('fieldelements', [
 				'ID' => $i,
 				'LABEL' => $options['label'],
 				'ANSWERS' => $options['answers'],
 				'C_DELETE' => $i > 1
-			));
+			]);
 			$i++;
 		}
 
-		$view->put_all(array(
+		$view->put_all([
 			'NAME' => $this->get_html_id(),
 			'HTML_ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->is_disabled(),
 			'MAX_INPUT' => $this->max_input,
 			'ITEMS_NUMBER' => $i,
-		));
+		]);
 
-		$template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $view->render()
-		));
+		]);
 
 		return $template;
 	}
@@ -57,7 +57,7 @@ class QaptchaFormFieldQuestions extends AbstractFormField
 	public function retrieve_value()
 	{
 		$request = AppContext::get_request();
-		$values = array();
+		$values = [];
 
 		for ($i = 1; $i <= $this->max_input; $i++)
 		{
@@ -69,10 +69,10 @@ class QaptchaFormFieldQuestions extends AbstractFormField
 				$field_answers = $request->get_poststring($field_answers_id);
 
 				if (!empty($field_label) && !empty($field_answers))
-					$values[$i] = array(
+					$values[$i] = [
 						'label' => TextHelper::htmlspecialchars($field_label),
 						'answers' => TextHelper::htmlspecialchars($field_answers)
-					);
+					];
 			}
 		}
 		$this->set_value($values);

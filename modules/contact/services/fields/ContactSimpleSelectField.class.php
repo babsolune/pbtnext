@@ -13,7 +13,7 @@ class ContactSimpleSelectField extends AbstractContactField
 	public function __construct()
 	{
 		parent::__construct();
-		$this->set_disable_fields_configuration(array('regex', 'default_value_small', 'default_value_medium'));
+		$this->set_disable_fields_configuration(['regex', 'default_value_small', 'default_value_medium']);
 		$this->set_name(LangLoader::get_message('user.field.type.simple.select', 'user-lang'));
 	}
 
@@ -21,7 +21,7 @@ class ContactSimpleSelectField extends AbstractContactField
 	{
 		$fieldset = $field->get_fieldset();
 
-		$options = array();
+		$options = [];
 		$default = '';
 		$i = 0;
 		foreach ($field->get_possible_values() as $name => $parameters)
@@ -36,11 +36,11 @@ class ContactSimpleSelectField extends AbstractContactField
 
 		if (empty($default))
 		{
-			$options = array_merge(array(new FormFieldSelectChoiceOption('', '')), $options);
+			$options = array_merge([new FormFieldSelectChoiceOption('', '')], $options);
 			$default = '';
 		}
 
-		$fieldset->add_field(new FormFieldSimpleSelectChoice($field->get_field_name(), $field->get_name(), $default, $options, array('required' => (bool)$field->is_required(), 'description' => $field->get_description())));
+		$fieldset->add_field(new FormFieldSimpleSelectChoice($field->get_field_name(), $field->get_name(), $default, $options, ['required' => (bool)$field->is_required(), 'description' => $field->get_description()]));
 	}
 
 	public function get_value(HTMLForm $form, ContactField $field)

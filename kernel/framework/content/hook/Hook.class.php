@@ -280,7 +280,7 @@ abstract class Hook implements ExtensionPoint
 	 * @param array $properties (optional) Properties of the configuration page (title, url, ...)
 	 * @param string $description Optional description of the action
 	 */
-	public function on_edit_config_action($module_id, array $properties = array(), $description = '')
+	public function on_edit_config_action($module_id, array $properties = [], $description = '')
 	{
 		return true;
 	}
@@ -327,7 +327,7 @@ abstract class Hook implements ExtensionPoint
 	 * @param string $content Content displayed on the current page
 	 * @param array $properties (optional) Properties of the item (title, content, ...)
 	 */
-	public function on_display_action($module_id, $content, array $properties = array())
+	public function on_display_action($module_id, $content, array $properties = [])
 	{
 		return $content;
 	}
@@ -337,7 +337,7 @@ abstract class Hook implements ExtensionPoint
 	 * @param string $module_id Name of the current module
 	 * @param array $properties (optional) Properties of the user (display_name, ...)
 	 */
-	public function on_display_user_additional_informations_action($module_id, array $properties = array())
+	public function on_display_user_additional_informations_action($module_id, array $properties = [])
 	{
 		return '';
 	}

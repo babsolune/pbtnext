@@ -39,9 +39,9 @@ class BugtrackerUnsolvedListController extends DefaultModuleController
 			$filter = $filter_id = '';
 		}
 
-		$filters = !empty($filter) ? explode('-', $filter) : array();
+		$filters = !empty($filter) ? explode('-', $filter) : [];
 		$nb_filters = count($filters);
-		$filters_ids = !empty($filter_id) ? explode('-', $filter_id) : array();
+		$filters_ids = !empty($filter_id) ? explode('-', $filter_id) : [];
 		$nb_filters_ids = count($filters_ids);
 
 		if ($nb_filters != $nb_filters_ids)
@@ -73,7 +73,7 @@ class BugtrackerUnsolvedListController extends DefaultModuleController
 		$select_filters = '';
 		foreach ($filters as $key => $f)
 		{
-			$select_filters .= in_array($f, array('type', 'category', 'severity', 'status', 'detected_in')) && $filters_ids[$key] ? "AND " . $f . " = '" . $filters_ids[$key] . "'" : '';
+			$select_filters .= in_array($f, ['type', 'category', 'severity', 'status', 'detected_in']) && $filters_ids[$key] ? "AND " . $f . " = '" . $filters_ids[$key] . "'" : '';
 		}
 
 		$stats_cache = BugtrackerStatsCache::load();
@@ -89,14 +89,14 @@ class BugtrackerUnsolvedListController extends DefaultModuleController
 		$select_filters . "
 		ORDER BY " . $field_bdd . " " . $mode . "
 		LIMIT :number_items_per_page OFFSET :display_from",
-			array(
+			[
 				'user_id' => AppContext::get_current_user()->get_id(),
 				'number_items_per_page' => $pagination->get_number_items_per_page(),
 				'display_from' => $pagination->get_display_from()
-			)
+			]
 		);
 
-		$displayed_severities = array();
+		$displayed_severities = [];
 
 		while ($row = $result->fetch())
 		{
@@ -105,13 +105,13 @@ class BugtrackerUnsolvedListController extends DefaultModuleController
 
 			if (!in_array($bug->get_severity(), $displayed_severities)) $displayed_severities[] = $bug->get_severity();
 
-			$this->view->assign_block_vars('bug', array_merge($bug->get_template_vars(), array(
+			$this->view->assign_block_vars('bug', array_merge($bug->get_template_vars(), [
 				'C_LINE_COLOR'		=> $bug->get_severity() && isset($severities[$bug->get_severity()]),
 				'LINE_COLOR' 		=> stripslashes($severities[$bug->get_severity()]['color']),
 				'U_CHANGE_STATUS'	=> BugtrackerUrlBuilder::change_status($bug->get_id())->rel(),
 				'U_EDIT'			=> BugtrackerUrlBuilder::edit($bug->get_id(), 'unsolved', $current_page, $filter, $filter_id)->rel(),
 				'U_DELETE'			=> BugtrackerUrlBuilder::delete($bug->get_id(), 'unsolved', $current_page, $filter, $filter_id)->rel(),
-			)));
+			]));
 		}
 		$result->dispose();
 
@@ -121,7 +121,7 @@ class BugtrackerUnsolvedListController extends DefaultModuleController
 		if ($this->config->is_priority_column_displayed()) $bugs_colspan++;
 		if ($this->config->is_detected_in_column_displayed()) $bugs_colspan++;
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_IS_ADMIN'					=> BugtrackerAuthorizationsService::check_authorizations()->moderation(),
 			'C_UNSOLVED' 					=> true,
 			'C_BUGS' 						=> $result->get_rows_count() > 0,
@@ -143,7 +143,7 @@ class BugtrackerUnsolvedListController extends DefaultModuleController
 			'LINK_BUG_STATUS_BOTTOM'		=> BugtrackerUrlBuilder::unsolved('status', 'bottom', $current_page, $filter, $filter_id)->rel(),
 			'LINK_BUG_DATE_TOP' 			=> BugtrackerUrlBuilder::unsolved('date', 'top', $current_page, $filter, $filter_id)->rel(),
 			'LINK_BUG_DATE_BOTTOM' 			=> BugtrackerUrlBuilder::unsolved('date', 'bottom', $current_page, $filter, $filter_id)->rel()
-		));
+		]);
 
 		if ($this->config->is_restrict_display_to_own_elements_enabled() && !BugtrackerAuthorizationsService::check_authorizations()->moderation() && !AppContext::get_current_user()->is_guest())
 			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.restrict_display_to_own_elements_enabled'], MessageHelper::WARNING));

@@ -131,16 +131,16 @@ class TeamSpeak3_Node_Host extends TeamSpeak3_Node_Abstract
     $virtual = ($virtual !== null) ? $virtual : $this->start_offline_virtual;
     $getargs = func_get_args();
 
-    $this->execute("use", array("sid" => $sid, $virtual ? "-virtual" : null));
+    $this->execute("use", ["sid" => $sid, $virtual ? "-virtual" : null]);
 
     if($sid != 0 && $this->predefined_query_name !== null)
     {
-      $this->execute("clientupdate", array("client_nickname" => (string) $this->predefined_query_name));
+      $this->execute("clientupdate", ["client_nickname" => (string) $this->predefined_query_name]);
     }
 
     $this->whoamiReset();
 
-    $this->setStorage("_server_use", array(__FUNCTION__, $getargs));
+    $this->setStorage("_server_use", [__FUNCTION__, $getargs]);
 
     TeamSpeak3_Helper_Signal::getInstance()->emit("notifyServerselected", $this);
   }
@@ -171,16 +171,16 @@ class TeamSpeak3_Node_Host extends TeamSpeak3_Node_Abstract
     $virtual = ($virtual !== null) ? $virtual : $this->start_offline_virtual;
     $getargs = func_get_args();
 
-    $this->execute("use", array("port" => $port, $virtual ? "-virtual" : null));
+    $this->execute("use", ["port" => $port, $virtual ? "-virtual" : null]);
 
     if($port != 0 && $this->predefined_query_name !== null)
     {
-      $this->execute("clientupdate", array("client_nickname" => (string) $this->predefined_query_name));
+      $this->execute("clientupdate", ["client_nickname" => (string) $this->predefined_query_name]);
     }
 
     $this->whoamiReset();
 
-    $this->setStorage("_server_use", array(__FUNCTION__, $getargs));
+    $this->setStorage("_server_use", [__FUNCTION__, $getargs]);
 
     TeamSpeak3_Helper_Signal::getInstance()->emit("notifyServerselected", $this);
   }
@@ -205,7 +205,7 @@ class TeamSpeak3_Node_Host extends TeamSpeak3_Node_Abstract
    */
   public function serverIdGetByPort($port)
   {
-    $sid = $this->execute("serveridgetbyport", array("virtualserver_port" => $port))->toList();
+    $sid = $this->execute("serveridgetbyport", ["virtualserver_port" => $port])->toList();
 
     return $sid["server_id"];
   }
@@ -246,7 +246,7 @@ class TeamSpeak3_Node_Host extends TeamSpeak3_Node_Abstract
   {
     $this->serverSelectById($sid);
 
-    return new TeamSpeak3_Node_Server($this, array("virtualserver_id" => intval($sid)));
+    return new TeamSpeak3_Node_Server($this, ["virtualserver_id" => intval($sid)]);
   }
 
   /**
@@ -259,7 +259,7 @@ class TeamSpeak3_Node_Host extends TeamSpeak3_Node_Abstract
   {
     $this->serverSelectByPort($port);
 
-    return new TeamSpeak3_Node_Server($this, array("virtualserver_id" => $this->serverSelectedId()));
+    return new TeamSpeak3_Node_Server($this, ["virtualserver_id" => $this->serverSelectedId()]);
   }
 
   /**
@@ -308,7 +308,7 @@ class TeamSpeak3_Node_Host extends TeamSpeak3_Node_Abstract
     $this->serverListReset();
 
     $detail = $this->execute("servercreate", $properties)->toList();
-    $server = new TeamSpeak3_Node_Server($this, array("virtualserver_id" => intval($detail["sid"])));
+    $server = new TeamSpeak3_Node_Server($this, ["virtualserver_id" => intval($detail["sid"])]);
 
     TeamSpeak3_Helper_Signal::getInstance()->emit("notifyServercreated", $this, $detail["sid"]);
     TeamSpeak3_Helper_Signal::getInstance()->emit("notifyTokencreated", $server, $detail["token"]);
@@ -326,7 +326,7 @@ class TeamSpeak3_Node_Host extends TeamSpeak3_Node_Abstract
   {
     $this->serverListReset();
 
-    $this->execute("serverdelete", array("sid" => $sid));
+    $this->execute("serverdelete", ["sid" => $sid]);
 
     TeamSpeak3_Helper_Signal::getInstance()->emit("notifyServerdeleted", $this, $sid);
   }
@@ -344,7 +344,7 @@ class TeamSpeak3_Node_Host extends TeamSpeak3_Node_Abstract
       $this->serverDeselect();
     }
 
-    $this->execute("serverstart", array("sid" => $sid));
+    $this->execute("serverstart", ["sid" => $sid]);
     $this->serverListReset();
 
     TeamSpeak3_Helper_Signal::getInstance()->emit("notifyServerstarted", $this, $sid);
@@ -363,7 +363,7 @@ class TeamSpeak3_Node_Host extends TeamSpeak3_Node_Abstract
       $this->serverDeselect();
     }
 
-    $this->execute("serverstop", array("sid" => $sid));
+    $this->execute("serverstop", ["sid" => $sid]);
     $this->serverListReset();
 
     TeamSpeak3_Helper_Signal::getInstance()->emit("notifyServerstopped", $this, $sid);
@@ -387,13 +387,13 @@ class TeamSpeak3_Node_Host extends TeamSpeak3_Node_Abstract
    * @param  array $filter
    * @return array
    */
-  public function serverList(array $filter = array())
+  public function serverList(array $filter = [])
   {
     if($this->serverList === null)
     {
       $servers = $this->request("serverlist -uid")->toAssocArray("virtualserver_id");
 
-      $this->serverList = array();
+      $this->serverList = [];
 
       foreach($servers as $sid => $server)
       {
@@ -453,7 +453,7 @@ class TeamSpeak3_Node_Host extends TeamSpeak3_Node_Abstract
   {
     $permident = (is_numeric($permid)) ? "permid" : "permsid";
 
-    return $this->execute("permfind", array($permident => $permid))->toArray();
+    return $this->execute("permfind", [$permident => $permid])->toArray();
   }
 
   /**
@@ -500,7 +500,7 @@ class TeamSpeak3_Node_Host extends TeamSpeak3_Node_Abstract
   {
     $permident = (is_numeric($permid)) ? "permid" : "permsid";
 
-    return $this->execute("permget", array($permident => $permid))->toAssocArray("permsid");
+    return $this->execute("permget", [$permident => $permid])->toAssocArray("permsid");
   }
 
   /**
@@ -523,7 +523,7 @@ class TeamSpeak3_Node_Host extends TeamSpeak3_Node_Abstract
    */
   public function message($msg)
   {
-    $this->execute("gm", array("msg" => $msg));
+    $this->execute("gm", ["msg" => $msg]);
   }
 
   /**
@@ -536,7 +536,7 @@ class TeamSpeak3_Node_Host extends TeamSpeak3_Node_Abstract
    */
   public function logView($limitcount = 30, $comparator = null, $timestamp = null)
   {
-    return $this->execute("logview", array("limitcount" => $limitcount, "comparator" => $comparator, "timestamp" => $timestamp))->toArray();
+    return $this->execute("logview", ["limitcount" => $limitcount, "comparator" => $comparator, "timestamp" => $timestamp])->toArray();
   }
 
   /**
@@ -551,7 +551,7 @@ class TeamSpeak3_Node_Host extends TeamSpeak3_Node_Abstract
     $sid = $this->serverSelectedId();
 
     $this->serverDeselect();
-    $this->execute("logadd", array("logmsg" => $logmsg, "loglevel" => $loglevel));
+    $this->execute("logadd", ["logmsg" => $logmsg, "loglevel" => $loglevel]);
     $this->serverSelect($sid);
   }
 
@@ -564,7 +564,7 @@ class TeamSpeak3_Node_Host extends TeamSpeak3_Node_Abstract
    */
   public function login($username, $password)
   {
-    $this->execute("login", array("client_login_name" => $username, "client_login_password" => $password));
+    $this->execute("login", ["client_login_name" => $username, "client_login_password" => $password]);
     $this->whoamiReset();
 
     $crypt = new TeamSpeak3_Helper_Crypt($username);
@@ -859,7 +859,7 @@ class TeamSpeak3_Node_Host extends TeamSpeak3_Node_Abstract
       $func = array_shift($server);
       $args = array_shift($server);
 
-      call_user_func_array(array($this, $func), $args);
+      call_user_func_array([$this, $func], $args);
     }
   }
 

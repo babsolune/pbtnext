@@ -13,7 +13,7 @@ class ContentSharingActionsMenuLinksExtensionPoint implements ExtensionPoint
 {
 	const EXTENSION_POINT = 'content_sharing_actions_menu_links';
 
-	private $content_sharing_actions_menu_links = array();
+	private $content_sharing_actions_menu_links = [];
 
 	public function __construct($content_sharing_actions_menu_links)
 	{

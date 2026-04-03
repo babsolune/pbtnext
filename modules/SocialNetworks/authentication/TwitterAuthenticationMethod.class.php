@@ -43,7 +43,7 @@ class TwitterAuthenticationMethod extends AbstractSocialNetworkAuthenticationMet
 
 				unset($_SESSION['twitter_oauth_token']);
 				unset($_SESSION['twitter_oauth_token_secret']);
-				$_SESSION['twitter_token'] = $access_token = $connection->oauth('oauth/access_token', array('oauth_verifier' => $request->get_getvalue('oauth_verifier')));
+				$_SESSION['twitter_token'] = $access_token = $connection->oauth('oauth/access_token', ['oauth_verifier' => $request->get_getvalue('oauth_verifier')]);
 
 				$connection = new TwitterOAuth($config->get_client_id(TwitterSocialNetwork::SOCIAL_NETWORK_ID), $config->get_client_secret(TwitterSocialNetwork::SOCIAL_NETWORK_ID), $access_token['oauth_token'], $access_token['oauth_token_secret']);
 			}
@@ -58,22 +58,22 @@ class TwitterAuthenticationMethod extends AbstractSocialNetworkAuthenticationMet
 			else
 			{
 				$connection = new TwitterOAuth($config->get_client_id(TwitterSocialNetwork::SOCIAL_NETWORK_ID), $config->get_client_secret(TwitterSocialNetwork::SOCIAL_NETWORK_ID));
-				$request_token = $connection->oauth('oauth/request_token', array('oauth_callback' => UserUrlBuilder::connect(TwitterSocialNetwork::SOCIAL_NETWORK_ID)->absolute()));
+				$request_token = $connection->oauth('oauth/request_token', ['oauth_callback' => UserUrlBuilder::connect(TwitterSocialNetwork::SOCIAL_NETWORK_ID)->absolute()]);
 				$_SESSION['twitter_oauth_token'] = $request_token['oauth_token'];
 				$_SESSION['twitter_oauth_token_secret'] = $request_token['oauth_token_secret'];
 
-				AppContext::get_response()->redirect($connection->url('oauth/authorize', array('oauth_token' => $request_token['oauth_token'])));
+				AppContext::get_response()->redirect($connection->url('oauth/authorize', ['oauth_token' => $request_token['oauth_token']]));
 			}
 		}
 
-		$user = $connection->get('account/verify_credentials', array('include_email' => 'true'));
+		$user = $connection->get('account/verify_credentials', ['include_email' => 'true']);
 
-		return array(
+		return [
 			'id' => $user->id,
 			'email' => $user->email,
 			'name' => $user->name,
 			'picture_url' => $user->profile_image_url_https
-		);
+		];
 	}
 }
 ?>

@@ -13,7 +13,7 @@ class ContactSimpleChoiceField extends AbstractContactField
 	public function __construct()
 	{
 		parent::__construct();
-		$this->set_disable_fields_configuration(array('regex', 'default_value_small', 'default_value_medium'));
+		$this->set_disable_fields_configuration(['regex', 'default_value_small', 'default_value_medium']);
 		$this->set_name(LangLoader::get_message('user.field.type.simple.check', 'user-lang'));
 	}
 
@@ -21,7 +21,7 @@ class ContactSimpleChoiceField extends AbstractContactField
 	{
 		$fieldset = $field->get_fieldset();
 
-		$options = array();
+		$options = [];
 		$i = 0;
 		$default = '';
 		foreach ($field->get_possible_values() as $name => $parameters)
@@ -34,7 +34,7 @@ class ContactSimpleChoiceField extends AbstractContactField
 			$i++;
 		}
 
-		$fieldset->add_field(new FormFieldRadioChoice($field->get_field_name(), $field->get_name(), $default, $options, array('required' => (bool)$field->is_required(), 'description' => $field->get_description())));
+		$fieldset->add_field(new FormFieldRadioChoice($field->get_field_name(), $field->get_name(), $default, $options, ['required' => (bool)$field->is_required(), 'description' => $field->get_description()]));
 	}
 
 	public function get_value(HTMLForm $form, ContactField $field)

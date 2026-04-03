@@ -13,15 +13,15 @@ class QuotesConfigUpdateVersion extends ConfigUpdateVersion
 	{
 		parent::__construct('quotes');
 
-		$this->config_parameters_to_modify = array(
+		$this->config_parameters_to_modify = [
 			'items_number_per_page'    => 'items_per_page',
 			'categories_number_per_page' => 'categories_per_page',
 			'columns_number_per_line'  => 'categories_per_row',
-			'root_category_description' => array(
+			'root_category_description' => [
 				'parameter_name' => 'root_category_description',
 				'value' => $this->get_parsed_old_content('QuotesConfig', 'root_category_description')
-			)
-		);
+			]
+		];
 	}
 }
 ?>

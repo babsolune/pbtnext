@@ -30,9 +30,9 @@ class SandboxConstraintUserIsAdmin extends AbstractFormFieldConstraint
 	{
 		if ($field->get_value())
 		{
-			return PersistenceContext::get_querier()->row_exists(DB_TABLE_MEMBER, 'WHERE level>=2 AND display_name=:display_name', array(
+			return PersistenceContext::get_querier()->row_exists(DB_TABLE_MEMBER, 'WHERE level>=2 AND display_name=:display_name', [
 				'display_name' => $field->get_value()
-			));
+			]);
 		}
 		return false;
 	}

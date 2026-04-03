@@ -43,7 +43,7 @@ class LangLoader
 		$langs_folder = new Folder(PATH_TO_ROOT . '/lang');
 		$langs_list = $langs_folder->get_folders();
 
-		$available_langs = array();
+		$available_langs = [];
 		foreach ($langs_list as $lang)
 		{
 			$available_langs[] = $lang->get_name();
@@ -152,7 +152,7 @@ class LangLoader
 
 	private static function load($lang_id, $folder, $filename, $forced_file = '')
 	{
-		$lang = array();
+		$lang = [];
 		include self::get_real_lang_path($folder, $filename, $forced_file);
 		if (empty($lang) && !empty($LANG) && is_array($LANG))
 		{
@@ -227,10 +227,10 @@ class LangLoader
 
 		$lang_directory = new Folder(PATH_TO_ROOT . '/lang/' . self::get_locale($locale));
 		$files = $lang_directory->get_files();
-		$langloader = array();
+		$langloader = [];
 
 		// Don't load admin language variables if not on admin page
-		$excluded_files = preg_match('/admin/i', REWRITED_SCRIPT) ? array('config') : array('config', 'addon-lang', 'admin-lang', 'configuration-lang', 'menu-lang');
+		$excluded_files = preg_match('/admin/i', REWRITED_SCRIPT) ? ['config'] : ['config', 'addon-lang', 'admin-lang', 'configuration-lang', 'menu-lang'];
 
 		foreach($files as $file)
 		{
@@ -254,11 +254,11 @@ class LangLoader
 		$current_theme = AppContext::get_current_user()->get_theme();
 		$theme_lang_directory = new Folder(PATH_TO_ROOT . '/templates/' . $current_theme . '/lang/' . self::get_locale($locale));
 		$files = $theme_lang_directory->get_files();
-		$theme_langloader = array();
+		$theme_langloader = [];
 		foreach($files as $file)
 		{
 			$filename = $file->get_name_without_extension();
-			if (!in_array($filename, array('desc')))
+			if (!in_array($filename, ['desc']))
 			{
 				foreach(self::get($filename, '/templates/' . $current_theme) as $var => $desc)
 				{
@@ -283,11 +283,11 @@ class LangLoader
 			$module_lang_directory = new Folder(PATH_TO_ROOT . '/' . $module_id . '/lang/' . self::get_locale($locale));
 		}
 		$files = $module_lang_directory->get_files();
-		$module_langloader = array();
+		$module_langloader = [];
 		foreach($files as $file)
 		{
 			$filename = $file->get_name_without_extension();
-			if (!in_array($filename, array('desc', 'install')))
+			if (!in_array($filename, ['desc', 'install']))
 			{
 				foreach(self::get($filename, $module_id) as $var => $desc)
 				{
@@ -300,7 +300,7 @@ class LangLoader
 
 	public static function get_all_langs($module_id = '', $locale = '')
 	{
-		if(!empty($module_id) && !in_array($module_id, array('admin', 'cache', 'images', 'kernel', 'lang', 'repository', 'syndication', 'templates', 'upload', 'user')))
+		if(!empty($module_id) && !in_array($module_id, ['admin', 'cache', 'images', 'kernel', 'lang', 'repository', 'syndication', 'templates', 'upload', 'user']))
 			return array_merge(self::get_kernel_langs($locale), self::get_module_langs($module_id, $locale), self::get_theme_langs($locale));
 		else
 			return array_merge(self::get_kernel_langs($locale), self::get_theme_langs($locale));

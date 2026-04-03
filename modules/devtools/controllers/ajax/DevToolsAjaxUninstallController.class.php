@@ -14,15 +14,15 @@ class DevToolsAjaxUninstallController extends AbstractController
     public function execute(HTTPRequestCustom $request)
     {
         if (!DevToolsAuthorizationsService::check_authorizations()->moderation())
-            return new JSONResponse(array('success' => false, 'error' => 'Unauthorized'), 403);
+            return new JSONResponse(['success' => false, 'error' => 'Unauthorized'], 403);
 
         $module_id = preg_replace('/[^a-zA-Z0-9_\-]/', '', $request->get_string('id', ''));
 
         if ($module_id === 'devtools')
-            return new JSONResponse(array('success' => false, 'error' => 'You cannot uninstall this module from within itself.'));
+            return new JSONResponse(['success' => false, 'error' => 'You cannot uninstall this module from within itself.']);
 
         if (!ModulesManager::is_module_installed($module_id))
-            return new JSONResponse(array('success' => false, 'error' => 'Module not installed'));
+            return new JSONResponse(['success' => false, 'error' => 'Module not installed']);
 
         // Backup tables FIRST before any deactivation or uninstall
         $backup_result = DevToolsBackupService::backup_module($module_id);
@@ -34,9 +34,9 @@ class DevToolsAjaxUninstallController extends AbstractController
         ModulesManager::uninstall_module($module_id, $drop_files);
 
         if (isset($backup_result['error']))
-            return new JSONResponse(array('success' => true, 'warning' => 'Module uninstalled but SQL backup failed: [' . $backup_result['error'] . '] ' . $backup_result['detail']));
+            return new JSONResponse(['success' => true, 'warning' => 'Module uninstalled but SQL backup failed: [' . $backup_result['error'] . '] ' . $backup_result['detail']]);
 
-        return new JSONResponse(array('success' => true, 'backup' => $backup_result['filepath']));
+        return new JSONResponse(['success' => true, 'backup' => $backup_result['filepath']]);
     }
 }
 ?>

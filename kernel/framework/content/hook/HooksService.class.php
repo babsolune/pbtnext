@@ -17,7 +17,7 @@ class HooksService
 	 */
 	public static function get_hooks()
 	{
-		$hooks = array();
+		$hooks = [];
 		foreach (AppContext::get_extension_provider_service()->get_extension_point(Hook::EXTENSION_POINT) as $id => $provider)
 		{
 			if ($provider)
@@ -32,7 +32,7 @@ class HooksService
 	 */
 	public static function get_modules_specific_hooks_actions()
 	{
-		$actions = array();
+		$actions = [];
 		foreach (ModulesManager::get_installed_modules_map() as $name => $module)
 		{
 			$actions = array_merge($actions, $module->get_configuration()->get_specific_hooks());
@@ -46,7 +46,7 @@ class HooksService
 	 */
 	public static function get_modules_with_specific_hooks_list()
 	{
-		$modules = array();
+		$modules = [];
 		foreach (ModulesManager::get_installed_modules_map() as $name => $module)
 		{
 			if ($module->get_configuration()->get_specific_hooks())
@@ -61,7 +61,7 @@ class HooksService
 	 */
 	public static function get_specific_hooks_list_with_localized_names()
 	{
-		$hooks = array();
+		$hooks = [];
 		foreach (self::get_modules_with_specific_hooks_list() as $module_id)
 		{
 			$module_lang = LangLoader::get_all_langs($module_id);
@@ -81,14 +81,14 @@ class HooksService
 	 * @param array $properties (optional) Properties of the item (title, content, ...)
 	 * @param string $description (optional) Description of the action
 	 */
-	public static function execute_hook_action($action, $module_id, array $properties = array(), $description = '')
+	public static function execute_hook_action($action, $module_id, array $properties = [], $description = '')
 	{
 		$action_function = 'on_' . $action . '_action';
 		
 		foreach (self::get_hooks() as $hook)
 		{
 			$hook_name = $hook->get_hook_name();
-			if (method_exists($hook_name, $action_function) && is_callable(array(new $hook_name(), $action_function)))
+			if (method_exists($hook_name, $action_function) && is_callable([new $hook_name(), $action_function]))
 				$hook->$action_function($module_id, $properties, $description);
 			else if (in_array($action, self::get_modules_specific_hooks_actions()) && ModulesManager::is_module_installed($module_id) && ModulesManager::is_module_activated($module_id))
 				$hook->execute_module_specific_hook_action($action, $module_id, $properties, $description);
@@ -103,14 +103,14 @@ class HooksService
 	 * @param array $properties (optional) Properties of the element (title, url, ...)
 	 * @param string $description (optional) Description of the action
 	 */
-	public static function execute_hook_typed_action($action, $type, $element_id, array $properties = array(), $description = '')
+	public static function execute_hook_typed_action($action, $type, $element_id, array $properties = [], $description = '')
 	{
 		$action_function = 'on_' . $action . '_action';
 		
 		foreach (self::get_hooks() as $hook)
 		{
 			$hook_name = $hook->get_hook_name();
-			if (method_exists($hook_name, $action_function) && is_callable(array(new $hook_name(), $action_function)))
+			if (method_exists($hook_name, $action_function) && is_callable([new $hook_name(), $action_function]))
 				$hook->$action_function($type, $element_id, $properties, $description);
 		}
 	}
@@ -122,12 +122,12 @@ class HooksService
 	 * @param array $properties (optional) Properties of the item (title, content, ...)
 	 * @return string Modified content
 	 */
-	public static function execute_hook_display_action($module_id, $content, array $properties = array())
+	public static function execute_hook_display_action($module_id, $content, array $properties = [])
 	{
 		foreach (self::get_hooks() as $hook)
 		{
 			$hook_name = $hook->get_hook_name();
-			if (method_exists($hook_name, 'on_display_action') && is_callable(array(new $hook_name(), 'on_display_action')))
+			if (method_exists($hook_name, 'on_display_action') && is_callable([new $hook_name(), 'on_display_action']))
 			{
 				$content = $hook->on_display_action($module_id, $content, $properties);
 			}
@@ -142,13 +142,13 @@ class HooksService
 	 * @param array $properties (optional) Properties of the user (display_name, ...)
 	 * @return string Content to display
 	 */
-	public static function execute_hook_display_user_additional_informations_action($module_id, array $properties = array())
+	public static function execute_hook_display_user_additional_informations_action($module_id, array $properties = [])
 	{
-		$content = array();
+		$content = [];
 		foreach (self::get_hooks() as $hook)
 		{
 			$hook_name = $hook->get_hook_name();
-			if (method_exists($hook_name, 'on_display_user_additional_informations_action') && is_callable(array(new $hook_name(), 'on_display_user_additional_informations_action')))
+			if (method_exists($hook_name, 'on_display_user_additional_informations_action') && is_callable([new $hook_name(), 'on_display_user_additional_informations_action']))
 			{
 				$content[] = $hook->on_display_user_additional_informations_action($module_id, $properties);
 			}

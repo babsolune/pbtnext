@@ -46,17 +46,17 @@ class RecipeTagController extends DefaultModuleController
 		$condition = 'WHERE relation.id_keyword = :id_keyword
 		AND id_category IN :authorized_categories
 		AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))';
-		$parameters = array(
+		$parameters = [
 			'id_keyword' => $this->get_keyword()->get_id(),
 			'authorized_categories' => $authorized_categories,
 			'timestamp_now' => $now->get_timestamp()
-		);
+		];
 
 		$page = $request->get_getint('page', 1);
 		$pagination = $this->get_pagination($condition, $parameters, $field, TextHelper::strtolower($mode), $page);
 
 		$sort_mode = TextHelper::strtoupper($mode);
-		$sort_mode = (in_array($sort_mode, array(RecipeItem::ASC, RecipeItem::DESC)) ? $sort_mode : $this->config->get_items_default_sort_mode());
+		$sort_mode = (in_array($sort_mode, [RecipeItem::ASC, RecipeItem::DESC]) ? $sort_mode : $this->config->get_items_default_sort_mode());
 
 		if (in_array($field, RecipeItem::SORT_FIELDS_URL_VALUES))
 			$sort_field = array_search($field, RecipeItem::SORT_FIELDS_URL_VALUES);
@@ -72,13 +72,13 @@ class RecipeTagController extends DefaultModuleController
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = recipe.id AND note.module_name = \'recipe\' AND note.user_id = :user_id
 		' . $condition . '
 		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
-		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
+		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, [
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
-		)));
+		]));
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_TAG_ITEMS'         => true,
 			'C_ITEMS'             => $result->get_rows_count() > 0,
 			'C_SEVERAL_ITEMS'     => $result->get_rows_count() > 1,
@@ -95,7 +95,7 @@ class RecipeTagController extends DefaultModuleController
 			'PAGINATION'             => $pagination->display(),
 			'TABLE_COLSPAN'          => 4 + (int)$this->comments_config->module_comments_is_enabled('recipe') + (int)$this->content_management_config->module_notation_is_enabled('recipe'),
 			'CATEGORY_NAME'          => $this->get_keyword()->get_name()
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{
@@ -105,9 +105,9 @@ class RecipeTagController extends DefaultModuleController
 			$keywords = $item->get_keywords();
 			$has_keywords = count($keywords) > 0;
 
-			$this->view->assign_block_vars('items', array_merge($item->get_template_vars(), array(
+			$this->view->assign_block_vars('items', array_merge($item->get_template_vars(), [
 				'C_KEYWORDS' => $has_keywords
-			)));
+			]));
 
 			if ($has_keywords)
 				$this->build_keywords_view($keywords);
@@ -121,33 +121,33 @@ class RecipeTagController extends DefaultModuleController
 		$form = new HTMLForm(self::class, '', false);
 		$form->set_css_class('options');
 
-		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $this->lang['common.sort.by']));
+		$fieldset = new FormFieldsetHorizontal('filters', ['description' => $this->lang['common.sort.by']]);
 		$form->add_fieldset($fieldset);
 
-		$sort_options = array(
-			new FormFieldSelectChoiceOption($this->lang['common.sort.by.update'], RecipeItem::SORT_FIELDS_URL_VALUES[RecipeItem::SORT_UPDATE_DATE], array('data_option_icon' => 'far fa-calendar-plus')),
-			new FormFieldSelectChoiceOption($this->lang['common.sort.by.date'], RecipeItem::SORT_FIELDS_URL_VALUES[RecipeItem::SORT_DATE], array('data_option_icon' => 'far fa-calendar-alt')),
-			new FormFieldSelectChoiceOption($this->lang['common.sort.by.alphabetic'], RecipeItem::SORT_FIELDS_URL_VALUES[RecipeItem::SORT_ALPHABETIC], array('data_option_icon' => 'fa fa-sort-alpha-up')),
-			new FormFieldSelectChoiceOption($this->lang['common.sort.by.author'], RecipeItem::SORT_FIELDS_URL_VALUES[RecipeItem::SORT_AUTHOR], array('data_option_icon' => 'fa fa-user')),
-			new FormFieldSelectChoiceOption($this->lang['common.sort.by.views.number'], RecipeItem::SORT_FIELDS_URL_VALUES[RecipeItem::SORT_VIEWS_NUMBER], array('data_option_icon' => 'far fa-eye'))
-		);
+		$sort_options = [
+			new FormFieldSelectChoiceOption($this->lang['common.sort.by.update'], RecipeItem::SORT_FIELDS_URL_VALUES[RecipeItem::SORT_UPDATE_DATE], ['data_option_icon' => 'far fa-calendar-plus']),
+			new FormFieldSelectChoiceOption($this->lang['common.sort.by.date'], RecipeItem::SORT_FIELDS_URL_VALUES[RecipeItem::SORT_DATE], ['data_option_icon' => 'far fa-calendar-alt']),
+			new FormFieldSelectChoiceOption($this->lang['common.sort.by.alphabetic'], RecipeItem::SORT_FIELDS_URL_VALUES[RecipeItem::SORT_ALPHABETIC], ['data_option_icon' => 'fa fa-sort-alpha-up']),
+			new FormFieldSelectChoiceOption($this->lang['common.sort.by.author'], RecipeItem::SORT_FIELDS_URL_VALUES[RecipeItem::SORT_AUTHOR], ['data_option_icon' => 'fa fa-user']),
+			new FormFieldSelectChoiceOption($this->lang['common.sort.by.views.number'], RecipeItem::SORT_FIELDS_URL_VALUES[RecipeItem::SORT_VIEWS_NUMBER], ['data_option_icon' => 'far fa-eye'])
+		];
 
 		if ($this->comments_config->module_comments_is_enabled('recipe'))
-			$sort_options[] = new FormFieldSelectChoiceOption($this->lang['common.sort.by.comments.number'], RecipeItem::SORT_FIELDS_URL_VALUES[RecipeItem::SORT_COMMENTS_NUMBER], array('data_option_icon' => 'far fa-comments'));
+			$sort_options[] = new FormFieldSelectChoiceOption($this->lang['common.sort.by.comments.number'], RecipeItem::SORT_FIELDS_URL_VALUES[RecipeItem::SORT_COMMENTS_NUMBER], ['data_option_icon' => 'far fa-comments']);
 
 		if ($this->content_management_config->module_notation_is_enabled('recipe'))
-			$sort_options[] = new FormFieldSelectChoiceOption($this->lang['common.sort.by.best.note'], RecipeItem::SORT_FIELDS_URL_VALUES[RecipeItem::SORT_NOTATION], array('data_option_icon' => 'far fa-star'));
+			$sort_options[] = new FormFieldSelectChoiceOption($this->lang['common.sort.by.best.note'], RecipeItem::SORT_FIELDS_URL_VALUES[RecipeItem::SORT_NOTATION], ['data_option_icon' => 'far fa-star']);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field, $sort_options,
-			array('select_to_list' => true, 'events' => array('change' => 'document.location = "'. RecipeUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			['select_to_list' => true, 'events' => ['change' => 'document.location = "'. RecipeUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();']]
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
-			array(
+			[
 				new FormFieldSelectChoiceOption($this->lang['common.sort.asc'], 'asc'),
 				new FormFieldSelectChoiceOption($this->lang['common.sort.desc'], 'desc')
-			),
-			array('select_to_list' => true, 'events' => array('change' => 'document.location = "' . RecipeUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			],
+			['select_to_list' => true, 'events' => ['change' => 'document.location = "' . RecipeUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name())->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();']]
 		));
 
 		$this->view->put('SORT_FORM', $form->display());
@@ -161,7 +161,7 @@ class RecipeTagController extends DefaultModuleController
 			if (!empty($rewrited_name))
 			{
 				try {
-					$this->keyword = KeywordsService::get_keywords_manager()->get_keyword('WHERE rewrited_name=:rewrited_name', array('rewrited_name' => $rewrited_name));
+					$this->keyword = KeywordsService::get_keywords_manager()->get_keyword('WHERE rewrited_name=:rewrited_name', ['rewrited_name' => $rewrited_name]);
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
 					DispatchManager::redirect($error_controller);
@@ -202,11 +202,11 @@ class RecipeTagController extends DefaultModuleController
 		$i = 1;
 		foreach ($keywords as $keyword)
 		{
-			$this->view->assign_block_vars('items.keywords', array(
+			$this->view->assign_block_vars('items.keywords', [
 				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
 				'URL' => RecipeUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
-			));
+			]);
 			$i++;
 		}
 	}
@@ -229,7 +229,7 @@ class RecipeTagController extends DefaultModuleController
 
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->get_keyword()->get_name(), $this->lang['recipe.module.title'], $page);
-		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['recipe.seo.description.tag'], array('subject' => $this->get_keyword()->get_name())), $page);
+		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['recipe.seo.description.tag'], ['subject' => $this->get_keyword()->get_name()]), $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(RecipeUrlBuilder::display_tag($this->get_keyword()->get_rewrited_name(), $sort_field, $sort_mode, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();

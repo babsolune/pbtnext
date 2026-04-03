@@ -57,7 +57,7 @@ class AdminQaptchaConfig extends DefaultAdminModuleController
 	{
 		$form = new HTMLForm(self::class);
 
-		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module()->get_configuration()->get_name()]));
 		$form->add_fieldset($fieldset);
 
 		$this->display_fields($fieldset);
@@ -72,7 +72,7 @@ class AdminQaptchaConfig extends DefaultAdminModuleController
 	private function display_fields(FormFieldset $fieldset)
 	{
 		$fieldset->add_field(new QaptchaFormFieldQuestions('items', $this->lang['questioncaptcha.config.label'], $this->config->get_items(),
-			array('description' => $this->lang['questioncaptcha.config.label.description'], 'class' => 'full-field')
+			['description' => $this->lang['questioncaptcha.config.label.description'], 'class' => 'full-field']
 		));
 	}
 
@@ -85,7 +85,7 @@ class AdminQaptchaConfig extends DefaultAdminModuleController
 
 	protected function execute_edit_config_hook()
 	{
-		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
+		HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]), 'url' => ModulesUrlBuilder::configuration()->rel()]);
 	}
 
 	private function build_response(View $view)

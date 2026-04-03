@@ -44,10 +44,10 @@ class DiscordModuleMiniMenu extends ModuleMiniMenu
 
 		$discord_config = DiscordConfig::load();
 
-		$view->put_all(array(
+		$view->put_all([
             'C_DISCORD_ID' => !empty($discord_config->get_discord_id()),
             'DISCORD_ID' => $discord_config->get_discord_id()
-        ));
+        ]);
 
 		return $view->render();
 	}

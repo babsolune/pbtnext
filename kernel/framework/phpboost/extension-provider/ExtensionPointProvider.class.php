@@ -24,7 +24,7 @@ abstract class ExtensionPointProvider
 	/**
 	 * @var array list of the extensions points provided
 	 */
-	private $extensions_points = array();
+	private $extensions_points = [];
 
 	/**
 	 * ExtensionPointProvider constructor

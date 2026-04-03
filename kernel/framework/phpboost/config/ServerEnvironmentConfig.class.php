@@ -171,7 +171,7 @@ class ServerEnvironmentConfig extends AbstractConfigData
 
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::URL_REWRITING_ENABLED     => false,
 			self::REDIRECTION_WWW_ENABLED   => false,
 			self::REDIRECTION_WWW_MODE      => self::REDIRECTION_WWW_WITH_WWW,
@@ -182,7 +182,7 @@ class ServerEnvironmentConfig extends AbstractConfigData
 			self::HTACCESS_MANUAL_CONTENT   => '',
 			self::NGINX_MANUAL_CONTENT      => '',
 			self::OUTPUT_GZIPING_ENABLED    => false
-		);
+		];
 	}
 
 	/**

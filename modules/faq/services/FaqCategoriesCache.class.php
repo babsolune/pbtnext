@@ -16,7 +16,7 @@ class FaqCategoriesCache extends DefaultRichCategoriesCache
 
 	protected function get_category_elements_number($id_category)
 	{
-		return FaqService::count('WHERE id_category = :id_category AND approved = 1', array('id_category' => $id_category));
+		return FaqService::count('WHERE id_category = :id_category AND approved = 1', ['id_category' => $id_category]);
 	}
 
 	protected function get_root_category_authorizations()
@@ -28,7 +28,7 @@ class FaqCategoriesCache extends DefaultRichCategoriesCache
 	{
 		$description = FaqConfig::load()->get_root_category_description();
 		if (empty($description))
-			$description = StringVars::replace_vars(LangLoader::get_message('faq.seo.description.root', 'common', 'faq'), array('site' => GeneralConfig::load()->get_site_name()));
+			$description = StringVars::replace_vars(LangLoader::get_message('faq.seo.description.root', 'common', 'faq'), ['site' => GeneralConfig::load()->get_site_name()]);
 		return $description;
 	}
 }

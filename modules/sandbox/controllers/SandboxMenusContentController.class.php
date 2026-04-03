@@ -40,14 +40,14 @@ class SandboxMenusContentController extends DefaultModuleController
 	{
 		$this->build_wizard_form();
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'BASIC'           => self::build_basic_markup(),
 			'ACCORDION'       => self::build_accordion_markup(),
 			'TABS'            => self::build_tabs_markup(),
 			'WIZARD'          => self::build_wizard_markup(),
 			'NO_AVATAR_URL'   => Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(UserAccountsConfig::NO_AVATAR_URL)),
 			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
-		));
+		]);
 	}
 
 	private function build_basic_markup()
@@ -66,13 +66,13 @@ class SandboxMenusContentController extends DefaultModuleController
 			$basic_form->add_fieldset($link_list);
 
 			$link_list->add_field(new FormFieldActionLinkList('actionlink_list',
-				array(
+				[
 					new FormFieldActionLinkElement($this->lang['sandbox.menu.link.icon'], '#', '', '', '', 'far fa-edit'),
 					new FormFieldActionLinkElement($this->lang['sandbox.menu.link.img'], '#', 'sandbox-svg-icon', '/templates/__default__/theme/images/logo.svg'),
 					new FormFieldActionLinkElement($this->lang['sandbox.menu.link'].' 3', '#', ''),
 					new FormFieldActionLinkElement($this->lang['sandbox.menu.link'].' 4', '#', '')
-				),
-				array('class' => 'css-class')
+				],
+				['class' => 'css-class']
 			));
 
 		return $basic_form;
@@ -99,37 +99,37 @@ class SandboxMenusContentController extends DefaultModuleController
 		// 	$accordion_menu->set_css_class('accordion-nav');
 
 		// 	$accordion_menu->add_field(new FormFieldMultitabsLinkList('accordion_menu_list',
-		// 		array(
+		// 		[
 		// 			new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link.icon'], 'accordion', 'Sandbox_Accordion_accordion_01', 'fa fa-cog'),
 		// 			new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link.img'], 'accordion', 'Sandbox_Accordion_accordion_02', '', '/templates/__default__/theme/images/logo.svg', '', 'sandbox-svg-icon'),
 		// 			new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link'].' 3', 'accordion', 'Sandbox_Accordion_accordion_03'),
 		// 			new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link'].' 4', 'accordion', 'Sandbox_Accordion_accordion_04', '', '', '', 'bgc warning')
-		// 		)
+		// 		]
 		// 	));
 
 		// 	$accordion_01 = new FormFieldsetMultitabsHTML('accordion_01', $this->lang['sandbox.menu.panel'].' 1',
-		// 		array('css_class' => 'accordion accordion-animation first-tab')
+		// 		['css_class' => 'accordion accordion-animation first-tab']
 		// 	);
 		// 	$accordion_form->add_fieldset($accordion_01);
 
 		// 	$accordion_01->add_field(new FormFieldHTML('accordion_content_01', $this->lang['sandbox.lorem.short.content']));
 
 		// 	$accordion_02 = new FormFieldsetMultitabsHTML('accordion_02', $this->lang['sandbox.menu.panel'].' 2',
-		// 		array('css_class' => 'accordion accordion-animation')
+		// 		['css_class' => 'accordion accordion-animation']
 		// 	);
 		// 	$accordion_form->add_fieldset($accordion_02);
 
 		// 	$accordion_02->add_field(new FormFieldHTML('accordion_content_02', $this->lang['sandbox.lorem.medium.content']));
 
 		// 	$accordion_03 = new FormFieldsetMultitabsHTML('accordion_03', $this->lang['sandbox.menu.panel'].' 3',
-		// 		array('css_class' => 'accordion accordion-animation')
+		// 		['css_class' => 'accordion accordion-animation']
 		// 	);
 		// 	$accordion_form->add_fieldset($accordion_03);
 
 		// 	$accordion_03->add_field(new FormFieldHTML('accordion_content_03', $this->lang['sandbox.lorem.large.content']));
 
 		// 	$accordion_04 = new FormFieldsetMultitabsHTML('accordion_04', $this->lang['sandbox.menu.panel'].' 4',
-		// 		array('css_class' => 'accordion accordion-animation')
+		// 		['css_class' => 'accordion accordion-animation']
 		// 	);
 		// 	$accordion_form->add_fieldset($accordion_04);
 
@@ -161,12 +161,12 @@ class SandboxMenusContentController extends DefaultModuleController
 			$tabs_menu->set_css_class('tabs-nav');
 
 			$tabs_menu->add_field(new TabsNavList('tabs_menu_list',
-				array(
+				[
 					new TabsNavElement($this->lang['sandbox.menu.link.icon'], 'Tabs_form_tabs_01', 'fa fa-cog'),
 					new TabsNavElement($this->lang['sandbox.menu.link.img'], 'Tabs_form_tabs_02', '', '/templates/__default__/theme/images/logo.svg', '', 'sandbox-svg-icon'),
 					new TabsNavElement($this->lang['sandbox.menu.link'].' 3', 'Tabs_form_tabs_03'),
 					new TabsNavElement($this->lang['sandbox.menu.link'].' 4', 'Tabs_form_tabs_04', '', '', '', 'bgc warning')
-				)
+				]
 			));
 
         // Tabs content
@@ -221,11 +221,11 @@ class SandboxMenusContentController extends DefaultModuleController
 		$wizard_form->add_fieldset($fieldset_tab_menu);
 
 		$fieldset_tab_menu->add_field(new WizardActionLinkList('tab_menu_list',
-			array(
+			[
 				new FormFieldActionLinkElement($this->lang['sandbox.menu.panel'] . ' 01', '#', '', '', '', 'fa-cog'),
 				new FormFieldActionLinkElement($this->lang['sandbox.menu.panel'] . ' 02', '#', '', '', '', 'fa-image'),
 				new FormFieldActionLinkElement($this->lang['sandbox.menu.panel'] . ' 03', '#', 'sandbox-svg-icon', PATH_TO_ROOT . '/templates/__default__/theme/images/logo.svg', 'articles'),
-			)
+			]
 		));
 
 		$fieldset_tab_one = new FormFieldsetHTML('tab-04', $this->lang['sandbox.menu.panel.title'] . ' 01');

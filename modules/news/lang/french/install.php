@@ -18,12 +18,12 @@
 
 $lang['categories'] = $lang['items'] = [];
 
-$lang['categories'][] = array(
+$lang['categories'][] = [
 	'category.name'        => 'Catégorie de test',
 	'category.description' => 'Actualités de démonstration'
-);
+];
 
-$lang['items'][] = array(
+$lang['items'][] = [
 	'item.title'   => 'Débuter avec le module Actualités',
 	'item.content' => '
 		<p>Cette brève actualité va vous donner quelques conseils simples pour prendre en main ce module.</p>
@@ -40,5 +40,5 @@ $lang['items'][] = array(
 		<br />
 		Bonne utilisation de ce module.',
 	'item.summary' => ''
-);
+];
 ?>

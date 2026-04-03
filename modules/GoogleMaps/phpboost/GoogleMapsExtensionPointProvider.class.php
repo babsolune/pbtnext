@@ -23,7 +23,7 @@ class GoogleMapsExtensionPointProvider extends ExtensionPointProvider
 
 	public function url_mappings()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/GoogleMaps/index.php')));
+		return new UrlMappings([new DispatcherUrlMapping('/GoogleMaps/index.php')]);
 	}
 }
 ?>

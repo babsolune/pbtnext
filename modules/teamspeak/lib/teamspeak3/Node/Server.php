@@ -95,13 +95,13 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    * @param  array $filter
    * @return array
    */
-  public function channelList(array $filter = array())
+  public function channelList(array $filter = [])
   {
     if($this->channelList === null)
     {
       $channels = $this->request("channellist -topic -flags -voice -limits -icon")->toAssocArray("cid");
 
-      $this->channelList = array();
+      $this->channelList = [];
 
       foreach($channels as $cid => $channel)
       {
@@ -153,7 +153,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function channelDelete($cid, $force = FALSE)
   {
-    $this->execute("channeldelete", array("cid" => $cid, "force" => $force));
+    $this->execute("channeldelete", ["cid" => $cid, "force" => $force]);
     $this->channelListReset();
 
     if(($cid instanceof TeamSpeak3_Node_Abstract ? $cid->getId() : $cid) == $this->whoamiGet("client_channel_id"))
@@ -172,7 +172,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function channelMove($cid, $pid, $order = null)
   {
-    $this->execute("channelmove", array("cid" => $cid, "cpid" => $pid, "order" => $order));
+    $this->execute("channelmove", ["cid" => $cid, "cpid" => $pid, "order" => $order]);
     $this->channelListReset();
   }
 
@@ -200,7 +200,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function channelSpacerCreate($ident, $type = TeamSpeak3::SPACER_SOLIDLINE, $align = TeamSpeak3::SPACER_ALIGN_REPEAT, $order = null)
   {
-    $properties = array(
+    $properties = [
       "channel_name_phonetic" => "channel spacer",
       "channel_codec" => TeamSpeak3::CODEC_SPEEX_NARROWBAND,
       "channel_codec_quality" => 0x00,
@@ -209,7 +209,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
       "channel_flag_maxfamilyclients_unlimited" => FALSE,
       "channel_flag_maxfamilyclients_inherited" => FALSE,
       "channel_order" => $order,
-    );
+    ];
 
     switch($align)
     {
@@ -343,7 +343,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function channelPermList($cid, $permsid = FALSE)
   {
-    return $this->execute("channelpermlist", array("cid" => $cid, $permsid ? "-permsid" : null))->toAssocArray($permsid ? "permsid" : "permid");
+    return $this->execute("channelpermlist", ["cid" => $cid, $permsid ? "-permsid" : null])->toAssocArray($permsid ? "permsid" : "permid");
   }
 
   /**
@@ -359,7 +359,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
   {
     $permident = (is_numeric($permid)) ? "permid" : "permsid";
 
-    $this->execute("channeladdperm", array("cid" => $cid, $permident => $permid, "permvalue" => $permvalue));
+    $this->execute("channeladdperm", ["cid" => $cid, $permident => $permid, "permvalue" => $permvalue]);
   }
 
   /**
@@ -373,7 +373,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
   {
     $permident = (is_numeric($permid)) ? "permid" : "permsid";
 
-    $this->execute("channeldelperm", array("cid" => $cid, $permident => $permid));
+    $this->execute("channeldelperm", ["cid" => $cid, $permident => $permid]);
   }
 
   /**
@@ -386,7 +386,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function channelClientPermList($cid, $cldbid, $permsid = FALSE)
   {
-    return $this->execute("channelclientpermlist", array("cid" => $cid, "cldbid" => $cldbid, $permsid ? "-permsid" : null))->toAssocArray($permsid ? "permsid" : "permid");
+    return $this->execute("channelclientpermlist", ["cid" => $cid, "cldbid" => $cldbid, $permsid ? "-permsid" : null])->toAssocArray($permsid ? "permsid" : "permid");
   }
 
   /**
@@ -403,7 +403,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
   {
     $permident = (is_numeric($permid)) ? "permid" : "permsid";
 
-    $this->execute("channelclientaddperm", array("cid" => $cid, "cldbid" => $cldbid, $permident => $permid, "permvalue" => $permvalue));
+    $this->execute("channelclientaddperm", ["cid" => $cid, "cldbid" => $cldbid, $permident => $permid, "permvalue" => $permvalue]);
   }
 
   /**
@@ -418,7 +418,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
   {
     $permident = (is_numeric($permid)) ? "permid" : "permsid";
 
-    $this->execute("channelclientdelperm", array("cid" => $cid, "cldbid" => $cldbid, $permident => $permid));
+    $this->execute("channelclientdelperm", ["cid" => $cid, "cldbid" => $cldbid, $permident => $permid]);
   }
 
   /**
@@ -432,7 +432,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function channelFileList($cid, $cpw = "", $path = "/", $recursive = FALSE)
   {
-    $files = $this->execute("ftgetfilelist", array("cid" => $cid, "cpw" => $cpw, "path" => $path))->toArray();
+    $files = $this->execute("ftgetfilelist", ["cid" => $cid, "cpw" => $cpw, "path" => $path])->toArray();
     $count = count($files);
 
     for($i = 0; $i < $count; $i++)
@@ -454,7 +454,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
       }
     }
 
-    uasort($files, array(self::class, "sortFileList"));
+    uasort($files, [self::class, "sortFileList"]);
 
     return $files;
   }
@@ -469,7 +469,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function channelFileInfo($cid, $cpw = "", $name = "/")
   {
-    return array_pop($this->execute("ftgetfileinfo", array("cid" => $cid, "cpw" => $cpw, "name" => $name))->toArray());
+    return array_pop($this->execute("ftgetfileinfo", ["cid" => $cid, "cpw" => $cpw, "name" => $name])->toArray());
   }
 
   /**
@@ -486,7 +486,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function channelFileRename($cid, $cpw = "", $oldname = "/", $newname = "/", $tcid = null, $tcpw = null)
   {
-    $this->execute("ftrenamefile", array("cid" => $cid, "cpw" => $cpw, "oldname" => $oldname, "newname" => $newname, "tcid" => $tcid, "tcpw" => $tcpw));
+    $this->execute("ftrenamefile", ["cid" => $cid, "cpw" => $cpw, "oldname" => $oldname, "newname" => $newname, "tcid" => $tcid, "tcpw" => $tcpw]);
   }
 
   /**
@@ -499,7 +499,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function channelFileDelete($cid, $cpw = "", $name = "/")
   {
-    $this->execute("ftdeletefile", array("cid" => $cid, "cpw" => $cpw, "name" => $name));
+    $this->execute("ftdeletefile", ["cid" => $cid, "cpw" => $cpw, "name" => $name]);
   }
 
   /**
@@ -512,7 +512,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function channelDirCreate($cid, $cpw = "", $dirname = "/")
   {
-    $this->execute("ftcreatedir", array("cid" => $cid, "cpw" => $cpw, "dirname" => $dirname));
+    $this->execute("ftcreatedir", ["cid" => $cid, "cpw" => $cpw, "dirname" => $dirname]);
   }
 
   /**
@@ -593,13 +593,13 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    * @param  array $filter
    * @return array
    */
-  public function clientList(array $filter = array())
+  public function clientList(array $filter = [])
   {
     if($this->clientList === null)
     {
       $clients = $this->request("clientlist -uid -away -voice -info -times -groups -icon -country")->toAssocArray("clid");
 
-      $this->clientList = array();
+      $this->clientList = [];
 
       foreach($clients as $clid => $client)
       {
@@ -608,7 +608,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
         $this->clientList[$clid] = new TeamSpeak3_Node_Client($this, $client);
       }
 
-      uasort($this->clientList, array(self::class, "sortClientList"));
+      uasort($this->clientList, [self::class, "sortClientList"]);
 
       $this->resetNodeList();
     }
@@ -635,7 +635,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function clientFind($pattern)
   {
-    return $this->execute("clientfind", array("pattern" => $pattern))->toAssocArray("clid");
+    return $this->execute("clientfind", ["pattern" => $pattern])->toAssocArray("clid");
   }
 
   /**
@@ -647,7 +647,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function clientListDb($offset = null, $limit = null)
   {
-    return $this->execute("clientdblist -count", array("start" => $offset, "duration" => $limit))->toAssocArray("cldbid");
+    return $this->execute("clientdblist -count", ["start" => $offset, "duration" => $limit])->toAssocArray("cldbid");
   }
 
   /**
@@ -658,7 +658,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function clientInfoDb($cldbid)
   {
-    return $this->execute("clientdbinfo", array("cldbid" => $cldbid))->toList();
+    return $this->execute("clientdbinfo", ["cldbid" => $cldbid])->toList();
   }
 
   /**
@@ -671,7 +671,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function clientFindDb($pattern, $uid = FALSE)
   {
-    return array_keys($this->execute("clientdbfind", array("pattern" => $pattern, ($uid) ? "-uid" : null))->toAssocArray("cldbid"));
+    return array_keys($this->execute("clientdbfind", ["pattern" => $pattern, ($uid) ? "-uid" : null])->toAssocArray("cldbid"));
   }
 
   /**
@@ -749,7 +749,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
   {
     $this->clientListReset();
 
-    $this->execute("clientmove", array("clid" => $clid, "cid" => $cid, "cpw" => $cpw));
+    $this->execute("clientmove", ["clid" => $clid, "cid" => $cid, "cpw" => $cpw]);
 
     if($clid == $this->whoamiGet("client_id"))
     {
@@ -769,7 +769,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
   {
     $this->clientListReset();
 
-    $this->execute("clientkick", array("clid" => $clid, "reasonid" => $reasonid, "reasonmsg" => $reasonmsg));
+    $this->execute("clientkick", ["clid" => $clid, "reasonid" => $reasonid, "reasonmsg" => $reasonmsg]);
   }
 
   /**
@@ -781,7 +781,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function clientPoke($clid, $msg)
   {
-    $this->execute("clientpoke", array("clid" => $clid, "msg" => $msg));
+    $this->execute("clientpoke", ["clid" => $clid, "msg" => $msg]);
   }
 
   /**
@@ -797,7 +797,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
   {
     $this->clientListReset();
 
-    $bans = $this->execute("banclient", array("clid" => $clid, "time" => $timeseconds, "banreason" => $reason))->toAssocArray("banid");
+    $bans = $this->execute("banclient", ["clid" => $clid, "time" => $timeseconds, "banreason" => $reason])->toAssocArray("banid");
 
     return array_keys($bans);
   }
@@ -824,7 +824,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function clientDeleteDb($cldbid)
   {
-    $this->execute("clientdbdelete", array("cldbid" => $cldbid));
+    $this->execute("clientdbdelete", ["cldbid" => $cldbid]);
   }
 
   /**
@@ -837,7 +837,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function clientSetChannelGroup($cldbid, $cid, $cgid)
   {
-    $this->execute("setclientchannelgroup", array("cldbid" => $cldbid, "cid" => $cid, "cgid" => $cgid));
+    $this->execute("setclientchannelgroup", ["cldbid" => $cldbid, "cid" => $cid, "cgid" => $cgid]);
   }
 
   /**
@@ -851,7 +851,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
   {
     $this->clientListReset();
 
-    return $this->execute("clientpermlist", array("cldbid" => $cldbid, $permsid ? "-permsid" : null))->toAssocArray($permsid ? "permsid" : "permid");
+    return $this->execute("clientpermlist", ["cldbid" => $cldbid, $permsid ? "-permsid" : null])->toAssocArray($permsid ? "permsid" : "permid");
   }
 
   /**
@@ -868,7 +868,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
   {
     $permident = (is_numeric($permid)) ? "permid" : "permsid";
 
-    $this->execute("clientaddperm", array("cldbid" => $cldbid, $permident => $permid, "permvalue" => $permvalue, "permskip" => $permskip));
+    $this->execute("clientaddperm", ["cldbid" => $cldbid, $permident => $permid, "permvalue" => $permvalue, "permskip" => $permskip]);
   }
 
   /**
@@ -882,7 +882,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
   {
     $permident = (is_numeric($permid)) ? "permid" : "permsid";
 
-    $this->execute("clientdelperm", array("cldbid" => $cldbid, $permident => $permid));
+    $this->execute("clientdelperm", ["cldbid" => $cldbid, $permident => $permid]);
   }
 
   /**
@@ -891,7 +891,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    * @param  filter $filter
    * @return array
    */
-  public function serverGroupList(array $filter = array())
+  public function serverGroupList(array $filter = [])
   {
     if($this->sgroupList === null)
     {
@@ -902,7 +902,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
         $this->sgroupList[$sgid] = new TeamSpeak3_Node_Servergroup($this, $group);
       }
 
-      uasort($this->sgroupList, array(self::class, "sortGroupList"));
+      uasort($this->sgroupList, [self::class, "sortGroupList"]);
     }
 
     return $this->filterList($this->sgroupList, $filter);
@@ -929,7 +929,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
   {
     $this->serverGroupListReset();
 
-    $sgid = $this->execute("servergroupadd", array("name" => $name, "type" => $type))->toList();
+    $sgid = $this->execute("servergroupadd", ["name" => $name, "type" => $type])->toList();
 
     return $sgid["sgid"];
   }
@@ -947,7 +947,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
   {
     $this->serverGroupListReset();
 
-    $sgid = $this->execute("servergroupcopy", array("ssgid" => $ssgid, "tsgid" => $tsgid, "name" => $name, "type" => $type))->toList();
+    $sgid = $this->execute("servergroupcopy", ["ssgid" => $ssgid, "tsgid" => $tsgid, "name" => $name, "type" => $type])->toList();
 
     if($tsgid && $name)
     {
@@ -968,7 +968,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
   {
     $this->serverGroupListReset();
 
-    $this->execute("servergrouprename", array("sgid" => $sgid, "name" => $name));
+    $this->execute("servergrouprename", ["sgid" => $sgid, "name" => $name]);
   }
 
   /**
@@ -983,7 +983,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
   {
     $this->serverGroupListReset();
 
-    $this->execute("servergroupdel", array("sgid" => $sgid, "force" => $force));
+    $this->execute("servergroupdel", ["sgid" => $sgid, "force" => $force]);
   }
 
   /**
@@ -1030,7 +1030,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function serverGroupPermList($sgid, $permsid = FALSE)
   {
-    return $this->execute("servergrouppermlist", array("sgid" => $sgid, $permsid ? "-permsid" : null))->toAssocArray($permsid ? "permsid" : "permid");
+    return $this->execute("servergrouppermlist", ["sgid" => $sgid, $permsid ? "-permsid" : null])->toAssocArray($permsid ? "permsid" : "permid");
   }
 
   /**
@@ -1048,7 +1048,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
   {
     $permident = (is_numeric($permid)) ? "permid" : "permsid";
 
-    $this->execute("servergroupaddperm", array("sgid" => $sgid, $permident => $permid, "permvalue" => $permvalue, "permnegated" => $permnegated, "permskip" => $permskip));
+    $this->execute("servergroupaddperm", ["sgid" => $sgid, $permident => $permid, "permvalue" => $permvalue, "permnegated" => $permnegated, "permskip" => $permskip]);
   }
 
   /**
@@ -1063,7 +1063,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
   {
     $permident = (is_numeric($permid)) ? "permid" : "permsid";
 
-    $this->execute("servergroupdelperm", array("sgid" => $sgid, $permident => $permid));
+    $this->execute("servergroupdelperm", ["sgid" => $sgid, $permident => $permid]);
   }
 
   /**
@@ -1076,10 +1076,10 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
   {
     if($this["virtualserver_default_server_group"] == $sgid)
     {
-      return array();
+      return [];
     }
 
-    return $this->execute("servergroupclientlist", array("sgid" => $sgid,  "-names"))->toAssocArray("cldbid");
+    return $this->execute("servergroupclientlist", ["sgid" => $sgid,  "-names"])->toAssocArray("cldbid");
   }
 
   /**
@@ -1094,7 +1094,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
   {
     $this->clientListReset();
 
-    $this->execute("servergroupaddclient", array("sgid" => $sgid, "cldbid" => $cldbid));
+    $this->execute("servergroupaddclient", ["sgid" => $sgid, "cldbid" => $cldbid]);
   }
 
   /**
@@ -1106,7 +1106,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function serverGroupClientDel($sgid, $cldbid)
   {
-    $this->execute("servergroupdelclient", array("sgid" => $sgid, "cldbid" => $cldbid));
+    $this->execute("servergroupdelclient", ["sgid" => $sgid, "cldbid" => $cldbid]);
   }
 
   /**
@@ -1117,13 +1117,13 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function serverGroupGetProfiles()
   {
-    $profiles = array();
+    $profiles = [];
 
     foreach($this->serverGroupList() as $sgid => $sgroup)
     {
       if($sgroup["type"] != TeamSpeak3::GROUP_DBTYPE_REGULAR) continue;
 
-      $profiles[$sgid] = array(
+      $profiles[$sgid] = [
         "b_permission_modify_power_ignore" => 0,
         "i_group_needed_member_add_power" => 0,
         "i_group_member_add_power" => 0,
@@ -1148,7 +1148,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
         "__sgid" => $sgid,
         "__name" => $sgroup->toString(),
         "__node" => $sgroup,
-      );
+      ];
 
       try
       {
@@ -1159,7 +1159,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
       {
         if($e->getCode() == 0x501) throw $e;
 
-        $perms = array();
+        $perms = [];
         $grant = null;
       }
 
@@ -1206,7 +1206,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    * @param  array $filter
    * @return array
    */
-  public function channelGroupList(array $filter = array())
+  public function channelGroupList(array $filter = [])
   {
     if($this->cgroupList === null)
     {
@@ -1217,7 +1217,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
         $this->cgroupList[$cgid] = new TeamSpeak3_Node_Channelgroup($this, $group);
       }
 
-      uasort($this->cgroupList, array(self::class, "sortGroupList"));
+      uasort($this->cgroupList, [self::class, "sortGroupList"]);
     }
 
     return $this->filterList($this->cgroupList, $filter);
@@ -1244,7 +1244,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
   {
     $this->serverGroupListReset();
 
-    $cgid = $this->execute("channelgroupadd", array("name" => $name, "type" => $type))->toList();
+    $cgid = $this->execute("channelgroupadd", ["name" => $name, "type" => $type])->toList();
 
     return $cgid["cgid"];
   }
@@ -1262,7 +1262,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
   {
     $this->serverGroupListReset();
 
-    $cgid = $this->execute("channelgroupcopy", array("scgid" => $scgid, "tcgid" => $tcgid, "name" => $name, "type" => $type))->toList();
+    $cgid = $this->execute("channelgroupcopy", ["scgid" => $scgid, "tcgid" => $tcgid, "name" => $name, "type" => $type])->toList();
 
     if($tcgid && $name)
     {
@@ -1283,7 +1283,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
   {
     $this->serverGroupListReset();
 
-    $this->execute("channelgrouprename", array("cgid" => $cgid, "name" => $name));
+    $this->execute("channelgrouprename", ["cgid" => $cgid, "name" => $name]);
   }
 
   /**
@@ -1298,7 +1298,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
   {
     $this->serverGroupListReset();
 
-    $this->execute("channelgroupdel", array("cgid" => $cgid, "force" => $force));
+    $this->execute("channelgroupdel", ["cgid" => $cgid, "force" => $force]);
   }
 
   /**
@@ -1345,7 +1345,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function channelGroupPermList($cgid, $permsid = FALSE)
   {
-    return $this->execute("channelgrouppermlist", array("cgid" => $cgid, $permsid ? "-permsid" : null))->toAssocArray($permsid ? "permsid" : "permid");
+    return $this->execute("channelgrouppermlist", ["cgid" => $cgid, $permsid ? "-permsid" : null])->toAssocArray($permsid ? "permsid" : "permid");
   }
 
   /**
@@ -1361,7 +1361,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
   {
     $permident = (is_numeric($permid)) ? "permid" : "permsid";
 
-    $this->execute("channelgroupaddperm", array("cgid" => $cgid, $permident => $permid, "permvalue" => $permvalue));
+    $this->execute("channelgroupaddperm", ["cgid" => $cgid, $permident => $permid, "permvalue" => $permvalue]);
   }
 
   /**
@@ -1376,7 +1376,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
   {
     $permident = (is_numeric($permid)) ? "permid" : "permsid";
 
-    $this->execute("channelgroupdelperm", array("cgid" => $cgid, $permident => $permid));
+    $this->execute("channelgroupdelperm", ["cgid" => $cgid, $permident => $permid]);
   }
 
   /**
@@ -1393,10 +1393,10 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
   {
     if($this["virtualserver_default_channel_group"] == $cgid)
     {
-      return array();
+      return [];
     }
 
-    return $this->execute("channelgroupclientlist", array("cgid" => $cgid, "cid" => $cid, "cldbid" => $cldbid))->toArray();
+    return $this->execute("channelgroupclientlist", ["cgid" => $cgid, "cid" => $cid, "cldbid" => $cldbid])->toArray();
   }
 
   /**
@@ -1430,7 +1430,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function transferInitUpload($clientftfid, $cid, $name, $size, $cpw = "", $overwrite = FALSE, $resume = FALSE)
   {
-    $upload = $this->execute("ftinitupload", array("clientftfid" => $clientftfid, "cid" => $cid, "name" => $name, "cpw" => $cpw, "size" => $size, "overwrite" => $overwrite, "resume" => $resume))->toList();
+    $upload = $this->execute("ftinitupload", ["clientftfid" => $clientftfid, "cid" => $cid, "name" => $name, "cpw" => $cpw, "size" => $size, "overwrite" => $overwrite, "resume" => $resume])->toList();
 
     if(array_key_exists("status", $upload) && $upload["status"] != 0x00)
     {
@@ -1461,7 +1461,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function transferInitDownload($clientftfid, $cid, $name, $cpw = "", $seekpos = 0)
   {
-    $download = $this->execute("ftinitdownload", array("clientftfid" => $clientftfid, "cid" => $cid, "name" => $name, "cpw" => $cpw, "seekpos" => $seekpos))->toList();
+    $download = $this->execute("ftinitdownload", ["clientftfid" => $clientftfid, "cid" => $cid, "name" => $name, "cpw" => $cpw, "seekpos" => $seekpos])->toList();
 
     if(array_key_exists("status", $download) && $download["status"] != 0x00)
     {
@@ -1498,7 +1498,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function transferStop($serverftfid, $delete = FALSE)
   {
-    $this->execute("ftstop", array("serverftfid" => $serverftfid, "delete" => $delete));
+    $this->execute("ftstop", ["serverftfid" => $serverftfid, "delete" => $delete]);
   }
 
   /**
@@ -1555,7 +1555,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function message($msg)
   {
-    $this->execute("sendtextmessage", array("msg" => $msg, "target" => $this->getId(), "targetmode" => TeamSpeak3::TEXTMSG_SERVER));
+    $this->execute("sendtextmessage", ["msg" => $msg, "target" => $this->getId(), "targetmode" => TeamSpeak3::TEXTMSG_SERVER]);
   }
 
   /**
@@ -1579,7 +1579,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function messageCreate($cluid, $subject, $message)
   {
-    $this->execute("messageadd", array("cluid" => $cluid, "subject" => $subject, "message" => $message));
+    $this->execute("messageadd", ["cluid" => $cluid, "subject" => $subject, "message" => $message]);
   }
 
   /**
@@ -1590,7 +1590,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function messageDelete($msgid)
   {
-    $this->execute("messagedel", array("msgid" => $msgid));
+    $this->execute("messagedel", ["msgid" => $msgid]);
   }
 
   /**
@@ -1602,11 +1602,11 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function messageRead($msgid, $flag_read = TRUE)
   {
-    $msg = $this->execute("messageget", array("msgid" => $msgid))->toList();
+    $msg = $this->execute("messageget", ["msgid" => $msgid])->toList();
 
     if($flag_read)
     {
-      $this->execute("messageget", array("msgid" => $msgid, "flag" => $flag_read));
+      $this->execute("messageget", ["msgid" => $msgid, "flag" => $flag_read]);
     }
 
     return $msg;
@@ -1676,7 +1676,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function notifyRegister($event, $id = 0)
   {
-    $this->execute("servernotifyregister", array("event" => $event, "id" => $id));
+    $this->execute("servernotifyregister", ["event" => $event, "id" => $id]);
   }
 
   /**
@@ -1765,7 +1765,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function privilegeKeyCreate($type = TeamSpeak3::TOKEN_SERVERGROUP, $id1, $id2 = 0, $description = null, $customset = null)
   {
-    $token = $this->execute("privilegekeyadd", array("tokentype" => $type, "tokenid1" => $id1, "tokenid2" => $id2, "tokendescription" => $description, "tokencustomset" => $customset))->toList();
+    $token = $this->execute("privilegekeyadd", ["tokentype" => $type, "tokenid1" => $id1, "tokenid2" => $id2, "tokendescription" => $description, "tokencustomset" => $customset])->toList();
 
     TeamSpeak3_Helper_Signal::getInstance()->emit("notifyTokencreated", $this, $token["token"]);
 
@@ -1790,7 +1790,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function privilegeKeyDelete($token)
   {
-    $this->execute("privilegekeydelete", array("token" => $token));
+    $this->execute("privilegekeydelete", ["token" => $token]);
   }
 
   /**
@@ -1812,7 +1812,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function privilegeKeyUse($token)
   {
-    $this->execute("privilegekeyuse", array("token" => $token));
+    $this->execute("privilegekeyuse", ["token" => $token]);
   }
 
   /**
@@ -1824,7 +1824,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function customSearch($ident, $pattern = "%")
   {
-    return $this->execute("customsearch", array("ident" => $ident, "pattern" => $pattern))->toArray();
+    return $this->execute("customsearch", ["ident" => $ident, "pattern" => $pattern])->toArray();
   }
 
   /**
@@ -1835,7 +1835,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function customInfo($cldbid)
   {
-    return $this->execute("custominfo", array("cldbid" => $cldbid))->toArray();
+    return $this->execute("custominfo", ["cldbid" => $cldbid])->toArray();
   }
 
   /**
@@ -1885,7 +1885,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function banDelete($banid)
   {
-    $this->execute("bandel", array("banid" => $banid));
+    $this->execute("bandel", ["banid" => $banid]);
   }
 
   /**
@@ -1897,7 +1897,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function complaintList($tcldbid = null)
   {
-    return $this->execute("complainlist", array("tcldbid" => $tcldbid))->toArray();
+    return $this->execute("complainlist", ["tcldbid" => $tcldbid])->toArray();
   }
 
   /**
@@ -1908,7 +1908,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function complaintListClear($tcldbid)
   {
-    $this->execute("complaindelall", array("tcldbid" => $tcldbid));
+    $this->execute("complaindelall", ["tcldbid" => $tcldbid]);
   }
 
   /**
@@ -1920,7 +1920,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function complaintCreate($tcldbid, $message)
   {
-    $this->execute("complainadd", array("tcldbid" => $tcldbid, "message" => $message));
+    $this->execute("complainadd", ["tcldbid" => $tcldbid, "message" => $message]);
   }
 
   /**
@@ -1932,7 +1932,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function complaintDelete($tcldbid, $fcldbid)
   {
-    $this->execute("complaindel", array("tcldbid" => $tcldbid, "fcldbid" => $fcldbid));
+    $this->execute("complaindel", ["tcldbid" => $tcldbid, "fcldbid" => $fcldbid]);
   }
 
   /**
@@ -1945,7 +1945,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function logView($limitcount = 30, $comparator = null, $timestamp = null)
   {
-    return $this->execute("logview", array("limitcount" => $limitcount, "comparator" => $comparator, "timestamp" => $timestamp))->toArray();
+    return $this->execute("logview", ["limitcount" => $limitcount, "comparator" => $comparator, "timestamp" => $timestamp])->toArray();
   }
 
   /**
@@ -1957,7 +1957,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function logAdd($logmsg, $loglevel = TeamSpeak3::LOGLEVEL_INFO)
   {
-    $this->execute("logadd", array("logmsg" => $logmsg, "loglevel" => $loglevel));
+    $this->execute("logadd", ["logmsg" => $logmsg, "loglevel" => $loglevel]);
   }
 
   /**
@@ -2027,7 +2027,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function selfUpdateLogin($username)
   {
-    $password = $this->execute("clientsetserverquerylogin", array("client_login_name" => $username))->toList();
+    $password = $this->execute("clientsetserverquerylogin", ["client_login_name" => $username])->toList();
 
     return $password["client_login_password"];
   }
@@ -2039,7 +2039,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   public function selfPermOverview()
   {
-    return $this->execute("permoverview", array("cldbid" => $this->whoamiGet("client_database_id"), "cid" => $this->whoamiGet("client_channel_id"), "permid" => 0))->toArray();
+    return $this->execute("permoverview", ["cldbid" => $this->whoamiGet("client_database_id"), "cid" => $this->whoamiGet("client_channel_id"), "permid" => 0])->toArray();
   }
 
   /**
@@ -2047,7 +2047,7 @@ class TeamSpeak3_Node_Server extends TeamSpeak3_Node_Abstract
    */
   protected function fetchNodeList()
   {
-    $this->nodeList = array();
+    $this->nodeList = [];
 
     foreach($this->channelList() as $channel)
     {

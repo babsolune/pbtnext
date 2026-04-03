@@ -33,9 +33,9 @@ class FormFieldsetCapsTop extends AbstractFormFieldset
 
 		$this->assign_template_fields($template);
 
-		$template->put_all(array(
+		$template->put_all([
 			'L_TAG' => $this->tag
-		));
+		]);
 
 		return $template;
 	}

@@ -35,10 +35,10 @@
      * @opt_param int maxResults The maximum number of URL channels to include in the response, used for paging.
      * @return Google_UrlChannels
      */
-    public function listUrlchannels($adClientId, $optParams = array()) {
-      $params = array('adClientId' => $adClientId);
+    public function listUrlchannels($adClientId, $optParams = []) {
+      $params = ['adClientId' => $adClientId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_UrlChannels($data);
       } else {
@@ -69,10 +69,10 @@
      * @opt_param int maxResults The maximum number of ad units to include in the response, used for paging.
      * @return Google_AdUnits
      */
-    public function listAdunits($adClientId, $optParams = array()) {
-      $params = array('adClientId' => $adClientId);
+    public function listAdunits($adClientId, $optParams = []) {
+      $params = ['adClientId' => $adClientId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_AdUnits($data);
       } else {
@@ -87,10 +87,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_AdUnit
      */
-    public function get($adClientId, $adUnitId, $optParams = array()) {
-      $params = array('adClientId' => $adClientId, 'adUnitId' => $adUnitId);
+    public function get($adClientId, $adUnitId, $optParams = []) {
+      $params = ['adClientId' => $adClientId, 'adUnitId' => $adUnitId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_AdUnit($data);
       } else {
@@ -121,10 +121,10 @@
      * @opt_param int maxResults The maximum number of custom channels to include in the response, used for paging.
      * @return Google_CustomChannels
      */
-    public function listAdunitsCustomchannels($adClientId, $adUnitId, $optParams = array()) {
-      $params = array('adClientId' => $adClientId, 'adUnitId' => $adUnitId);
+    public function listAdunitsCustomchannels($adClientId, $adUnitId, $optParams = []) {
+      $params = ['adClientId' => $adClientId, 'adUnitId' => $adUnitId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_CustomChannels($data);
       } else {
@@ -153,10 +153,10 @@
      * @opt_param int maxResults The maximum number of ad clients to include in the response, used for paging.
      * @return Google_AdClients
      */
-    public function listAdclients($optParams = array()) {
-      $params = array();
+    public function listAdclients($optParams = []) {
+      $params = [];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_AdClients($data);
       } else {
@@ -196,10 +196,10 @@
      * @opt_param string accountId Accounts upon which to report.
      * @return Google_AdsenseReportsGenerateResponse
      */
-    public function generate($startDate, $endDate, $optParams = array()) {
-      $params = array('startDate' => $startDate, 'endDate' => $endDate);
+    public function generate($startDate, $endDate, $optParams = []) {
+      $params = ['startDate' => $startDate, 'endDate' => $endDate];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('generate', array($params));
+      $data = $this->__call('generate', [$params]);
       if ($this->useObjects()) {
         return new Google_AdsenseReportsGenerateResponse($data);
       } else {
@@ -228,10 +228,10 @@
      * @opt_param int maxResults The maximum number of accounts to include in the response, used for paging.
      * @return Google_Accounts
      */
-    public function listAccounts($optParams = array()) {
-      $params = array();
+    public function listAccounts($optParams = []) {
+      $params = [];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_Accounts($data);
       } else {
@@ -247,10 +247,10 @@
      * @opt_param bool tree Whether the tree of sub accounts should be returned.
      * @return Google_Account
      */
-    public function get($accountId, $optParams = array()) {
-      $params = array('accountId' => $accountId);
+    public function get($accountId, $optParams = []) {
+      $params = ['accountId' => $accountId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Account($data);
       } else {
@@ -281,10 +281,10 @@
      * @opt_param int maxResults The maximum number of URL channels to include in the response, used for paging.
      * @return Google_UrlChannels
      */
-    public function listAccountsUrlchannels($accountId, $adClientId, $optParams = array()) {
-      $params = array('accountId' => $accountId, 'adClientId' => $adClientId);
+    public function listAccountsUrlchannels($accountId, $adClientId, $optParams = []) {
+      $params = ['accountId' => $accountId, 'adClientId' => $adClientId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_UrlChannels($data);
       } else {
@@ -315,10 +315,10 @@
      * @opt_param int maxResults The maximum number of ad units to include in the response, used for paging.
      * @return Google_AdUnits
      */
-    public function listAccountsAdunits($accountId, $adClientId, $optParams = array()) {
-      $params = array('accountId' => $accountId, 'adClientId' => $adClientId);
+    public function listAccountsAdunits($accountId, $adClientId, $optParams = []) {
+      $params = ['accountId' => $accountId, 'adClientId' => $adClientId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_AdUnits($data);
       } else {
@@ -334,10 +334,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_AdUnit
      */
-    public function get($accountId, $adClientId, $adUnitId, $optParams = array()) {
-      $params = array('accountId' => $accountId, 'adClientId' => $adClientId, 'adUnitId' => $adUnitId);
+    public function get($accountId, $adClientId, $adUnitId, $optParams = []) {
+      $params = ['accountId' => $accountId, 'adClientId' => $adClientId, 'adUnitId' => $adUnitId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_AdUnit($data);
       } else {
@@ -369,10 +369,10 @@
      * @opt_param int maxResults The maximum number of custom channels to include in the response, used for paging.
      * @return Google_CustomChannels
      */
-    public function listAccountsAdunitsCustomchannels($accountId, $adClientId, $adUnitId, $optParams = array()) {
-      $params = array('accountId' => $accountId, 'adClientId' => $adClientId, 'adUnitId' => $adUnitId);
+    public function listAccountsAdunitsCustomchannels($accountId, $adClientId, $adUnitId, $optParams = []) {
+      $params = ['accountId' => $accountId, 'adClientId' => $adClientId, 'adUnitId' => $adUnitId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_CustomChannels($data);
       } else {
@@ -401,10 +401,10 @@
      * @opt_param int maxResults The maximum number of ad clients to include in the response, used for paging.
      * @return Google_AdClients
      */
-    public function listAccountsAdclients($accountId, $optParams = array()) {
-      $params = array('accountId' => $accountId);
+    public function listAccountsAdclients($accountId, $optParams = []) {
+      $params = ['accountId' => $accountId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_AdClients($data);
       } else {
@@ -443,10 +443,10 @@
      * @opt_param string dimension Dimensions to base the report on.
      * @return Google_AdsenseReportsGenerateResponse
      */
-    public function generate($accountId, $startDate, $endDate, $optParams = array()) {
-      $params = array('accountId' => $accountId, 'startDate' => $startDate, 'endDate' => $endDate);
+    public function generate($accountId, $startDate, $endDate, $optParams = []) {
+      $params = ['accountId' => $accountId, 'startDate' => $startDate, 'endDate' => $endDate];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('generate', array($params));
+      $data = $this->__call('generate', [$params]);
       if ($this->useObjects()) {
         return new Google_AdsenseReportsGenerateResponse($data);
       } else {
@@ -477,10 +477,10 @@
      * @opt_param int maxResults The maximum number of custom channels to include in the response, used for paging.
      * @return Google_CustomChannels
      */
-    public function listAccountsCustomchannels($accountId, $adClientId, $optParams = array()) {
-      $params = array('accountId' => $accountId, 'adClientId' => $adClientId);
+    public function listAccountsCustomchannels($accountId, $adClientId, $optParams = []) {
+      $params = ['accountId' => $accountId, 'adClientId' => $adClientId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_CustomChannels($data);
       } else {
@@ -497,10 +497,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_CustomChannel
      */
-    public function get($accountId, $adClientId, $customChannelId, $optParams = array()) {
-      $params = array('accountId' => $accountId, 'adClientId' => $adClientId, 'customChannelId' => $customChannelId);
+    public function get($accountId, $adClientId, $customChannelId, $optParams = []) {
+      $params = ['accountId' => $accountId, 'adClientId' => $adClientId, 'customChannelId' => $customChannelId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_CustomChannel($data);
       } else {
@@ -533,10 +533,10 @@
      * @opt_param string pageToken A continuation token, used to page through ad units. To retrieve the next page, set this parameter to the value of "nextPageToken" from the previous response.
      * @return Google_AdUnits
      */
-    public function listAccountsCustomchannelsAdunits($accountId, $adClientId, $customChannelId, $optParams = array()) {
-      $params = array('accountId' => $accountId, 'adClientId' => $adClientId, 'customChannelId' => $customChannelId);
+    public function listAccountsCustomchannelsAdunits($accountId, $adClientId, $customChannelId, $optParams = []) {
+      $params = ['accountId' => $accountId, 'adClientId' => $adClientId, 'customChannelId' => $customChannelId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_AdUnits($data);
       } else {
@@ -567,10 +567,10 @@
      * @opt_param int maxResults The maximum number of custom channels to include in the response, used for paging.
      * @return Google_CustomChannels
      */
-    public function listCustomchannels($adClientId, $optParams = array()) {
-      $params = array('adClientId' => $adClientId);
+    public function listCustomchannels($adClientId, $optParams = []) {
+      $params = ['adClientId' => $adClientId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_CustomChannels($data);
       } else {
@@ -585,10 +585,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_CustomChannel
      */
-    public function get($adClientId, $customChannelId, $optParams = array()) {
-      $params = array('adClientId' => $adClientId, 'customChannelId' => $customChannelId);
+    public function get($adClientId, $customChannelId, $optParams = []) {
+      $params = ['adClientId' => $adClientId, 'customChannelId' => $customChannelId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_CustomChannel($data);
       } else {
@@ -620,10 +620,10 @@
      * @opt_param int maxResults The maximum number of ad units to include in the response, used for paging.
      * @return Google_AdUnits
      */
-    public function listCustomchannelsAdunits($adClientId, $customChannelId, $optParams = array()) {
-      $params = array('adClientId' => $adClientId, 'customChannelId' => $customChannelId);
+    public function listCustomchannelsAdunits($adClientId, $customChannelId, $optParams = []) {
+      $params = ['adClientId' => $adClientId, 'customChannelId' => $customChannelId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_AdUnits($data);
       } else {

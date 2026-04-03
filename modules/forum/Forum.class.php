@@ -22,7 +22,7 @@ class Forum
     function Add_msg($idtopic, $id_category, $content, $title, $last_page, $last_page_rewrite, $new_topic = false)
     {
         $last_timestamp = time();
-        $properties = array(
+        $properties = [
             'idtopic'        => $idtopic,
             'user_id'        => AppContext::get_current_user()->get_id(),
             'content'        => FormatingHelper::strparse($content),
@@ -30,7 +30,7 @@ class Forum
             'timestamp_edit' => 0,
             'user_id_edit'   => 0,
             'user_ip'        => AppContext::get_request()->get_ip_address()
-        );
+        ];
 
         $lang = LangLoader::get_all_langs('forum');
         ##### Insertion message #####
@@ -42,7 +42,7 @@ class Forum
 
         //On met à jour le last_topic_id dans la catégorie dans le lequel le message a été posté et ses parents
         $categories = array_keys(CategoriesService::get_categories_manager('forum')->get_parents($id_category, true));
-        PersistenceContext::get_querier()->update(ForumSetup::$forum_cats_table, array('last_topic_id' => $idtopic), 'WHERE id IN :categories_id', array('categories_id' => $categories));
+        PersistenceContext::get_querier()->update(ForumSetup::$forum_cats_table, ['last_topic_id' => $idtopic], 'WHERE id IN :categories_id', ['categories_id' => $categories]);
 
         //Mise à jour du nombre de messages du membre.
         PersistenceContext::get_querier()->inject("UPDATE " . DB_TABLE_MEMBER . " SET posted_msg = posted_msg + 1 WHERE user_id = '" . AppContext::get_current_user()->get_id() . "'");
@@ -56,7 +56,7 @@ class Forum
             //Message précédent ce nouveau message.
             $previous_msg_id = 0;
             try {
-                $previous_msg_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'MAX(id)', 'WHERE idtopic = :idtopic AND id < :id', array('idtopic' => $idtopic, 'id' => $last_msg_id));
+                $previous_msg_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'MAX(id)', 'WHERE idtopic = :idtopic AND id < :id', ['idtopic' => $idtopic, 'id' => $last_msg_id]);
             } catch (RowNotFoundException $e) {}
 
             $title_subject = TextHelper::html_entity_decode($title);
@@ -65,7 +65,7 @@ class Forum
             {
                 $pseudo = '';
                 try {
-                    $pseudo = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id = :id', array('id' => AppContext::get_current_user()->get_id()));
+                    $pseudo = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'display_name', 'WHERE user_id = :id', ['id' => AppContext::get_current_user()->get_id()]);
                 } catch (RowNotFoundException $e) {}
 
                 $pseudo_pm = '<a href="'. UserUrlBuilder::profile(AppContext::get_current_user()->get_id())->rel() .'" class="offload">' . $pseudo . '</a>';
@@ -127,7 +127,7 @@ class Forum
             }
             $result->dispose();
 
-            HooksService::execute_hook_action('add', 'forum', array_merge($properties, array('id' => $last_msg_id, 'title' => $title, 'url' => Url::to_rel($next_msg_link))));
+            HooksService::execute_hook_action('add', 'forum', array_merge($properties, ['id' => $last_msg_id, 'title' => $title, 'url' => Url::to_rel($next_msg_link)]));
         }
 
         forum_generate_feeds(); //Regénération du flux rss.
@@ -139,7 +139,7 @@ class Forum
     //Ajout d'un sujet.
     function Add_topic($id_category, $title, $subtitle, $content, $type)
     {
-        $properties = array(
+        $properties = [
             'id_category'    => $id_category,
             'title'          => $title,
             'subtitle'       => $subtitle,
@@ -154,20 +154,20 @@ class Forum
             'status'         => 1,
             'aprob'          => 0,
             'display_msg'    => 0
-        );
+        ];
 
         $result = PersistenceContext::get_querier()->insert(PREFIX . "forum_topics", $properties);
         $last_topic_id = $result->get_last_inserted_id(); //Dernier topic inseré
 
         $last_msg_id = $this->Add_msg($last_topic_id, $id_category, $content, $title, 0, 0, true); //Insertion du message.
-        PersistenceContext::get_querier()->update(PREFIX . 'forum_topics', array('first_msg_id' => $last_msg_id), 'WHERE id=:id', array('id' => $last_topic_id));
+        PersistenceContext::get_querier()->update(PREFIX . 'forum_topics', ['first_msg_id' => $last_msg_id], 'WHERE id=:id', ['id' => $last_topic_id]);
 
         forum_generate_feeds(); //Regénération des flux flux
         ForumCategoriesCache::invalidate();
 
-        HooksService::execute_hook_action('forum_add_topic', 'forum', array_merge($properties, array('id' => $last_topic_id, 'url' => Url::to_rel('/forum/topic.php?id=' . $last_topic_id, '-' . $last_topic_id . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . Url::encode_rewrite($title) : '') . '.php'))));
+        HooksService::execute_hook_action('forum_add_topic', 'forum', array_merge($properties, ['id' => $last_topic_id, 'url' => Url::to_rel('/forum/topic.php?id=' . $last_topic_id, '-' . $last_topic_id . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . Url::encode_rewrite($title) : '') . '.php')]));
 
-        return array($last_topic_id, $last_msg_id);
+        return [$last_topic_id, $last_msg_id];
     }
 
     //Edition d'un message.
@@ -186,20 +186,20 @@ class Forum
         //On récupère l'id de la catégorie du topic.
         $topic_id_category = 0;
         try {
-            $topic_id_category = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'id_category', 'WHERE id=:id', array('id' => $idtopic));
+            $topic_id_category = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'id_category', 'WHERE id=:id', ['id' => $idtopic]);
         } catch (RowNotFoundException $e) {}
 
         //On met à jour le last_topic_id dans la catégorie dans le lequel le message a été posté et ses parents
         $categories = array_keys(CategoriesService::get_categories_manager('forum')->get_parents($topic_id_category, true));
-        PersistenceContext::get_querier()->update(ForumSetup::$forum_cats_table, array('last_topic_id' => $idtopic), 'WHERE id IN :categories_id', array('categories_id' => $categories));
+        PersistenceContext::get_querier()->update(ForumSetup::$forum_cats_table, ['last_topic_id' => $idtopic], 'WHERE id IN :categories_id', ['categories_id' => $categories]);
 
         //On supprime les marqueurs de messages lus pour ce message.
-        PersistenceContext::get_querier()->delete(PREFIX . 'forum_view', 'WHERE idtopic=:id AND last_view_id=:id_message', array('id' => $idtopic, 'id_message' => $idmsg));
+        PersistenceContext::get_querier()->delete(PREFIX . 'forum_view', 'WHERE idtopic=:id AND last_view_id=:id_message', ['id' => $idtopic, 'id_message' => $idmsg]);
 
         //On marque le topic comme lu pour le posteur
         mark_topic_as_read($idtopic, $idmsg, $last_timestamp);
 
-        $nbr_msg_before = PersistenceContext::get_querier()->count(PREFIX . "forum_msg", 'WHERE idtopic = :idtopic AND id < :id', array('idtopic' => $idtopic, 'id' => $idmsg));
+        $nbr_msg_before = PersistenceContext::get_querier()->count(PREFIX . "forum_msg", 'WHERE idtopic = :idtopic AND id < :id', ['idtopic' => $idtopic, 'id' => $idmsg]);
 
         //Calcul de la page sur laquelle se situe le message.
         $msg_page = ceil( ($nbr_msg_before + 1) / $config->get_number_messages_per_page() );
@@ -211,12 +211,12 @@ class Forum
         forum_history_collector(H_EDIT_MSG, $user_id_msg, 'topic' . url('.php?id=' . $idtopic . $msg_page, '-' . $idtopic .  $msg_page_rewrite . '.php', '&') . '#m' . $idmsg);
 
         try {
-            $topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id', 'user_id', 'id_category', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'), 'WHERE id=:id', array('id' => $idtopic));
+            $topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', ['id', 'user_id', 'id_category', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'], 'WHERE id=:id', ['id' => $idtopic]);
         } catch (RowNotFoundException $e) {
-            $topic = array();
+            $topic = [];
         }
 
-        HooksService::execute_hook_action('edit', 'forum', array_merge($topic, array('id' => $idmsg, 'content' => FormatingHelper::strparse($content), 'idtopic' => $idtopic, 'url' => Url::to_rel('/forum/topic' . url('.php?id=' . $idtopic . $msg_page, '-' . $idtopic .  $msg_page_rewrite . '.php', '&') . '#m' . $idmsg))));
+        HooksService::execute_hook_action('edit', 'forum', array_merge($topic, ['id' => $idmsg, 'content' => FormatingHelper::strparse($content), 'idtopic' => $idtopic, 'url' => Url::to_rel('/forum/topic' . url('.php?id=' . $idtopic . $msg_page, '-' . $idtopic .  $msg_page_rewrite . '.php', '&') . '#m' . $idmsg)]));
 
         return $nbr_msg_before;
     }
@@ -224,14 +224,14 @@ class Forum
     //Edition d'un sujet.
     function Update_topic($idtopic, $idmsg, $title, $subtitle, $content, $type, $user_id_msg)
     {
-        $properties = array(
+        $properties = [
             'title'    => $title,
             'subtitle' => $subtitle,
             'type'     => $type
-        );
+        ];
 
         //Mise à jour du sujet.
-        PersistenceContext::get_querier()->update(PREFIX . 'forum_topics', $properties, 'WHERE id=:id', array('id' => $idtopic));
+        PersistenceContext::get_querier()->update(PREFIX . 'forum_topics', $properties, 'WHERE id=:id', ['id' => $idtopic]);
         //Mise à jour du contenu du premier message du sujet.
         $this->Update_msg($idtopic, $idmsg, $content, $user_id_msg, NO_HISTORY);
 
@@ -240,11 +240,11 @@ class Forum
         forum_history_collector(H_EDIT_TOPIC, $user_id_msg, 'topic' . url('.php?id=' . $idtopic, '-' . $idtopic . '.php', '&'));
 
         try {
-            $topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id', 'user_id', 'id_category', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'), 'WHERE id=:id', array('id' => $idtopic));
+            $topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', ['id', 'user_id', 'id_category', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'], 'WHERE id=:id', ['id' => $idtopic]);
         } catch (RowNotFoundException $e) {}
 
         $hook_url = ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? 'topic-' . $idtopic . '-' . Url::encode_rewrite($title) . '.php' : 'topic.php?id=' . $idtopic;
-        HooksService::execute_hook_action('forum_edit_topic', 'forum', array_merge($topic, array('url' => Url::to_rel('/forum/' . $hook_url))));
+        HooksService::execute_hook_action('forum_edit_topic', 'forum', array_merge($topic, ['url' => Url::to_rel('/forum/' . $hook_url)]));
     }
 
     //Supression d'un message.
@@ -255,13 +255,13 @@ class Forum
         if ($first_msg_id != $idmsg) //Suppression d'un message.
         {
             //On compte le nombre de messages du topic avant l'id supprimé.
-            $nbr_msg = PersistenceContext::get_querier()->count(PREFIX . "forum_msg", 'WHERE idtopic = :idtopic AND id < :id', array('idtopic' => $idtopic, 'id' => $idmsg));
+            $nbr_msg = PersistenceContext::get_querier()->count(PREFIX . "forum_msg", 'WHERE idtopic = :idtopic AND id < :id', ['idtopic' => $idtopic, 'id' => $idmsg]);
             //On supprime le message demandé.
-            PersistenceContext::get_querier()->delete(PREFIX . 'forum_msg', 'WHERE id=:id', array('id' => $idmsg));
+            PersistenceContext::get_querier()->delete(PREFIX . 'forum_msg', 'WHERE id=:id', ['id' => $idmsg]);
             //On met à jour la table forum_topics.
             $actual_nbr_msg = 0;
             try {
-                $actual_nbr_msg = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'nbr_msg', 'WHERE id=:id', array('id' => $idtopic));
+                $actual_nbr_msg = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'nbr_msg', 'WHERE id=:id', ['id' => $idtopic]);
             } catch (RowNotFoundException $e) {}
 
             if (!empty($actual_nbr_msg))
@@ -269,20 +269,20 @@ class Forum
             //Récupération du message précédent celui supprimé afin de rediriger vers la bonne ancre.
             $previous_msg_id = 0;
             try {
-                $previous_msg_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg" , 'id', 'WHERE idtopic = :idtopic AND id < :id ORDER BY timestamp DESC LIMIT 1', array('idtopic' => $idtopic, 'id' => $idmsg));
+                $previous_msg_id = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg" , 'id', 'WHERE idtopic = :idtopic AND id < :id ORDER BY timestamp DESC LIMIT 1', ['idtopic' => $idtopic, 'id' => $idmsg]);
             } catch (RowNotFoundException $e) {}
 
             if ($last_msg_id == $idmsg) //On met à jour le dernier message posté dans la liste des topics.
             {
                 //On cherche les infos à propos de l'avant dernier message afin de mettre la table forum_topics à jour.
                 try {
-                    $id_before_last = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', array('user_id', 'timestamp'), 'WHERE id=:id', array('id' => $previous_msg_id));
+                    $id_before_last = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', ['user_id', 'timestamp'], 'WHERE id=:id', ['id' => $previous_msg_id]);
                 } catch (RowNotFoundException $e) {
                     $error_controller = PHPBoostErrors::unexisting_element();
                     DispatchManager::redirect($error_controller);
                 }
 
-                PersistenceContext::get_querier()->update(PREFIX . 'forum_topics', array('last_user_id' => $id_before_last['user_id'], 'last_msg_id' => $previous_msg_id, 'last_timestamp' => $id_before_last['timestamp']), 'WHERE id=:id', array('id' => $idtopic));
+                PersistenceContext::get_querier()->update(PREFIX . 'forum_topics', ['last_user_id' => $id_before_last['user_id'], 'last_msg_id' => $previous_msg_id, 'last_timestamp' => $id_before_last['timestamp']], 'WHERE id=:id', ['id' => $idtopic]);
 
                 //On met maintenant a jour le last_topic_id dans les catégories.
                 $this->Update_last_topic_id($id_category);
@@ -291,7 +291,7 @@ class Forum
             //On retire un msg au membre.
             $user_posted_msg_number = 0;
             try {
-                $user_posted_msg_number = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'posted_msg', 'WHERE user_id=:id', array('id' => $msg_user_id));
+                $user_posted_msg_number = PersistenceContext::get_querier()->get_column_value(DB_TABLE_MEMBER, 'posted_msg', 'WHERE user_id=:id', ['id' => $msg_user_id]);
             } catch (RowNotFoundException $e) {}
 
             if (!empty($user_posted_msg_number))
@@ -319,24 +319,24 @@ class Forum
             ForumCategoriesCache::invalidate();
 
             try {
-                $topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id', 'user_id', 'id_category', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'), 'WHERE id=:id', array('id' => $idtopic));
+                $topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', ['id', 'user_id', 'id_category', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'], 'WHERE id=:id', ['id' => $idtopic]);
             } catch (RowNotFoundException $e) {
-                $topic = array();
+                $topic = [];
             }
 
-            HooksService::execute_hook_action('delete', 'forum', array_merge($topic, array('id' => $idmsg, 'idtopic' => $idtopic, 'id_category' => $id_category, 'msg_user_id' => $msg_user_id, 'url' => Url::to_rel('/forum/topic' . url('.php?id=' . $idtopic . $msg_page, '-' . $idtopic .  $msg_page_rewrite . '.php', '&') . '#m' . $previous_msg_id))));
+            HooksService::execute_hook_action('delete', 'forum', array_merge($topic, ['id' => $idmsg, 'idtopic' => $idtopic, 'id_category' => $id_category, 'msg_user_id' => $msg_user_id, 'url' => Url::to_rel('/forum/topic' . url('.php?id=' . $idtopic . $msg_page, '-' . $idtopic .  $msg_page_rewrite . '.php', '&') . '#m' . $previous_msg_id)]));
 
-            return array($nbr_msg, $previous_msg_id);
+            return [$nbr_msg, $previous_msg_id];
         }
 
-        return array(false, false);
+        return [false, false];
     }
 
     //Suppresion d'un sujet.
     function Del_topic($idtopic, $generate_rss = true)
     {
         try {
-            $topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('title', 'id_category', 'user_id'), 'WHERE id=:id', array('id' => $idtopic));
+            $topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', ['title', 'id_category', 'user_id'], 'WHERE id=:id', ['id' => $idtopic]);
         } catch (RowNotFoundException $e) {
             $error_controller = PHPBoostErrors::unexisting_element();
             DispatchManager::redirect($error_controller);
@@ -346,19 +346,19 @@ class Forum
 
         //On ne supprime pas de msg aux membres ayant postés dans le topic => trop de requêtes.
         //On compte le nombre de messages du topic.
-        $nbr_msg = PersistenceContext::get_querier()->count(PREFIX . "forum_msg", 'WHERE idtopic = :idtopic', array('idtopic' => $idtopic));
+        $nbr_msg = PersistenceContext::get_querier()->count(PREFIX . "forum_msg", 'WHERE idtopic = :idtopic', ['idtopic' => $idtopic]);
         $nbr_msg = !empty($nbr_msg) ? NumberHelper::numeric($nbr_msg) : 1;
 
         //On rippe le topic ainsi que les messages du topic.
-        PersistenceContext::get_querier()->delete(PREFIX . 'forum_msg', 'WHERE idtopic=:id', array('id' => $idtopic));
-        PersistenceContext::get_querier()->delete(PREFIX . 'forum_topics', 'WHERE id=:id', array('id' => $idtopic));
-        PersistenceContext::get_querier()->delete(PREFIX . 'forum_poll', 'WHERE idtopic=:id', array('id' => $idtopic));
+        PersistenceContext::get_querier()->delete(PREFIX . 'forum_msg', 'WHERE idtopic=:id', ['id' => $idtopic]);
+        PersistenceContext::get_querier()->delete(PREFIX . 'forum_topics', 'WHERE id=:id', ['id' => $idtopic]);
+        PersistenceContext::get_querier()->delete(PREFIX . 'forum_poll', 'WHERE idtopic=:id', ['id' => $idtopic]);
 
         //On met maintenant a jour le last_topic_id dans les catégories.
         $this->Update_last_topic_id($topic['id_category']);
 
         //Topic supprimé, on supprime les marqueurs de messages lus pour ce topic.
-        PersistenceContext::get_querier()->delete(PREFIX . 'forum_view', 'WHERE idtopic=:id', array('id' => $idtopic));
+        PersistenceContext::get_querier()->delete(PREFIX . 'forum_view', 'WHERE idtopic=:id', ['id' => $idtopic]);
 
         //On supprime l'alerte.
         $this->Del_alert_topic($idtopic);
@@ -372,7 +372,7 @@ class Forum
 
         ForumCategoriesCache::invalidate();
 
-        HooksService::execute_hook_action('forum_delete_topic', 'forum', array_merge($topic, array('id' => $idtopic)));
+        HooksService::execute_hook_action('forum_delete_topic', 'forum', array_merge($topic, ['id' => $idtopic]));
     }
 
     //Suivi d'un sujet.
@@ -380,7 +380,7 @@ class Forum
     {
         $config = ForumConfig::load();
 
-        list($mail, $pm, $track) = array(0, 0, 0);
+        list($mail, $pm, $track) = [0, 0, 0];
         if ($tracking_type == 0) //Suivi par email.
             $track = '1';
         elseif ($tracking_type == 1) //Suivi par email.
@@ -388,15 +388,15 @@ class Forum
         elseif ($tracking_type == 2) //Suivi par email.
             $pm = '1';
 
-        $exist = PersistenceContext::get_querier()->count(PREFIX . 'forum_track', 'WHERE user_id = :user_id AND idtopic = :idtopic', array('user_id' => AppContext::get_current_user()->get_id(), 'idtopic' => $idtopic));
+        $exist = PersistenceContext::get_querier()->count(PREFIX . 'forum_track', 'WHERE user_id = :user_id AND idtopic = :idtopic', ['user_id' => AppContext::get_current_user()->get_id(), 'idtopic' => $idtopic]);
         if ($exist == 0)
-            PersistenceContext::get_querier()->insert(PREFIX . "forum_track", array('idtopic' => $idtopic, 'user_id' => AppContext::get_current_user()->get_id(), 'track' => $track, 'pm' => $pm, 'mail' => $mail));
+            PersistenceContext::get_querier()->insert(PREFIX . "forum_track", ['idtopic' => $idtopic, 'user_id' => AppContext::get_current_user()->get_id(), 'track' => $track, 'pm' => $pm, 'mail' => $mail]);
         elseif ($tracking_type == 0)
-            PersistenceContext::get_querier()->update(PREFIX . "forum_track", array('track' => 1), 'WHERE idtopic = :idtopic AND user_id = :user_id', array('idtopic' => $idtopic , 'user_id' => AppContext::get_current_user()->get_id()));
+            PersistenceContext::get_querier()->update(PREFIX . "forum_track", ['track' => 1], 'WHERE idtopic = :idtopic AND user_id = :user_id', ['idtopic' => $idtopic , 'user_id' => AppContext::get_current_user()->get_id()]);
         elseif ($tracking_type == 1)
-            PersistenceContext::get_querier()->update(PREFIX . "forum_track", array('mail' => 1), 'WHERE idtopic = :idtopic AND user_id = :user_id', array('idtopic' => $idtopic , 'user_id' => AppContext::get_current_user()->get_id()));
+            PersistenceContext::get_querier()->update(PREFIX . "forum_track", ['mail' => 1], 'WHERE idtopic = :idtopic AND user_id = :user_id', ['idtopic' => $idtopic , 'user_id' => AppContext::get_current_user()->get_id()]);
         elseif ($tracking_type == 2)
-            PersistenceContext::get_querier()->update(PREFIX . "forum_track", array('pm' => 1), 'WHERE idtopic = :idtopic AND user_id = :user_id', array('idtopic' => $idtopic , 'user_id' => AppContext::get_current_user()->get_id()));
+            PersistenceContext::get_querier()->update(PREFIX . "forum_track", ['pm' => 1], 'WHERE idtopic = :idtopic AND user_id = :user_id', ['idtopic' => $idtopic , 'user_id' => AppContext::get_current_user()->get_id()]);
 
         //Limite de sujets suivis?
         if (!ForumAuthorizationsService::check_authorizations()->unlimited_topics_tracking())
@@ -418,7 +418,7 @@ class Forum
 
             //Suppression des sujets suivis dépassant le nbr maximum autorisé.
             if (!empty($tracked_topics_number))
-                PersistenceContext::get_querier()->delete(PREFIX . 'forum_track', 'WHERE user_id=:id  AND id < :number', array('id' => AppContext::get_current_user()->get_id(), 'number' => $tracked_topics_number['number']));
+                PersistenceContext::get_querier()->delete(PREFIX . 'forum_track', 'WHERE user_id=:id  AND id < :number', ['id' => AppContext::get_current_user()->get_id(), 'number' => $tracked_topics_number['number']]);
         }
     }
 
@@ -428,81 +428,81 @@ class Forum
         if ($tracking_type == 1) //Par mail
         {
             try {
-                $info = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_track', array("pm", "track"), 'WHERE user_id=:user_id AND idtopic=:idtopic', array('user_id' => AppContext::get_current_user()->get_id(), 'idtopic' => $idtopic));
+                $info = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_track', ["pm", "track"], 'WHERE user_id=:user_id AND idtopic=:idtopic', ['user_id' => AppContext::get_current_user()->get_id(), 'idtopic' => $idtopic]);
             } catch (RowNotFoundException $e) {
                 $error_controller = PHPBoostErrors::unexisting_element();
                 DispatchManager::redirect($error_controller);
             }
 
             if ($info['track'] == 0 && $info['pm'] == 0)
-                PersistenceContext::get_querier()->delete(PREFIX . 'forum_track', 'WHERE idtopic=:id AND user_id =:user_id', array('id' => $idtopic, 'user_id' => AppContext::get_current_user()->get_id()));
+                PersistenceContext::get_querier()->delete(PREFIX . 'forum_track', 'WHERE idtopic=:id AND user_id =:user_id', ['id' => $idtopic, 'user_id' => AppContext::get_current_user()->get_id()]);
             else
-                PersistenceContext::get_querier()->update(PREFIX . "forum_track", array('mail' => 0), 'WHERE idtopic = :idtopic AND user_id = :user_id', array('idtopic' => $idtopic , 'user_id' => AppContext::get_current_user()->get_id()));
+                PersistenceContext::get_querier()->update(PREFIX . "forum_track", ['mail' => 0], 'WHERE idtopic = :idtopic AND user_id = :user_id', ['idtopic' => $idtopic , 'user_id' => AppContext::get_current_user()->get_id()]);
         }
         elseif ($tracking_type == 2) //Par mp
         {
             try {
-                $info = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_track', array("mail", "track"), 'WHERE user_id=:user_id AND idtopic=:idtopic', array('user_id' => AppContext::get_current_user()->get_id(), 'idtopic' => $idtopic));
+                $info = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_track', ["mail", "track"], 'WHERE user_id=:user_id AND idtopic=:idtopic', ['user_id' => AppContext::get_current_user()->get_id(), 'idtopic' => $idtopic]);
                 } catch (RowNotFoundException $e) {
                 $error_controller = PHPBoostErrors::unexisting_element();
                 DispatchManager::redirect($error_controller);
             }
 
             if ($info['mail'] == 0 && $info['track'] == 0)
-                PersistenceContext::get_querier()->delete(PREFIX . 'forum_track', 'WHERE idtopic=:id AND user_id =:user_id', array('id' => $idtopic, 'user_id' => AppContext::get_current_user()->get_id()));
+                PersistenceContext::get_querier()->delete(PREFIX . 'forum_track', 'WHERE idtopic=:id AND user_id =:user_id', ['id' => $idtopic, 'user_id' => AppContext::get_current_user()->get_id()]);
             else
-                PersistenceContext::get_querier()->update(PREFIX . "forum_track", array('pm' => 0), 'WHERE idtopic = :idtopic AND user_id = :user_id', array('idtopic' => $idtopic , 'user_id' => AppContext::get_current_user()->get_id()));
+                PersistenceContext::get_querier()->update(PREFIX . "forum_track", ['pm' => 0], 'WHERE idtopic = :idtopic AND user_id = :user_id', ['idtopic' => $idtopic , 'user_id' => AppContext::get_current_user()->get_id()]);
         }
         else //Suivi
         {
             try {
-                $info = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_track', array("mail", "pm"), 'WHERE user_id=:user_id AND idtopic=:idtopic', array('user_id' => AppContext::get_current_user()->get_id(), 'idtopic' => $idtopic));
+                $info = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_track', ["mail", "pm"], 'WHERE user_id=:user_id AND idtopic=:idtopic', ['user_id' => AppContext::get_current_user()->get_id(), 'idtopic' => $idtopic]);
             } catch (RowNotFoundException $e) {
                 $error_controller = PHPBoostErrors::unexisting_element();
                 DispatchManager::redirect($error_controller);
             }
 
             if ($info['mail'] == 0 && $info['pm'] == 0)
-                PersistenceContext::get_querier()->delete(PREFIX . 'forum_track', 'WHERE idtopic=:id AND user_id =:user_id', array('id' => $idtopic, 'user_id' => AppContext::get_current_user()->get_id()));
+                PersistenceContext::get_querier()->delete(PREFIX . 'forum_track', 'WHERE idtopic=:id AND user_id =:user_id', ['id' => $idtopic, 'user_id' => AppContext::get_current_user()->get_id()]);
             else
-                PersistenceContext::get_querier()->update(PREFIX . "forum_track", array('track' => 0), 'WHERE idtopic = :idtopic AND user_id = :user_id', array('idtopic' => $idtopic , 'user_id' => AppContext::get_current_user()->get_id()));
+                PersistenceContext::get_querier()->update(PREFIX . "forum_track", ['track' => 0], 'WHERE idtopic = :idtopic AND user_id = :user_id', ['idtopic' => $idtopic , 'user_id' => AppContext::get_current_user()->get_id()]);
         }
     }
 
     //Verrouillage d'un sujet.
     function Lock_topic($idtopic)
     {
-        PersistenceContext::get_querier()->update(PREFIX . "forum_topics", array('status' => 0), 'WHERE id = :id', array('id' => $idtopic));
+        PersistenceContext::get_querier()->update(PREFIX . "forum_topics", ['status' => 0], 'WHERE id = :id', ['id' => $idtopic]);
 
         //Insertion de l'action dans l'historique.
         forum_history_collector(H_LOCK_TOPIC, 0, 'topic' . url('.php?id=' . $idtopic, '-' . $idtopic . '.php', '&'));
 
         try {
-            $topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id', 'user_id', 'id_category', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'), 'WHERE id=:id', array('id' => $idtopic));
+            $topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', ['id', 'user_id', 'id_category', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'], 'WHERE id=:id', ['id' => $idtopic]);
         } catch (RowNotFoundException $e) {
-            $topic = array();
+            $topic = [];
         }
 
         if (!empty($topic))
-            HooksService::execute_hook_action('forum_lock_topic', 'forum', array_merge($topic, array('url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . Url::encode_rewrite($topic['title']) : '') . '.php'))));
+            HooksService::execute_hook_action('forum_lock_topic', 'forum', array_merge($topic, ['url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . Url::encode_rewrite($topic['title']) : '') . '.php')]));
     }
 
     //Déverrouillage d'un sujet.
     function Unlock_topic($idtopic)
     {
-        PersistenceContext::get_querier()->update(PREFIX . "forum_topics", array('status' => 1), 'WHERE id = :id', array('id' => $idtopic));
+        PersistenceContext::get_querier()->update(PREFIX . "forum_topics", ['status' => 1], 'WHERE id = :id', ['id' => $idtopic]);
 
         //Insertion de l'action dans l'historique.
         forum_history_collector(H_UNLOCK_TOPIC, 0, 'topic' . url('.php?id=' . $idtopic, '-' . $idtopic . '.php', '&'));
 
         try {
-            $topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id', 'user_id', 'id_category', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'), 'WHERE id=:id', array('id' => $idtopic));
+            $topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', ['id', 'user_id', 'id_category', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'], 'WHERE id=:id', ['id' => $idtopic]);
         } catch (RowNotFoundException $e) {
-            $topic = array();
+            $topic = [];
         }
 
         if (!empty($topic))
-            HooksService::execute_hook_action('forum_unlock_topic', 'forum', array_merge($topic, array('url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . Url::encode_rewrite($topic['title']) : '') . '.php'))));
+            HooksService::execute_hook_action('forum_unlock_topic', 'forum', array_merge($topic, ['url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . Url::encode_rewrite($topic['title']) : '') . '.php')]));
     }
 
     //Déplacement d'un sujet.
@@ -510,7 +510,7 @@ class Forum
     {
         //On va chercher le nombre de messages dans la table topics
         try {
-            $topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id', 'user_id', 'id_category', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'), 'WHERE id=:id', array('id' => $idtopic));
+            $topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', ['id', 'user_id', 'id_category', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status', 'display_msg'], 'WHERE id=:id', ['id' => $idtopic]);
         } catch (RowNotFoundException $e) {
             $error_controller = PHPBoostErrors::unexisting_element();
             DispatchManager::redirect($error_controller);
@@ -519,7 +519,7 @@ class Forum
         $topic['nbr_msg'] = !empty($topic['nbr_msg']) ? NumberHelper::numeric($topic['nbr_msg']) : 1;
 
         //On déplace le topic dans la nouvelle catégorie
-        PersistenceContext::get_querier()->update(PREFIX . "forum_topics", array('id_category' => $id_category_dest), 'WHERE id = :id', array('id' => $idtopic));
+        PersistenceContext::get_querier()->update(PREFIX . "forum_topics", ['id_category' => $id_category_dest], 'WHERE id = :id', ['id' => $idtopic]);
 
         //On met maintenant a jour le last_topic_id dans les catégories.
         $this->Update_last_topic_id($id_category);
@@ -533,7 +533,7 @@ class Forum
         ForumCategoriesCache::invalidate();
 
         $categories_cache = ForumCategoriesCache::load();
-        HooksService::execute_hook_action('forum_move_topic', 'forum', array_merge($topic, array('url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . Url::encode_rewrite($topic['title']) : '') . '.php'))), StringVars::replace_vars(LangLoader::get_message('forum.specific_hook.forum_move_topic.description', 'common', 'forum'), array('old_category' => $categories_cache->get_category($id_category)->get_name(), 'new_category' => $categories_cache->get_category($id_category_dest)->get_name())));
+        HooksService::execute_hook_action('forum_move_topic', 'forum', array_merge($topic, ['url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . (ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . Url::encode_rewrite($topic['title']) : '') . '.php')]), StringVars::replace_vars(LangLoader::get_message('forum.specific_hook.forum_move_topic.description', 'common', 'forum'), ['old_category' => $categories_cache->get_category($id_category)->get_name(), 'new_category' => $categories_cache->get_category($id_category_dest)->get_name()]));
     }
 
     //Déplacement d'un sujet
@@ -541,19 +541,19 @@ class Forum
     {
         $now = new Date();
         //Calcul du nombre de messages déplacés.
-        $nbr_msg = PersistenceContext::get_querier()->count(PREFIX . "forum_msg", 'WHERE idtopic = :idtopic AND id >= :id', array('idtopic' => $idtopic, 'id' => $id_msg_cut));
+        $nbr_msg = PersistenceContext::get_querier()->count(PREFIX . "forum_msg", 'WHERE idtopic = :idtopic AND id >= :id', ['idtopic' => $idtopic, 'id' => $id_msg_cut]);
         $nbr_msg = !empty($nbr_msg) ? NumberHelper::numeric($nbr_msg) : 1;
 
         //Insertion nouveau topic.
-        $result = PersistenceContext::get_querier()->insert(PREFIX . "forum_topics", array('id_category' => $id_category_dest, 'title' => $title, 'subtitle' => $subtitle, 'user_id' => $msg_user_id, 'nbr_msg' => $nbr_msg, 'nbr_views' => 0, 'last_user_id' => $last_user_id, 'last_msg_id' => $last_msg_id, 'last_timestamp' => $now->get_timestamp(), 'first_msg_id' => $id_msg_cut, 'type' => $type, 'status' => 1, 'aprob' => 0));
+        $result = PersistenceContext::get_querier()->insert(PREFIX . "forum_topics", ['id_category' => $id_category_dest, 'title' => $title, 'subtitle' => $subtitle, 'user_id' => $msg_user_id, 'nbr_msg' => $nbr_msg, 'nbr_views' => 0, 'last_user_id' => $last_user_id, 'last_msg_id' => $last_msg_id, 'last_timestamp' => $now->get_timestamp(), 'first_msg_id' => $id_msg_cut, 'type' => $type, 'status' => 1, 'aprob' => 0]);
         $last_topic_id = $result->get_last_inserted_id(); //Dernier topic inseré
 
         //Mise à jour du message.
-        PersistenceContext::get_querier()->update(PREFIX . "forum_msg", array('content' => $content), 'WHERE id = :id', array('id' => $id_msg_cut));
+        PersistenceContext::get_querier()->update(PREFIX . "forum_msg", ['content' => $content], 'WHERE id = :id', ['id' => $id_msg_cut]);
 
         //Déplacement des messages.
-        $messages_to_move = array();
-        $result = PersistenceContext::get_querier()->select_rows(PREFIX . 'forum_msg', array('id'), 'WHERE idtopic = :idtopic AND id >= :id', array('idtopic' => $idtopic, 'id' => $id_msg_cut));
+        $messages_to_move = [];
+        $result = PersistenceContext::get_querier()->select_rows(PREFIX . 'forum_msg', ['id'], 'WHERE idtopic = :idtopic AND id >= :id', ['idtopic' => $idtopic, 'id' => $id_msg_cut]);
         while ($row = $result->fetch())
         {
             $messages_to_move[] = $row['id'];
@@ -561,11 +561,11 @@ class Forum
         $result->dispose();
 
         if (!empty($messages_to_move))
-            PersistenceContext::get_querier()->update(PREFIX . "forum_msg", array('idtopic' => $last_topic_id), 'WHERE id IN :ids_list', array('ids_list' => $messages_to_move));
+            PersistenceContext::get_querier()->update(PREFIX . "forum_msg", ['idtopic' => $last_topic_id], 'WHERE id IN :ids_list', ['ids_list' => $messages_to_move]);
 
         //Mise à jour de l'ancien topic
         try {
-            $previous_topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', array('id', 'user_id', 'timestamp'), 'WHERE id<:id AND idtopic =:idtopic ORDER BY timestamp DESC LIMIT 0, 1', array('id' => $id_msg_cut, 'idtopic' => $idtopic));
+            $previous_topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', ['id', 'user_id', 'timestamp'], 'WHERE id<:id AND idtopic =:idtopic ORDER BY timestamp DESC LIMIT 0, 1', ['id' => $id_msg_cut, 'idtopic' => $idtopic]);
         } catch (RowNotFoundException $e) {
             $error_controller = PHPBoostErrors::unexisting_element();
             DispatchManager::redirect($error_controller);
@@ -584,7 +584,7 @@ class Forum
         $this->Update_last_topic_id($id_category);
 
         //On marque comme lu le message avant le message scindé qui est le dernier message de l'ancienne catégorie pour tous les utilisateurs.
-        PersistenceContext::get_querier()->update(PREFIX . "forum_view", array('last_view_id' => $previous_topic['id'], 'timestamp' => time()), 'WHERE idtopic = :idtopic', array('idtopic' => $idtopic));
+        PersistenceContext::get_querier()->update(PREFIX . "forum_view", ['last_view_id' => $previous_topic['id'], 'timestamp' => time()], 'WHERE idtopic = :idtopic', ['idtopic' => $idtopic]);
 
         //Insertion de l'action dans l'historique.
         forum_history_collector(H_CUT_TOPIC, 0, 'topic' . url('.php?id=' . $last_topic_id, '-' . $last_topic_id . '.php', '&'));
@@ -600,13 +600,13 @@ class Forum
         $lang = LangLoader::get_all_langs('forum');
 
         try {
-            $topic_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array("id_category", "title"), 'WHERE id=:id', array('id' => $alert_post));
+            $topic_infos = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', ["id_category", "title"], 'WHERE id=:id', ['id' => $alert_post]);
         } catch (RowNotFoundException $e) {
             $error_controller = PHPBoostErrors::unexisting_element();
             DispatchManager::redirect($error_controller);
         }
 
-        $result = PersistenceContext::get_querier()->insert(PREFIX . "forum_alerts", array('id_category' => $topic_infos['id_category'], 'idtopic' => $alert_post, 'title' => $alert_title, 'content' => $alert_content, 'user_id' => AppContext::get_current_user()->get_id(), 'status' => 0, 'idmodo' => 0, 'timestamp' => time()));
+        $result = PersistenceContext::get_querier()->insert(PREFIX . "forum_alerts", ['id_category' => $topic_infos['id_category'], 'idtopic' => $alert_post, 'title' => $alert_title, 'content' => $alert_content, 'user_id' => AppContext::get_current_user()->get_id(), 'status' => 0, 'idmodo' => 0, 'timestamp' => time()]);
 
         $alert_id = $result->get_last_inserted_id();
 
@@ -644,7 +644,7 @@ class Forum
     //Passe en résolu une alerte sur un sujet.
     function Solve_alert_topic($id_alert)
     {
-        PersistenceContext::get_querier()->update(PREFIX . "forum_alerts", array('status' => 1, 'idmodo' => AppContext::get_current_user()->get_id()), 'WHERE id = :id', array('id' => $id_alert));
+        PersistenceContext::get_querier()->update(PREFIX . "forum_alerts", ['status' => 1, 'idmodo' => AppContext::get_current_user()->get_id()], 'WHERE id = :id', ['id' => $id_alert]);
 
         //Insertion de l'action dans l'historique.
         forum_history_collector(H_SOLVE_ALERT, 0, 'moderation_forum.php?action=alert&id=' . $id_alert, '', '&');
@@ -664,7 +664,7 @@ class Forum
     //Passe en attente une alerte sur un sujet.
     function Wait_alert_topic($id_alert)
     {
-        PersistenceContext::get_querier()->update(PREFIX . 'forum_alerts', array('status' => 0, 'idmodo' => 0), 'WHERE id=:id', array('id' => $id_alert));
+        PersistenceContext::get_querier()->update(PREFIX . 'forum_alerts', ['status' => 0, 'idmodo' => 0], 'WHERE id=:id', ['id' => $id_alert]);
 
         //Insertion de l'action dans l'historique.
         forum_history_collector(H_WAIT_ALERT, 0, 'moderation_forum.php?action=alert&id=' . $id_alert);
@@ -673,7 +673,7 @@ class Forum
     //Supprime une alerte sur un sujet.
     function Del_alert_topic($id_alert)
     {
-        PersistenceContext::get_querier()->delete(PREFIX . 'forum_alerts', 'WHERE id=:id', array('id' => $id_alert));
+        PersistenceContext::get_querier()->delete(PREFIX . 'forum_alerts', 'WHERE id=:id', ['id' => $id_alert]);
 
         //Si la contribution associée n'est pas réglée, on la règle
         $corresponding_contributions = ContributionService::find_by_criteria('forum', $id_alert, 'alert');
@@ -694,41 +694,41 @@ class Forum
     {
         $topic_title = '';
         try {
-            $topic_title = PersistenceContext::get_querier()->get_column_value(ForumSetup::$forum_topics_table, 'title', 'WHERE id = :id', array('id' => $idtopic));
+            $topic_title = PersistenceContext::get_querier()->get_column_value(ForumSetup::$forum_topics_table, 'title', 'WHERE id = :id', ['id' => $idtopic]);
         } catch (RowNotFoundException $e) {}
 
-        $properties = array('idtopic' => $idtopic, 'question' => $question, 'answers' => implode('|', $answers), 'voter_id' => 0, 'votes' => trim(str_repeat('0|', $nbr_votes)), 'type' => NumberHelper::numeric($type));
+        $properties = ['idtopic' => $idtopic, 'question' => $question, 'answers' => implode('|', $answers), 'voter_id' => 0, 'votes' => trim(str_repeat('0|', $nbr_votes)), 'type' => NumberHelper::numeric($type)];
         PersistenceContext::get_querier()->insert(PREFIX . "forum_poll", $properties);
-        HooksService::execute_hook_action('forum_add_poll', 'forum', array_merge($properties, array('id' => $idtopic, 'title' => $question, 'url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . ($topic_title && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . Url::encode_rewrite($topic_title) : '') . '.php'))));
+        HooksService::execute_hook_action('forum_add_poll', 'forum', array_merge($properties, ['id' => $idtopic, 'title' => $question, 'url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . ($topic_title && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . Url::encode_rewrite($topic_title) : '') . '.php')]));
     }
 
     //Edition d'un sondage.
     function Update_poll($idtopic, $question, $answers, $type)
     {
         //Vérification => vérifie si il n'y a pas de nouvelle réponses à ajouter.
-        $previous_votes = array();
+        $previous_votes = [];
         try {
-            $previous_votes = explode('|', PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_poll", 'votes', 'WHERE idtopic = :idtopic', array('idtopic' => $idtopic)));
+            $previous_votes = explode('|', PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_poll", 'votes', 'WHERE idtopic = :idtopic', ['idtopic' => $idtopic]));
         } catch (RowNotFoundException $e) {}
 
-        $votes = array();
+        $votes = [];
         foreach ($answers as $key => $answer_value) //Récupération des votes précédents.
         $votes[$key] = isset($previous_votes[$key]) ? $previous_votes[$key] : 0;
 
         $topic_title = '';
         try {
-            $topic_title = PersistenceContext::get_querier()->get_column_value(ForumSetup::$forum_topics_table, 'title', 'WHERE id = :id', array('id' => $idtopic));
+            $topic_title = PersistenceContext::get_querier()->get_column_value(ForumSetup::$forum_topics_table, 'title', 'WHERE id = :id', ['id' => $idtopic]);
         } catch (RowNotFoundException $e) {}
         
-        $properties = array('question' => $question, 'answers' => implode('|', $answers), 'votes' => implode('|', $votes), 'type' => $type);
-        PersistenceContext::get_querier()->update(PREFIX . "forum_poll", $properties, 'WHERE idtopic = :idtopic', array('idtopic' => $idtopic));
-        HooksService::execute_hook_action('forum_edit_poll', 'forum', array_merge($properties, array('idtopic' => $idtopic, 'id' => $idtopic, 'title' => $question, 'url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . ($topic_title && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . Url::encode_rewrite($topic_title) : '') . '.php'))));
+        $properties = ['question' => $question, 'answers' => implode('|', $answers), 'votes' => implode('|', $votes), 'type' => $type];
+        PersistenceContext::get_querier()->update(PREFIX . "forum_poll", $properties, 'WHERE idtopic = :idtopic', ['idtopic' => $idtopic]);
+        HooksService::execute_hook_action('forum_edit_poll', 'forum', array_merge($properties, ['idtopic' => $idtopic, 'id' => $idtopic, 'title' => $question, 'url' => Url::to_rel('/forum/topic.php?id=' . $idtopic, '-' . $idtopic . ($topic_title && ServerEnvironmentConfig::load()->is_url_rewriting_enabled() ? '-' . Url::encode_rewrite($topic_title) : '') . '.php')]));
     }
 
     //Suppression d'un sondage.
     function Del_poll($idtopic)
     {
-        PersistenceContext::get_querier()->delete(PREFIX . 'forum_poll', 'WHERE idtopic=:id', array('id' => $idtopic));
+        PersistenceContext::get_querier()->delete(PREFIX . 'forum_poll', 'WHERE idtopic=:id', ['id' => $idtopic]);
     }
 
     ## Private Method ##
@@ -749,10 +749,10 @@ class Forum
 
         $last_topic_id = 0;
         try {
-            $last_topic_id = PersistenceContext::get_querier()->get_column_value(ForumSetup::$forum_topics_table, 'MAX(id)', 'WHERE last_timestamp = :timestamp', array('timestamp' => $last_timestamp));
+            $last_topic_id = PersistenceContext::get_querier()->get_column_value(ForumSetup::$forum_topics_table, 'MAX(id)', 'WHERE last_timestamp = :timestamp', ['timestamp' => $last_timestamp]);
         } catch (RowNotFoundException $e) {}
 
-        PersistenceContext::get_querier()->update(ForumSetup::$forum_cats_table, array('last_topic_id' => (int)$last_topic_id ), 'WHERE id = :id', array('id' => $id_category));
+        PersistenceContext::get_querier()->update(ForumSetup::$forum_cats_table, ['last_topic_id' => (int)$last_topic_id ], 'WHERE id = :id', ['id' => $id_category]);
 
         if ($category->get_id_parent() != Category::ROOT_CATEGORY) //Appel recursif si sous-forum.
         {

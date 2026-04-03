@@ -34,10 +34,10 @@
      * @opt_param string sort Enables sorting of the list
      * @return Google_WebfontList
      */
-    public function listWebfonts($optParams = array()) {
-      $params = array();
+    public function listWebfonts($optParams = []) {
+      $params = [];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_WebfontList($data);
       } else {
@@ -114,7 +114,7 @@ class Google_WebfontList extends Google_Model {
   protected $__itemsDataType = 'array';
   public $items;
   public $kind;
-  public function setItems(/* array(Google_Webfont) */ $items) {
+  public function setItems(/* [Google_Webfont] */ $items) {
     $this->assertIsArray($items, 'Google_Webfont', __METHOD__);
     $this->items = $items;
   }

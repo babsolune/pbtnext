@@ -37,10 +37,10 @@
      * @opt_param string language Specify the preferred language to search with. See search language codes for available values.
      * @return Google_ActivityFeed
      */
-    public function search($query, $optParams = array()) {
-      $params = array('query' => $query);
+    public function search($query, $optParams = []) {
+      $params = ['query' => $query];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('search', array($params));
+      $data = $this->__call('search', [$params]);
       if ($this->useObjects()) {
         return new Google_ActivityFeed($data);
       } else {
@@ -58,10 +58,10 @@
      * @opt_param string maxResults The maximum number of activities to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.
      * @return Google_ActivityFeed
      */
-    public function listActivities($userId, $collection, $optParams = array()) {
-      $params = array('userId' => $userId, 'collection' => $collection);
+    public function listActivities($userId, $collection, $optParams = []) {
+      $params = ['userId' => $userId, 'collection' => $collection];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_ActivityFeed($data);
       } else {
@@ -75,10 +75,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Activity
      */
-    public function get($activityId, $optParams = array()) {
-      $params = array('activityId' => $activityId);
+    public function get($activityId, $optParams = []) {
+      $params = ['activityId' => $activityId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Activity($data);
       } else {
@@ -109,10 +109,10 @@
      * @opt_param string sortOrder The order in which to sort the list of comments.
      * @return Google_CommentFeed
      */
-    public function listComments($activityId, $optParams = array()) {
-      $params = array('activityId' => $activityId);
+    public function listComments($activityId, $optParams = []) {
+      $params = ['activityId' => $activityId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_CommentFeed($data);
       } else {
@@ -126,10 +126,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Comment
      */
-    public function get($commentId, $optParams = array()) {
-      $params = array('commentId' => $commentId);
+    public function get($commentId, $optParams = []) {
+      $params = ['commentId' => $commentId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Comment($data);
       } else {
@@ -161,10 +161,10 @@
      * @opt_param string maxResults The maximum number of people to include in the response, used for paging. For any response, the actual number returned may be less than the specified maxResults.
      * @return Google_PeopleFeed
      */
-    public function listByActivity($activityId, $collection, $optParams = array()) {
-      $params = array('activityId' => $activityId, 'collection' => $collection);
+    public function listByActivity($activityId, $collection, $optParams = []) {
+      $params = ['activityId' => $activityId, 'collection' => $collection];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('listByActivity', array($params));
+      $data = $this->__call('listByActivity', [$params]);
       if ($this->useObjects()) {
         return new Google_PeopleFeed($data);
       } else {
@@ -182,10 +182,10 @@
      * @opt_param string language Specify the preferred language to search with. See search language codes for available values.
      * @return Google_PeopleFeed
      */
-    public function search($query, $optParams = array()) {
-      $params = array('query' => $query);
+    public function search($query, $optParams = []) {
+      $params = ['query' => $query];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('search', array($params));
+      $data = $this->__call('search', [$params]);
       if ($this->useObjects()) {
         return new Google_PeopleFeed($data);
       } else {
@@ -199,10 +199,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Person
      */
-    public function get($userId, $optParams = array()) {
-      $params = array('userId' => $userId);
+    public function get($userId, $optParams = []) {
+      $params = ['userId' => $userId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Person($data);
       } else {

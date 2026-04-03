@@ -55,10 +55,10 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 		$row = PersistenceContext::get_querier()->select_single_row_query("SELECT COUNT(*) as nbr_topics
 		FROM " . PREFIX . "forum_view v
 		LEFT JOIN " . PREFIX . "forum_topics t ON t.id = v.idtopic
-		WHERE t.last_timestamp >= :timestamp AND v.user_id = :user_id", array(
+		WHERE t.last_timestamp >= :timestamp AND v.user_id = :user_id", [
 			'timestamp' => $max_time,
 			'user_id' => AppContext::get_current_user()->get_id()
-		));
+		]);
 		$nbr_topics = $row['nbr_topics'];
 	} catch (RowNotFoundException $e) {}
 
@@ -88,16 +88,16 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 	LEFT JOIN " . DB_TABLE_MEMBER . " m2 ON m2.user_id = t.last_user_id
 	WHERE t.last_timestamp >= :timestamp AND v.user_id = :user_id
 	ORDER BY t.last_timestamp DESC
-	LIMIT :number_items_per_page OFFSET :display_from", array(
+	LIMIT :number_items_per_page OFFSET :display_from", [
 		'user_id' => AppContext::get_current_user()->get_id(),
 		'timestamp' => $max_time,
 		'number_items_per_page' => $pagination->get_number_items_per_page(),
 		'display_from' => $pagination->get_display_from()
-	));
+	]);
 	while ($row = $result->fetch())
 	{
 		//On définit un array pour l'appelation correspondant au type de champ
-		$type = array('2' => $lang['forum.announce'] . ':', '1' => $lang['forum.pinned'] . ':', '0' => '');
+		$type = ['2' => $lang['forum.announce'] . ':', '1' => $lang['forum.pinned'] . ':', '0' => ''];
 
 		//Vérifications des topics Lu/non Lus.
 		$topic_icon = 'fa-announce';
@@ -144,7 +144,7 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 
 		$view->assign_block_vars('topics', array_merge(
 			Date::get_array_tpl_vars($last_msg_date, 'last_message_date'),
-			array(
+			[
 			'C_PAGINATION'            => $topic_pagination->has_several_pages(),
 			'C_IMG_POLL'              => !empty($row['question']),
 			'C_IMG_TRACK'             => !empty($row['idtrack']),
@@ -178,7 +178,7 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 			'U_LAST_USER_PROFILE'     => UserUrlBuilder::profile($row['last_user_id'])->rel(),
 
 			'L_ISSUE_STATUS_MESSAGE'  => ($config->is_message_before_topic_title_displayed() && $row['display_msg']) ? $config->get_message_before_topic_title() : '',
-			)
+			]
 		));
 	}
 	$result->dispose();
@@ -186,9 +186,9 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 	//Le membre a déjà lu tous les messages.
 	if ($nbr_topics == 0)
 	{
-		$view->put_all(array(
+		$view->put_all([
 			'C_NO_TOPICS' => true
-		));
+		]);
 	}
 
 	//Listes les utilisateurs en ligne.
@@ -213,12 +213,12 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 		}
 	}
 
-	$view->assign_block_vars('syndication_cats', array(
+	$view->assign_block_vars('syndication_cats', [
 		'LINK'  => PATH_TO_ROOT . '/modules/forum/lastread.php',
 		'LABEL' => $lang['forum.last.read.messages']
-	));
+	]);
 
-	$vars_tpl = array(
+	$vars_tpl = [
 		'C_USER_CONNECTED'      => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 		'C_NO_USER_ONLINE'      => (($total_online - $total_visit) == 0),
 		'C_PAGINATION'          => $pagination->has_several_pages(),
@@ -245,7 +245,7 @@ if (AppContext::get_current_user()->check_level(User::MEMBER_LEVEL)) //Affichage
 		'L_MEMBER' => ($total_member > 1) ? $lang['user.members'] : $lang['user.member'],
 		'L_GUEST'  => ($total_visit > 1) ? $lang['user.guests'] : $lang['user.guest'],
 		'L_TOPIC'  => ($nbr_topics > 1) ? $lang['forum.topics'] : $lang['forum.topic'],
-	);
+	];
 
 	$view->put_all($vars_tpl);
 	$top_view->put_all($vars_tpl);

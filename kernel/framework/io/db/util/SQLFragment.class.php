@@ -14,7 +14,7 @@ class SQLFragment
 	private $query;
 	private $parameters;
 
-	public function __construct($query = '', array $parameters = array())
+	public function __construct($query = '', array $parameters = [])
 	{
 		$this->query = $query;
 		$this->parameters = $parameters;

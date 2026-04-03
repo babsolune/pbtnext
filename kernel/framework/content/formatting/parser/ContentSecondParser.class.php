@@ -30,7 +30,7 @@ class ContentSecondParser extends AbstractParser
     /**
      * Maps GeSHi language names to Prism.js language names.
      */
-    private static $language_map = array(
+    private static $language_map = [
         'actionscript' => 'actionscript',
         'apache'       => 'apacheconf',
         'asm'          => 'nasm',
@@ -73,7 +73,7 @@ class ContentSecondParser extends AbstractParser
         'xml'          => 'xml',
         'tpl'          => 'markup',
         'template'     => 'markup',
-    );
+    ];
     /**
      * Builds a ContentSecondParser object
      */
@@ -91,30 +91,30 @@ class ContentSecondParser extends AbstractParser
         if ($this->content === null)
             $this->content = '';
         //Relative url parsing
-        $this->content = preg_replace_callback('`(src|href)="/([A-Za-z0-9#+-_\./]+)"`suU', array($this, 'callbackrelative_url'), $this->content);
+        $this->content = preg_replace_callback('`(src|href)="/([A-Za-z0-9#+-_\./]+)"`suU', [$this, 'callbackrelative_url'], $this->content);
 
         //Balise code
         if (TextHelper::strpos($this->content, '[[CODE') !== false)
         {
-            $this->content = preg_replace_callback('`\[\[CODE(?:=([^,\s]+))?(?:,(0|1)(?:,(0|1))?)?\]\](.+)\[\[/CODE\]\]`suU', array($this, 'callbackhighlight_code'), $this->content);
+            $this->content = preg_replace_callback('`\[\[CODE(?:=([^,\s]+))?(?:,(0|1)(?:,(0|1))?)?\]\](.+)\[\[/CODE\]\]`suU', [$this, 'callbackhighlight_code'], $this->content);
         }
 
         //Balise member
         if (stripos($this->content, '[[MEMBER]]') !== false)
         {
-            $this->content = preg_replace_callback('`\[\[MEMBER\]\](.+)\[\[/MEMBER\]\]`suU', array($this, 'callback_member_tag'), $this->content);
+            $this->content = preg_replace_callback('`\[\[MEMBER\]\](.+)\[\[/MEMBER\]\]`suU', [$this, 'callback_member_tag'], $this->content);
         }
 
         // Teaser tag
         if (stripos($this->content, '[[TEASER]]') !== false)
         {
-            $this->content = preg_replace_callback('`\[\[TEASER\]\](.+)\[\[/TEASER\]\]`suU', array($this, 'callback_teaser_tag'), $this->content);
+            $this->content = preg_replace_callback('`\[\[TEASER\]\](.+)\[\[/TEASER\]\]`suU', [$this, 'callback_teaser_tag'], $this->content);
         }
 
         //Balise moderator
         if (stripos($this->content, '[[MODERATOR]]') !== false)
         {
-            $this->content = preg_replace_callback('`\[\[MODERATOR\]\](.+)\[\[/MODERATOR\]\]`suU', array($this, 'callback_moderator_tag'), $this->content);
+            $this->content = preg_replace_callback('`\[\[MODERATOR\]\](.+)\[\[/MODERATOR\]\]`suU', [$this, 'callback_moderator_tag'], $this->content);
         }
 
         //Media
@@ -130,7 +130,7 @@ class ContentSecondParser extends AbstractParser
             if ($server_config->has_gd_extension())
             {
                 require_once PATH_TO_ROOT . '/kernel/lib/php/mathpublisher/mathpublisher.php';
-                $this->content = preg_replace_callback('`\[\[MATH\]\](.+)\[\[/MATH\]\]`suU', array($this, 'math_code'), $this->content);
+                $this->content = preg_replace_callback('`\[\[MATH\]\](.+)\[\[/MATH\]\]`suU', [$this, 'math_code'], $this->content);
             }
         }
 
@@ -348,17 +348,17 @@ class ContentSecondParser extends AbstractParser
     private function process_media_insertion()
     {
         // Sound
-        $this->content = preg_replace_callback('`\[\[MEDIA\]\]insertSoundPlayer\(\'([^\']+)\'\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_sound_tag'), $this->content);
+        $this->content = preg_replace_callback('`\[\[MEDIA\]\]insertSoundPlayer\(\'([^\']+)\'\);\[\[/MEDIA\]\]`isuU', ['ContentSecondParser', 'process_sound_tag'], $this->content);
         // Movie
-        $this->content = preg_replace_callback('`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_movie_tag'), $this->content);
+        $this->content = preg_replace_callback('`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isuU', ['ContentSecondParser', 'process_movie_tag'], $this->content);
         // Movie with poster
-        $this->content = preg_replace_callback('`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+), \'([^\']+)\'\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_movie_tag'), $this->content);
+        $this->content = preg_replace_callback('`\[\[MEDIA\]\]insertMoviePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+), \'([^\']+)\'\);\[\[/MEDIA\]\]`isuU', ['ContentSecondParser', 'process_movie_tag'], $this->content);
         // Youtube
-        $this->content = preg_replace_callback('`\[\[MEDIA\]\]insertYoutubePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_youtube_tag'), $this->content);
+        $this->content = preg_replace_callback('`\[\[MEDIA\]\]insertYoutubePlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isuU', ['ContentSecondParser', 'process_youtube_tag'], $this->content);
         // Dailymotion
-        $this->content = preg_replace_callback('`\[\[MEDIA\]\]insertDailymotionPlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_dailymotion_tag'), $this->content);
+        $this->content = preg_replace_callback('`\[\[MEDIA\]\]insertDailymotionPlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isuU', ['ContentSecondParser', 'process_dailymotion_tag'], $this->content);
         // Vimeo
-        $this->content = preg_replace_callback('`\[\[MEDIA\]\]insertVimeoPlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isuU', array('ContentSecondParser', 'process_vimeo_tag'), $this->content);
+        $this->content = preg_replace_callback('`\[\[MEDIA\]\]insertVimeoPlayer\(\'([^\']+)\', ([0-9]+), ([0-9]+)\);\[\[/MEDIA\]\]`isuU', ['ContentSecondParser', 'process_vimeo_tag'], $this->content);
     }
 
     /**
@@ -422,7 +422,7 @@ class ContentSecondParser extends AbstractParser
 
     private function parse_feed_tag()
     {
-        $this->content = preg_replace_callback('`\[\[FEED((?: [a-z]+="[^"]+")*)\]\]([a-z]+)\[\[/FEED\]\]`uU', array(self::class, 'inject_feed'), $this->content);
+        $this->content = preg_replace_callback('`\[\[FEED((?: [a-z]+="[^"]+")*)\]\]([a-z]+)\[\[/FEED\]\]`uU', [self::class, 'inject_feed'], $this->content);
     }
 
     private static function inject_feed(array $matches)
@@ -450,7 +450,7 @@ class ContentSecondParser extends AbstractParser
         }
         else
         {
-            $error = StringVars::replace_vars(LangLoader::get_message('warning.feed.tag.error', 'warning-lang'), array('module' => $module));
+            $error = StringVars::replace_vars(LangLoader::get_message('warning.feed.tag.error', 'warning-lang'), ['module' => $module]);
             return '<div class="message-helper error">' . $error . '</div>';
         }
     }

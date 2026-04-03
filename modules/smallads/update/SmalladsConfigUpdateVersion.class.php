@@ -13,15 +13,15 @@ class SmalladsConfigUpdateVersion extends ConfigUpdateVersion
 	{
 		parent::__construct('smallads');
 
-		$this->config_parameters_to_modify = array(
+		$this->config_parameters_to_modify = [
 			'items_number_per_page'            => 'items_per_page',
 			'descriptions_displayed_to_guests' => 'summaries_displayed_to_guests',
 			'displayed_cols_number_per_line'   => 'items_per_row',
-			'root_category_description'        => array(
+			'root_category_description'        => [
 				'parameter_name' => 'root_category_description',
 				'value' => $this->get_parsed_old_content('SmalladsConfig', 'root_category_description')
-			)
-		);
+			]
+		];
 	}
 }
 ?>

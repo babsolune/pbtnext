@@ -12,9 +12,9 @@
 
 class EditLinkHTMLElement extends LinkHTMLElement
 {
-	public function __construct($url, $content = '', $attributes = array(), $css_class = '')
+	public function __construct($url, $content = '', $attributes = [], $css_class = '')
 	{
-		parent::__construct($url, $content, array_merge(array('aria-label' => LangLoader::get_message('common.edit', 'common-lang')), $attributes), 'far fa-fw fa-edit' . ($css_class ? ' ' . $css_class : ''), true);
+		parent::__construct($url, $content, array_merge(['aria-label' => LangLoader::get_message('common.edit', 'common-lang')], $attributes), 'far fa-fw fa-edit' . ($css_class ? ' ' . $css_class : ''), true);
 	}
 }
 ?>

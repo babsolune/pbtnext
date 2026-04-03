@@ -64,12 +64,12 @@ class FormConstraintFieldsEquality implements FormConstraint
 	public function get_validation_error_message()
 	{
 		return StringVars::replace_vars($this->js_message,
-			array('field1' => $this->first_field->get_label(), 'field2' => $this->second_field->get_label()));
+			['field1' => $this->first_field->get_label(), 'field2' => $this->second_field->get_label()]);
 	}
 
 	public function get_related_fields()
 	{
-		return array($this->first_field, $this->second_field);
+		return [$this->first_field, $this->second_field];
 	}
 }
 

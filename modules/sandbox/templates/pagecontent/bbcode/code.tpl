@@ -45,7 +45,7 @@ abstract class CategoriesCache implements CacheData
     public static function __static()
     {
         $module_id = Environment::get_running_module_name();
-        if (!in_array($module_id, array('admin', 'kernel', 'user')))
+        if (!in_array($module_id, ['admin', 'kernel', 'user']))
         {
             self::$module_id       = $module_id;
             self::$module          = ModulesManager::get_module(self::$module_id);

@@ -25,7 +25,7 @@ class NewsletterExtensionPointProvider extends ExtensionPointProvider
 
 	public function extended_field()
 	{
-		return new ExtendedFields(array(new RegisterNewsletterExtendedField()));
+		return new ExtendedFields([new RegisterNewsletterExtendedField()]);
 	}
 
 	public function home_page()
@@ -35,7 +35,7 @@ class NewsletterExtensionPointProvider extends ExtensionPointProvider
 
 	public function menus()
 	{
-		return new ModuleMenus(array(new NewsletterModuleMiniMenu()));
+		return new ModuleMenus([new NewsletterModuleMiniMenu()]);
 	}
 
 	public function sitemap()
@@ -50,7 +50,7 @@ class NewsletterExtensionPointProvider extends ExtensionPointProvider
 
 	public function url_mappings()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/newsletter/index.php')));
+		return new UrlMappings([new DispatcherUrlMapping('/newsletter/index.php')]);
 	}
 }
 ?>

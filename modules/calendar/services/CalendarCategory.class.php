@@ -12,12 +12,12 @@ class CalendarCategory extends Category
 {
 	protected function set_additional_attributes_list()
 	{
-		$this->add_additional_attribute('color', array('type' => 'string', 'length' => 250, 'default' => "''", 'attribute_field_parameters' => array(
+		$this->add_additional_attribute('color', ['type' => 'string', 'length' => 250, 'default' => "''", 'attribute_field_parameters' => [
 			'field_class'   => 'FormFieldColorPicker',
 			'label'         => LangLoader::get_message('calendar.category.color', 'common', 'calendar'),
 			'default_value' => CalendarConfig::load()->get_event_color()
-			)
-		));
+			]
+		]);
 	}
 
 	public function get_color()

@@ -53,11 +53,11 @@ class ReCaptchaConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::SITE_KEY => '',
 			self::SECRET_KEY => '',
 			self::INVISIBLE_MODE_ENABLED => false
-		);
+		];
 	}
 
 	/**

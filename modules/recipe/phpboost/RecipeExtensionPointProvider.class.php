@@ -12,7 +12,7 @@ class RecipeExtensionPointProvider extends ItemsModuleExtensionPointProvider
 {
 	public function comments()
 	{
-		return new CommentsTopics(array(new RecipeCommentsTopic()));
+		return new CommentsTopics([new RecipeCommentsTopic()]);
 	}
 
 	public function home_page()

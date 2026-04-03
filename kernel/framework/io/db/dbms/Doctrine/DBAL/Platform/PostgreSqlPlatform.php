@@ -498,7 +498,7 @@ class PostgreSqlPlatform extends AbstractPlatform
 			return true;
 		}
 
-		$sql = array();
+		$sql = [];
 
 		if (isset($changes['add']) && is_array($changes['add'])) {
 			foreach ($changes['add'] as $fieldName => $field) {
@@ -580,10 +580,10 @@ class PostgreSqlPlatform extends AbstractPlatform
 	 * @param array $options
 	 * @return unknown
 	 */
-	public function getCreateTableSql($name, array $fields, array $options = array())
+	public function getCreateTableSql($name, array $fields, array $options = [])
 	{
 		/* @PATH BEGIN PHPBoost */
-		$sql = array();
+		$sql = [];
 		if (isset($options['primary']) && count($options['primary']) === 1) {
 			$pk_name = $options['primary'][0];
 			if (isset($fields[$pk_name]) && isset($fields[$pk_name]['autoincrement']) &&

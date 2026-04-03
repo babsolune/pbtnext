@@ -13,11 +13,11 @@ class DictionaryModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('dictionary');
 
-		self::$delete_old_files_list = array(
+		self::$delete_old_files_list = [
 			'/lang/english/dictionary_english.php',
 			'/lang/french/dictionary_french.php',
 			'/phpboost/DictionaryHomePageExtensionPoint.class.php',
-		);
+		];
 	}
 }
 ?>

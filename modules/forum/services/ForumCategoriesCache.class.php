@@ -19,9 +19,9 @@ class ForumCategoriesCache extends CategoriesCache
 
 		$root_category = $categories_cache->get_root_category();
 		$this->categories[Category::ROOT_CATEGORY] = $root_category;
-		$result = PersistenceContext::get_querier()->select_rows($categories_cache->get_table_name(), array('*'), 'ORDER BY id_parent, c_order');
+		$result = PersistenceContext::get_querier()->select_rows($categories_cache->get_table_name(), ['*'], 'ORDER BY id_parent, c_order');
 
-		$categories = array();
+		$categories = [];
 
 		while ($row = $result->fetch())
 		{
@@ -91,13 +91,13 @@ class ForumCategoriesCache extends CategoriesCache
 
 	protected function get_category_elements_number($id_category)
 	{
-		$topics_number = ForumService::count_topics('WHERE id_category = :id_category', array('id_category' => $id_category));
-		$messages_number = ForumService::count_messages('WHERE id_category = :id_category', array('id_category' => $id_category));
+		$topics_number = ForumService::count_topics('WHERE id_category = :id_category', ['id_category' => $id_category]);
+		$messages_number = ForumService::count_messages('WHERE id_category = :id_category', ['id_category' => $id_category]);
 
-		return array(
+		return [
 			'topics_number'   => (int)$topics_number,
 			'messages_number' => (int)$messages_number
-		);
+		];
 	}
 
 	public function get_root_category()

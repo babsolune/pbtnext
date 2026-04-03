@@ -13,7 +13,7 @@
 class FormFieldsetVertical extends AbstractFormFieldset
 {
 
-    public function __construct($id, $options = array())
+    public function __construct($id, $options = [])
     {
         parent::__construct($id, $options);
     }

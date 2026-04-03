@@ -21,7 +21,7 @@ define ('RESULTS_PER_PAGE', $config->get_nb_results_per_page());
  */
 function execute_search($search, &$search_modules, &$modules_args, &$results)
 {
-	$requests = array();
+	$requests = [];
 
 	$config = SearchConfig::load();
 	foreach ($search_modules as $module_id => $module)
@@ -44,7 +44,7 @@ function execute_search($search, &$search_modules, &$modules_args, &$results)
  */
 function get_search_results($search_string, &$search_modules, &$modules_args, &$results, &$ids_search, $just_insert = false)
 {
-	$modules_options = array();
+	$modules_options = [];
 
 	$search = new Search($search_string, $modules_args);
 	execute_search($search, $search_modules, $modules_args, $results);
@@ -53,7 +53,7 @@ function get_search_results($search_string, &$search_modules, &$modules_args, &$
 
 	if (!$just_insert)
 	{
-		$modules_ids = array();
+		$modules_ids = [];
 		foreach ($search_modules as $module_id => $module)
 		{
 			$modules_ids[] = $module_id;
@@ -85,21 +85,21 @@ function get_html_results(&$results, &$html_results, &$results_name)
 	{
 		$provider = $provider_service->get_provider(TextHelper::strtolower($results_name));
 		$extension_point = $provider->get_extension_point(SearchableExtensionPoint::EXTENSION_POINT);
-		$results_data = array();
+		$results_data = [];
 		$personnal_parse_results = $extension_point->has_customized_results();
 		if ($personnal_parse_results && $results_name != 'all')
 		{
-			$results_data = $extension_point->compute_search_results(array('results' => $results));
+			$results_data = $extension_point->compute_search_results(['results' => $results]);
 			$nb_results = min($nb_results, count($results_data));
 		}
 	}
 
 	for ($num_page = 0; $num_page < $nb_pages; $num_page++)
 	{
-		$tpl_results->assign_block_vars('page', array(
+		$tpl_results->assign_block_vars('page', [
 			'NUM_PAGE'      => $num_page,
 			'BLOCK_DISPLAY' => ($num_page == 0 ? 'block' : 'none')
-		));
+		]);
 
 		for ($i = 0 ; $i < RESULTS_PER_PAGE; $i++)
 		{
@@ -113,32 +113,32 @@ function get_html_results(&$results, &$html_results, &$results_name)
 				$module = ModulesManager::get_module($results[$num_item]['module']);
 				if ($display_all_results)
 				{
-					$tpl_result->assign_vars(array(
+					$tpl_result->assign_vars([
 						'C_ALL_RESULTS' => true,
 						'L_MODULE_NAME' => $module->get_configuration()->get_name()
-					));
+					]);
 				}
 				else
 				{
-					$tpl_result->assign_vars(array(
+					$tpl_result->assign_vars([
 						'C_ALL_RESULTS' => false,
 						'L_MODULE_NAME' => $module->get_configuration()->get_name(),
-					));
+					]);
 				}
-				$tpl_result->assign_vars(array(
+				$tpl_result->assign_vars([
 					'TITLE'  => stripslashes($results[$num_item]['title']),
 					'U_LINK' => url($results[$num_item]['link'])
-				));
+				]);
 
-				$tpl_results->assign_block_vars('page.results', array(
+				$tpl_results->assign_block_vars('page.results', [
 					'result' => $tpl_result->render()
-				));
+				]);
 			}
 			else
 			{
-				$tpl_results->assign_block_vars('page.results', array(
+				$tpl_results->assign_block_vars('page.results', [
 					'result' => $extension_point->parse_search_result($results_data[$num_item])
-				));
+				]);
 			}
 		}
 	}

@@ -32,31 +32,31 @@ class AdminPagesConfigController extends DefaultConfigurationController
 	{
 		$form = new HTMLForm(self::$module_id . '_config_form');
 
-		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())));
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('left_column_disabled', $this->lang['config.left.column.disabled'], $this->config->get_left_column_disabled(),
-			array('class' => 'custom-checkbox')
+			['class' => 'custom-checkbox']
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('right_column_disabled', $this->lang['config.right.column.disabled'], $this->config->get_right_column_disabled(),
-			array('class' => 'custom-checkbox')
+			['class' => 'custom-checkbox']
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('views_number_enabled', $this->lang['form.display.views.number'], $this->config->get_views_number_enabled(),
-			array('class' => 'custom-checkbox')
+			['class' => 'custom-checkbox']
 		));
 
 		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->lang['form.root.category.description'], $this->config->get_root_category_description(),
-			array('rows' => 8, 'cols' => 47)
+			['rows' => 8, 'cols' => 47]
 		));
 
 		$fieldset->add_field(new FormFieldRichTextEditor('default_content', $this->lang['config.item.default.content'], $this->config->get_default_content(),
-			array('rows' => 8, 'cols' => 47)
+			['rows' => 8, 'cols' => 47]
 		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['form.authorizations'],
-			array('description' => $this->lang['form.authorizations.clue'])
+			['description' => $this->lang['form.authorizations.clue']]
 		);
 
 		$form->add_fieldset($fieldset_authorizations);

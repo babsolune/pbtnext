@@ -18,7 +18,7 @@ class AjaxPollMiniController extends AbstractController
 	protected $item;
 	protected $answers_type;
 	protected $answers_list;
-	protected $vote = array();
+	protected $vote = [];
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -27,15 +27,15 @@ class AjaxPollMiniController extends AbstractController
 		$previous_item_id = $this->request->get_int('sendNavData_previous', '');
 		$next_item_id = $this->request->get_int('sendNavData_next', '');
 
-		$json_response = array();
+		$json_response = [];
 
 		if (!empty($previous_item_id) || !empty($next_item_id))
 		{
-			$json_response = array(
+			$json_response = [
 				'validated' => 0,
 				'message'   => '',
 				'html'      => $this->set_view($this->get_pollminimenu(), !empty($previous_item_id) ? $previous_item_id : $next_item_id)
-			);
+			];
 		}
 		else
 		{
@@ -49,28 +49,28 @@ class AjaxPollMiniController extends AbstractController
 				{
 					$this->save_vote();
 
-					$json_response = array(
+					$json_response = [
 						'validated' => 1,
 						'message'   => LangLoader::get_message('poll.vote.saved', 'common', 'poll'),
-						'html'      => $this->set_view($this->get_pollminimenu(), '', array('poll.vote.saved' => MessageHelper::SUCCESS))
-					);
+						'html'      => $this->set_view($this->get_pollminimenu(), '', ['poll.vote.saved' => MessageHelper::SUCCESS])
+					];
 
 				}
 				elseif ($this->form_has_been_submited() && !$this->form_is_validated())
 				{
-					$json_response = array(
+					$json_response = [
 						'validated' => 0,
 						'message'   => LangLoader::get_message('poll.mini.have.to.choose', 'common', 'poll'),
-						'html'      => $this->set_view($this->get_pollminimenu(), $this->get_sended_item_id(), array('poll.mini.have.to.choose' => MessageHelper::NOTICE))
-					);
+						'html'      => $this->set_view($this->get_pollminimenu(), $this->get_sended_item_id(), ['poll.mini.have.to.choose' => MessageHelper::NOTICE])
+					];
 				}
 				elseif (!$this->form_has_been_submited() && !$this->form_is_validated())
 				{
-					$json_response = array(
+					$json_response = [
 						'validated' => 0,
 						'message'   => LangLoader::get_message('poll.mini.form.error', 'common', 'poll'),
-						'html' 	    => $this->set_view($this->get_pollminimenu(), $this->get_sended_item_id(), array('poll.mini.form.error' => MessageHelper::WARNING))
-					);
+						'html' 	    => $this->set_view($this->get_pollminimenu(), $this->get_sended_item_id(), ['poll.mini.form.error' => MessageHelper::WARNING])
+					];
 				}
 			}
 		}
@@ -153,7 +153,7 @@ class AjaxPollMiniController extends AbstractController
 		elseif ($this->answers_type == 2)
 		{
 			$count_answers_list = count($this->answers_list);
-			$multiple_int_vote = array();
+			$multiple_int_vote = [];
 
 			for ($i=1; $i<=$count_answers_list; $i++)
 			{
@@ -181,7 +181,7 @@ class AjaxPollMiniController extends AbstractController
 	{
 		$count_answers_list = count($this->answers_list);
 
-		$multiple_int_vote = array();
+		$multiple_int_vote = [];
 		for ($i=1; $i<=$count_answers_list; $i++)
 		{
 			if ( isset($this->get_sended_data()[self::FORM_HTML_ID . '_multiple_vote_' . $i]) && $this->get_sended_data()[self::FORM_HTML_ID . '_multiple_vote_' . $i] == 'on' )
@@ -190,7 +190,7 @@ class AjaxPollMiniController extends AbstractController
 			}
 		}
 
-		$multiple_vote = array();
+		$multiple_vote = [];
 		foreach ($multiple_int_vote as $int_vote)
 		{
 			$multiple_vote[] = $this->answers_list[$int_vote-1];
@@ -199,7 +199,7 @@ class AjaxPollMiniController extends AbstractController
 		return $multiple_vote;
 	}
 
-	protected function set_view(ModuleMiniMenu $moduleminimenu, $item_id, $msg_return = array())
+	protected function set_view(ModuleMiniMenu $moduleminimenu, $item_id, $msg_return = [])
 	{
 		return $moduleminimenu->get_menu_content((int)$item_id, $msg_return);
 	}

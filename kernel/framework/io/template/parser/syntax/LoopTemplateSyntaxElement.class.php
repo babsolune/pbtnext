@@ -39,7 +39,7 @@ class LoopTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	private function process_start()
 	{
-		$matches = array();
+		$matches = [];
 		$this->input->consume_next('#\sSTART\s+(?P<loop>(?:\w+\.)*\w+)\s#', '', $matches);
 		$loop_name = $matches['loop'];
 		$this->context->enter_loop($loop_name);

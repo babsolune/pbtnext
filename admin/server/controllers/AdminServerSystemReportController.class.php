@@ -125,13 +125,13 @@ DIRECTORIES AUTHORIZATIONS-----------------------------------------------------
         $form->add_fieldset($fieldset);
 
         $fieldset->add_field(new FormFieldLabel($this->lang['admin.system.report.summary.clue'],
-            array('class' => 'full-field')
+            ['class' => 'full-field']
         ));
 
         $fieldset->add_element(new FormButtonButton('<i class="far fa-fw fa-copy"></i>' . $this->lang['admin.copy.report'], 'copy_code_clipboard(\'system-report_report-content\')', 'copy_report', 'copy-to-clipboard', '', 'system-report'));
 
         $fieldset->add_field(new FormFieldMultiLineTextEditor('report-content', '', $summerization . $directories_summerization,
-            array('rows' => 20, 'cols' => 15, 'class' => 'system-report')
+            ['rows' => 20, 'cols' => 15, 'class' => 'system-report']
         ));
 
         $this->form = $form;

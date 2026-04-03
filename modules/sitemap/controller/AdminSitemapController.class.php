@@ -32,23 +32,23 @@ class AdminSitemapController extends DefaultAdminModuleController
 	private function build_form()
 	{
 		$this->form = new HTMLForm('sitemap_global_config', SitemapUrlBuilder::get_general_config()->rel());
-		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module()->get_configuration()->get_name()]));
 		$this->form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('enable_sitemap_xml', $this->lang['sitemap.auto.generate.xml'], SitemapXMLFileService::is_xml_file_generation_enabled() ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED,
-			array(
+			[
 				'class' => 'custom-checkbox',
-				'events' => array('click' => 'if ($FF("enable_sitemap_xml").getValue()) { $FF("file_life_time").enable(); } else { $FF("file_life_time").disable(); }'
-			)
-		)));
+				'events' => ['click' => 'if ($FF("enable_sitemap_xml").getValue()) { $FF("file_life_time").enable(); } else { $FF("file_life_time").disable(); }'
+			]
+		]));
 
 		$fieldset->add_field(new FormFieldNumberEditor('file_life_time', $this->lang['sitemap.xml.life.time'], SitemapXMLFileService::get_life_time(),
-			array(
+			[
 				'required' => true, 'min' => 0,
 				'description' => $this->lang['sitemap.xml.life.time.clue'],
 				'hidden' => !SitemapXMLFileService::is_xml_file_generation_enabled()
-			),
-			array(new FormFieldConstraintIntegerRange(1, 50))
+			],
+			[new FormFieldConstraintIntegerRange(1, 50)]
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -70,13 +70,13 @@ class AdminSitemapController extends DefaultAdminModuleController
 
 		SitemapConfig::save();
 
-		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
+		HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]), 'url' => ModulesUrlBuilder::configuration()->rel()]);
 	}
 
 	private function build_response(Template $view)
 	{
 		$response = new AdminSitemapResponse($view);
-		$response->get_graphical_environment()->set_page_title(StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$response->get_graphical_environment()->set_page_title(StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module()->get_configuration()->get_name()]));
 		return $response;
 	}
 }

@@ -35,19 +35,19 @@ class VideoPendingItemsController extends DefaultModuleController
 		$condition = 'WHERE id_category IN :authorized_categories
 		' . (!CategoriesAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
 		AND (published = 0 OR (published = 2 AND (publishing_start_date > :timestamp_now OR (publishing_end_date != 0 AND publishing_end_date < :timestamp_now))))';
-		$parameters = array(
+		$parameters = [
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'authorized_categories' => $authorized_categories,
 			'timestamp_now' => $now->get_timestamp()
-		);
+		];
 
 		$page = $request->get_getint('page', 1);
 		$pagination = $this->get_pagination($condition, $parameters, $field, TextHelper::strtolower($mode), $page);
 
 		$sort_mode = TextHelper::strtoupper($mode);
-		$sort_mode = (in_array($sort_mode, array(VideoItem::ASC, VideoItem::DESC)) ? $sort_mode : $this->config->get_items_default_sort_mode());
+		$sort_mode = (in_array($sort_mode, [VideoItem::ASC, VideoItem::DESC]) ? $sort_mode : $this->config->get_items_default_sort_mode());
 
-		if (in_array($field, array(VideoItem::SORT_FIELDS_URL_VALUES[VideoItem::SORT_ALPHABETIC], VideoItem::SORT_FIELDS_URL_VALUES[VideoItem::SORT_AUTHOR], VideoItem::SORT_FIELDS_URL_VALUES[VideoItem::SORT_DATE])))
+		if (in_array($field, [VideoItem::SORT_FIELDS_URL_VALUES[VideoItem::SORT_ALPHABETIC], VideoItem::SORT_FIELDS_URL_VALUES[VideoItem::SORT_AUTHOR], VideoItem::SORT_FIELDS_URL_VALUES[VideoItem::SORT_DATE]]))
 			$sort_field = array_search($field, VideoItem::SORT_FIELDS_URL_VALUES);
 		else
 			$sort_field = VideoItem::SORT_DATE;
@@ -60,12 +60,12 @@ class VideoPendingItemsController extends DefaultModuleController
 		LEFT JOIN ' . DB_TABLE_NOTE . ' note ON note.id_in_module = video.id AND note.module_name = \'video\' AND note.user_id = :user_id
 		' . $condition . '
 		ORDER BY ' . $sort_field . ' ' . $sort_mode . '
-		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
+		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, [
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
-		)));
+		]));
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_SUBCATEGORIES_DISPLAY' => $this->config->get_subcategories_display(),
 			'C_PENDING' 			  => true,
 			'C_ITEMS' 				  => $result->get_rows_count() > 0,
@@ -83,7 +83,7 @@ class VideoPendingItemsController extends DefaultModuleController
 			'ITEMS_PER_ROW' 	 => $this->config->get_items_per_row(),
 			'PAGINATION' 		 => $pagination->display(),
 			'TABLE_COLSPAN' 	 => 4 + (int)$comments_config->module_comments_is_enabled('video') + (int)$content_management_config->module_notation_is_enabled('video')
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{
@@ -93,9 +93,9 @@ class VideoPendingItemsController extends DefaultModuleController
 			$keywords = $item->get_keywords();
 			$has_keywords = count($keywords) > 0;
 
-			$this->view->assign_block_vars('items', array_merge($item->get_template_vars(), array(
+			$this->view->assign_block_vars('items', array_merge($item->get_template_vars(), [
 				'C_KEYWORDS' => $has_keywords
-			)));
+			]));
 
 			if ($has_keywords)
 				$this->build_keywords_view($keywords);
@@ -109,24 +109,24 @@ class VideoPendingItemsController extends DefaultModuleController
 		$form = new HTMLForm(self::class, '', false);
 		$form->set_css_class('options');
 
-		$fieldset = new FormFieldsetHorizontal('filters', array('description' => $this->lang['common.sort.by']));
+		$fieldset = new FormFieldsetHorizontal('filters', ['description' => $this->lang['common.sort.by']]);
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_fields', '', $field,
-			array(
+			[
 				new FormFieldSelectChoiceOption($this->lang['common.sort.by.date'], VideoItem::SORT_FIELDS_URL_VALUES[VideoItem::SORT_DATE]),
 				new FormFieldSelectChoiceOption($this->lang['common.sort.by.alphabetic'], VideoItem::SORT_FIELDS_URL_VALUES[VideoItem::SORT_ALPHABETIC]),
 				new FormFieldSelectChoiceOption($this->lang['common.sort.by.author'], VideoItem::SORT_FIELDS_URL_VALUES[VideoItem::SORT_AUTHOR])
-			),
-			array('events' => array('change' => 'document.location = "'. VideoUrlBuilder::display_pending()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			],
+			['events' => ['change' => 'document.location = "'. VideoUrlBuilder::display_pending()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();']]
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('sort_mode', '', $mode,
-			array(
+			[
 				new FormFieldSelectChoiceOption($this->lang['common.sort.asc'], 'asc'),
 				new FormFieldSelectChoiceOption($this->lang['common.sort.desc'], 'desc')
-			),
-			array('events' => array('change' => 'document.location = "' . VideoUrlBuilder::display_pending()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();'))
+			],
+			['events' => ['change' => 'document.location = "' . VideoUrlBuilder::display_pending()->rel() . '" + HTMLForms.getField("sort_fields").getValue() + "/" + HTMLForms.getField("sort_mode").getValue();']]
 		));
 
 		$this->view->put('SORT_FORM', $form->display());
@@ -155,11 +155,11 @@ class VideoPendingItemsController extends DefaultModuleController
 		$i = 1;
 		foreach ($keywords as $keyword)
 		{
-			$this->view->assign_block_vars('items.keywords', array(
+			$this->view->assign_block_vars('items.keywords', [
 				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
 				'URL' => VideoUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
-			));
+			]);
 			$i++;
 		}
 	}

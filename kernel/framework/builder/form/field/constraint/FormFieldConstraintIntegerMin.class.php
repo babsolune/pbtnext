@@ -24,7 +24,7 @@ class FormFieldConstraintIntegerMin extends AbstractFormFieldConstraint
 		{
 			$js_message = LangLoader::get_message('warning.integer.min', 'warning-lang');
 		}
-		$this->error_message = StringVars::replace_vars($js_message, array('lower_bound' => $lower_bound));
+		$this->error_message = StringVars::replace_vars($js_message, ['lower_bound' => $lower_bound]);
 		$this->set_validation_error_message($this->error_message);
 		$this->lower_bound = $lower_bound;
 	}

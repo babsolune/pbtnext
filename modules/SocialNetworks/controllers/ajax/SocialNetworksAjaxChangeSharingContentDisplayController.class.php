@@ -33,7 +33,7 @@ class SocialNetworksAjaxChangeSharingContentDisplayController extends AbstractCo
 			SocialNetworksConfig::save();
 		}
 
-		return new JSONResponse(array('id' => $id, 'display' => $display));
+		return new JSONResponse(['id' => $id, 'display' => $display]);
 	}
 }
 ?>

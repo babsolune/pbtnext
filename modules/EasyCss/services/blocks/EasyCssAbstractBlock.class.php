@@ -122,7 +122,7 @@ abstract class EasyCssAbstractBlock
      */
     protected function parse_title_block($css)
     {
-        return preg_replace_callback('`\/\*\*\s*-{3}(.+)-{3}\s*\*\/`isuU', array($this, 'replace_parse_title_block'), $css );
+        return preg_replace_callback('`\/\*\*\s*-{3}(.+)-{3}\s*\*\/`isuU', [$this, 'replace_parse_title_block'], $css );
     }
 
     /**
@@ -133,7 +133,7 @@ abstract class EasyCssAbstractBlock
      */
     protected function parse_display_comment_block($css)
     {
-        return preg_replace_callback('`\/\*\*(.+)\*\/`isuU', array($this, 'replace_parse_display_comment_block'), $css );
+        return preg_replace_callback('`\/\*\*(.+)\*\/`isuU', [$this, 'replace_parse_display_comment_block'], $css );
     }
 
     /**
@@ -144,7 +144,7 @@ abstract class EasyCssAbstractBlock
      */
     protected function parse_comment_block($css)
     {
-        return preg_replace_callback('`\/\*(.+)\*\/`isuU', array($this, 'replace_parse_comment_block'), $css );
+        return preg_replace_callback('`\/\*(.+)\*\/`isuU', [$this, 'replace_parse_comment_block'], $css );
     }
 
     /**
@@ -155,7 +155,7 @@ abstract class EasyCssAbstractBlock
      */
     protected function parse_media_block($css)
     {
-        return preg_replace_callback('`@media\s*\((.+)\)\s*\{(.*)\}\s*\}`isuU', array($this, 'replace_parse_media_block'), $css );
+        return preg_replace_callback('`@media\s*\((.+)\)\s*\{(.*)\}\s*\}`isuU', [$this, 'replace_parse_media_block'], $css );
     }
 
     /**
@@ -166,7 +166,7 @@ abstract class EasyCssAbstractBlock
      */
     protected function parse_block($css)
     {
-        return preg_replace_callback('`\s*((?:(?!#\s|\/).)*)\{(.*)\}`isuU', array($this, 'replace_parse_block'), $css );
+        return preg_replace_callback('`\s*((?:(?!#\s|\/).)*)\{(.*)\}`isuU', [$this, 'replace_parse_block'], $css );
     }
 
     /**

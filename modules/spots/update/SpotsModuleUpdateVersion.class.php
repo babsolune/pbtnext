@@ -13,9 +13,9 @@ class SpotsModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('spots');
 
-		self::$delete_old_files_list = array(
+		self::$delete_old_files_list = [
 			'/templates/js/leaflet.google.min.js',
-		);
+		];
 	}
 }
 ?>

@@ -14,7 +14,7 @@ class MemberHiddenExtendedField extends AbstractMemberExtendedField
 	public function __construct()
 	{
 		parent::__construct();
-		$this->set_disable_fields_configuration(array('name', 'description', 'field_type', 'regex', 'authorizations', 'possible_values', 'default_value'));
+		$this->set_disable_fields_configuration(['name', 'description', 'field_type', 'regex', 'authorizations', 'possible_values', 'default_value']);
 		$this->set_name('');
 	}
 

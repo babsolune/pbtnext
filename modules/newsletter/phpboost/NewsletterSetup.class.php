@@ -42,7 +42,7 @@ class NewsletterSetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(self::$newsletter_table_subscribers, self::$newsletter_table_streams, self::$newsletter_table_archives, self::$newsletter_table_subscriptions));
+		PersistenceContext::get_dbms_utils()->drop([self::$newsletter_table_subscribers, self::$newsletter_table_streams, self::$newsletter_table_archives, self::$newsletter_table_subscriptions]);
 	}
 
 	private function delete_configuration()
@@ -60,15 +60,15 @@ class NewsletterSetup extends DefaultModuleSetup
 
 	private function create_newsletter_subscribers_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => -1),
-			'mail' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"),
-			'subscription_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id')
-		);
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'user_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => -1],
+			'mail' => ['type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"],
+			'subscription_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0]
+		];
+		$options = [
+			'primary' => ['id']
+		];
 		PersistenceContext::get_dbms_utils()->create_table(self::$newsletter_table_subscribers, $fields, $options);
 	}
 
@@ -79,32 +79,32 @@ class NewsletterSetup extends DefaultModuleSetup
 
 	private function create_newsletter_archives_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'stream_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1),
-			'subject' => array('type' => 'string', 'length' => 200, 'notnull' => 1, 'default' => "''"),
-			'content' => array('type' => 'text', 'length' => 65000),
-			'nbr_subscribers' => array('type' => 'integer', 'length' => 11, 'notnull' => 1),
-			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'language_type' => array('type' => 'string', 'length' => 10, 'notnull' => 1, 'default' => "''")
-		);
-		$options = array(
-			'primary' => array('id')
-		);
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'stream_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1],
+			'subject' => ['type' => 'string', 'length' => 200, 'notnull' => 1, 'default' => "''"],
+			'content' => ['type' => 'text', 'length' => 65000],
+			'nbr_subscribers' => ['type' => 'integer', 'length' => 11, 'notnull' => 1],
+			'timestamp' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'language_type' => ['type' => 'string', 'length' => 10, 'notnull' => 1, 'default' => "''"]
+		];
+		$options = [
+			'primary' => ['id']
+		];
 		PersistenceContext::get_dbms_utils()->create_table(self::$newsletter_table_archives, $fields, $options);
 	}
 
 	private function create_newsletter_subscriptions_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'stream_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1),
-			'subscriber_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1)
-		);
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'stream_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1],
+			'subscriber_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1]
+		];
 
-		$options = array(
-			'primary' => array('id')
-		);
+		$options = [
+			'primary' => ['id']
+		];
 
 		PersistenceContext::get_dbms_utils()->create_table(self::$newsletter_table_subscriptions, $fields, $options);
 	}
@@ -135,7 +135,7 @@ class NewsletterSetup extends DefaultModuleSetup
 	private function insert_newsletter_streams_data()
 	{
 		$lang = LangLoader::get('install', 'newsletter');
-		PersistenceContext::get_querier()->insert(self::$newsletter_table_streams, array(
+		PersistenceContext::get_querier()->insert(self::$newsletter_table_streams, [
 			'id' => 1,
 			'id_parent' => 0,
 			'c_order' => 1,
@@ -144,7 +144,7 @@ class NewsletterSetup extends DefaultModuleSetup
 			'name' => $lang['stream.name'],
 			'description' => $lang['stream.description'],
 			'thumbnail' => '/templates/__default__/images/default_item.webp'
-		));
+		]);
 	}
 }
 ?>

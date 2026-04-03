@@ -39,13 +39,13 @@ class FaqReorderItemsController extends DefaultModuleController
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = faq.author_user_id
 		WHERE approved = 1
 		AND faq.id_category = :id_category
-		ORDER BY q_order ASC', array(
+		ORDER BY q_order ASC', [
 			'id_category' => $this->get_category()->get_id()
-		));
+		]);
 
 		$category_description = FormatingHelper::second_parse($this->get_category()->get_description());
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_ROOT_CATEGORY'        => $this->get_category()->get_id() == Category::ROOT_CATEGORY,
 			'C_HIDE_NO_ITEM_MESSAGE' => $this->get_category()->get_id() == Category::ROOT_CATEGORY && !empty($category_description),
 			'C_CATEGORY_DESCRIPTION' => !empty($category_description),
@@ -59,7 +59,7 @@ class FaqReorderItemsController extends DefaultModuleController
 
 			'U_CATEGORY_THUMBNAIL' => $this->get_category()->get_thumbnail()->rel(),
 			'U_EDIT_CATEGORY'      => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? FaqUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->get_category()->get_id(), 'faq')->rel()
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{
@@ -125,7 +125,7 @@ class FaqReorderItemsController extends DefaultModuleController
 
 		$description = $this->get_category()->get_description() . ' ' . $this->lang['faq.questions.reorder'];
 		if (empty($description))
-			$description = StringVars::replace_vars($this->lang['faq.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())) . ($this->get_category()->get_id() != Category::ROOT_CATEGORY ? ' ' . $this->lang['category.category'] . ' ' . $this->get_category()->get_name() : '') . ' ' . $this->lang['faq.questions.reorder'];
+			$description = StringVars::replace_vars($this->lang['faq.seo.description.root'], ['site' => GeneralConfig::load()->get_site_name()]) . ($this->get_category()->get_id() != Category::ROOT_CATEGORY ? ' ' . $this->lang['category.category'] . ' ' . $this->get_category()->get_name() : '') . ' ' . $this->lang['faq.questions.reorder'];
 		$graphical_environment->get_seo_meta_data()->set_description($description);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(FaqUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name()));
 

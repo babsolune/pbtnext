@@ -19,26 +19,26 @@ class DownloadCategoriesFormController extends DefaultCategoriesFormController
 		$fieldset = new FormFieldsetHTML('category', self::$lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('name', self::$lang['form.name'], $this->get_category()->get_name(), array('required' => true)));
+		$fieldset->add_field(new FormFieldTextEditor('name', self::$lang['form.name'], $this->get_category()->get_name(), ['required' => true]));
 
 		$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_name', self::$lang['form.rewrited.title.personalize'], $this->get_category()->rewrited_name_is_personalized(),
-			array(
-				'events' => array('click' => '
+			[
+				'events' => ['click' => '
 					if (HTMLForms.getField("personalize_rewrited_name").getValue()) {
 						HTMLForms.getField("rewrited_name").enable();
 					} else {
 						HTMLForms.getField("rewrited_name").disable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$fieldset->add_field(new FormFieldTextEditor('rewrited_name', self::$lang['form.rewrited.title'], $this->get_category()->get_rewrited_name(),
-			array(
+			[
 				'description' => self::$lang['form.rewrited.title.clue'],
 				'hidden' => !$this->get_category()->rewrited_name_is_personalized()
-			),
-			array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu'))
+			],
+			[new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu')]
 		));
 
 		if ($this->get_category()->is_allowed_to_have_childs()) {
@@ -51,28 +51,28 @@ class DownloadCategoriesFormController extends DefaultCategoriesFormController
 		}
 
 		$fieldset->add_field(new FormFieldThumbnail('thumbnail', self::$lang['form.thumbnail'], $this->get_category()->get_thumbnail()->relative(), DownloadCategory::THUMBNAIL_URL,
-			array()
+			[]
 		));
 
 		$fieldset->add_field(new FormFieldRichTextEditor('description', self::$lang['form.description'], $this->get_category()->get_description(),
-			array()
+			[]
 		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', self::$lang['form.authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 
 		$fieldset_authorizations->add_field(new FormFieldCheckbox('special_authorizations', self::$lang['form.authorizations'], $this->get_category()->has_special_authorizations(),
-			array(
+			[
 				'description' => self::$lang['category.form.authorizations.clue'],
-				'events' => array(
+				'events' => [
 					'click' => '
 					if (HTMLForms.getField("special_authorizations").getValue()) {
 						jQuery("#' . self::class . '_authorizations").show();
 					} else {
 						jQuery("#' . self::class . '_authorizations").hide();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		// Hide categories manager authorizations but keep its bit in auth
@@ -86,11 +86,11 @@ class DownloadCategoriesFormController extends DefaultCategoriesFormController
 			</script>'
 		));
 
-		$auth_settings = new AuthorizationsSettings(array_merge(RootCategory::get_authorizations_settings(), array(
+		$auth_settings = new AuthorizationsSettings(array_merge(RootCategory::get_authorizations_settings(), [
 			new ActionAuthorization(self::$lang['download.config.download.link'], DownloadAuthorizationsService::DISPLAY_DOWNLOAD_LINK_AUTHORIZATIONS)
-		)));
+		]));
 		$auth_settings->build_from_auth_array($this->get_category()->get_authorizations());
-		$fieldset_authorizations->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings, array('hidden' => !$this->get_category()->has_special_authorizations())));
+		$fieldset_authorizations->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings, ['hidden' => !$this->get_category()->has_special_authorizations()]));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
 		$form->add_button($this->submit_button);
@@ -113,7 +113,7 @@ class DownloadCategoriesFormController extends DefaultCategoriesFormController
 		else 
 		{
 			$this->get_category()->set_special_authorizations(false);
-			$autorizations = array();
+			$autorizations = [];
 		}
 		$this->get_category()->set_authorizations($autorizations);
 	}

@@ -36,31 +36,31 @@ class AdminSmalladsCategoriesConfigController extends DefaultAdminModuleControll
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('display_sort_filters', $this->lang['form.display.sort.form'], $this->config->are_sort_filters_enabled(),
-			array('class'=> 'custom-checkbox')
+			['class'=> 'custom-checkbox']
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_icon_cats', $this->lang['smallads.cats.icon.display'], $this->config->are_cat_icons_enabled(),
-			array('class'=> 'custom-checkbox')
+			['class'=> 'custom-checkbox']
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->lang['form.items.per.page'], $this->config->get_items_per_page(),
-			array('min' => 1, 'max' => 50, 'required' => true),
-			array(new FormFieldConstraintIntegerRange(1, 50))
+			['min' => 1, 'max' => 50, 'required' => true],
+			[new FormFieldConstraintIntegerRange(1, 50)]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_summaries_to_guests', $this->lang['form.display.summary.to.guests'], $this->config->are_summaries_displayed_to_guests(),
-			array('class'=> 'custom-checkbox')
+			['class'=> 'custom-checkbox']
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['form.display.type'], $this->config->get_display_type(),
-			array(
-				new FormFieldSelectChoiceOption($this->lang['form.display.type.grid'], SmalladsConfig::GRID_VIEW, array('data_option_icon' => 'fa fa-th-large')),
-				new FormFieldSelectChoiceOption($this->lang['form.display.type.list'], SmalladsConfig::LIST_VIEW, array('data_option_icon' => 'fa fa-list')),
-				new FormFieldSelectChoiceOption($this->lang['form.display.type.table'], SmalladsConfig::TABLE_VIEW, array('data_option_icon' => 'fa fa-table'))
-			),
-			array(
+			[
+				new FormFieldSelectChoiceOption($this->lang['form.display.type.grid'], SmalladsConfig::GRID_VIEW, ['data_option_icon' => 'fa fa-th-large']),
+				new FormFieldSelectChoiceOption($this->lang['form.display.type.list'], SmalladsConfig::LIST_VIEW, ['data_option_icon' => 'fa fa-list']),
+				new FormFieldSelectChoiceOption($this->lang['form.display.type.table'], SmalladsConfig::TABLE_VIEW, ['data_option_icon' => 'fa fa-table'])
+			],
+			[
 				'select_to_list' => true,
-				'events' => array('change' => '
+				'events' => ['change' => '
 					if (HTMLForms.getField("display_type").getValue() === \'' . SmalladsConfig::GRID_VIEW . '\') {
 						HTMLForms.getField("characters_number_to_cut").enable();
 						HTMLForms.getField("items_per_row").enable();
@@ -71,32 +71,32 @@ class AdminSmalladsCategoriesConfigController extends DefaultAdminModuleControll
 						HTMLForms.getField("characters_number_to_cut").disable();
 						HTMLForms.getField("items_per_row").disable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('characters_number_to_cut', $this->lang['form.characters.number.to.cut'], $this->config->get_characters_number_to_cut(),
-			array(
+			[
 				'min' => 20, 'max' => 1000,
 				'hidden' => $this->config->get_display_type() === SmalladsConfig::TABLE_VIEW
-			),
-			array(new FormFieldConstraintIntegerRange(20, 1000))
+			],
+			[new FormFieldConstraintIntegerRange(20, 1000)]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->lang['form.items.per.row'], $this->config->get_items_per_row(),
-			array(
+			[
 				'min' => 1, 'max' => 4,
 				'hidden' => $this->config->get_display_type() !== SmalladsConfig::GRID_VIEW
-			),
-			array(new FormFieldConstraintIntegerRange(1, 4))
+			],
+			[new FormFieldConstraintIntegerRange(1, 4)]
 		));
 
 		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->lang['form.root.category.description'], $this->config->get_root_category_description(),
-			array('rows' => 8, 'cols' => 47)
+			['rows' => 8, 'cols' => 47]
 		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['form.authorizations'],
-			array('description' => $this->lang['form.authorizations.clue'])
+			['description' => $this->lang['form.authorizations.clue']]
 		);
 
 		$form->add_fieldset($fieldset_authorizations);
@@ -147,7 +147,7 @@ class AdminSmalladsCategoriesConfigController extends DefaultAdminModuleControll
 		SmalladsConfig::save();
 		CategoriesService::get_categories_manager()->regenerate_cache();
 		SmalladsCache::invalidate();
-		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())) . ' - ' . $this->lang['smallads.categories.config'], 'url' => ModulesUrlBuilder::configuration()->rel()));
+		HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]) . ' - ' . $this->lang['smallads.categories.config'], 'url' => ModulesUrlBuilder::configuration()->rel()]);
 	}
 }
 ?>

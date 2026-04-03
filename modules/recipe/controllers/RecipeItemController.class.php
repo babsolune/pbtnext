@@ -73,13 +73,13 @@ class RecipeItemController extends DefaultModuleController
 		$this->build_ingredients_view();
 		$this->build_steps_view();
 
-		$this->view->put_all(array_merge($item->get_template_vars(), array(
+		$this->view->put_all(array_merge($item->get_template_vars(), [
 			'C_AUTHOR_DISPLAYED' => $config->is_author_displayed(),
 			'C_ENABLED_COMMENTS' => $comments_config->module_comments_is_enabled('recipe'),
 			'C_ENABLED_NOTATION' => $content_management_config->module_notation_is_enabled('recipe'),
 			'C_KEYWORDS' => $has_keywords,
 			'NOT_VISIBLE_MESSAGE' => MessageHelper::display($this->lang['warning.element.not.visible'], MessageHelper::WARNING),
-		)));
+		]));
 
 		if ($comments_config->module_comments_is_enabled('recipe'))
 		{
@@ -101,11 +101,11 @@ class RecipeItemController extends DefaultModuleController
 		$i = 1;
 		foreach ($keywords as $keyword)
 		{
-			$this->view->assign_block_vars('keywords', array(
+			$this->view->assign_block_vars('keywords', [
 				'C_SEPARATOR' => $i < $keywords_nb,
 				'NAME' => $keyword->get_name(),
 				'URL' => RecipeUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
-			));
+			]);
 			$i++;
 		}
 	}
@@ -118,10 +118,10 @@ class RecipeItemController extends DefaultModuleController
 
 		$i = 1;
 		foreach ($ingredients as $id => $options) {
-			$this->view->assign_block_vars('ingredients', array(
+			$this->view->assign_block_vars('ingredients', [
 				'INGREDIENT' => $options['ingredient'],
 				'AMOUNT' 	 => $options['amount'],
-			));
+			]);
 			$i++;
 		}
 	}
@@ -134,10 +134,10 @@ class RecipeItemController extends DefaultModuleController
 
 		$i = 1;
 		foreach ($steps as $id => $options) {
-			$this->view->assign_block_vars('steps', array(
+			$this->view->assign_block_vars('steps', [
 				'STEP_NUMBER'  => $options['step_number'],
 				'STEP_CONTENT' => FormatingHelper::second_parse($options['step_content']),
-			));
+			]);
 			$i++;
 		}
 	}

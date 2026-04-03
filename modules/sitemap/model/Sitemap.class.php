@@ -55,7 +55,7 @@ class Sitemap
 	/**
 	 * @var SitemapElement[] Elements contained by the site map
 	 */
-	private $elements = array();
+	private $elements = [];
 	/**
 	 * @var string name of the site
 	 */
@@ -125,18 +125,18 @@ class Sitemap
 		//We get the stream in which we are going to write
 		$template = $export_config->get_site_map_stream();
 
-		$template->put_all(array(
+		$template->put_all([
 			'C_SITE_MAP' => true,
 
             'SITE_NAME' => TextHelper::htmlspecialchars($this->site_name, ENT_QUOTES)
-		));
+		]);
 
 		//Let's export all the element it contains
 		foreach ($this->elements as $element)
 		{
-			$template->assign_block_vars('element', array(), array(
+			$template->assign_block_vars('element', [], [
 				'ELEMENT' => $element->export($export_config)
-			));
+			]);
 		}
 
 		return $template;

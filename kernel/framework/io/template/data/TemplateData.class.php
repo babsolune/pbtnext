@@ -75,7 +75,7 @@ interface TemplateData
 	 * @param array $array_vars A map var_name => var_value. Generally, var_name is written in caps characters.
 	 * @param Template[] $subtemplates The list of subtemplates to embed in the loop's iteration.
 	 */
-	function assign_block_vars($block_name, array $array_vars, array $subtemplates = array());
+	function assign_block_vars($block_name, array $array_vars, array $subtemplates = []);
 
 	/**
 	 * Returns the block $blockname in the template block list

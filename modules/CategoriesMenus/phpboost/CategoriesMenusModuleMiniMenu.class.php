@@ -59,22 +59,22 @@ class CategoriesMenusModuleMiniMenu extends ModuleMiniMenu
 			if ($category->get_id() != Category::ROOT_CATEGORY && in_array($category->get_id(), $authorized_categories))
 			{
 				$categories_number++;
-				$view->assign_block_vars('items', array(
+				$view->assign_block_vars('items', [
 					'ID'            => $category->get_id(),
 					'SUB_ORDER'     => $category->get_order(),
 					'ID_PARENT'     => $category->get_id_parent(),
 					'CATEGORY_NAME' => $category->get_name(),
 					'U_CATEGORY'    => CategoriesUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $this->module_id)->rel()
-				));
+				]);
 			}
 		}
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_CATEGORIES' => $categories_number > 0,
 			'MODULE_ID'    => $this->module_id,
 			'MENU_ID'      => $this->get_menu_id(),
 			'MENU_TITLE'   => $this->get_menu_title()
-		));
+		]);
 
 		return $view->render();
 	}

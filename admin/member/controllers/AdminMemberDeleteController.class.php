@@ -27,8 +27,8 @@ class AdminMemberDeleteController extends AdminController
 				DispatchManager::redirect($error_controller);
 			}
 
-			HooksService::execute_hook_action('delete_user', 'user', array_merge($user->get_properties(), array('title' => $user->get_display_name())));
-			AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : AdminMembersUrlBuilder::management()), StringVars::replace_vars(LangLoader::get_message('user.message.success.delete', 'user-lang'), array('name' => $user->get_display_name())));
+			HooksService::execute_hook_action('delete_user', 'user', array_merge($user->get_properties(), ['title' => $user->get_display_name()]));
+			AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : AdminMembersUrlBuilder::management()), StringVars::replace_vars(LangLoader::get_message('user.message.success.delete', 'user-lang'), ['name' => $user->get_display_name()]));
 		}
 		else
 		{

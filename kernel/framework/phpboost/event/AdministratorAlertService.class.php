@@ -35,9 +35,9 @@ class AdministratorAlertService
         $result = self::$db_querier->select("SELECT id, entitled, fixing_url, current_status, id_in_module, identifier, type, priority, creation_date, description
         FROM " . DB_TABLE_EVENTS  . "
         WHERE id = :alert_id
-        ORDER BY creation_date DESC", array(
+        ORDER BY creation_date DESC", [
             'alert_id' => $alert_id
-        ));
+        ]);
 
         $properties = $result->fetch();
 
@@ -66,7 +66,7 @@ class AdministratorAlertService
      */
     public static function find_by_criteria($id_in_module = null, $type = null, $identifier = null)
     {
-        $criterias = array();
+        $criterias = [];
 
         if ($id_in_module != null)
         {
@@ -86,7 +86,7 @@ class AdministratorAlertService
         //Restrictive criteria
         if (!empty($criterias))
         {
-            $array_result = array();
+            $array_result = [];
             $result = self::$db_querier->select("SELECT id, entitled, fixing_url, current_status, creation_date, identifier, id_in_module, type, priority, description
             FROM " . DB_TABLE_EVENTS  . "
             WHERE contribution_type = '" . ADMINISTRATOR_ALERT_TYPE . "' AND " . implode(' AND ', $criterias));
@@ -114,14 +114,14 @@ class AdministratorAlertService
      */
     public static function get_unread_alerts()
     {
-        $array_result = array();
+        $array_result = [];
         
         $result = self::$db_querier->select("SELECT id, entitled, fixing_url, current_status, creation_date, identifier, id_in_module, type, priority, description
             FROM " . DB_TABLE_EVENTS  . "
-            WHERE contribution_type = :contribution_type AND current_status = :current_status", array(
+            WHERE contribution_type = :contribution_type AND current_status = :current_status", [
                 'contribution_type' => ADMINISTRATOR_ALERT_TYPE,
                 'current_status' => AdministratorAlert::ADMIN_ALERT_STATUS_UNREAD
-        ));
+        ]);
 
         while ($row = $result->fetch())
         {
@@ -145,10 +145,10 @@ class AdministratorAlertService
         $result = self::$db_querier->select("SELECT id, entitled, fixing_url, current_status, creation_date, id_in_module, priority, identifier, type, description
             FROM " . DB_TABLE_EVENTS  . "
             WHERE identifier = :identifier" . (!empty($type) ? " AND type = :type" : '') . " ORDER BY creation_date DESC
-            LIMIT 1;", array(
+            LIMIT 1;", [
                 'identifier' => $identifier,
                 'type' => $type
-            ));
+            ]);
 
         if ($row = $result->fetch())
         {
@@ -173,17 +173,17 @@ class AdministratorAlertService
      */
     public static function get_all_alerts($criteria = 'creation_date', $order = 'desc', $begin = 0, $number = 20)
     {
-        $array_result = array();
+        $array_result = [];
 
         //On liste les alertes
         $result = self::$db_querier->select("SELECT id, entitled, fixing_url, current_status, creation_date, identifier, id_in_module, type, priority, description
         FROM " . DB_TABLE_EVENTS  . "
         WHERE contribution_type = " . ADMINISTRATOR_ALERT_TYPE . "
         ORDER BY " . $criteria . " " . TextHelper::strtoupper($order) . "
-        LIMIT :pagination_number OFFSET :display_from", array(
+        LIMIT :pagination_number OFFSET :display_from", [
             'pagination_number' => $number,
             'display_from' => $begin
-        ));
+        ]);
         while ($row = $result->fetch())
         {
             $alert = new AdministratorAlert();
@@ -204,7 +204,7 @@ class AdministratorAlertService
         // If it exists already in the data base
         if ($alert->get_id() > 0)
         {
-            self::$db_querier->update(DB_TABLE_EVENTS, array('entitled' => $alert->get_entitled(), 'description' => $alert->get_alert_properties(), 'fixing_url' => $alert->get_fixing_url(), 'module' => '', 'current_status' => $alert->get_status(), 'creation_date' => $alert->get_creation_date()->get_timestamp(), 'id_in_module' => $alert->get_id_in_module(), 'identifier' => $alert->get_identifier(), 'type' => $alert->get_type(), 'priority' => $alert->get_priority()), 'WHERE id = :id', array('id' => $alert->get_id()));
+            self::$db_querier->update(DB_TABLE_EVENTS, ['entitled' => $alert->get_entitled(), 'description' => $alert->get_alert_properties(), 'fixing_url' => $alert->get_fixing_url(), 'module' => '', 'current_status' => $alert->get_status(), 'creation_date' => $alert->get_creation_date()->get_timestamp(), 'id_in_module' => $alert->get_id_in_module(), 'identifier' => $alert->get_identifier(), 'type' => $alert->get_type(), 'priority' => $alert->get_priority()], 'WHERE id = :id', ['id' => $alert->get_id()]);
 
             //Regeneration of the member cache file
             if ($alert->get_must_regenerate_cache())
@@ -216,7 +216,7 @@ class AdministratorAlertService
         else //We create it
         {
             $creation_date = new Date();
-            $result = self::$db_querier->insert(DB_TABLE_EVENTS, array('entitled' => $alert->get_entitled(), 'description' => $alert->get_alert_properties(), 'fixing_url' => $alert->get_fixing_url(), 'module' => '', 'current_status' => $alert->get_status(), 'creation_date' => $creation_date->get_timestamp(), 'id_in_module' => $alert->get_id_in_module(), 'identifier' => $alert->get_identifier(), 'type' => $alert->get_type(), 'priority' => $alert->get_priority()));
+            $result = self::$db_querier->insert(DB_TABLE_EVENTS, ['entitled' => $alert->get_entitled(), 'description' => $alert->get_alert_properties(), 'fixing_url' => $alert->get_fixing_url(), 'module' => '', 'current_status' => $alert->get_status(), 'creation_date' => $creation_date->get_timestamp(), 'id_in_module' => $alert->get_id_in_module(), 'identifier' => $alert->get_identifier(), 'type' => $alert->get_type(), 'priority' => $alert->get_priority()]);
             $alert->set_id($result->get_last_inserted_id());
 
             //Cache regeneration
@@ -233,7 +233,7 @@ class AdministratorAlertService
         // If it exists in the data base
         if ($alert->get_id() > 0)
         {
-            self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE id = :id', array('id' => $alert->get_id()));
+            self::$db_querier->delete(DB_TABLE_EVENTS, 'WHERE id = :id', ['id' => $alert->get_id()]);
             $alert->set_id(0);
             AdministratorAlertCache::invalidate();
         }

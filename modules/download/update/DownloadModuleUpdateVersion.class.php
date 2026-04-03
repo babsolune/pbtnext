@@ -15,8 +15,8 @@ class DownloadModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('download');
 
-		$this->content_tables = array(PREFIX . 'download');
-		self::$delete_old_files_list = array(
+		$this->content_tables = [PREFIX . 'download'];
+		self::$delete_old_files_list = [
 			'/controllers/categories/DownloadCategoriesManageController.class.php',
 			'/controllers/categories/DownloadDeleteCategoryController.class.php',
 			'/controllers/DownloadDeleteController.class.php',
@@ -38,22 +38,22 @@ class DownloadModuleUpdateVersion extends ModuleUpdateVersion
 			'/templates/DownloadDisplayDownloadFileController.tpl',
 			'/templates/DownloadDisplaySeveralDownloadFilesController.tpl',
 			'/util/AdminDownloadDisplayResponse.class.php'
-		);
+		];
 
-		$this->database_columns_to_add = array(
-			array(
+		$this->database_columns_to_add = [
+			[
 				'table_name' => PREFIX . 'download',
-				'columns' => array(
-					'sources' => array('type' => 'text', 'length' => 65000),
-					'version_number' => array('type' => 'string', 'length' => 30, 'notnull' => 1, 'default' => "''")
-				)
-			)
-		);
+				'columns' => [
+					'sources' => ['type' => 'text', 'length' => 65000],
+					'version_number' => ['type' => 'string', 'length' => 30, 'notnull' => 1, 'default' => "''"]
+				]
+			]
+		];
 
-		$this->database_columns_to_modify = array(
-			array(
+		$this->database_columns_to_modify = [
+			[
 				'table_name' => PREFIX . 'download',
-				'columns' => array(
+				'columns' => [
 					'name'             => 'title TEXT',
 					'rewrited_name'    => 'rewrited_title TEXT',
 					'url'              => 'file_url TEXT',
@@ -67,15 +67,15 @@ class DownloadModuleUpdateVersion extends ModuleUpdateVersion
 					'picture_url'      => 'thumbnail VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 0',
 					'number_view'      => 'views_number INT(11) NOT NULL DEFAULT 0',
 					'number_downloads' => 'downloads_number INT(11) NOT NULL DEFAULT 0'
-				)
-			),
-			array(
+				]
+			],
+			[
 				'table_name' => PREFIX . 'download_cats',
-				'columns' => array(
+				'columns' => [
 					'image' => 'thumbnail VARCHAR(255) NOT NULL DEFAULT ""'
-				)
-			)
-		);
+				]
+			]
+		];
 	}
 }
 ?>

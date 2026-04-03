@@ -9,14 +9,14 @@
 
 class VideoCache implements CacheData
 {
-	private $items = array();
+	private $items = [];
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{
-		$this->items = array();
+		$this->items = [];
 
 		$now = new Date();
 		$config = VideoConfig::load();
@@ -27,10 +27,10 @@ class VideoCache implements CacheData
 			LEFT JOIN ' . DB_TABLE_AVERAGE_NOTES . ' notes ON notes.id_in_module = video.id AND notes.module_name = \'video\'
 			WHERE (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
 			ORDER BY ' . $config->get_sort_type() . ' DESC
-			LIMIT :files_number_in_menu OFFSET 0', array(
+			LIMIT :files_number_in_menu OFFSET 0', [
 				'timestamp_now' => $now->get_timestamp(),
 				'files_number_in_menu' => (int)$config->get_files_number_in_menu()
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{

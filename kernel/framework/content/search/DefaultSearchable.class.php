@@ -22,7 +22,7 @@ class DefaultSearchable extends AbstractSearchableExtensionPoint
 	protected $second_table_foreign_id;
 	
 	protected $cats_table_name;
-	protected $authorized_categories = array();
+	protected $authorized_categories = [];
 	
 	protected $use_keywords = false;
 	
@@ -61,7 +61,7 @@ class DefaultSearchable extends AbstractSearchableExtensionPoint
 		$this->cats_table_name = $module_configuration->has_categories() ? $module_configuration->get_categories_table_name() : '';
 
 		$this->read_authorization = $module_configuration->has_categories() ? CategoriesAuthorizationsService::check_authorizations(Category::ROOT_CATEGORY, $this->module_id)->read() : ItemsAuthorizationsService::check_authorizations($this->module_id)->read();
-		$this->authorized_categories = $module_configuration->has_categories() ? CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, ($module_configuration->has_rich_config_parameters() ? $module_configuration->get_configuration_parameters()->get_summary_displayed_to_guests() : true), $this->module_id) : array();
+		$this->authorized_categories = $module_configuration->has_categories() ? CategoriesService::get_authorized_categories(Category::ROOT_CATEGORY, ($module_configuration->has_rich_config_parameters() ? $module_configuration->get_configuration_parameters()->get_summary_displayed_to_guests() : true), $this->module_id) : [];
 
 		$this->field_title = $module_configuration->has_items() ? $item_class_name::get_title_label() : 'title';
 		$this->field_rewrited_title = 'rewrited_' . $this->field_title;

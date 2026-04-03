@@ -43,10 +43,10 @@ class GalleryFeedProvider implements FeedProvider
 				FROM ' . GallerySetup::$gallery_table . '
 				WHERE id_category IN :ids_categories
 				ORDER BY timestamp DESC
-				LIMIT :pics_number_per_page', array(
+				LIMIT :pics_number_per_page', [
 					'ids_categories' => $ids_categories,
 					'pics_number_per_page' => $config->get_pics_number_per_page()
-			));
+			]);
 
 			foreach ($results as $row)
 			{

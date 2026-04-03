@@ -13,7 +13,7 @@ class SandboxModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('sandbox');
 
-		self::$delete_old_files_list = array(
+		self::$delete_old_files_list = [
 			'/controllers/SandboxFormController.class.php',
 			'/controllers/SandboxGraphicsCSSController.class.php',
 			'/controllers/SandboxMailController.class.php',
@@ -23,11 +23,11 @@ class SandboxModuleUpdateVersion extends ModuleUpdateVersion
 			'/templates/SandboxGraphicsCSSController.tpl',
 			'/templates/SandboxMailController.tpl',
 			'/templates/SandboxMenuController.tpl',
-		);
-		self::$delete_old_folders_list = array(
+		];
+		self::$delete_old_folders_list = [
 			'/html',
 			'/templates/js',
-		);
+		];
 	}
 }
 ?>

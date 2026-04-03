@@ -42,7 +42,7 @@ class ContactExtensionPointProvider extends ExtensionPointProvider
 
 	public function url_mappings()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/contact/index.php')));
+		return new UrlMappings([new DispatcherUrlMapping('/contact/index.php')]);
 	}
 }
 ?>

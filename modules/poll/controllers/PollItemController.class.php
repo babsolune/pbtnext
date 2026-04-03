@@ -11,7 +11,7 @@
 class PollItemController extends DefaultDisplayItemController
 {
 	private $vote_form;
-	private $vote = array();
+	private $vote = [];
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -31,14 +31,14 @@ class PollItemController extends DefaultDisplayItemController
 			}
 		}
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_PUBLISHED' 	      => $this->get_item()->is_published(),
 			'C_MORE_OPTIONS'      => true,
 			'C_ENABLED_COUNTDOWN' => $this->get_item()->is_published() && $this->get_item()->end_date_enabled() && $this->get_item()->get_countdown_display() > 0,
 			'COUNTDOWN'	      => PollCountdownService::display($this->get_item()),
 			'VOTE_FORM' 	      => $this->vote_form->display(),
 			'VOTES_RESULT'        => PollVotesResultService::display($this->get_item())
-		));
+		]);
 
 		return $this->generate_response();
 	}
@@ -52,17 +52,17 @@ class PollItemController extends DefaultDisplayItemController
 
 		$fieldset->add_field(new FormFieldFree('question', $this->lang['poll.form.question'], FormatingHelper::second_parse($this->get_item()->get_question())));
 
-		$answers_list = array();
+		$answers_list = [];
 		$i = 1;
 		foreach ($this->get_item()->get_answers_list() as $answer)
 		{
 			switch ($this->get_item()->get_answers_type())
 			{
 				case 1:
-					$answers_list['single'][] = new FormFieldRadioChoiceOption($answer, $i, array('disable' => !$this->get_item()->user_is_empowered_to_vote()));
+					$answers_list['single'][] = new FormFieldRadioChoiceOption($answer, $i, ['disable' => !$this->get_item()->user_is_empowered_to_vote()]);
 					break;
 				case 2:
-					$answers_list['multiple'][] = new FormFieldMultipleCheckboxOption($i, $answer, array('disable' => !$this->get_item()->user_is_empowered_to_vote()));
+					$answers_list['multiple'][] = new FormFieldMultipleCheckboxOption($i, $answer, ['disable' => !$this->get_item()->user_is_empowered_to_vote()]);
 					break;
 			}
 			$i++;
@@ -70,14 +70,14 @@ class PollItemController extends DefaultDisplayItemController
 
 		if ($this->get_item()->get_answers_type() == 1)
 		{
-			$fieldset->add_field(new FormFieldRadioChoice('single_vote', $this->lang['poll.vote.single.choice'], array(), $answers_list['single'],
-				array('required' => $this->get_item()->user_is_empowered_to_vote())
+			$fieldset->add_field(new FormFieldRadioChoice('single_vote', $this->lang['poll.vote.single.choice'], [], $answers_list['single'],
+				['required' => $this->get_item()->user_is_empowered_to_vote()]
 			));
 		}
 		elseif ($this->get_item()->get_answers_type() == 2)
 		{
-			$fieldset->add_field(new FormFieldMultipleCheckbox('multiple_vote', $this->lang['poll.vote.multiple.choice'], array(), $answers_list['multiple'],
-				array('required' => $this->get_item()->user_is_empowered_to_vote())
+			$fieldset->add_field(new FormFieldMultipleCheckbox('multiple_vote', $this->lang['poll.vote.multiple.choice'], [], $answers_list['multiple'],
+				['required' => $this->get_item()->user_is_empowered_to_vote()]
 			));
 		}
 

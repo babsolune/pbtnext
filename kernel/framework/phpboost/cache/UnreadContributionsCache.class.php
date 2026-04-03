@@ -19,8 +19,8 @@ class UnreadContributionsCache implements CacheData
 	private $admin = 0;
 	private $moderators = false;
 	private $members = false;
-	private $groups = array();
-	private $users = array();
+	private $groups = [];
+	private $users = [];
 
 	/**
 	 * {@inheritdoc}

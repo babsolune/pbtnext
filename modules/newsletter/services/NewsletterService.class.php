@@ -37,13 +37,13 @@ class NewsletterService
 				//Send mail
 				NewsletterMailFactory::send_mail(self::list_subscribers_by_stream($id), $language_type, NewsletterConfig::load()->get_mail_sender(), $subject, $content);
 
-				$properties = array(
+				$properties = [
 					'id'            => $archive_id,
 					'title'         => $subject,
 					'content'       => $content,
 					'language_type' => $language_type,
 					'url'           => NewsletterUrlBuilder::archive($archive_id)->rel(),
-				);
+				];
 				HooksService::execute_hook_action('add', 'newsletter', $properties);
 			}
 		}
@@ -56,7 +56,7 @@ class NewsletterService
 
 	public static function display_newsletter($id_archive)
 	{
-		$row = PersistenceContext::get_querier()->select_single_row(NewsletterSetup::$newsletter_table_archives, array('*'), "WHERE id = '". $id_archive ."'");
+		$row = PersistenceContext::get_querier()->select_single_row(NewsletterSetup::$newsletter_table_archives, ['*'], "WHERE id = '". $id_archive ."'");
 
 		return NewsletterMailFactory::display_mail($row['language_type'], $row['subject'], $row['content']);
 	}
@@ -103,14 +103,14 @@ class NewsletterService
 
 	public static function get_member_id_streams($user_id)
 	{
-		$id_streams = array();
+		$id_streams = [];
 
 		$result = PersistenceContext::get_querier()->select("SELECT stream_id
 		FROM " . NewsletterSetup::$newsletter_table_subscriptions . " subscriptions
 		LEFT JOIN " . NewsletterSetup::$newsletter_table_subscribers . " subscribers ON subscribers.id = subscriptions.subscriber_id
-		WHERE user_id = :user_id", array(
+		WHERE user_id = :user_id", [
 			'user_id' => $user_id
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{
@@ -123,14 +123,14 @@ class NewsletterService
 
 	public static function get_visitor_id_streams($mail)
 	{
-		$id_streams = array();
+		$id_streams = [];
 
 		$result = PersistenceContext::get_querier()->select("SELECT stream_id
 		FROM " . NewsletterSetup::$newsletter_table_subscriptions . " subscriptions
 		LEFT JOIN " . NewsletterSetup::$newsletter_table_subscribers . " subscribers ON subscribers.id = subscriptions.subscriber_id
-		WHERE mail = :mail", array(
+		WHERE mail = :mail", [
 			'mail' => $mail
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{
@@ -143,7 +143,7 @@ class NewsletterService
 
 	public static function list_subscribers_by_stream($stream_id)
 	{
-		$list_subscribers = array();
+		$list_subscribers = [];
 
 		$result = PersistenceContext::get_querier()->select("SELECT subscription.stream_id, subscription.subscriber_id, subscriber.id, subscriber.user_id, subscriber.mail, member.display_name
 		FROM " . NewsletterSetup::$newsletter_table_subscriptions . " subscription
@@ -151,18 +151,18 @@ class NewsletterService
 		LEFT JOIN " . DB_TABLE_MEMBER . " member ON member.user_id = subscriber.user_id
 		WHERE subscription.stream_id = :stream_id
 		",
-			array(
+			[
 				'stream_id' => $stream_id
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{
-			$list_subscribers[$row['id']] = array(
+			$list_subscribers[$row['id']] = [
 				'id' => $row['id'],
 				'user_id' => $row['user_id'],
 				'mail' => $row['mail'],
 				'display_name' => isset($row['display_name']) ? $row['display_name'] : TextHelper::lcfirst(LangLoader::get_message('user.guest', 'user-lang')),
-			);
+			];
 		}
 		$result->dispose();
 

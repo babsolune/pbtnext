@@ -27,7 +27,7 @@ class FormFieldCaptcha extends AbstractFormField
 	{
 		$this->captcha = AppContext::get_captcha_service()->get_default_factory();
 
-		$field_options = $this->is_enabled() && $this->captcha->is_visible() ? array('required' => true) : array();
+		$field_options = $this->is_enabled() && $this->captcha->is_visible() ? ['required' => true] : [];
 		parent::__construct($id, LangLoader::get_message('form.captcha', 'form-lang'), false, $field_options);
 	}
 
@@ -59,11 +59,11 @@ class FormFieldCaptcha extends AbstractFormField
 
 		$this->assign_common_template_variables($template);
 
-		$template->put_all(array(
+		$template->put_all([
 			'C_IS_ENABLED' => $this->is_enabled(),
 			'C_IS_VISIBLE' => $this->captcha->is_visible(),
 			'CAPTCHA' => $this->captcha->display(),
-		));
+		]);
 
 		return $template;
 	}

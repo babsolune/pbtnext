@@ -97,7 +97,7 @@ interface Template extends View
 	 * @param array $array_vars A map var_name => var_value. Generally, var_name is written in caps characters.
 	 * @param Template[] $subtemplates A list
 	 */
-	function assign_block_vars($block_name, array $array_vars, array $subtemplates = array());
+	function assign_block_vars($block_name, array $array_vars, array $subtemplates = []);
 
 	/**
 	 * Displays the template.

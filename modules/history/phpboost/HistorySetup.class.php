@@ -29,7 +29,7 @@ class HistorySetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(self::$history_table));
+		PersistenceContext::get_dbms_utils()->drop([self::$history_table]);
 	}
 
 	private function create_tables()
@@ -39,24 +39,24 @@ class HistorySetup extends DefaultModuleSetup
 
 	private function create_history_table()
 	{
-		$fields = array(
-			'id'            => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'module_id'     => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'id_in_module'  => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'user_id'       => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'action'        => array('type' => 'string', 'length' => 128, 'notnull' => 1, 'default' => "''"),
-			'title'         => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'url'           => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'description'   => array('type' => 'string', 'length' => 512, 'default' => "''")
-		);
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array(
-				'module_id_index'    => array('type' => 'key', 'fields' => 'module_id'),
-				'id_in_module_index' => array('type' => 'key', 'fields' => 'id_in_module')
-			)
-		);
+		$fields = [
+			'id'            => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'module_id'     => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'id_in_module'  => ['type' => 'integer', 'length' => 11, 'default' => 0],
+			'user_id'       => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'creation_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'action'        => ['type' => 'string', 'length' => 128, 'notnull' => 1, 'default' => "''"],
+			'title'         => ['type' => 'string', 'length' => 255, 'default' => "''"],
+			'url'           => ['type' => 'string', 'length' => 255, 'default' => "''"],
+			'description'   => ['type' => 'string', 'length' => 512, 'default' => "''"]
+		];
+		$options = [
+			'primary' => ['id'],
+			'indexes' => [
+				'module_id_index'    => ['type' => 'key', 'fields' => 'module_id'],
+				'id_in_module_index' => ['type' => 'key', 'fields' => 'id_in_module']
+			]
+		];
 		PersistenceContext::get_dbms_utils()->create_table(self::$history_table, $fields, $options);
 	}
 }

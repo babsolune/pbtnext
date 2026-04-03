@@ -15,8 +15,8 @@ class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('calendar');
 
-		$this->content_tables = array(PREFIX . 'calendar_events_content');
-		self::$delete_old_files_list = array(
+		$this->content_tables = [PREFIX . 'calendar_events_content'];
+		self::$delete_old_files_list = [
 			'/controllers/CalendarDeleteController.class.php',
 			'/controllers/CalendarDisplayCategoryController.class.php',
 			'/controllers/CalendarDisplayEventController.class.php',
@@ -36,38 +36,38 @@ class CalendarModuleUpdateVersion extends ModuleUpdateVersion
 			'/templates/CalendarDisplayEventController.tpl',
 			'/templates/CalendarDisplaySeveralEventsController.tpl',
 			'/util/AdminCalendarDisplayResponse.class.php'
-		);
-		self::$delete_old_folders_list = array(
+		];
+		self::$delete_old_folders_list = [
 			'/controllers/categories'
-		);
+		];
 
-		$this->database_columns_to_add = array(
-			array(
+		$this->database_columns_to_add = [
+			[
 				'table_name' => PREFIX . 'calendar_events_content',
-				'columns' => array(
-					'update_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-					'registration_limit' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0),
-					'cancelled' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0)
-				)
-			)
-		);
+				'columns' => [
+					'update_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+					'registration_limit' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0],
+					'cancelled' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0]
+				]
+			]
+		];
 
-		$this->database_columns_to_modify = array(
-			array(
+		$this->database_columns_to_modify = [
+			[
 				'table_name' => PREFIX . 'calendar_events_content',
-				'columns' => array(
+				'columns' => [
 					'contents'    => 'content MEDIUMTEXT',
 					'author_id'    => 'author_user_id INT(11) NOT NULL DEFAULT 0',
 					'picture_url' => 'thumbnail VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 0',
-				)
-			)
-		);
+				]
+			]
+		];
 	}
 
 	protected function execute_module_specific_changes()
 	{
 		// Set registration_limit enabled where max registered members id different of 0
-		$this->querier->update(PREFIX . 'calendar_events_content', array('registration_limit' => 1), 'WHERE max_registered_members <> 0');
+		$this->querier->update(PREFIX . 'calendar_events_content', ['registration_limit' => 1], 'WHERE max_registered_members <> 0');
 	}
 }
 ?>

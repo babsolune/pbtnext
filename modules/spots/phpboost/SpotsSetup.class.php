@@ -44,7 +44,7 @@ class SpotsSetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(self::$spots_table, self::$spots_cats_table));
+		PersistenceContext::get_dbms_utils()->drop([self::$spots_table, self::$spots_cats_table]);
 	}
 
 	private function create_tables()
@@ -55,40 +55,40 @@ class SpotsSetup extends DefaultModuleSetup
 
 	private function create_spots_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'title' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'rewrited_title' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'website_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'content' => array('type' => 'text', 'length' => 65000),
-			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'update_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'published' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'views_number' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'visits_number' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'thumbnail' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'location' => array('type' => 'text', 'length' => 65000),
-			'latitude' => array('type' => 'decimal', 'length' => 18, 'scale' => 15, 'notnull' => 1, 'default' => 0),
-			'longitude' => array('type' => 'decimal', 'length' => 18, 'scale' => 15, 'notnull' => 1, 'default' => 0),
-			'route_enabled' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'travel_type' => array('type' => 'string', 'lenght' => 255, 'default' => 0),
-            'spot_email' => array('type' => 'text', 'length' => 65000),
-			'phone' => array('type' => 'text', 'length' => 65000),
-			'facebook' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'twitter' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'instagram' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'youtube' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-		);
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array(
-				'id_category' => array('type' => 'key', 'fields' => 'id_category'),
-				'title' => array('type' => 'fulltext', 'fields' => 'title'),
-				'content' => array('type' => 'fulltext', 'fields' => 'content')
-			)
-		);
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'id_category' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'title' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'rewrited_title' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'website_url' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'content' => ['type' => 'text', 'length' => 65000],
+			'creation_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'update_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'published' => ['type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0],
+			'author_user_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'views_number' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'visits_number' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'thumbnail' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'location' => ['type' => 'text', 'length' => 65000],
+			'latitude' => ['type' => 'decimal', 'length' => 18, 'scale' => 15, 'notnull' => 1, 'default' => 0],
+			'longitude' => ['type' => 'decimal', 'length' => 18, 'scale' => 15, 'notnull' => 1, 'default' => 0],
+			'route_enabled' => ['type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0],
+			'travel_type' => ['type' => 'string', 'lenght' => 255, 'default' => 0],
+            'spot_email' => ['type' => 'text', 'length' => 65000],
+			'phone' => ['type' => 'text', 'length' => 65000],
+			'facebook' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'twitter' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'instagram' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'youtube' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+		];
+		$options = [
+			'primary' => ['id'],
+			'indexes' => [
+				'id_category' => ['type' => 'key', 'fields' => 'id_category'],
+				'title' => ['type' => 'fulltext', 'fields' => 'title'],
+				'content' => ['type' => 'fulltext', 'fields' => 'content']
+			]
+		];
 		PersistenceContext::get_dbms_utils()->create_table(self::$spots_table, $fields, $options);
 	}
 
@@ -106,7 +106,7 @@ class SpotsSetup extends DefaultModuleSetup
 
 	private function insert_spots_cats_data()
 	{
-		PersistenceContext::get_querier()->insert(self::$spots_cats_table, array(
+		PersistenceContext::get_querier()->insert(self::$spots_cats_table, [
 			'id'            => 1,
 			'id_parent'     => 0,
 			'c_order'       => 1,
@@ -115,12 +115,12 @@ class SpotsSetup extends DefaultModuleSetup
 			'name'          => $this->messages['default.category.name'],
 			'color'			=> '#366493',
 			'inner_icon'	=> 'fa fa-circle'
-		));
+		]);
 	}
 
 	private function insert_spots_data()
 	{
-		PersistenceContext::get_querier()->insert(self::$spots_table, array(
+		PersistenceContext::get_querier()->insert(self::$spots_table, [
 			'id'             => 1,
 			'id_category'    => 1,
 			'title'          => $this->messages['default.item.title'],
@@ -139,7 +139,7 @@ class SpotsSetup extends DefaultModuleSetup
 			'views_number'   => 0,
 			'visits_number'  => 0,
 			'thumbnail'      => '/templates/__default__/images/default_item.webp',
-		));
+		]);
 	}
 }
 ?>

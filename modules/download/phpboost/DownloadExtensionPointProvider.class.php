@@ -15,7 +15,7 @@ class DownloadExtensionPointProvider extends ItemsModuleExtensionPointProvider
 {
 	public function comments()
 	{
-		return new CommentsTopics(array(new DownloadCommentsTopic()));
+		return new CommentsTopics([new DownloadCommentsTopic()]);
 	}
 	
 	public function home_page()

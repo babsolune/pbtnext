@@ -47,7 +47,7 @@ if (!empty($idm_get) && $del) //Suppression d'un message/topic.
 
 	//Info sur le message.
 	try {
-		$msg = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', array('user_id', 'idtopic'), 'WHERE id=:id', array('id' => $idm_get));
+		$msg = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', ['user_id', 'idtopic'], 'WHERE id=:id', ['id' => $idm_get]);
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
@@ -55,7 +55,7 @@ if (!empty($idm_get) && $del) //Suppression d'un message/topic.
 
 	//On va chercher les infos sur le topic
 	try {
-		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('user_id', 'id_category', 'title', 'subtitle', 'first_msg_id', 'last_msg_id', 'last_timestamp'), 'WHERE id=:id', array('id' => $msg['idtopic']));
+		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', ['user_id', 'id_category', 'title', 'subtitle', 'first_msg_id', 'last_msg_id', 'last_timestamp'], 'WHERE id=:id', ['id' => $msg['idtopic']]);
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
@@ -113,7 +113,7 @@ elseif (!empty($idt_get))
 
 	//On va chercher les infos sur le topic
 	try {
-		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('user_id', 'id_category', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status'), 'WHERE id=:id', array('id' => $idt_get));
+		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', ['user_id', 'id_category', 'title', 'subtitle', 'nbr_msg', 'last_msg_id', 'first_msg_id', 'last_timestamp', 'status'], 'WHERE id=:id', ['id' => $idt_get]);
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
@@ -143,7 +143,7 @@ elseif (!empty($idt_get))
 		//Vérification de l'appartenance du sujet au membres, ou modo.
 		$check_mbr = 0;
 		try {
-			$check_mbr = PersistenceContext::get_querier()->get_column_value(PREFIX . 'forum_topics', 'user_id', 'WHERE id=:id', array('id' => $idt_get));
+			$check_mbr = PersistenceContext::get_querier()->get_column_value(PREFIX . 'forum_topics', 'user_id', 'WHERE id=:id', ['id' => $idt_get]);
 		} catch (RowNotFoundException $e) {}
 
 		if ((!empty($check_mbr) && AppContext::get_current_user()->get_id() == $check_mbr) || ForumAuthorizationsService::check_authorizations($topic['id_category'])->moderation())
@@ -161,7 +161,7 @@ elseif (!empty($idt_get))
 	elseif ($poll && AppContext::get_current_user()->get_id() !== -1) //Enregistrement vote du sondage
 	{
 		try {
-			$info_poll = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_poll', array('*'), 'WHERE idtopic=:id', array('id' => $idt_get));
+			$info_poll = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_poll', ['*'], 'WHERE idtopic=:id', ['id' => $idt_get]);
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
@@ -192,9 +192,9 @@ elseif (!empty($idt_get))
 				}
 			}
 
-			$properties = array('voter_id' =>  implode('|', $voter_id), 'votes' =>  implode('|', $array_votes));
-			PersistenceContext::get_querier()->update(PREFIX . 'forum_poll', $properties, 'WHERE idtopic=:id', array('id' => $idt_get));
-			HooksService::execute_hook_action('forum_answer_poll', 'forum', array_merge($info_poll, $properties, array('id' => $idt_get, 'url' => Url::to_rel('/forum/topic.php?id=' . $idt_get . '&pt=' . $page_get, '-' . $idt_get . '-' . $page_get . $rewrited_title . '.php'))));
+			$properties = ['voter_id' =>  implode('|', $voter_id), 'votes' =>  implode('|', $array_votes)];
+			PersistenceContext::get_querier()->update(PREFIX . 'forum_poll', $properties, 'WHERE idtopic=:id', ['id' => $idt_get]);
+			HooksService::execute_hook_action('forum_answer_poll', 'forum', array_merge($info_poll, $properties, ['id' => $idt_get, 'url' => Url::to_rel('/forum/topic.php?id=' . $idt_get . '&pt=' . $page_get, '-' . $idt_get . '-' . $page_get . $rewrited_title . '.php')]));
 		}
 
 		AppContext::get_response()->redirect('/forum/topic' . url('.php?id=' . $idt_get . '&pt=' . $page_get, '-' . $idt_get . '-' . $page_get . $rewrited_title . '.php', '&'));
@@ -286,13 +286,13 @@ elseif ($read) //Marquer comme lu.
 		AppContext::get_response()->redirect(UserUrlBuilder::connect());
 
 	//Calcul du temps de péremption, ou de dernière vue des messages.
-	$check_last_view_forum = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER_EXTENDED_FIELDS, 'WHERE user_id=:user_id', array('user_id' => AppContext::get_current_user()->get_id()));
+	$check_last_view_forum = PersistenceContext::get_querier()->count(DB_TABLE_MEMBER_EXTENDED_FIELDS, 'WHERE user_id=:user_id', ['user_id' => AppContext::get_current_user()->get_id()]);
 
 	//Modification du last_view_forum, si le membre est déjà dans la table
 	if (!empty($check_last_view_forum))
-		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER_EXTENDED_FIELDS, array('last_view_forum' => time()), 'WHERE user_id=:id', array('id' => AppContext::get_current_user()->get_id()));
+		PersistenceContext::get_querier()->update(DB_TABLE_MEMBER_EXTENDED_FIELDS, ['last_view_forum' => time()], 'WHERE user_id=:id', ['id' => AppContext::get_current_user()->get_id()]);
 	else
-		PersistenceContext::get_querier()->insert(DB_TABLE_MEMBER_EXTENDED_FIELDS, array('user_id' => AppContext::get_current_user()->get_id(), 'last_view_forum' =>  time()));
+		PersistenceContext::get_querier()->insert(DB_TABLE_MEMBER_EXTENDED_FIELDS, ['user_id' => AppContext::get_current_user()->get_id(), 'last_view_forum' =>  time()]);
 
 	AppContext::get_session()->recheck_cached_data();
 
@@ -304,15 +304,15 @@ elseif (!empty($selected) && !empty($idm_get)) {
 		AppContext::get_response()->redirect(UserUrlBuilder::connect());
 	}
 	try {
-		$message_selected = PersistenceContext::get_querier()->select_single_row(ForumSetup::$forum_message_table, array('*'), 'WHERE id=:id', array(
+		$message_selected = PersistenceContext::get_querier()->select_single_row(ForumSetup::$forum_message_table, ['*'], 'WHERE id=:id', [
 			'id' => $idm_get
-		));
+		]);
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error);
 	}
 	try {
-		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('user_id'), 'WHERE id=:id', array('id' => $message_selected['idtopic']));
+		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', ['user_id'], 'WHERE id=:id', ['id' => $message_selected['idtopic']]);
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
@@ -323,17 +323,17 @@ elseif (!empty($selected) && !empty($idm_get)) {
 	{
 		if ($selected == "true")
 		{
-			PersistenceContext::get_querier()->update(ForumSetup::$forum_message_table, array(
+			PersistenceContext::get_querier()->update(ForumSetup::$forum_message_table, [
 				'selected' => 1,
-			), 'WHERE id=:id', array('id' => $idm_get));
+			], 'WHERE id=:id', ['id' => $idm_get]);
 			header('Location: ' . $_SERVER["HTTP_REFERER"]);
 			exit();
 		}
 		else if ($selected == "false")
 		{
-			PersistenceContext::get_querier()->update(ForumSetup::$forum_message_table, array(
+			PersistenceContext::get_querier()->update(ForumSetup::$forum_message_table, [
 				'selected' => 0,
-			), 'WHERE id=:id', array('id' => $idm_get));
+			], 'WHERE id=:id', ['id' => $idm_get]);
 			header('Location: ' . $_SERVER["HTTP_REFERER"]);
 			exit();
 		}

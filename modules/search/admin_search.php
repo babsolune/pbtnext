@@ -37,7 +37,7 @@ if ($valid)
 {
 	if (!$weighting)
 	{
-		$authorized_modules = $request->get_postvalue('authorized_modules', array());
+		$authorized_modules = $request->get_postvalue('authorized_modules', []);
 		$authorized_modules = !empty($authorized_modules) ? explode(',', $authorized_modules[0]) : $authorized_modules;
 		$config = SearchConfig::load();
 		$config->set_nb_results_per_page($request->get_postvalue('nb_results_p', 15));
@@ -47,7 +47,7 @@ if ($valid)
 		$config->set_authorizations(Authorizations::build_auth_array_from_form(SearchAuthorizationsService::READ_AUTHORIZATIONS));
 		SearchConfig::save();
 
-		HooksService::execute_hook_action('edit_config', 'search', array('title' => StringVars::replace_vars($lang['form.module.title'], array('module_name' => ModulesManager::get_module('search')->get_configuration()->get_name())), 'url' => Url::to_rel('/search/admin_search.php')));
+		HooksService::execute_hook_action('edit_config', 'search', ['title' => StringVars::replace_vars($lang['form.module.title'], ['module_name' => ModulesManager::get_module('search')->get_configuration()->get_name()]), 'url' => Url::to_rel('/search/admin_search.php')]);
 
 		$view->put('MESSAGE_HELPER', MessageHelper::display($lang['warning.success.config'], MessageHelper::SUCCESS, 4));
 	}
@@ -63,7 +63,7 @@ if ($valid)
 		SearchConfig::load()->set_weightings($search_weightings);
 		SearchConfig::save();
 
-		HooksService::execute_hook_action('edit_config', 'search', array('title' => $lang['search.config.weighting'], 'url' => Url::to_rel('/search/admin_search.php?weighting=true')));
+		HooksService::execute_hook_action('edit_config', 'search', ['title' => $lang['search.config.weighting'], 'url' => Url::to_rel('/search/admin_search.php?weighting=true')]);
 
 		$view->put('MESSAGE_HELPER', MessageHelper::display($lang['warning.success.config'], MessageHelper::SUCCESS, 4));
 	}
@@ -76,9 +76,9 @@ elseif ($clearOutCache) // On vide le contenu du cache de la recherche
 	$view->put('MESSAGE_HELPER', MessageHelper::display($lang['warning.process.success'], MessageHelper::SUCCESS, 4));
 }
 
-$view->assign_vars(array(
+$view->assign_vars([
 	'C_WEIGHTING' => $weighting
-));
+]);
 
 if (!$weighting)
 {
@@ -96,30 +96,30 @@ if (!$weighting)
 			else
 				$selected = '';
 
-			$view->assign_block_vars('authorized_modules', array(
+			$view->assign_block_vars('authorized_modules', [
 				'MODULE'      => $module->get_id(),
 				'SELECTED'    => $selected,
 				'MODULE_NAME' => $module_configuration->get_name()
-			));
+			]);
 		}
 	}
 
-	$view->put_all(array(
+	$view->put_all([
 		'CACHE_TIME'         => $config->get_cache_lifetime(),
 		'MAX_USE'            => $config->get_cache_max_uses(),
 		'ITEMS_PER_PAGE'     => $config->get_nb_results_per_page(),
 		'READ_AUTHORIZATION' => Authorizations::generate_select(SearchAuthorizationsService::READ_AUTHORIZATIONS, $config->get_authorizations()),
-	));
+	]);
 }
 else
 {
 	foreach ($config->get_weightings_sorted_by_localized_name() as $module_id => $weighting)
 	{
-		$view->assign_block_vars('weights', array(
+		$view->assign_block_vars('weights', [
 			'MODULE'      => $module_id,
 			'MODULE_NAME' => ModulesManager::get_module($module_id)->get_configuration()->get_name(),
 			'WEIGHT'      => $weighting
-		));
+		]);
 	}
 }
 

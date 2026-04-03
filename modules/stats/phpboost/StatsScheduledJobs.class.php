@@ -13,29 +13,29 @@ class StatsScheduledJobs extends AbstractScheduledJobExtensionPoint
 	public function on_changeday(Date $yesterday, Date $today)
 	{
 		try {
-			$result = PersistenceContext::get_querier()->insert(StatsSetup::$stats_table, array(
+			$result = PersistenceContext::get_querier()->insert(StatsSetup::$stats_table, [
 				'stats_year' => $yesterday->get_year(Timezone::SERVER_TIMEZONE),
 				'stats_month' => $yesterday->get_month(Timezone::SERVER_TIMEZONE),
 				'stats_day' => $yesterday->get_day(Timezone::SERVER_TIMEZONE),
 				'nbr' => 0,
 				'pages' => 0,
 				'pages_detail' => ''
-			));
+			]);
 
 			// We retrieve the id we just created
 			$last_stats = $result->get_last_inserted_id();
 		} catch (MySQLQuerierException $e) {
-			$last_stats = PersistenceContext::get_querier()->get_column_value(StatsSetup::$stats_table, 'id', 'WHERE stats_year = :stats_year AND stats_month = :stats_month AND stats_day = :stats_day', array(
+			$last_stats = PersistenceContext::get_querier()->get_column_value(StatsSetup::$stats_table, 'id', 'WHERE stats_year = :stats_year AND stats_month = :stats_month AND stats_day = :stats_day', [
 				'stats_year' => $yesterday->get_year(Timezone::SERVER_TIMEZONE),
 				'stats_month' => $yesterday->get_month(Timezone::SERVER_TIMEZONE),
 				'stats_day' => $yesterday->get_day(Timezone::SERVER_TIMEZONE)
-			));
+			]);
 		}
 
 		PersistenceContext::get_querier()->inject("UPDATE " . StatsSetup::$stats_referer_table . " SET yesterday_visit = today_visit, today_visit = 0, nbr_day = nbr_day + 1");
 
 		// We delete the referer entries older than one week
-		PersistenceContext::get_querier()->delete(StatsSetup::$stats_referer_table, 'WHERE last_update < :last_update', array('last_update' => time() - 604800));
+		PersistenceContext::get_querier()->delete(StatsSetup::$stats_referer_table, 'WHERE last_update < :last_update', ['last_update' => time() - 604800]);
 
 		// We retrieve the number of page views until now
 		$pages_displayed = StatsSaver::retrieve_stats('pages');
@@ -49,8 +49,8 @@ class StatsScheduledJobs extends AbstractScheduledJobExtensionPoint
 
 		// We update the stats table: the today's number of visits
 		PersistenceContext::get_querier()->update(StatsSetup::$stats_table,
-			array('nbr' => $total_visit, 'pages' => array_sum($pages_displayed), 'pages_detail' => TextHelper::serialize($pages_displayed)),
-		'WHERE id=:id', array('id' => $last_stats));
+			['nbr' => $total_visit, 'pages' => array_sum($pages_displayed), 'pages_detail' => TextHelper::serialize($pages_displayed)],
+		'WHERE id=:id', ['id' => $last_stats]);
 	}
 
 	public function on_changepage()

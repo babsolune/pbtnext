@@ -34,9 +34,9 @@ class ServerStatusController extends DefaultModuleController
 		{
 			if ($server->is_authorized() && $server->is_displayed())
 			{
-				$this->view->assign_block_vars('servers', array(
+				$this->view->assign_block_vars('servers', [
 					'VIEW' => $server->get_view()
-				));
+				]);
 				$servers_number++;
 			}
 		}

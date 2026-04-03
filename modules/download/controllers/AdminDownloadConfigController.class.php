@@ -48,37 +48,37 @@ class AdminDownloadConfigController extends DefaultAdminModuleController
 	{
 		$form = new HTMLForm(self::class);
 
-		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module()->get_configuration()->get_name()]));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldNumberEditor('categories_per_page', $this->lang['form.categories.per.page'], $this->config->get_categories_per_page(),
 			['min' => 1, 'max' => 50, 'required' => true],
-			array(new FormFieldConstraintIntegerRange(1, 50))
+			[new FormFieldConstraintIntegerRange(1, 50)]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('categories_per_row', $this->lang['form.categories.per.row'], $this->config->get_categories_per_row(),
 			['min' => 1, 'max' => 4, 'required' => true],
-			array(new FormFieldConstraintIntegerRange(1, 4))
+			[new FormFieldConstraintIntegerRange(1, 4)]
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('items_default_sort', $this->lang['form.items.default.sort'], $this->config->get_items_default_sort_field() . '-' . TextHelper::strtoupper($this->config->get_items_default_sort_mode()), $this->get_sort_options()));
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->lang['form.items.per.page'], $this->config->get_items_per_page(),
 			['min' => 1, 'max' => 50, 'required' => true],
-			array(new FormFieldConstraintIntegerRange(1, 50))
+			[new FormFieldConstraintIntegerRange(1, 50)]
 		));
 
 		$fieldset->add_field(new FormFieldSpacer('display', ''));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['form.display.type'], $this->config->get_display_type(),
-			array(
+			[
 				new FormFieldSelectChoiceOption($this->lang['form.display.type.grid'], DownloadConfig::GRID_VIEW, ['data_option_icon' => 'fa fa-th-large']),
 				new FormFieldSelectChoiceOption($this->lang['form.display.type.list'], DownloadConfig::LIST_VIEW, ['data_option_icon' => 'fa fa-list']),
 				new FormFieldSelectChoiceOption($this->lang['form.display.type.table'], DownloadConfig::TABLE_VIEW, ['data_option_icon' => 'fa fa-table'])
-			),
-			array(
+			],
+			[
 				'select_to_list' => true,
-				'events' => array('change' => '
+				'events' => ['change' => '
 				if (HTMLForms.getField("display_type").getValue() == \'' . DownloadConfig::GRID_VIEW . '\') {
 					HTMLForms.getField("items_per_row").enable();
 					HTMLForms.getField("display_summary_to_guests").enable();
@@ -99,44 +99,44 @@ class AdminDownloadConfigController extends DefaultAdminModuleController
 					HTMLForms.getField("full_item_display").disable();
 					HTMLForms.getField("auto_cut_characters_number").disable();
 				}'
-			))
+			]]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->lang['form.items.per.row'], $this->config->get_items_per_row(),
-			array(
+			[
 				'hidden' => $this->config->get_display_type() !== DownloadConfig::GRID_VIEW,
 				'min' => 1, 'max' => 4, 'required' => true
-            ),
-            array(new FormFieldConstraintIntegerRange(1, 4))
+            ],
+            [new FormFieldConstraintIntegerRange(1, 4)]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('full_item_display', $this->lang['form.display.full.item'], $this->config->is_full_item_displayed(),
-			array(
+			[
 				'class' => 'custom-checkbox',
 				'hidden' => $this->config->get_display_type() !== DownloadConfig::LIST_VIEW,
-				'events' => array('click' => '
+				'events' => ['click' => '
 					if (HTMLForms.getField("full_item_display").getValue()) {
 						HTMLForms.getField("auto_cut_characters_number").disable();
 					} else {
 						HTMLForms.getField("auto_cut_characters_number").enable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('auto_cut_characters_number', $this->lang['form.characters.number.to.cut'], $this->config->get_auto_cut_characters_number(),
-			array(
+			[
 				'min' => 20, 'max' => 1000, 'required' => true,
 				'hidden' => $this->config->get_display_type() == DownloadConfig::LIST_VIEW && $this->config->is_full_item_displayed()
-			),
-			array(new FormFieldConstraintIntegerRange(20, 1000))
+			],
+			[new FormFieldConstraintIntegerRange(20, 1000)]
         ));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_summary_to_guests', $this->lang['form.display.summary.to.guests'], $this->config->is_summary_displayed_to_guests(),
-			array(
+			[
 				'class' => 'custom-checkbox',
 				'hidden' => $this->config->get_display_type() == DownloadConfig::TABLE_VIEW
-			)
+			]
 		));$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->lang['form.root.category.description'], $this->config->get_root_category_description(),
 			['rows' => 8, 'cols' => 47]
 		));
@@ -156,14 +156,14 @@ class AdminDownloadConfigController extends DefaultAdminModuleController
 		$fieldset = new FormFieldsetHTML('menu', $this->lang['download.config.mini.module']);
 		$form->add_fieldset($fieldset);
 
-		$sort_options = array(
+		$sort_options = [
 			new FormFieldSelectChoiceOption($this->lang['common.sort.by.update'], DownloadItem::SORT_UPDATE_DATE, ['data_option_icon' => 'far fa-calendar-plus']),
 			new FormFieldSelectChoiceOption($this->lang['common.sort.by.date'], DownloadItem::SORT_DATE, ['data_option_icon' => 'far fa-calendar-alt']),
 			new FormFieldSelectChoiceOption($this->lang['common.sort.by.alphabetic'], DownloadItem::SORT_ALPHABETIC, ['data_option_icon' => 'fa fa-sort-alpha-up']),
 			new FormFieldSelectChoiceOption($this->lang['common.sort.by.author'], DownloadItem::SORT_AUTHOR, ['data_option_icon' => 'far fa-user']),
 			new FormFieldSelectChoiceOption($this->lang['download.downloads.number'], DownloadItem::SORT_DOWNLOADS_NUMBER, ['data_option_icon' => 'fa fa-download']),
 			new FormFieldSelectChoiceOption($this->lang['common.sort.by.views.number'], DownloadItem::SORT_VIEWS_NUMBERS, ['data_option_icon' => 'fa fa-eye']),
-		);
+		];
 
 		if ($this->comments_config->module_comments_is_enabled('download'))
 			$sort_options[] = new FormFieldSelectChoiceOption($this->lang['common.sort.by.comments.number'], DownloadItem::SORT_COMMENTS_NUMBER, ['data_option_icon' => 'far fa-comments']);
@@ -177,25 +177,25 @@ class AdminDownloadConfigController extends DefaultAdminModuleController
 
 		$fieldset->add_field(new FormFieldNumberEditor('files_number_in_menu', $this->lang['download.config.items.number'], $this->config->get_files_number_in_menu(),
 			['min' => 1, 'max' => 50, 'required' => true],
-			array(new FormFieldConstraintIntegerRange(1, 50))
+			[new FormFieldConstraintIntegerRange(1, 50)]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('limit_oldest_file_day_in_menu', $this->lang['download.config.limit.items.age'], $this->config->is_limit_oldest_file_day_in_menu_enabled(),
-			array(
+			[
 				'class' => 'custom-checkbox',
-				'events' => array('click' => '
+				'events' => ['click' => '
 					if (HTMLForms.getField("limit_oldest_file_day_in_menu").getValue()) {
 						HTMLForms.getField("oldest_file_day_in_menu").enable();
 					} else {
 						HTMLForms.getField("oldest_file_day_in_menu").disable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('oldest_file_day_in_menu', $this->lang['download.config.max.items.age'], $this->config->get_oldest_file_day_in_menu(),
-			array('min' => 1, 'max' => 365, 'required' => true, 'hidden' => !$this->config->is_limit_oldest_file_day_in_menu_enabled()),
-			array(new FormFieldConstraintIntegerRange(1, 365))
+			['min' => 1, 'max' => 365, 'required' => true, 'hidden' => !$this->config->is_limit_oldest_file_day_in_menu_enabled()],
+			[new FormFieldConstraintIntegerRange(1, 365)]
 		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $this->lang['form.authorizations'],
@@ -203,9 +203,9 @@ class AdminDownloadConfigController extends DefaultAdminModuleController
 		);
 		$form->add_fieldset($fieldset_authorizations);
 
-		$auth_settings = new AuthorizationsSettings(array_merge(RootCategory::get_authorizations_settings(), array(
+		$auth_settings = new AuthorizationsSettings(array_merge(RootCategory::get_authorizations_settings(), [
 			new ActionAuthorization($this->lang['download.config.download.link'], DownloadAuthorizationsService::DISPLAY_DOWNLOAD_LINK_AUTHORIZATIONS)
-		)));
+		]));
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());
 		$fieldset_authorizations->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
 
@@ -218,7 +218,7 @@ class AdminDownloadConfigController extends DefaultAdminModuleController
 
 	private function get_sort_options()
 	{
-		$sort_options = array(
+		$sort_options = [
 			new FormFieldSelectChoiceOption($this->lang['common.sort.by.update'] . ' - ' . $this->lang['common.sort.asc'], DownloadItem::SORT_UPDATE_DATE . '-' . DownloadItem::ASC),
 			new FormFieldSelectChoiceOption($this->lang['common.sort.by.update'] . ' - ' . $this->lang['common.sort.desc'], DownloadItem::SORT_UPDATE_DATE . '-' . DownloadItem::DESC),
 			new FormFieldSelectChoiceOption($this->lang['common.sort.by.date'] . ' - ' . $this->lang['common.sort.asc'], DownloadItem::SORT_DATE . '-' . DownloadItem::ASC),
@@ -231,7 +231,7 @@ class AdminDownloadConfigController extends DefaultAdminModuleController
 			new FormFieldSelectChoiceOption($this->lang['download.downloads.number'] . ' - ' . $this->lang['common.sort.desc'], DownloadItem::SORT_DOWNLOADS_NUMBER . '-' . DownloadItem::DESC),
 			new FormFieldSelectChoiceOption($this->lang['common.sort.by.views.number'] . ' - ' . $this->lang['common.sort.asc'], DownloadItem::SORT_VIEWS_NUMBERS . '-' . DownloadItem::ASC),
 			new FormFieldSelectChoiceOption($this->lang['common.sort.by.views.number'] . ' - ' . $this->lang['common.sort.desc'], DownloadItem::SORT_VIEWS_NUMBERS . '-' . DownloadItem::DESC)
-		);
+		];
 
 		if ($this->comments_config->module_comments_is_enabled('download'))
 		{
@@ -303,7 +303,7 @@ class AdminDownloadConfigController extends DefaultAdminModuleController
 		CategoriesService::get_categories_manager()->regenerate_cache();
 		DownloadCache::invalidate();
 
-		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
+		HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]), 'url' => ModulesUrlBuilder::configuration()->rel()]);
 	}
 }
 ?>

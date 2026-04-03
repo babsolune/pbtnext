@@ -121,35 +121,35 @@ if (!empty($add_pic))
 	$categories = CategoriesService::get_categories_manager('gallery')->get_categories_cache()->get_categories();
 
 	try {
-		$imageup = PersistenceContext::get_querier()->select_single_row(GallerySetup::$gallery_table, array('id_category', 'name', 'path'), 'WHERE id = :id', array('id' => $add_pic));
+		$imageup = PersistenceContext::get_querier()->select_single_row(GallerySetup::$gallery_table, ['id_category', 'name', 'path'], 'WHERE id = :id', ['id' => $add_pic]);
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
 	}
 
-	$view->assign_block_vars('image_up', array(
+	$view->assign_block_vars('image_up', [
 		'NAME'          => stripslashes($imageup['name']),
 		'PATH'          => $imageup['path'],
 		'CATEGORY_NAME' => $categories[$imageup['id_category']]->get_name(),
 
 		'U_ITEM'     => 'admin_gallery.php?cat=' . $imageup['id_category'] . '&amp;id=' . $add_pic . '#pics_max',
 		'U_CATEGORY' => 'admin_gallery.php?cat=' . $imageup['id_category'],
-	));
+	]);
 }
 
-$view->put_all(array(
+$view->put_all([
 	'MAX_WIDTH'          => $config->get_max_width(),
 	'MAX_HEIGHT'         => $config->get_max_height(),
 	'MAX_FILE_SIZE'      => $config->get_max_weight() * 1024,
 	'MAX_FILE_SIZE_TEXT' => ($config->get_max_weight() / 1024) . ' ' . LangLoader::get_message('common.unit.megabytes', 'common-lang'),
 	'ALLOWED_EXTENSIONS' => implode('", "',FileUploadConfig::load()->get_authorized_picture_extensions()),
-));
+]);
 
 //Affichage photos
 $dir = 'pics/';
 if (is_dir($dir)) //Si le dossier existe
 {
-	$array_pics = array();
+	$array_pics = [];
 	$image_folder_path = new Folder('./pics/');
 	foreach ($image_folder_path->get_files('`.*\.(png|webp|jpg|bmp|gif|jpeg|tiff)$`iu') as $image)
 		$array_pics[] = $image->get_name();
@@ -197,11 +197,11 @@ if (is_dir($dir)) //Si le dossier existe
 			$root_categories_list .= $option->display()->render();
 		}
 
-		$view->put_all(array(
+		$view->put_all([
 			'ITEMS_NUMBER'         => $nbr_pics,
 			'CATEGORIES_LIST'      => $categories_list,
 			'ROOT_CATEGORIES_LIST' => $root_categories_list,
-		));
+		]);
 
 		$j = 0;
 		foreach ($array_pics as  $key => $pics)
@@ -261,12 +261,12 @@ if (is_dir($dir)) //Si le dossier existe
 				$categories_list .= $option->display()->render();
 			}
 
-			$view->assign_block_vars('list', array(
+			$view->assign_block_vars('list', [
 				'ID' => $j,
 				'NAME' => $pics,
 				'UNIQ_NAME' => $pics,
 				'CATEGORIES_LIST' => $categories_list,
-			));
+			]);
 		}
 	}
 }

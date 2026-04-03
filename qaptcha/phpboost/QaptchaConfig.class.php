@@ -30,7 +30,7 @@ class QaptchaConfig extends AbstractConfigData
 
 	private function init_items_array()
 	{
-		$items = array();
+		$items = [];
 
 		$lang = LangLoader::get('install', 'qaptcha');
 
@@ -54,9 +54,9 @@ class QaptchaConfig extends AbstractConfigData
 	 */
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::ITEMS => self::init_items_array()
-		);
+		];
 	}
 
 	/**

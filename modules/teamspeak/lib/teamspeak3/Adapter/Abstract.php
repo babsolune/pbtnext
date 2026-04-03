@@ -84,7 +84,7 @@ abstract class TeamSpeak3_Adapter_Abstract
    */
   public function __sleep()
   {
-    return array("options");
+    return ["options"];
   }
 
   /**

@@ -41,10 +41,10 @@
      * @opt_param string timedTextLanguage The language of the timed text.
      * @return Google_DriveFile
      */
-    public function insert(Google_DriveFile $postBody, $optParams = array()) {
-      $params = array('postBody' => $postBody);
+    public function insert(Google_DriveFile $postBody, $optParams = []) {
+      $params = ['postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_DriveFile($data);
       } else {
@@ -58,10 +58,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_DriveFile
      */
-    public function untrash($fileId, $optParams = array()) {
-      $params = array('fileId' => $fileId);
+    public function untrash($fileId, $optParams = []) {
+      $params = ['fileId' => $fileId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('untrash', array($params));
+      $data = $this->__call('untrash', [$params]);
       if ($this->useObjects()) {
         return new Google_DriveFile($data);
       } else {
@@ -75,10 +75,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_DriveFile
      */
-    public function trash($fileId, $optParams = array()) {
-      $params = array('fileId' => $fileId);
+    public function trash($fileId, $optParams = []) {
+      $params = ['fileId' => $fileId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('trash', array($params));
+      $data = $this->__call('trash', [$params]);
       if ($this->useObjects()) {
         return new Google_DriveFile($data);
       } else {
@@ -95,10 +95,10 @@
      * @opt_param string projection This parameter is deprecated and has no function.
      * @return Google_DriveFile
      */
-    public function get($fileId, $optParams = array()) {
-      $params = array('fileId' => $fileId);
+    public function get($fileId, $optParams = []) {
+      $params = ['fileId' => $fileId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_DriveFile($data);
       } else {
@@ -116,10 +116,10 @@
      * @opt_param int maxResults Maximum number of files to return.
      * @return Google_FileList
      */
-    public function listFiles($optParams = array()) {
-      $params = array();
+    public function listFiles($optParams = []) {
+      $params = [];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_FileList($data);
       } else {
@@ -146,10 +146,10 @@
      * @opt_param string timedTextTrackName The timed text track name.
      * @return Google_DriveFile
      */
-    public function update($fileId, Google_DriveFile $postBody, $optParams = array()) {
-      $params = array('fileId' => $fileId, 'postBody' => $postBody);
+    public function update($fileId, Google_DriveFile $postBody, $optParams = []) {
+      $params = ['fileId' => $fileId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('update', array($params));
+      $data = $this->__call('update', [$params]);
       if ($this->useObjects()) {
         return new Google_DriveFile($data);
       } else {
@@ -176,10 +176,10 @@
      * @opt_param string timedTextTrackName The timed text track name.
      * @return Google_DriveFile
      */
-    public function patch($fileId, Google_DriveFile $postBody, $optParams = array()) {
-      $params = array('fileId' => $fileId, 'postBody' => $postBody);
+    public function patch($fileId, Google_DriveFile $postBody, $optParams = []) {
+      $params = ['fileId' => $fileId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('patch', array($params));
+      $data = $this->__call('patch', [$params]);
       if ($this->useObjects()) {
         return new Google_DriveFile($data);
       } else {
@@ -193,10 +193,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_DriveFile
      */
-    public function touch($fileId, $optParams = array()) {
-      $params = array('fileId' => $fileId);
+    public function touch($fileId, $optParams = []) {
+      $params = ['fileId' => $fileId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('touch', array($params));
+      $data = $this->__call('touch', [$params]);
       if ($this->useObjects()) {
         return new Google_DriveFile($data);
       } else {
@@ -220,10 +220,10 @@
      * @opt_param string timedTextTrackName The timed text track name.
      * @return Google_DriveFile
      */
-    public function copy($fileId, Google_DriveFile $postBody, $optParams = array()) {
-      $params = array('fileId' => $fileId, 'postBody' => $postBody);
+    public function copy($fileId, Google_DriveFile $postBody, $optParams = []) {
+      $params = ['fileId' => $fileId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('copy', array($params));
+      $data = $this->__call('copy', [$params]);
       if ($this->useObjects()) {
         return new Google_DriveFile($data);
       } else {
@@ -236,10 +236,10 @@
      * @param string $fileId The ID of the file to delete.
      * @param array $optParams Optional parameters.
      */
-    public function delete($fileId, $optParams = array()) {
-      $params = array('fileId' => $fileId);
+    public function delete($fileId, $optParams = []) {
+      $params = ['fileId' => $fileId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       return $data;
     }
   }
@@ -265,10 +265,10 @@
      * @opt_param string startChangeId Change ID to start counting from when calculating number of remaining change IDs
      * @return Google_About
      */
-    public function get($optParams = array()) {
-      $params = array();
+    public function get($optParams = []) {
+      $params = [];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_About($data);
       } else {
@@ -294,10 +294,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_AppList
      */
-    public function listApps($optParams = array()) {
-      $params = array();
+    public function listApps($optParams = []) {
+      $params = [];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_AppList($data);
       } else {
@@ -311,10 +311,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_App
      */
-    public function get($appId, $optParams = array()) {
-      $params = array('appId' => $appId);
+    public function get($appId, $optParams = []) {
+      $params = ['appId' => $appId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_App($data);
       } else {
@@ -342,10 +342,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_ParentReference
      */
-    public function insert($fileId, Google_ParentReference $postBody, $optParams = array()) {
-      $params = array('fileId' => $fileId, 'postBody' => $postBody);
+    public function insert($fileId, Google_ParentReference $postBody, $optParams = []) {
+      $params = ['fileId' => $fileId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_ParentReference($data);
       } else {
@@ -360,10 +360,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_ParentReference
      */
-    public function get($fileId, $parentId, $optParams = array()) {
-      $params = array('fileId' => $fileId, 'parentId' => $parentId);
+    public function get($fileId, $parentId, $optParams = []) {
+      $params = ['fileId' => $fileId, 'parentId' => $parentId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_ParentReference($data);
       } else {
@@ -377,10 +377,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_ParentList
      */
-    public function listParents($fileId, $optParams = array()) {
-      $params = array('fileId' => $fileId);
+    public function listParents($fileId, $optParams = []) {
+      $params = ['fileId' => $fileId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_ParentList($data);
       } else {
@@ -394,10 +394,10 @@
      * @param string $parentId The ID of the parent.
      * @param array $optParams Optional parameters.
      */
-    public function delete($fileId, $parentId, $optParams = array()) {
-      $params = array('fileId' => $fileId, 'parentId' => $parentId);
+    public function delete($fileId, $parentId, $optParams = []) {
+      $params = ['fileId' => $fileId, 'parentId' => $parentId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       return $data;
     }
   }
@@ -422,10 +422,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Revision
      */
-    public function patch($fileId, $revisionId, Google_Revision $postBody, $optParams = array()) {
-      $params = array('fileId' => $fileId, 'revisionId' => $revisionId, 'postBody' => $postBody);
+    public function patch($fileId, $revisionId, Google_Revision $postBody, $optParams = []) {
+      $params = ['fileId' => $fileId, 'revisionId' => $revisionId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('patch', array($params));
+      $data = $this->__call('patch', [$params]);
       if ($this->useObjects()) {
         return new Google_Revision($data);
       } else {
@@ -440,10 +440,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Revision
      */
-    public function get($fileId, $revisionId, $optParams = array()) {
-      $params = array('fileId' => $fileId, 'revisionId' => $revisionId);
+    public function get($fileId, $revisionId, $optParams = []) {
+      $params = ['fileId' => $fileId, 'revisionId' => $revisionId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Revision($data);
       } else {
@@ -457,10 +457,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_RevisionList
      */
-    public function listRevisions($fileId, $optParams = array()) {
-      $params = array('fileId' => $fileId);
+    public function listRevisions($fileId, $optParams = []) {
+      $params = ['fileId' => $fileId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_RevisionList($data);
       } else {
@@ -476,10 +476,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Revision
      */
-    public function update($fileId, $revisionId, Google_Revision $postBody, $optParams = array()) {
-      $params = array('fileId' => $fileId, 'revisionId' => $revisionId, 'postBody' => $postBody);
+    public function update($fileId, $revisionId, Google_Revision $postBody, $optParams = []) {
+      $params = ['fileId' => $fileId, 'revisionId' => $revisionId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('update', array($params));
+      $data = $this->__call('update', [$params]);
       if ($this->useObjects()) {
         return new Google_Revision($data);
       } else {
@@ -493,10 +493,10 @@
      * @param string $revisionId The ID of the revision.
      * @param array $optParams Optional parameters.
      */
-    public function delete($fileId, $revisionId, $optParams = array()) {
-      $params = array('fileId' => $fileId, 'revisionId' => $revisionId);
+    public function delete($fileId, $revisionId, $optParams = []) {
+      $params = ['fileId' => $fileId, 'revisionId' => $revisionId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       return $data;
     }
   }
@@ -524,10 +524,10 @@
      * @opt_param string pageToken Page token for changes.
      * @return Google_ChangeList
      */
-    public function listChanges($optParams = array()) {
-      $params = array();
+    public function listChanges($optParams = []) {
+      $params = [];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_ChangeList($data);
       } else {
@@ -541,10 +541,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Change
      */
-    public function get($changeId, $optParams = array()) {
-      $params = array('changeId' => $changeId);
+    public function get($changeId, $optParams = []) {
+      $params = ['changeId' => $changeId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Change($data);
       } else {
@@ -572,10 +572,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_ChildReference
      */
-    public function insert($folderId, Google_ChildReference $postBody, $optParams = array()) {
-      $params = array('folderId' => $folderId, 'postBody' => $postBody);
+    public function insert($folderId, Google_ChildReference $postBody, $optParams = []) {
+      $params = ['folderId' => $folderId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_ChildReference($data);
       } else {
@@ -590,10 +590,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_ChildReference
      */
-    public function get($folderId, $childId, $optParams = array()) {
-      $params = array('folderId' => $folderId, 'childId' => $childId);
+    public function get($folderId, $childId, $optParams = []) {
+      $params = ['folderId' => $folderId, 'childId' => $childId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_ChildReference($data);
       } else {
@@ -611,10 +611,10 @@
      * @opt_param int maxResults Maximum number of children to return.
      * @return Google_ChildList
      */
-    public function listChildren($folderId, $optParams = array()) {
-      $params = array('folderId' => $folderId);
+    public function listChildren($folderId, $optParams = []) {
+      $params = ['folderId' => $folderId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_ChildList($data);
       } else {
@@ -628,10 +628,10 @@
      * @param string $childId The ID of the child.
      * @param array $optParams Optional parameters.
      */
-    public function delete($folderId, $childId, $optParams = array()) {
-      $params = array('folderId' => $folderId, 'childId' => $childId);
+    public function delete($folderId, $childId, $optParams = []) {
+      $params = ['folderId' => $folderId, 'childId' => $childId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       return $data;
     }
   }
@@ -657,10 +657,10 @@
      * @opt_param bool sendNotificationEmails Whether to send notification emails.
      * @return Google_Permission
      */
-    public function insert($fileId, Google_Permission $postBody, $optParams = array()) {
-      $params = array('fileId' => $fileId, 'postBody' => $postBody);
+    public function insert($fileId, Google_Permission $postBody, $optParams = []) {
+      $params = ['fileId' => $fileId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_Permission($data);
       } else {
@@ -675,10 +675,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Permission
      */
-    public function get($fileId, $permissionId, $optParams = array()) {
-      $params = array('fileId' => $fileId, 'permissionId' => $permissionId);
+    public function get($fileId, $permissionId, $optParams = []) {
+      $params = ['fileId' => $fileId, 'permissionId' => $permissionId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Permission($data);
       } else {
@@ -692,10 +692,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_PermissionList
      */
-    public function listPermissions($fileId, $optParams = array()) {
-      $params = array('fileId' => $fileId);
+    public function listPermissions($fileId, $optParams = []) {
+      $params = ['fileId' => $fileId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_PermissionList($data);
       } else {
@@ -711,10 +711,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Permission
      */
-    public function update($fileId, $permissionId, Google_Permission $postBody, $optParams = array()) {
-      $params = array('fileId' => $fileId, 'permissionId' => $permissionId, 'postBody' => $postBody);
+    public function update($fileId, $permissionId, Google_Permission $postBody, $optParams = []) {
+      $params = ['fileId' => $fileId, 'permissionId' => $permissionId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('update', array($params));
+      $data = $this->__call('update', [$params]);
       if ($this->useObjects()) {
         return new Google_Permission($data);
       } else {
@@ -730,10 +730,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Permission
      */
-    public function patch($fileId, $permissionId, Google_Permission $postBody, $optParams = array()) {
-      $params = array('fileId' => $fileId, 'permissionId' => $permissionId, 'postBody' => $postBody);
+    public function patch($fileId, $permissionId, Google_Permission $postBody, $optParams = []) {
+      $params = ['fileId' => $fileId, 'permissionId' => $permissionId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('patch', array($params));
+      $data = $this->__call('patch', [$params]);
       if ($this->useObjects()) {
         return new Google_Permission($data);
       } else {
@@ -747,10 +747,10 @@
      * @param string $permissionId The ID for the permission.
      * @param array $optParams Optional parameters.
      */
-    public function delete($fileId, $permissionId, $optParams = array()) {
-      $params = array('fileId' => $fileId, 'permissionId' => $permissionId);
+    public function delete($fileId, $permissionId, $optParams = []) {
+      $params = ['fileId' => $fileId, 'permissionId' => $permissionId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       return $data;
     }
   }
@@ -836,7 +836,7 @@ class Google_About extends Google_Model {
   public function getKind() {
     return $this->kind;
   }
-  public function setFeatures(/* array(Google_AboutFeatures) */ $features) {
+  public function setFeatures(/* [Google_AboutFeatures] */ $features) {
     $this->assertIsArray($features, 'Google_AboutFeatures', __METHOD__);
     $this->features = $features;
   }
@@ -855,7 +855,7 @@ class Google_About extends Google_Model {
   public function getPermissionId() {
     return $this->permissionId;
   }
-  public function setMaxUploadSizes(/* array(Google_AboutMaxUploadSizes) */ $maxUploadSizes) {
+  public function setMaxUploadSizes(/* [Google_AboutMaxUploadSizes] */ $maxUploadSizes) {
     $this->assertIsArray($maxUploadSizes, 'Google_AboutMaxUploadSizes', __METHOD__);
     $this->maxUploadSizes = $maxUploadSizes;
   }
@@ -874,7 +874,7 @@ class Google_About extends Google_Model {
   public function getRemainingChangeIds() {
     return $this->remainingChangeIds;
   }
-  public function setAdditionalRoleInfo(/* array(Google_AboutAdditionalRoleInfo) */ $additionalRoleInfo) {
+  public function setAdditionalRoleInfo(/* [Google_AboutAdditionalRoleInfo] */ $additionalRoleInfo) {
     $this->assertIsArray($additionalRoleInfo, 'Google_AboutAdditionalRoleInfo', __METHOD__);
     $this->additionalRoleInfo = $additionalRoleInfo;
   }
@@ -887,7 +887,7 @@ class Google_About extends Google_Model {
   public function getEtag() {
     return $this->etag;
   }
-  public function setImportFormats(/* array(Google_AboutImportFormats) */ $importFormats) {
+  public function setImportFormats(/* [Google_AboutImportFormats] */ $importFormats) {
     $this->assertIsArray($importFormats, 'Google_AboutImportFormats', __METHOD__);
     $this->importFormats = $importFormats;
   }
@@ -918,7 +918,7 @@ class Google_About extends Google_Model {
   public function getQuotaBytesUsedInTrash() {
     return $this->quotaBytesUsedInTrash;
   }
-  public function setExportFormats(/* array(Google_AboutExportFormats) */ $exportFormats) {
+  public function setExportFormats(/* [Google_AboutExportFormats] */ $exportFormats) {
     $this->assertIsArray($exportFormats, 'Google_AboutExportFormats', __METHOD__);
     $this->exportFormats = $exportFormats;
   }
@@ -950,7 +950,7 @@ class Google_AboutAdditionalRoleInfo extends Google_Model {
   protected $__roleSetsDataType = 'array';
   public $roleSets;
   public $type;
-  public function setRoleSets(/* array(Google_AboutAdditionalRoleInfoRoleSets) */ $roleSets) {
+  public function setRoleSets(/* [Google_AboutAdditionalRoleInfoRoleSets] */ $roleSets) {
     $this->assertIsArray($roleSets, 'Google_AboutAdditionalRoleInfoRoleSets', __METHOD__);
     $this->roleSets = $roleSets;
   }
@@ -974,7 +974,7 @@ class Google_AboutAdditionalRoleInfoRoleSets extends Google_Model {
   public function getPrimaryRole() {
     return $this->primaryRole;
   }
-  public function setAdditionalRoles(/* array(Google_string) */ $additionalRoles) {
+  public function setAdditionalRoles(/* [Google_string] */ $additionalRoles) {
     $this->assertIsArray($additionalRoles, 'Google_string', __METHOD__);
     $this->additionalRoles = $additionalRoles;
   }
@@ -992,7 +992,7 @@ class Google_AboutExportFormats extends Google_Model {
   public function getSource() {
     return $this->source;
   }
-  public function setTargets(/* array(Google_string) */ $targets) {
+  public function setTargets(/* [Google_string] */ $targets) {
     $this->assertIsArray($targets, 'Google_string', __METHOD__);
     $this->targets = $targets;
   }
@@ -1027,7 +1027,7 @@ class Google_AboutImportFormats extends Google_Model {
   public function getSource() {
     return $this->source;
   }
-  public function setTargets(/* array(Google_string) */ $targets) {
+  public function setTargets(/* [Google_string] */ $targets) {
     $this->assertIsArray($targets, 'Google_string', __METHOD__);
     $this->targets = $targets;
   }
@@ -1077,7 +1077,7 @@ class Google_App extends Google_Model {
   public function getKind() {
     return $this->kind;
   }
-  public function setPrimaryFileExtensions(/* array(Google_string) */ $primaryFileExtensions) {
+  public function setPrimaryFileExtensions(/* [Google_string] */ $primaryFileExtensions) {
     $this->assertIsArray($primaryFileExtensions, 'Google_string', __METHOD__);
     $this->primaryFileExtensions = $primaryFileExtensions;
   }
@@ -1096,14 +1096,14 @@ class Google_App extends Google_Model {
   public function getName() {
     return $this->name;
   }
-  public function setIcons(/* array(Google_AppIcons) */ $icons) {
+  public function setIcons(/* [Google_AppIcons] */ $icons) {
     $this->assertIsArray($icons, 'Google_AppIcons', __METHOD__);
     $this->icons = $icons;
   }
   public function getIcons() {
     return $this->icons;
   }
-  public function setSecondaryFileExtensions(/* array(Google_string) */ $secondaryFileExtensions) {
+  public function setSecondaryFileExtensions(/* [Google_string] */ $secondaryFileExtensions) {
     $this->assertIsArray($secondaryFileExtensions, 'Google_string', __METHOD__);
     $this->secondaryFileExtensions = $secondaryFileExtensions;
   }
@@ -1122,7 +1122,7 @@ class Google_App extends Google_Model {
   public function getProductUrl() {
     return $this->productUrl;
   }
-  public function setSecondaryMimeTypes(/* array(Google_string) */ $secondaryMimeTypes) {
+  public function setSecondaryMimeTypes(/* [Google_string] */ $secondaryMimeTypes) {
     $this->assertIsArray($secondaryMimeTypes, 'Google_string', __METHOD__);
     $this->secondaryMimeTypes = $secondaryMimeTypes;
   }
@@ -1147,7 +1147,7 @@ class Google_App extends Google_Model {
   public function getSupportsImport() {
     return $this->supportsImport;
   }
-  public function setPrimaryMimeTypes(/* array(Google_string) */ $primaryMimeTypes) {
+  public function setPrimaryMimeTypes(/* [Google_string] */ $primaryMimeTypes) {
     $this->assertIsArray($primaryMimeTypes, 'Google_string', __METHOD__);
     $this->primaryMimeTypes = $primaryMimeTypes;
   }
@@ -1199,7 +1199,7 @@ class Google_AppList extends Google_Model {
   public $kind;
   public $etag;
   public $selfLink;
-  public function setItems(/* array(Google_App) */ $items) {
+  public function setItems(/* [Google_App] */ $items) {
     $this->assertIsArray($items, 'Google_App', __METHOD__);
     $this->items = $items;
   }
@@ -1295,7 +1295,7 @@ class Google_ChangeList extends Google_Model {
   public function getKind() {
     return $this->kind;
   }
-  public function setItems(/* array(Google_Change) */ $items) {
+  public function setItems(/* [Google_Change] */ $items) {
     $this->assertIsArray($items, 'Google_Change', __METHOD__);
     $this->items = $items;
   }
@@ -1349,7 +1349,7 @@ class Google_ChildList extends Google_Model {
   public function getKind() {
     return $this->kind;
   }
-  public function setItems(/* array(Google_ChildReference) */ $items) {
+  public function setItems(/* [Google_ChildReference] */ $items) {
     $this->assertIsArray($items, 'Google_ChildReference', __METHOD__);
     $this->items = $items;
   }
@@ -1511,7 +1511,7 @@ class Google_DriveFile extends Google_Model {
   public function getTitle() {
     return $this->title;
   }
-  public function setOwnerNames(/* array(Google_string) */ $ownerNames) {
+  public function setOwnerNames(/* [Google_string] */ $ownerNames) {
     $this->assertIsArray($ownerNames, 'Google_string', __METHOD__);
     $this->ownerNames = $ownerNames;
   }
@@ -1530,7 +1530,7 @@ class Google_DriveFile extends Google_Model {
   public function getLastViewedByMeDate() {
     return $this->lastViewedByMeDate;
   }
-  public function setParents(/* array(Google_ParentReference) */ $parents) {
+  public function setParents(/* [Google_ParentReference] */ $parents) {
     $this->assertIsArray($parents, 'Google_ParentReference', __METHOD__);
     $this->parents = $parents;
   }
@@ -1779,7 +1779,7 @@ class Google_FileList extends Google_Model {
   public function getKind() {
     return $this->kind;
   }
-  public function setItems(/* array(Google_DriveFile) */ $items) {
+  public function setItems(/* [Google_DriveFile] */ $items) {
     $this->assertIsArray($items, 'Google_DriveFile', __METHOD__);
     $this->items = $items;
   }
@@ -1813,7 +1813,7 @@ class Google_ParentList extends Google_Model {
   public $kind;
   public $etag;
   public $selfLink;
-  public function setItems(/* array(Google_ParentReference) */ $items) {
+  public function setItems(/* [Google_ParentReference] */ $items) {
     $this->assertIsArray($items, 'Google_ParentReference', __METHOD__);
     $this->items = $items;
   }
@@ -1951,7 +1951,7 @@ class Google_Permission extends Google_Model {
   public function getType() {
     return $this->type;
   }
-  public function setAdditionalRoles(/* array(Google_string) */ $additionalRoles) {
+  public function setAdditionalRoles(/* [Google_string] */ $additionalRoles) {
     $this->assertIsArray($additionalRoles, 'Google_string', __METHOD__);
     $this->additionalRoles = $additionalRoles;
   }
@@ -1973,7 +1973,7 @@ class Google_PermissionList extends Google_Model {
   public $kind;
   public $etag;
   public $selfLink;
-  public function setItems(/* array(Google_Permission) */ $items) {
+  public function setItems(/* [Google_Permission] */ $items) {
     $this->assertIsArray($items, 'Google_Permission', __METHOD__);
     $this->items = $items;
   }
@@ -2129,7 +2129,7 @@ class Google_RevisionList extends Google_Model {
   public $kind;
   public $etag;
   public $selfLink;
-  public function setItems(/* array(Google_Revision) */ $items) {
+  public function setItems(/* [Google_Revision] */ $items) {
     $this->assertIsArray($items, 'Google_Revision', __METHOD__);
     $this->items = $items;
   }

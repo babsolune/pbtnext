@@ -171,11 +171,11 @@ class AdministratorAlert extends Event
 	 */
 	public function get_properties()
 	{
-		return array_merge(parent::get_properties(), array(
+		return array_merge(parent::get_properties(), [
 			'priority'         => $this->get_priority(),
 			'priority_name'    => $this->get_priority_name(),
 			'alert_properties' => $this->get_alert_properties()
-		));
+		]);
 	}
 }
 ?>

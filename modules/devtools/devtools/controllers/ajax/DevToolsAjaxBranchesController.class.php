@@ -11,21 +11,21 @@ class DevToolsAjaxBranchesController extends AbstractController
     public function execute(HTTPRequestCustom $request)
     {
         if (!DevToolsAuthorizationsService::check_authorizations()->read())
-            return new JSONResponse(array('success' => false, 'error' => 'Unauthorized'), 403);
+            return new JSONResponse(['success' => false, 'error' => 'Unauthorized'], 403);
 
         $owner = $request->get_string('owner', '');
         $repo  = $request->get_string('repo', '');
 
         if (!$owner || !$repo)
-            return new JSONResponse(array('success' => false, 'error' => 'Missing owner or repo'));
+            return new JSONResponse(['success' => false, 'error' => 'Missing owner or repo']);
 
         $branches = DevToolsGitHubService::get_branches($owner, $repo);
 
         if (!is_array($branches))
-            return new JSONResponse(array('success' => false, 'error' => 'GitHub API error'));
+            return new JSONResponse(['success' => false, 'error' => 'GitHub API error']);
 
         $names = array_map(function($b) { return $b['name']; }, $branches);
-        return new JSONResponse(array('success' => true, 'branches' => $names));
+        return new JSONResponse(['success' => true, 'branches' => $names]);
     }
 }
 ?>

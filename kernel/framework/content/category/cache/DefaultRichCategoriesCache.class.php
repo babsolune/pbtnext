@@ -30,7 +30,7 @@ class DefaultRichCategoriesCache extends DefaultCategoriesCache
 		if (empty($description))
 		{
 			$lang = ItemsService::get_items_lang(self::$module->get_id());
-			$description = StringVars::replace_vars($lang['items.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name()));
+			$description = StringVars::replace_vars($lang['items.seo.description.root'], ['site' => GeneralConfig::load()->get_site_name()]);
 		}
 		return $description;
 	}

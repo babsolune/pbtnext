@@ -478,7 +478,7 @@ class UserAccountsConfig extends AbstractConfigData
 	{
 		$server_configuration = new ServerConfiguration();
 
-		return array(
+		return [
 			self::DISPLAY_TYPE                               => self::TABLE_VIEW,
 			self::ITEMS_PER_PAGE                             => 25,
 			self::ITEMS_PER_ROW                              => 2,
@@ -494,13 +494,13 @@ class UserAccountsConfig extends AbstractConfigData
 			self::MAX_AVATAR_WIDTH_PROPERTY                  => 120,
 			self::MAX_AVATAR_HEIGHT_PROPERTY                 => 120,
 			self::MAX_AVATAR_WEIGHT_PROPERTY                 => 20,
-			self::AUTH_READ_MEMBERS                          => array('r0' => 1, 'r1' => 1),
+			self::AUTH_READ_MEMBERS                          => ['r0' => 1, 'r1' => 1],
 			self::DEFAULT_LANG                               => 'english',
 			self::DEFAULT_THEME                              => 'base',
 			self::MAX_PRIVATE_MESSAGES_NUMBER                => 50,
 			self::ALLOW_USERS_TO_CHANGE_DISPLAY_NAME         => true,
 			self::ALLOW_USERS_TO_CHANGE_EMAIL                => true
-		);
+		];
 	}
 
 	/**

@@ -29,11 +29,11 @@ class MenuConfigurationDAO extends SQLDAO
 		$tablename = PREFIX . 'menu_configuration';
 		$primary_key = new MappingModelField('id');
 
-		$fields = array(
+		$fields = [
 		new MappingModelField('name'),
 		new MappingModelField('match_regex'),
 		new MappingModelField('priority')
-		);
+		];
 
 		$model = new MappingModel($classname, $tablename, $primary_key, $fields);
 

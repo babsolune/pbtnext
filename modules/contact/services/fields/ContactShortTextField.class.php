@@ -13,7 +13,7 @@ class ContactShortTextField extends AbstractContactField
 	public function __construct()
 	{
 		parent::__construct();
-		$this->set_disable_fields_configuration(array('possible_values', 'default_value_medium'));
+		$this->set_disable_fields_configuration(['possible_values', 'default_value_medium']);
 		$this->set_name(LangLoader::get_message('user.field.type.short.text', 'user-lang'));
 	}
 
@@ -46,9 +46,9 @@ class ContactShortTextField extends AbstractContactField
 				break;
 		}
 
-		$fieldset->add_field(new $field_class($field->get_field_name(), $field->get_name(), $field->get_default_value(), array(
-			'required' => (bool)$field->is_required(), 'description' => $field->get_description()),
-			($display_constraint ? array($this->constraint($regex)) : array())
+		$fieldset->add_field(new $field_class($field->get_field_name(), $field->get_name(), $field->get_default_value(), [
+			'required' => (bool)$field->is_required(), 'description' => $field->get_description()],
+			($display_constraint ? [$this->constraint($regex)] : [])
 		));
 	}
 }

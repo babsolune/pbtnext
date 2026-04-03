@@ -26,7 +26,7 @@ class UserExtensionPointProvider extends ExtensionPointProvider
 
 	public function commands()
 	{
-		return new CLICommandsList(array('user' => 'CLIUserManagementCommand'));
+		return new CLICommandsList(['user' => 'CLIUserManagementCommand']);
 	}
 
 	public function user()
@@ -41,7 +41,7 @@ class UserExtensionPointProvider extends ExtensionPointProvider
 
 	public function url_mappings()
 	{
-		return new UrlMappings(array(
+		return new UrlMappings([
 			new DispatcherUrlMapping('/user/index.php', '([\w/-_]*)$'),
 			new DispatcherUrlMapping('/user/index.php', 'login/?$', 'root', 'login/'),
 			new DispatcherUrlMapping('/user/index.php', 'aboutcookie/?$', 'root', 'aboutcookie/'),
@@ -51,14 +51,14 @@ class UserExtensionPointProvider extends ExtensionPointProvider
 			new DispatcherUrlMapping('/user/index.php', 'password/change/?([a-z0-9]+)?/?$', 'root', 'password/change/$1'),
 			new DispatcherUrlMapping('/user/index.php', 'error/403/?$', 'root', 'error/403/'),
 			new DispatcherUrlMapping('/user/index.php', 'error/404/?$', 'root', 'error/404/')
-		));
+		]);
 	}
 
 	public function comments()
 	{
-		return new CommentsTopics(array(
+		return new CommentsTopics([
 			new UserEventsCommentsTopic()
-		));
+		]);
 	}
 }
 ?>

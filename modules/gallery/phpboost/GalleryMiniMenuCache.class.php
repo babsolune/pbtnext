@@ -10,14 +10,14 @@
 
 class GalleryMiniMenuCache implements CacheData
 {
-	private $pictures = array();
+	private $pictures = [];
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{
-		$this->pictures = array();
+		$this->pictures = [];
 		$config = GalleryConfig::load();
 		$Gallery = new Gallery();
 

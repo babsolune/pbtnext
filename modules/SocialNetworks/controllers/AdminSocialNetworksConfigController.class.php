@@ -40,7 +40,7 @@ class AdminSocialNetworksConfigController extends DefaultAdminModuleController
 			{
 				$sn = new $this->social_networks[$id]();
 
-				$this->view->assign_block_vars('social_networks_list', array(
+				$this->view->assign_block_vars('social_networks_list', [
 					'C_MOBILE_ONLY'     => $sn->is_mobile_only(),
 					'C_DESKTOP_ONLY'    => $sn->is_desktop_only(),
 					'C_SHARING_CONTENT' => $sn->has_content_sharing_url() || $sn->has_mobile_content_sharing_url(),
@@ -49,20 +49,20 @@ class AdminSocialNetworksConfigController extends DefaultAdminModuleController
 					'NAME'      => $sn->get_name(),
 					'ICON_NAME' => $sn->get_icon_name(),
 					'CSS_CLASS' => $sn->get_css_class()
-				));
+				]);
 				$social_networks_number++;
 			}
 		}
 
-		$this->view->put_all(array(
+		$this->view->put_all([
             'CHANGE_DISPLAY' => Url::to_rel('/SocialNetworks/index.php?url=/config/change_display'),
 			'C_MORE_THAN_ONE_SOCIAL_NETWORK' => $social_networks_number > 1,
 			'FORM' => $this->form->display()
-		));
+		]);
 
 		$response = new AdminMenuDisplayResponse($this->view);
 		$response->add_link($this->lang['form.configuration'], DispatchManager::get_url('/SocialNetworks', '/admin/'));
-		$response->get_graphical_environment()->set_page_title(StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$response->get_graphical_environment()->set_page_title(StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module()->get_configuration()->get_name()]));
 
 		return $response;
 	}
@@ -92,14 +92,14 @@ class AdminSocialNetworksConfigController extends DefaultAdminModuleController
 					if ($sn->authentication_identifiers_needed())
 					{
 						$fieldset->add_field(new FormFieldCheckbox($id . '_authentication_enabled', StringVars::replace_vars($this->lang['sn.enable.authentication'],
-							array('name' => $sn->get_name())), $this->config->is_authentication_enabled($id),
-								array(
+							['name' => $sn->get_name()]), $this->config->is_authentication_enabled($id),
+								[
 									'class' => 'third-field custom-checkbox',
 									'description' => StringVars::replace_vars(($sn->authentication_client_secret_needed() ? $this->lang['sn.enable.authentication.clue'] : $this->lang['sn.enable.authentication.key.only.clue']
 								),
-								array(
-									'identifiers_creation_url' => $sn->get_identifiers_creation_url())) . ($sn->callback_url_needed() ? StringVars::replace_vars($this->lang['sn.enable.authentication.callback.url.clue'],
-									array('callback_url' => UserUrlBuilder::connect($id)->absolute())) : ''), 'events' => array('click' => '
+								[
+									'identifiers_creation_url' => $sn->get_identifiers_creation_url()]) . ($sn->callback_url_needed() ? StringVars::replace_vars($this->lang['sn.enable.authentication.callback.url.clue'],
+									['callback_url' => UserUrlBuilder::connect($id)->absolute()]) : ''), 'events' => ['click' => '
 										if (HTMLForms.getField("' . $id . '_authentication_enabled").getValue()) {
 											HTMLForms.getField("' . $id . '_client_id").enable();
 											' . ($sn->authentication_client_secret_needed() ? 'HTMLForms.getField("' . $id . '_client_secret").enable();
@@ -107,19 +107,19 @@ class AdminSocialNetworksConfigController extends DefaultAdminModuleController
 											HTMLForms.getField("' . $id . '_client_id").disable();
 											' . ($sn->authentication_client_secret_needed() ? 'HTMLForms.getField("' . $id . '_client_secret").disable();
 										' : '') . '}'
-									)
-								)
+									]
+								]
 							)
 						);
 
-						$fieldset->add_field(new FormFieldTextEditor($id . '_client_id', StringVars::replace_vars($this->lang['sn.authentication.client.id'], array('name' => $sn->get_name())), $this->config->get_client_id($id),
-							array('class' => 'third-field top-field', 'required' => true, 'hidden' => !$this->config->is_authentication_enabled($id))
+						$fieldset->add_field(new FormFieldTextEditor($id . '_client_id', StringVars::replace_vars($this->lang['sn.authentication.client.id'], ['name' => $sn->get_name()]), $this->config->get_client_id($id),
+							['class' => 'third-field top-field', 'required' => true, 'hidden' => !$this->config->is_authentication_enabled($id)]
 						));
 
 						if ($sn->authentication_client_secret_needed())
 						{
-							$fieldset->add_field(new FormFieldPasswordEditor($id . '_client_secret', StringVars::replace_vars($this->lang['sn.authentication.client.secret'], array('name' => $sn->get_name())), $this->config->get_client_secret($id),
-								array('class' => 'third-field top-field', 'required' => true, 'hidden' => !$this->config->is_authentication_enabled($id))
+							$fieldset->add_field(new FormFieldPasswordEditor($id . '_client_secret', StringVars::replace_vars($this->lang['sn.authentication.client.secret'], ['name' => $sn->get_name()]), $this->config->get_client_secret($id),
+								['class' => 'third-field top-field', 'required' => true, 'hidden' => !$this->config->is_authentication_enabled($id)]
 							));
 						}
 
@@ -127,8 +127,8 @@ class AdminSocialNetworksConfigController extends DefaultAdminModuleController
 					}
 					else
 					{
-						$fieldset->add_field(new FormFieldCheckbox($id . '_authentication_enabled', StringVars::replace_vars($this->lang['sn.enable.authentication'], array('name' => $sn->get_name())), $this->config->is_authentication_enabled($id),
-							array('class' => 'custom-checkbox', 'description' => $this->lang['sn.authentication.no.identifier.needed'])
+						$fieldset->add_field(new FormFieldCheckbox($id . '_authentication_enabled', StringVars::replace_vars($this->lang['sn.enable.authentication'], ['name' => $sn->get_name()]), $this->config->is_authentication_enabled($id),
+							['class' => 'custom-checkbox', 'description' => $this->lang['sn.authentication.no.identifier.needed']]
 						));
 					}
 				}
@@ -150,9 +150,9 @@ class AdminSocialNetworksConfigController extends DefaultAdminModuleController
 	{
 		if ($this->server_configuration->has_curl_extension())
 		{
-			$authentications_enabled = array();
-			$client_ids = array();
-			$client_secrets = array();
+			$authentications_enabled = [];
+			$client_ids = [];
+			$client_secrets = [];
 
 			foreach ($this->social_networks as $id => $social_network)
 			{
@@ -193,7 +193,7 @@ class AdminSocialNetworksConfigController extends DefaultAdminModuleController
 				}
 			}
 
-			HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
+			HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]), 'url' => ModulesUrlBuilder::configuration()->rel()]);
 		}
 	}
 
@@ -208,7 +208,7 @@ class AdminSocialNetworksConfigController extends DefaultAdminModuleController
 
 	private function update_position(HTTPRequestCustom $request)
 	{
-		$sorted_social_networks = array();
+		$sorted_social_networks = [];
 
 		$social_networks_list = json_decode(TextHelper::html_entity_decode($request->get_value('tree')));
 		foreach($social_networks_list as $position => $tree)
@@ -220,7 +220,7 @@ class AdminSocialNetworksConfigController extends DefaultAdminModuleController
 
 		SocialNetworksConfig::save();
 
-		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
+		HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]), 'url' => ModulesUrlBuilder::configuration()->rel()]);
 	}
 }
 ?>

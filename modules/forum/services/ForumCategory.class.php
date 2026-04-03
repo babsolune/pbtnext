@@ -35,24 +35,24 @@ class ForumCategory extends Category
 
 	protected function set_additional_attributes_list()
 	{
-		$this->add_additional_attribute('status', array('type' => 'boolean', 'notnull' => 1, 'default' => 0));
-		$this->add_additional_attribute('description', array('type' => 'text', 'length' => 65000));
-		$this->add_additional_attribute('last_topic_id', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0, 'key' => true));
-		$this->add_additional_attribute('url', array('type' => 'string', 'length' => 255, 'default' => "''"));
-		$this->add_additional_attribute('icon', array('type' => 'string', 'length' => 255, 'default' => "''"));
-		$this->add_additional_attribute('color', array('type' => 'string', 'length' => 250, 'default' => "''"));
-		$this->add_additional_attribute('thumbnail', array(
+		$this->add_additional_attribute('status', ['type' => 'boolean', 'notnull' => 1, 'default' => 0]);
+		$this->add_additional_attribute('description', ['type' => 'text', 'length' => 65000]);
+		$this->add_additional_attribute('last_topic_id', ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0, 'key' => true]);
+		$this->add_additional_attribute('url', ['type' => 'string', 'length' => 255, 'default' => "''"]);
+		$this->add_additional_attribute('icon', ['type' => 'string', 'length' => 255, 'default' => "''"]);
+		$this->add_additional_attribute('color', ['type' => 'string', 'length' => 250, 'default' => "''"]);
+		$this->add_additional_attribute('thumbnail', [
 			'type'    => 'string',
 			'length'  => 255,
 			'notnull' => 1,
 			'default' => "''",
-			'attribute_field_parameters' => array(
+			'attribute_field_parameters' => [
 				'field_class'     => 'FormFieldThumbnail',
 				'label'           => LangLoader::get_message('form.thumbnail', 'form-lang'),
 				'default_value'   => FormFieldThumbnail::DEFAULT_VALUE,
 				'default_picture' => self::THUMBNAIL_URL
-			)
-		));
+			]
+		]);
 	}
 
 	public function set_type($type)

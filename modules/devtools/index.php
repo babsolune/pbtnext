@@ -11,7 +11,7 @@ define('PATH_TO_ROOT', is_dir(__DIR__ . '/../../modules') ? '../..' : '..');
 
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
-$url_controller_mappers = array(
+$url_controller_mappers = [
     // Admin
     new UrlControllerMapper('AdminDevToolsConfigController', '`^/admin(?:/config)?/?$`'),
 
@@ -33,7 +33,7 @@ $url_controller_mappers = array(
 
     // Main page (modules tab)
     new UrlControllerMapper('DevToolsHomeController', '`^(?:/modules)?/?$`'),
-);
+];
 
 DispatchManager::dispatch($url_controller_mappers);
 ?>

@@ -37,12 +37,12 @@ if ($add)
 	if (!empty($name) && $msg_number >= 0)
 	{
 		//On insere le nouveau lien, tout en précisant qu'il s'agit d'un lien ajouté et donc supprimable
-		PersistenceContext::get_querier()->insert(PREFIX . "forum_ranks", array('name' => $name, 'msg' => $msg_number, 'icon' => $icon, 'special' => 0));
+		PersistenceContext::get_querier()->insert(PREFIX . "forum_ranks", ['name' => $name, 'msg' => $msg_number, 'icon' => $icon, 'special' => 0]);
 
 		###### Régénération du cache des rangs #######
 		ForumRanksCache::invalidate();
 
-		HooksService::execute_hook_action('edit_config', 'forum', array('title' => $lang['forum.rank.add'], 'url' => ForumUrlBuilder::add_rank()->rel()));
+		HooksService::execute_hook_action('edit_config', 'forum', ['title' => $lang['forum.rank.add'], 'url' => ForumUrlBuilder::add_rank()->rel()]);
 
 		$view->put('MESSAGE_HELPER', MessageHelper::display($lang['warning.process.success'], MessageHelper::SUCCESS, 4));
 	}
@@ -91,12 +91,12 @@ foreach ($image_folder_path->get_files('`\.(png|jpg|bmp|gif)$`iu') as $image)
 	$rank_options .= '<option value="' . $file . '">' . $file . '</option>';
 }
 
-$view->put_all(array(
+$view->put_all([
 	'RANK_OPTIONS'       => $rank_options,
 	'MAX_FILE_SIZE'      => ServerConfiguration::get_upload_max_filesize(),
 	'MAX_FILE_SIZE_TEXT' => File::get_formated_size(ServerConfiguration::get_upload_max_filesize()),
 	'ALLOWED_EXTENSIONS' => implode('", "',FileUploadConfig::load()->get_authorized_picture_extensions()),
-));
+]);
 
 $view->display();
 

@@ -43,7 +43,7 @@ class RecipeItem
 	const SORT_COMMENTS_NUMBER  = 'comments_number';
 	const SORT_VIEWS_NUMBER 	= 'views_number';
 
-	const SORT_FIELDS_URL_VALUES = array(
+	const SORT_FIELDS_URL_VALUES = [
 		self::SORT_ALPHABETIC       => 'title',
 		self::SORT_AUTHOR           => 'author',
 		self::SORT_DATE             => 'date',
@@ -51,7 +51,7 @@ class RecipeItem
 		self::SORT_VIEWS_NUMBER    => 'views',
 		self::SORT_NOTATION         => 'notes',
 		self::SORT_COMMENTS_NUMBER  => 'comments'
-	);
+	];
 
 	const THUMBNAIL_URL = '/templates/__default__/images/default_item.webp';
 
@@ -358,7 +358,7 @@ class RecipeItem
 
 	public function get_properties()
 	{
-		return array(
+		return [
 			'id' => $this->get_id(),
 			'id_category' => $this->get_id_category(),
 			'title' => $this->get_title(),
@@ -377,7 +377,7 @@ class RecipeItem
 			'persons_number' => $this->get_persons_number(),
 			'ingredients' => TextHelper::serialize($this->get_ingredients()),
 			'steps' => TextHelper::serialize($this->get_steps()),
-		);
+		];
 	}
 
 	public function set_properties(array $properties)
@@ -397,8 +397,8 @@ class RecipeItem
 		$this->update_date = !empty($properties['update_date']) ? new Date($properties['update_date'], Timezone::SERVER_TIMEZONE) : null;
 		$this->thumbnail_url = $properties['thumbnail'];
 		$this->persons_number = $properties['persons_number'];
-		$this->ingredients = !empty($properties['ingredients']) ? TextHelper::unserialize($properties['ingredients']) : array();
-		$this->steps = !empty($properties['steps']) ? TextHelper::unserialize($properties['steps']) : array();
+		$this->ingredients = !empty($properties['ingredients']) ? TextHelper::unserialize($properties['ingredients']) : [];
+		$this->steps = !empty($properties['steps']) ? TextHelper::unserialize($properties['steps']) : [];
 
 		$user = new User();
 		if (!empty($properties['user_id']))
@@ -431,8 +431,8 @@ class RecipeItem
 		$this->creation_date = new Date();
 		$this->views_number = 0;
 		$this->thumbnail_url = FormFieldThumbnail::DEFAULT_VALUE;
-		$this->ingredients = array();
-		$this->steps = array();
+		$this->ingredients = [];
+		$this->steps = [];
 		$this->end_date_enabled = false;
 		$this->persons_number = 0;
 		$this->author_custom_name = $this->author_user->get_display_name();
@@ -477,7 +477,7 @@ class RecipeItem
 			Date::get_array_tpl_vars($this->creation_date, 'date'),
 			Date::get_array_tpl_vars($this->update_date, 'update_date'),
 			Date::get_array_tpl_vars($this->publishing_start_date, 'differed_publishing_start_date'),
-			array(
+			[
 				// Conditions
 				'C_VISIBLE'              => $this->is_published(),
 				'C_CONTROLS'			 => $this->is_authorized_to_edit() || $this->is_authorized_to_delete(),
@@ -533,7 +533,7 @@ class RecipeItem
 				'U_DELETE'         => RecipeUrlBuilder::delete($this->id)->rel(),
 				'U_THUMBNAIL'      => $this->get_thumbnail()->rel(),
 				'U_COMMENTS'       => RecipeUrlBuilder::display_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_title)->rel()
-			)
+			]
 		);
 	}
 }

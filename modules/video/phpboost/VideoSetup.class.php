@@ -40,7 +40,7 @@ class VideoSetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(self::$video_table, self::$video_cats_table));
+		PersistenceContext::get_dbms_utils()->drop([self::$video_table, self::$video_cats_table]);
 	}
 
 	private function create_tables()
@@ -51,36 +51,36 @@ class VideoSetup extends DefaultModuleSetup
 
 	private function create_video_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'thumbnail' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'title' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'rewrited_title' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'file_url' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'mime_type' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => 0),
-			'width' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 100),
-			'height' => array('type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 100),
-			'content' => array('type' => 'text', 'length' => 65000),
-			'summary' => array('type' => 'text', 'length' => 65000),
-			'views_number' => array('type' => 'integer', 'length' => 11, 'default' => 0),
-			'author_custom_name' => array('type' =>  'string', 'length' => 255, 'default' => "''"),
-			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'published' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'publishing_start_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'publishing_end_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'update_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array(
-				'id_category' => array('type' => 'key', 'fields' => 'id_category'),
-				'title' => array('type' => 'fulltext', 'fields' => 'title'),
-				'content' => array('type' => 'fulltext', 'fields' => 'content'),
-				'summary' => array('type' => 'fulltext', 'fields' => 'summary')
-			)
-		);
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'id_category' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'thumbnail' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'title' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'rewrited_title' => ['type' => 'string', 'length' => 255, 'default' => "''"],
+			'file_url' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'mime_type' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => 0],
+			'width' => ['type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 100],
+			'height' => ['type' => 'integer', 'length' => 9, 'notnull' => 1, 'default' => 100],
+			'content' => ['type' => 'text', 'length' => 65000],
+			'summary' => ['type' => 'text', 'length' => 65000],
+			'views_number' => ['type' => 'integer', 'length' => 11, 'default' => 0],
+			'author_custom_name' => ['type' =>  'string', 'length' => 255, 'default' => "''"],
+			'author_user_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'published' => ['type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0],
+			'publishing_start_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'publishing_end_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'creation_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'update_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0]
+		];
+		$options = [
+			'primary' => ['id'],
+			'indexes' => [
+				'id_category' => ['type' => 'key', 'fields' => 'id_category'],
+				'title' => ['type' => 'fulltext', 'fields' => 'title'],
+				'content' => ['type' => 'fulltext', 'fields' => 'content'],
+				'summary' => ['type' => 'fulltext', 'fields' => 'summary']
+			]
+		];
 		PersistenceContext::get_dbms_utils()->create_table(self::$video_table, $fields, $options);
 	}
 
@@ -98,7 +98,7 @@ class VideoSetup extends DefaultModuleSetup
 
 	private function insert_video_cats_data()
 	{
-		PersistenceContext::get_querier()->insert(self::$video_cats_table, array(
+		PersistenceContext::get_querier()->insert(self::$video_cats_table, [
 			'id' => 1,
 			'id_parent' => 0,
 			'c_order' => 1,
@@ -107,12 +107,12 @@ class VideoSetup extends DefaultModuleSetup
 			'name' => $this->messages['default.cat.name'],
 			'description' => $this->messages['default.cat.description'],
 			'thumbnail' => FormFieldThumbnail::DEFAULT_VALUE
-		));
+		]);
 	}
 
 	private function insert_video_data()
 	{
-		PersistenceContext::get_querier()->insert(self::$video_table, array(
+		PersistenceContext::get_querier()->insert(self::$video_table, [
 			'id' => 1,
 			'id_category' => 1,
 			'title' => $this->messages['default.title'],
@@ -132,7 +132,7 @@ class VideoSetup extends DefaultModuleSetup
 			'author_user_id' => 1,
 			'views_number' => 0,
 			'thumbnail' => FormFieldThumbnail::DEFAULT_VALUE
-		));
+		]);
 	}
 }
 ?>

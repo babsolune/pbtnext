@@ -30,12 +30,12 @@ class GuestbookService
 
 	public static function update(GuestbookItem $message)
 	{
-		self::$db_querier->update(GuestbookSetup::$guestbook_table, $message->get_properties(), 'WHERE id=:id', array('id' => $message->get_id()));
+		self::$db_querier->update(GuestbookSetup::$guestbook_table, $message->get_properties(), 'WHERE id=:id', ['id' => $message->get_id()]);
 	}
 
 	public static function delete(int $id)
 	{
-		self::$db_querier->delete(GuestbookSetup::$guestbook_table, 'WHERE id=:id', array('id' => $id));
+		self::$db_querier->delete(GuestbookSetup::$guestbook_table, 'WHERE id=:id', ['id' => $id]);
 	}
 
 	public static function get_item(int $id)
@@ -43,9 +43,9 @@ class GuestbookService
 		$row = self::$db_querier->select_single_row_query('SELECT member.*, guestbook.*, guestbook.login as glogin
 		FROM ' . GuestbookSetup::$guestbook_table . ' guestbook
 		LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = guestbook.user_id
-		WHERE guestbook.id=:id', array(
+		WHERE guestbook.id=:id', [
 			'id' => $id
-		));
+		]);
 
 		$message = new GuestbookItem();
 		$message->set_properties($row);
@@ -54,9 +54,9 @@ class GuestbookService
 
 	public static function get_last_message_timestamp_from_user($user_id)
 	{
-		return self::$db_querier->get_column_value(GuestbookSetup::$guestbook_table, 'MAX(timestamp) as timestamp', 'WHERE user_id=:user_id', array(
+		return self::$db_querier->get_column_value(GuestbookSetup::$guestbook_table, 'MAX(timestamp) as timestamp', 'WHERE user_id=:user_id', [
 			'user_id' => $user_id
-		));
+		]);
 	}
 }
 ?>

@@ -30,7 +30,7 @@ class ReCaptchaExtensionPointProvider extends ExtensionPointProvider
 
 	public function url_mappings()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/ReCaptcha/index.php')));
+		return new UrlMappings([new DispatcherUrlMapping('/ReCaptcha/index.php')]);
 	}
 }
 ?>

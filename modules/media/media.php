@@ -49,10 +49,10 @@ elseif ($id_media > 0)
 		LEFT JOIN " . DB_TABLE_MEMBER . " AS mb ON v.author_user_id = mb.user_id
 		LEFT JOIN " . DB_TABLE_AVERAGE_NOTES . " notes ON notes.id_in_module = v.id AND notes.module_name = 'media'
 		LEFT JOIN " . DB_TABLE_NOTE . " note ON note.id_in_module = v.id AND note.module_name = 'media' AND note.user_id = :user_id
-		WHERE v.id = :id", array(
+		WHERE v.id = :id", [
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'id' => $id_media
-		));
+		]);
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
@@ -78,7 +78,7 @@ elseif ($id_media > 0)
 	require_once(PATH_TO_ROOT . '/kernel/header.php');
 
 	// Update views_number
-	PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "media SET views_number = views_number + 1 WHERE id = :id", array('id' => $id_media));
+	PersistenceContext::get_querier()->inject("UPDATE " . PREFIX . "media SET views_number = views_number + 1 WHERE id = :id", ['id' => $id_media]);
 
 	$notation = new Notation();
 	$notation->set_module_name('media');
@@ -96,7 +96,7 @@ elseif ($id_media > 0)
 
 	$view->put_all(array_merge(
 		Date::get_array_tpl_vars($date, 'date'),
-		array(
+		[
 			'C_ROOT_CATEGORY'      => $media['id_category'] == Category::ROOT_CATEGORY,
 			'C_CONTROLS'           => CategoriesAuthorizationsService::check_authorizations($media['id_category'])->moderation(),
 			'C_ENABLED_NOTATION'   => $content_management_config->module_notation_is_enabled('media'),
@@ -125,7 +125,7 @@ elseif ($id_media > 0)
 			'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($media['user_id'])->rel(),
 			'U_EDIT_CATEGORY'  => $media['id_category'] == Category::ROOT_CATEGORY ? MediaUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($media['id_category'], 'media')->rel(),
 			'U_THUMBNAIL'      => Url::to_rel($media['thumbnail'])
-		)
+		]
 	));
 
 	if (empty($mime_type_tpl[$media['mime_type']]))
@@ -142,10 +142,10 @@ elseif ($id_media > 0)
 		$poster_type = new FileType(new File($media['thumbnail']));
 		$picture_url = new Url($media['thumbnail']);
 
-		$media_tpl->put_all(array(
+		$media_tpl->put_all([
 			'C_POSTER' => $poster_type->is_picture(),
 			'POSTER' => $picture_url->rel()
-		));
+		]);
 	}
 
 	// Media from websites
@@ -203,10 +203,10 @@ elseif ($id_media > 0)
 			$parent = pathinfo(GeneralConfig::load()->get_site_url());
 			$parent = $parent['basename'];
 			if($twitch_player) {
-				$media_tpl->put_all(array(
+				$media_tpl->put_all([
 					'C_TWITCH' => true,
 					'PARENT' => $parent
-				));
+				]);
 			}
 
 			// Soundcloud
@@ -215,27 +215,27 @@ elseif ($id_media > 0)
 				$explode = explode('/', $dirname);
 				$soundcloud_type = end($explode);
 
-				$media_tpl->put_all(array(
+				$media_tpl->put_all([
 					'C_SOUNDCLOUD' => $soundcloud_player,
 
 					'SOUNDCLOUD_TYPE' => $soundcloud_player ? $soundcloud_type : '',
-				));
+				]);
 			}
 
 			// All
-			$media_tpl->put_all(array(
+			$media_tpl->put_all([
 				'PLAYER' => $player
-			));
+			]);
 		}
 	}
 
-	$media_tpl->put_all(array(
+	$media_tpl->put_all([
 		'FILE_URL' => Url::to_rel($media['file_url']),
 		'MIME' => $media['mime_type'],
 		'WIDTH' => $media['width'],
 		'HEIGHT' => $media['height'],
 		'MEDIA_ID' => $media_id
-	));
+	]);
 
 	$view->put('MEDIA_FORMAT', $media_tpl);
 
@@ -245,9 +245,9 @@ elseif ($id_media > 0)
 		$comments_topic = new MediaCommentsTopic();
 		$comments_topic->set_id_in_module($id_media);
 		$comments_topic->set_url(new Url('/media/media.php?id='. $id_media . '&com=0'));
-		$view->put_all(array(
+		$view->put_all([
 			'COMMENTS' => CommentsService::display($comments_topic)->render()
-		));
+		]);
 	}
 	$view->display();
 }

@@ -27,11 +27,11 @@ class FacebookAuthenticationMethod extends AbstractSocialNetworkAuthenticationMe
 	{
 		$config = SocialNetworksConfig::load();
 
-		$this->facebook = new Facebook\Facebook(array(
+		$this->facebook = new Facebook\Facebook([
 			'app_id'  => $config->get_client_id(FacebookSocialNetwork::SOCIAL_NETWORK_ID),
 			'app_secret' => $config->get_client_secret(FacebookSocialNetwork::SOCIAL_NETWORK_ID),
 			'persistent_data_handler' => 'session'
-		));
+		]);
 	}
 
 	protected function get_external_authentication()
@@ -54,7 +54,7 @@ class FacebookAuthenticationMethod extends AbstractSocialNetworkAuthenticationMe
 				AppContext::get_response()->redirect(Environment::get_home_page());
 		}
 		else if (!$request->has_getparameter('state'))
-			AppContext::get_response()->redirect($helper->getLoginUrl(UserUrlBuilder::connect(FacebookSocialNetwork::SOCIAL_NETWORK_ID)->absolute(), array('email')));
+			AppContext::get_response()->redirect($helper->getLoginUrl(UserUrlBuilder::connect(FacebookSocialNetwork::SOCIAL_NETWORK_ID)->absolute(), ['email']));
 
 		$helper->getPersistentDataHandler()->set('state', $request->get_getvalue('state'));
 
@@ -63,7 +63,7 @@ class FacebookAuthenticationMethod extends AbstractSocialNetworkAuthenticationMe
 		if ($accessToken)
 			$_SESSION[FacebookSocialNetwork::SOCIAL_NETWORK_ID . '_token'] = (string)$accessToken;
 		else
-			AppContext::get_response()->redirect($helper->getLoginUrl(UserUrlBuilder::connect(FacebookSocialNetwork::SOCIAL_NETWORK_ID)->absolute(), array('email')));
+			AppContext::get_response()->redirect($helper->getLoginUrl(UserUrlBuilder::connect(FacebookSocialNetwork::SOCIAL_NETWORK_ID)->absolute(), ['email']));
 
 		try {
 			$response = $this->facebook->get('/me?fields=id,name,email', $accessToken);
@@ -72,12 +72,12 @@ class FacebookAuthenticationMethod extends AbstractSocialNetworkAuthenticationMe
 
 		$user = !empty($response) ? $response->getGraphUser() : '';
 
-		return array (
+		return [
 			'id'	=> !empty($user) ? $user->getId() : '',
 			'name'	=> !empty($user) ? $user->getName() : '',
 			'email'	=> !empty($user) ? $user->getEmail() : '',
 			'picture_url'	=> !empty($user) ? 'https://graph.facebook.com/' . $user->getId() . '/picture' : ''
-		);
+		];
 	}
 }
 ?>

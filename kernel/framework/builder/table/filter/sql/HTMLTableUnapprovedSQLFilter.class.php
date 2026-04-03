@@ -28,7 +28,7 @@ class HTMLTableUnapprovedSQLFilter extends HTMLTableCheckboxFilter implements SQ
 	{
 		$parameter_name = $this->get_sql_value_parameter_prefix() . '_' . $this->db_field;
 		$query = $this->db_field . ' = ' . $parameter_name;
-		$parameters = array($parameter_name => 0);
+		$parameters = [$parameter_name => 0];
 		return new SQLFragment($query, $parameters);
 	}
 

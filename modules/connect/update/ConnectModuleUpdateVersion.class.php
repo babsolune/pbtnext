@@ -13,9 +13,9 @@ class ConnectModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('connect');
 
-		self::$delete_old_files_list = array(
+		self::$delete_old_files_list = [
 			'/phpboost/ConnectExtensionPointProvider.class.php'
-		);
+		];
 	}
 }
 ?>

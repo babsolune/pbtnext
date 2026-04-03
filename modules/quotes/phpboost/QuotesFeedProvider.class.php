@@ -47,10 +47,10 @@ class QuotesFeedProvider implements FeedProvider
 			LEFT JOIN '. QuotesSetup::$quotes_cats_table .' cat ON cat.id = quote.id_category
 			WHERE approved = 1
 			AND id_category IN :cats_ids
-			ORDER BY writer ASC', array(
+			ORDER BY writer ASC', [
 				'cats_ids' => $ids_categories,
 				'timestamp_now' => $now->get_timestamp()
-			));
+			]);
 
 			while ($row = $result->fetch())
 			{

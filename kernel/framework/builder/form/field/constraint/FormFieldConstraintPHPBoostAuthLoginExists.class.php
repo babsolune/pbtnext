@@ -39,16 +39,16 @@ class FormFieldConstraintPHPBoostAuthLoginExists extends AbstractFormFieldConstr
 	{
 		if (!empty($this->user_id))
 		{
-			return PersistenceContext::get_querier()->row_exists(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE login=:login AND user_id != :user_id', array(
+			return PersistenceContext::get_querier()->row_exists(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE login=:login AND user_id != :user_id', [
 				'login' => $field->get_value(),
 				'user_id' => $this->user_id
-			));
+			]);
 		}
 		else if ($field->get_value())
 		{
-			return PersistenceContext::get_querier()->row_exists(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE login=:login', array(
+			return PersistenceContext::get_querier()->row_exists(DB_TABLE_INTERNAL_AUTHENTICATION, 'WHERE login=:login', [
 				'login' => $field->get_value()
-			));
+			]);
 		}
 		return false;
 	}

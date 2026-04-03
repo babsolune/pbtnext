@@ -37,7 +37,7 @@ class ShoutboxSetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(self::$shoutbox_table));
+		PersistenceContext::get_dbms_utils()->drop([self::$shoutbox_table]);
 	}
 
 	private function delete_configuration()
@@ -52,19 +52,19 @@ class ShoutboxSetup extends DefaultModuleSetup
 
 	private function create_shoutbox_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'login' => array('type' => 'string', 'length' => 150, 'default' => "''"),
-			'user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'content' => array('type' => 'text', 'length' => 65000),
-			'timestamp' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array(
-				'timestamp' => array('type' => 'key', 'fields' => 'timestamp')
-			)
-		);
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'login' => ['type' => 'string', 'length' => 150, 'default' => "''"],
+			'user_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'content' => ['type' => 'text', 'length' => 65000],
+			'timestamp' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0]
+		];
+		$options = [
+			'primary' => ['id'],
+			'indexes' => [
+				'timestamp' => ['type' => 'key', 'fields' => 'timestamp']
+			]
+		];
 		PersistenceContext::get_dbms_utils()->create_table(self::$shoutbox_table, $fields, $options);
 	}
 
@@ -76,13 +76,13 @@ class ShoutboxSetup extends DefaultModuleSetup
 
 	private function insert_shoutbox_data()
 	{
-		PersistenceContext::get_querier()->insert(self::$shoutbox_table, array(
+		PersistenceContext::get_querier()->insert(self::$shoutbox_table, [
 			'id' => 1,
 			'login' => $this->messages['shoutbox_login'],
 			'user_id' => -1,
 			'content' => $this->messages['shoutbox_content'],
 			'timestamp' => time()
-		));
+		]);
 	}
 }
 ?>

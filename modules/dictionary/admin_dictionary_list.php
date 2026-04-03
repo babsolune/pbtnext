@@ -34,20 +34,20 @@ if ($pagination->current_page_is_empty() && $page > 1)
 	DispatchManager::redirect($error_controller);
 }
 
-$view->put_all(array(
+$view->put_all([
 	'C_PAGINATION' => $pagination->has_several_pages(),
 
 	'PAGINATION' => $pagination->display(),
-));
+]);
 
 $result = PersistenceContext::get_querier()->select("SELECT l.word ,l.id AS dictionary_id,l.cat,l.approved AS dictionary_approved,l.timestamp,cat.id,cat.name,cat.images
 FROM " . PREFIX . "dictionary AS l
 LEFT JOIN " . PREFIX . "dictionary_cat cat ON cat.id = l.cat
 ORDER BY timestamp DESC
-LIMIT :number_items_per_page OFFSET :display_from", array(
+LIMIT :number_items_per_page OFFSET :display_from", [
 	'number_items_per_page' => $pagination->get_number_items_per_page(),
 	'display_from' => $pagination->get_display_from()
-));
+]);
 while ($row = $result->fetch())
 {
 	$aprob = ($row['dictionary_approved'] == 1) ? $lang['common.yes'] : $lang['common.no'];
@@ -57,7 +57,7 @@ while ($row = $result->fetch())
 	$img = empty($row['images']) ? '<i class="fa fa-folder"></i>' : '<img src="' . $row['images'] . '" alt="' . $row['images'] . '" />';
 	$date_created = !empty($row['timestamp']) ? new Date($row['timestamp'], Timezone::SERVER_TIMEZONE) : null;
 
-	$view->assign_block_vars('dictionary_list', array(
+	$view->assign_block_vars('dictionary_list', [
 		'ITEM_ID'        => $row['dictionary_id'],
 		'NAME'           => Texthelper::ucfirst(TextHelper::strtolower(stripslashes($title))),
 		'CATEGORY_ID'    => $row['cat'],
@@ -65,7 +65,7 @@ while ($row = $result->fetch())
 		'DATE'           => (!empty($date_created)) ? $date_created->format(Date::FORMAT_DAY_MONTH_YEAR) : '',
 		'APPROBATION'    => $aprob,
 		'CATEGORY_IMAGE' => $img,
-	));
+	]);
 }
 $result->dispose();
 

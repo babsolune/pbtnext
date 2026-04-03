@@ -35,85 +35,85 @@ class AdminSpotsConfigController extends DefaultAdminModuleController
 		$fieldset->add_field(new FormFieldTextEditor('module_name', $this->lang['spots.module.name'], $this->config->get_module_name()));
 
 		$fieldset->add_field(new FormFieldColorPicker('default_color', $this->lang['spots.default.color'], $this->config->get_default_color(),
-			array('description' => $this->lang['spots.default.color.clue'])
+			['description' => $this->lang['spots.default.color.clue']]
 		));
 
 		$fieldset->add_field(new FormFieldTextEditor('default_inner_icon', $this->lang['spots.default.inner.icon'], $this->config->get_default_inner_icon(),
-			array(
+			[
 				'required' => true,
 				'description' => $this->lang['spots.default.inner.icon.clue']
-			)
+			]
 		));
 
 		$fieldset->add_field(new FormFieldSpacer('default_config', ''));
 
         $fieldset->add_field(new FormFieldNumberEditor('items_per_page', $this->lang['form.items.per.page'], $this->config->get_items_per_page(),
-			array('min' => 1, 'max' => 50, 'required' => true),
-			array(new FormFieldConstraintIntegerRange(1, 50))
+			['min' => 1, 'max' => 50, 'required' => true],
+			[new FormFieldConstraintIntegerRange(1, 50)]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('new_window', $this->lang['form.new.window'], $this->config->get_new_window(),
-			array(
+			[
 	            'description' => $this->lang['form.new.window.clue'],
 				'class' => 'custom-checkbox'
-        	)
+        	]
 		));
 
         $fieldset->add_field(new FormFieldSimpleSelectChoice('display_type', $this->lang['form.display.type'], $this->config->get_display_type(),
-			array(
-				new FormFieldSelectChoiceOption($this->lang['form.display.type.grid'], SpotsConfig::GRID_VIEW, array('data_option_icon' => 'fa fa-th-large')),
-				new FormFieldSelectChoiceOption($this->lang['form.display.type.table'], SpotsConfig::TABLE_VIEW, array('data_option_icon' => 'fa fa-table'))
-			),
-			array(
+			[
+				new FormFieldSelectChoiceOption($this->lang['form.display.type.grid'], SpotsConfig::GRID_VIEW, ['data_option_icon' => 'fa fa-th-large']),
+				new FormFieldSelectChoiceOption($this->lang['form.display.type.table'], SpotsConfig::TABLE_VIEW, ['data_option_icon' => 'fa fa-table'])
+			],
+			[
 				'select_to_list' => true,
-				'events' => array('change' => '
+				'events' => ['change' => '
 					if (HTMLForms.getField("display_type").getValue() == \'' . SpotsConfig::GRID_VIEW . '\') {
 						HTMLForms.getField("items_per_row").enable();
 					} else {
 						HTMLForms.getField("items_per_row").disable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
         $fieldset->add_field(new FormFieldNumberEditor('items_per_row', $this->lang['form.items.per.row'], $this->config->get_items_per_row(),
-			array(
+			[
 				'min' => 1, 'max' => 4, 'required' => true,
 				'hidden' => $this->config->get_display_type() !== SpotsConfig::GRID_VIEW
-			),
-			array(new FormFieldConstraintIntegerRange(1, 4))
+			],
+			[new FormFieldConstraintIntegerRange(1, 4)]
 		));
 
 		$fieldset->add_field(new FormFieldRichTextEditor('default_content', $this->lang['form.item.default.content'], $this->config->get_default_content(),
-			array('rows' => 8, 'cols' => 47)
+			['rows' => 8, 'cols' => 47]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('categories_per_page', $this->lang['form.categories.per.page'], $this->config->get_categories_per_page(),
-			array('min' => 1, 'max' => 50, 'required' => true),
-			array(new FormFieldConstraintIntegerRange(1, 50))
+			['min' => 1, 'max' => 50, 'required' => true],
+			[new FormFieldConstraintIntegerRange(1, 50)]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('categories_per_row', $this->lang['form.categories.per.row'], $this->config->get_categories_per_row(),
-			array('min' => 1, 'max' => 4, 'required' => true),
-			array(new FormFieldConstraintIntegerRange(1, 4))
+			['min' => 1, 'max' => 4, 'required' => true],
+			[new FormFieldConstraintIntegerRange(1, 4)]
 		));
 
 		$fieldset->add_field(new FormFieldRichTextEditor('root_category_description', $this->lang['form.root.category.description'], $this->config->get_root_category_description(),
-			array('rows' => 8, 'cols' => 47)
+			['rows' => 8, 'cols' => 47]
 		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $this->lang['form.authorizations'],
-			array('description' => $this->lang['form.authorizations.clue'])
+			['description' => $this->lang['form.authorizations.clue']]
 		);
 		$form->add_fieldset($fieldset_authorizations);
 
-		$auth_settings = new AuthorizationsSettings(array(
+		$auth_settings = new AuthorizationsSettings([
 			new ActionAuthorization($this->lang['form.authorizations.read'], Category::READ_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['form.authorizations.write'], Category::WRITE_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['form.authorizations.contribution'], Category::CONTRIBUTION_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['form.authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
 			new ActionAuthorization($this->lang['form.authorizations.categories'], Category::CATEGORIES_MANAGEMENT_AUTHORIZATIONS)
-		));
+		]);
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());
 		$fieldset_authorizations->add_field($auth_setter);
@@ -147,7 +147,7 @@ class AdminSpotsConfigController extends DefaultAdminModuleController
 		SpotsConfig::save();
 		CategoriesService::get_categories_manager()->regenerate_cache();
 
-		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
+		HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]), 'url' => ModulesUrlBuilder::configuration()->rel()]);
 	}
 }
 ?>

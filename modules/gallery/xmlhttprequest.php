@@ -41,14 +41,14 @@ if (!empty($increment_view))
 		exit;
 
 	//Mise à jour du nombre de vues.
-	PersistenceContext::get_querier()->inject("UPDATE " . GallerySetup::$gallery_table . " SET views = views + 1 WHERE id_category = :id_category AND id = :id", array('id_category' => $g_id_category, 'id' => $g_idpics));
+	PersistenceContext::get_querier()->inject("UPDATE " . GallerySetup::$gallery_table . " SET views = views + 1 WHERE id_category = :id_category AND id = :id", ['id_category' => $g_id_category, 'id' => $g_idpics]);
 }
 elseif (!empty($rename_pics)) //Renomme une image.
 {
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
 	try {
-		$id_cat = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'id_category', 'WHERE id = :id', array('id' => $id_file));
+		$id_cat = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'id_category', 'WHERE id = :id', ['id' => $id_file]);
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);
@@ -74,7 +74,7 @@ elseif (!empty($aprob_pics))
 	AppContext::get_session()->csrf_get_protect(); //Protection csrf
 
 	try {
-		$id_cat = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'id_category', 'WHERE id = :id', array('id' => $id_file));
+		$id_cat = PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'id_category', 'WHERE id = :id', ['id' => $id_file]);
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_page();
 		DispatchManager::redirect($error_controller);

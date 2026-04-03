@@ -13,10 +13,10 @@ class OnlineModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('online');
 
-		self::$delete_old_files_list = array(
+		self::$delete_old_files_list = [
 			'/phpboost/OnlineHomePageExtensionPoint.class.php',
 			'/util/AdminOnlineDisplayResponse.class.php'
-		);
+		];
 	}
 
 	public function execute()

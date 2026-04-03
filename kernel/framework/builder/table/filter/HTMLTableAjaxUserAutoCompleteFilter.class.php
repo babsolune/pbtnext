@@ -16,7 +16,7 @@ abstract class HTMLTableAjaxUserAutoCompleteFilter extends AbstractHTMLTableFilt
 	public function __construct($name, $label, $match_regex = null)
 	{
 		$this->match_regex = $match_regex;
-		$input = new FormFieldAjaxUserAutoComplete($name, $label, '', array(), array(new FormFieldConstraintUserExist()));
+		$input = new FormFieldAjaxUserAutoComplete($name, $label, '', [], [new FormFieldConstraintUserExist()]);
 		parent::__construct($name, $input);
 	}
 

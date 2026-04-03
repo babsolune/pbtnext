@@ -38,59 +38,59 @@ class AdminForumConfigController extends DefaultAdminModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('forum_name', $this->lang['forum.config.forum.name'], $this->config->get_forum_name(),
-			array('maxlength' => 255, 'required' => true)
+			['maxlength' => 255, 'required' => true]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('number_topics_per_page', $this->lang['forum.config.topics.per.page'], $this->config->get_number_topics_per_page(),
-			array('min' => 1, 'max' => 50, 'required' => true),
-			array(new FormFieldConstraintIntegerRange(1, 50))
+			['min' => 1, 'max' => 50, 'required' => true],
+			[new FormFieldConstraintIntegerRange(1, 50)]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('number_messages_per_page', $this->lang['forum.config.messages.per.page'], $this->config->get_number_messages_per_page(),
-			array('min' => 1, 'max' => 50, 'required' => true),
-			array(new FormFieldConstraintIntegerRange(1, 50))
+			['min' => 1, 'max' => 50, 'required' => true],
+			[new FormFieldConstraintIntegerRange(1, 50)]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('read_messages_storage_duration', $this->lang['forum.config.read.messages.storage'], $this->config->get_read_messages_storage_duration(),
-			array('min' => 1, 'max' => 365, 'required' => true, 'description' => $this->lang['forum.config.read.messages.storage.clue']),
-			array(new FormFieldConstraintIntegerRange(1, 365))
+			['min' => 1, 'max' => 365, 'required' => true, 'description' => $this->lang['forum.config.read.messages.storage.clue']],
+			[new FormFieldConstraintIntegerRange(1, 365)]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('max_topic_number_in_favorite', $this->lang['forum.config.favorite.topics.number'], $this->config->get_max_topic_number_in_favorite(),
-			array('min' => 1, 'max' => 500, 'required' => true),
-			array(new FormFieldConstraintIntegerRange(1, 500))
+			['min' => 1, 'max' => 500, 'required' => true],
+			[new FormFieldConstraintIntegerRange(1, 500)]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('edit_mark_enabled', $this->lang['forum.config.enable.edit.marker'], $this->config->is_edit_mark_enabled(),
-			array('class' => 'custom-checkbox')
+			['class' => 'custom-checkbox']
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('multiple_posts_allowed', $this->lang['forum.config.enable.multiple.posts'], $this->config->are_multiple_posts_allowed(),
-			array(
+			[
 				'class' => 'custom-checkbox',
-				'description' => $this->lang['forum.config.enable.multiple.posts.clue'])
+				'description' => $this->lang['forum.config.enable.multiple.posts.clue']]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('connexion_form_displayed', $this->lang['forum.config.display.connexion.form'], $this->config->is_connexion_form_displayed(),
-			array('class' => 'custom-checkbox')
+			['class' => 'custom-checkbox']
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('left_column_disabled', StringVars::replace_vars($this->lang['form.hide.left.column'], array('module' => "forum")), $this->config->is_left_column_disabled(),
-			array('class' => 'custom-checkbox')
+		$fieldset->add_field(new FormFieldCheckbox('left_column_disabled', StringVars::replace_vars($this->lang['form.hide.left.column'], ['module' => "forum"]), $this->config->is_left_column_disabled(),
+			['class' => 'custom-checkbox']
 		));
 
-		$fieldset->add_field(new FormFieldCheckbox('right_column_disabled', StringVars::replace_vars($this->lang['form.hide.right.column'], array('module' => "forum")), $this->config->is_right_column_disabled(),
-			array('class' => 'custom-checkbox')
+		$fieldset->add_field(new FormFieldCheckbox('right_column_disabled', StringVars::replace_vars($this->lang['form.hide.right.column'], ['module' => "forum"]), $this->config->is_right_column_disabled(),
+			['class' => 'custom-checkbox']
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_thumbnails', $this->lang['forum.config.display.thumbnails'], $this->config->are_thumbnails_displayed(),
-			array('class' => 'custom-checkbox')
+			['class' => 'custom-checkbox']
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('message_before_topic_title_displayed', $this->lang['forum.config.display.message.before.topic'], $this->config->is_message_before_topic_title_displayed(),
-			array(
+			[
 				'class' => 'custom-checkbox',
-				'events' => array('click' => '
+				'events' => ['click' => '
 					if (HTMLForms.getField("message_before_topic_title_displayed").getValue()) {
 						HTMLForms.getField("message_before_topic_title").enable();
 						HTMLForms.getField("message_when_topic_is_unsolved").enable();
@@ -102,35 +102,35 @@ class AdminForumConfigController extends DefaultAdminModuleController
 						HTMLForms.getField("message_when_topic_is_solved").disable();
 						HTMLForms.getField("message_before_topic_title_icon_displayed").disable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$fieldset->add_field(new FormFieldSpacer('1_separator', ''));
 
 		$fieldset->add_field(new FormFieldTextEditor('message_before_topic_title', $this->lang['forum.config.message.before.topic'], $this->config->get_message_before_topic_title(),
-			array('maxlength' => 255, 'required' => true)
+			['maxlength' => 255, 'required' => true]
 		));
 
 		$fieldset->add_field(new FormFieldTextEditor('message_when_topic_is_unsolved', $this->lang['forum.config.status.message.unsolved'], $this->config->get_message_when_topic_is_unsolved(),
-			array('maxlength' => 255, 'required' => true)
+			['maxlength' => 255, 'required' => true]
 		));
 
 		$fieldset->add_field(new FormFieldTextEditor('message_when_topic_is_solved', $this->lang['forum.config.status.message.solved'], $this->config->get_message_when_topic_is_solved(),
-			array('maxlength' => 255, 'required' => true)
+			['maxlength' => 255, 'required' => true]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('message_before_topic_title_icon_displayed', $this->lang['forum.config.display.issue.status.icon'], $this->config->is_message_before_topic_title_icon_displayed(),
-			array(
+			[
 				'class' => 'custom-checkbox',
 				'description' => '<i class="fa fa-check success"></i> / <i class="fa fa-times error"></i>'
-			)
+			]
 		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', $this->lang['form.authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 
-		$auth_settings = new AuthorizationsSettings(array(
+		$auth_settings = new AuthorizationsSettings([
 			new ActionAuthorization($this->lang['form.authorizations.read'], Category::READ_AUTHORIZATIONS),
 			new VisitorDisabledActionAuthorization($this->lang['form.authorizations.write'], Category::WRITE_AUTHORIZATIONS),
 			new MemberDisabledActionAuthorization($this->lang['form.authorizations.moderation'], Category::MODERATION_AUTHORIZATIONS),
@@ -140,7 +140,7 @@ class AdminForumConfigController extends DefaultAdminModuleController
 			new ActionAuthorization($this->lang['forum.authorizations.unlimited.topics.tracking'], ForumAuthorizationsService::UNLIMITED_TOPICS_TRACKING_AUTHORIZATIONS),
 			new MemberDisabledActionAuthorization($this->lang['form.authorizations.categories'], ForumAuthorizationsService::CATEGORIES_MANAGEMENT_AUTHORIZATIONS),
 			new VisitorDisabledActionAuthorization($this->lang['forum.authorizations.multiple.posts'], ForumAuthorizationsService::MULTIPLE_POSTS_AUTHORIZATIONS)
-		));
+		]);
 		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings);
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());
 		$fieldset_authorizations->add_field($auth_setter);
@@ -210,7 +210,7 @@ class AdminForumConfigController extends DefaultAdminModuleController
 		ForumConfig::save();
 		CategoriesService::get_categories_manager('forum')->regenerate_cache();
 
-		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
+		HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]), 'url' => ModulesUrlBuilder::configuration()->rel()]);
 	}
 }
 ?>

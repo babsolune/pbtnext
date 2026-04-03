@@ -10,7 +10,7 @@
 class BroadcastItemsManagerController extends DefaultModuleController
 {
 	private $elements_number = 0;
-	private $ids = array();
+	private $ids = [];
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -27,14 +27,14 @@ class BroadcastItemsManagerController extends DefaultModuleController
 	{
 		$display_categories = CategoriesService::get_categories_manager()->get_categories_cache()->has_categories();
 
-		$columns = array(
+		$columns = [
 			new HTMLTableColumn($this->lang['common.title'], 'aria-label'),
 			new HTMLTableColumn($this->lang['common.category'], 'id_category'),
 			new HTMLTableColumn($this->lang['broadcast.announcer'], 'display_name'),
 			// new HTMLTableColumn($this->lang['date.day'], 'release_days'),
 			new HTMLTableColumn($this->lang['common.status'], 'published'),
-			new HTMLTableColumn($this->lang['common.moderation'], '', array('sr-only' => true))
-		);
+			new HTMLTableColumn($this->lang['common.moderation'], '', ['sr-only' => true])
+		];
 
 		if (!$display_categories)
 			unset($columns[1]);
@@ -48,13 +48,13 @@ class BroadcastItemsManagerController extends DefaultModuleController
 		if ($display_categories)
 			$table_model->add_filter(new HTMLTableCategorySQLFilter('filter2'));
 
-		$status_list = array(Item::PUBLISHED => $this->lang['common.status.published.alt'], Item::NOT_PUBLISHED => $this->lang['common.status.draft'], Item::DEFERRED_PUBLICATION => $this->lang['common.status.deffered.date']);
+		$status_list = [Item::PUBLISHED => $this->lang['common.status.published.alt'], Item::NOT_PUBLISHED => $this->lang['common.status.draft'], Item::DEFERRED_PUBLICATION => $this->lang['common.status.deffered.date']];
 		$table_model->add_filter(new HTMLTableEqualsFromListSQLFilter('published', 'filter3', $this->lang['common.status.publication'], $status_list));
 
 		$table = new HTMLTable($table_model);
 		$table->set_filters_fieldset_class_HTML();
 
-		$results = array();
+		$results = [];
 		$result = $table_model->get_sql_results('broadcast 
 			LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = broadcast.author_user_id'
 		);
@@ -68,26 +68,26 @@ class BroadcastItemsManagerController extends DefaultModuleController
 			$this->elements_number++;
 			$this->ids[$this->elements_number] = $item->get_id();
 
-			$edit_item = new LinkHTMLElement(BroadcastUrlBuilder::edit($item->get_id()), '', array('aria-label' => $this->lang['common.edit']), 'fa fa-edit');
-			$delete_item = new LinkHTMLElement(BroadcastUrlBuilder::delete($item->get_id()), '', array('aria-label' => $this->lang['common.delete'], 'data-confirmation' => 'delete-element'), 'fa fa-trash-alt');
+			$edit_item = new LinkHTMLElement(BroadcastUrlBuilder::edit($item->get_id()), '', ['aria-label' => $this->lang['common.edit']], 'fa fa-edit');
+			$delete_item = new LinkHTMLElement(BroadcastUrlBuilder::delete($item->get_id()), '', ['aria-label' => $this->lang['common.delete'], 'data-confirmation' => 'delete-element'], 'fa fa-trash-alt');
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
-			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
+			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? ['style' => 'color: ' . $user_group_color] : []), UserService::get_level_class($user->get_level())) : $user->get_display_name();
 
-			// $release_days_list = array();
+			// $release_days_list = [];
 			// Debug::stop($item->get_release_days());
 			// foreach ((array)TextHelper::unserialize($item->get_release_days()) as $value) {
 			// 	$release_days_list[] = LangLoader::get_message('date.' . $value['id'] . '.short', 'date-lang') . ', ';
 			// }
 
-			$row = array(
+			$row = [
 				new HTMLTableRowCell(new LinkHTMLElement(BroadcastUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()), $item->get_title()), 'align-left'),
 				new HTMLTableRowCell(new LinkHTMLElement(BroadcastUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name()), $category->get_name())),
 				new HTMLTableRowCell($author),
 				// new HTMLTableRowCell(''),
 				new HTMLTableRowCell($item->get_status()),
 				new HTMLTableRowCell($edit_item->display() . $delete_item->display())
-			);
+			];
 
 			if (!$display_categories)
 				unset($row[1]);
@@ -114,7 +114,7 @@ class BroadcastItemsManagerController extends DefaultModuleController
 			for ($i = 1; $i <= $this->elements_number; $i++) {
 				if ($request->get_value('delete-checkbox-' . $i, 'off') == 'on') {
 					if (isset($this->ids[$i])) {
-						$item = BroadcastService::get_item('WHERE broadcast.id=:id', array('id' => $this->ids[$i]));
+						$item = BroadcastService::get_item('WHERE broadcast.id=:id', ['id' => $this->ids[$i]]);
 						BroadcastService::delete($this->ids[$i]);
 						HooksService::execute_hook_action('delete', self::$module_id, $item->get_properties());
 					}

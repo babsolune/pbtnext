@@ -79,7 +79,7 @@ if ($valid)
 	###### Régénération du cache de la gallery #######
 	GalleryMiniMenuCache::invalidate();
 
-	HooksService::execute_hook_action('edit_config', 'gallery', array('title' => StringVars::replace_vars($lang['form.module.title'], array('module_name' => ModulesManager::get_module('gallery')->get_configuration()->get_name())), 'url' => GalleryUrlBuilder::configuration()->rel()));
+	HooksService::execute_hook_action('edit_config', 'gallery', ['title' => StringVars::replace_vars($lang['form.module.title'], ['module_name' => ModulesManager::get_module('gallery')->get_configuration()->get_name()]), 'url' => GalleryUrlBuilder::configuration()->rel()]);
 
 	$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.success.config', 'warning-lang'), MessageHelper::SUCCESS, 4));
 }
@@ -104,12 +104,12 @@ for ($i = 1; $i <= 10; $i++)
 
 //Type de défilemennt
 $scroll_types = '';
-$array_scroll = array(
+$array_scroll = [
 	GalleryConfig::STATIC_SCROLL => $lang['gallery.static.scroll'],
 	GalleryConfig::VERTICAL_DYNAMIC_SCROLL => $lang['gallery.vertical.scroll'],
 	GalleryConfig::HORIZONTAL_DYNAMIC_SCROLL => $lang['gallery.horizontal.scroll'],
 	GalleryConfig::NO_SCROLL => $lang['gallery.no.scroll']
-);
+];
 
 foreach ($array_scroll as $key => $name)
 {
@@ -117,7 +117,7 @@ foreach ($array_scroll as $key => $name)
 	$scroll_types .= '<option value="' . $key . '"' . $selected . '>' . $name . '</option>';
 }
 
-$view->put_all(array(
+$view->put_all([
 	'C_LOGO_ENABLED'           => $config->is_logo_enabled(),
 	'C_TITLE_ENABLED'          => $config->is_title_enabled(),
 	'C_NOTES_NUMBER_DISPLAYED' => $config->are_notes_number_displayed(),
@@ -154,7 +154,7 @@ $view->put_all(array(
 	'AUTH_WRITE'               => Authorizations::generate_select(Category::WRITE_AUTHORIZATIONS, $config->get_authorizations()),
 	'AUTH_MODERATION'          => Authorizations::generate_select(Category::MODERATION_AUTHORIZATIONS, $config->get_authorizations()),
 	'AUTH_MANAGE_CATEGORIES'   => Authorizations::generate_select(Category::CATEGORIES_MANAGEMENT_AUTHORIZATIONS, $config->get_authorizations()),
-));
+]);
 
 $view->display();
 

@@ -26,7 +26,7 @@ class AdminExtendedFieldMemberDeleteController extends AdminController
 				$code = $id;
 			}
 		}
-		return new JSONResponse(array('code' => $code));
+		return new JSONResponse(['code' => $code]);
 	}
 }
 

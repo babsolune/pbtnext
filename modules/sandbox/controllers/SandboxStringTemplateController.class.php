@@ -19,7 +19,7 @@ class SandboxStringTemplateController extends DefaultModuleController
 # END elements #
 </ul>';
 
-	private $fruits = array('apple', 'pear', 'banana');
+	private $fruits = ['apple', 'pear', 'banana'];
 
 	protected function get_template_to_use()
 	{
@@ -42,10 +42,10 @@ class SandboxStringTemplateController extends DefaultModuleController
 		$this->run_cached_parsing();
 		$bench_cached->stop();
 
-		$this->view->put_all(array(
-			'RESULT' => StringVars::replace_vars($this->lang['sandbox.string_template.result'], array('non_cached_time' => $bench_non_cached->to_string(5), 'cached_time' => $bench_cached->to_string(5), 'string_length' => TextHelper::strlen($this->test))),
+		$this->view->put_all([
+			'RESULT' => StringVars::replace_vars($this->lang['sandbox.string_template.result'], ['non_cached_time' => $bench_non_cached->to_string(5), 'cached_time' => $bench_cached->to_string(5), 'string_length' => TextHelper::strlen($this->test)]),
 			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
-		));
+		]);
 
 		return $this->generate_response();
 	}
@@ -56,7 +56,7 @@ class SandboxStringTemplateController extends DefaultModuleController
 
 		foreach ($this->fruits as $fruit)
 		{
-			$tpl->assign_block_vars('elements', array('NAME' => $fruit));
+			$tpl->assign_block_vars('elements', ['NAME' => $fruit]);
 		}
 	}
 

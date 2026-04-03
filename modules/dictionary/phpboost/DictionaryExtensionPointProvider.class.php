@@ -34,7 +34,7 @@ class DictionaryExtensionPointProvider extends ExtensionPointProvider
 
 	public function menus()
 	{
-		return new ModuleMenus(array(new DictionaryModuleMiniMenu()));
+		return new ModuleMenus([new DictionaryModuleMiniMenu()]);
 	}
 
 	public function search()
@@ -49,7 +49,7 @@ class DictionaryExtensionPointProvider extends ExtensionPointProvider
 
 	public function url_mappings()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/dictionary/index.php')));
+		return new UrlMappings([new DispatcherUrlMapping('/dictionary/index.php')]);
 	}
 }
 ?>

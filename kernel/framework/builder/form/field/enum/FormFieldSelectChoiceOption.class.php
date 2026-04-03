@@ -21,7 +21,7 @@ class FormFieldSelectChoiceOption extends AbstractFormFieldEnumOption
 	 * @param $raw_value string The raw value
 	 * @param array $field_choice_options Map associating the parameters values to the parameters names.
 	 */
-	public function __construct($label, $raw_value, $field_choice_options = array())
+	public function __construct($label, $raw_value, $field_choice_options = [])
 	{
 		parent::__construct($label, $raw_value, $field_choice_options);
 	}
@@ -33,7 +33,7 @@ class FormFieldSelectChoiceOption extends AbstractFormFieldEnumOption
 	{
 
 		$tpl = new FileTemplate('framework/builder/form/fieldelements/FormFieldSelectChoiceOption.tpl');
-		$tpl->put_all(array(
+		$tpl->put_all([
 			'VALUE' => $this->get_raw_value(),
 			'C_SELECTED' => $this->is_active(),
 			'C_DISABLE' => $this->is_disable(),
@@ -45,7 +45,7 @@ class FormFieldSelectChoiceOption extends AbstractFormFieldEnumOption
 			'OPTION_CLASS' => $this->get_data_option_class(),
 			'LABEL' => $this->get_label(),
 			'PROTECTED_LABEL' => stripslashes(TextHelper::strprotect($this->get_label()))
-		));
+		]);
 
 		return $tpl;
 	}

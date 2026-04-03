@@ -26,7 +26,7 @@ class AuthorizationsSettings
 	 * Constructs from a list of {@link ActionAuthorization}
 	 * @param ActionAuthorization[] $actions Actions
 	 */
-	public function __construct(array $actions = array())
+	public function __construct(array $actions = [])
 	{
 		$this->actions = $actions;
 	}
@@ -57,7 +57,7 @@ class AuthorizationsSettings
 	 */
 	public function build_auth_array()
 	{
-		$auth_array = array();
+		$auth_array = [];
 		foreach ($this->actions as $action)
 		{
 			self::merge_auth_array($auth_array, $action);

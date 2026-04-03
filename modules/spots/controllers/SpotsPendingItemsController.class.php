@@ -33,11 +33,11 @@ class SpotsPendingItemsController extends DefaultModuleController
 		$condition = 'WHERE id_category IN :authorized_categories
 		' . (!CategoriesAuthorizationsService::check_authorizations()->moderation() ? ' AND author_user_id = :user_id' : '') . '
 		AND published = 0';
-		$parameters = array(
+		$parameters = [
 			'user_id' => AppContext::get_current_user()->get_id(),
 			'authorized_categories' => $authorized_categories,
 			'timestamp_now' => $now->get_timestamp()
-		);
+		];
 
 		$page = AppContext::get_request()->get_getint('page', 1);
 		$pagination = $this->get_pagination($condition, $parameters, $page);
@@ -47,14 +47,14 @@ class SpotsPendingItemsController extends DefaultModuleController
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = spots.author_user_id
 		' . $condition . '
 		ORDER BY spots.creation_date DESC
-		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
+		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, [
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
-		)));
+		]));
 
 		$number_columns_display_per_line = $config->get_items_per_row();
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_SELF_ITEMS'    => $result->get_rows_count() > 0,
 			'C_SEVERAL_ITEMS' => $result->get_rows_count() > 1,
 			'C_PENDING'       => true,
@@ -65,7 +65,7 @@ class SpotsPendingItemsController extends DefaultModuleController
 
 			'ITEMS_PER_ROW'   => $number_columns_display_per_line,
 			'PAGINATION'      => $pagination->display()
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{

@@ -31,7 +31,7 @@ class PagesReorderItemsController extends DefaultSeveralItemsController
 		parent::init();
 		$this->customized_page_title = $this->lang['items.reordering'];
 		$this->page_description = '';
-		$this->current_url = ItemsUrlBuilder::specific_page('reorder', self::$module_id, $this->category->get_id() != Category::ROOT_CATEGORY ? array($this->get_category()->get_id() . '-' . $this->get_category()->get_rewrited_name()) : array());
+		$this->current_url = ItemsUrlBuilder::specific_page('reorder', self::$module_id, $this->category->get_id() != Category::ROOT_CATEGORY ? [$this->get_category()->get_id() . '-' . $this->get_category()->get_rewrited_name()] : []);
 	}
 
 	protected function build_view()
@@ -44,7 +44,7 @@ class PagesReorderItemsController extends DefaultSeveralItemsController
 		}
 
 		$category_thumbnail = $this->get_category()->get_thumbnail()->rel();
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_ITEMS'              => $items_number > 0,
 			'C_SEVERAL_ITEMS'      => $items_number > 1,
 			'C_CATEGORY_THUMBNAIL' => !empty($category_thumbnail),
@@ -54,7 +54,7 @@ class PagesReorderItemsController extends DefaultSeveralItemsController
 			'CATEGORY_DESCRIPTION' => FormatingHelper::second_parse($this->get_category()->get_description()),
 			'U_CATEGORY_THUMBNAIL' => $category_thumbnail,
 			'U_EDIT_CATEGORY'      => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? ModulesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->get_category()->get_id(), self::$module_id)->rel()
-		));
+		]);
 	}
 
 	protected function check_authorizations()

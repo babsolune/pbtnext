@@ -87,9 +87,9 @@ class SmalladsItemController extends DefaultModuleController
 		$this->build_suggested_items($this->item);
 		$this->build_navigation_links($this->item);
 
-		$this->view->put_all(array_merge($this->item->get_template_vars(), array(
+		$this->view->put_all(array_merge($this->item->get_template_vars(), [
 			'C_ENABLED_COMMENTS' => $comments_config->module_comments_is_enabled('smallads')
-		)));
+		]));
 
 		// Comments
 		if ($comments_config->module_comments_is_enabled('smallads'))
@@ -125,11 +125,11 @@ class SmalladsItemController extends DefaultModuleController
 		$i = 1;
 		foreach ($sources as $name => $url)
 		{
-			$this->view->assign_block_vars('sources', array(
+			$this->view->assign_block_vars('sources', [
 				'C_SEPARATOR' => $i < $nbr_sources,
 				'NAME' => $name,
 				'URL' => $url,
-			));
+			]);
 			$i++;
 		}
 	}
@@ -144,11 +144,11 @@ class SmalladsItemController extends DefaultModuleController
 		foreach ($carousel as $id => $options)
 		{
 
-			$this->view->assign_block_vars('carousel', array(
+			$this->view->assign_block_vars('carousel', [
 				'C_DESCRIPTION' => !empty($options['description']),
 				'DESCRIPTION' => $options['description'],
 				'U_PICTURE' => Url::to_rel($options['picture_url']),
-			));
+			]);
 			$i++;
 		}
 	}
@@ -162,11 +162,11 @@ class SmalladsItemController extends DefaultModuleController
 		$i = 1;
 		foreach ($keywords as $keyword)
 		{
-			$this->view->assign_block_vars('keywords', array(
+			$this->view->assign_block_vars('keywords', [
 				'C_SEPARATOR' => $i < $nbr_keywords,
 				'NAME' => $keyword->get_name(),
 				'URL' => SmalladsUrlBuilder::display_tag($keyword->get_rewrited_name())->rel(),
-			));
+			]);
 			$i++;
 		}
 	}
@@ -182,26 +182,26 @@ class SmalladsItemController extends DefaultModuleController
 		WHERE (FT_SEARCH(title, :search_content) OR FT_SEARCH(content, :search_content)) AND id <> :excluded_id
 		AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
 		AND completed = 0 AND archived = 0
-		ORDER BY relevance DESC LIMIT 0, :limit_nb', array(
+		ORDER BY relevance DESC LIMIT 0, :limit_nb', [
 			'excluded_id' => $item->get_id(),
 			'search_content' => $item->get_title() .','. $item->get_content(),
 			'timestamp_now' => $now->get_timestamp(),
 			'limit_nb' => (int)SmalladsConfig::load()->get_suggested_items_nb()
-		));
+		]);
 
 		$this->view->put('C_SUGGESTED_ITEMS', $result->get_rows_count() > 0 && SmalladsConfig::load()->get_enabled_items_suggestions());
 
 		while ($row = $result->fetch())
 		{
 			$date = $row['creation_date'] <= $row['update_date'] ? $row['update_date'] : $row['creation_date'];
-			$this->view->assign_block_vars('suggested', array(
+			$this->view->assign_block_vars('suggested', [
 				'C_COMPLETED'     => $row['completed'],
 				'C_HAS_THUMBNAIL' => !empty($row['thumbnail_url']),
 				'TITLE'           => $row['title'],
 				'DATE'            => Date::to_format($date, Date::FORMAT_DAY_MONTH_YEAR),
 				'U_THUMBNAIL'     => Url::to_rel($row['thumbnail_url']),
 				'U_ITEM'          => SmalladsUrlBuilder::display($row['id_category'], CategoriesService::get_categories_manager()->get_categories_cache()->get_category($row['id_category'])->get_rewrited_name(), $row['id'], $row['rewrited_title'])->rel()
-			));
+			]);
 		}
 		$result->dispose();
 	}
@@ -219,26 +219,26 @@ class SmalladsItemController extends DefaultModuleController
 		(SELECT id, title, id_category, rewrited_title, thumbnail_url, completed, \'NEXT\' as type
 		FROM '. SmalladsSetup::$smallads_table .'
 		WHERE (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0))) AND creation_date > :item_timestamp AND id_category IN :authorized_categories ORDER BY creation_date ASC LIMIT 1 OFFSET 0)
-		', array(
+		', [
 			'timestamp_now' => $now->get_timestamp(),
 			'item_timestamp' => $item_timestamp,
-			'authorized_categories' => array($item->get_id_category())
-		));
+			'authorized_categories' => [$item->get_id_category()]
+		]);
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_RELATED_LINKS' => $result->get_rows_count() > 0 && SmalladsConfig::load()->get_enabled_navigation_links(),
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{
-			$this->view->put_all(array(
+			$this->view->put_all([
 				'C_'. $row['type'] .'_COMPLETED' => $row['completed'],
 				'C_'. $row['type'] .'_ITEM' => true,
 				'C_' . $row['type'] . '_HAS_THUMBNAIL' => !empty($row['thumbnail_url']),
 				$row['type'] . '_ITEM' => $row['title'],
 				'U_'. $row['type'] . '_THUMBNAIL' => Url::to_rel($row['thumbnail_url']),
 				'U_'. $row['type'] .'_ITEM' => SmalladsUrlBuilder::display($row['id_category'], CategoriesService::get_categories_manager()->get_categories_cache()->get_category($row['id_category'])->get_rewrited_name(), $row['id'], $row['rewrited_title'])->rel(),
-			));
+			]);
 		}
 		$result->dispose();
 	}
@@ -252,21 +252,21 @@ class SmalladsItemController extends DefaultModuleController
 
 		$email_form = new HTMLForm(self::class);
 
-		$fieldset = new FormFieldsetHTML('send_a_mail', $this->lang['smallads.contact.author'], array('description' => $author_name));
+		$fieldset = new FormFieldsetHTML('send_a_mail', $this->lang['smallads.contact.author'], ['description' => $author_name]);
 		$email_form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldFree('email_smallad_title', $this->lang['smallads.item.interest'], $this->item->get_title()));
 
 		$fieldset->add_field(new FormFieldTextEditor('sender_name', $this->lang['smallads.sender.name'], AppContext::get_current_user()->get_display_name(),
-			array('required' => true)
+			['required' => true]
 		));
 
 		$fieldset->add_field(new FormFieldMailEditor('sender_email', $this->lang['smallads.sender.email'], AppContext::get_current_user()->get_email(),
-			array('required' => true)
+			['required' => true]
 		));
 
 		$fieldset->add_field(new FormFieldMultiLineTextEditor('sender_message', $this->lang['smallads.sender.message'], '',
-			array('required' => true)
+			['required' => true]
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();

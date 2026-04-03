@@ -23,7 +23,7 @@ function display_cat_explorer($id, &$cats, $user_id, $display_select_link = 1)
 		{
 			$id_cat = -1;
 			try {
-				$id_cat = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'id_parent', 'WHERE id = :id_cat AND user_id = :user_id', array('id_cat' => $id_cat, 'user_id' => $user_id));
+				$id_cat = PersistenceContext::get_querier()->get_column_value(DB_TABLE_UPLOAD_CAT, 'id_parent', 'WHERE id = :id_cat AND user_id = :user_id', ['id_cat' => $id_cat, 'user_id' => $user_id]);
 			} catch (RowNotFoundException $ex) {}
 
 			if ($id_cat >= 0)
@@ -59,10 +59,10 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link, $user_id)
 	FROM " . PREFIX . "upload_cat
 	WHERE user_id = :user_id
 	AND id_parent = :id_parent
-	ORDER BY name", array(
+	ORDER BY name", [
 		'user_id'   => $user_id,
 		'id_parent' => $id_cat
-	));
+	]);
 	while ($row = $result->fetch())
 	{
 		if (in_array($row['id'], $cats)) // If the category belongs to another, explore the parent
@@ -74,9 +74,9 @@ function show_cat_contents($id_cat, $cats, $id, $display_select_link, $user_id)
 		else
 		{
 			// Count existing categries to make possible subfolder creation
-			$sub_cats_number = PersistenceContext::get_querier()->count(DB_TABLE_UPLOAD_CAT, 'WHERE id_parent = :id', array(
+			$sub_cats_number = PersistenceContext::get_querier()->count(DB_TABLE_UPLOAD_CAT, 'WHERE id_parent = :id', [
 				'id' => $row['id']
-			));
+			]);
 			// If this category has subcategories, its content is visible
 			if ($sub_cats_number > 0)
 				$line .= '<li><a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="far fa-plus-square" id="img2_' . $row['id'] . '"></a> <a href="javascript:show_cat_contents(' . $row['id'] . ', ' . ($display_select_link != 0 ? 1 : 0) . ');" class="fa fa-folder" id="img_' . $row['id'] . '"></a>&nbsp;<span id="class-' . $row['id'] . '" class="' . ($row['id'] == $id ? 'upload-selected-cat' : '') . '"><a href="javascript:' . ($display_select_link != 0 ? 'select_cat' : 'open_cat') . '(' . $row['id'] . ');">' . $row['name'] . '</a></span><span id="cat_' . $row['id'] . '"></span></li>';
@@ -93,10 +93,10 @@ function upload_find_subcats(&$array, $id_cat, $user_id)
 {
 	$result = PersistenceContext::get_querier()->select("SELECT id
 		FROM " . DB_TABLE_UPLOAD_CAT . "
-		WHERE id_parent = :id_parent AND user_id = :user_id", array(
+		WHERE id_parent = :id_parent AND user_id = :user_id", [
 			'id_parent' => $id_cat,
 			'user_id' => $user_id
-		));
+		]);
 	while ($row = $result->fetch())
 	{
 		$array[] = $row['id'];

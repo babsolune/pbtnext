@@ -25,10 +25,10 @@ class MediaCategoriesCache extends DefaultCategoriesCache
 		require_once(ModulesManager::get_module_path('media') . '/media_constant.php');
 
 		return MediaService::count('WHERE id_category = :id_category AND published = :status',
-			array(
+			[
 				'id_category' => $id_category,
 				'status' => MEDIA_STATUS_APPROVED
-			)
+			]
 		);
 	}
 
@@ -45,7 +45,7 @@ class MediaCategoriesCache extends DefaultCategoriesCache
 		$root->set_authorizations($config->get_authorizations());
 		$description = $config->get_root_category_description();
 		if (empty($description))
-			$description = StringVars::replace_vars(LangLoader::get_message('media.seo.description.root', 'common', 'media'), array('site' => GeneralConfig::load()->get_site_name()));
+			$description = StringVars::replace_vars(LangLoader::get_message('media.seo.description.root', 'common', 'media'), ['site' => GeneralConfig::load()->get_site_name()]);
 		$root->set_description($description);
 		$root->set_additional_property('content_type', $config->get_root_category_content_type());
 		return $root;

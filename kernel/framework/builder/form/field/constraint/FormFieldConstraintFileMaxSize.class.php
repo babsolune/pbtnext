@@ -20,7 +20,7 @@ class FormFieldConstraintFileMaxSize extends AbstractFormFieldConstraint
 		$this->error_message = $error_message;
 		if (!$this->error_message)
 		{
-			$this->error_message = StringVars::replace_vars(LangLoader::get_message('warning.file.max.size.exceeded', 'warning-lang'), array('max_file_size' => File::get_formated_size($max_size)));
+			$this->error_message = StringVars::replace_vars(LangLoader::get_message('warning.file.max.size.exceeded', 'warning-lang'), ['max_file_size' => File::get_formated_size($max_size)]);
 		}
 		$this->set_validation_error_message($this->error_message);
 

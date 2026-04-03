@@ -22,13 +22,13 @@ $request = AppContext::get_request();
 $search_txt = $request->get_postvalue('q', '');
 $module_id = TextHelper::strtolower($request->get_postvalue('moduleName', ''));
 $id_search = $request->get_postvalue('idSearch', -1);
-$selected_modules = $request->get_postvalue('searched_modules', array());
+$selected_modules = $request->get_postvalue('searched_modules', []);
 
 //------------------------------------------------------------- Other includes
 require_once(PATH_TO_ROOT . '/modules/search/search.inc.php');
 
 //----------------------------------------------------------------------- Main
-$modules_args = array();
+$modules_args = [];
 
 if (($id_search >= 0) && ($module_id != ''))
 {
@@ -38,7 +38,7 @@ if (($id_search >= 0) && ($module_id != ''))
 	if (!$search->is_search_id_in_cache($id_search))
 	{   // MAJ DES RESULTATS SI ILS NE SONT PLUS DANS LE CACHE
 		// Listes des modules de recherches
-		$search_modules = array();
+		$search_modules = [];
 		$provider_service = AppContext::get_extension_provider_service();
 		$providers = $provider_service->get_providers(SearchableExtensionPoint::EXTENSION_POINT);
 		foreach ($provider_service->get_extension_point(SearchableExtensionPoint::EXTENSION_POINT) as $id => $extension_point)
@@ -49,7 +49,7 @@ if (($id_search >= 0) && ($module_id != ''))
 
 		// Ajout du paramètre search à tous les modules
 		foreach ($search_modules as $id => $extension_point)
-			$modules_args[$id] = array('search' => $search_txt);
+			$modules_args[$id] = ['search' => $search_txt];
 
 		// Ajout de la liste des paramètres de recherches spécifiques à chaque module
 		foreach ($search_modules as $id => $extension_point)
@@ -68,8 +68,8 @@ if (($id_search >= 0) && ($module_id != ''))
 			}
 		}
 
-		$results = array();
-		$ids_search = array();
+		$results = [];
+		$ids_search = [];
 
 		get_search_results($search_txt, $search_modules, $modules_args, $results, $ids_search, true);
 
@@ -99,7 +99,7 @@ if (($id_search >= 0) && ($module_id != ''))
 
 		echo   'nbResults[\'' . $module_id . '\'] = ' . $nb_results . ';
 				resultsAJAX[\'nbResults\'] = \'' . $nb_results . ' ' . addslashes($nb_results > 1 ? $lang['search.results.found'] : $lang['search.result.found']) . '\';
-				resultsAJAX[\'results\'] = \''.str_replace(array("\r", "\n", '\''), array('', ' ', '\\\''), $html_results) . '\';
+				resultsAJAX[\'results\'] = \''.str_replace(["\r", "\n", '\''], ['', ' ', '\\\''], $html_results) . '\';
 				resultWarning = \'success\';';
 	}
 	else

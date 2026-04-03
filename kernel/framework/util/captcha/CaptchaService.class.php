@@ -81,7 +81,7 @@ class CaptchaService
 
 	public function get_available_captchas()
 	{
-		$available_captchas = array();
+		$available_captchas = [];
 		foreach (CaptchaProvidersService::get_captchas() as $id => $provider)
 		{
 			if ($provider->is_available())

@@ -15,7 +15,7 @@ class ShoutboxAjaxRefreshMessagesController extends AbstractController
 	public function execute(HTTPRequestCustom $request)
 	{
 		$this->build_view();
-		return new JSONResponse(array('messages' => $this->view->render()));
+		return new JSONResponse(['messages' => $this->view->render()]);
 	}
 
 	private function build_view()

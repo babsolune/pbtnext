@@ -36,10 +36,10 @@
      * @opt_param string mine Flag indicating only return the channel ids of the authenticated user.
      * @return Google_ChannelListResponse
      */
-    public function listChannels($part, $optParams = array()) {
-      $params = array('part' => $part);
+    public function listChannels($part, $optParams = []) {
+      $params = ['part' => $part];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_ChannelListResponse($data);
       } else {
@@ -71,10 +71,10 @@
      * @opt_param string maxResults Maximum number of search results to return per page.
      * @return Google_SearchListResponse
      */
-    public function listSearch($optParams = array()) {
-      $params = array();
+    public function listSearch($optParams = []) {
+      $params = [];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_SearchListResponse($data);
       } else {
@@ -106,10 +106,10 @@
      * @opt_param string maxResults Maximum number of results to return
      * @return Google_PlaylistItemListResponse
      */
-    public function listPlaylistitems($part, $optParams = array()) {
-      $params = array('part' => $part);
+    public function listPlaylistitems($part, $optParams = []) {
+      $params = ['part' => $part];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_PlaylistItemListResponse($data);
       } else {
@@ -137,10 +137,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_PlaylistListResponse
      */
-    public function listPlaylists($id, $part, $optParams = array()) {
-      $params = array('id' => $id, 'part' => $part);
+    public function listPlaylists($id, $part, $optParams = []) {
+      $params = ['id' => $id, 'part' => $part];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_PlaylistListResponse($data);
       } else {
@@ -168,10 +168,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_VideoListResponse
      */
-    public function listVideos($id, $part, $optParams = array()) {
-      $params = array('id' => $id, 'part' => $part);
+    public function listVideos($id, $part, $optParams = []) {
+      $params = ['id' => $id, 'part' => $part];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_VideoListResponse($data);
       } else {
@@ -597,7 +597,7 @@ class Google_PlaylistSnippet extends Google_Model {
   public function getPublishedAt() {
     return $this->publishedAt;
   }
-  public function setTags(/* array(Google_string) */ $tags) {
+  public function setTags(/* [Google_string] */ $tags) {
     $this->assertIsArray($tags, 'Google_string', __METHOD__);
     $this->tags = $tags;
   }
@@ -646,7 +646,7 @@ class Google_SearchListResponse extends Google_Model {
   protected $__pageInfoType = 'Google_PageInfo';
   protected $__pageInfoDataType = '';
   public $pageInfo;
-  public function setSearchResults(/* array(Google_SearchResult) */ $searchResults) {
+  public function setSearchResults(/* [Google_SearchResult] */ $searchResults) {
     $this->assertIsArray($searchResults, 'Google_SearchResult', __METHOD__);
     $this->searchResults = $searchResults;
   }
@@ -887,7 +887,7 @@ class Google_VideoSnippet extends Google_Model {
   public function getThumbnails() {
     return $this->thumbnails;
   }
-  public function setTags(/* array(Google_string) */ $tags) {
+  public function setTags(/* [Google_string] */ $tags) {
     $this->assertIsArray($tags, 'Google_string', __METHOD__);
     $this->tags = $tags;
   }

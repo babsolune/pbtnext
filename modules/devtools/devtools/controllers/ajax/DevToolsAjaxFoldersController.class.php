@@ -11,7 +11,7 @@ class DevToolsAjaxFoldersController extends AbstractController
     public function execute(HTTPRequestCustom $request)
     {
         if (!DevToolsAuthorizationsService::check_authorizations()->read())
-            return new JSONResponse(array('success' => false, 'error' => 'Unauthorized'), 403);
+            return new JSONResponse(['success' => false, 'error' => 'Unauthorized'], 403);
 
         $owner  = $request->get_string('owner', '');
         $repo   = $request->get_string('repo', '');
@@ -19,15 +19,15 @@ class DevToolsAjaxFoldersController extends AbstractController
         $path   = $request->get_string('path', '');
 
         if (!$owner || !$repo || !$branch)
-            return new JSONResponse(array('success' => false, 'error' => 'Missing parameters'));
+            return new JSONResponse(['success' => false, 'error' => 'Missing parameters']);
 
         $folders = DevToolsGitHubService::get_modules_with_versions($owner, $repo, $branch, $path);
 
         if (!is_array($folders))
-            return new JSONResponse(array('success' => false, 'error' => 'GitHub API error'));
+            return new JSONResponse(['success' => false, 'error' => 'GitHub API error']);
 
         $local  = DevToolsLocalService::get_local_modules();
-        $result = array();
+        $result = [];
 
         foreach ($folders as $folder)
         {
@@ -37,16 +37,16 @@ class DevToolsAjaxFoldersController extends AbstractController
             $installed      = isset($local[$name]) ? $local[$name]['installed'] : false;
             $activated      = isset($local[$name]) ? $local[$name]['activated'] : false;
 
-            $result[] = array(
+            $result[] = [
                 'name'           => $name,
                 'remote_version' => $remote_version,
                 'local_version'  => $local_version,
                 'installed'      => $installed,
                 'activated'      => $activated,
-            );
+            ];
         }
 
-        return new JSONResponse(array('success' => true, 'folders' => $result));
+        return new JSONResponse(['success' => true, 'folders' => $result]);
     }
 }
 ?>

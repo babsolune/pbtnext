@@ -44,10 +44,10 @@ class RecipeFeedProvider implements FeedProvider
 				LEFT JOIN '. RecipeSetup::$recipe_cats_table .' cat ON cat.id = recipe.id_category
 				WHERE recipe.id_category IN :ids_categories
 				AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
-				ORDER BY recipe.update_date DESC', array(
+				ORDER BY recipe.update_date DESC', [
 					'ids_categories' => $ids_categories,
 					'timestamp_now' => $now->get_timestamp()
-			));
+			]);
 
 			foreach ($results as $row)
 			{

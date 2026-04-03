@@ -15,7 +15,7 @@ class MemberUserPMToMailExtendedField extends AbstractMemberExtendedField
 	public function __construct()
 	{
 		parent::__construct();
-		$this->set_disable_fields_configuration(array('field_required', 'regex', 'possible_values', 'default_value'));
+		$this->set_disable_fields_configuration(['field_required', 'regex', 'possible_values', 'default_value']);
 		$this->set_name(LangLoader::get_message('user.field.type.pm.email','user-lang'));
 		$this->field_used_once = true;
 		$this->field_used_phpboost_config = true;
@@ -26,7 +26,7 @@ class MemberUserPMToMailExtendedField extends AbstractMemberExtendedField
 		$fieldset = $member_extended_field->get_fieldset();
 
 		$fieldset->add_field(new FormFieldCheckbox($member_extended_field->get_field_name(), $member_extended_field->get_name(), false,
-			array('description' => $member_extended_field->get_description(), 'required' => (bool)$member_extended_field->get_required())
+			['description' => $member_extended_field->get_description(), 'required' => (bool)$member_extended_field->get_required()]
 		));
 	}
 
@@ -35,7 +35,7 @@ class MemberUserPMToMailExtendedField extends AbstractMemberExtendedField
 		$fieldset = $member_extended_field->get_fieldset();
 
 		$fieldset->add_field(new FormFieldCheckbox($member_extended_field->get_field_name(), $member_extended_field->get_name(), $member_extended_field->get_value(),
-			array('description' => $member_extended_field->get_description(), 'required' => (bool)$member_extended_field->get_required())
+			['description' => $member_extended_field->get_description(), 'required' => (bool)$member_extended_field->get_required()]
 		));
 	}
 

@@ -16,7 +16,7 @@ class ForumScheduledJobs extends AbstractScheduledJobExtensionPoint
 	{
 		//Suppression des marqueurs de vue du forum trop anciens.
 		PersistenceContext::get_querier()->delete(PREFIX . 'forum_view',
-			'WHERE timestamp < :limit', array('limit' => time() - (ForumConfig::load()->get_read_messages_storage_duration() * 3600 * 24)));
+			'WHERE timestamp < :limit', ['limit' => time() - (ForumConfig::load()->get_read_messages_storage_duration() * 3600 * 24)]);
 	}
 }
 ?>

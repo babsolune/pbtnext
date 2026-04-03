@@ -21,12 +21,12 @@ class ForumCategoriesFormController extends DefaultCategoriesFormController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('type', self::$lang['common.type'], $this->get_category()->get_type(),
-			array(
+			[
 				new FormFieldSelectChoiceOption(self::$lang['category.category'], ForumCategory::TYPE_CATEGORY),
 				new FormFieldSelectChoiceOption(self::$lang['forum.module.title'], ForumCategory::TYPE_FORUM),
 				new FormFieldSelectChoiceOption(self::$lang['common.link'], ForumCategory::TYPE_URL)
-			), array(
-				'events' => array('change' => '
+			], [
+				'events' => ['change' => '
 				if (HTMLForms.getField("type").getValue() == ' . ForumCategory::TYPE_CATEGORY . ') {
 					HTMLForms.getField("id_parent").disable();
 					HTMLForms.getField("description").disable();
@@ -54,8 +54,8 @@ class ForumCategoriesFormController extends DefaultCategoriesFormController
 						jQuery("#' . self::class . '_authorizations > div").eq(1).hide();
 						jQuery("#' . self::class . '_authorizations > div").eq(2).hide();
 					}
-				}')
-			)
+				}']
+			]
 		));
 
 		$search_category_children_options = new SearchCategoryChildrensOptions();
@@ -65,66 +65,66 @@ class ForumCategoriesFormController extends DefaultCategoriesFormController
 			$search_category_children_options->add_category_in_excluded_categories($this->get_category()->get_id());
 
 		$fieldset->add_field(self::get_categories_manager()->get_select_categories_form_field('id_parent', self::$lang['form.category'], $this->get_category()->get_id_parent(), $search_category_children_options,
-			array(
+			[
 				'required' => true,
 				'hidden' => $this->get_category()->get_type() == ForumCategory::TYPE_CATEGORY
-			)
+			]
 		));
 
-		$fieldset->add_field(new FormFieldTextEditor('name', self::$lang['form.name'], $this->get_category()->get_name(), array('required' => true)));
+		$fieldset->add_field(new FormFieldTextEditor('name', self::$lang['form.name'], $this->get_category()->get_name(), ['required' => true]));
 
 		$fieldset->add_field(new FormFieldCheckbox('personalize_rewrited_name', self::$lang['form.rewrited.title.personalize'], $this->get_category()->rewrited_name_is_personalized(),
-			array(
-				'events' => array('click' => '
+			[
+				'events' => ['click' => '
 					if (HTMLForms.getField("personalize_rewrited_name").getValue()) {
 						HTMLForms.getField("rewrited_name").enable();
 					} else {
 						HTMLForms.getField("rewrited_name").disable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$fieldset->add_field(new FormFieldTextEditor('rewrited_name', self::$lang['form.rewrited.title'], $this->get_category()->get_rewrited_name(),
-			array(
+			[
 				'description' => self::$lang['form.rewrited.title.clue'],
 				'hidden' => !$this->get_category()->rewrited_name_is_personalized()
-			),
-			array(new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu'))
+			],
+			[new FormFieldConstraintRegex('`^[a-z0-9\-]+$`iu')]
 		));
 
 		$fieldset->add_field(new FormFieldThumbnail('thumbnail', self::$lang['form.thumbnail'], $this->get_category()->get_thumbnail()->relative(), ForumCategory::THUMBNAIL_URL,
-			array(
-				// 'events' => array('click' => '
+			[
+				// 'events' => ['click' => '
 				// 	if (HTMLForms.getField("thumbnail").getValue() == ' . FormFieldThumbnail::NONE . ') {
 				// 		HTMLForms.getField("icon").enable();
 				// 	} else {
 				// 		HTMLForms.getField("icon").disable();
 				// 	}'
-				// )
-			)
+				// ]
+			]
 		));
 
 		$fieldset->add_field(new FormFieldTextEditor('icon', self::$lang['forum.category.icon'], $this->get_category()->get_icon(),
-			array(
+			[
 				'description' => self::$lang['forum.category.icon.clue'],
 				'placeholder' => self::$lang['forum.category.icon.placeholder'],
 				// 'hidden' => !$this->get_category()->get_thumbnail()->relative() == FormFieldThumbnail::NONE
-			)
+			]
 		));
 
 		$fieldset->add_field(new FormFieldColorPicker('color', self::$lang['common.color'], $this->get_category()->get_color()));
 
 		$fieldset->add_field(new FormFieldRichTextEditor('description', self::$lang['form.description'], $this->get_category()->get_description(),
-			array('hidden' => $this->get_category()->get_type() == ForumCategory::TYPE_CATEGORY)
+			['hidden' => $this->get_category()->get_type() == ForumCategory::TYPE_CATEGORY]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('status', self::$lang['forum.category.status.locked'], $this->get_category()->get_status(),
-			array('hidden' => $this->get_category()->get_type() != ForumCategory::TYPE_FORUM)
+			['hidden' => $this->get_category()->get_type() != ForumCategory::TYPE_FORUM]
 		));
 
 		$fieldset->add_field(new FormFieldUrlEditor('url', self::$lang['form.url'], $this->get_category()->get_url(),
-			array('required' => true, 'hidden' => $this->get_category()->get_type() != ForumCategory::TYPE_URL)
+			['required' => true, 'hidden' => $this->get_category()->get_type() != ForumCategory::TYPE_URL]
 		));
 
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations_fieldset', self::$lang['form.authorizations']);
@@ -133,9 +133,9 @@ class ForumCategoriesFormController extends DefaultCategoriesFormController
 		$root_auth = self::get_categories_manager()->get_categories_cache()->get_category(Category::ROOT_CATEGORY)->get_authorizations();
 
 		$fieldset_authorizations->add_field(new FormFieldCheckbox('special_authorizations', self::$lang['form.authorizations'], !$this->get_category()->auth_is_equals($root_auth),
-			array(
+			[
 				'description' => self::$lang['category.form.authorizations.clue'],
-				'events' => array('click' => '
+				'events' => ['click' => '
 					if (HTMLForms.getField("special_authorizations").getValue()) {
 						jQuery("#' . self::class . '_authorizations").show();
 						if (HTMLForms.getField("type").getValue() == ' . ForumCategory::TYPE_CATEGORY . ' || HTMLForms.getField("type").getValue() == ' . ForumCategory::TYPE_URL . ') {
@@ -145,8 +145,8 @@ class ForumCategoriesFormController extends DefaultCategoriesFormController
 					} else {
 						jQuery("#' . self::class . '_authorizations").hide();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		// Autorisations cachées à l'édition Si le type est catégorie ou url
@@ -164,7 +164,7 @@ class ForumCategoriesFormController extends DefaultCategoriesFormController
 		));
 
 		$auth_settings = new AuthorizationsSettings($this->get_authorizations_settings());
-		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings, array('hidden' => $this->get_category()->auth_is_equals($root_auth)));
+		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings, ['hidden' => $this->get_category()->auth_is_equals($root_auth)]);
 		$auth_settings->build_from_auth_array($this->get_category()->get_authorizations());
 		$fieldset_authorizations->add_field($auth_setter);
 
@@ -221,7 +221,7 @@ class ForumCategoriesFormController extends DefaultCategoriesFormController
 		else
 		{
 			$this->get_category()->set_special_authorizations(false);
-			$autorizations = array();
+			$autorizations = [];
 		}
 
 		$this->get_category()->set_authorizations($autorizations);

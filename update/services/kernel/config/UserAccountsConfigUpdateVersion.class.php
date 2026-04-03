@@ -20,7 +20,7 @@ class UserAccountsConfigUpdateVersion extends ConfigUpdateVersion
         $old_config = $this->get_old_config();
 
         $config = UserAccountsConfig::load();
-        $config->set_default_avatar_name($old_config->is_default_avatar_enabled() ? (in_array($old_config->get_default_avatar_name(), array('no_avatar.png', FormFieldThumbnail::DEFAULT_VALUE)) ? FormFieldThumbnail::DEFAULT_VALUE : Url::to_rel('/templates/' . AppContext::get_current_user()->get_theme() . '/images/' . $old_config->get_default_avatar_name())) : '');
+        $config->set_default_avatar_name($old_config->is_default_avatar_enabled() ? (in_array($old_config->get_default_avatar_name(), ['no_avatar.png', FormFieldThumbnail::DEFAULT_VALUE]) ? FormFieldThumbnail::DEFAULT_VALUE : Url::to_rel('/templates/' . AppContext::get_current_user()->get_theme() . '/images/' . $old_config->get_default_avatar_name())) : '');
         $this->save_new_config('kernel-user-accounts', $config);
 
         return true;

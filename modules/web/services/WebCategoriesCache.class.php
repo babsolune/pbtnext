@@ -18,10 +18,10 @@ class WebCategoriesCache extends DefaultRichCategoriesCache
 	{
 		$now = new Date();
 		return WebService::count('WHERE id_category = :id_category AND (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))',
-			array(
+			[
 				'timestamp_now' => $now->get_timestamp(),
 				'id_category' => $id_category
-			)
+			]
 		);
 	}
 
@@ -34,7 +34,7 @@ class WebCategoriesCache extends DefaultRichCategoriesCache
 	{
 		$description = WebConfig::load()->get_root_category_description();
 		if (empty($description))
-			$description = StringVars::replace_vars(LangLoader::get_message('web.seo.description.root', 'common', 'web'), array('site' => GeneralConfig::load()->get_site_name()));
+			$description = StringVars::replace_vars(LangLoader::get_message('web.seo.description.root', 'common', 'web'), ['site' => GeneralConfig::load()->get_site_name()]);
 		return $description;
 	}
 }

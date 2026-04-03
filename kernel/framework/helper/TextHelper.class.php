@@ -116,7 +116,7 @@ class TextHelper
 	public static function to_js_string($string, $add_quotes = true)
 	{
 		$bounds = $add_quotes ? '\'' : '';
-		return $bounds . ($string ? str_replace(array("\r\n", "\r", "\n", '"', '\\\\\''), array('\n', '\n', '\n', '&quot;', '\\\''), addcslashes($string, '\'')) : '') . $bounds;
+		return $bounds . ($string ? str_replace(["\r\n", "\r", "\n", '"', '\\\\\''], ['\n', '\n', '\n', '&quot;', '\\\''], addcslashes($string, '\'')) : '') . $bounds;
 	}
 
 	/**
@@ -128,7 +128,7 @@ class TextHelper
 	public static function to_json_string($string, $add_quotes = true)
 	{
 		$bounds = $add_quotes ? '"' : '';
-		return $bounds . ($string ? str_replace(array("\r\n", "\r", "\n",), array('\n', '\n', '\n',), addcslashes($string, '"')) : '') . $bounds;
+		return $bounds . ($string ? str_replace(["\r\n", "\r", "\n",], ['\n', '\n', '\n',], addcslashes($string, '"')) : '') . $bounds;
 	}
 
 	public static function htmlspecialchars($string, $flags = null, $encoding = 'UTF-8', $double_encode = true)
@@ -434,7 +434,7 @@ class TextHelper
 	 */
 	public static function utf8_wordwrap($string, $width = 75, $break = "\n", $cut = true)
 	{
-		$lines = array();
+		$lines = [];
 		while (!empty($string))
 		{
 			// We got a line with a break in it somewhere before the end

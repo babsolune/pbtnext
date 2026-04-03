@@ -30,7 +30,7 @@ class MediaCommentsTopic extends CommentsTopic
 
 	private function get_id_category()
 	{
-		return PersistenceContext::get_querier()->get_column_value(MediaSetup::$media_table, 'id_category', 'WHERE id = :id', array('id' => $this->get_id_in_module()));
+		return PersistenceContext::get_querier()->get_column_value(MediaSetup::$media_table, 'id_category', 'WHERE id = :id', ['id' => $this->get_id_in_module()]);
 	}
 }
 ?>

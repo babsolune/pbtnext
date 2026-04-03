@@ -15,7 +15,7 @@ class FormFieldSelectSources extends AbstractFormField
 {
 	private $max_input = 20;
 
-	public function __construct($id, $label, array $value = array(), array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, array $value = [], array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 	}
@@ -27,45 +27,45 @@ class FormFieldSelectSources extends AbstractFormField
 		$view = new FileTemplate('framework/builder/form/fieldelements/FormFieldSelectSources.tpl');
 		$view->add_lang(LangLoader::get_all_langs());
 
-		$view->put_all(array(
+		$view->put_all([
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->is_disabled()
-		));
+		]);
 
 		$this->assign_common_template_variables($template);
 
 		$i = 0;
 		foreach ($this->get_value() as $name => $value)
 		{
-			$view->assign_block_vars('fieldelements', array(
+			$view->assign_block_vars('fieldelements', [
 				'ID' => $i,
 				'VALUE' => $value,
 				'NAME' => $name
-			));
+			]);
 			$i++;
 		}
 
 		if ($i == 0)
 		{
-			$view->assign_block_vars('fieldelements', array(
+			$view->assign_block_vars('fieldelements', [
 				'ID' => $i,
 				'VALUE' => '',
 				'NAME' => ''
-			));
+			]);
 		}
 
-		$view->put_all(array(
+		$view->put_all([
 			'NAME' => $this->get_html_id(),
 			'ID' => $this->get_html_id(),
 			'C_DISABLED' => $this->is_disabled(),
 			'MAX_INPUT' => $this->max_input,
 			'NBR_FIELDS' => $i == 0 ? 1 : $i,
-		));
+		]);
 
-		$template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $view->render()
-		));
+		]);
 
 		return $template;
 	}
@@ -74,7 +74,7 @@ class FormFieldSelectSources extends AbstractFormField
 	{
 		$request = AppContext::get_request();
 
-		$values = array();
+		$values = [];
 		for ($i = 0; $i < $this->max_input; $i++)
 		{
 			$field_name_id = 'field_name_' . $this->get_html_id() . '_' . $i;

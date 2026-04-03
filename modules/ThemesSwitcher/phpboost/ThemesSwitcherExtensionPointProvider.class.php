@@ -17,9 +17,9 @@ class ThemesSwitcherExtensionPointProvider extends ExtensionPointProvider
 
 	public function menus()
 	{
-		return new ModuleMenus(array(
+		return new ModuleMenus([
 			new ThemesSwitcherModuleMiniMenu()
-		));
+		]);
 	}
 
 	public function css_files()

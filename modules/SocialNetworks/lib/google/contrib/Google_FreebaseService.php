@@ -35,10 +35,10 @@
      * @opt_param string format Sanitizing transformation.
      * @return Google_ContentserviceGet
      */
-    public function get($id, $optParams = array()) {
-      $params = array('id' => $id);
+    public function get($id, $optParams = []) {
+      $params = ['id' => $id];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_ContentserviceGet($data);
       } else {

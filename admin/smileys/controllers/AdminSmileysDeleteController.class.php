@@ -13,7 +13,7 @@ class AdminSmileysDeleteController extends AdminController
 	{
 		$id = $request->get_getint('id', 0);
 
-		PersistenceContext::get_querier()->delete(DB_TABLE_SMILEYS, 'WHERE idsmiley = :id', array('id' => $id));
+		PersistenceContext::get_querier()->delete(DB_TABLE_SMILEYS, 'WHERE idsmiley = :id', ['id' => $id]);
 
 		###### Régénération du cache des smileys #######
 		SmileysCache::invalidate();

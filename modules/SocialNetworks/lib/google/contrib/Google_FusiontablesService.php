@@ -33,10 +33,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Column
      */
-    public function insert($tableId, Google_Column $postBody, $optParams = array()) {
-      $params = array('tableId' => $tableId, 'postBody' => $postBody);
+    public function insert($tableId, Google_Column $postBody, $optParams = []) {
+      $params = ['tableId' => $tableId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_Column($data);
       } else {
@@ -51,10 +51,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Column
      */
-    public function get($tableId, $columnId, $optParams = array()) {
-      $params = array('tableId' => $tableId, 'columnId' => $columnId);
+    public function get($tableId, $columnId, $optParams = []) {
+      $params = ['tableId' => $tableId, 'columnId' => $columnId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Column($data);
       } else {
@@ -71,10 +71,10 @@
      * @opt_param string maxResults Maximum number of columns to return. Optional. Default is 5.
      * @return Google_ColumnList
      */
-    public function listColumn($tableId, $optParams = array()) {
-      $params = array('tableId' => $tableId);
+    public function listColumn($tableId, $optParams = []) {
+      $params = ['tableId' => $tableId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_ColumnList($data);
       } else {
@@ -90,10 +90,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Column
      */
-    public function update($tableId, $columnId, Google_Column $postBody, $optParams = array()) {
-      $params = array('tableId' => $tableId, 'columnId' => $columnId, 'postBody' => $postBody);
+    public function update($tableId, $columnId, Google_Column $postBody, $optParams = []) {
+      $params = ['tableId' => $tableId, 'columnId' => $columnId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('update', array($params));
+      $data = $this->__call('update', [$params]);
       if ($this->useObjects()) {
         return new Google_Column($data);
       } else {
@@ -110,10 +110,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Column
      */
-    public function patch($tableId, $columnId, Google_Column $postBody, $optParams = array()) {
-      $params = array('tableId' => $tableId, 'columnId' => $columnId, 'postBody' => $postBody);
+    public function patch($tableId, $columnId, Google_Column $postBody, $optParams = []) {
+      $params = ['tableId' => $tableId, 'columnId' => $columnId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('patch', array($params));
+      $data = $this->__call('patch', [$params]);
       if ($this->useObjects()) {
         return new Google_Column($data);
       } else {
@@ -127,10 +127,10 @@
      * @param string $columnId Name or identifier for the column being deleted.
      * @param array $optParams Optional parameters.
      */
-    public function delete($tableId, $columnId, $optParams = array()) {
-      $params = array('tableId' => $tableId, 'columnId' => $columnId);
+    public function delete($tableId, $columnId, $optParams = []) {
+      $params = ['tableId' => $tableId, 'columnId' => $columnId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       return $data;
     }
   }
@@ -156,10 +156,10 @@
      * @opt_param bool hdrs Should column names be included (in the first row)?. Default is true.
      * @return Google_Sqlresponse
      */
-    public function sqlGet($sql, $optParams = array()) {
-      $params = array('sql' => $sql);
+    public function sqlGet($sql, $optParams = []) {
+      $params = ['sql' => $sql];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('sqlGet', array($params));
+      $data = $this->__call('sqlGet', [$params]);
       if ($this->useObjects()) {
         return new Google_Sqlresponse($data);
       } else {
@@ -176,10 +176,10 @@
      * @opt_param bool hdrs Should column names be included (in the first row)?. Default is true.
      * @return Google_Sqlresponse
      */
-    public function sql($sql, $optParams = array()) {
-      $params = array('sql' => $sql);
+    public function sql($sql, $optParams = []) {
+      $params = ['sql' => $sql];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('sql', array($params));
+      $data = $this->__call('sql', [$params]);
       if ($this->useObjects()) {
         return new Google_Sqlresponse($data);
       } else {
@@ -207,10 +207,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_StyleSetting
      */
-    public function insert($tableId, Google_StyleSetting $postBody, $optParams = array()) {
-      $params = array('tableId' => $tableId, 'postBody' => $postBody);
+    public function insert($tableId, Google_StyleSetting $postBody, $optParams = []) {
+      $params = ['tableId' => $tableId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_StyleSetting($data);
       } else {
@@ -225,10 +225,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_StyleSetting
      */
-    public function get($tableId, $styleId, $optParams = array()) {
-      $params = array('tableId' => $tableId, 'styleId' => $styleId);
+    public function get($tableId, $styleId, $optParams = []) {
+      $params = ['tableId' => $tableId, 'styleId' => $styleId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_StyleSetting($data);
       } else {
@@ -245,10 +245,10 @@
      * @opt_param string maxResults Maximum number of styles to return. Optional. Default is 5.
      * @return Google_StyleSettingList
      */
-    public function listStyle($tableId, $optParams = array()) {
-      $params = array('tableId' => $tableId);
+    public function listStyle($tableId, $optParams = []) {
+      $params = ['tableId' => $tableId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_StyleSettingList($data);
       } else {
@@ -264,10 +264,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_StyleSetting
      */
-    public function update($tableId, $styleId, Google_StyleSetting $postBody, $optParams = array()) {
-      $params = array('tableId' => $tableId, 'styleId' => $styleId, 'postBody' => $postBody);
+    public function update($tableId, $styleId, Google_StyleSetting $postBody, $optParams = []) {
+      $params = ['tableId' => $tableId, 'styleId' => $styleId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('update', array($params));
+      $data = $this->__call('update', [$params]);
       if ($this->useObjects()) {
         return new Google_StyleSetting($data);
       } else {
@@ -283,10 +283,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_StyleSetting
      */
-    public function patch($tableId, $styleId, Google_StyleSetting $postBody, $optParams = array()) {
-      $params = array('tableId' => $tableId, 'styleId' => $styleId, 'postBody' => $postBody);
+    public function patch($tableId, $styleId, Google_StyleSetting $postBody, $optParams = []) {
+      $params = ['tableId' => $tableId, 'styleId' => $styleId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('patch', array($params));
+      $data = $this->__call('patch', [$params]);
       if ($this->useObjects()) {
         return new Google_StyleSetting($data);
       } else {
@@ -300,10 +300,10 @@
      * @param int $styleId Identifier (within a table) for the style being deleted
      * @param array $optParams Optional parameters.
      */
-    public function delete($tableId, $styleId, $optParams = array()) {
-      $params = array('tableId' => $tableId, 'styleId' => $styleId);
+    public function delete($tableId, $styleId, $optParams = []) {
+      $params = ['tableId' => $tableId, 'styleId' => $styleId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       return $data;
     }
   }
@@ -327,10 +327,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Template
      */
-    public function insert($tableId, Google_Template $postBody, $optParams = array()) {
-      $params = array('tableId' => $tableId, 'postBody' => $postBody);
+    public function insert($tableId, Google_Template $postBody, $optParams = []) {
+      $params = ['tableId' => $tableId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_Template($data);
       } else {
@@ -345,10 +345,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Template
      */
-    public function get($tableId, $templateId, $optParams = array()) {
-      $params = array('tableId' => $tableId, 'templateId' => $templateId);
+    public function get($tableId, $templateId, $optParams = []) {
+      $params = ['tableId' => $tableId, 'templateId' => $templateId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Template($data);
       } else {
@@ -365,10 +365,10 @@
      * @opt_param string maxResults Maximum number of templates to return. Optional. Default is 5.
      * @return Google_TemplateList
      */
-    public function listTemplate($tableId, $optParams = array()) {
-      $params = array('tableId' => $tableId);
+    public function listTemplate($tableId, $optParams = []) {
+      $params = ['tableId' => $tableId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_TemplateList($data);
       } else {
@@ -384,10 +384,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Template
      */
-    public function update($tableId, $templateId, Google_Template $postBody, $optParams = array()) {
-      $params = array('tableId' => $tableId, 'templateId' => $templateId, 'postBody' => $postBody);
+    public function update($tableId, $templateId, Google_Template $postBody, $optParams = []) {
+      $params = ['tableId' => $tableId, 'templateId' => $templateId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('update', array($params));
+      $data = $this->__call('update', [$params]);
       if ($this->useObjects()) {
         return new Google_Template($data);
       } else {
@@ -403,10 +403,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Template
      */
-    public function patch($tableId, $templateId, Google_Template $postBody, $optParams = array()) {
-      $params = array('tableId' => $tableId, 'templateId' => $templateId, 'postBody' => $postBody);
+    public function patch($tableId, $templateId, Google_Template $postBody, $optParams = []) {
+      $params = ['tableId' => $tableId, 'templateId' => $templateId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('patch', array($params));
+      $data = $this->__call('patch', [$params]);
       if ($this->useObjects()) {
         return new Google_Template($data);
       } else {
@@ -420,10 +420,10 @@
      * @param int $templateId Identifier for the template which is being deleted
      * @param array $optParams Optional parameters.
      */
-    public function delete($tableId, $templateId, $optParams = array()) {
-      $params = array('tableId' => $tableId, 'templateId' => $templateId);
+    public function delete($tableId, $templateId, $optParams = []) {
+      $params = ['tableId' => $tableId, 'templateId' => $templateId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       return $data;
     }
   }
@@ -446,10 +446,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Table
      */
-    public function insert(Google_Table $postBody, $optParams = array()) {
-      $params = array('postBody' => $postBody);
+    public function insert(Google_Table $postBody, $optParams = []) {
+      $params = ['postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_Table($data);
       } else {
@@ -463,10 +463,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Table
      */
-    public function get($tableId, $optParams = array()) {
-      $params = array('tableId' => $tableId);
+    public function get($tableId, $optParams = []) {
+      $params = ['tableId' => $tableId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Table($data);
       } else {
@@ -482,10 +482,10 @@
      * @opt_param string maxResults Maximum number of styles to return. Optional. Default is 5.
      * @return Google_TableList
      */
-    public function listTable($optParams = array()) {
-      $params = array();
+    public function listTable($optParams = []) {
+      $params = [];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_TableList($data);
       } else {
@@ -503,10 +503,10 @@
      * @opt_param bool replaceViewDefinition Should the view definition also be updated? The specified view definition replaces the existing one. Only a view can be updated with a new definition.
      * @return Google_Table
      */
-    public function update($tableId, Google_Table $postBody, $optParams = array()) {
-      $params = array('tableId' => $tableId, 'postBody' => $postBody);
+    public function update($tableId, Google_Table $postBody, $optParams = []) {
+      $params = ['tableId' => $tableId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('update', array($params));
+      $data = $this->__call('update', [$params]);
       if ($this->useObjects()) {
         return new Google_Table($data);
       } else {
@@ -524,10 +524,10 @@
      * @opt_param bool replaceViewDefinition Should the view definition also be updated? The specified view definition replaces the existing one. Only a view can be updated with a new definition.
      * @return Google_Table
      */
-    public function patch($tableId, Google_Table $postBody, $optParams = array()) {
-      $params = array('tableId' => $tableId, 'postBody' => $postBody);
+    public function patch($tableId, Google_Table $postBody, $optParams = []) {
+      $params = ['tableId' => $tableId, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('patch', array($params));
+      $data = $this->__call('patch', [$params]);
       if ($this->useObjects()) {
         return new Google_Table($data);
       } else {
@@ -540,10 +540,10 @@
      * @param string $tableId Id of the table that is being deleted.
      * @param array $optParams Optional parameters.
      */
-    public function delete($tableId, $optParams = array()) {
-      $params = array('tableId' => $tableId);
+    public function delete($tableId, $optParams = []) {
+      $params = ['tableId' => $tableId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       return $data;
     }
   }
@@ -703,7 +703,7 @@ class Google_ColumnList extends Google_Model {
   public function getNextPageToken() {
     return $this->nextPageToken;
   }
-  public function setItems(/* array(Google_Column) */ $items) {
+  public function setItems(/* [Google_Column] */ $items) {
     $this->assertIsArray($items, 'Google_Column', __METHOD__);
     $this->items = $items;
   }
@@ -740,7 +740,7 @@ class Google_Geometry extends Google_Model {
   public function getType() {
     return $this->type;
   }
-  public function setGeometries(/* array(Google_object) */ $geometries) {
+  public function setGeometries(/* [Google_object] */ $geometries) {
     $this->assertIsArray($geometries, 'Google_object', __METHOD__);
     $this->geometries = $geometries;
   }
@@ -758,7 +758,7 @@ class Google_Line extends Google_Model {
   public function getType() {
     return $this->type;
   }
-  public function setCoordinates(/* array(Google_double) */ $coordinates) {
+  public function setCoordinates(/* [Google_double] */ $coordinates) {
     $this->assertIsArray($coordinates, 'Google_double', __METHOD__);
     $this->coordinates = $coordinates;
   }
@@ -818,7 +818,7 @@ class Google_Point extends Google_Model {
   public function getType() {
     return $this->type;
   }
-  public function setCoordinates(/* array(Google_double) */ $coordinates) {
+  public function setCoordinates(/* [Google_double] */ $coordinates) {
     $this->assertIsArray($coordinates, 'Google_double', __METHOD__);
     $this->coordinates = $coordinates;
   }
@@ -855,7 +855,7 @@ class Google_Polygon extends Google_Model {
   public function getType() {
     return $this->type;
   }
-  public function setCoordinates(/* array(Google_double) */ $coordinates) {
+  public function setCoordinates(/* [Google_double] */ $coordinates) {
     $this->assertIsArray($coordinates, 'Google_double', __METHOD__);
     $this->coordinates = $coordinates;
   }
@@ -939,14 +939,14 @@ class Google_Sqlresponse extends Google_Model {
   public function getKind() {
     return $this->kind;
   }
-  public function setRows(/* array(Google_object) */ $rows) {
+  public function setRows(/* [Google_object] */ $rows) {
     $this->assertIsArray($rows, 'Google_object', __METHOD__);
     $this->rows = $rows;
   }
   public function getRows() {
     return $this->rows;
   }
-  public function setColumns(/* array(Google_string) */ $columns) {
+  public function setColumns(/* [Google_string] */ $columns) {
     $this->assertIsArray($columns, 'Google_string', __METHOD__);
     $this->columns = $columns;
   }
@@ -976,7 +976,7 @@ class Google_StyleFunction extends Google_Model {
   public function getColumnName() {
     return $this->columnName;
   }
-  public function setBuckets(/* array(Google_Bucket) */ $buckets) {
+  public function setBuckets(/* [Google_Bucket] */ $buckets) {
     $this->assertIsArray($buckets, 'Google_Bucket', __METHOD__);
     $this->buckets = $buckets;
   }
@@ -1003,7 +1003,7 @@ class Google_StyleFunctionGradient extends Google_Model {
   public function getMax() {
     return $this->max;
   }
-  public function setColors(/* array(Google_StyleFunctionGradientColors) */ $colors) {
+  public function setColors(/* [Google_StyleFunctionGradientColors] */ $colors) {
     $this->assertIsArray($colors, 'Google_StyleFunctionGradientColors', __METHOD__);
     $this->colors = $colors;
   }
@@ -1113,7 +1113,7 @@ class Google_StyleSettingList extends Google_Model {
   public function getNextPageToken() {
     return $this->nextPageToken;
   }
-  public function setItems(/* array(Google_StyleSetting) */ $items) {
+  public function setItems(/* [Google_StyleSetting] */ $items) {
     $this->assertIsArray($items, 'Google_StyleSetting', __METHOD__);
     $this->items = $items;
   }
@@ -1171,7 +1171,7 @@ class Google_Table extends Google_Model {
   public function getIsExportable() {
     return $this->isExportable;
   }
-  public function setBaseTableIds(/* array(Google_string) */ $baseTableIds) {
+  public function setBaseTableIds(/* [Google_string] */ $baseTableIds) {
     $this->assertIsArray($baseTableIds, 'Google_string', __METHOD__);
     $this->baseTableIds = $baseTableIds;
   }
@@ -1196,7 +1196,7 @@ class Google_Table extends Google_Model {
   public function getTableId() {
     return $this->tableId;
   }
-  public function setColumns(/* array(Google_Column) */ $columns) {
+  public function setColumns(/* [Google_Column] */ $columns) {
     $this->assertIsArray($columns, 'Google_Column', __METHOD__);
     $this->columns = $columns;
   }
@@ -1223,7 +1223,7 @@ class Google_TableList extends Google_Model {
   public function getNextPageToken() {
     return $this->nextPageToken;
   }
-  public function setItems(/* array(Google_Table) */ $items) {
+  public function setItems(/* [Google_Table] */ $items) {
     $this->assertIsArray($items, 'Google_Table', __METHOD__);
     $this->items = $items;
   }
@@ -1264,7 +1264,7 @@ class Google_Template extends Google_Model {
   public function getName() {
     return $this->name;
   }
-  public function setAutomaticColumnNames(/* array(Google_string) */ $automaticColumnNames) {
+  public function setAutomaticColumnNames(/* [Google_string] */ $automaticColumnNames) {
     $this->assertIsArray($automaticColumnNames, 'Google_string', __METHOD__);
     $this->automaticColumnNames = $automaticColumnNames;
   }
@@ -1304,7 +1304,7 @@ class Google_TemplateList extends Google_Model {
   public function getNextPageToken() {
     return $this->nextPageToken;
   }
-  public function setItems(/* array(Google_Template) */ $items) {
+  public function setItems(/* [Google_Template] */ $items) {
     $this->assertIsArray($items, 'Google_Template', __METHOD__);
     $this->items = $items;
   }

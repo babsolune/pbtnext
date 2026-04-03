@@ -36,7 +36,7 @@ class TeamSpeak3_Helper_Profiler
    *
    * @var array
    */
-  protected static $timers = array();
+  protected static $timers = [];
 
   /**
    * Inits a timer.

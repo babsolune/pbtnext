@@ -53,10 +53,10 @@ abstract class DefaultModuleController extends ModuleController
 
 		$this->view->add_lang($this->lang);
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'MODULE_ID'   => self::get_module()->get_id(),
 			'MODULE_NAME' => self::get_module_configuration()->get_name()
-		));
+		]);
 	}
 
 	protected function init_lang()

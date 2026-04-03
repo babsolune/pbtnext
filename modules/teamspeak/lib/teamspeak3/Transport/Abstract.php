@@ -91,7 +91,7 @@ abstract class TeamSpeak3_Transport_Abstract
    */
   public function __sleep()
   {
-    return array("config");
+    return ["config"];
   }
 
   /**
@@ -210,7 +210,7 @@ abstract class TeamSpeak3_Transport_Abstract
     {
       $string = TeamSpeak3_Helper_String::factory(get_class($this->adapter));
 
-      return $string->substr($string->findLast("_"))->replace(array("_", " "), "")->toString();
+      return $string->substr($string->findLast("_"))->replace(["_", " "], "")->toString();
     }
 
     return "Unknown";
@@ -254,7 +254,7 @@ abstract class TeamSpeak3_Transport_Abstract
     if(!$this->isConnected() || $this->config["blocking"]) return;
 
     do {
-      $read = array($this->stream);
+      $read = [$this->stream];
       $null = null;
 
       if($time)

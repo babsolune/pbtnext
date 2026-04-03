@@ -26,7 +26,7 @@ class ContactAjaxDeleteFieldController extends AbstractController
 				if ($field->is_deletable())
 				{
 					unset($fields[$id]);
-					$new_fields_list = array();
+					$new_fields_list = [];
 
 					$position = 1;
 					foreach ($fields as $key => $f)
@@ -43,7 +43,7 @@ class ContactAjaxDeleteFieldController extends AbstractController
 			}
 		}
 
-		return new JSONResponse(array('code' => $code));
+		return new JSONResponse(['code' => $code]);
 	}
 }
 ?>

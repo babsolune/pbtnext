@@ -17,9 +17,9 @@ class LangsSwitcherExtensionPointProvider extends ExtensionPointProvider
 
 	public function menus()
 	{
-		return new ModuleMenus(array(
+		return new ModuleMenus([
 			new LangsSwitcherModuleMiniMenu()
-		));
+		]);
 	}
 
 	public function css_files()

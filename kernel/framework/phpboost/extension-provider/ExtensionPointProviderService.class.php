@@ -22,7 +22,7 @@ class ExtensionPointProviderService
 	 * @var RAMDataStore
 	 */
 	private $loaded_providers;
-	private $available_providers_ids = array();
+	private $available_providers_ids = [];
 
 	/**
 	 * Builds a new ExtensionPointProvider factory
@@ -70,7 +70,7 @@ class ExtensionPointProviderService
 		{  
 			$authorized_providers_ids = $this->available_providers_ids;
 		}
-        $providers = array();
+        $providers = [];
 		foreach ($authorized_providers_ids as $extension_provider_id)
 		{
 			$provider = $this->get_provider($extension_provider_id);
@@ -184,7 +184,7 @@ class ExtensionPointProviderService
 				if ($module_config_file->exists())
 				{
 					$config = parse_ini_file($module_config_file->get_path());
-					$features = !empty($config['features']) ? explode(',', preg_replace('/\s/', '', $config['features'])) : array();
+					$features = !empty($config['features']) ? explode(',', preg_replace('/\s/', '', $config['features'])) : [];
 					$items_feature = in_array('items', array_map('trim', $features), true) || in_array('rich_items', array_map('trim', $features), true);
 				}
 				

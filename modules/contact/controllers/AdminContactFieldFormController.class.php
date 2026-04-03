@@ -29,9 +29,9 @@ class AdminContactFieldFormController extends DefaultAdminModuleController
 		{
 			$this->save();
 			if ($this->is_new_field)
-				AppContext::get_response()->redirect(ContactUrlBuilder::manage_fields(), StringVars::replace_vars($this->lang['contact.message.success.add'], array('name' => $this->get_field()->get_name())));
+				AppContext::get_response()->redirect(ContactUrlBuilder::manage_fields(), StringVars::replace_vars($this->lang['contact.message.success.add'], ['name' => $this->get_field()->get_name()]));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ContactUrlBuilder::manage_fields()), StringVars::replace_vars($this->lang['contact.message.success.edit'], array('name' => $this->get_field()->get_name())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : ContactUrlBuilder::manage_fields()), StringVars::replace_vars($this->lang['contact.message.success.edit'], ['name' => $this->get_field()->get_name()]));
 		}
 
 		$this->view->put('CONTENT', $this->form->display());
@@ -60,91 +60,91 @@ class AdminContactFieldFormController extends DefaultAdminModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('name', $this->lang['form.name'], $field->get_name(),
-			array('class' => 'top-field', 'required' => true),
-			array(new ContactConstraintFieldExist($this->id))
+			['class' => 'top-field', 'required' => true],
+			[new ContactConstraintFieldExist($this->id)]
 		));
 
 		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('description', $this->lang['form.description'], $field->get_description(),
-			array('class' => 'top-field', 'rows' => 4, 'cols' => 47)
+			['class' => 'top-field', 'rows' => 4, 'cols' => 47]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('field_required', $this->lang['form.required.field'], (int)$field->is_required(),
-			array(
+			[
 				'class' => 'top-field custom-checkbox',
 				'disabled' => $field->is_readonly()
-			)
+			]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('display', $this->lang['form.display'], (int)$field->is_displayed(),
-			array(
+			[
 				'class' => 'top-field custom-checkbox',
 				'disabled' => $field->is_readonly()
-			)
+			]
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('field_type', $this->lang['form.field.type'], $field->get_field_type(),
 			$this->get_array_select_type($field->get_field_name()),
-			array('class' => 'top-field', 'disabled' => $field->is_readonly(), 'events' => array('change' => $this->get_events_select_type()))
+			['class' => 'top-field', 'disabled' => $field->is_readonly(), 'events' => ['change' => $this->get_events_select_type()]]
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('regex_type', $this->lang['form.regex'], $regex_type,
 			$this->get_array_select_regex(),
-			array(
+			[
 				'disabled' => $field->is_readonly(),
 				'description' => $this->lang['form.regex.clue'],
-				'events' => array('change' => '
+				'events' => ['change' => '
 					if (HTMLForms.getField("regex_type").getValue() == 6) {
 						HTMLForms.getField("regex").enable();
 						jQuery("#' . self::class . '_regex").focus();
 					} else {
 						HTMLForms.getField("regex").disable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$fieldset->add_field(new FormFieldTextEditor('regex', $this->lang['form.personnal.regex'], $regex,
-			array('class' => 'top-field', 'hidden' => $field->is_readonly())
+			['class' => 'top-field', 'hidden' => $field->is_readonly()]
 		));
 
 		if ($field->get_field_name() == 'f_recipients')
 		{
 			$fieldset->add_field(new ContactFormFieldRecipientsPossibleValues('possible_values', $this->lang['form.possible.values'], $field->get_possible_values(),
-				array(
+				[
 					'class' => 'top-field half-field',
 					'description' => $this->lang['contact.possible.values.email.clue']
-				)
+				]
 			));
 		}
 		else if ($field->get_field_name() == 'f_subject')
 		{
 			$fieldset->add_field(new ContactFormFieldObjectPossibleValues('possible_values', $this->lang['form.possible.values'], $field->get_possible_values(),
-				array(
+				[
 					'class' => 'top-field half-field',
 					'description' => $this->lang['contact.possible.values.recipient.clue']
-				)
+				]
 			));
 		}
 		else
 		{
 			$fieldset->add_field(new FormFieldPossibleValues('possible_values', $this->lang['form.possible.values'], $field->get_possible_values(),
-				array('class' => 'half-field', 'hidden' => $field->is_readonly())
+				['class' => 'half-field', 'hidden' => $field->is_readonly()]
 			));
 		}
 
 		$fieldset->add_field(new FormFieldTextEditor('default_value_small', $this->lang['form.default.value'], $field->get_default_value(),
-			array('class' => 'top-field', 'disabled' => $field->is_readonly()
-		)));
+			['class' => 'top-field', 'disabled' => $field->is_readonly()
+		]));
 
 		$fieldset->add_field(new FormFieldShortMultiLineTextEditor('default_value_medium', $this->lang['form.default.value'], $field->get_default_value(),
-			array('rows' => 4, 'cols' => 47, 'hidden' => $field->is_readonly())
+			['rows' => 4, 'cols' => 47, 'hidden' => $field->is_readonly()]
 		));
 
-		$auth_settings = new AuthorizationsSettings(array(
+		$auth_settings = new AuthorizationsSettings([
 			new ActionAuthorization($this->lang['contact.authorizations.display.field'], ContactField::DISPLAY_FIELD_AUTHORIZATION)
-		));
+		]);
 		$auth_settings->build_from_auth_array($field->get_authorization());
-		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings, array('hidden' => $field->is_readonly()));
+		$auth_setter = new FormFieldAuthorizationsSetter('authorizations', $auth_settings, ['hidden' => $field->is_readonly()]);
 		$fieldset->add_field($auth_setter);
 
 		$fieldset->add_field(new FormFieldHidden('referrer', $request->get_url_referrer()));
@@ -238,7 +238,7 @@ class AdminContactFieldFormController extends DefaultAdminModuleController
 
 	private function get_array_select_type($field_name)
 	{
-		$types = array();
+		$types = [];
 
 		foreach ($this->get_fields_class_name($field_name) as $field_type)
 		{
@@ -249,7 +249,7 @@ class AdminContactFieldFormController extends DefaultAdminModuleController
 
 	private function get_array_select_regex()
 	{
-		return array(
+		return [
 			new FormFieldSelectChoiceOption('--', 0),
 			new FormFieldSelectChoiceOption($this->lang['form.figures'], 1),
 			new FormFieldSelectChoiceOption($this->lang['form.letters'], 2),
@@ -259,7 +259,7 @@ class AdminContactFieldFormController extends DefaultAdminModuleController
 			new FormFieldSelectChoiceOption($this->lang['form.website'], 5),
 			new FormFieldSelectChoiceOption($this->lang['form.phone.number'], 8),
 			new FormFieldSelectChoiceOption($this->lang['form.personnal.regex'], 6),
-		);
+		];
 	}
 
 	private function get_events_select_type()
@@ -297,14 +297,14 @@ class AdminContactFieldFormController extends DefaultAdminModuleController
 
 	private function get_disable_fields()
 	{
-		$disable_field = array(
-			'name' => array(),
-			'description' => array(),
-			'regex' => array(),
-			'possible_values' => array(),
-			'default_value_small' => array(),
-			'default_value_medium' => array(),
-		);
+		$disable_field = [
+			'name' => [],
+			'description' => [],
+			'regex' => [],
+			'possible_values' => [],
+			'default_value_small' => [],
+			'default_value_medium' => [],
+		];
 
 		foreach ($this->get_fields_class_name() as $field_type)
 		{
@@ -325,24 +325,24 @@ class AdminContactFieldFormController extends DefaultAdminModuleController
 	{
 		if ($field_name == 'f_recipients')
 		{
-			return array(
+			return [
 				new ContactSimpleSelectField(),
 				new ContactMultipleSelectField(),
 				new ContactSimpleChoiceField(),
 				new ContactMultipleChoiceField(),
-			);
+			];
 		}
 		else if ($field_name == 'f_subject')
 		{
-			return array(
+			return [
 				new ContactShortTextField(),
 				new ContactSimpleSelectField(),
 				new ContactSimpleChoiceField(),
-			);
+			];
 		}
 		else
 		{
-			return array(
+			return [
 				new ContactShortTextField(),
 				new ContactHalfLongTextField(),
 				new ContactLongTextField(),
@@ -351,7 +351,7 @@ class AdminContactFieldFormController extends DefaultAdminModuleController
 				new ContactSimpleChoiceField(),
 				new ContactMultipleChoiceField(),
 				new ContactDateField()
-			);
+			];
 		}
 	}
 }

@@ -15,7 +15,7 @@ class NewsletterArchivesController extends DefaultModuleController
 	private $stream;
 
 	private $elements_number = 0;
-	private $ids = array();
+	private $ids = [];
 
 	public function execute(HTTPRequestCustom $request)
 	{
@@ -48,18 +48,18 @@ class NewsletterArchivesController extends DefaultModuleController
 	{
 		$moderation_authorization = NewsletterAuthorizationsService::id_stream($this->stream->get_id())->moderation_archives();
 
-		$columns = array(
+		$columns = [
 			new HTMLTableColumn($this->lang['newsletter.stream.name'], 'stream_id'),
 			new HTMLTableColumn($this->lang['newsletter.item.name'], 'subject'),
 			new HTMLTableColumn($this->lang['newsletter.archives.date'], 'timestamp'),
 			new HTMLTableColumn($this->lang['newsletter.subscribers.number'], 'nbr_subscribers')
-		);
+		];
 
 		if ($this->stream->get_id())
 			unset($columns[0]);
 
 		if ($moderation_authorization)
-			$columns[] = new HTMLTableColumn($this->lang['common.moderation'], '', array('sr-only' => true));
+			$columns[] = new HTMLTableColumn($this->lang['common.moderation'], '', ['sr-only' => true]);
 
 		$table_model = new SQLHTMLTableModel(NewsletterSetup::$newsletter_table_archives, 'items-manager', $columns, new HTMLTableSortingRule('timestamp', HTMLTableSortingRule::DESC));
 
@@ -68,7 +68,7 @@ class NewsletterArchivesController extends DefaultModuleController
 
 		$table = new HTMLTable($table_model);
 
-		$results = array();
+		$results = [];
 		$result = $table_model->get_sql_results();
 		foreach ($result as $row)
 		{
@@ -82,12 +82,12 @@ class NewsletterArchivesController extends DefaultModuleController
 			$stream_link = new LinkHTMLElement(NewsletterUrlBuilder::archives($stream->get_id(), $stream->get_rewrited_name()), $stream->get_name());
 			$archive_link = new LinkHTMLElement(NewsletterUrlBuilder::archive($row['id']), $row['subject']);
 
-			$table_row = array(
+			$table_row = [
 				new HTMLTableRowCell($stream_link->display()),
 				new HTMLTableRowCell($archive_link->display()),
 				new HTMLTableRowCell($stream_date->format(Date::FORMAT_DAY_MONTH_YEAR)),
 				new HTMLTableRowCell($row['nbr_subscribers'])
-			);
+			];
 
 			if ($this->stream->get_id())
 				unset($table_row[0]);
@@ -117,9 +117,9 @@ class NewsletterArchivesController extends DefaultModuleController
 				{
 					if (isset($this->ids[$i]) && $this->ids[$i] && NewsletterAuthorizationsService::id_stream($this->stream->get_id())->moderation_archives())
 					{
-						$row = PersistenceContext::get_querier()->select_single_row(NewsletterSetup::$newsletter_table_archives, array('*'), "WHERE id = '". $this->ids[$i] ."'");
+						$row = PersistenceContext::get_querier()->select_single_row(NewsletterSetup::$newsletter_table_archives, ['*'], "WHERE id = '". $this->ids[$i] ."'");
 						NewsletterService::delete_archive($this->ids[$i]);
-						HooksService::execute_hook_action('delete', self::$module_id, array('id' => $this->ids[$i], 'title' => $row['subject']));
+						HooksService::execute_hook_action('delete', self::$module_id, ['id' => $this->ids[$i], 'title' => $row['subject']]);
 					}
 				}
 			}
@@ -134,13 +134,13 @@ class NewsletterArchivesController extends DefaultModuleController
 	{
 		$body_view = new FileTemplate('newsletter/NewsletterBody.tpl');
 		$body_view->add_lang($this->lang);
-		$body_view->put_all(array(
+		$body_view->put_all([
 			'C_SUBTITLE' => true,
 			'C_STREAM_TITLE' => $this->stream->get_id() != Category::ROOT_CATEGORY,
 			'L_SUBTITLE' => $this->lang['newsletter.archives'],
 			'STREAM_TITLE' => $this->stream->get_name(),
 			'TEMPLATE'   => $this->view
-		));
+		]);
 		$response = new SiteDisplayResponse($body_view);
 
 		$graphical_environment = $response->get_graphical_environment();
@@ -158,7 +158,7 @@ class NewsletterArchivesController extends DefaultModuleController
 		$graphical_environment->set_page_title($this->lang['newsletter.archives.list'], $this->lang['newsletter.module.title'], $page);
 		$description = $this->stream->get_description();
 		if (empty($description))
-			$description = StringVars::replace_vars($this->lang['newsletter.seo.archives'], array('name' => $this->stream->get_name()));
+			$description = StringVars::replace_vars($this->lang['newsletter.seo.archives'], ['name' => $this->stream->get_name()]);
 		$graphical_environment->get_seo_meta_data()->set_description($description, $page);
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(NewsletterUrlBuilder::archives($this->stream->get_id(), $this->stream->get_rewrited_name()));
 

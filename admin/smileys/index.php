@@ -11,11 +11,11 @@ defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '../..');
 
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
-$url_controller_mappers = array(
+$url_controller_mappers = [
 	new UrlControllerMapper('AdminSmileysListController', '`^/(?:management/?)?$`'),
 	new UrlControllerMapper('AdminSmileysFormController', '`^/add/?$`'),
-	new UrlControllerMapper('AdminSmileysFormController', '`^/([0-9]+)/edit/?$`', array('id')),
-	new UrlControllerMapper('AdminSmileysDeleteController', '`^/([0-9]+)/delete/?$`', array('id'))
-);
+	new UrlControllerMapper('AdminSmileysFormController', '`^/([0-9]+)/edit/?$`', ['id']),
+	new UrlControllerMapper('AdminSmileysDeleteController', '`^/([0-9]+)/delete/?$`', ['id'])
+];
 DispatchManager::dispatch($url_controller_mappers);
 ?>

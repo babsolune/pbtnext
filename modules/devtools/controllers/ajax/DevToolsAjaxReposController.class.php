@@ -13,27 +13,27 @@ class DevToolsAjaxReposController extends AbstractController
     public function execute(HTTPRequestCustom $request)
     {
         if (!DevToolsAuthorizationsService::check_authorizations()->admin())
-            return new JSONResponse(array('success' => false, 'error' => 'Unauthorized'), 403);
+            return new JSONResponse(['success' => false, 'error' => 'Unauthorized'], 403);
 
         $org = preg_replace('/[^a-zA-Z0-9_\-]/', '', $request->get_string('org', ''));
         if (empty($org))
-            return new JSONResponse(array('success' => false, 'error' => 'Missing organisation name'));
+            return new JSONResponse(['success' => false, 'error' => 'Missing organisation name']);
 
         $data = DevToolsGitHubService::get_org_repos($org);
         if ($data === false)
-            return new JSONResponse(array('success' => false, 'error' => 'Could not retrieve repositories'));
+            return new JSONResponse(['success' => false, 'error' => 'Could not retrieve repositories']);
 
-        $repos = array();
+        $repos = [];
         foreach ($data as $repo)
         {
-            $repos[] = array(
+            $repos[] = [
                 'name'        => $repo['name'],
                 'full_name'   => $repo['full_name'],
                 'description' => $repo['description'] ?? '',
-            );
+            ];
         }
 
-        return new JSONResponse(array('success' => true, 'repos' => $repos));
+        return new JSONResponse(['success' => true, 'repos' => $repos]);
     }
 }
 ?>

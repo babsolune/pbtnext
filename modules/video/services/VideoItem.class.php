@@ -44,7 +44,7 @@ class VideoItem
 	const SORT_COMMENTS_NUMBER  = 'comments_number';
 	const SORT_VIEWS_NUMBERS 	= 'views_number';
 
-	const SORT_FIELDS_URL_VALUES = array(
+	const SORT_FIELDS_URL_VALUES = [
 		self::SORT_ALPHABETIC       => 'title',
 		self::SORT_AUTHOR           => 'author',
 		self::SORT_DATE             => 'date',
@@ -52,7 +52,7 @@ class VideoItem
 		self::SORT_VIEWS_NUMBERS    => 'views',
 		self::SORT_NOTATION         => 'notes',
 		self::SORT_COMMENTS_NUMBER  => 'comments'
-	);
+	];
 
 	const THUMBNAIL_URL = '/templates/__default__/images/default_item.webp';
 
@@ -367,7 +367,7 @@ class VideoItem
 
 	public function get_properties()
 	{
-		return array(
+		return [
 			'id' => $this->get_id(),
 			'id_category' => $this->get_id_category(),
 			'title' => $this->get_title(),
@@ -387,7 +387,7 @@ class VideoItem
 			'author_user_id' => $this->get_author_user()->get_id(),
 			'views_number' => $this->get_views_number(),
 			'thumbnail' => $this->get_thumbnail()->relative()
-		);
+		];
 	}
 
 	public function set_properties(array $properties)
@@ -484,7 +484,7 @@ class VideoItem
 			Date::get_array_tpl_vars($this->creation_date, 'date'),
 			Date::get_array_tpl_vars($this->update_date, 'update_date'),
 			Date::get_array_tpl_vars($this->publishing_start_date, 'differed_publishing_start_date'),
-			array(
+			[
 				// Conditions
 				'C_VISIBLE'              => $this->is_published(),
 				'C_CONTROLS'			 => $this->is_authorized_to_edit() || $this->is_authorized_to_delete() || $this->is_authorized_to_duplicate(),
@@ -539,7 +539,7 @@ class VideoItem
 				'U_DELETE'         => VideoUrlBuilder::delete($this->id)->rel(),
 				'U_THUMBNAIL'      => $this->get_thumbnail()->rel(),
 				'U_COMMENTS'       => VideoUrlBuilder::display_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_title)->rel()
-			)
+			]
 		);
 	}
 }

@@ -41,11 +41,11 @@ class PollConfigUpdateVersion extends ConfigUpdateVersion
 
 	private function build_authorizations($old_auth)
 	{
-		$new_auth = array();
+		$new_auth = [];
 
 		foreach ($old_auth as $level => $auth)
 		{
-			if (($auth == 1 || $auth == 3) && in_array($level, array("r-1", "r0", "r1")))
+			if (($auth == 1 || $auth == 3) && in_array($level, ["r-1", "r0", "r1"]))
 			{
 				if ($level == 'r1')
 				{

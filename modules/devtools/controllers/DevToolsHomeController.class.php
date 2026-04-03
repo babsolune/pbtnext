@@ -91,7 +91,7 @@ class DevToolsHomeController extends DefaultModuleController
             $repo_options .= '<option value="' . $idx . '" data-repo="' . htmlspecialchars(json_encode($repo)) . '">' . $label . '</option>';
         }
 
-        $this->view->put_all(array(
+        $this->view->put_all([
             'C_IS_ADMIN'              => DevToolsAuthorizationsService::check_authorizations()->admin(),
             'U_CONFIG'                => ModulesUrlBuilder::configuration()->rel(),
             'MODULE_ROWS'             => $module_rows,
@@ -111,7 +111,7 @@ class DevToolsHomeController extends DefaultModuleController
             'URL_AJAX_REVIEW'         => DevToolsUrlBuilder::ajax_review()->rel(),
             'URL_AJAX_LANG'           => DevToolsUrlBuilder::ajax_lang()->rel(),
             'CSRF_TOKEN'              => AppContext::get_session()->get_token(),
-        ));
+        ]);
     }
 
     protected function get_template_string_content()

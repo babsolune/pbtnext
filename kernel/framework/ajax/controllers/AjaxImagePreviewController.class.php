@@ -22,7 +22,7 @@ class AjaxImagePreviewController extends AbstractController
 		if (Url::check_url_validity($check))
 			$url = $image->rel();
 
-		return new JSONResponse(array('url' => $url));
+		return new JSONResponse(['url' => $url]);
 	}
 }
 ?>

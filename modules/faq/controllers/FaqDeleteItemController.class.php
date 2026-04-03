@@ -31,7 +31,7 @@ class FaqDeleteItemController extends ModuleController
 		FaqService::clear_cache();
 		HooksService::execute_hook_action('delete', self::$module_id, $item->get_properties());
 
-		AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : FaqUrlBuilder::home()), StringVars::replace_vars(LangLoader::get_message('faq.message.success.delete', 'common', 'faq'), array('title' => $item->get_title())));
+		AppContext::get_response()->redirect(($request->get_url_referrer() ? $request->get_url_referrer() : FaqUrlBuilder::home()), StringVars::replace_vars(LangLoader::get_message('faq.message.success.delete', 'common', 'faq'), ['title' => $item->get_title()]));
 	}
 
 	private function get_item(HTTPRequestCustom $request)

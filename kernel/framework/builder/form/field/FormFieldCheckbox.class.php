@@ -25,7 +25,7 @@ class FormFieldCheckbox extends AbstractFormField
 	 * @param array $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
-	public function __construct($id, $label, $value = self::UNCHECKED, array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, $value = self::UNCHECKED, array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $value, $field_options, $constraints);
 		$this->set_css_form_field_class('form-field-checkbox');
@@ -40,10 +40,10 @@ class FormFieldCheckbox extends AbstractFormField
 
 		$this->assign_common_template_variables($template);
 
-		$template->put_all(array(
+		$template->put_all([
 			'C_REQUIRED_AND_HAS_VALUE' => $this->is_required() && $this->get_value(),
 			'C_CHECKED' => $this->is_checked()
-		));
+		]);
 
 		return $template;
 	}

@@ -13,11 +13,11 @@ class ContactModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('contact');
 
-		self::$delete_old_files_list = array(
+		self::$delete_old_files_list = [
 			'/lang/english/config.php',
 			'/lang/french/config.php',
 			'/phpboost/ContactHomePageExtensionPoint.class.php'
-		);
+		];
 	}
 }
 ?>

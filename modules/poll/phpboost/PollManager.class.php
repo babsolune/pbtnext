@@ -20,28 +20,28 @@ class PollManager extends ItemsManager
 	{
 		self::$db_querier->update(
 			self::$items_table,
-			array(
+			[
 				'votes'        => TextHelper::serialize($vote),
 				'votes_number' => $current_votes_number + 1
-			),
+			],
 			'WHERE id=:id',
-			array('id' => $item_id)
+			['id' => $item_id]
 		);
 	}
 
 	public function reset_votes_number($item_id)
 	{
-		self::$db_querier->update(self::$items_table, array('votes_number' => 0), 'WHERE id=:id', array('id' => $item_id));
+		self::$db_querier->update(self::$items_table, ['votes_number' => 0], 'WHERE id=:id', ['id' => $item_id]);
 	}
 
 	public function insert_voter(int $item_id)
 	{
-		$properties = array(
+		$properties = [
 			'poll_id'        => $item_id,
 			'voter_user_id'  => AppContext::get_current_user()->get_id(),
 			'voter_ip'       => AppContext::get_request()->get_ip_address() ? AppContext::get_request()->get_ip_address() : '0.0.0.0',
 			'vote_timestamp' => time()
-		);
+		];
 		self::$db_querier->insert(PREFIX . 'poll_voters', $properties);
 	}
 
@@ -50,9 +50,9 @@ class PollManager extends ItemsManager
 	{
 		return self::$db_querier->select_single_row(
 			PREFIX . 'poll_voters',
-			array('id', 'poll_id', 'voter_user_id', 'voter_ip', 'vote_timestamp'),
+			['id', 'poll_id', 'voter_user_id', 'voter_ip', 'vote_timestamp'],
 			'WHERE poll_id =:poll_id AND voter_user_id =:voter_user_id',
-			array('poll_id' => $item_id, 'voter_user_id' => $voter_user_id));
+			['poll_id' => $item_id, 'voter_user_id' => $voter_user_id]);
 	}
 
 	public function get_voters(int $item_id)
@@ -62,13 +62,13 @@ class PollManager extends ItemsManager
 			id, poll_id, voter_user_id, voter_ip, vote_timestamp
 			FROM ' . PREFIX . 'poll_voters
 			WHERE poll_id =:poll_id',
-			array('poll_id' => $item_id)
+			['poll_id' => $item_id]
 		);
 
-		$id = array();
-		$voter_user_id = array();
-		$voter_ip = array();
-		$vote_timestamp = array();
+		$id = [];
+		$voter_user_id = [];
+		$voter_ip = [];
+		$vote_timestamp = [];
 
 		while ($row = $result->fetch())
 		{
@@ -89,7 +89,7 @@ class PollManager extends ItemsManager
 
 	public function delete_voters(int $item_id)
 	{
-		self::$db_querier->delete(PREFIX . 'poll_voters', 'WHERE poll_id =:poll_id', array('poll_id' => $item_id));
+		self::$db_querier->delete(PREFIX . 'poll_voters', 'WHERE poll_id =:poll_id', ['poll_id' => $item_id]);
 	}
 
 	public function user_has_voted(int $voter_user_id, int $item_id)
@@ -105,7 +105,7 @@ class PollManager extends ItemsManager
 			$check_member_by_id = self::$db_querier->count(
 				PREFIX . 'poll_voters',
 				'WHERE voter_user_id > 0 AND voter_user_id =:voter_user_id AND poll_id =:poll_id',
-				array('voter_user_id' => $voter_user_id, 'poll_id' => $item_id)) > 0;
+				['voter_user_id' => $voter_user_id, 'poll_id' => $item_id]) > 0;
 				
 			return $check_member_by_id || $this->check_user_by_cookie($request, $item_id) || $this->check_user_by_ip($request, $voter_user_id, $item_id);
 		}
@@ -118,14 +118,14 @@ class PollManager extends ItemsManager
 				return self::$db_querier->count(
 					PREFIX . 'poll_voters',
 					'WHERE voter_user_id < 0 AND voter_ip =:voter_ip AND poll_id =:poll_id',
-					array( 'voter_ip' => $request->get_ip_address(), 'poll_id' => $item_id)) > 0;
+					[ 'voter_ip' => $request->get_ip_address(), 'poll_id' => $item_id]) > 0;
 			}
 			else
 			{
 				return self::$db_querier->count(
 					PREFIX . 'poll_voters',
 					'WHERE voter_user_id > 0 AND voter_ip =:voter_ip AND poll_id =:poll_id',
-					array( 'voter_ip' => $request->get_ip_address(), 'poll_id' => $item_id)) > 0;
+					[ 'voter_ip' => $request->get_ip_address(), 'poll_id' => $item_id]) > 0;
 			}
         }
 
@@ -146,7 +146,7 @@ class PollManager extends ItemsManager
 		$request = AppContext::get_request();
 		$config = self::$module->get_configuration()->get_configuration_parameters();
 		$cookie_name = $config->get_cookie_name();
-		$array_cookie = $request->has_cookieparameter($cookie_name) ? explode('/', $request->get_cookie($cookie_name)) : array();
+		$array_cookie = $request->has_cookieparameter($cookie_name) ? explode('/', $request->get_cookie($cookie_name)) : [];
 		$array_cookie[] = $item_id;
 		$value_cookie = implode('/', array_unique($array_cookie, SORT_NUMERIC));
 

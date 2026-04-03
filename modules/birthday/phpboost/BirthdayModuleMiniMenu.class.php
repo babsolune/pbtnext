@@ -56,7 +56,7 @@ class BirthdayModuleMiniMenu extends ModuleMiniMenu
 			{
 				$user_group_color = User::get_group_color($user['user_groups'], $user['level'], false);
 
-				$view->assign_block_vars('birthday', array(
+				$view->assign_block_vars('birthday', [
 					'C_USER_GROUP_COLOR' => !empty($user_group_color),
 
 					'LOGIN'            => $user['display_name'],
@@ -65,7 +65,7 @@ class BirthdayModuleMiniMenu extends ModuleMiniMenu
 					'AGE'              => $user['age'],
 
 					'U_USER_PROFILE' => UserUrlBuilder::profile($user['user_id'])->absolute()
-				));
+				]);
 			}
 		}
 
@@ -77,7 +77,7 @@ class BirthdayModuleMiniMenu extends ModuleMiniMenu
 
 				$view->assign_block_vars(
                     'upcoming_birthdays',
-                    array(
+                    [
                         'C_USER_GROUP_COLOR' => !empty($user_group_color),
 
                         'LOGIN'            => $user['display_name'],
@@ -87,12 +87,12 @@ class BirthdayModuleMiniMenu extends ModuleMiniMenu
                         'AGE'              => $user['age'],
 
                         'U_USER_PROFILE' => UserUrlBuilder::profile($user['user_id'])->absolute()
-                    )
+                    ]
                 );
 			}
 		}
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_BIRTHDAY_ENABLED'    => BirthdayAuthorizationsService::check_authorizations()->read() && !empty($user_born_field) && $user_born_field['display'],
 			'C_HAS_BIRTHDAY'        => count($users_birthday),
 			'C_COMING_NEXT'         => $config->get_coming_next() > 1,
@@ -100,8 +100,8 @@ class BirthdayModuleMiniMenu extends ModuleMiniMenu
 			'C_DISPLAY_MEMBERS_AGE' => BirthdayConfig::load()->is_members_age_displayed(),
 
 			'UPCOMING_BIRTHDAYS_NB' => count($upcoming_birthdays),
-			'L_COMING_NEXT'         => $config->get_coming_next() > 1 ? StringVars::replace_vars($lang['birthday.next.days'], array('coming_next' => $config->get_coming_next())) : $lang['date.tomorrow']
-		));
+			'L_COMING_NEXT'         => $config->get_coming_next() > 1 ? StringVars::replace_vars($lang['birthday.next.days'], ['coming_next' => $config->get_coming_next()]) : $lang['date.tomorrow']
+		]);
 
 		return $view->render();
 	}

@@ -14,7 +14,7 @@
 #                      English                     #
 ####################################################
 
-$lang = array(
+$lang = [
     //Variables générales
     'update.title' => 'PHPBoost Update',
     'steps.list' => 'Steps list',
@@ -194,5 +194,5 @@ $lang = array(
     ',
     'site.index'  => 'Go to the website',
     'admin.index' => 'Go to the administration panel'
-);
+];
 ?>

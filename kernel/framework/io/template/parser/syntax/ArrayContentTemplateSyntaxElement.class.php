@@ -31,7 +31,7 @@ class ArrayContentTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	private function process_key()
 	{
-		$matches = array();
+		$matches = [];
 		if ($this->input->consume_next('\s*(?P<key>(?:[0-9]+)|(?:\'[^\']+\'))\s*:\s*', '', $matches))
 		{
 			$this->output->write($matches['key'] . '=>');

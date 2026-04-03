@@ -65,16 +65,16 @@ class BugtrackerFormController extends DefaultModuleController
 		$fieldset = new FormFieldsetHTML('bug_infos', $this->lang['form.parameters']);
 		$form->add_fieldset($fieldset);
 
-		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['form.title'], $bug->get_title(), array('required' => true)));
+		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['form.title'], $bug->get_title(), ['required' => true]));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('content', $this->lang['form.description'], $bug->get_content(), array(
-			'description' => $this->lang['explain.content'], 'rows' => 15, 'required' => true)
+		$fieldset->add_field(new FormFieldRichTextEditor('content', $this->lang['form.description'], $bug->get_content(), [
+			'description' => $this->lang['explain.content'], 'rows' => 15, 'required' => true]
 		));
 
 		//Types
 		if ($display_types)
 		{
-			$array_types = array();
+			$array_types = [];
 			if (empty($default_type))
 			{
 				$array_types[] = new FormFieldSelectChoiceOption(' ', '');
@@ -84,15 +84,15 @@ class BugtrackerFormController extends DefaultModuleController
 				$array_types[] = new FormFieldSelectChoiceOption(stripslashes($type), $key);
 			}
 
-			$fieldset->add_field(new FormFieldSimpleSelectChoice('type', $this->lang['labels.fields.type'], $bug->get_type(), $array_types, array(
-				'required' => $this->config->is_type_mandatory())
+			$fieldset->add_field(new FormFieldSimpleSelectChoice('type', $this->lang['labels.fields.type'], $bug->get_type(), $array_types, [
+				'required' => $this->config->is_type_mandatory()]
 			));
 		}
 
 		//Categories
 		if ($display_categories)
 		{
-			$array_categories = array();
+			$array_categories = [];
 			if (empty($default_category))
 			{
 				$array_categories[] = new FormFieldSelectChoiceOption(' ', '');
@@ -102,8 +102,8 @@ class BugtrackerFormController extends DefaultModuleController
 				$array_categories[] = new FormFieldSelectChoiceOption(stripslashes($category), $key);
 			}
 
-			$fieldset->add_field(new FormFieldSimpleSelectChoice('category', $this->lang['labels.fields.category'], $bug->get_category(), $array_categories, array(
-				'required' => $this->config->is_category_mandatory())
+			$fieldset->add_field(new FormFieldSimpleSelectChoice('category', $this->lang['labels.fields.category'], $bug->get_category(), $array_categories, [
+				'required' => $this->config->is_category_mandatory()]
 			));
 		}
 
@@ -112,7 +112,7 @@ class BugtrackerFormController extends DefaultModuleController
 			//Severities
 			if ($display_severities)
 			{
-				$array_severities = array();
+				$array_severities = [];
 				if (empty($default_severity))
 				{
 					$array_severities[] = new FormFieldSelectChoiceOption(' ', '');
@@ -122,15 +122,15 @@ class BugtrackerFormController extends DefaultModuleController
 					$array_severities[] = new FormFieldSelectChoiceOption(stripslashes($severity['name']), $key);
 				}
 
-				$fieldset->add_field(new FormFieldSimpleSelectChoice('severity', $this->lang['labels.fields.severity'], $bug->get_severity(), $array_severities, array(
-					'required' => $this->config->is_severity_mandatory())
+				$fieldset->add_field(new FormFieldSimpleSelectChoice('severity', $this->lang['labels.fields.severity'], $bug->get_severity(), $array_severities, [
+					'required' => $this->config->is_severity_mandatory()]
 				));
 			}
 
 			//Priorities
 			if ($display_priorities)
 			{
-				$array_priorities = array();
+				$array_priorities = [];
 				if (empty($default_priority))
 				{
 					$array_priorities[] = new FormFieldSelectChoiceOption(' ', '');
@@ -140,8 +140,8 @@ class BugtrackerFormController extends DefaultModuleController
 					$array_priorities[] = new FormFieldSelectChoiceOption(stripslashes($priority), $key);
 				}
 
-				$fieldset->add_field(new FormFieldSimpleSelectChoice('priority', $this->lang['labels.fields.priority'], $bug->get_priority(), $array_priorities, array(
-					'required' => $this->config->is_priority_mandatory())
+				$fieldset->add_field(new FormFieldSimpleSelectChoice('priority', $this->lang['labels.fields.priority'], $bug->get_priority(), $array_priorities, [
+					'required' => $this->config->is_priority_mandatory()]
 				));
 			}
 		}
@@ -149,7 +149,7 @@ class BugtrackerFormController extends DefaultModuleController
 		//Detected versions
 		if ($display_versions_detected_in)
 		{
-			$array_versions = array();
+			$array_versions = [];
 			if (empty($default_version))
 			{
 				$array_versions[] = new FormFieldSelectChoiceOption(' ', '');
@@ -159,22 +159,22 @@ class BugtrackerFormController extends DefaultModuleController
 				$array_versions[] = new FormFieldSelectChoiceOption(stripslashes($version['name']), $key);
 			}
 
-			$fieldset->add_field(new FormFieldSimpleSelectChoice('detected_in', $this->lang['labels.fields.detected_in'], $bug->get_detected_in(), $array_versions, array(
-				'required' => $this->config->is_detected_in_version_mandatory())
+			$fieldset->add_field(new FormFieldSimpleSelectChoice('detected_in', $this->lang['labels.fields.detected_in'], $bug->get_detected_in(), $array_versions, [
+				'required' => $this->config->is_detected_in_version_mandatory()]
 			));
 		}
 
 		$fieldset->add_field(new FormFieldCheckbox('reproductible', $this->lang['labels.fields.reproductible'], $bug->is_reproductible() ? FormFieldCheckbox::CHECKED : FormFieldCheckbox::UNCHECKED,
-			array('events' => array('click' => '
+			['events' => ['click' => '
 			if (HTMLForms.getField("reproductible").getValue()) {
 				HTMLForms.getField("reproduction_method").enable();
 			} else {
 				HTMLForms.getField("reproduction_method").disable();
-			}')
-		)));
+			}']
+		]));
 
-		$fieldset->add_field(new FormFieldRichTextEditor('reproduction_method', $this->lang['labels.fields.reproduction_method'], FormatingHelper::unparse($bug->get_reproduction_method()), array(
-			'rows' => 15, 'hidden' => !$bug->is_reproductible())
+		$fieldset->add_field(new FormFieldRichTextEditor('reproduction_method', $this->lang['labels.fields.reproduction_method'], FormatingHelper::unparse($bug->get_reproduction_method()), [
+			'rows' => 15, 'hidden' => !$bug->is_reproductible()]
 		));
 
 		$fieldset->add_field(new FormFieldHidden('referrer', $request->get_url_referrer()));
@@ -195,7 +195,7 @@ class BugtrackerFormController extends DefaultModuleController
 			if (!empty($id))
 			{
 				try {
-					$this->bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
+					$this->bug = BugtrackerService::get_bug('WHERE id=:id', ['id' => $id]);
 				} catch (RowNotFoundException $e) {
 					$error_controller = PHPBoostErrors::unexisting_page();
 					DispatchManager::redirect($error_controller);
@@ -262,7 +262,7 @@ class BugtrackerFormController extends DefaultModuleController
 			//Bug creation
 			$bug->set_id(BugtrackerService::add($bug));
 
-			HooksService::execute_hook_action('add', self::$module_id, array_merge($bug->get_properties(), array('item_url' => $bug->get_item_url())));
+			HooksService::execute_hook_action('add', self::$module_id, array_merge($bug->get_properties(), ['item_url' => $bug->get_item_url()]));
 
 			if ($this->config->are_admin_alerts_enabled() && in_array($bug->get_severity(), $this->config->get_admin_alerts_levels()))
 			{
@@ -420,7 +420,7 @@ class BugtrackerFormController extends DefaultModuleController
 			$pm_comment = '';
 			$modification = false;
 
-			$fields = array('title', 'content', 'type', 'category', 'severity', 'priority', 'detected_in', 'reproductible', 'reproduction_method');
+			$fields = ['title', 'content', 'type', 'category', 'severity', 'priority', 'detected_in', 'reproductible', 'reproduction_method'];
 
 			$n_values = $bug->get_properties();
 			$o_values = $old_values->get_properties();
@@ -485,7 +485,7 @@ class BugtrackerFormController extends DefaultModuleController
 					$pm_comment .= ($field != 'content' && $field != 'reproduction_method') ? $this->lang['labels.fields.' . $field] . ' : ' . stripslashes($new_value) . '
 	' : '';
 					//Bug history update
-					BugtrackerService::add_history(array(
+					BugtrackerService::add_history([
 						'bug_id'		=> $bug->get_id(),
 						'updater_id'	=> $this->current_user->get_id(),
 						'update_date'	=> $now->get_timestamp(),
@@ -493,7 +493,7 @@ class BugtrackerFormController extends DefaultModuleController
 						'old_value'		=> $o_values[$field],
 						'new_value'		=> $n_values[$field],
 						'change_comment'=> $comment
-					));
+					]);
 				}
 			}
 
@@ -502,7 +502,7 @@ class BugtrackerFormController extends DefaultModuleController
 				//Bug update
 				BugtrackerService::update($bug);
 
-				HooksService::execute_hook_action('edit', self::$module_id, array_merge($bug->get_properties(), array('item_url' => $bug->get_item_url())));
+				HooksService::execute_hook_action('edit', self::$module_id, array_merge($bug->get_properties(), ['item_url' => $bug->get_item_url()]));
 
 				//Send PM to updaters if the option is enabled
 				if ($this->config->are_pm_enabled() && $this->config->are_pm_edit_enabled() && !empty($pm_comment))
@@ -519,7 +519,7 @@ class BugtrackerFormController extends DefaultModuleController
 		}
 		else
 		{
-			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : BugtrackerUrlBuilder::unsolved()), StringVars::replace_vars($this->lang['success.edit'], array('id' => $bug->get_id())));
+			AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : BugtrackerUrlBuilder::unsolved()), StringVars::replace_vars($this->lang['success.edit'], ['id' => $bug->get_id()]));
 		}
 	}
 

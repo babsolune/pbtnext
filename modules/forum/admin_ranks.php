@@ -41,33 +41,33 @@ if ($valid)
 		$icon       = $request->get_poststring($row['id'] . 'icon', '');
 
 		if (!empty($name) && $row['special'] != 1)
-			PersistenceContext::get_querier()->update(PREFIX . "forum_ranks", array('name' => $name, 'msg' => $msg_number, 'icon' => $icon), ' WHERE id = :id', array('id' => $row['id']));
+			PersistenceContext::get_querier()->update(PREFIX . "forum_ranks", ['name' => $name, 'msg' => $msg_number, 'icon' => $icon], ' WHERE id = :id', ['id' => $row['id']]);
 		else
-			PersistenceContext::get_querier()->update(PREFIX . "forum_ranks", array('name' => $name, 'icon' => $icon), ' WHERE id = :id', array('id' => $row['id']));
+			PersistenceContext::get_querier()->update(PREFIX . "forum_ranks", ['name' => $name, 'icon' => $icon], ' WHERE id = :id', ['id' => $row['id']]);
 	}
 	$result->dispose();
 
 	ForumRanksCache::invalidate();
 
-	HooksService::execute_hook_action('edit_config', 'forum', array('title' => $lang['forum.ranks.management'], 'url' => ForumUrlBuilder::manage_ranks()->rel()));
+	HooksService::execute_hook_action('edit_config', 'forum', ['title' => $lang['forum.ranks.management'], 'url' => ForumUrlBuilder::manage_ranks()->rel()]);
 
 	$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
 }
 elseif (!empty($del) && !empty($get_id)) //Suppression du rang.
 {
 	//On supprime dans la bdd.
-	PersistenceContext::get_querier()->delete(PREFIX . 'forum_ranks', 'WHERE id=:id', array('id' => $get_id));
+	PersistenceContext::get_querier()->delete(PREFIX . 'forum_ranks', 'WHERE id=:id', ['id' => $get_id]);
 
 	###### Régénération du cache des rangs #######
 	ForumRanksCache::invalidate();
 
-	HooksService::execute_hook_action('edit_config', 'forum', array('title' => $lang['forum.ranks.management'], 'url' => ForumUrlBuilder::manage_ranks()->rel()));
+	HooksService::execute_hook_action('edit_config', 'forum', ['title' => $lang['forum.ranks.management'], 'url' => ForumUrlBuilder::manage_ranks()->rel()]);
 
 	$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message('warning.process.success', 'warning-lang'), MessageHelper::SUCCESS, 4));
 }
 
 //On recupère les images des groupes
-$rank_options_array = array();
+$rank_options_array = [];
 
 //On regarde s'il existe un repertoire d'image de rank dans le "thème par défaut" templates/{THEME}/modules/forum/images/ranks
 $rank_folder = PATH_TO_ROOT . '/templates/' . ThemesManager::get_default_theme() . '/modules/forum/images/ranks';
@@ -94,7 +94,7 @@ foreach($ranks_cache as $msg => $row)
 		$rank_options .= '<option value="' . $icon . '"' . $selected . '>' . $icon . '</option>';
 	}
 
-	$view->assign_block_vars('rank', array(
+	$view->assign_block_vars('rank', [
 		'C_CUSTOM_RANK' => $row['special'] == 0,
 
 		'ID'             => $row['id'],
@@ -106,7 +106,7 @@ foreach($ranks_cache as $msg => $row)
 		'U_RANK_THUMBNAIL' => $rank_folder . '/' . $row['icon'],
 		'JS_PATH_RANKS'    => $rank_folder . '/',
 		'U_DELETE'         => 'admin_ranks.php?del=1&amp;id=' . $row['id'],
-	));
+	]);
 }
 
 $view->display();

@@ -33,10 +33,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Output
      */
-    public function predict($id, Google_Input $postBody, $optParams = array()) {
-      $params = array('id' => $id, 'postBody' => $postBody);
+    public function predict($id, Google_Input $postBody, $optParams = []) {
+      $params = ['id' => $id, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('predict', array($params));
+      $data = $this->__call('predict', [$params]);
       if ($this->useObjects()) {
         return new Google_Output($data);
       } else {
@@ -50,10 +50,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Training
      */
-    public function insert(Google_Training $postBody, $optParams = array()) {
-      $params = array('postBody' => $postBody);
+    public function insert(Google_Training $postBody, $optParams = []) {
+      $params = ['postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('insert', array($params));
+      $data = $this->__call('insert', [$params]);
       if ($this->useObjects()) {
         return new Google_Training($data);
       } else {
@@ -67,10 +67,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Training
      */
-    public function get($id, $optParams = array()) {
-      $params = array('id' => $id);
+    public function get($id, $optParams = []) {
+      $params = ['id' => $id];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Training($data);
       } else {
@@ -85,10 +85,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Training
      */
-    public function update($id, Google_Update $postBody, $optParams = array()) {
-      $params = array('id' => $id, 'postBody' => $postBody);
+    public function update($id, Google_Update $postBody, $optParams = []) {
+      $params = ['id' => $id, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('update', array($params));
+      $data = $this->__call('update', [$params]);
       if ($this->useObjects()) {
         return new Google_Training($data);
       } else {
@@ -101,10 +101,10 @@
      * @param string $id The unique name for the predictive model.
      * @param array $optParams Optional parameters.
      */
-    public function delete($id, $optParams = array()) {
-      $params = array('id' => $id);
+    public function delete($id, $optParams = []) {
+      $params = ['id' => $id];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('delete', array($params));
+      $data = $this->__call('delete', [$params]);
       return $data;
     }
   }
@@ -128,10 +128,10 @@
      * @param array $optParams Optional parameters.
      * @return Google_Output
      */
-    public function predict($hostedModelName, Google_Input $postBody, $optParams = array()) {
-      $params = array('hostedModelName' => $hostedModelName, 'postBody' => $postBody);
+    public function predict($hostedModelName, Google_Input $postBody, $optParams = []) {
+      $params = ['hostedModelName' => $hostedModelName, 'postBody' => $postBody];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('predict', array($params));
+      $data = $this->__call('predict', [$params]);
       if ($this->useObjects()) {
         return new Google_Output($data);
       } else {
@@ -188,7 +188,7 @@ class Google_Input extends Google_Model {
 
 class Google_InputInput extends Google_Model {
   public $csvInstance;
-  public function setCsvInstance(/* array(Google_object) */ $csvInstance) {
+  public function setCsvInstance(/* [Google_object] */ $csvInstance) {
     $this->assertIsArray($csvInstance, 'Google_object', __METHOD__);
     $this->csvInstance = $csvInstance;
   }
@@ -224,7 +224,7 @@ class Google_Output extends Google_Model {
   public function getId() {
     return $this->id;
   }
-  public function setOutputMulti(/* array(Google_OutputOutputMulti) */ $outputMulti) {
+  public function setOutputMulti(/* [Google_OutputOutputMulti] */ $outputMulti) {
     $this->assertIsArray($outputMulti, 'Google_OutputOutputMulti', __METHOD__);
     $this->outputMulti = $outputMulti;
   }
@@ -331,7 +331,7 @@ class Google_Training extends Google_Model {
   public function getSelfLink() {
     return $this->selfLink;
   }
-  public function setUtility(/* array(Google_double) */ $utility) {
+  public function setUtility(/* [Google_double] */ $utility) {
     $this->assertIsArray($utility, 'Google_double', __METHOD__);
     $this->utility = $utility;
   }
@@ -342,7 +342,7 @@ class Google_Training extends Google_Model {
 
 class Google_TrainingDataAnalysis extends Google_Model {
   public $warnings;
-  public function setWarnings(/* array(Google_string) */ $warnings) {
+  public function setWarnings(/* [Google_string] */ $warnings) {
     $this->assertIsArray($warnings, 'Google_string', __METHOD__);
     $this->warnings = $warnings;
   }
@@ -413,7 +413,7 @@ class Google_TrainingModelInfo extends Google_Model {
 class Google_Update extends Google_Model {
   public $csvInstance;
   public $label;
-  public function setCsvInstance(/* array(Google_object) */ $csvInstance) {
+  public function setCsvInstance(/* [Google_object] */ $csvInstance) {
     $this->assertIsArray($csvInstance, 'Google_object', __METHOD__);
     $this->csvInstance = $csvInstance;
   }

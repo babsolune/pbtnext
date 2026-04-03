@@ -26,10 +26,10 @@ class SandboxMenusNavController extends DefaultModuleController
 
 	private function build_view()
 	{
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'MARKUP' => self::get_markup(),
 			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
-		));
+		]);
 	}
 
 	private function get_markup()

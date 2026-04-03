@@ -62,10 +62,10 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 
 		if (AppContext::get_current_user()->is_guest())
 		{
-			$this->view->put_all(array(
+			$this->view->put_all([
 				'C_DISPLAYING_POLLS_MAP' => !empty($items_for_polls_displaying),
 				'C_MULTIPLE_POLL_ITEMS'  => $cache->get_number_polls_displaying() > 1
-			));
+			]);
 
 			if (!empty($items_for_polls_displaying))
 			{
@@ -126,13 +126,13 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 
 			if ($vote_form_and_result_displaying)
 			{
-				$this->view->put_all(array(
+				$this->view->put_all([
 					'C_VOTE_FORM_AND_RESULTS' => true,
 					'C_ENABLED_COUNTDOWN' 	  => $this->item->is_published() && $this->item->end_date_enabled() && $this->item->get_countdown_display() > 0,
 					'COUNTDOWN'				  => PollCountdownService::display($this->item),
 					'VOTE_FORM'               => $this->build_vote_form($this->item, $previous_item_id, $next_item_id)->display(),
 					'VOTES_RESULT'            => PollVotesResultService::display($this->item)
-				));
+				]);
 			}
 		}
 
@@ -173,7 +173,7 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 		$vote_form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldFree('question', '', FormatingHelper::second_parse($item->get_question()),
-			array('class' => 'no-label align-center text-strong')
+			['class' => 'no-label align-center text-strong']
 		));
 
 		$answers_list = [];
@@ -196,14 +196,14 @@ class PollModuleMiniMenu extends ModuleMiniMenu
 		{
 			$fieldset->add_field(new FormFieldRadioChoice('single_vote', $this->lang['poll.vote.single.choice'], [],
 			$answers_list['single'],
-			array('class' => 'full-label')
+			['class' => 'full-label']
 			));
 		}
 		elseif ($item->get_answers_type() == 2)
 		{
 			$fieldset->add_field(new FormFieldMultipleCheckbox('multiple_vote', $this->lang['poll.vote.multiple.choice'], [],
 			$answers_list['multiple'],
-			array('class' => 'full-label')
+			['class' => 'full-label']
 			));
 		}
 

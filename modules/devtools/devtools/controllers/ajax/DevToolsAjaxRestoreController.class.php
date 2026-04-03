@@ -14,7 +14,7 @@ class DevToolsAjaxRestoreController extends AbstractController
     public function execute(HTTPRequestCustom $request)
     {
         if (!DevToolsAuthorizationsService::check_authorizations()->moderation())
-            return new JSONResponse(array('success' => false, 'error' => 'Unauthorized'), 403);
+            return new JSONResponse(['success' => false, 'error' => 'Unauthorized'], 403);
 
         $action = $request->get_string('action', 'list');
 
@@ -30,7 +30,7 @@ class DevToolsAjaxRestoreController extends AbstractController
                 return $this->action_reinstall($request);
 
             default:
-                return new JSONResponse(array('success' => false, 'error' => 'Unknown action'));
+                return new JSONResponse(['success' => false, 'error' => 'Unknown action']);
         }
     }
 
@@ -38,20 +38,20 @@ class DevToolsAjaxRestoreController extends AbstractController
     {
         $backups = DevToolsBackupService::list_backups();
 
-        $result = array();
+        $result = [];
         foreach ($backups as $b)
         {
-            $result[] = array(
+            $result[] = [
                 'module_id' => $b['module_id'],
                 'filename'  => $b['filename'],
                 'date'      => date('d/m/Y H:i:s', $b['timestamp']),
                 'size'      => self::format_size($b['size']),
                 'installed' => ModulesManager::is_module_installed($b['module_id']),
                 'has_folder'=> is_dir(PATH_TO_ROOT . '/modules/' . $b['module_id']),
-            );
+            ];
         }
 
-        return new JSONResponse(array('success' => true, 'backups' => $result));
+        return new JSONResponse(['success' => true, 'backups' => $result]);
     }
 
     private function action_download(HTTPRequestCustom $request)
@@ -62,7 +62,7 @@ class DevToolsAjaxRestoreController extends AbstractController
         $filepath = PATH_TO_ROOT . '/cache/backup/' . $module_id . '/' . $filename;
 
         if (!file_exists($filepath))
-            return new JSONResponse(array('success' => false, 'error' => 'File not found'));
+            return new JSONResponse(['success' => false, 'error' => 'File not found']);
 
         // Serve file as download
         header('Content-Type: application/octet-stream');
@@ -78,13 +78,13 @@ class DevToolsAjaxRestoreController extends AbstractController
         $filename  = preg_replace('/[^a-zA-Z0-9_\-\.]/', '', $request->get_string('filename', ''));
 
         if (empty($module_id))
-            return new JSONResponse(array('success' => false, 'error' => 'Missing module identifier'));
+            return new JSONResponse(['success' => false, 'error' => 'Missing module identifier']);
 
         if (!is_dir(PATH_TO_ROOT . '/modules/' . $module_id))
-            return new JSONResponse(array('success' => false, 'error' => 'Module folder not found — download it first from the Remote Repositories tab'));
+            return new JSONResponse(['success' => false, 'error' => 'Module folder not found — download it first from the Remote Repositories tab']);
 
         if (ModulesManager::is_module_installed($module_id))
-            return new JSONResponse(array('success' => false, 'error' => 'Module already installed'));
+            return new JSONResponse(['success' => false, 'error' => 'Module already installed']);
 
         $result = ModulesManager::install_module($module_id);
 
@@ -93,7 +93,7 @@ class DevToolsAjaxRestoreController extends AbstractController
             case ModulesManager::MODULE_INSTALLED:
                 $module = ModulesManager::get_module($module_id);
                 HooksService::execute_hook_typed_action('install', 'module', $module_id, array_merge(
-                    array('title' => $module->get_configuration()->get_name(), 'url' => ''),
+                    ['title' => $module->get_configuration()->get_name(), 'url' => ''],
                     $module->get_configuration()->get_properties()
                 ));
 
@@ -105,26 +105,26 @@ class DevToolsAjaxRestoreController extends AbstractController
                     {
                         $sql_error = $this->execute_sql_file($filepath);
                         if ($sql_error)
-                            return new JSONResponse(array('success' => true, 'warning' => 'Module installed but SQL restoration failed: ' . $sql_error));
+                            return new JSONResponse(['success' => true, 'warning' => 'Module installed but SQL restoration failed: ' . $sql_error]);
                     }
                 }
 
-                return new JSONResponse(array('success' => true));
+                return new JSONResponse(['success' => true]);
 
             case ModulesManager::MODULE_ALREADY_INSTALLED:
-                return new JSONResponse(array('success' => false, 'error' => 'Module already installed'));
+                return new JSONResponse(['success' => false, 'error' => 'Module already installed']);
 
             case ModulesManager::CONFIG_CONFLICT:
-                return new JSONResponse(array('success' => false, 'error' => 'Configuration conflict'));
+                return new JSONResponse(['success' => false, 'error' => 'Configuration conflict']);
 
             case ModulesManager::PHP_VERSION_CONFLICT:
-                return new JSONResponse(array('success' => false, 'error' => 'Incompatible PHP version'));
+                return new JSONResponse(['success' => false, 'error' => 'Incompatible PHP version']);
 
             case ModulesManager::PHPBOOST_VERSION_CONFLICT:
-                return new JSONResponse(array('success' => false, 'error' => 'Incompatible PHPBoost version'));
+                return new JSONResponse(['success' => false, 'error' => 'Incompatible PHPBoost version']);
 
             default:
-                return new JSONResponse(array('success' => false, 'error' => 'Erreur d\'installation'));
+                return new JSONResponse(['success' => false, 'error' => 'Erreur d\'installation']);
         }
     }
 
@@ -145,7 +145,7 @@ class DevToolsAjaxRestoreController extends AbstractController
         try
         {
             $querier = PersistenceContext::get_querier();
-            $truncated = array();
+            $truncated = [];
 
             foreach ($statements as $statement)
             {

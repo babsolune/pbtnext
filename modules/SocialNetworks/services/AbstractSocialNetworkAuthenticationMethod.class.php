@@ -18,19 +18,19 @@ abstract class AbstractSocialNetworkAuthenticationMethod extends AuthenticationM
 	/**
 	 * {@inheritDoc}
 	 */
-	public function associate($user_id, $data = array())
+	public function associate($user_id, $data = [])
 	{
 		if (!$data)
 			$data = $this->get_user_data();
 
 		if ($data)
 		{
-			$authentication_method_columns = array(
+			$authentication_method_columns = [
 				'user_id' => $user_id,
 				'method' => $this->get_external_authentication()->get_authentication_id(),
 				'identifier' => $data['id'],
 				'data' => TextHelper::serialize($data)
-			);
+			];
 			try {
 				PersistenceContext::get_querier()->insert(DB_TABLE_AUTHENTICATION_METHOD, $authentication_method_columns);
 			} catch (SQLQuerierException $ex) {
@@ -49,13 +49,13 @@ abstract class AbstractSocialNetworkAuthenticationMethod extends AuthenticationM
 	{
 		$querier = PersistenceContext::get_querier();
 
-		if ($querier->count(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id', array('user_id' => $user_id)) > 1)
+		if ($querier->count(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id', ['user_id' => $user_id]) > 1)
 		{
 			try {
-				$querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id AND method=:method', array(
+				$querier->delete(DB_TABLE_AUTHENTICATION_METHOD, 'WHERE user_id=:user_id AND method=:method', [
 					'user_id' => $user_id,
 					'method' => $this->get_external_authentication()->get_authentication_id()
-				));
+				]);
 			} catch (SQLQuerierException $ex) {
 				throw new IllegalArgumentException('User Id ' . $user_id .
 					' is already dissociated with an authentication method [' . $ex->getMessage() . ']');
@@ -76,12 +76,12 @@ abstract class AbstractSocialNetworkAuthenticationMethod extends AuthenticationM
 		if ($data)
 		{
 			try {
-				$user_id = $querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', 'WHERE method=:method AND identifier=:identifier',  array('method' => $this->get_external_authentication()->get_authentication_id(), 'identifier' => $data['id']));
+				$user_id = $querier->get_column_value(DB_TABLE_AUTHENTICATION_METHOD, 'user_id', 'WHERE method=:method AND identifier=:identifier',  ['method' => $this->get_external_authentication()->get_authentication_id(), 'identifier' => $data['id']]);
 			} catch (RowNotFoundException $e) {
 
 				if (!empty($data['email']))
 				{
-					$email_exists = $querier->row_exists(DB_TABLE_MEMBER, 'WHERE email=:email', array('email' => $data['email']));
+					$email_exists = $querier->row_exists(DB_TABLE_MEMBER, 'WHERE email=:email', ['email' => $data['email']]);
 					if ($email_exists || !AppContext::get_current_user()->is_guest())
 					{
 						if (!AppContext::get_current_user()->is_guest())
@@ -108,7 +108,7 @@ abstract class AbstractSocialNetworkAuthenticationMethod extends AuthenticationM
 							$user->set_email($data['email']);
 
 							$auth_method = new static();
-							$fields_data = !empty($data['picture_url']) ? array('user_avatar' => $data['picture_url']) : array();
+							$fields_data = !empty($data['picture_url']) ? ['user_avatar' => $data['picture_url']] : [];
 
 							return UserService::create($user, $auth_method, $fields_data, $data);
 						}

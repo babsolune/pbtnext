@@ -15,23 +15,23 @@ class GuestbookModuleUpdateVersion extends ModuleUpdateVersion
 	{
 		parent::__construct('guestbook');
 
-		self::$delete_old_files_list = array(
+		self::$delete_old_files_list = [
 			'/phpboost/GuestbookHomePageExtensionPoint.class.php',
 			'/phpboost/GuestbookMessagesCache.class.php',
 			'/phpboost/GuestbookTreeLinks.class.php',
 			'/services/GuestbookMessage.class.php',
 			'/util/AdminGuestbookDisplayResponse.class.php'
-		);
+		];
 
-		$this->content_tables = array(PREFIX . 'guestbook');
-		$this->database_columns_to_modify = array(
-			array(
+		$this->content_tables = [PREFIX . 'guestbook'];
+		$this->database_columns_to_modify = [
+			[
 				'table_name' => PREFIX . 'guestbook',
-				'columns' => array(
+				'columns' => [
 					'contents' => 'content MEDIUMTEXT',
-				)
-			)
-		);
+				]
+			]
+		];
 	}
 }
 ?>

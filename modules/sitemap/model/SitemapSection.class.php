@@ -18,7 +18,7 @@ class SitemapSection extends SitemapElement
 	/**
 	 * @var SitemapElement[] List of the elements contained by the module map
 	 */
-	protected $elements = array();
+	protected $elements = [];
 
 	/**
 	 * @desc Builds a SitemapSection object
@@ -96,12 +96,12 @@ class SitemapSection extends SitemapElement
 		//We get the stream in which we are going to write
 		$template = $export_config->get_section_stream();
 
-		$template->put_all(array(
+		$template->put_all([
 			'SECTION_NAME' => TextHelper::htmlspecialchars($this->get_name(), ENT_QUOTES),
             'SECTION_URL' => !empty($this->link) ? $this->link->get_url() : '',
 			'DEPTH' => $this->depth,
             'C_SECTION' => true
-		));
+		]);
 
 		if ($this->link != null)
 		{
@@ -110,9 +110,9 @@ class SitemapSection extends SitemapElement
 
 		foreach ($this->elements as $element)
 		{
-			$template->assign_block_vars('element', array(), array(
+			$template->assign_block_vars('element', [], [
 				'ELEMENT' => $element->export($export_config)
-			));
+			]);
 		}
 		return $template;
 	}

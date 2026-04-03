@@ -38,7 +38,7 @@ if (preg_match('`([a-z]+)_([a-z]+)`u', $g_sort, $array_match))
 	$g_mode = $array_match[2];
 }
 else
-	list($g_type, $g_mode) = array('date', 'desc');
+	list($g_type, $g_mode) = ['date', 'desc'];
 
 $Gallery = new Gallery();
 
@@ -179,7 +179,7 @@ elseif ($g_add)
 
 	//Gestion erreur.
 	$get_error = $request->get_getvalue('error', '');
-	$array_error = array('e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_max_dimension', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_unsupported_format', 'e_unabled_create_pics', 'e_error_resize', 'e_no_graphic_support', 'e_unabled_incrust_logo', 'delete_thumbnails', 'upload_limit');
+	$array_error = ['e_upload_invalid_format', 'e_upload_max_weight', 'e_upload_max_dimension', 'e_upload_error', 'e_upload_php_code', 'e_upload_failed_unwritable', 'e_upload_already_exist', 'e_unlink_disabled', 'e_unsupported_format', 'e_unabled_create_pics', 'e_error_resize', 'e_no_graphic_support', 'e_unabled_incrust_logo', 'delete_thumbnails', 'upload_limit'];
 	if (in_array($get_error, $array_error))
 		$view->put('MESSAGE_HELPER', MessageHelper::display(LangLoader::get_message($get_error, 'errors'), MessageHelper::WARNING));
 
@@ -189,19 +189,19 @@ elseif ($g_add)
 	if (!empty($g_idpics))
 	{
 		try {
-			$imageup = PersistenceContext::get_querier()->select_single_row(GallerySetup::$gallery_table, array('id_category', 'name', 'path'), 'WHERE id = :id', array('id' => $g_idpics));
+			$imageup = PersistenceContext::get_querier()->select_single_row(GallerySetup::$gallery_table, ['id_category', 'name', 'path'], 'WHERE id = :id', ['id' => $g_idpics]);
 		} catch (RowNotFoundException $e) {
 			$error_controller = PHPBoostErrors::unexisting_element();
 			DispatchManager::redirect($error_controller);
 		}
 
-		$view->assign_block_vars('image_up', array(
+		$view->assign_block_vars('image_up', [
 			'NAME'          => stripslashes($imageup['name']),
 			'ID'            => $g_idpics,
 			'PATH'          => $imageup['path'],
 			'ID_CATEGORY'   => $imageup['id_category'],
 			'CATEGORY_NAME' => $categories[$imageup['id_category']]->get_name(),
-		));
+		]);
 	}
 
 	//Affichage du quota d'image uploadée.
@@ -222,15 +222,15 @@ elseif ($g_add)
 		}
 		$nbr_upload_pics = $Gallery->get_nbr_upload_pics(AppContext::get_current_user()->get_id());
 
-		$view->put_all(array(
+		$view->put_all([
 			'CURRENT_ITEMS_NUMBER' => $nbr_upload_pics,
 			'MAX_ITEMS_NUMBER'     => $l_pics_quota
-		));
+		]);
 	}
 
 	$search_category_children_options = new SearchCategoryChildrensOptions();
 	$search_category_children_options->add_authorizations_bits(Category::WRITE_AUTHORIZATIONS);
-	$view->put_all(array(
+	$view->put_all([
 		'CATEGORIES_TREE'    => CategoriesService::get_categories_manager('gallery')->get_select_categories_form_field('cat', LangLoader::get_message('common.category', 'common-lang'), $id_category, $search_category_children_options)->display()->render(),
 		'MAX_WIDTH'          => $config->get_max_width(),
 		'MAX_HEIGHT'         => $config->get_max_height(),
@@ -240,7 +240,7 @@ elseif ($g_add)
 		'IMG_FORMAT'         => 'JPG, PNG, GIF',
 
 		'U_GALLERY_ACTION_ADD' => GalleryUrlBuilder::get_link_cat_add($id_category,null,AppContext::get_session()->get_token()),
-	));
+	]);
 
 	$view->display();
 }

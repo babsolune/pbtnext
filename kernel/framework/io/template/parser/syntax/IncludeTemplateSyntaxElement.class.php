@@ -28,7 +28,7 @@ class IncludeTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	private function do_parse()
 	{
-		$matches = array();
+		$matches = [];
         $this->output->write('\';');
 		if ($this->input->consume_next('#\s+INCLUDEFILE (?P<file>[\w_/.]+)\s+#', '', $matches))
 		{

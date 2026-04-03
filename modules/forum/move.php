@@ -37,7 +37,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 	$view->add_lang($lang);
 
 	try {
-		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id_category', 'title'), 'WHERE id=:id', array('id' => $id_get));
+		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', ['id_category', 'title'], 'WHERE id=:id', ['id' => $id_get]);
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
@@ -50,7 +50,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 	}
 
 	try {
-		$cat = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_cats', array('id', 'name'), 'WHERE id=:id', array('id' => $topic['id_category']));
+		$cat = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_cats', ['id', 'name'], 'WHERE id=:id', ['id' => $topic['id_category']]);
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
@@ -86,7 +86,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 	//Listes les utilisateurs en ligne.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '" ."/forum/%'");
 
-	$vars_tpl = array(
+	$vars_tpl = [
 		'C_USER_CONNECTED'      => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 		'C_NO_USER_ONLINE'      => (($total_online - $total_visit) == 0),
 
@@ -111,7 +111,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 		'L_MODO'   => ($total_modo > 1) ? $lang['user.moderators']    : $lang['user.moderator'],
 		'L_MEMBER' => ($total_member > 1) ? $lang['user.members'] : $lang['user.member'],
 		'L_GUEST'  => ($total_visit > 1) ? $lang['user.guests'] : $lang['user.guest'],
-	);
+	];
 
 	$view->put_all($vars_tpl);
 	$top_view->put_all($vars_tpl);
@@ -124,7 +124,7 @@ if (!empty($id_get)) //Déplacement du sujet.
 }
 elseif (!empty($id_post)) // Moving topic
 {
-	$id_category = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'id_category', 'WHERE id = :id', array('id' => $id_post));
+	$id_category = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_topics", 'id_category', 'WHERE id = :id', ['id' => $id_post]);
 	if (ForumAuthorizationsService::check_authorizations($id_category)->moderation()) //Accès en édition
 	{
 		$to = $request->get_postint('to', $id_category); //Catégorie cible.
@@ -158,14 +158,14 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	$idm = !empty($id_get_msg) ? $id_get_msg : $id_post_msg;
 
 	try {
-		$msg = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', array('idtopic', 'content'), 'WHERE id=:id', array('id' => $idm));
+		$msg = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', ['idtopic', 'content'], 'WHERE id=:id', ['id' => $idm]);
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
 	}
 
 	try {
-		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id_category', 'title'), 'WHERE id=:id', array('id' => $msg['idtopic']));
+		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', ['id_category', 'title'], 'WHERE id=:id', ['id' => $msg['idtopic']]);
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
@@ -177,7 +177,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		DispatchManager::redirect($error_controller);
 	}
 
-	$id_first = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'MIN(id)', 'WHERE idtopic = :id', array('id' => $msg['idtopic']));
+	$id_first = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'MIN(id)', 'WHERE idtopic = :id', ['id' => $msg['idtopic']]);
 	//Scindage du premier message interdite.
 	if ($id_first == $idm)
 	{
@@ -186,7 +186,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	}
 
 	try {
-		$cat = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_cats', array('id', 'name'), 'WHERE id=:id', array('id' => $topic['id_category']));
+		$cat = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_cats', ['id', 'name'], 'WHERE id=:id', ['id' => $topic['id_category']]);
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
@@ -227,7 +227,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 	$editor = AppContext::get_content_formatting_service()->get_default_editor();
 	$editor->set_identifier('content');
 
-	$vars_tpl = array(
+	$vars_tpl = [
 		'C_FORUM_CUT_CAT'  => true,
 
 		'FORUM_NAME'       => $config->get_forum_name() . ' : ' . $lang['cut_topic'],
@@ -239,7 +239,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 
 		'U_CATEGORY'       => 'forum' . url('.php?id=' . $cat['id'], '-' . $cat['id'] . '.php'),
 		'U_TITLE_T'        => 'topic' . url('.php?id=' . $msg['idtopic'], '-' . $msg['idtopic'] . '.php'),
-	);
+	];
 
 	if (empty($post_topic))
 	{
@@ -247,14 +247,14 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		$nbr_poll_field = 0;
 		for ($i = 0; $i < 5; $i++)
 		{
-			$view->assign_block_vars('answers_poll', array(
+			$view->assign_block_vars('answers_poll', [
 				'ID'     => $i,
 				'ANSWER' => ''
-			));
+			]);
 			$nbr_poll_field++;
 		}
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_FORUM_POST_TYPE'      => true,
 			'C_ADD_POLL_FIELD'       => true,
 			'C_SIMPLE_POLL_SELECTED' => true,
@@ -266,13 +266,13 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 			'CONTENT'                => FormatingHelper::unparse(stripslashes($msg['content'])),
 			'IDM'                    => $id_get_msg,
 			'NBR_POLL_FIELD'         => $nbr_poll_field,
-		));
+		]);
 	}
 
 	//Listes les utilisateurs en ligne.
 	list($users_list, $total_admin, $total_modo, $total_member, $total_visit, $total_online) = forum_list_user_online("AND s.location_script LIKE '" ."/forum/%'");
 
-	$vars_tpl = array_merge($vars_tpl, array(
+	$vars_tpl = array_merge($vars_tpl, [
 		'C_USER_CONNECTED'      => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 
 		'TOTAL_ONLINE'          => $total_online,
@@ -288,7 +288,7 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 		'L_MODO'   => ($total_modo > 1) ? $lang['user.moderators']    : $lang['user.moderator'],
 		'L_MEMBER' => ($total_member > 1) ? $lang['user.members'] : $lang['user.member'],
 		'L_GUEST'  => ($total_visit > 1) ? $lang['user.guests'] : $lang['user.guest'],
-	));
+	]);
 
 	$view->put_all($vars_tpl);
 	$top_view->put_all($vars_tpl);
@@ -302,14 +302,14 @@ elseif ((!empty($id_get_msg) || !empty($id_post_msg)) && empty($post_topic)) //C
 elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 {
 	try {
-		$msg = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', array('idtopic', 'user_id', 'timestamp', 'content'), 'WHERE id=:id', array('id' => $id_post_msg));
+		$msg = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_msg', ['idtopic', 'user_id', 'timestamp', 'content'], 'WHERE id=:id', ['id' => $id_post_msg]);
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
 	}
 
 	try {
-		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id_category', 'title', 'last_user_id', 'last_msg_id', 'last_timestamp'), 'WHERE id=:id', array('id' => $msg['idtopic']));
+		$topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', ['id_category', 'title', 'last_user_id', 'last_msg_id', 'last_timestamp'], 'WHERE id=:id', ['id' => $msg['idtopic']]);
 	} catch (RowNotFoundException $e) {
 		$error_controller = PHPBoostErrors::unexisting_element();
 		DispatchManager::redirect($error_controller);
@@ -323,7 +323,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 		DispatchManager::redirect($error_controller);
 	}
 
-	$id_first = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'MIN(id)', 'WHERE idtopic = :id', array('id' => $msg['idtopic']));
+	$id_first = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'MIN(id)', 'WHERE idtopic = :id', ['id' => $msg['idtopic']]);
 	//Scindage du premier message interdite.
 	if ($id_first == $id_post_msg)
 	{
@@ -354,7 +354,7 @@ elseif (!empty($id_post_msg) && !empty($post_topic)) //Scindage du topic
 				$poll_type = (int)$request->get_postvalue('poll_type', 0);
 				$poll_type = ($poll_type == 0 || $poll_type == 1) ? $poll_type : 0;
 
-				$answers = array();
+				$answers = [];
 				$nbr_votes = 0;
 				for ($i = 0; $i < 20; $i++)
 				{

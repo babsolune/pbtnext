@@ -47,99 +47,99 @@ class AdminSmalladsItemsConfigController extends DefaultAdminModuleController
 		$fieldset->add_field(new FormFieldSelectCurrencies('currency', $this->lang['smallads.currency'], $this->config->get_currency()));
 
 		$fieldset->add_field(new FormFieldNumberEditor('display_delay_before_delete', $this->lang['smallads.delay.before.archiving'], $this->config->get_display_delay_before_delete(),
-			array(
+			[
 				'min' => 1, 'max' => 7, 'required' => true,
 				'description' => $this->lang['smallads.delay.before.archiving.clue']
-			),
-			array(new FormFieldConstraintIntegerRange(1, 7))
+			],
+			[new FormFieldConstraintIntegerRange(1, 7)]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('max_weeks_number_displayed', $this->lang['smallads.limit.max.weeks'], $this->config->is_max_weeks_number_displayed(),
-			array(
+			[
 				'class'=> 'custom-checkbox',
-				'events' => array('click' => '
+				'events' => ['click' => '
 					if (HTMLForms.getField("max_weeks_number_displayed").getValue()) {
 						HTMLForms.getField("max_weeks_number").enable();
 					} else {
 						HTMLForms.getField("max_weeks_number").disable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('max_weeks_number', $this->lang['smallads.max.weeks'], $this->config->get_max_weeks_number(),
-			array(
+			[
 				'min' => 1, 'max' => 52, 'required' => true,
 				'hidden' => !$this->config->is_max_weeks_number_displayed()
-			),
-			array(new FormFieldConstraintIntegerRange(1, 52))
+			],
+			[new FormFieldConstraintIntegerRange(1, 52)]
 		));
 
 		$fieldset->add_field(new FormFieldSpacer('1_separator', ''));
 
 		$fieldset->add_field(new FormFieldCheckbox('contact_level', $this->lang['smallads.contact.to.visitors'], $this->config->is_user_allowed(),
-			array(
+			[
 				'class'=> 'custom-checkbox',
 				'description' => $this->lang['smallads.contact.to.visitors.clue']
-			)
+			]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_email_enabled', $this->lang['smallads.enable.email.contact'], $this->config->is_email_displayed(),
-			array('class'=> 'custom-checkbox')
+			['class'=> 'custom-checkbox']
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_pm_enabled', $this->lang['smallads.enable.pm.contact'], $this->config->is_pm_displayed(),
-			array('class'=> 'custom-checkbox')
+			['class'=> 'custom-checkbox']
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_phone_enabled', $this->lang['smallads.enable.phone.contact'], $this->config->is_phone_displayed(),
-			array('class'=> 'custom-checkbox')
+			['class'=> 'custom-checkbox']
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('enabled_navigation_links', $this->lang['smallads.enable.related.links'], $this->config->get_enabled_navigation_links(),
-			array(
+			[
 				'class' => 'custom-checkbox',
 				'description' => $this->lang['smallads.related.links.clue']
-			)
+			]
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('display_location_enabled', $this->lang['smallads.enable.location'], $this->config->is_location_displayed(),
-			array('class'=> 'custom-checkbox')
+			['class'=> 'custom-checkbox']
 		));
 
 		$fieldset->add_field(new FormFieldCheckbox('enabled_items_suggestions', $this->lang['smallads.enable.suggestions'], $this->config->get_enabled_items_suggestions(),
-			array(
+			[
 				'class' => 'custom-checkbox',
-				'events' => array('click' => '
+				'events' => ['click' => '
 					if (HTMLForms.getField("enabled_items_suggestions").getValue()) {
 						HTMLForms.getField("suggested_items_nb").enable();
 					} else {
 						HTMLForms.getField("suggested_items_nb").disable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$fieldset->add_field(new FormFieldNumberEditor('suggested_items_nb', $this->lang['smallads.suggestions.number'], $this->config->get_suggested_items_nb(),
-			array(
+			[
 				'min' => 1, 'max' => 10,
 				'hidden' => !$this->config->get_enabled_items_suggestions()
-			),
-			array(new FormFieldConstraintIntegerRange(1, 10))
+			],
+			[new FormFieldConstraintIntegerRange(1, 10)]
 		));
 
 		$fieldset->add_field(new FormFieldSpacer('2_separator', ''));
 
 		$fieldset->add_field(new SmalladsFormFieldSmalladType('smallad_type', $this->lang['smallads.type.add'], $this->config->get_smallad_types(),
-			array('class' => ' full-field')
+			['class' => ' full-field']
 		));
 
 		// $fieldset->add_field(new SmalladsFormFieldBrand('smallad_brand', $this->lang['smallads.brand.add'], $this->config->get_brands(),
-		// 	array('class' => ' full-field')
+		// 	['class' => ' full-field']
 		// ));
 
         $fieldset->add_field(new FormFieldRichTextEditor('default_content', $this->lang['smallads.default.content'], $this->config->get_default_content(),
-			array('rows' => 8, 'cols' => 47)
+			['rows' => 8, 'cols' => 47]
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -201,7 +201,7 @@ class AdminSmalladsItemsConfigController extends DefaultAdminModuleController
 
 		SmalladsConfig::save();
 		CategoriesService::get_categories_manager()->regenerate_cache();
-		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())) . ' - ' . $this->lang['smallads.items.config'], 'url' => ModulesUrlBuilder::configuration()->rel()));
+		HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]) . ' - ' . $this->lang['smallads.items.config'], 'url' => ModulesUrlBuilder::configuration()->rel()]);
 	}
 }
 ?>

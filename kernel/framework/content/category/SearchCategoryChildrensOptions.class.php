@@ -15,9 +15,9 @@
 
 class SearchCategoryChildrensOptions
 {
-	private $authorizations_bits = array();
+	private $authorizations_bits = [];
 	private $check_all_bits = false;
-	private $excluded_categories_ids = array();
+	private $excluded_categories_ids = [];
 	private $excluded_categories_recursive = true;
 	private $enable_recursive_exploration = true;
 	private $allow_only_member_level_authorizations = false;
@@ -41,7 +41,7 @@ class SearchCategoryChildrensOptions
 		}
 		else
 		{
-			$authorized_bits = array();
+			$authorized_bits = [];
 			foreach ($this->authorizations_bits as $bit)
 			{
 				if (($this->allow_only_member_level_authorizations && Authorizations::check_auth(RANK_TYPE, User::MEMBER_LEVEL, $category->get_authorizations(), $bit)) || $category->check_auth($bit))

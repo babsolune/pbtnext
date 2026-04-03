@@ -26,7 +26,7 @@ abstract class CategoriesCache implements CacheData
 	public static function __static()
 	{
 		$module_id = self::$module_id ? self::$module_id : Environment::get_running_module_name();
-		if (!in_array($module_id, array('admin', 'kernel', 'user')))
+		if (!in_array($module_id, ['admin', 'kernel', 'user']))
 		{
 			self::$module_id       = $module_id;
 			self::$module          = ModulesManager::get_module(self::$module_id);
@@ -60,7 +60,7 @@ abstract class CategoriesCache implements CacheData
 		$this->categories[Category::ROOT_CATEGORY] = $root_category;
 		if ($categories_cache->get_table_name())
 		{
-			$result = PersistenceContext::get_querier()->select_rows($categories_cache->get_table_name(), array('*'), 'ORDER BY id_parent, c_order');
+			$result = PersistenceContext::get_querier()->select_rows($categories_cache->get_table_name(), ['*'], 'ORDER BY id_parent, c_order');
 			while ($row = $result->fetch())
 			{
 				$category = new $category_class();
@@ -134,9 +134,9 @@ abstract class CategoriesCache implements CacheData
 		return $this->categories;
 	}
 
-	public function get_children($id_category, $allowed_categories_filter = array())
+	public function get_children($id_category, $allowed_categories_filter = [])
 	{
-		$children = array();
+		$children = [];
 		foreach ($this->categories as $id => $category)
 		{
 			if ($category->get_id_parent() == $id_category && $id != Category::ROOT_CATEGORY)
@@ -198,7 +198,7 @@ abstract class CategoriesCache implements CacheData
 	 */
 	public static function load($module_id = '')
 	{
-		if (!in_array($module_id, array('admin', 'kernel', 'user')))
+		if (!in_array($module_id, ['admin', 'kernel', 'user']))
 			return CacheManager::load(get_called_class(), self::get_class($module_id)->get_module_identifier(), 'categories');
 	}
 
@@ -207,7 +207,7 @@ abstract class CategoriesCache implements CacheData
 	 */
 	public static function invalidate($module_id = '')
 	{
-		if (!in_array($module_id, array('admin', 'kernel', 'user')))
+		if (!in_array($module_id, ['admin', 'kernel', 'user']))
 			CacheManager::invalidate(self::get_class($module_id)->get_module_identifier(), 'categories');
 	}
 

@@ -40,7 +40,7 @@ class BroadcastModuleMiniMenu extends ModuleMiniMenu
 
 			$config = BroadcastConfig::load();
 
-			$view->put_all(array(
+			$view->put_all([
 				'C_HAS_LOGO'  => !empty($config->get_broadcast_logo()),
 				'C_ITEMS'     => !empty(BroadcastCache::load()->get_items()),
 
@@ -54,7 +54,7 @@ class BroadcastModuleMiniMenu extends ModuleMiniMenu
 				'U_PROG'   => BroadcastUrlBuilder::home()->rel(),
 				'U_LOGO'   => $config->get_broadcast_logo()->rel(),
 				'U_STREAM' => $config->get_broadcast_url()->rel()
-			));
+			]);
 
 			return $view->render();
 		}

@@ -12,11 +12,11 @@ class SearchWeightings
 {
 	const DEFAULT_WEIGHTING = 1;
 
-	private $weightings = array();
+	private $weightings = [];
 
 	public function get_modules_weighting()
 	{
-		$weighting = array();
+		$weighting = [];
 		$provider_service = AppContext::get_extension_provider_service();
 		foreach ($provider_service->get_providers(SearchableExtensionPoint::EXTENSION_POINT) as $module_id => $provider)
 		{

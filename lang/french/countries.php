@@ -12,7 +12,7 @@
 #                     French                       #
 ####################################################
 
-$lang = array(
+$lang = [
 	'ad' => 'Andorre',
 	'ae' => 'Emirats Arabes Unis',
 	'af' => 'Afghanistan',
@@ -262,5 +262,5 @@ $lang = array(
 	'zm' => 'Zambie',
 	'zw' => 'Zimbabwe',
 	'other' => 'Autres'
-);
+];
 ?>

@@ -24,7 +24,7 @@ class FormFieldRanksSelect extends FormFieldSimpleSelectChoice
      * @param array $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
      * @param FormFieldConstraint List of the constraints
      */
-    public function __construct($id, $label, $value = 0, $field_options = array(), array $constraints = array())
+    public function __construct($id, $label, $value = 0, $field_options = [], array $constraints = [])
     {
         parent::__construct($id, $label, $value, $this->generate_options(), $field_options, $constraints);
     }
@@ -32,7 +32,7 @@ class FormFieldRanksSelect extends FormFieldSimpleSelectChoice
     private function generate_options()
 	{
 		$lang = LangLoader::get_all_langs();
-		$options = array();
+		$options = [];
 		$options[] = new FormFieldSelectChoiceOption($lang['user.member'], self::MEMBER);
 		$options[] = new FormFieldSelectChoiceOption($lang['user.moderator'], self::MODERATOR);
 		$options[] = new FormFieldSelectChoiceOption($lang['user.administrator'], self::ADMINISTRATOR);

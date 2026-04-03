@@ -31,12 +31,12 @@ class BugtrackerPMService
 
 			$author = $current_user->get_id() != User::VISITOR_LEVEL ? $current_user->get_display_name() : $lang['user.guest'];
 
-			$pm_content = StringVars::replace_vars($lang['pm.' . $pm_type . '.content'], array('author' => $author, 'id' => $bug_id)) . (!empty($message) ? ($pm_type != 'edit' ? StringVars::replace_vars($lang['pm.with_comment'], array('comment' => $message)) : StringVars::replace_vars($lang['pm.edit_fields'], array('fields' => $message))) : '') . ($pm_type != 'delete' ? StringVars::replace_vars($lang['pm.bug_link'], array('link' => BugtrackerUrlBuilder::detail($bug_id)->relative())) : '');
+			$pm_content = StringVars::replace_vars($lang['pm.' . $pm_type . '.content'], ['author' => $author, 'id' => $bug_id]) . (!empty($message) ? ($pm_type != 'edit' ? StringVars::replace_vars($lang['pm.with_comment'], ['comment' => $message]) : StringVars::replace_vars($lang['pm.edit_fields'], ['fields' => $message])) : '') . ($pm_type != 'delete' ? StringVars::replace_vars($lang['pm.bug_link'], ['link' => BugtrackerUrlBuilder::detail($bug_id)->relative()]) : '');
 
 			//Send the PM
 			PrivateMsg::start_conversation(
 				$recipient_id,
-				StringVars::replace_vars($lang['pm.' . $pm_type . '.title'], array('id' => $bug_id)),
+				StringVars::replace_vars($lang['pm.' . $pm_type . '.title'], ['id' => $bug_id]),
 				$pm_content,
 				-1,
 				PrivateMsg::SYSTEM_PM
@@ -51,7 +51,7 @@ class BugtrackerPMService
 	 * @param string $message (optional) Message to include in the PM
 	 * @param string[] $recipients_list (optional) Recipients to whom send the PM
 	 */
-	public static function send_PM_to_updaters($pm_type, $bug_id, $message = '', $recipients_list = array())
+	public static function send_PM_to_updaters($pm_type, $bug_id, $message = '', $recipients_list = [])
 	{
 		//Load configuration
 		$config = BugtrackerConfig::load();

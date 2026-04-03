@@ -10,14 +10,14 @@
 
 class SmalladsCache implements CacheData
 {
-	private $items = array();
+	private $items = [];
 
 	/**
 	 * {@inheritdoc}
 		*/
 	public function synchronize()
 	{
-		$this->items = array();
+		$this->items = [];
 		$now = new Date();
 
 		$result = PersistenceContext::get_querier()->select('
@@ -25,10 +25,10 @@ class SmalladsCache implements CacheData
 			FROM ' . SmalladsSetup::$smallads_table . ' smallads
 			WHERE (published = 1 OR (published = 2 AND publishing_start_date < :timestamp_now AND (publishing_end_date > :timestamp_now OR publishing_end_date = 0)))
 			ORDER BY creation_date DESC
-			LIMIT :module_mini_items_nb OFFSET 0', array(
+			LIMIT :module_mini_items_nb OFFSET 0', [
 				'timestamp_now' => $now->get_timestamp(),
 				'module_mini_items_nb' => (int)SmalladsConfig::load()->get_mini_menu_items_nb()
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{

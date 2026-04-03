@@ -25,14 +25,14 @@ class CommentsDAO
 	public static function delete_comments_by_topic($id_topic)
 	{
 		$condition = "WHERE id_topic = :id_topic";
-		$parameters = array('id_topic' => $id_topic);
+		$parameters = ['id_topic' => $id_topic];
 		self::$db_querier->delete(DB_TABLE_COMMENTS, $condition, $parameters);
 	}
 
 	public static function delete_comments_topic_module($module_id, $id_in_module)
 	{
 		$condition = "WHERE module_id = :module_id AND id_in_module = :id_in_module";
-		$parameters = array('module_id' => $module_id, 'id_in_module' => $id_in_module);
+		$parameters = ['module_id' => $module_id, 'id_in_module' => $id_in_module];
 		self::$db_querier->delete(DB_TABLE_COMMENTS, $condition, $parameters);
 	}
 
@@ -41,7 +41,7 @@ class CommentsDAO
 		if ($id_topics)
 		{
 			$condition= 'WHERE id_topic IN (' . implode(',', $id_topics) . ')';
-			$parameters= array('id_topics'=> $id_topics);
+			$parameters= ['id_topics'=> $id_topics];
 			self::$db_querier->delete(DB_TABLE_COMMENTS, $condition, $parameters);
 		}
 	}
@@ -49,7 +49,7 @@ class CommentsDAO
 	public static function delete_comment($comment_id)
 	{
 		$condition = "WHERE id = :id";
-		$parameters = array('id' => $comment_id);
+		$parameters = ['id' => $comment_id];
 		self::$db_querier->delete(DB_TABLE_COMMENTS, $condition, $parameters);
 	}
 
@@ -63,11 +63,11 @@ class CommentsDAO
 	{
 		if ($user_id !== '-1')
 		{
-			return self::$db_querier->get_column_value(DB_TABLE_COMMENTS, 'MAX(timestamp)', 'WHERE user_id=:user_id', array('user_id' => $user_id));
+			return self::$db_querier->get_column_value(DB_TABLE_COMMENTS, 'MAX(timestamp)', 'WHERE user_id=:user_id', ['user_id' => $user_id]);
 		}
 		else
 		{
-			return self::$db_querier->get_column_value(DB_TABLE_COMMENTS, 'MAX(timestamp)', 'WHERE user_ip=:user_ip', array('user_ip' => AppContext::get_request()->get_ip_address()));
+			return self::$db_querier->get_column_value(DB_TABLE_COMMENTS, 'MAX(timestamp)', 'WHERE user_ip=:user_ip', ['user_ip' => AppContext::get_request()->get_ip_address()]);
 		}
 	}
 
@@ -88,7 +88,7 @@ class CommentsDAO
 
 	public static function add_comment($id_topic, $message, $user_id, $pseudo, $user_ip, $visitor_email)
 	{
-		$columns = array(
+		$columns = [
 			'id_topic' => $id_topic,
 			'user_id' => $user_id,
 			'visitor_email' => TextHelper::htmlspecialchars($visitor_email),
@@ -96,20 +96,20 @@ class CommentsDAO
 			'user_ip' => TextHelper::htmlspecialchars($user_ip),
 			'timestamp' => time(),
 			'message' => $message
-		);
+		];
 		$result = self::$db_querier->insert(DB_TABLE_COMMENTS, $columns);
 		return $result->get_last_inserted_id();
 	}
 
 	public static function edit_comment($comment_id, $message)
 	{
-		$columns = array(
+		$columns = [
 			'message' => $message
-		);
+		];
 		$condition = "WHERE id = :id";
-		$parameters = array(
+		$parameters = [
 			'id' => $comment_id
-		);
+		];
 		self::$db_querier->update(DB_TABLE_COMMENTS, $columns, $condition, $parameters);
 	}
 }

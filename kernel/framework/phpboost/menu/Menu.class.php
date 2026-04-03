@@ -106,7 +106,7 @@ abstract class Menu
 	 * @access protected
 	 * @var Array<Filter> The filter list
 	 */
-	public $filters = array();
+	public $filters = [];
 	/**
 	 * @access protected
 	 * @var Template the template of the menu
@@ -171,12 +171,12 @@ abstract class Menu
 	 */
 	protected function assign_common_template_variables(Template $template)
 	{
-		$template->put_all(array(
+		$template->put_all([
 			'C_VERTICAL_BLOCK' => ($this->get_block() == Menu::BLOCK_POSITION__LEFT || $this->get_block() == Menu::BLOCK_POSITION__RIGHT),
 			'C_HIDDEN_WITH_SMALL_SCREENS' => $this->hidden_with_small_screens,
 			'C_PUSHMENU_DISABLED_BODY' => $this->disabled_body,
 			'C_PUSHMENU_PUSHED_CONTENT' => $this->pushed_content,
-		));
+		]);
 	}
 
 	/**
@@ -250,7 +250,7 @@ abstract class Menu
 	/**
 	 * @return array the authorization array $auth
 	 */
-	public function get_auth() { return is_array($this->auth) ? $this->auth : array('r-1' => self::MENU_AUTH_BIT, 'r0' => self::MENU_AUTH_BIT, 'r1' => self::MENU_AUTH_BIT); }
+	public function get_auth() { return is_array($this->auth) ? $this->auth : ['r-1' => self::MENU_AUTH_BIT, 'r0' => self::MENU_AUTH_BIT, 'r1' => self::MENU_AUTH_BIT]; }
 	/**
 	 * @return int the $id of the menu in the database
 	 */

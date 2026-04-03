@@ -187,7 +187,7 @@ class TeamSpeak3
    *
    * @var array
    */
-  protected static $escape_patterns = array(
+  protected static $escape_patterns = [
     "\\" => "\\\\", // backslash
     "/"  => "\\/",  // slash
     " "  => "\\s",  // whitespace
@@ -200,7 +200,7 @@ class TeamSpeak3
     "\r" => "\\r",  // carriage return
     "\t" => "\\t",  // horizontal tab
     "\v" => "\\v"   // vertical tab
-  );
+  ];
 
   /**
    * Factory for TeamSpeak3_Adapter_Abstract classes. $uri must be formatted as
@@ -241,7 +241,7 @@ class TeamSpeak3
     $uri = new TeamSpeak3_Helper_Uri($uri);
 
     $adapter = self::getAdapterName($uri->getScheme());
-    $options = array("host" => $uri->getHost(), "port" => $uri->getPort(), "timeout" => intval($uri->getQueryVar("timeout", 10)), "blocking" => intval($uri->getQueryVar("blocking", 1)));
+    $options = ["host" => $uri->getHost(), "port" => $uri->getPort(), "timeout" => intval($uri->getQueryVar("timeout", 10)), "blocking" => intval($uri->getQueryVar("blocking", 1))];
 
     self::loadClass($adapter);
 
@@ -467,7 +467,7 @@ class TeamSpeak3
 
     if(!class_exists("TeamSpeak3_Helper_Profiler"))
     {
-      spl_autoload_register(array(self::class, "autoload"));
+      spl_autoload_register([self::class, "autoload"]);
     }
 
     TeamSpeak3_Helper_Profiler::start();

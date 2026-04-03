@@ -33,7 +33,7 @@ class ServerStatusAjaxChangeServerDisplayController extends AbstractController
 			ServerStatusConfig::save();
 		}
 
-		return new JSONResponse(array('id' => $id, 'display' => $display));
+		return new JSONResponse(['id' => $id, 'display' => $display]);
 	}
 }
 ?>

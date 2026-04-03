@@ -79,7 +79,7 @@ class ModuleMap extends SitemapSection
 		if($module_icon->exists())
 			$is_picture = true;
 
-		$template->put_all(array(
+		$template->put_all([
 			'C_ICON_IS_PICTURE'   => $is_picture,
 			'MODULE_ID' => $this->get_module_id(),
 			'C_MODULE_ID' => $this->get_module_id() != '',
@@ -89,7 +89,7 @@ class ModuleMap extends SitemapSection
 			'FA_ICON' => $this->get_module_id() != '' ? ModulesManager::get_module($this->get_module_id())->get_configuration()->get_fa_icon() : 'fa fa-cube',
 			'DEPTH' => $this->depth,
             'C_MODULE_MAP' => true
-		));
+		]);
 
 		if ($this->link != null)
 		{
@@ -99,9 +99,9 @@ class ModuleMap extends SitemapSection
 		//We export all the elements contained by the module map
 		foreach ($this->elements as $element)
 		{
-			$template->assign_block_vars('element', array(), array(
+			$template->assign_block_vars('element', [], [
 				'ELEMENT' => $element->export($export_config)
-			));
+			]);
 		}
 		return $template;
 	}

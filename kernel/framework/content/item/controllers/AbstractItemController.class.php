@@ -14,7 +14,7 @@
 
 abstract class AbstractItemController extends DefaultModuleController
 {
-	protected $enabled_features = array();
+	protected $enabled_features = [];
 	protected $module_item;
 
 	public function __construct($module_id = '')
@@ -28,18 +28,18 @@ abstract class AbstractItemController extends DefaultModuleController
 		if (self::get_module_configuration()->feature_is_enabled('notation') && ContentManagementConfig::load()->module_notation_is_enabled(self::get_module()->get_id()))
 			$this->enabled_features[] = 'notation';
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'MODULE_ID'            => self::get_module()->get_id(),
 			'MODULE_NAME'          => self::get_module_configuration()->get_name(),
 			'ITEMS_PER_ROW'        => $this->config->get_items_per_row(),
 			'C_ENABLED_CATEGORIES' => self::get_module_configuration()->has_categories(),
 			'C_ENABLED_COMMENTS'   => in_array('comments', $this->enabled_features),
 			'C_ENABLED_NOTATION'   => in_array('notation', $this->enabled_features)
-		));
+		]);
 
 		if (self::get_module_configuration()->has_rich_config_parameters())
 		{
-			$this->view->put_all(array(
+			$this->view->put_all([
 				'C_GRID_VIEW'            => $this->config->get_display_type() == DefaultRichModuleConfig::GRID_VIEW,
 				'C_LIST_VIEW'            => $this->config->get_display_type() == DefaultRichModuleConfig::LIST_VIEW,
 				'C_TABLE_VIEW'           => $this->config->get_display_type() == DefaultRichModuleConfig::TABLE_VIEW,
@@ -52,14 +52,14 @@ abstract class AbstractItemController extends DefaultModuleController
 				'C_ENABLED_UPDATE_DATE'  => $this->config->get_update_date_displayed(),
 				'C_ENABLED_VIEWS'        => $this->config->get_views_number_enabled(),
 				'CATEGORIES_PER_ROW'     => $this->config->get_categories_per_row()
-			));
+			]);
 		}
 
 		// Automatically add module dedicated configuration parameters to template
 		$configuration_class_name = self::get_module_configuration()->get_configuration_name();
-		if (!in_array($configuration_class_name, array('DefaultModuleConfig', 'DefaultRichModuleConfig')))
+		if (!in_array($configuration_class_name, ['DefaultModuleConfig', 'DefaultRichModuleConfig']))
 		{
-			$configuration_variables = array();
+			$configuration_variables = [];
 			$kernel_configuration_class = new ReflectionClass('DefaultRichModuleConfig');
 			$configuration_class = new ReflectionClass($configuration_class_name);
 
@@ -120,7 +120,7 @@ abstract class AbstractItemController extends DefaultModuleController
 
 	protected function get_additional_view_parameters()
 	{
-		return array();
+		return [];
 	}
 	
 	protected function init_lang()

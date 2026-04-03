@@ -41,10 +41,10 @@ class CSSCacheConfig extends AbstractConfigData
 
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::ACTIVATED => true,
 			self::OPTIMIZATION_LEVEL => CSSFileOptimizer::HIGH_OPTIMIZATION
-		);
+		];
 	}
 
 	/**

@@ -40,7 +40,7 @@ trait EasyCssColorTrait
             $g = hexdec(TextHelper::substr($hex, 2, 2));
             $b = hexdec(TextHelper::substr($hex, 4, 2));
         }
-        $rgb = array($r, $g, $b);
+        $rgb = [$r, $g, $b];
         return implode(",", $rgb);
     }
 

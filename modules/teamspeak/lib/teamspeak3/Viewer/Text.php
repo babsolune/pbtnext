@@ -45,16 +45,16 @@ class TeamSpeak3_Viewer_Text implements TeamSpeak3_Viewer_Interface
    * @param  array $siblings
    * @return string
    */
-  public function fetchObject(TeamSpeak3_Node_Abstract $node, array $siblings = array())
+  public function fetchObject(TeamSpeak3_Node_Abstract $node, array $siblings = [])
   {
     $this->currObj = $node;
     $this->currSib = $siblings;
 
-    $args = array(
+    $args = [
       $this->getPrefix(),
       $this->getCorpusIcon(),
       $this->getCorpusName(),
-    );
+    ];
 
     return TeamSpeak3_Helper_String::factory($this->pattern)->arg($args);
   }

@@ -13,7 +13,7 @@
 
 abstract class AbstractConfigData implements ConfigData
 {
-	private $properties_map = array();
+	private $properties_map = [];
 
 	/**
 	 * Constructs a AbstractConfigData object

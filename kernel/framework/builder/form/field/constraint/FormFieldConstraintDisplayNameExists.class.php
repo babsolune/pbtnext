@@ -39,16 +39,16 @@ class FormFieldConstraintDisplayNameExists extends AbstractFormFieldConstraint
 	{
 		if (!empty($this->user_id))
 		{
-			return PersistenceContext::get_querier()->row_exists(DB_TABLE_MEMBER, 'WHERE display_name=:display_name AND user_id != :user_id', array(
+			return PersistenceContext::get_querier()->row_exists(DB_TABLE_MEMBER, 'WHERE display_name=:display_name AND user_id != :user_id', [
 				'display_name' => $field->get_value(),
 				'user_id' => $this->user_id
-			));
+			]);
 		}
 		else if ($field->get_value())
 		{
-			return PersistenceContext::get_querier()->row_exists(DB_TABLE_MEMBER, 'WHERE display_name=:display_name', array(
+			return PersistenceContext::get_querier()->row_exists(DB_TABLE_MEMBER, 'WHERE display_name=:display_name', [
 				'display_name' => $field->get_value()
-			));
+			]);
 		}
 		return false;
 	}

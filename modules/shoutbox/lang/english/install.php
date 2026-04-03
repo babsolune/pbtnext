@@ -12,8 +12,8 @@
 #                      English                     #
 ####################################################
 
-$lang = array(
+$lang = [
     'shoutbox_login' => 'PHPBoost',
     'shoutbox_content' => 'PHPBoost Team welcomes you on your website !'
-);
+];
 ?>

@@ -54,19 +54,19 @@ class AdminEasyCssThemeController extends ModuleController
 
         foreach ($obj_themes as $theme)
         {
-            $this->view->assign_block_vars('themes', array(
+            $this->view->assign_block_vars('themes', [
                 'NAME'    => $theme->get_id(),
                 'DEFAULT' => ($theme->get_id() === ThemesManager::get_default_theme()) ? true : false,
-            ));
+            ]);
 
             $theme_folder = new Folder(PATH_TO_ROOT . '/templates/' . $theme->get_id() . '/theme');
 
             foreach ($theme_folder->get_files('`\.css$`iu') as $file)
             {
-                $this->view->assign_block_vars('themes.css', array(
+                $this->view->assign_block_vars('themes.css', [
                     'NAME' => $file->get_name(),
                     'URL'  => EasyCssUrlBuilder::edit($theme->get_id(), $file->get_name_without_extension())->rel(),
-                ));
+                ]);
             }
         }
     }

@@ -17,11 +17,11 @@ class BugtrackerAjaxDeleteFilterController extends AbstractController
 		if (!empty($id))
 		{
 			//Delete filter
-			BugtrackerService::delete_filter("WHERE id=:id", array('id' => $id));
+			BugtrackerService::delete_filter("WHERE id=:id", ['id' => $id]);
 			$code = $id;
 		}
 
-		return new JSONResponse(array('code' => $code));
+		return new JSONResponse(['code' => $code]);
 	}
 }
 ?>

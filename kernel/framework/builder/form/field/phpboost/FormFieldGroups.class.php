@@ -19,7 +19,7 @@ class FormFieldGroups extends FormFieldMultipleSelectChoice
      * @param array $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
      * @param FormFieldConstraint List of the constraints
      */
-    public function __construct($id, $label, $value = 0, $field_options = array(), array $constraints = array())
+    public function __construct($id, $label, $value = 0, $field_options = [], array $constraints = [])
     {
         parent::__construct($id, $label, $value, $this->generate_options(), $field_options, $constraints);
     }
@@ -27,7 +27,7 @@ class FormFieldGroups extends FormFieldMultipleSelectChoice
     private function generate_options()
 	{
 		$groups = GroupsCache::load()->get_groups();
-		$options = array();
+		$options = [];
 		foreach ($groups as $id => $informations)
 		{
 			$options[] = new FormFieldSelectChoiceOption($informations['name'], $id);

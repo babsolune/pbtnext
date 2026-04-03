@@ -32,7 +32,7 @@ class OnlineExtensionPointProvider extends ExtensionPointProvider
 
 	public function menus()
 	{
-		return new ModuleMenus(array(new OnlineModuleMiniMenu()));
+		return new ModuleMenus([new OnlineModuleMiniMenu()]);
 	}
 
 	public function tree_links()
@@ -42,7 +42,7 @@ class OnlineExtensionPointProvider extends ExtensionPointProvider
 
 	public function url_mappings()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/online/index.php')));
+		return new UrlMappings([new DispatcherUrlMapping('/online/index.php')]);
 	}
 }
 ?>

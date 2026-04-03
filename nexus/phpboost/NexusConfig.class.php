@@ -17,7 +17,7 @@ class NexusConfig extends DefaultRichModuleConfig
 	 */
 	public function get_additional_default_values()
 	{
-		return array(
+		return [
 			self::ITEMS_PER_PAGE            => 10,
 			self::ITEMS_PER_ROW             => 1,
 			self::FULL_ITEM_DISPLAY         => true,
@@ -26,7 +26,7 @@ class NexusConfig extends DefaultRichModuleConfig
 			self::ROOT_CATEGORY_DESCRIPTION => '',
 			self::ITEMS_SUGGESTIONS_ENABLED => true,
 			self::ITEMS_NAVIGATION_ENABLED  => true
-		);
+		];
 	}
 }
 ?>

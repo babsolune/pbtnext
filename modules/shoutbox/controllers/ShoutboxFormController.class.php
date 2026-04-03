@@ -63,17 +63,17 @@ class ShoutboxFormController extends DefaultModuleController
 
 		if (!$current_user->check_level(User::MEMBER_LEVEL))
 		{
-			$fieldset->add_field(new FormFieldTextEditor('pseudo', $this->lang['form.name'], $this->get_item()->get_login(), array(
-				'required' => true, 'maxlength' => 25)
+			$fieldset->add_field(new FormFieldTextEditor('pseudo', $this->lang['form.name'], $this->get_item()->get_login(), [
+				'required' => true, 'maxlength' => 25]
 			));
 		}
 
 		$fieldset->add_field(new FormFieldRichTextEditor('content', LangLoader::get_message('common.message', 'common-lang'), $this->get_item()->get_content(),
-			array('formatter' => $formatter, 'rows' => 10, 'cols' => 47, 'required' => true),
-			array(
+			['formatter' => $formatter, 'rows' => 10, 'cols' => 47, 'required' => true],
+			[
 				(!$current_user->is_moderator() && !$current_user->is_admin() ? new FormFieldConstraintMaxLinks($config->get_max_links_number_per_message(), true) : ''),
 				new FormFieldConstraintAntiFlood(ShoutboxService::get_last_message_timestamp_from_user($this->get_item()->get_author_user()->get_id())
-			))
+			)]
 		));
 
 		$fieldset->add_field(new FormFieldHidden('page', $request->get_getint('page', 1)));
@@ -149,13 +149,13 @@ class ShoutboxFormController extends DefaultModuleController
 			$item->set_creation_date(new Date());
 			$id = ShoutboxService::add($item);
 			$item->set_id($id);
-			HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), array('title' => $this->lang['item'], 'item_url' => ShoutboxUrlBuilder::home(1, $id)->rel())));
+			HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), ['title' => $this->lang['item'], 'item_url' => ShoutboxUrlBuilder::home(1, $id)->rel()]));
 		}
 		else
 		{
 			$id = $item->get_id();
 			ShoutboxService::update($item);
-			HooksService::execute_hook_action('edit', self::$module_id, array_merge($item->get_properties(), array('title' => $this->lang['item'], 'item_url' => ShoutboxUrlBuilder::home(AppContext::get_request()->get_getint('page', 1), $id)->rel())));
+			HooksService::execute_hook_action('edit', self::$module_id, array_merge($item->get_properties(), ['title' => $this->lang['item'], 'item_url' => ShoutboxUrlBuilder::home(AppContext::get_request()->get_getint('page', 1), $id)->rel()]));
 		}
 
 		return $id;

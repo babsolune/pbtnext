@@ -69,11 +69,11 @@ class SearchModuleMiniMenu extends ModuleMiniMenu
 				MenuService::assign_positions_conditions($template, $this->get_block());
 				$this->assign_common_template_variables($template);
 
-				$template->put_all(array(
+				$template->put_all([
 					'ID'       => $this->get_menu_id(),
 					'TITLE'    => $this->get_menu_title(),
 					'CONTENTS' => $this->get_menu_content()
-				));
+				]);
 
 				return $template->render();
 			}

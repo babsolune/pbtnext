@@ -67,10 +67,10 @@ class AdminCustomizeInterfaceController extends DefaultAdminModuleController
 
 		$theme_choise_fieldset->add_field(
 			new FormFieldSimpleSelectChoice('select_theme', $this->lang['customization.interface.select.theme'], $theme_selected, $this->list_themes(),
-				array(
+				[
 					'class' => 'top-field third-field',
-					'events' => array('change' => 'document.location.href = "' . AdminCustomizeUrlBuilder::customize_interface()->rel() . '" + HTMLForms.getField(\'select_theme\').getValue()')
-				)
+					'events' => ['change' => 'document.location.href = "' . AdminCustomizeUrlBuilder::customize_interface()->rel() . '" + HTMLForms.getField(\'select_theme\').getValue()']
+				]
 			)
 		);
 
@@ -86,33 +86,33 @@ class AdminCustomizeInterfaceController extends DefaultAdminModuleController
 			{
 				$picture = '<img src="' . Url::to_rel($header_logo_file->get_path()) . '" alt="' . $this->lang['customization.interface.logo.current'] . '" />';
 				$customize_interface_fieldset->add_field(new FormFieldFree('current_logo', $this->lang['customization.interface.logo.current'], $picture,
-					array('class' => 'top-field third-field')
+					['class' => 'top-field third-field']
 				));
 			}
 			else
 			{
 				$customize_interface_fieldset->add_field(new FormFieldFree('current_logo', $this->lang['customization.interface.logo.current'], '<span class="text-strong error">' . $this->lang['customization.interface.logo.current.erased'] .'</span>',
-					array('class' => 'top-field third-field')
+					['class' => 'top-field third-field']
 				));
 			}
 		}
 		else
 		{
 			$customize_interface_fieldset->add_field(new FormFieldFree('current_logo', $this->lang['customization.interface.logo.current'], $this->lang['customization.interface.logo.current.null'],
-				array('class' => 'top-field third-field')
+				['class' => 'top-field third-field']
 			));
 		}
 
 		$customize_interface_fieldset->add_field(new FormFieldFilePicker('header_logo', $this->lang['customization.interface.logo.current.change'],
-			array(
+			[
 				'class' => 'top-field third-field',
 				'description' => $this->lang['customization.interface.logo.current.change.description']
-			),
-			array(new FormFieldConstraintPictureFile())
+			],
+			[new FormFieldConstraintPictureFile()]
 		));
 
 		$customize_interface_fieldset->add_field(new FormFieldCheckbox('use_default_logo', $this->lang['customization.interface.logo.use.default'], FormFieldCheckbox::UNCHECKED,
-			array('class' => 'top-field third-field custom-checkbox')
+			['class' => 'top-field third-field custom-checkbox']
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -182,7 +182,7 @@ class AdminCustomizeInterfaceController extends DefaultAdminModuleController
 
 	private function list_themes()
 	{
-		$choices_list = array();
+		$choices_list = [];
 		$choices_list[] = new FormFieldSelectChoiceOption($this->lang['customization.interface.all.themes'], 'all');
 		foreach (ThemesManager::get_activated_themes_map() as $id => $value)
 		{

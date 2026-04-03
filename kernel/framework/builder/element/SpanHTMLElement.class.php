@@ -13,9 +13,9 @@
 class SpanHTMLElement extends AbstractHTMLElement
 {
 	private $content;
-	private $attributes = array();
+	private $attributes = [];
 
-	public function __construct($content, $attributes = array(), $css_class = '')
+	public function __construct($content, $attributes = [], $css_class = '')
 	{
 		$this->content = $content;
 		$this->attributes = $attributes;
@@ -26,18 +26,18 @@ class SpanHTMLElement extends AbstractHTMLElement
 	{
 		$tpl = new FileTemplate('framework/builder/element/SpanHTMLElement.tpl');
 
-		$tpl->put_all(array(
+		$tpl->put_all([
 			'C_HAS_CSS_CLASSES' => $this->has_css_class(),
 			'CSS_CLASSES' => $this->get_css_class(),
 			'CONTENT' => $this->content
-		));
+		]);
 
 		foreach ($this->attributes as $type => $value)
 		{
-			$tpl->assign_block_vars('attributes', array(
+			$tpl->assign_block_vars('attributes', [
 				'TYPE' => $type,
 				'VALUE' => $value
-			));
+			]);
 		}
 
 		return $tpl->render();

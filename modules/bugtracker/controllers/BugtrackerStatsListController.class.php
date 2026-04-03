@@ -42,10 +42,10 @@ class BugtrackerStatsListController extends DefaultModuleController
 			if ($status != 'total')
 			{
 				$bugs[$this->lang['status.' . $status]] = (int)$bugs_number;
-				$this->view->assign_block_vars('status', array(
+				$this->view->assign_block_vars('status', [
 					'NAME'	=> $this->lang['status.' . $status],
 					'NUMBER'=> $bugs_number
-				));
+				]);
 			}
 		}
 
@@ -54,7 +54,7 @@ class BugtrackerStatsListController extends DefaultModuleController
 		$dataset->set_datas($bugs);
 		$chart->add_dataset($dataset);
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_BUGS'				=> $stats_cache->get_bugs_number('total'),
 			'C_FIXED_BUGS'			=> !empty($bugs_number_per_version),
 			'C_POSTERS'				=> !empty($top_posters),
@@ -62,18 +62,18 @@ class BugtrackerStatsListController extends DefaultModuleController
 			'C_DISPLAY_TOP_POSTERS'	=> $this->config->are_stats_top_posters_enabled(),
 			'C_ROADMAP_ENABLED'		=> $this->config->is_roadmap_enabled(),
 			'CHART'                 => $chart->get_html()
-		));
+		]);
 
 		foreach ($bugs_number_per_version as $version_id => $bugs_number)
 		{
 			$release_date = !empty($versions[$version_id]['release_date']) && is_numeric($versions[$version_id]['release_date']) ? new Date($versions[$version_id]['release_date'], Timezone::SERVER_TIMEZONE) : null;
 
-			$this->view->assign_block_vars('fixed_version', array(
+			$this->view->assign_block_vars('fixed_version', [
 				'NAME'					=> stripslashes($versions[$version_id]['name']),
 				'RELEASE_DATE'			=> !empty($release_date) ? $release_date->format(Date::FORMAT_DAY_MONTH_YEAR) : $this->lang['notice.not_defined_e_date'],
 				'LINK_VERSION_ROADMAP'	=> BugtrackerUrlBuilder::roadmap($version_id, Url::encode_rewrite($versions[$version_id]['name']))->rel(),
 				'NUMBER'				=> $bugs_number['all']
-			));
+			]);
 		}
 
 		foreach ($top_posters as $id => $poster)
@@ -82,7 +82,7 @@ class BugtrackerStatsListController extends DefaultModuleController
 			{
 				$author_group_color = User::get_group_color($poster['user']->get_groups(), $poster['user']->get_level(), true);
 
-				$this->view->assign_block_vars('top_poster', array(
+				$this->view->assign_block_vars('top_poster', [
 					'C_AUTHOR_GROUP_COLOR'	=> !empty($author_group_color),
 					'ID' 					=> $id,
 					'AUTHOR'				=> $poster['user']->get_display_name(),
@@ -90,7 +90,7 @@ class BugtrackerStatsListController extends DefaultModuleController
 					'AUTHOR_GROUP_COLOR'	=> $author_group_color,
 					'LINK_AUTHOR_PROFILE'	=> UserUrlBuilder::profile($poster['user']->get_id())->rel(),
 					'USER_BUGS' 			=> $poster['bugs_number']
-				));
+				]);
 			}
 		}
 

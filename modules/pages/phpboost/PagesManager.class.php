@@ -24,7 +24,7 @@ class PagesManager extends ItemsManager
 	 */
 	public function update_position($id_item, $position)
 	{
-		self::$db_querier->update(self::$items_table, array('i_order' => $position), 'WHERE id=:id', array('id' => $id_item));
+		self::$db_querier->update(self::$items_table, ['i_order' => $position], 'WHERE id=:id', ['id' => $id_item]);
 	}
 }
 ?>

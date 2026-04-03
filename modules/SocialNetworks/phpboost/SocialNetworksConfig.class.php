@@ -181,14 +181,14 @@ class SocialNetworksConfig extends AbstractConfigData
 
 	public function get_default_values()
 	{
-		return array(
-			self::AUTHENTICATIONS_ENABLED    => array(),
-			self::CLIENT_IDS                 => array(),
-			self::CLIENT_SECRETS             => array(),
-			self::CONTENT_SHARING_ENABLED    => array(FacebookSocialNetwork::SOCIAL_NETWORK_ID, TwitterSocialNetwork::SOCIAL_NETWORK_ID),
-			self::SOCIAL_NETWORKS_ORDER      => array(),
-			self::ADDITIONAL_SOCIAL_NETWORKS => array()
-		);
+		return [
+			self::AUTHENTICATIONS_ENABLED    => [],
+			self::CLIENT_IDS                 => [],
+			self::CLIENT_SECRETS             => [],
+			self::CONTENT_SHARING_ENABLED    => [FacebookSocialNetwork::SOCIAL_NETWORK_ID, TwitterSocialNetwork::SOCIAL_NETWORK_ID],
+			self::SOCIAL_NETWORKS_ORDER      => [],
+			self::ADDITIONAL_SOCIAL_NETWORKS => []
+		];
 	}
 
 	/**

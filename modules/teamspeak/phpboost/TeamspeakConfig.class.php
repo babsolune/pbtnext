@@ -105,7 +105,7 @@ class TeamspeakConfig extends AbstractConfigData
 
 	public function get_default_values()
 	{
-		return array(
+		return [
 			self::TS_IP => '',
 			self::TS_USER => '',
 			self::TS_PASS => '',
@@ -113,8 +113,8 @@ class TeamspeakConfig extends AbstractConfigData
 			self::TS_QUERY => 10011,
 			self::TS_REFRESH_DELAY => 1, // 1 minute
 			self::CLIENTS_NUMBER_DISPLAYED => true,
-			self::AUTHORIZATIONS => array('r-1' => 1, 'r0' => 1, 'r1' => 1)
-		);
+			self::AUTHORIZATIONS => ['r-1' => 1, 'r0' => 1, 'r1' => 1]
+		];
 	}
 
 	/**

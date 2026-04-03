@@ -26,13 +26,13 @@ class SandboxLayoutController extends DefaultModuleController
 
 	private function build_view()
 	{
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'GRID'            => self::build_markup('sandbox/pagecontent/layout/grid.tpl'),
 			'CELL'            => self::build_markup('sandbox/pagecontent/layout/cell.tpl'),
 			'MESSAGE'         => self::build_markup('sandbox/pagecontent/layout/message.tpl'),
 			'SORTABLE'        => self::build_markup('sandbox/pagecontent/layout/sortable.tpl'),
 			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
-		));
+		]);
 	}
 
 	private function build_markup($tpl)
@@ -41,12 +41,12 @@ class SandboxLayoutController extends DefaultModuleController
 		$view->add_lang($this->lang);
 
 		$date = new Date();
-		$view->put_all(array(
+		$view->put_all([
 			'TODAY' => $date->format(Date::FORMAT_DAY_MONTH_YEAR),
 			'TODAY_TIME' => $date->format(Date::FORMAT_DAY_MONTH_YEAR_HOUR_MINUTE),
 			'NO_AVATAR_URL' => Url::to_rel(FormFieldThumbnail::get_default_thumbnail_url(UserAccountsConfig::NO_AVATAR_URL)),
 			'U_PICTURE' => Url::to_rel('/sandbox/templates/images/default.png'),
-		));
+		]);
 
 		return $view;
 	}

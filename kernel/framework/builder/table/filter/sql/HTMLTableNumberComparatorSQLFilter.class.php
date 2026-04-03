@@ -24,7 +24,7 @@ abstract class HTMLTableNumberComparatorSQLFilter extends AbstractHTMLTableFilte
 		$this->db_field = $db_field;
 		$this->lower_bound = $lower_bound;
 		$this->upper_bound = $upper_bound;
-		$field = new FormFieldTextEditor($name, $label, '', array('size' => 5));
+		$field = new FormFieldTextEditor($name, $label, '', ['size' => 5]);
 		parent::__construct($name, $field);
 	}
 
@@ -35,7 +35,7 @@ abstract class HTMLTableNumberComparatorSQLFilter extends AbstractHTMLTableFilte
 	{
 		$parameter_name = $this->get_sql_value_parameter_prefix() . '_' . $this->db_field;
 		$query = $this->db_field . ' ' . $this->get_sql_comparator_symbol() . ' :' . $parameter_name;
-		$parameters = array($parameter_name => $this->get_value());
+		$parameters = [$parameter_name => $this->get_value()];
 		return new SQLFragment($query, $parameters);
 	}
 

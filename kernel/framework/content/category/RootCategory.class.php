@@ -29,9 +29,9 @@ class RootCategory extends Category
 	public static function get_authorizations_settings($module_id = '')
 	{
 		return array_merge(
-			DefaultCategoriesFormController::get_authorizations_settings($module_id), array(
+			DefaultCategoriesFormController::get_authorizations_settings($module_id), [
 			new MemberDisabledActionAuthorization(LangLoader::get_message('form.authorizations.categories', 'form-lang'), Category::CATEGORIES_MANAGEMENT_AUTHORIZATIONS)
-		));
+		]);
 	}
 }
 ?>

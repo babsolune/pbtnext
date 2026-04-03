@@ -29,7 +29,7 @@ if (!empty($stats_referer))
 	$url = '';
 
 	try {
-		$url = $db_querier->get_column_value(StatsSetup::$stats_referer_table, 'url', 'WHERE id = :id', array('id' => $idurl));
+		$url = $db_querier->get_column_value(StatsSetup::$stats_referer_table, 'url', 'WHERE id = :id', ['id' => $idurl]);
 	} catch (RowNotFoundException $e) {}
 
 	if ($url)
@@ -37,16 +37,16 @@ if (!empty($stats_referer))
 		$result = $db_querier->select("SELECT url, relative_url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
 			FROM " . StatsSetup::$stats_referer_table . "
 			WHERE url = :url AND type = 0
-			ORDER BY total_visit DESC", array(
+			ORDER BY total_visit DESC", [
 				'url' => $url
-		));
+		]);
 		while ($row = $result->fetch())
 		{
 			$trend_parameters = StatsDisplayService::get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
 
 			$view = new FileTemplate('stats/stats_tables.tpl');
 
-			$view->put_all(array(
+			$view->put_all([
 				'C_REFERER'    => true,
 				'FULL_URL'     => $row['url'] . $row['relative_url'],
 				'RELATIVE_URL' => $row['url'] . $row['relative_url'],
@@ -57,7 +57,7 @@ if (!empty($stats_referer))
 				'PICTURE'      => $trend_parameters['picture'],
 				'SIGN'         => $trend_parameters['sign'],
 				'TREND'        => $trend_parameters['trend'],
-			));
+			]);
 
 			echo $view->display();
 		}
@@ -70,7 +70,7 @@ elseif (!empty($stats_keyword))
 	$keyword = '';
 
 	try {
-		$keyword = $db_querier->get_column_value(StatsSetup::$stats_referer_table, 'relative_url', 'WHERE id = :id', array('id' => $idkeyword));
+		$keyword = $db_querier->get_column_value(StatsSetup::$stats_referer_table, 'relative_url', 'WHERE id = :id', ['id' => $idkeyword]);
 	} catch (RowNotFoundException $e) {}
 
 	if ($keyword)
@@ -78,16 +78,16 @@ elseif (!empty($stats_keyword))
 		$result = $db_querier->select("SELECT url, total_visit, today_visit, yesterday_visit, nbr_day, last_update
 			FROM " . StatsSetup::$stats_referer_table. "
 			WHERE relative_url = :url AND type = 1
-			ORDER BY total_visit DESC", array(
+			ORDER BY total_visit DESC", [
 				'url' => $keyword
-		));
+		]);
 		while ($row = $result->fetch())
 		{
 			$trend_parameters = StatsDisplayService::get_trend_parameters($row['total_visit'], $row['nbr_day'], $row['yesterday_visit'], $row['today_visit']);
 
 			$view = new FileTemplate('stats/stats_tables.tpl');
 
-			$view->put_all(array(
+			$view->put_all([
 				'FULL_URL'    => $row['url'],
 				'TOTAL_VISIT' => $row['total_visit'],
 				'AVERAGE'     => $trend_parameters['average'],
@@ -96,7 +96,7 @@ elseif (!empty($stats_keyword))
 				'PICTURE'     => $trend_parameters['picture'],
 				'SIGN'        => $trend_parameters['sign'],
 				'TREND'       => $trend_parameters['trend'],
-			));
+			]);
 
 			echo $view->display();
 		}

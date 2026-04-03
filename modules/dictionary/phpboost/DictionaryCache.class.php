@@ -10,14 +10,14 @@
 
 class DictionaryCache implements CacheData
 {
-	private $dictionary_words = array();
+	private $dictionary_words = [];
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function synchronize()
 	{
-		$this->dictionary_words = array();
+		$this->dictionary_words = [];
 
 		$result = PersistenceContext::get_querier()->select('
 			SELECT id, word, cat, description, approved

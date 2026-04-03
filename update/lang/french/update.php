@@ -14,7 +14,7 @@
 #                      French                      #
 ####################################################
 
-$lang = array(
+$lang = [
     //Variables générales
     'update.title'             => 'Mise à jour de PHPBoost',
     'steps.list'               => 'Liste des étapes',
@@ -213,3 +213,4 @@ $lang = array(
     'admin.index' => 'Aller dans le panneau d\'administration'
 );
 ?>
+]

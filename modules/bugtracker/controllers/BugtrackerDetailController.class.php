@@ -37,7 +37,7 @@ class BugtrackerDetailController extends DefaultModuleController
 		$id = $request->get_int('id', 0);
 
 		try {
-			$this->bug = BugtrackerService::get_bug('WHERE id=:id', array('id' => $id));
+			$this->bug = BugtrackerService::get_bug('WHERE id=:id', ['id' => $id]);
 		} catch (RowNotFoundException $e) {
 			$error_controller = new UserErrorController($this->lang['warning.error'], $this->lang['error.e_unexist_bug']);
 			DispatchManager::redirect($error_controller);
@@ -53,12 +53,12 @@ class BugtrackerDetailController extends DefaultModuleController
 		$versions = $this->config->get_versions_detected();
 		$comments_config = CommentsConfig::load();
 
-		$user_assigned = $this->bug->get_assigned_to_id() && UserService::user_exists("WHERE user_id=:user_id", array('user_id' => $this->bug->get_assigned_to_id())) ? UserService::get_user($this->bug->get_assigned_to_id()) : '';
+		$user_assigned = $this->bug->get_assigned_to_id() && UserService::user_exists("WHERE user_id=:user_id", ['user_id' => $this->bug->get_assigned_to_id()]) ? UserService::get_user($this->bug->get_assigned_to_id()) : '';
 		$user_assigned_group_color = $user_assigned ? User::get_group_color($user_assigned->get_groups(), $user_assigned->get_level(), true) : '';
 
 		$this->view->put_all($this->bug->get_template_vars());
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_ENABLED_COMMENTS' 			=> $comments_config->module_comments_is_enabled('bugtracker'),
 			'C_TYPES' 						=> $types,
 			'C_CATEGORIES' 					=> $categories,
@@ -76,7 +76,7 @@ class BugtrackerDetailController extends DefaultModuleController
 			'U_CHANGE_STATUS'				=> BugtrackerUrlBuilder::change_status($this->bug->get_id())->rel(),
 			'U_EDIT'						=> BugtrackerUrlBuilder::edit($this->bug->get_id(), 'detail')->rel(),
 			'U_DELETE'						=> BugtrackerUrlBuilder::delete($this->bug->get_id(), 'unsolved')->rel(),
-		));
+		]);
 
 		$comments_topic = new BugtrackerCommentsTopic();
 		$comments_topic->set_id_in_module($this->bug->get_id());

@@ -24,17 +24,17 @@ class AdminLoggedErrorsControllerList extends DefaultAdminController
 	{
 		$errors = $this->get_errors_list();
 
-		$types = array(
+		$types = [
 			'question' => 'warning.unknown',
 			'notice' => 'warning.notice',
 			'warning' => 'warning.warning',
 			'error' => 'warning.fatal'
-		);
+		];
 
-		$table_model = new HTMLTableModel('error-list', array(
-			new HTMLTableColumn($this->lang['common.date'], '', array('css_class' => 'col-medium')),
+		$table_model = new HTMLTableModel('error-list', [
+			new HTMLTableColumn($this->lang['common.date'], '', ['css_class' => 'col-medium']),
 			new HTMLTableColumn($this->lang['common.description'])
-		), new HTMLTableSortingRule(''), self::NUMBER_ITEMS_PER_PAGE);
+		], new HTMLTableSortingRule(''), self::NUMBER_ITEMS_PER_PAGE);
 
 		$table = new HTMLTable($table_model, $this->lang, 'admin.logged.errors.list');
 		$table->hide_multiple_delete();
@@ -44,18 +44,18 @@ class AdminLoggedErrorsControllerList extends DefaultAdminController
 
 		$br = new BrHTMLElement();
 
-		$results = array();
+		$results = [];
 		foreach ($errors as $error)
 		{
-			$error_class = new SpanHTMLElement($this->lang[$types[$error['errclass']]] . ' : ', array(), 'text-strong');
-			$error_stacktrace = new SpanHTMLElement(strip_tags($error['errstacktrace'], '<br>'), array(), 'text-italic');
+			$error_class = new SpanHTMLElement($this->lang[$types[$error['errclass']]] . ' : ', [], 'text-strong');
+			$error_stacktrace = new SpanHTMLElement(strip_tags($error['errstacktrace'], '<br>'), [], 'text-italic');
 
 			$error_message = $error_class->display() . strip_tags($error['errmsg'], '<br>') . $br->display() . $br->display() . $br->display() . $error_stacktrace->display();
 
-			$results[] = new HTMLTableRow(array(
+			$results[] = new HTMLTableRow([
 				new HTMLTableRowCell($error['errdate']),
-				new HTMLTableRowCell(new DivHTMLElement($error_message, array(), 'message-helper bgc ' . $error['errclass']))
-			));
+				new HTMLTableRowCell(new DivHTMLElement($error_message, [], 'message-helper bgc ' . $error['errclass']))
+			]);
 		}
 		$results_number = count($results);
 		$table->set_rows($results_number, $results);
@@ -63,10 +63,10 @@ class AdminLoggedErrorsControllerList extends DefaultAdminController
 		if ($results_number)
 		{
 			$this->view = new StringTemplate('# INCLUDE FORM ## INCLUDE TABLE #');
-			$this->view->put_all(array(
+			$this->view->put_all([
 				'FORM' => $this->build_form()->display(),
 				'TABLE' => $table->display()
-			));
+			]);
 		}
 		else
 			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['common.no.item.now'], MessageHelper::SUCCESS, 0, true));
@@ -89,7 +89,7 @@ class AdminLoggedErrorsControllerList extends DefaultAdminController
 
 	private function get_errors_list()
 	{
-		$array_errinfo = array();
+		$array_errinfo = [];
 		$file_path = PATH_TO_ROOT . '/cache/error.log';
 
 		if (is_file($file_path) && is_readable($file_path)) // Readable file
@@ -115,12 +115,12 @@ class AdminLoggedErrorsControllerList extends DefaultAdminController
 						case 4:
 						$errinfo['errstacktrace'] = $buffer;
 						$i = 0;
-						$array_errinfo[] = array(
+						$array_errinfo[] = [
 							'errclass' => ErrorHandler::get_errno_class($errinfo['errno']),
 							'errmsg' => $errinfo['errmsg'],
 							'errstacktrace'=> $errinfo['errstacktrace'],
 							'errdate' => $errinfo['errdate']
-						);
+						];
 						break;
 					}
 					$i++;

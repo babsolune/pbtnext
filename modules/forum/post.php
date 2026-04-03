@@ -79,7 +79,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
     if (ContentManagementConfig::load()->is_anti_flood_enabled() && AppContext::get_current_user()->get_id() != -1)
     {
         try {
-            $check_time = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'MAX(timestamp) as timestamp', 'WHERE user_id = :user_id', array('user_id' => AppContext::get_current_user()->get_id()));
+            $check_time = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'MAX(timestamp) as timestamp', 'WHERE user_id = :user_id', ['user_id' => AppContext::get_current_user()->get_id()]);
         } catch (RowNotFoundException $e) {}
     }
 
@@ -143,7 +143,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
                         $poll_type = $request->get_postint('poll_type', 0);
                         $poll_type = ($poll_type == 0 || $poll_type == 1) ? $poll_type : 0;
 
-                        $answers = array();
+                        $answers = [];
                         $nbr_votes = 0;
                         for ($i = 0; $i < 20; $i++)
                         {
@@ -178,24 +178,24 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
             if (ForumAuthorizationsService::check_authorizations($id_get)->moderation())
             {
-                $view->put_all(array(
+                $view->put_all([
                     'C_FORUM_POST_TYPE'      => true,
                     'C_NORMAL_TYPE_SELECTED' => true
-                ));
+                ]);
             }
 
             //Liste des choix des sondages => 20 maxi
             $nbr_poll_field = 0;
             for ($i = 0; $i < 5; $i++)
             {
-                $view->assign_block_vars('answers_poll', array(
+                $view->assign_block_vars('answers_poll', [
                     'ID'     => $i,
                     'ANSWER' => ''
-                ));
+                ]);
                 $nbr_poll_field++;
             }
 
-            $vars_tpl = array(
+            $vars_tpl = [
                 'C_ADD_POLL_FIELD'       => true,
                 'C_SIMPLE_POLL_SELECTED' => true,
                 'C_DISPLAY_POLL'         => false,
@@ -213,7 +213,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
                 'U_TITLE_T'              => 'post' . url('.php?new=topic&amp;id=' . $id_get),
 
                 'L_ACTION'               => $lang['forum.new.topic'],
-            );
+            ];
 
             $view->put_all($vars_tpl);
 
@@ -230,9 +230,9 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
         try {
             $topic = PersistenceContext::get_querier()->select_single_row_query('SELECT user_id, id_category, title, nbr_msg, last_user_id, last_msg_id, status
             FROM ' . PREFIX . 'forum_topics
-            WHERE id=:id', array(
+            WHERE id=:id', [
                 'id' => $idt_get
-            ));
+            ]);
         } catch (RowNotFoundException $e) {
             $controller = new UserErrorController($lang['warning.error'], $lang['forum.error.locked.topic']);
             DispatchManager::redirect($controller);
@@ -277,7 +277,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
                     $message_content = '';
                     try {
-                        $message_content = FormatingHelper::unparse(PersistenceContext::get_querier()->get_column_value(PREFIX . 'forum_msg', 'content', 'WHERE id = :id', array('id' => $topic['last_msg_id'])));
+                        $message_content = FormatingHelper::unparse(PersistenceContext::get_querier()->get_column_value(PREFIX . 'forum_msg', 'content', 'WHERE id = :id', ['id' => $topic['last_msg_id']]));
                     } catch (RowNotFoundException $e) {}
 
                     $now = new Date();
@@ -317,7 +317,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
         $update = $request->get_getint('update', false);
 
         try {
-            $id_first = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'MIN(id)', 'WHERE idtopic = :idtopic', array('idtopic' => $idt_get));
+            $id_first = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'MIN(id)', 'WHERE idtopic = :idtopic', ['idtopic' => $idt_get]);
         } catch (RowNotFoundException $e) {
             $error_controller = PHPBoostErrors::unexisting_element();
             DispatchManager::redirect($error_controller);
@@ -330,7 +330,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
         }
 
         try {
-            $topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('title', 'subtitle', 'type', 'user_id', 'display_msg'), 'WHERE id=:id', array('id' => $idt_get));
+            $topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', ['title', 'subtitle', 'type', 'user_id', 'display_msg'], 'WHERE id=:id', ['id' => $idt_get]);
         } catch (RowNotFoundException $e) {
             $error_controller = PHPBoostErrors::unexisting_element();
             DispatchManager::redirect($error_controller);
@@ -343,7 +343,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
             //User_id du message correspondant à l'utilisateur connecté => autorisation.
             $user_id_msg = 0;
             try {
-                $user_id_msg = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'user_id', 'WHERE id = :id', array('id' => $id_m));
+                $user_id_msg = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'user_id', 'WHERE id = :id', ['id' => $id_m]);
             } catch (RowNotFoundException $e) {}
 
             $check_auth = false;
@@ -375,12 +375,12 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
                     if (!empty($question) && !$del_poll) //Enregistrement du sondage.
                     {
                         //Mise à jour si le sondage existe, sinon création.
-                        $check_poll = PersistenceContext::get_querier()->count(PREFIX . 'forum_poll', 'WHERE idtopic=:idtopic', array('idtopic' => $idt_get));
+                        $check_poll = PersistenceContext::get_querier()->count(PREFIX . 'forum_poll', 'WHERE idtopic=:idtopic', ['idtopic' => $idt_get]);
 
                         $poll_type = $request->get_postint('poll_type', 0);
                         $poll_type = ($poll_type == 0 || $poll_type == 1) ? $poll_type : 0;
 
-                        $answers = array();
+                        $answers = [];
                         $nbr_votes = 0;
                         for ($i = 0; $i < 20; $i++)
                         {
@@ -413,7 +413,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
                 $content = '';
                 try {
-                    $content = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'content', 'WHERE id = :id', array('id' => $id_first));
+                    $content = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'content', 'WHERE id = :id', ['id' => $id_first]);
                 } catch (RowNotFoundException $e) {}
 
                 //Gestion des erreurs à l'édition.
@@ -423,18 +423,18 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
                 if ($is_modo)
                 {
-                    $view->put_all(array(
+                    $view->put_all([
                         'C_FORUM_POST_TYPE'        => true,
                         'C_NORMAL_TYPE_SELECTED'   => ($topic['type'] == '0'),
                         'C_PINNED_TYPE_SELECTED'   => ($topic['type'] == '1'),
                         'C_ANNOUNCE_TYPE_SELECTED' => ($topic['type'] == '2')
-                    ));
+                    ]);
                 }
 
                 //Récupération des infos du sondage associé si il existe
-                $poll = array('question' => '', 'answers' => '', 'votes' => '', 'type' => '');
+                $poll = ['question' => '', 'answers' => '', 'votes' => '', 'type' => ''];
                 try {
-                    $poll = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_poll', array('question', 'answers', 'votes', 'type'), 'WHERE idtopic=:id', array('id' => $idt_get));
+                    $poll = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_poll', ['question', 'answers', 'votes', 'type'], 'WHERE idtopic=:id', ['id' => $idt_get]);
                 } catch (RowNotFoundException $e) {}
 
                 $array_answer = explode('|', $poll['answers']);
@@ -447,7 +447,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
                 if ($config->is_message_before_topic_title_displayed() && ($is_modo || AppContext::get_current_user()->get_id() == $topic['user_id']))
                 {
                     $img_display = $topic['display_msg'] ? 'fa fa-check success' : 'fa fa-times error';
-                    $bottom_view->put_all(array(
+                    $bottom_view->put_all([
                         'C_DISPLAY_ISSUE_STATUS' => true,
                         'C_DISPLAY_ISSUE_ICON'   => $config->is_message_before_topic_title_icon_displayed(),
 
@@ -456,8 +456,8 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
                         'L_DEFAULT_ISSUE_STATUS' => $topic['display_msg'] ? $config->get_message_when_topic_is_solved() : $config->get_message_when_topic_is_unsolved(),
                         'L_UNSOLVED_TOPIC'       => $config->get_message_when_topic_is_unsolved(),
                         'L_SOLVED_TOPIC'         => $config->get_message_when_topic_is_solved()
-                    ));
-                    $view->put_all(array(
+                    ]);
+                    $view->put_all([
                         'C_DISPLAY_ISSUE_STATUS' => true,
                         'C_DISPLAY_ISSUE_ICON'   => $config->is_message_before_topic_title_icon_displayed(),
 
@@ -466,7 +466,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
                         'L_DEFAULT_ISSUE_STATUS' => $topic['display_msg'] ? $config->get_message_when_topic_is_solved() : $config->get_message_when_topic_is_unsolved(),
                         'L_UNSOLVED_TOPIC'       => $config->get_message_when_topic_is_unsolved(),
                         'L_SOLVED_TOPIC'         => $config->get_message_when_topic_is_solved()
-                    ));
+                    ]);
                 }
 
                 //Liste des choix des sondages => 20 maxi
@@ -476,26 +476,26 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
                     if (!empty($answer))
                     {
                         $nbr_votes = isset($array_votes[$key]) ? $array_votes[$key] : 0;
-                        $view->assign_block_vars('answers_poll', array(
+                        $view->assign_block_vars('answers_poll', [
                             'ID'        => $nbr_poll_field,
                             'ANSWER'    => stripslashes($answer),
                             'NBR_VOTES' => $nbr_votes,
 
                             'L_VOTES'   => ($nbr_votes > 1) ? $lang['forum.poll.votes'] : $lang['forum.poll.vote']
-                        ));
+                        ]);
                         $nbr_poll_field++;
                     }
                 }
                 for ($i = $nbr_poll_field; $i < 5; $i++) //On complète s'il y a moins de 5 réponses.
                 {
-                    $view->assign_block_vars('answers_poll', array(
+                    $view->assign_block_vars('answers_poll', [
                         'ID'     => $i,
                         'ANSWER' => ''
-                    ));
+                    ]);
                     $nbr_poll_field++;
                 }
 
-                $vars_tpl = array(
+                $vars_tpl = [
                     'C_DELETE_POLL'          => $is_modo, //Suppression d'un sondage => modo uniquement.
                     'C_ADD_POLL_FIELD'       => ($nbr_poll_field <= 19),
                     'C_SIMPLE_POLL_SELECTED' => true,
@@ -518,7 +518,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
                     'L_NEW_SUBJECT'          => stripslashes($topic['title']),
                     'L_ACTION'               => $lang['forum.edit.topic'],
-                );
+                ];
 
                 //Type de réponses du sondage.
                 if (isset($poll['type']) && $poll['type'] == '0')
@@ -540,7 +540,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
             //User_id du message correspondant à l'utilisateur connecté => autorisation.
             $user_id_msg = 0;
             try {
-                $user_id_msg = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'user_id', 'WHERE id = :id', array('id' => $id_m));
+                $user_id_msg = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'user_id', 'WHERE id = :id', ['id' => $id_m]);
             } catch (RowNotFoundException $e) {}
 
             $check_auth = false;
@@ -580,7 +580,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
                 $content = '';
                 try {
-                    $content = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'content', 'WHERE id = :id', array('id' => $id_m));
+                    $content = PersistenceContext::get_querier()->get_column_value(PREFIX . "forum_msg", 'content', 'WHERE id = :id', ['id' => $id_m]);
                 } catch (RowNotFoundException $e) {}
 
                 //Gestion des erreurs à l'édition.
@@ -588,7 +588,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
                 if ($get_error_e == 'incomplete')
                     $view->put('MESSAGE_HELPER', MessageHelper::display($lang['warning.incomplete'], MessageHelper::NOTICE));
 
-                $vars_tpl = array(
+                $vars_tpl = [
                     'P_UPDATE'       => url('?update=1&amp;new=msg&amp;id=' . $id_get . '&amp;idt=' . $idt_get . '&amp;idm=' . $id_m),
                     'FORUM_NAME'     => $config->get_forum_name(),
                     'CATEGORY_NAME'  => $category->get_name(),
@@ -602,7 +602,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
                     'U_TITLE_T'      => 'topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php'),
 
                     'L_NEW_SUBJECT'  => stripslashes($topic['title']),
-                );
+                ];
 
                 $view->put_all($vars_tpl);
 
@@ -617,7 +617,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
         if (!empty($id_get) && !empty($idt_get) && ($error_get === 'flood' || $error_get === 'incomplete' || $error_get === 'locked'))
         {
             try {
-                $topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', array('id_category', 'title', 'subtitle'), 'WHERE id=:id', array('id' => $idt_get));
+                $topic = PersistenceContext::get_querier()->select_single_row(PREFIX . 'forum_topics', ['id_category', 'title', 'subtitle'], 'WHERE id=:id', ['id' => $idt_get]);
             } catch (RowNotFoundException $e) {
                 $error_controller = PHPBoostErrors::unexisting_element();
                 DispatchManager::redirect($error_controller);
@@ -653,7 +653,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
             if (!empty($errstr))
                 $view->put('MESSAGE_HELPER', MessageHelper::display($errstr, $type));
 
-            $vars_tpl = array(
+            $vars_tpl = [
                 'P_UPDATE'       => '',
                 'FORUM_NAME'     => $config->get_forum_name(),
                 'CATEGORY_NAME'  => $category->get_name(),
@@ -666,7 +666,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
                 'U_TITLE_T'      => 'topic' . url('.php?id=' . $idt_get, '-' . $idt_get . '.php'),
 
                 'L_NEW_SUBJECT'  => stripslashes($topic['title']),
-            );
+            ];
         }
         elseif (!empty($id_get) && ($error_get === 'c_locked' || $error_get === 'c_write' || $error_get === 'incomplete_t' || $error_get === 'false_t'))
         {
@@ -676,10 +676,10 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
 
             if (ForumAuthorizationsService::check_authorizations($id_get)->moderation())
             {
-                $view->put_all(array(
+                $view->put_all([
                     'C_FORUM_POST_TYPE' => true,
                     'C_NORMAL_TYPE_SELECTED' => true
-                ));
+                ]);
             }
 
             //Gestion erreur.
@@ -711,14 +711,14 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
             $nbr_poll_field = 0;
             for ($i = 0; $i < 5; $i++)
             {
-                $view->assign_block_vars('answers_poll', array(
+                $view->assign_block_vars('answers_poll', [
                     'ID'     => $i,
                     'ANSWER' => ''
-                ));
+                ]);
                 $nbr_poll_field++;
             }
 
-            $vars_tpl = array(
+            $vars_tpl = [
                 'C_ADD_POLL_FIELD'       => true,
                 'C_SIMPLE_POLL_SELECTED' => true,
                 'C_DISPLAY_POLL'         => false,
@@ -735,7 +735,7 @@ if (ForumAuthorizationsService::check_authorizations($id_get)->read())
                 'U_TITLE_T'              => 'post' . url('.php?new=topic&amp;id=' . $id_get),
 
                 'L_ACTION'               => $lang['forum.new.topic'],
-            );
+            ];
         }
         else
         {

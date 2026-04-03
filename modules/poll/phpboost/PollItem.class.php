@@ -14,8 +14,8 @@ class PollItem extends RichItem
 
 	const DEFAULT_VALUE_QUESTION = '';
 	const DEFAULT_VALUE_ANSWERS_TYPE = '1';
-	const DEFAULT_VALUE_ANSWERS = array();
-	const DEFAULT_VALUE_VOTES = array();
+	const DEFAULT_VALUE_ANSWERS = [];
+	const DEFAULT_VALUE_VOTES = [];
 	const DEFAULT_VALUE_VOTES_NUMBER = 0;
 	const DEFAULT_VALUE_COUNTDOWN_DISPLAY = 2;
 
@@ -38,41 +38,41 @@ class PollItem extends RichItem
 
 	protected function set_additional_attributes_list()
 	{
-		$this->add_additional_attribute('question', array('type' => 'text', 'length' => 65000, 'notnull' => 1, 'attribute_pre_content_field_parameters' => array(
+		$this->add_additional_attribute('question', ['type' => 'text', 'length' => 65000, 'notnull' => 1, 'attribute_pre_content_field_parameters' => [
 			'field_class' => 'FormFieldRichTextEditor',
 			'label'       => $this->lang['poll.form.question'],
 			'value'       => self::DEFAULT_VALUE_QUESTION,
-			'options'     => array('required' => true)
-			)
-		));
+			'options'     => ['required' => true]
+			]
+		]);
 
-		$this->add_additional_attribute('answers_type', array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 1, 'attribute_pre_content_field_parameters' => array(
+		$this->add_additional_attribute('answers_type', ['type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 1, 'attribute_pre_content_field_parameters' => [
 			'field_class'    => 'FormFieldRadioChoice',
 			'label'          => $this->lang['poll.form.answers.type'],
 			'value'          => self::DEFAULT_VALUE_ANSWERS_TYPE,
-			'options'        => array(
+			'options'        => [
 									new FormFieldRadioChoiceOption($this->lang['poll.form.single'], '1'),
 									new FormFieldRadioChoiceOption($this->lang['poll.form.multiple'], '2')
-								),
-			'field_options'  => array('required' => true, 'class' => 'inline-radio')
-			)
-		));
+								],
+			'field_options'  => ['required' => true, 'class' => 'inline-radio']
+			]
+		]);
 
-		$this->add_additional_attribute('answers', array('type' => 'text', 'length' => 65000, 'notnull' => 1, 'is_array' => true, 'attribute_pre_content_field_parameters' => array(
+		$this->add_additional_attribute('answers', ['type' => 'text', 'length' => 65000, 'notnull' => 1, 'is_array' => true, 'attribute_pre_content_field_parameters' => [
 			'field_class' => 'FormFieldPossibleValues',
 			'label'       => $this->lang['poll.form.answers'],
 			'value'       => self::DEFAULT_VALUE_ANSWERS,
-			'options'     => array('required' => true, 'unique_input_value' => true, 'min_input' => 2, 'display_default' => false, 'placeholder' => $this->lang['poll.form.answer.placeholder'])
-			)
-		));
+			'options'     => ['required' => true, 'unique_input_value' => true, 'min_input' => 2, 'display_default' => false, 'placeholder' => $this->lang['poll.form.answer.placeholder']]
+			]
+		]);
 
-		$this->add_additional_attribute('votes', array('type' => 'text', 'length' => 65000, 'notnull' => 1));
+		$this->add_additional_attribute('votes', ['type' => 'text', 'length' => 65000, 'notnull' => 1]);
 
-		$this->add_additional_attribute('votes_number', array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0));
+		$this->add_additional_attribute('votes_number', ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0]);
 
-		$this->add_additional_attribute('countdown_display', array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 2));
+		$this->add_additional_attribute('countdown_display', ['type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 2]);
 
-		$this->add_additional_attribute('close_poll', array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0));
+		$this->add_additional_attribute('close_poll', ['type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0]);
 	}
 
 	public function get_question()
@@ -102,7 +102,7 @@ class PollItem extends RichItem
 
 	public function get_answers_list()
 	{
-		$answers_list = array();
+		$answers_list = [];
 		foreach ($this->get_answers() as $answer)
 		{
 			$answers_list[] = stripslashes($answer['title']);
@@ -260,12 +260,12 @@ class PollItem extends RichItem
 
 	protected function get_additional_sorting_fields()
 	{
-		return array('close_poll' => array('database_field' => 'close_poll', 'label' => $this->lang['poll.sorting.field.closed'], 'icon' => 'fas fa-window-close'));
+		return ['close_poll' => ['database_field' => 'close_poll', 'label' => $this->lang['poll.sorting.field.closed'], 'icon' => 'fas fa-window-close']];
 	}
 
 	public function get_additional_template_vars()
 	{
-		return array('C_COMPLETED' => $this->is_closed());
+		return ['C_COMPLETED' => $this->is_closed()];
 	}
 }
 ?>

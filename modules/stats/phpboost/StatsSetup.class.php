@@ -35,7 +35,7 @@ class StatsSetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(self::$stats_table, self::$stats_referer_table,));
+		PersistenceContext::get_dbms_utils()->drop([self::$stats_table, self::$stats_referer_table,]);
 	}
 
 	private function create_tables()
@@ -46,44 +46,44 @@ class StatsSetup extends DefaultModuleSetup
 
 	private function create_stats_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'stats_year' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'stats_month' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'stats_day' => array('type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0),
-			'nbr' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'pages' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'pages_detail' => array('type' => 'text', 'length' => 65000)
-		);
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array(
-				'stats_day' => array('type' => 'unique', 'fields' => array('stats_day', 'stats_month', 'stats_year'))
-			)
-		);
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'stats_year' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'stats_month' => ['type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0],
+			'stats_day' => ['type' => 'integer', 'length' => 1, 'notnull' => 1, 'default' => 0],
+			'nbr' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'pages' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'pages_detail' => ['type' => 'text', 'length' => 65000]
+		];
+		$options = [
+			'primary' => ['id'],
+			'indexes' => [
+				'stats_day' => ['type' => 'unique', 'fields' => ['stats_day', 'stats_month', 'stats_year']]
+			]
+		];
 		self::$db_utils->create_table(self::$stats_table, $fields, $options);
 	}
 
 	private function create_stats_referer_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'url' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'relative_url' => array('type' => 'string', 'length' => 255, 'default' => "''"),
-			'total_visit' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'today_visit' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'yesterday_visit' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'nbr_day' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'last_update' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'type' => array('type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array(
-				'url' => array('type' => 'key', 'fields' => array('url', 'relative_url'))
-			),
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'url' => ['type' => 'string', 'length' => 255, 'default' => "''"],
+			'relative_url' => ['type' => 'string', 'length' => 255, 'default' => "''"],
+			'total_visit' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'today_visit' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'yesterday_visit' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'nbr_day' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'last_update' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'type' => ['type' => 'boolean', 'length' => 1, 'notnull' => 1, 'default' => 0]
+		];
+		$options = [
+			'primary' => ['id'],
+			'indexes' => [
+				'url' => ['type' => 'key', 'fields' => ['url', 'relative_url']]
+			],
 			'charset' => 'latin1'
-		);
+		];
 		self::$db_utils->create_table(self::$stats_referer_table, $fields, $options);
 	}
 }

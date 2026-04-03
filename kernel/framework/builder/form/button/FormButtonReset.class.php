@@ -30,9 +30,9 @@ class FormButtonReset implements FormButton
 	{
 		$template = new FileTemplate('framework/builder/form/button/FormButtonReset.tpl');
 
-		$template->put_all(array(
+		$template->put_all([
 			'L_RESET' => $this->value
-		));
+		]);
 
 		return $template;
 	}

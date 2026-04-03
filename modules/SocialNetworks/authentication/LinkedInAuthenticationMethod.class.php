@@ -25,11 +25,11 @@ class LinkedInAuthenticationMethod extends AbstractSocialNetworkAuthenticationMe
 	{
 		$config = SocialNetworksConfig::load();
 
-		$this->linkedin = new LinkedIn\LinkedIn(array(
+		$this->linkedin = new LinkedIn\LinkedIn([
 			'api_key'  => $config->get_client_id(LinkedInSocialNetwork::SOCIAL_NETWORK_ID),
 			'api_secret' => $config->get_client_secret(LinkedInSocialNetwork::SOCIAL_NETWORK_ID),
 			'callback_url' => UserUrlBuilder::connect(LinkedInSocialNetwork::SOCIAL_NETWORK_ID)->absolute()
-		));
+		]);
 	}
 
 	protected function get_external_authentication()
@@ -39,10 +39,10 @@ class LinkedInAuthenticationMethod extends AbstractSocialNetworkAuthenticationMe
 
 	protected function get_user_data()
 	{
-		$scope = array(
+		$scope = [
 			LinkedIn\LinkedIn::SCOPE_BASIC_PROFILE,
 			LinkedIn\LinkedIn::SCOPE_EMAIL_ADDRESS
-		);
+		];
 
 		$request = AppContext::get_request();
 
@@ -56,12 +56,12 @@ class LinkedInAuthenticationMethod extends AbstractSocialNetworkAuthenticationMe
 		{
 			$user = $this->linkedin->get('/people/~:(id,email-address,first-name,last-name,picture-url)');
 
-			return array(
+			return [
 				'id' => $user['id'],
 				'email' => $user['emailAddress'],
 				'name' => $user['firstName'] . ' ' . $user['lastName'],
 				'picture_url' => isset($user['pictureUrl']) ? $user['pictureUrl'] : ''
-			);
+			];
 		}
 		else if ($request->has_getparameter('error') && ($request->get_getvalue('error') == 'access_denied'))
 		{

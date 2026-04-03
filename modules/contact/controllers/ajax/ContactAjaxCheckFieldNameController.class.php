@@ -33,7 +33,7 @@ class ContactAjaxCheckFieldNameController extends AbstractController
 			}
 		}
 
-		return new JSONResponse(array('result' => $result));
+		return new JSONResponse(['result' => $result]);
 	}
 }
 ?>

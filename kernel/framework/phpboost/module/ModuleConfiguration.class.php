@@ -259,10 +259,10 @@ class ModuleConfiguration
 		$this->hexa_icon              = isset($config['hexa_icon']) ? $config['hexa_icon'] : '';
 		$this->php_version            = isset($config['php_version']) && !empty($config['php_version']) ? $config['php_version'] : ServerConfiguration::MIN_PHP_VERSION;
 		$this->repository             = isset($config['repository']) && !empty($config['repository']) ? $config['repository'] : Updates::PHPBOOST_OFFICIAL_REPOSITORY;
-		$this->features               = isset($config['features']) && !empty($config['features']) ? explode(',', preg_replace('/\s/', '', $config['features'])) : array();
-		$this->specific_hooks         = isset($config['specific_hooks']) && !empty($config['specific_hooks']) ? explode(',', preg_replace('/\s/', '', $config['specific_hooks'])) : array();
+		$this->features               = isset($config['features']) && !empty($config['features']) ? explode(',', preg_replace('/\s/', '', $config['features'])) : [];
+		$this->specific_hooks         = isset($config['specific_hooks']) && !empty($config['specific_hooks']) ? explode(',', preg_replace('/\s/', '', $config['specific_hooks'])) : [];
 		$this->contribution_interface = isset($config['contribution_interface']) && !empty($config['contribution_interface']) ? Url::to_rel('/' . $this->module_id . '/' . $config['contribution_interface']) : ($this->feature_is_enabled('contribution') ? ItemsUrlBuilder::add(Category::ROOT_CATEGORY, $this->module_id)->rel() : '');
-		$this->url_rewrite_rules      = isset($config['rewrite_rules']) && !empty($config['rewrite_rules']) ? $config['rewrite_rules'] : array();
+		$this->url_rewrite_rules      = isset($config['rewrite_rules']) && !empty($config['rewrite_rules']) ? $config['rewrite_rules'] : [];
 
 		if (GeneralConfig::load()->get_phpboost_major_version() >= '6.0' && $this->compatibility >= '6.0' && ((ModulesManager::is_module_installed($this->module_id) && ModulesConfig::load()->get_module($this->module_id)->get_installed_version() == $this->version) || !ModulesManager::is_module_installed($this->module_id)))
 		{
@@ -317,7 +317,7 @@ class ModuleConfiguration
 
 	public function get_properties()
 	{
-		return array(
+		return [
 			'addon_type'             => $this->addon_type,
 			'name'                   => $this->name,
 			'genre'                  => $this->genre,
@@ -339,7 +339,7 @@ class ModuleConfiguration
 			'home_page'              => $this->home_page,
 			'admin_main_page'        => $this->admin_main_page,
 			'admin_menu'             => $this->admin_menu
-		);
+		];
 	}
 }
 ?>

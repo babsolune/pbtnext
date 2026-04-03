@@ -20,31 +20,31 @@ class SpotsCategory extends Category
 	protected function set_additional_attributes_list()
 	{
 		$lang = LangLoader::get_all_langs('spots');
-		$this->add_additional_attribute('color', array('type' => 'string', 'length' => 250, 'default' => "''", 'attribute_field_parameters' => array(
+		$this->add_additional_attribute('color', ['type' => 'string', 'length' => 250, 'default' => "''", 'attribute_field_parameters' => [
 			'field_class'   => 'FormFieldColorPicker',
 			'label'         => LangLoader::get_message('common.color', 'common-lang'),
 			'default_value' => SpotsConfig::load()->get_default_color()
-			)
-		));
-		$this->add_additional_attribute('inner_icon', array('type' => 'string', 'length' => 250, 'default' => "''", 'attribute_field_parameters' => array(
+			]
+		]);
+		$this->add_additional_attribute('inner_icon', ['type' => 'string', 'length' => 250, 'default' => "''", 'attribute_field_parameters' => [
 			'field_class'   => 'FormFieldTextEditor',
 			'label'         => $lang['spots.inner.icon'],
 			'default_value' => '',
-			'options' => array(
+			'options' => [
 				'description' => $lang['spots.inner.icon.clue'],
 				'placeholder' => $lang['spots.inner.icon.placeholder']
-			)
-			)
-		));
-		$this->add_additional_attribute('category_address', array('type' => 'string', 'length' => 65000, 'default' => "''", 'attribute_field_parameters' => array(
+			]
+			]
+		]);
+		$this->add_additional_attribute('category_address', ['type' => 'string', 'length' => 65000, 'default' => "''", 'attribute_field_parameters' => [
 			'field_class'   => 'GoogleMapsFormFieldMapAddress',
 			'label'         => $lang['spots.category.address'],
 			'default_value' => '',
-			'options' => array(
+			'options' => [
 				'description' => $lang['spots.category.address.clue']
-			)
-			)
-		));
+			]
+			]
+		]);
 	}
 
 	public function get_color()

@@ -40,7 +40,7 @@ class FaqSetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		PersistenceContext::get_dbms_utils()->drop(array(self::$faq_table, self::$faq_cats_table));
+		PersistenceContext::get_dbms_utils()->drop([self::$faq_table, self::$faq_cats_table]);
 	}
 
 	private function create_tables()
@@ -51,24 +51,24 @@ class FaqSetup extends DefaultModuleSetup
 
 	private function create_faq_table()
 	{
-		$fields = array(
-			'id' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'id_category' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'q_order' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'title' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'content' => array('type' => 'text', 'length' => 65000),
-			'creation_date' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'author_user_id' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'approved' => array('type' => 'boolean', 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id'),
-			'indexes' => array(
-				'id_category' => array('type' => 'key', 'fields' => 'id_category'),
-				'title' => array('type' => 'fulltext', 'fields' => 'title'),
-				'content' => array('type' => 'fulltext', 'fields' => 'content')
-			)
-		);
+		$fields = [
+			'id' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'id_category' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'q_order' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'title' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'content' => ['type' => 'text', 'length' => 65000],
+			'creation_date' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'author_user_id' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'approved' => ['type' => 'boolean', 'notnull' => 1, 'default' => 0]
+		];
+		$options = [
+			'primary' => ['id'],
+			'indexes' => [
+				'id_category' => ['type' => 'key', 'fields' => 'id_category'],
+				'title' => ['type' => 'fulltext', 'fields' => 'title'],
+				'content' => ['type' => 'fulltext', 'fields' => 'content']
+			]
+		];
 		PersistenceContext::get_dbms_utils()->create_table(self::$faq_table, $fields, $options);
 	}
 
@@ -86,7 +86,7 @@ class FaqSetup extends DefaultModuleSetup
 
 	private function insert_faq_cats_data()
 	{
-		PersistenceContext::get_querier()->insert(self::$faq_cats_table, array(
+		PersistenceContext::get_querier()->insert(self::$faq_cats_table, [
 			'id' => 1,
 			'id_parent' => 0,
 			'c_order' => 1,
@@ -95,9 +95,9 @@ class FaqSetup extends DefaultModuleSetup
 			'name' => $this->messages['default.cat.phpboost.name'],
 			'description' => $this->messages['default.cat.phpboost.description'],
 			'thumbnail' => '/templates/__default__/images/default_category.webp'
-		));
+		]);
 
-		PersistenceContext::get_querier()->insert(self::$faq_cats_table, array(
+		PersistenceContext::get_querier()->insert(self::$faq_cats_table, [
 			'id' => 2,
 			'id_parent' => 0,
 			'c_order' => 2,
@@ -106,12 +106,12 @@ class FaqSetup extends DefaultModuleSetup
 			'name' => $this->messages['default.cat.dictionary.name'],
 			'description' => $this->messages['default.cat.dictionary.description'],
 			'thumbnail' => '/templates/__default__/images/default_category.webp'
-		));
+		]);
 	}
 
 	private function insert_faq_data()
 	{
-		PersistenceContext::get_querier()->insert(self::$faq_table, array(
+		PersistenceContext::get_querier()->insert(self::$faq_table, [
 			'id' => 1,
 			'id_category' => 1,
 			'q_order' => 1,
@@ -120,9 +120,9 @@ class FaqSetup extends DefaultModuleSetup
 			'creation_date' => time(),
 			'author_user_id' => 1,
 			'approved' => 1
-		));
+		]);
 
-		PersistenceContext::get_querier()->insert(self::$faq_table, array(
+		PersistenceContext::get_querier()->insert(self::$faq_table, [
 			'id' => 2,
 			'id_category' => 2,
 			'q_order' => 1,
@@ -131,7 +131,7 @@ class FaqSetup extends DefaultModuleSetup
 			'creation_date' => time(),
 			'author_user_id' => 1,
 			'approved' => 1
-		));
+		]);
 	}
 }
 ?>

@@ -34,7 +34,7 @@ class Robots
 			{
 				$result = (preg_match('`x86_64; ([^/]+)`iu', $user_agent, $matches) || preg_match('`x64; ([^/]+)`iu', $user_agent, $matches) || preg_match('`compatible; ([^/]+)`iu', $user_agent, $matches)) ? $matches[1] : $user_agent;
 				$result = preg_split('`(\ |;|\/|\+)`', $result);
-				$result = TextHelper::ucfirst(str_replace(array('(', ')'), '', $result[0]));
+				$result = TextHelper::ucfirst(str_replace(['(', ')'], '', $result[0]));
 				$result = preg_replace('`bot[0-9\.]+$`iu', 'Bot', $result);
 				$result = (preg_match('`bot`iu', $result) && !preg_match('`robot`iu', $result)) ? preg_replace('`bot$`iu', 'Bot', $result) : $result;
 				$result = preg_replace('`spider$`iu', 'Spider', $result);
@@ -49,12 +49,12 @@ class Robots
 	// Robots with user-agents that don't match the regex
 	private static function get_robots_list()
 	{
-		return array(
+		return [
 			'360Spider',
 			'Applebot',
 			'AppEngine-Google',
 			'YisouSpider',
-		);
+		];
 	}
 }
 ?>

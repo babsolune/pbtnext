@@ -18,7 +18,7 @@ class AdminBugtrackerDeleteDefaultParameterController extends AdminModuleControl
 
 		$parameter = $request->get_string('parameter', '');
 
-		if (in_array($parameter, array('type', 'category', 'severity', 'priority', 'version')))
+		if (in_array($parameter, ['type', 'category', 'severity', 'priority', 'version']))
 		{
 			switch ($parameter)
 			{

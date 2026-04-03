@@ -35,7 +35,7 @@ class AdminSandboxFWKBoostController extends DefaultAdminModuleController
 
 	private function build_view()
 	{
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'BASIC'          => self::build_basic_markup(),
 			// 'ACCORDION'      => self::build_accordion_markup(),
 			'TABS'           => self::build_tabs_markup(),
@@ -44,7 +44,7 @@ class AdminSandboxFWKBoostController extends DefaultAdminModuleController
 			'PAGINATION'     => self::build_markup('sandbox/pagecontent/components/pagination.tpl'),
 			'TABLE'          => self::build_markup('sandbox/pagecontent/components/table.tpl'),
 			'MESSAGE_HELPER' => self::build_alert_markup()
-		));
+		]);
 	}
 
 	private function build_floating_messages()
@@ -67,11 +67,11 @@ class AdminSandboxFWKBoostController extends DefaultAdminModuleController
 		$pagination = new ModulePagination(2, 15, 5);
 		$pagination->set_url(new Url('#%d'));
 
-		$view->put_all(array(
+		$view->put_all([
 			'PAGINATION_FULL'  => $pagination_full->display(),
 			'PAGINATION_LIGHT' => $pagination_light->display(),
 			'PAGINATION_TABLE' => $pagination->display()
-		));
+		]);
 		return $view;
 	}
 
@@ -81,7 +81,7 @@ class AdminSandboxFWKBoostController extends DefaultAdminModuleController
 		$view->add_lang($this->lang);
 		$view->add_lang($this->lang);
 
-		$messages = array(
+		$messages = [
 			MessageHelper::display($this->lang['sandbox.component.message.notice'], MessageHelper::NOTICE),
 			MessageHelper::display($this->lang['sandbox.component.message.question'], MessageHelper::QUESTION),
 			MessageHelper::display($this->lang['sandbox.component.message.success'], MessageHelper::SUCCESS),
@@ -90,21 +90,21 @@ class AdminSandboxFWKBoostController extends DefaultAdminModuleController
 			MessageHelper::display($this->lang['sandbox.component.message.member'], MessageHelper::MEMBER_ONLY),
 			MessageHelper::display($this->lang['sandbox.component.message.modo'], MessageHelper::MODERATOR_ONLY),
 			MessageHelper::display($this->lang['sandbox.component.message.admin'], MessageHelper::ADMIN_ONLY)
-		);
+		];
 
 		foreach ($messages as $message)
 		{
-			$view->assign_block_vars('messages', array('VIEW' => $message));
+			$view->assign_block_vars('messages', ['VIEW' => $message]);
 		}
 
 		$this->build_floating_messages();
 		if ($this->floating_messages_button->has_been_submited() && $this->floating_messages->validate()) {
-			$view->put_all(array(
+			$view->put_all([
 				'FLOATING_SUCCESS'  => MessageHelper::display($this->lang['sandbox.component.message.float.unlimited'], MessageHelper::SUCCESS, -1),
 				'FLOATING_NOTICE'   => MessageHelper::display($this->lang['sandbox.component.message.float.limited'], MessageHelper::NOTICE, 3),
 				'FLOATING_WARNING'  => MessageHelper::display($this->lang['sandbox.component.message.float.unlimited'], MessageHelper::WARNING, -1),
 				'FLOATING_ERROR'    => MessageHelper::display($this->lang['sandbox.component.message.float.limited'], MessageHelper::ERROR, 6)
-			));
+			]);
 		}
 		$view->put('FLOATING_MESSAGES', $this->floating_messages->display());
 
@@ -128,13 +128,13 @@ class AdminSandboxFWKBoostController extends DefaultAdminModuleController
 			$basic_form->add_fieldset($link_list);
 
 			$link_list->add_field(new FormFieldActionLinkList('actionlink_list',
-				array(
+				[
 					new FormFieldActionLinkElement($this->lang['sandbox.menu.link.icon'], '#', '', '', '', 'far fa-edit'),
 					new FormFieldActionLinkElement($this->lang['sandbox.menu.link.img'], '#', 'sandbox-svg-icon', '/templates/__default__/theme/images/logo.svg'),
 					new FormFieldActionLinkElement($this->lang['sandbox.menu.link'].' 3', '#', ''),
 					new FormFieldActionLinkElement($this->lang['sandbox.menu.link'].' 4', '#', '')
-				),
-				array('class' => 'css-class')
+				],
+				['class' => 'css-class']
 			));
 
 		return $basic_form;
@@ -161,23 +161,23 @@ class AdminSandboxFWKBoostController extends DefaultAdminModuleController
 		// 	$accordion_menu->set_css_class('accordion-nav');
 
 		// 	$accordion_menu->add_field(new FormFieldMultitabsLinkList('accordion_menu_list',
-		// 		array(
+		// 		[
 		// 			new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link.icon'], 'accordion', 'Sandbox_Accordion_accordion_01', 'fa fa-cog'),
 		// 			new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link.img'], 'accordion', 'Sandbox_Accordion_accordion_02', '', '/templates/__default__/theme/images/logo.svg', '', 'sandbox-svg-icon'),
 		// 			new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link'].' 3', 'accordion', 'Sandbox_Accordion_accordion_03'),
 		// 			new FormFieldMultitabsLinkElement($this->lang['sandbox.menu.link'].' 4', 'accordion', 'Sandbox_Accordion_accordion_04', '', '', '', 'bgc warning')
-		// 		)
+		// 		]
 		// 	));
 
 		// 	$accordion_01 = new FormFieldsetMultitabsHTML('accordion_01', $this->lang['sandbox.menu.panel'].' 1',
-		// 		array('css_class' => 'accordion accordion-animation first-tab')
+		// 		['css_class' => 'accordion accordion-animation first-tab']
 		// 	);
 		// 	$accordion_form->add_fieldset($accordion_01);
 
 		// 	$accordion_01->add_field(new FormFieldHTML('accordion_content_01', $this->lang['sandbox.lorem.short.content']));
 
 		// 	$accordion_02 = new FormFieldsetMultitabsHTML('accordion_02', $this->lang['sandbox.menu.panel'].' 2',
-		// 		array('css_class' => 'accordion accordion-animation')
+		// 		['css_class' => 'accordion accordion-animation']
 		// 	);
 		// 	$accordion_form->add_fieldset($accordion_02);
 
@@ -185,7 +185,7 @@ class AdminSandboxFWKBoostController extends DefaultAdminModuleController
 		// 	$accordion_02->add_field(new FormFieldHTML('accordion_content_02_b', $this->lang['sandbox.lorem.short.content']));
 
 		// 	$accordion_03 = new FormFieldsetMultitabsHTML('accordion_03', $this->lang['sandbox.menu.panel'].' 3',
-		// 		array('css_class' => 'accordion accordion-animation')
+		// 		['css_class' => 'accordion accordion-animation']
 		// 	);
 		// 	$accordion_form->add_fieldset($accordion_03);
 
@@ -194,7 +194,7 @@ class AdminSandboxFWKBoostController extends DefaultAdminModuleController
 		// 	$accordion_03->add_field(new FormFieldHTML('accordion_content_03_c', $this->lang['sandbox.lorem.short.content']));
 
 		// 	$accordion_04 = new FormFieldsetMultitabsHTML('accordion_04', $this->lang['sandbox.menu.panel'].' 4',
-		// 		array('css_class' => 'accordion accordion-animation')
+		// 		['css_class' => 'accordion accordion-animation']
 		// 	);
 		// 	$accordion_form->add_fieldset($accordion_04);
 
@@ -228,12 +228,12 @@ class AdminSandboxFWKBoostController extends DefaultAdminModuleController
 			$tabs_menu->set_css_class('tabs-nav');
 
 			$tabs_menu->add_field(new TabsNavList('tabs_menu_list',
-				array(
+				[
 					new TabsNavElement($this->lang['sandbox.menu.link.icon'], 'Sandbox_Tabs_tabs_01', 'fa fa-cog'),
 					new TabsNavElement($this->lang['sandbox.menu.link.img'], 'Sandbox_Tabs_tabs_02', '', '/templates/__default__/theme/images/logo.svg', '', 'sandbox-svg-icon'),
 					new TabsNavElement($this->lang['sandbox.menu.link'].' 3', 'Sandbox_Tabs_tabs_03'),
 					new TabsNavElement($this->lang['sandbox.menu.link'].' 4', 'Sandbox_Tabs_tabs_04', '', '', '', 'bgc warning')
-				)
+				]
 			));
 
         // Tabs content
@@ -295,11 +295,11 @@ class AdminSandboxFWKBoostController extends DefaultAdminModuleController
 		$wizard_form->add_fieldset($fieldset_tab_menu);
 
 		$fieldset_tab_menu->add_field(new WizardActionLinkList('tab_menu_list',
-			array(
+			[
 				new FormFieldActionLinkElement($this->lang['sandbox.menu.panel'] . ' 01', '#', '', '', '', 'fa fa-cog'),
 				new FormFieldActionLinkElement($this->lang['sandbox.menu.panel'] . ' 02', '#', '', '', '', 'fa fa-image'),
 				new FormFieldActionLinkElement($this->lang['sandbox.menu.panel'] . ' 03', '#', 'sandbox-svg-icon', PATH_TO_ROOT . 'templates/__default__/theme/images/logo.svg', 'articles'),
-			)
+			]
 		));
 
 		$fieldset_tab_one = new FormFieldsetHTML('tab-04', $this->lang['sandbox.menu.panel.title'] . ' 01');

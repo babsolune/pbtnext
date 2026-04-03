@@ -62,7 +62,7 @@ class NewslettersubscribeController extends DefaultModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldMailEditor('mail', $this->lang['newsletter.subscriber.email'], $email,
-			array('required' => true)
+			['required' => true]
 		));
 
 		if ($this->current_user->check_level(User::MEMBER_LEVEL) && $email == $this->current_user->get_email())
@@ -77,10 +77,10 @@ class NewslettersubscribeController extends DefaultModuleController
 				$newsletter_subscribe = NewsletterService::get_visitor_id_streams($email);
 		}
 		else
-			$newsletter_subscribe = array();
+			$newsletter_subscribe = [];
 
 		$fieldset->add_field(new FormFieldMultipleCheckbox('newsletter_choice', $this->lang['newsletter.subscribe.item.clue'], $newsletter_subscribe, $this->get_streams(),
-			array('required' => true)
+			['required' => true]
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -110,7 +110,7 @@ class NewslettersubscribeController extends DefaultModuleController
 
 	private function get_streams()
 	{
-		$streams = array();
+		$streams = [];
 		$newsletter_streams = NewsletterStreamsCache::load()->get_streams();
 		foreach ($newsletter_streams as $id => $stream)
 		{
@@ -122,7 +122,7 @@ class NewslettersubscribeController extends DefaultModuleController
 
 	private function save(&$view)
 	{
-		$streams = array();
+		$streams = [];
 		foreach ($this->form->get_value('newsletter_choice') as $field => $option)
 		{
 			$streams[] = $option->get_id();

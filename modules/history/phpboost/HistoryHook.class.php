@@ -222,7 +222,7 @@ class HistoryHook extends Hook
 	/**
 	 * {@inheritdoc}
 	 */
-	public function on_edit_config_action($module_id, array $properties = array(), $description = '')
+	public function on_edit_config_action($module_id, array $properties = [], $description = '')
 	{
 		if (!in_array('config', HistoryConfig::load()->get_history_topics_disabled()))
 			return $this->add_history_entry('edit_config', $module_id, $properties, $description);
@@ -274,7 +274,7 @@ class HistoryHook extends Hook
 			$title = (isset($properties['title']) ? $properties['title'] : (isset($properties['name']) ? $properties['name'] : ''));
 			$url = isset($properties['item_url']) ? $properties['item_url'] : (isset($properties['url']) ? $properties['url'] : '');
 			
-			if (in_array($action, array('add_category', 'edit_category', 'delete_category')) && !$url && isset($properties['id']) && isset($properties['rewrited_name']))
+			if (in_array($action, ['add_category', 'edit_category', 'delete_category']) && !$url && isset($properties['id']) && isset($properties['rewrited_name']))
 				$url = Url::to_rel('/' . $module_id . '/' . $properties['id'] . '-' . $properties['rewrited_name'] . '/');
 			
 			$item_manager_class = ucfirst($module_id) . 'Manager';
@@ -313,7 +313,7 @@ class HistoryHook extends Hook
 				}
 			}
 			
-			$parameters = array(
+			$parameters = [
 				'module_id'     => $module_id,
 				'id_in_module'  => $id_in_module,
 				'user_id'       => AppContext::get_current_user()->get_id(),
@@ -322,7 +322,7 @@ class HistoryHook extends Hook
 				'title'         => $title,
 				'url'           => $url,
 				'description'   => $description
-			);
+			];
 			
 			if (!HistoryManager::count('WHERE module_id = :module_id AND action = :action and creation_date = :creation_date and title = :title and user_id = :user_id', $parameters))
 				return HistoryManager::add($parameters);

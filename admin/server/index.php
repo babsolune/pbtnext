@@ -11,9 +11,9 @@ defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '../..');
 
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
-$url_controller_mappers = array(
+$url_controller_mappers = [
 	new UrlControllerMapper('AdminServerPHPInfoController', '`^/phpinfo/?$`'),
 	new UrlControllerMapper('AdminServerSystemReportController', '`^/(?:report/?)?$`')
-);
+];
 DispatchManager::dispatch($url_controller_mappers);
 ?>

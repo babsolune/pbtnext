@@ -22,7 +22,7 @@ class FormFieldDecimalNumberEditor extends FormFieldNumberEditor
 	 * @param array $field_options Map containing the options
 	 * @param FormFieldConstraint[] $constraints The constraints checked during the validation
 	 */
-	public function __construct($id, $label, $value, array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, $value, array $field_options = [], array $constraints = [])
 	{
 		$this->pattern = '`^[0-9]+([\.|,][0-9]{1,2})?$`iu';
 		parent::__construct($id, $label, $value, $field_options, $constraints);

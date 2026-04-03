@@ -17,8 +17,8 @@ class AdminServerPHPInfoController extends AdminController
 		phpinfo();
 		$phpinfo = ob_get_contents();
 		$phpinfo = preg_replace('`^.*<body>`isu', '', $phpinfo);
-		$phpinfo = str_replace(array('class="e"', 'class="v"', '<table>', '<th>', '</body></html>'),
-		array('', '',  '<table class="table-no-header phpinfo">', '<td>', ''), $phpinfo);
+		$phpinfo = str_replace(['class="e"', 'class="v"', '<table>', '<th>', '</body></html>'],
+		['', '',  '<table class="table-no-header phpinfo">', '<td>', ''], $phpinfo);
 		ob_end_clean();
 		ob_start();
 

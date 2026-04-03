@@ -60,12 +60,12 @@ class MenuControllerConfigurationEdit extends AdminController
 		$menu_config = MenuConfigurationDAO::instance()->find_by_id($this->object_id);
 
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'NAME' => $menu_config->get_name(),
 			'MATCH_REGEX' => $menu_config->get_match_regex(),
 			'U_CONFIGURE' => MenuUrlBuilder::menu_configuration_configure($menu_config->get_id())->rel(),
 			'U_LIST' => MenuUrlBuilder::menu_configuration_list()->rel()
-		));
+		]);
 	}
 
 	private function load_env()

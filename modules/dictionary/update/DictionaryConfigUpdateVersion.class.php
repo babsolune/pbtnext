@@ -13,9 +13,9 @@ class DictionaryConfigUpdateVersion extends ConfigUpdateVersion
 	{
 		parent::__construct('dictionary');
 
-		$this->config_parameters_to_modify = array(
+		$this->config_parameters_to_modify = [
 			'items_number_per_page' => 'items_per_page'
-		);
+		];
 	}
 }
 ?>

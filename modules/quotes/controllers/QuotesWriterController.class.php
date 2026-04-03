@@ -41,10 +41,10 @@ class QuotesWriterController extends DefaultModuleController
 		$page = $request->get_getint('page', 1);
 
 		$condition = 'WHERE rewrited_writer = :rewrited_writer AND id_category IN :authorized_categories AND approved = 1';
-		$parameters = array(
+		$parameters = [
 			'rewrited_writer' => $rewrited_writer,
 			'authorized_categories' => $authorized_categories
-		);
+		];
 
 		$pagination = $this->get_pagination($condition, $parameters, $rewrited_writer, $page);
 
@@ -53,18 +53,18 @@ class QuotesWriterController extends DefaultModuleController
 		LEFT JOIN '. DB_TABLE_MEMBER .' member ON member.user_id = quotes.author_user_id
 		' . $condition . '
 		ORDER BY quotes.creation_date DESC
-		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, array(
+		LIMIT :number_items_per_page OFFSET :display_from', array_merge($parameters, [
 			'number_items_per_page' => (int)$pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
-		)));
+		]));
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_ITEMS' => $result->get_rows_count() > 0,
 			'C_WRITER_ITEMS' => $this->cache->get_writer($rewrited_writer),
 			'WRITER_NAME' => $this->cache->get_writer($rewrited_writer),
 			'C_PAGINATION' => $pagination->has_several_pages(),
 			'PAGINATION' => $pagination->display()
-		));
+		]);
 
 		while ($row = $result->fetch())
 		{
@@ -119,7 +119,7 @@ class QuotesWriterController extends DefaultModuleController
 
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['quotes.module.title'], $this->cache->get_writer($rewrited_writer), $page);
-		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['quotes.seo.description.writer'], array('writer' => $this->cache->get_writer($rewrited_writer))));
+		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['quotes.seo.description.writer'], ['writer' => $this->cache->get_writer($rewrited_writer)]));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(QuotesUrlBuilder::display_writer_items($rewrited_writer, $page));
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();

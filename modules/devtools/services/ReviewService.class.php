@@ -16,11 +16,11 @@ class ReviewService
     public static $files_in_content_table;
 
     /** List of modules whose content is indexed by this service. */
-    private static $supported_modules = array(
+    private static $supported_modules = [
         'news', 'articles', 'calendar', 'download', 'media',
         'wiki', 'gallery', 'faq', 'forum', 'web',
         'newsletter', 'pages', 'smallads',
-    );
+    ];
 
     public static function __static()
     {
@@ -63,7 +63,7 @@ class ReviewService
     /** Truncates the review cache table so it can be repopulated. */
     public static function delete_files_in_content_table()
     {
-        PersistenceContext::get_dbms_utils()->truncate(array(self::table()));
+        PersistenceContext::get_dbms_utils()->truncate([self::table()]);
     }
 
     /**
@@ -88,13 +88,13 @@ class ReviewService
 
         // Suffixes that indicate secondary/auxiliary tables — never contain user-uploaded files.
         // Only the primary content table of each module should be scanned.
-        $excluded_suffixes = array(
+        $excluded_suffixes = [
             '_cats', '_cat', '_categories', '_config', '_configs',
             '_topics', '_articles', '_archives', '_streams',
             '_logs', '_rights', '_auth',
-        );
+        ];
 
-        $by_table = array();
+        $by_table = [];
         while ($row = $req->fetch())
         {
             $table = $row['TABLE_NAME'];
@@ -116,9 +116,9 @@ class ReviewService
 
         $req->dispose();
 
-        $results = array();
+        $results = [];
         foreach ($by_table as $table => $columns)
-            $results[] = array('table' => $table, 'columns' => $columns);
+            $results[] = ['table' => $table, 'columns' => $columns];
 
         return $results;
     }
@@ -138,7 +138,7 @@ class ReviewService
     public static function get_files_on_server($folder)
     {
         $data    = new Folder(PATH_TO_ROOT . $folder);
-        $results = array();
+        $results = [];
 
         if ($data->exists())
         {
@@ -167,7 +167,7 @@ class ReviewService
      */
     public static function get_files_in_content()
     {
-        $files_in_content = array();
+        $files_in_content = [];
 
         try
         {
@@ -197,7 +197,7 @@ class ReviewService
      */
     public static function get_files_in_table($table)
     {
-        $results = array();
+        $results = [];
 
         try
         {
@@ -229,7 +229,7 @@ class ReviewService
     public static function get_all_unused_files()
     {
         $files_on_server  = self::get_files_on_server('/upload');
-        $files_in_content = array();
+        $files_in_content = [];
 
         foreach (self::get_files_in_content() as $file)
             $files_in_content[] = $file['file_path'];
@@ -246,7 +246,7 @@ class ReviewService
     public static function get_count_used_files_not_on_server($folder)
     {
         $files_on_server  = self::get_files_on_server($folder);
-        $files_in_content = array();
+        $files_in_content = [];
 
         foreach (self::get_files_in_content() as $file)
             $files_in_content[] = $file['file_path'];
@@ -266,14 +266,14 @@ class ReviewService
             $missing = self::get_count_used_files_not_on_server('/upload');
 
         if (empty($missing))
-            return array();
+            return [];
 
         // Single query instead of one per file to avoid N×1 timeout
         $placeholders = implode(', ', array_map(function($f) {
             return '"' . addslashes($f) . '"';
         }, $missing));
 
-        $data_used_files = array();
+        $data_used_files = [];
         try
         {
             $result = PersistenceContext::get_querier()->select(
@@ -283,7 +283,7 @@ class ReviewService
             );
             while ($row = $result->fetch())
             {
-                $data_used_files[] = array(
+                $data_used_files[] = [
                     'id'                 => $row['id'],
                     'file_path'          => $row['file_path'],
                     'file_link'          => $row['file_link'],
@@ -295,7 +295,7 @@ class ReviewService
                     'item_id'            => $row['item_id'],
                     'id_in_module'       => $row['id_in_module'],
                     'file_context'       => $row['file_context'],
-                );
+                ];
             }
             $result->dispose();
         }
@@ -347,7 +347,7 @@ class ReviewService
      */
     public static function get_unused_files_with_users()
     {
-        $upload_data = array();
+        $upload_data = [];
 
         foreach (self::get_all_unused_files() as $file)
         {
@@ -361,12 +361,12 @@ class ReviewService
                 );
                 while ($row = $result->fetch())
                 {
-                    $upload_data[] = array(
+                    $upload_data[] = [
                         'file_path'    => $row['path'],
                         'display_name' => $row['display_name'],
                         'timestamp'    => $row['timestamp'],
                         'file_size'    => $row['size'],
-                    );
+                    ];
                 }
                 $result->dispose();
             }
@@ -383,7 +383,7 @@ class ReviewService
      */
     public static function get_orphan_files()
     {
-        $files_with_users = array();
+        $files_with_users = [];
         foreach (self::get_unused_files_with_users() as $file)
             $files_with_users[] = $file['file_path'];
 
@@ -401,7 +401,7 @@ class ReviewService
     public static function is_picture_file($file, $folder)
     {
         $ext = strtolower(substr(strrchr(is_array($file) ? $file['file_path'] : $file, '.'), 1));
-        return in_array($ext, array('jpg', 'jpeg', 'png', 'svg', 'gif'));
+        return in_array($ext, ['jpg', 'jpeg', 'png', 'svg', 'gif']);
     }
 
     /**
@@ -434,7 +434,7 @@ class ReviewService
                 $article_id = isset($data['item_id']) ? (int)$data['item_id'] : (isset($data['id']) ? (int)$data['id'] : 0);
                 $article    = self::get_wiki_article($article_id);
                 if (!$article) return '';
-                $cat_name = self::get_category_name('wiki', array('id_category' => $article['id_category']));
+                $cat_name = self::get_category_name('wiki', ['id_category' => $article['id_category']]);
                 return '/' . $db_name . '/wiki/' . $article['id_category'] . '-' . $cat_name . '/' . $article['id'] . '-' . $article['rewrited_title'] . '/';
 
             case 'media':
@@ -564,9 +564,9 @@ class ReviewService
             );
             $row = $result->fetch();
             $result->dispose();
-            return $row ?: array();
+            return $row ?: [];
         }
-        catch (Exception $e) { return array(); }
+        catch (Exception $e) { return []; }
     }
 
     public static function get_wiki_title($id)

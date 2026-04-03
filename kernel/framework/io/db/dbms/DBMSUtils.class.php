@@ -32,7 +32,7 @@ interface DBMSUtils
 
 	function desc_table($table);
 
-    function create_table($table_name, array $fields, array $options = array());
+    function create_table($table_name, array $fields, array $options = []);
 
     function copy_table($table_name, $new_table_name);
 

@@ -26,12 +26,12 @@ class MenuInstanceDAO extends SQLDAO
 		$tablename = PREFIX . 'menu_instance';
 		$primary_key = new MappingModelField('id');
 
-		$fields = array(
+		$fields = [
 		new MappingModelField('menu_id'),
 		new MappingModelField('menu_configuration_id'),
 		new MappingModelField('block'),
 		new MappingModelField('position'),
-		);
+		];
 
 		$model = new MappingModel($classname, $tablename, $primary_key, $fields);
 

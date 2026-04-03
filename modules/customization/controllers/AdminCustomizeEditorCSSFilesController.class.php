@@ -57,10 +57,10 @@ class AdminCustomizeEditorCSSFilesController extends DefaultAdminModuleControlle
         $theme_choise_fieldset->add_field(
             new FormFieldSimpleSelectChoice('select_theme', $this->lang['customization.interface.select.theme'], $theme_selected,
                 $this->list_themes(),
-                array(
+                [
                     'class' => 'third-field',
-                    'events' => array('change' => 'document.location.href = "' . AdminCustomizeUrlBuilder::editor_css_file()->rel() . '" + HTMLForms.getField(\'select_theme\').getValue()')
-                )
+                    'events' => ['change' => 'document.location.href = "' . AdminCustomizeUrlBuilder::editor_css_file()->rel() . '" + HTMLForms.getField(\'select_theme\').getValue()']
+                ]
             )
         );
 
@@ -72,11 +72,11 @@ class AdminCustomizeEditorCSSFilesController extends DefaultAdminModuleControlle
             $file_editor_fieldset->add_field(
                 new FormFieldSimpleSelectChoice('select_file', $this->lang['customization.editor.files.select'], $file_selected,
                     $this->list_files($theme_selected),
-                    array(
+                    [
                         'class'       => 'third-field',
                         'description' => $this->lang['customization.editor.files.select.clue'],
-                        'events'      => array('change' => 'document.location.href = "' . AdminCustomizeUrlBuilder::editor_css_file($theme_selected)->rel() . '" + "/" + HTMLForms.getField(\'select_file\').getValue()')
-                    )
+                        'events'      => ['change' => 'document.location.href = "' . AdminCustomizeUrlBuilder::editor_css_file($theme_selected)->rel() . '" + "/" + HTMLForms.getField(\'select_file\').getValue()']
+                    ]
                 )
             );
 
@@ -99,7 +99,7 @@ class AdminCustomizeEditorCSSFilesController extends DefaultAdminModuleControlle
                 if ($css_file->exists())
                 {
                     $file_editor_fieldset->add_field(new FormFieldMultiLineTextEditor('css_file', $this->lang['customization.editor.files.content'], TextHelper::htmlspecialchars($css_file->read()),
-                        array('rows' => 30, 'class' => "lined")
+                        ['rows' => 30, 'class' => "lined"]
                     ));
                 }
                 
@@ -121,7 +121,7 @@ class AdminCustomizeEditorCSSFilesController extends DefaultAdminModuleControlle
                 if ($display_remove_override_button)
                 {
                     $file_editor_fieldset->add_field(new FormFieldCheckbox('remove_override', $this->lang['customization.remove.override'], false,
-                        array('class' => 'third-field custom-checkbox')
+                        ['class' => 'third-field custom-checkbox']
                     ));
                 }
 
@@ -212,7 +212,7 @@ class AdminCustomizeEditorCSSFilesController extends DefaultAdminModuleControlle
 
     private function list_themes()
     {
-        $choices_list = array();
+        $choices_list = [];
         $choices_list[] = new FormFieldSelectChoiceOption('--', '');
         foreach (ThemesManager::get_activated_themes_map() as $id => $value)
         {
@@ -223,7 +223,7 @@ class AdminCustomizeEditorCSSFilesController extends DefaultAdminModuleControlle
 
     private function list_files($theme_selected)
     {
-        $files = $theme_css_files_list = array();
+        $files = $theme_css_files_list = [];
         $files[] = new FormFieldSelectChoiceOption('--', '');
 
         // Selected theme CSS files

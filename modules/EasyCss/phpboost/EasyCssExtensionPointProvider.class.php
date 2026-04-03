@@ -17,7 +17,7 @@ class EasyCssExtensionPointProvider extends ExtensionPointProvider
 
     public function url_mappings()
     {
-        return new UrlMappings(array(new DispatcherUrlMapping('/EasyCss/index.php', '([\w/_-]*)$')));
+        return new UrlMappings([new DispatcherUrlMapping('/EasyCss/index.php', '([\w/_-]*)$')]);
     }
 
     public function css_files()

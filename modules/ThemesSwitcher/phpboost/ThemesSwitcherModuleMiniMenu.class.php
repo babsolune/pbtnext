@@ -63,19 +63,19 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
 
 		foreach (ThemesManager::get_activated_and_authorized_themes_map_sorted_by_localized_name() as $item)
 		{
-			$view->assign_block_vars('items', array(
+			$view->assign_block_vars('items', [
 				'C_SELECTED' => $user->get_theme() == $item->get_id(),
 				'ITEM_NAME'  => $item->get_configuration()->get_name(),
 				'ITEM_ID'    => $item->get_id()
-			));
+			]);
 		}
 
 		$current_url = AppContext::get_request()->get_site_url() . $_SERVER['SCRIPT_NAME'] . '?' . rtrim($query_string, '&');
 
-		$view->put_all(array(
+		$view->put_all([
 			'DEFAULT_ITEM' => UserAccountsConfig::load()->get_default_theme(),
 			'U_ITEM'       => $current_url . (strstr($current_url, '?') ? '&' : '?') . 'switchtheme='
-		));
+		]);
 
 		return $view->render();
 	}
@@ -90,11 +90,11 @@ class ThemesSwitcherModuleMiniMenu extends ModuleMiniMenu
 				MenuService::assign_positions_conditions($template, $this->get_block());
 				$this->assign_common_template_variables($template);
 
-				$template->put_all(array(
+				$template->put_all([
 					'ID'       => $this->get_menu_id(),
 					'TITLE'    => $this->get_menu_title(),
 					'CONTENTS' => $this->get_menu_content()
-				));
+				]);
 
 				return $template->render();
 			}

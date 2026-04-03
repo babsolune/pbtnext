@@ -20,19 +20,19 @@ class DownloadCategory extends Category
 
 	protected function set_additional_attributes_list()
 	{
-		$this->add_additional_attribute('description', array('type' => 'text', 'length' => 65000));
-		$this->add_additional_attribute('thumbnail', array(
+		$this->add_additional_attribute('description', ['type' => 'text', 'length' => 65000]);
+		$this->add_additional_attribute('thumbnail', [
 			'type'    => 'string',
 			'length'  => 255,
 			'notnull' => 1,
 			'default' => "''",
-			'attribute_field_parameters' => array(
+			'attribute_field_parameters' => [
 				'field_class'     => 'FormFieldThumbnail',
 				'label'           => LangLoader::get_message('form.thumbnail', 'form-lang'),
 				'default_value'   => FormFieldThumbnail::DEFAULT_VALUE,
 				'default_picture' => self::THUMBNAIL_URL
-			)
-		));
+			]
+		]);
 	}
 
 	public function get_description()

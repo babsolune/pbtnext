@@ -75,7 +75,7 @@ class TeamSpeak3_Adapter_ServerQuery_Event implements ArrayAccess
     }
 
     $fake = new TeamSpeak3_Helper_String(TeamSpeak3::ERROR . TeamSpeak3::SEPARATOR_CELL . "id" . TeamSpeak3::SEPARATOR_PAIR . 0 . TeamSpeak3::SEPARATOR_CELL . "msg" . TeamSpeak3::SEPARATOR_PAIR . "ok");
-    $repl = new TeamSpeak3_Adapter_ServerQuery_Reply(array($data, $fake), $type);
+    $repl = new TeamSpeak3_Adapter_ServerQuery_Reply([$data, $fake], $type);
 
     $this->type = $type->substr(strlen(TeamSpeak3::EVENT));
     $this->data = $repl->toList();

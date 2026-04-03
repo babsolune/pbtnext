@@ -26,7 +26,7 @@ class FormFieldConstraintPossibleValuesMax extends AbstractFormFieldConstraint
 	public function validate(FormField $field)
 	{
 		$value = $field->get_value();
-		$this->set_validation_error_message(StringVars::replace_vars($this->error_message, array('name' => TextHelper::strtolower($field->get_label()), 'max_input' => $field->get_max_input())));
+		$this->set_validation_error_message(StringVars::replace_vars($this->error_message, ['name' => TextHelper::strtolower($field->get_label()), 'max_input' => $field->get_max_input()]));
 
 		return is_array($value) && !empty($value) && count($value) <= $field->get_max_input();
 	}
@@ -34,7 +34,7 @@ class FormFieldConstraintPossibleValuesMax extends AbstractFormFieldConstraint
 	public function get_js_validation(FormField $field)
 	{
 		return 'MaxPossibleValuesFormFieldValidator(' . TextHelper::to_js_string($field->get_html_id()) .
-			', ' . $field->get_max_input() . ', ' . TextHelper::to_js_string(StringVars::replace_vars($this->error_message, array('name' => TextHelper::strtolower($field->get_label()), 'max_input' => $field->get_max_input()))) .')';
+			', ' . $field->get_max_input() . ', ' . TextHelper::to_js_string(StringVars::replace_vars($this->error_message, ['name' => TextHelper::strtolower($field->get_label()), 'max_input' => $field->get_max_input()])) .')';
 	}
 }
 

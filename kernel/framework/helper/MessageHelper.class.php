@@ -68,7 +68,7 @@ class MessageHelper
 				$group_only = true;
 		}
 
-		$tpl->put_all(array(
+		$tpl->put_all([
 			'ID'                => KeyGenerator::generate_key(4),
 			'MESSAGE_CSS_CLASS' => $css_class . ($display_small ? ' message-helper-small' : ''),
 			'MESSAGE_IMG'       => $image,
@@ -80,7 +80,7 @@ class MessageHelper
 			'C_MODERATOR_ONLY'  => $type == self::MODERATOR_ONLY,
 			'C_ADMIN_ONLY'      => $type == self::ADMIN_ONLY,
 			'C_GROUP_ONLY'      => $group_only
-		));
+		]);
 
 		return $tpl;
 	}

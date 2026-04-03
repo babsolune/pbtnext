@@ -34,7 +34,7 @@ class SandboxComponentController extends DefaultModuleController
 
 	private function build_view()
 	{
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'TYPOGRAPHY'      => self::build_markup('sandbox/pagecontent/components/typography.tpl'),
 			'COLOR'           => self::build_markup('sandbox/pagecontent/components/color.tpl'),
 			'MEDIA'           => self::build_markup('sandbox/pagecontent/components/media.tpl'),
@@ -47,7 +47,7 @@ class SandboxComponentController extends DefaultModuleController
 			'TABLE'           => self::build_markup('sandbox/pagecontent/components/table.tpl'),
 			'MESSAGE_HELPER'  => self::build_alert_markup(),
 			'SANDBOX_SUBMENU' => SandboxSubMenu::get_submenu()
-		));
+		]);
 	}
 
 	private function build_floating_messages()
@@ -70,11 +70,11 @@ class SandboxComponentController extends DefaultModuleController
 		$pagination = new ModulePagination(2, 15, 5);
 		$pagination->set_url(new Url('#%d'));
 
-		$view->put_all(array(
+		$view->put_all([
 			'PAGINATION_FULL'  => $pagination_full->display(),
 			'PAGINATION_LIGHT' => $pagination_light->display(),
 			'PAGINATION_TABLE' => $pagination->display()
-		));
+		]);
 		return $view;
 	}
 
@@ -83,7 +83,7 @@ class SandboxComponentController extends DefaultModuleController
 		$view = new FileTemplate('sandbox/pagecontent/components/alert.tpl');
 		$view->add_lang(array_merge($this->lang, $this->lang));
 
-		$messages = array(
+		$messages = [
 			MessageHelper::display($this->lang['sandbox.component.message.notice'], MessageHelper::NOTICE),
 			MessageHelper::display($this->lang['sandbox.component.message.question'], MessageHelper::QUESTION),
 			MessageHelper::display($this->lang['sandbox.component.message.success'], MessageHelper::SUCCESS),
@@ -92,21 +92,21 @@ class SandboxComponentController extends DefaultModuleController
 			MessageHelper::display($this->lang['sandbox.component.message.member'], MessageHelper::MEMBER_ONLY),
 			MessageHelper::display($this->lang['sandbox.component.message.modo'], MessageHelper::MODERATOR_ONLY),
 			MessageHelper::display($this->lang['sandbox.component.message.admin'], MessageHelper::ADMIN_ONLY)
-		);
+		];
 
 		foreach ($messages as $message)
 		{
-			$view->assign_block_vars('messages', array('VIEW' => $message));
+			$view->assign_block_vars('messages', ['VIEW' => $message]);
 		}
 
 		$this->build_floating_messages();
 		if ($this->floating_messages_button->has_been_submited() && $this->floating_messages->validate()) {
-			$view->put_all(array(
+			$view->put_all([
 				'FLOATING_SUCCESS'  => MessageHelper::display($this->lang['sandbox.component.message.float.unlimited'], MessageHelper::SUCCESS, -1),
 				'FLOATING_NOTICE'   => MessageHelper::display($this->lang['sandbox.component.message.float.limited'], MessageHelper::NOTICE, 3),
 				'FLOATING_WARNING'  => MessageHelper::display($this->lang['sandbox.component.message.float.unlimited'], MessageHelper::WARNING, -1),
 				'FLOATING_ERROR'    => MessageHelper::display($this->lang['sandbox.component.message.float.limited'], MessageHelper::ERROR, 6)
-			));
+			]);
 		}
 		$view->put('FLOATING_MESSAGES', $this->floating_messages->display());
 

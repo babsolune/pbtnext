@@ -12,29 +12,29 @@
 #                       English                     #
 #####################################################
 
-$lang['categories'] = $lang['items'] = array();
+$lang['categories'] = $lang['items'] = [];
 
-$lang['categories'][] = array(
+$lang['categories'][] = [
 	'category.name'        => 'First category',
 	'category.description' => 'Elements demonstration'
-);
+];
 
-$lang['items'][] = array(
+$lang['items'][] = [
 	'item.title'   => 'Website review',
 	'item.additional_fields.question' => 'Do you like our website?',
 	'item.additional_fields.answers_type' => 1,
-	'item.additional_fields.answers' => TextHelper::serialize(array(
-		'Amazing'    => array('is_default' => false, 'title' => 'Amazing'),
-		'Notsobad'   => array('is_default' => false, 'title' => 'Not so bad'),
-		'Mid-level'  => array('is_default' => false, 'title' => 'Mid-level'),
-		'Crapy'      => array('is_default' => false, 'title' => 'Crapy')
-	)),
-	'item.additional_fields.votes' => TextHelper::serialize(array('Amazing' => 15, 'Not so bad' => 3, 'Mid-level' => 6, 'Crapy' => 0)),
+	'item.additional_fields.answers' => TextHelper::serialize([
+		'Amazing'    => ['is_default' => false, 'title' => 'Amazing'],
+		'Notsobad'   => ['is_default' => false, 'title' => 'Not so bad'],
+		'Mid-level'  => ['is_default' => false, 'title' => 'Mid-level'],
+		'Crapy'      => ['is_default' => false, 'title' => 'Crapy']
+	]),
+	'item.additional_fields.votes' => TextHelper::serialize(['Amazing' => 15, 'Not so bad' => 3, 'Mid-level' => 6, 'Crapy' => 0]),
 	'item.additional_fields.votes_number' => 24,
 	'item.additional_fields.close_poll' => 0,
 	'item.additional_fields.countdown_display' => 0,
 
 	'item.content' => '',
 	'item.summary' => ''
-);
+];
 ?>

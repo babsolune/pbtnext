@@ -58,7 +58,7 @@ class TextTemplateSyntaxElement extends AbstractTemplateSyntaxElement
 
 	private function process_escaped_char($char)
 	{
-		if (!in_array($char, array('\\', '{', '}', '#', '$')))
+		if (!in_array($char, ['\\', '{', '}', '#', '$']))
 		{
 			$this->write('\\');
 		}

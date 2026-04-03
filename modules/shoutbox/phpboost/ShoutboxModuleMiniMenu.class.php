@@ -59,11 +59,11 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 			{
 				$smileys_displayed_number++;
 
-				$view->assign_block_vars('smileys', array(
+				$view->assign_block_vars('smileys', [
 					'C_END_LINE' => $smileys_displayed_number % $smileys_per_line == 0,
 					'URL' => TPL_PATH_TO_ROOT . '/images/smileys/' . $infos['url_smiley'],
 					'CODE' => addslashes($code_smile)
-				));
+				]);
 			}
 
 			$emojis = LangLoader::get('emojis');
@@ -78,7 +78,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 					{
 						$name = TextHelper::strtolower($name);
 						$name = TextHelper::ucfirst($name);
-						$view->assign_block_vars('emojis', array(
+						$view->assign_block_vars('emojis', [
 							'C_CATEGORY'     => $is_category,
 							'C_SUB_CATEGORY' => $is_sub,
 							'C_NAME'  		 => !empty($name),
@@ -87,13 +87,13 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 							'SUB_CATEGORY_NAME' => $name,
 							'NAME'              => $name,
 							'DECIMAL'           => $decimal
-						));
+						]);
 					}
 				}
 			}
 		}
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_MEMBER' => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 			'C_DISPLAY_FORM' => ShoutboxAuthorizationsService::check_authorizations()->write() && !AppContext::get_current_user()->is_readonly(),
 			'C_VALIDATE_ONKEYPRESS_ENTER' => $config->is_validation_onkeypress_enter_enabled(),
@@ -110,7 +110,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 			'SHOUT_REFRESH_DELAY' => $config->get_refresh_delay(),
 			'L_ALERT_LINK_FLOOD' => sprintf(LangLoader::get_message('warning.link.flood', 'warning-lang'), $config->get_max_links_number_per_message()),
 			'SHOUTBOX_MESSAGES' => ShoutboxAjaxRefreshMessagesController::get_view()
-		));
+		]);
 
 		return $view->render();
 	}

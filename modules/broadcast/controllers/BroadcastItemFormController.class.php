@@ -35,7 +35,7 @@ class BroadcastItemFormController extends DefaultModuleController
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldTextEditor('title', $this->lang['form.title'], $this->get_item()->get_title(),
-			array('required' => true)
+			['required' => true]
 		));
 
 		if (CategoriesService::get_categories_manager()->get_categories_cache()->has_categories())
@@ -47,15 +47,15 @@ class BroadcastItemFormController extends DefaultModuleController
 		}
 
 		$fieldset->add_field(new FormFieldRichTextEditor('content', $this->lang['form.description'], $this->get_item()->get_content(),
-			array('rows' => 15)
+			['rows' => 15]
 		));
 
 		$fieldset->add_field(new FormFieldTextEditor('author_custom_name', $this->lang['broadcast.announcer'], $this->get_item()->get_author_custom_name(),
-			array('required' => true)
+			['required' => true]
 		));
 
 		$fieldset->add_field(new FormFieldMultipleCheckbox('release_days', $this->lang['broadcast.release.day'], TextHelper::unserialize($this->get_item()->get_release_days()),
-			array(
+			[
 				new FormFieldMultipleCheckboxOption(BroadcastItem::MONDAY, $this->lang['date.monday']),
 				new FormFieldMultipleCheckboxOption(BroadcastItem::TUESDAY, $this->lang['date.tuesday']),
 				new FormFieldMultipleCheckboxOption(BroadcastItem::WEDNESDAY, $this->lang['date.wednesday']),
@@ -63,16 +63,16 @@ class BroadcastItemFormController extends DefaultModuleController
 				new FormFieldMultipleCheckboxOption(BroadcastItem::FRIDAY, $this->lang['date.friday']),
 				new FormFieldMultipleCheckboxOption(BroadcastItem::SATURDAY, $this->lang['date.saturday']),
 				new FormFieldMultipleCheckboxOption(BroadcastItem::SUNDAY, $this->lang['date.sunday']),
-			),
-			array('required' => true)
+			],
+			['required' => true]
 		));
 
 		$fieldset->add_field(new FormFieldDateTime('start_time', $this->lang['broadcast.start.time'], $this->get_item()->get_start_time(),
-			array('required' => true, 'five_minutes_step' => true)
+			['required' => true, 'five_minutes_step' => true]
 		));
 
 		$fieldset->add_field(new FormFieldDateTime('end_time', $this->lang['broadcast.end.time'], $this->get_item()->get_end_time(),
-			array('required' => true, 'five_minutes_step' => true)
+			['required' => true, 'five_minutes_step' => true]
 		));
 
 		$options_fieldset = new FormFieldsetHTML('other', $this->lang['form.options']);
@@ -86,21 +86,21 @@ class BroadcastItemFormController extends DefaultModuleController
 			$form->add_fieldset($publication_fieldset);
 
 			$publication_fieldset->add_field(new FormFieldDateTime('creation_date', $this->lang['form.creation.date'], $this->get_item()->get_creation_date(),
-				array('required' => true)
+				['required' => true]
 			));
 
 			if (!$this->get_item()->is_published())
 			{
 				$publication_fieldset->add_field(new FormFieldCheckbox('update_creation_date', $this->lang['form.update.date'], false,
-					array('hidden' => $this->get_item()->get_status() != BroadcastItem::PUBLISHED_NOW)
+					['hidden' => $this->get_item()->get_status() != BroadcastItem::PUBLISHED_NOW]
 				));
 			}
 
 			$publication_fieldset->add_field(new FormFieldSimpleSelectChoice('published', $this->lang['form.publication'], $this->get_item()->get_publishing_state(),
-				array(
+				[
 					new FormFieldSelectChoiceOption($this->lang['form.publication.draft'], BroadcastItem::NOT_PUBLISHED),
 					new FormFieldSelectChoiceOption($this->lang['form.publication.now'], BroadcastItem::PUBLISHED_NOW),
-				)
+				]
 			));
 		}
 
@@ -123,7 +123,7 @@ class BroadcastItemFormController extends DefaultModuleController
 			$form->add_fieldset($fieldset);
 
 			$fieldset->add_field(new FormFieldRichTextEditor('contribution_description', $this->lang['contribution.description'], '',
-				array('description' => $this->lang['contribution.description.clue'])
+				['description' => $this->lang['contribution.description.clue']]
 			));
 		}
 		elseif ($this->get_item()->is_published() && $this->get_item()->is_authorized_to_edit() && $this->is_contributor_member())
@@ -133,7 +133,7 @@ class BroadcastItemFormController extends DefaultModuleController
 			$form->add_fieldset($fieldset);
 
 			$fieldset->add_field(new FormFieldRichTextEditor('edition_description', $this->lang['contribution.edition.description'], '',
-				array('description' => $this->lang['contribution.edition.description.clue'])
+				['description' => $this->lang['contribution.edition.description.clue']]
 			));
 		}
 	}
@@ -207,7 +207,7 @@ class BroadcastItemFormController extends DefaultModuleController
 
 		$item->set_content($this->form->get_value('content'));
 
-		$release_days_list = array();
+		$release_days_list = [];
 		foreach($this->form->get_value('release_days') as $id => $value)
 		{
 			$release_days_list[] = $value;
@@ -246,14 +246,14 @@ class BroadcastItemFormController extends DefaultModuleController
 			$item->set_id($id);
 
 			if (!$this->is_contributor_member())
-				HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
+				HooksService::execute_hook_action('add', self::$module_id, array_merge($item->get_properties(), ['item_url' => $item->get_item_url()]));
 		}
 		else {
 			$item->set_update_date(new Date());
 			BroadcastService::update($item);
 
 			if (!$this->is_contributor_member())
-				HooksService::execute_hook_action('edit', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
+				HooksService::execute_hook_action('edit', self::$module_id, array_merge($item->get_properties(), ['item_url' => $item->get_item_url()]));
 		}
 
 		$this->contribution_actions($item);
@@ -283,7 +283,7 @@ class BroadcastItemFormController extends DefaultModuleController
 				)
 			);
 			ContributionService::save_contribution($contribution);
-			HooksService::execute_hook_action($this->is_new_item ? 'add_contribution' : 'edit_contribution', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
+			HooksService::execute_hook_action($this->is_new_item ? 'add_contribution' : 'edit_contribution', self::$module_id, array_merge($item->get_properties(), ['item_url' => $item->get_item_url()]));
 		}
 		else
 		{
@@ -295,7 +295,7 @@ class BroadcastItemFormController extends DefaultModuleController
 					$contribution->set_status(Event::EVENT_STATUS_PROCESSED);
 					ContributionService::save_contribution($contribution);
 				}
-				HooksService::execute_hook_action('process_contribution', self::$module_id, array_merge($item->get_properties(), array('item_url' => $item->get_item_url())));
+				HooksService::execute_hook_action('process_contribution', self::$module_id, array_merge($item->get_properties(), ['item_url' => $item->get_item_url()]));
 			}
 		}
 	}
@@ -312,16 +312,16 @@ class BroadcastItemFormController extends DefaultModuleController
 		elseif ($item->is_published())
 		{
 			if ($this->is_new_item)
-				AppContext::get_response()->redirect(BroadcastUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()), StringVars::replace_vars($this->lang['broadcast.message.success.add'], array('title' => $item->get_title())));
+				AppContext::get_response()->redirect(BroadcastUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title()), StringVars::replace_vars($this->lang['broadcast.message.success.add'], ['title' => $item->get_title()]));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : BroadcastUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title())), StringVars::replace_vars($this->lang['broadcast.message.success.edit'], array('title' => $item->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : BroadcastUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_rewrited_title())), StringVars::replace_vars($this->lang['broadcast.message.success.edit'], ['title' => $item->get_title()]));
 		}
 		else
 		{
 			if ($this->is_new_item)
-				AppContext::get_response()->redirect(BroadcastUrlBuilder::display_pending(), StringVars::replace_vars($this->lang['broadcast.message.success.add'], array('title' => $item->get_title())));
+				AppContext::get_response()->redirect(BroadcastUrlBuilder::display_pending(), StringVars::replace_vars($this->lang['broadcast.message.success.add'], ['title' => $item->get_title()]));
 			else
-				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : BroadcastUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['broadcast.message.success.edit'], array('title' => $item->get_title())));
+				AppContext::get_response()->redirect(($this->form->get_value('referrer') ? $this->form->get_value('referrer') : BroadcastUrlBuilder::display_pending()), StringVars::replace_vars($this->lang['broadcast.message.success.edit'], ['title' => $item->get_title()]));
 		}
 	}
 

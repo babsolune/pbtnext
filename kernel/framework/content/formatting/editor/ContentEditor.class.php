@@ -14,7 +14,7 @@
 abstract class ContentEditor
 {
     protected $template = null;
-    protected $forbidden_tags = array();
+    protected $forbidden_tags = [];
     protected $identifier = 'contents';
 
     public function __construct()

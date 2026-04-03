@@ -23,31 +23,31 @@ class AdminDatabaseConfigController extends DefaultAdminModuleController
 
 		$this->view->put('CONTENT', $this->form->display());
 
-		return new AdminDatabaseDisplayResponse($this->view, StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		return new AdminDatabaseDisplayResponse($this->view, StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module()->get_configuration()->get_name()]));
 	}
 
 	private function build_form()
 	{
 		$form = new HTMLForm(self::class);
 
-		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module()->get_configuration()->get_name())));
+		$fieldset = new FormFieldsetHTML('configuration', StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module()->get_configuration()->get_name()]));
 		$form->add_fieldset($fieldset);
 
 		$fieldset->add_field(new FormFieldCheckbox('database_tables_optimization_enabled', $this->lang['database.config.enable.tables.optimization'], $this->config->is_database_tables_optimization_enabled(),
-			array(
+			[
 				'class' => 'half-field top-field custom-checkbox',
-				'events' => array('change' => '
+				'events' => ['change' => '
 					if (HTMLForms.getField("database_tables_optimization_enabled").getValue()) {
 						HTMLForms.getField("database_tables_optimization_day").enable();
 					} else {
 						HTMLForms.getField("database_tables_optimization_day").disable();
 					}'
-				)
-			)
+				]
+			]
 		));
 
 		$fieldset->add_field(new FormFieldSimpleSelectChoice('database_tables_optimization_day', $this->lang['database.config.tables.optimization.day'], $this->config->get_database_tables_optimization_day(),
-			array(
+			[
 				new FormFieldSelectChoiceOption($this->lang['date.sunday'], 0),
 				new FormFieldSelectChoiceOption($this->lang['date.monday'], 1),
 				new FormFieldSelectChoiceOption($this->lang['date.tuesday'], 2),
@@ -56,11 +56,11 @@ class AdminDatabaseConfigController extends DefaultAdminModuleController
 				new FormFieldSelectChoiceOption($this->lang['date.friday'], 5),
 				new FormFieldSelectChoiceOption($this->lang['date.saturday'], 6),
 				new FormFieldSelectChoiceOption($this->lang['date.every.month'], 7)
-			),
-			array(
+			],
+			[
 				'description' => $this->lang['database.config.tables.optimization.day.clue'],
 				'hidden' => !$this->config->is_database_tables_optimization_enabled()
-			)
+			]
 		));
 
 		$this->submit_button = new FormButtonDefaultSubmit();
@@ -81,7 +81,7 @@ class AdminDatabaseConfigController extends DefaultAdminModuleController
 
 		DatabaseConfig::save();
 
-		HooksService::execute_hook_action('edit_config', self::$module_id, array('title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())), 'url' => ModulesUrlBuilder::configuration()->rel()));
+		HooksService::execute_hook_action('edit_config', self::$module_id, ['title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]), 'url' => ModulesUrlBuilder::configuration()->rel()]);
 	}
 }
 ?>

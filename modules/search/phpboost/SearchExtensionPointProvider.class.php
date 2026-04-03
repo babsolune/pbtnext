@@ -25,7 +25,7 @@ class SearchExtensionPointProvider extends ExtensionPointProvider
 
 	public function menus()
 	{
-		return new ModuleMenus(array(new SearchModuleMiniMenu()));
+		return new ModuleMenus([new SearchModuleMiniMenu()]);
 	}
 
 	public function scheduled_jobs()

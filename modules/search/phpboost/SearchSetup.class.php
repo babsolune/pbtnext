@@ -35,7 +35,7 @@ class SearchSetup extends DefaultModuleSetup
 
 	private function drop_tables()
 	{
-		self::$db_utils->drop(array(self::$search_index_table, self::$search_results_table));
+		self::$db_utils->drop([self::$search_index_table, self::$search_results_table]);
 	}
 
 	private function create_tables()
@@ -46,42 +46,42 @@ class SearchSetup extends DefaultModuleSetup
 
 	private function create_search_index_table()
 	{
-		$fields = array(
-			'id_search' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'id_user' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'module' => array('type' => 'string', 'length' => 64, 'notnull' => 1, 'default' => 0),
-			'search' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"),
-			'options' => array('type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"),
-			'last_search_use' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'times_used' => array('type' => 'integer', 'length' => 3, 'notnull' => 1, 'default' => 0)
-		);
-		$options = array(
-			'primary' => array('id_search'),
-			'indexes' => array(
-				'id_user' => array('type' => 'unique', 'fields' => array('id_user', 'module', 'search', 'options')),
-				'last_search_use' => array('type' => 'key', 'fields' => 'last_search_use')
-			)
-		);
+		$fields = [
+			'id_search' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'id_user' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'module' => ['type' => 'string', 'length' => 64, 'notnull' => 1, 'default' => 0],
+			'search' => ['type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"],
+			'options' => ['type' => 'string', 'length' => 50, 'notnull' => 1, 'default' => "''"],
+			'last_search_use' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'times_used' => ['type' => 'integer', 'length' => 3, 'notnull' => 1, 'default' => 0]
+		];
+		$options = [
+			'primary' => ['id_search'],
+			'indexes' => [
+				'id_user' => ['type' => 'unique', 'fields' => ['id_user', 'module', 'search', 'options']],
+				'last_search_use' => ['type' => 'key', 'fields' => 'last_search_use']
+			]
+		];
 		self::$db_utils->create_table(self::$search_index_table, $fields, $options);
 	}
 
 	private function create_search_results_table()
 	{
-		$fields = array(
-			'id_search' => array('type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1),
-			'id_content' => array('type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0),
-			'title' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"),
-			'relevance' => array('type' => 'decimal', 'scale' => 3, 'notnull' => 1, 'default' => 0.00),
-			'link' => array('type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''")
+		$fields = [
+			'id_search' => ['type' => 'integer', 'length' => 11, 'autoincrement' => true, 'notnull' => 1],
+			'id_content' => ['type' => 'integer', 'length' => 11, 'notnull' => 1, 'default' => 0],
+			'title' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"],
+			'relevance' => ['type' => 'decimal', 'scale' => 3, 'notnull' => 1, 'default' => 0.00],
+			'link' => ['type' => 'string', 'length' => 255, 'notnull' => 1, 'default' => "''"]
 
-		);
+		];
 
-		$options = array(
-			'primary' => array('id_search', 'id_content'),
-			'indexes' => array(
-				'relevance' => array('type' => 'key', 'fields' => 'relevance')
-			)
-		);
+		$options = [
+			'primary' => ['id_search', 'id_content'],
+			'indexes' => [
+				'relevance' => ['type' => 'key', 'fields' => 'relevance']
+			]
+		];
 		self::$db_utils->create_table(self::$search_results_table, $fields, $options);
 	}
 

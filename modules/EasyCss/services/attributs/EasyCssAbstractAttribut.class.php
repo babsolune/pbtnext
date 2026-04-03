@@ -101,7 +101,7 @@ abstract class EasyCssAbstractAttribut
      *
      * @return \FileTemplate Template ou tableau de templates
      */
-    public function get_templates($label = false, $tpl = array())
+    public function get_templates($label = false, $tpl = [])
     {
         if (!is_array($tpl))
             $tpls[] = $tpl;
@@ -250,13 +250,13 @@ abstract class EasyCssAbstractAttribut
     private function get_important_tpl()
     {
         $imp_tpl = new FileTemplate('EasyCss/fields/EasyCssImportantField.tpl');
-        $imp_tpl->put_all(array(
+        $imp_tpl->put_all([
             'NAME' => $this->important_field_id,
             'ID' => $this->important_field_id,
             'HTML_ID' => $this->important_field_id,
             'CHECKED' => ($this->is_important !== false) ? 'checked="checked"' : '',
             'LABEL' => AdminEasyCssEditController::get_lang('important')
-        ));
+        ]);
         return $imp_tpl;
     }
 

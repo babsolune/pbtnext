@@ -13,9 +13,9 @@ class PagesConfigUpdateVersion extends ConfigUpdateVersion
 	{
 		parent::__construct('pages');
 
-		$this->config_parameters_to_modify = array(
+		$this->config_parameters_to_modify = [
 			'count_hits_activated' => 'views_number_enabled'
-		);
+		];
 	}
 }
 ?>

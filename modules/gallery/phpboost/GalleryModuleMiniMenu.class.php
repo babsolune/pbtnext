@@ -54,10 +54,10 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 
 		//Affichage des miniatures disponibles
 		$array_pics_mini = 'var array_pics_mini = new Array();' . "\n";
-		list($nbr_pics, $sum_height, $sum_width, $scoll_mode, $height_max, $width_max) = array(0, 0, 0, 0, 142, 142);
-		if (isset($array_random_pics) && $array_random_pics !== array())
+		list($nbr_pics, $sum_height, $sum_width, $scoll_mode, $height_max, $width_max) = [0, 0, 0, 0, 142, 142];
+		if (isset($array_random_pics) && $array_random_pics !== [])
 		{
-			$gallery_mini = array();
+			$gallery_mini = [];
 			shuffle($array_random_pics); //On mélange les éléments du tableau.
 
 			//Vérification des autorisations.
@@ -76,7 +76,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 			//Aucune photo ne correspond, on fait une requête pour vérifier.
 			if (count($gallery_mini) == 0)
 			{
-				$array_random_pics = array();
+				$array_random_pics = [];
 				$result = PersistenceContext::get_querier()->select("SELECT g.id, g.name, g.path, g.width, g.height, g.id_category, gc.auth
 				FROM " . GallerySetup::$gallery_table . " g
 				LEFT JOIN " . GallerySetup::$gallery_cats_table . " gc on gc.id = g.id_category
@@ -102,12 +102,12 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 				}
 			}
 
-			$view->put_all(array(
+			$view->put_all([
 				'C_FADE'              => false,
 				'C_VERTICAL_SCROLL'   => false,
 				'C_HORIZONTAL_SCROLL' => false,
 				'C_STATIC'            => false
-			));
+			]);
 
 			switch ($config->get_scroll_type())
 			{
@@ -137,16 +137,16 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 			if ($row['width'] == 0 || $row['height'] == 0)
 				list($row['width'], $row['height']) = @getimagesize(ModulesManager::get_module_path('gallery') . '/pics/thumbnails/' . $row['path']);
 			if ($row['width'] == 0 || $row['height'] == 0)
-				list($row['width'], $row['height']) = array(142, 142);
+				list($row['width'], $row['height']) = [142, 142];
 
-			$view->assign_block_vars('pics_mini', array(
+			$view->assign_block_vars('pics_mini', [
 				'ID'          => $row['id'],
 				'U_THUMBNAIL' => TPL_PATH_TO_ROOT . '/modules/gallery/pics/thumbnails/' . $row['path'],
 					'NAME'        => $row['name'],
 					'HEIGHT'      => $row['height'],
 					'WIDTH'       => $row['width'],
 					'U_ITEM'      => TPL_PATH_TO_ROOT . '/modules/gallery/gallery' . url('.php?cat=' . $row['id_category'] . '&amp;id=' . $row['id'], '-' . $row['id_category'] . '-' . $row['id'] . '.php')
-				));
+				]);
 
 				$sum_height += $row['height'] + 5;
 				$sum_width += $row['width'] + 5;
@@ -158,7 +158,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 			}
 		}
 
-		$view->put_all(array(
+		$view->put_all([
             'C_NO_ITEM' => $i == 0,
 
 			'SCROLL_DELAY'  => $config->get_mini_pics_speed()*1000,
@@ -169,7 +169,7 @@ class GalleryModuleMiniMenu extends ModuleMiniMenu
 			'WIDTH_DIV'     => $config->get_mini_max_width(),
 			'SUM_WIDTH'     => $sum_width + 30,
 			'HIDDEN_WIDTH'  => ($config->get_mini_max_width() * 3) + 30,
-		));
+		]);
 		return $view->render();
 	}
 }

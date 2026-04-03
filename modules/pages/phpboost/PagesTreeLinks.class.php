@@ -18,7 +18,7 @@ class PagesTreeLinks extends DefaultTreeLinks
 		$category_rewrited_name = $request->get_getstring('rewrited_name', '');
 		
 		if (!$request->get_getstring('id', 0) && $category_id)
-			$tree->add_link(new ModuleLink(LangLoader::get_message('items.reorder', 'common', $module_id), ItemsUrlBuilder::specific_page('reorder', $module_id, $category_id != Category::ROOT_CATEGORY ? array($category_id . '-' . $category_rewrited_name) : array()), CategoriesAuthorizationsService::check_authorizations($category_id, $module_id)->moderation()));
+			$tree->add_link(new ModuleLink(LangLoader::get_message('items.reorder', 'common', $module_id), ItemsUrlBuilder::specific_page('reorder', $module_id, $category_id != Category::ROOT_CATEGORY ? [$category_id . '-' . $category_rewrited_name] : []), CategoriesAuthorizationsService::check_authorizations($category_id, $module_id)->moderation()));
 	}
 }
 ?>

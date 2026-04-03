@@ -45,7 +45,7 @@ class ContactController extends DefaultModuleController
 
 		$this->view->put('FORM', $this->form->display());
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_INFORMATIONS_LEFT'   => $this->config->are_informations_enabled() && $this->config->are_informations_left(),
 			'C_INFORMATIONS_TOP'    => $this->config->are_informations_enabled() && $this->config->are_informations_top(),
 			'C_INFORMATIONS_RIGHT'  => $this->config->are_informations_enabled() && $this->config->are_informations_right(),
@@ -55,7 +55,7 @@ class ContactController extends DefaultModuleController
 			'C_MAP_ENABLED'         => $this->config->is_map_enabled(),
 			'C_MAP_TOP'             => $this->config->is_map_enabled() && $this->config->is_map_top(),
 			'C_MAP_BOTTOM'          => $this->config->is_map_enabled() && $this->config->is_map_bottom(),
-		));
+		]);
 	}
 
 	public function build_map_view()
@@ -168,12 +168,12 @@ class ContactController extends DefaultModuleController
 
 		if ($recipients_field->is_displayed() && $recipients_field->is_authorized())
 		{
-			if (in_array($recipients_field->get_field_type(), array('ContactSimpleSelectField', 'ContactSimpleChoiceField')))
+			if (in_array($recipients_field->get_field_type(), ['ContactSimpleSelectField', 'ContactSimpleChoiceField']))
 				$recipients_mails = explode(';', $recipients[$this->form->get_value('f_recipients')->get_raw_value()]['email']);
 			else
 			{
 				$selected_recipients = $this->form->get_value('f_recipients');
-				$recipients_mails = array();
+				$recipients_mails = [];
 				foreach ($selected_recipients as $recipient)
 				{
 					$mails = explode(';', $recipients[$recipient->get_id()]['email']);
@@ -243,7 +243,7 @@ class ContactController extends DefaultModuleController
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['contact.module.title']);
-		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['contact.seo.description'], array('site' => GeneralConfig::load()->get_site_name())));
+		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['contact.seo.description'], ['site' => GeneralConfig::load()->get_site_name()]));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(ContactUrlBuilder::home());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();

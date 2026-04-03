@@ -55,12 +55,12 @@ class QuotesModuleMiniMenu extends ModuleMiniMenu
 
 			if (!empty($random_item))
 			{
-				$view->put_all(array(
+				$view->put_all([
 					'C_ITEMS'     => $random_item,
 					'CONTENT'     => strip_tags(FormatingHelper::second_parse($random_item['content'])),
 					'WRITER_NAME' => $random_item['writer'],
 					'U_WRITER'    => QuotesUrlBuilder::display_writer_items($random_item['rewrited_writer'])->rel()
-				));
+				]);
 			}
 		}
 

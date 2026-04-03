@@ -11,7 +11,7 @@
 
 class CommentsTopics implements CommentsExtensionPoint
 {
-	private $comments_topics = array();
+	private $comments_topics = [];
 
 	public function __construct(Array $comments_topics)
 	{

@@ -13,7 +13,7 @@
 class AdminErrorsController404List extends DefaultAdminController
 {
     private $elements_number = 0;
-    private $ids = array();
+    private $ids = [];
     private $table;
 
     public function execute(HTTPRequestCustom $request)
@@ -27,19 +27,19 @@ class AdminErrorsController404List extends DefaultAdminController
 
     private function build_table()
     {
-        $table_model = new SQLHTMLTableModel(PREFIX . 'errors_404', 'error-list404', array(
+        $table_model = new SQLHTMLTableModel(PREFIX . 'errors_404', 'error-list404', [
             new HTMLTableColumn($this->lang['admin.404.requested.url']),
             new HTMLTableColumn($this->lang['admin.404.from.url'], 'from_url'),
-            new HTMLTableColumn($this->lang['common.number'], 'times', array('css_class' => 'col-medium')),
-            new HTMLTableColumn($this->lang['common.delete'], '', array('css_class' => 'col-small'))
-        ), new HTMLTableSortingRule('times', HTMLTableSortingRule::DESC));
+            new HTMLTableColumn($this->lang['common.number'], 'times', ['css_class' => 'col-medium']),
+            new HTMLTableColumn($this->lang['common.delete'], '', ['css_class' => 'col-small'])
+        ], new HTMLTableSortingRule('times', HTMLTableSortingRule::DESC));
 
         $this->table = new HTMLTable($table_model, $this->lang, 'error-list404');
 
         $table_model->set_caption($this->lang['admin.404.errors.list']);
         $table_model->set_footer_css_class('footer-error-list404');
 
-        $results = array();
+        $results = [];
         $result = $table_model->get_sql_results();
         foreach ($result as $row)
         {
@@ -48,12 +48,12 @@ class AdminErrorsController404List extends DefaultAdminController
 
             $delete_link = new DeleteLinkHTMLElement(AdminErrorsUrlBuilder::delete_404_error($row['id']));
 
-            $results[] = new HTMLTableRow(array(
+            $results[] = new HTMLTableRow([
                 new HTMLTableRowCell(new LinkHTMLElement($row['requested_url'], $row['requested_url'])),
                 new HTMLTableRowCell(new LinkHTMLElement($row['from_url'], $row['from_url'])),
                 new HTMLTableRowCell($row['times']),
                 new HTMLTableRowCell($delete_link->display())
-            ));
+            ]);
         }
         $this->table->set_rows($table_model->get_number_of_matching_rows(), $results);
 

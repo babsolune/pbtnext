@@ -19,7 +19,7 @@ class HistoryScheduledJobs extends AbstractScheduledJobExtensionPoint
 		if ($config->get_log_retention_period())
 		{
 			$now = new Date();
-			HistoryManager::delete('WHERE creation_date < :timestamp', array('timestamp' => ($now->get_timestamp() - $config->get_log_retention_period())));
+			HistoryManager::delete('WHERE creation_date < :timestamp', ['timestamp' => ($now->get_timestamp() - $config->get_log_retention_period())]);
 		}
 	}
 }

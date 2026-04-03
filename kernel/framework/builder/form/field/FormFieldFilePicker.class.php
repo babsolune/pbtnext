@@ -25,7 +25,7 @@ class FormFieldFilePicker extends AbstractFormField
 	private $max_files_size = 0;
 	private $authorized_extensions = '';
 
-	public function __construct($id, $label, array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, array $field_options = [], array $constraints = [])
 	{
 		$constraints[] = new FormFieldConstraintFileMaxSize(isset($field_options['max_file_size']) ? $field_options['max_file_size'] : $this->get_max_file_size());
 		if (isset($field_options['authorized_extensions']))
@@ -43,7 +43,7 @@ class FormFieldFilePicker extends AbstractFormField
 
 		$file_field_tpl = $this->get_file_field_template();
 		$file_field_tpl->add_lang(LangLoader::get_all_langs());
-		$file_field_tpl->put_all(array(
+		$file_field_tpl->put_all([
 			'C_DISABLED' => $this->is_disabled(),
 			'C_MULTIPLE' => $this->is_multiple(),
 
@@ -55,13 +55,13 @@ class FormFieldFilePicker extends AbstractFormField
 			'MAX_FILES_SIZE'      => $this->get_max_files_size(),
 			'MAX_FILES_SIZE_TEXT' => File::get_formated_size($this->get_max_files_size()),
 			'ALLOWED_EXTENSIONS'  => $this->get_authorized_extensions()
-		));
+		]);
 
 		$this->assign_common_template_variables($template);
 
-		$template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $file_field_tpl->render()
-		));
+		]);
 
 		return $template;
 	}

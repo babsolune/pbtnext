@@ -41,20 +41,20 @@ class TeamspeakCache implements CacheData
 			/* display viewer for selected TeamSpeak3_Node_Server */
 			$viewer = $ts3->getViewer(new TeamSpeak3_Viewer_Html($viewer_pictures->rel(), $flags_pictures->rel()));
 
-			$this->view->put_all(array(
+			$this->view->put_all([
 				'C_NUMBER_CLIENTS_DISPLAYED' => $config->is_clients_number_displayed(),
 				'C_SEVERAL_CLIENTS'          => $number_clients > 1,
 				'VIEWER'         => $viewer,
 				'NUMBER_CLIENTS' => $number_clients
-			));
+			]);
 		}
 		catch(Exception $e)
 		{
-			$this->view->put_all(array(
+			$this->view->put_all([
 				'C_ERROR'       => true,
 				'ERROR_CODE'    => dechex($e->getCode()),
 				'ERROR_MESSAGE' => TextHelper::htmlspecialchars($e->getMessage())
-			));
+			]);
 		}
 
 		$this->last_update = $now->get_timestamp();

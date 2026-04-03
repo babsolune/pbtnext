@@ -22,12 +22,12 @@ class FormFieldsetModal extends FormFieldsetHTML
 	{
 		$template = $this->get_template_to_use();
 
-		$template->put_all(array(
+		$template->put_all([
 			'C_TITLE' => !empty($this->title),
 			'C_BUTTON_CLASS' => !empty($this->button_class),
 			'BUTTON_CLASS' => $this->button_class,
 			'L_TITLE' => $this->title
-		));
+		]);
 
 		$this->assign_template_fields($template);
 

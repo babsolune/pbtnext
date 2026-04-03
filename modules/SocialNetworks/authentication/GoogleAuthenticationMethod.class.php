@@ -33,10 +33,10 @@ class GoogleAuthenticationMethod extends AbstractSocialNetworkAuthenticationMeth
 		$this->google_client->setClientId($config->get_client_id(GoogleSocialNetwork::SOCIAL_NETWORK_ID));
 		$this->google_client->setClientSecret($config->get_client_secret(GoogleSocialNetwork::SOCIAL_NETWORK_ID));
 		$this->google_client->setRedirectUri(UserUrlBuilder::connect(GoogleSocialNetwork::SOCIAL_NETWORK_ID)->absolute());
-		$this->google_client->setScopes(array(
+		$this->google_client->setScopes([
 			'https://www.googleapis.com/auth/userinfo.profile',
 			'https://www.googleapis.com/auth/userinfo.email',
-		));
+		]);
 		$this->google_auth = new Google_Oauth2Service($this->google_client);
 	}
 
@@ -69,7 +69,7 @@ class GoogleAuthenticationMethod extends AbstractSocialNetworkAuthenticationMeth
 		if ($this->google_client->getAccessToken())
 		{
 			$user = $this->google_auth->userinfo->get();
-			return array_merge($user, array('picture_url' => $user['picture']));
+			return array_merge($user, ['picture_url' => $user['picture']]);
 		}
 		else if ($request->has_getparameter('error') && ($request->get_getvalue('error') == 'access_denied'))
 		{

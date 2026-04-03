@@ -22,7 +22,7 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 
 	public function comments()
 	{
-		return new CommentsTopics(array(new GalleryCommentsTopic()));
+		return new CommentsTopics([new GalleryCommentsTopic()]);
 	}
 
 	public function css_files()
@@ -45,7 +45,7 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 
 	public function menus()
 	{
-		return new ModuleMenus(array(new GalleryModuleMiniMenu()));
+		return new ModuleMenus([new GalleryModuleMiniMenu()]);
 	}
 
 	public function sitemap()
@@ -60,7 +60,7 @@ class GalleryExtensionPointProvider extends ExtensionPointProvider
 
 	public function url_mappings()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/gallery/index.php')));
+		return new UrlMappings([new DispatcherUrlMapping('/gallery/index.php')]);
 	}
 
 	public function lobby(): array

@@ -28,7 +28,7 @@ class EasyCssDisplayCommentBlock extends EasyCssAbstractBlock
     public function get_templates()
     {
         $title_tpl = $this->title->get_form(false);
-        return array($title_tpl);
+        return [$title_tpl];
     }
 
     public function get_css_to_save()

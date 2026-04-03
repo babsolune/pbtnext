@@ -15,7 +15,7 @@ require_once PATH_TO_ROOT . '/kernel/init.php';
 
 AppContext::get_session()->no_session_location();
 
-$url_controller_mappers = array(
+$url_controller_mappers = [
 	//new UrlControllerMapper('AjaxCommentsNotationController', '`^/comments/notation/?$`'),
 	new UrlControllerMapper('AjaxCommentsDisplayController', '`^/comments/display/?$`'),
 	new UrlControllerMapper('AjaxUserAutoCompleteController','`^/users_autocomplete/?$`'),
@@ -24,7 +24,7 @@ $url_controller_mappers = array(
 	new UrlControllerMapper('AjaxModuleCategoriesListController', '`^/categories/list/?$`'),
 	new UrlControllerMapper('AjaxKeywordsAutoCompleteController','`^/tags/?$`'),
 	new UrlControllerMapper('AjaxUrlValidationController', '`^/url_validation/?$`')
-);
+];
 
 DispatchManager::dispatch($url_controller_mappers);
 ?>

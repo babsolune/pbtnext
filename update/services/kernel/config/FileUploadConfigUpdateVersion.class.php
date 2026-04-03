@@ -25,7 +25,7 @@ class FileUploadConfigUpdateVersion extends ConfigUpdateVersion
 
             if ($old_config->has_property('authorized_extensions'))
             {
-                $authorized_extensions = array_diff($old_config->get_property('authorized_extensions'), array('flv'));
+                $authorized_extensions = array_diff($old_config->get_property('authorized_extensions'), ['flv']);
 
                 if (!in_array('webp', $authorized_extensions))
                     $authorized_extensions[] = 'webp';

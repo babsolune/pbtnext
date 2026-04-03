@@ -29,7 +29,7 @@ class LangsManager
 	{
 		$langs = self::get_installed_langs_map();
 		try {
-			uasort($langs, array(self::class, 'callback_sort_langs_by_name'));
+			uasort($langs, [self::class, 'callback_sort_langs_by_name']);
 		} catch (IOException $ex) {
 		}
 		return $langs;
@@ -37,7 +37,7 @@ class LangsManager
 
 	public static function get_activated_langs_map()
 	{
-		$activated_langs = array();
+		$activated_langs = [];
 		foreach (LangsConfig::load()->get_langs() as $lang) {
 			if ($lang->is_activated()) {
 				$activated_langs[$lang->get_id()] = $lang;
@@ -54,7 +54,7 @@ class LangsManager
 	{
 		$langs = self::get_activated_langs_map();
 		try {
-			uasort($langs, array(self::class, 'callback_sort_langs_by_name'));
+			uasort($langs, [self::class, 'callback_sort_langs_by_name']);
 		} catch (IOException $ex) {
 		}
 		return $langs;
@@ -62,7 +62,7 @@ class LangsManager
 
 	public static function get_activated_and_authorized_langs_map()
 	{
-		$langs = array();
+		$langs = [];
 		foreach (LangsConfig::load()->get_langs() as $lang) {
 			if ($lang->is_activated() && $lang->check_auth()) {
 				$langs[$lang->get_id()] = $lang;
@@ -79,7 +79,7 @@ class LangsManager
 	{
 		$langs = self::get_activated_and_authorized_langs_map();
 		try {
-			uasort($langs, array(self::class, 'callback_sort_langs_by_name'));
+			uasort($langs, [self::class, 'callback_sort_langs_by_name']);
 		} catch (IOException $ex) {
 		}
 		return $langs;
@@ -148,9 +148,9 @@ class LangsManager
 			$default_lang = self::get_default_lang();
 			if (self::get_lang($id)->get_id() !== $default_lang)
 			{
-				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('locale' => $default_lang),
-					'WHERE locale=:old_locale', array('old_locale' => $id
-				));
+				PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, ['locale' => $default_lang],
+					'WHERE locale=:old_locale', ['old_locale' => $id
+				]);
 
 				LangsConfig::load()->remove_lang_by_id($id);
 				LangsConfig::save();
@@ -186,7 +186,7 @@ class LangsManager
 		}
 	}
 
-	public static function change_informations($id, $visibility, Array $authorizations = array())
+	public static function change_informations($id, $visibility, Array $authorizations = [])
 	{
 		if (!empty($id) && self::get_lang_existed($id))
 		{

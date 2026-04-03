@@ -42,7 +42,7 @@ class AdminDevToolsConfigController extends DefaultAdminModuleController
             'github_token',
             $lang['devtools.config.github.token'],
             $this->config->get_github_token(),
-            array('description' => 'ghp_… — optional, increases the GitHub API rate limit (60 → 5,000 req/h)')
+            ['description' => 'ghp_… — optional, increases the GitHub API rate limit (60 → 5,000 req/h)']
         ));
 
         // --- Repos ---
@@ -223,23 +223,23 @@ HTML;
         $this->config->set_github_token($token);
 
         $json  = $this->form->get_value('repos_json') ?? '';
-        $repos = !empty($json) ? json_decode($json, true) : array();
+        $repos = !empty($json) ? json_decode($json, true) : [];
 
         if (is_array($repos))
         {
-            $clean = array();
+            $clean = [];
             foreach ($repos as $repo)
             {
                 $owner = trim($repo['owner'] ?? '');
                 $r     = trim($repo['repo']  ?? '');
                 if ($owner && $r)
                 {
-                    $clean[] = array(
+                    $clean[] = [
                         'label' => trim($repo['label'] ?? '') ?: $owner.'/'.$r,
                         'owner' => $owner,
                         'repo'  => $r,
                         'path'  => trim($repo['path'] ?? ''),
-                    );
+                    ];
                 }
             }
             if (!empty($clean))
@@ -251,10 +251,10 @@ HTML;
         HooksService::execute_hook_action(
             'edit_config',
             self::$module_id,
-            array(
-                'title' => StringVars::replace_vars($this->lang['form.module.title'], array('module_name' => self::get_module_configuration()->get_name())),
+            [
+                'title' => StringVars::replace_vars($this->lang['form.module.title'], ['module_name' => self::get_module_configuration()->get_name()]),
                 'url'   => ModulesUrlBuilder::configuration()->rel(),
-            )
+            ]
         );
     }
 

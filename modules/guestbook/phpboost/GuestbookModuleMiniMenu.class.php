@@ -56,7 +56,7 @@ class GuestbookModuleMiniMenu extends ModuleMiniMenu
 			{
 				$user_group_color = User::get_group_color($random_message['user_groups'], $random_message['level']);
 
-				$view->put_all(array(
+				$view->put_all([
 					'C_ANY_MESSAGE_GUESTBOOK' => true,
 					'C_AUTHOR_GROUP_COLOR'    => !empty($user_group_color),
 					'C_SUMMARY'               => TextHelper::strlen($random_message['content']) >= 200,
@@ -70,7 +70,7 @@ class GuestbookModuleMiniMenu extends ModuleMiniMenu
 
 					'U_MESSAGE'        => GuestbookUrlBuilder::home($random_message['page'], $random_message['id'])->rel(),
 					'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($random_message['user_id'])->rel(),
-				));
+				]);
 			}
 		}
 

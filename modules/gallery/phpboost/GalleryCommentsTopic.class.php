@@ -25,12 +25,12 @@ class GalleryCommentsTopic extends CommentsTopic
 
 	public function is_displayed()
 	{
-		return (bool)PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'aprob', 'WHERE id = :id', array('id' => $this->get_id_in_module()));
+		return (bool)PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'aprob', 'WHERE id = :id', ['id' => $this->get_id_in_module()]);
 	}
 
 	private function get_id_category()
 	{
-		return PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'id_category', 'WHERE id = :id', array('id' => $this->get_id_in_module()));
+		return PersistenceContext::get_querier()->get_column_value(GallerySetup::$gallery_table, 'id_category', 'WHERE id = :id', ['id' => $this->get_id_in_module()]);
 	}
 }
 ?>

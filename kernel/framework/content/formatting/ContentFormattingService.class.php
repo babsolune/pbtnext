@@ -113,7 +113,7 @@ class ContentFormattingService
 
 	public function get_available_editors()
 	{
-		$available_editors = array();
+		$available_editors = [];
 		foreach (ContentFormattingProvidersService::get_editors() as $id => $provider)
 		{
 			$available_editors[$id] = $provider->get_name();
@@ -136,9 +136,9 @@ class ContentFormattingService
 
 				if ($default_editor !== $id_module)
 				{
-					PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, array('editor' => $default_editor),
-						'WHERE editor=:old_editor', array('old_editor' => $id_module
-					));
+					PersistenceContext::get_querier()->update(DB_TABLE_MEMBER, ['editor' => $default_editor],
+						'WHERE editor=:old_editor', ['old_editor' => $id_module
+					]);
 				}
 				else
 					return LangLoader::get_message('warning.is.default.editor', 'warning-lang');
@@ -156,7 +156,7 @@ class ContentFormattingService
 	public function get_available_tags()
 	{
 		$lang = LangLoader::get_all_langs();
-		return array(
+		return [
 			'b'              => $lang['editor.bold'],
 			'i'              => $lang['editor.italic'],
 			'u'              => $lang['editor.underline'],
@@ -204,7 +204,7 @@ class ContentFormattingService
 			'html'           => $lang['editor.html'],
 			'charmap'        => $lang['editor.charmap'],
 			'insertdatetime' => $lang['editor.date.time'],
-		);
+		];
 	}
 }
 ?>

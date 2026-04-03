@@ -75,10 +75,10 @@
      * @opt_param bool promotions.useGcsConfig Whether to return promotion information as configured in the GCS account
      * @return Google_Products
      */
-    public function listProducts($source, $optParams = array()) {
-      $params = array('source' => $source);
+    public function listProducts($source, $optParams = []) {
+      $params = ['source' => $source];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('list', array($params));
+      $data = $this->__call('list', [$params]);
       if ($this->useObjects()) {
         return new Google_Products($data);
       } else {
@@ -109,10 +109,10 @@
      * @opt_param bool recommendations.useGcsConfig This parameter is currently ignored
      * @return Google_Product
      */
-    public function get($source, $accountId, $productIdType, $productId, $optParams = array()) {
-      $params = array('source' => $source, 'accountId' => $accountId, 'productIdType' => $productIdType, 'productId' => $productId);
+    public function get($source, $accountId, $productIdType, $productId, $optParams = []) {
+      $params = ['source' => $source, 'accountId' => $accountId, 'productIdType' => $productIdType, 'productId' => $productId];
       $params = array_merge($params, $optParams);
-      $data = $this->__call('get', array($params));
+      $data = $this->__call('get', [$params]);
       if ($this->useObjects()) {
         return new Google_Product($data);
       } else {
@@ -194,7 +194,7 @@ class Google_Product extends Google_Model {
   public function getRequestId() {
     return $this->requestId;
   }
-  public function setRecommendations(/* array(Google_ShoppingModelRecommendationsJsonV1) */ $recommendations) {
+  public function setRecommendations(/* [Google_ShoppingModelRecommendationsJsonV1] */ $recommendations) {
     $this->assertIsArray($recommendations, 'Google_ShoppingModelRecommendationsJsonV1', __METHOD__);
     $this->recommendations = $recommendations;
   }
@@ -213,7 +213,7 @@ class Google_Product extends Google_Model {
   public function getId() {
     return $this->id;
   }
-  public function setCategories(/* array(Google_ShoppingModelCategoryJsonV1) */ $categories) {
+  public function setCategories(/* [Google_ShoppingModelCategoryJsonV1] */ $categories) {
     $this->assertIsArray($categories, 'Google_ShoppingModelCategoryJsonV1', __METHOD__);
     $this->categories = $categories;
   }
@@ -260,7 +260,7 @@ class Google_Products extends Google_Model {
   protected $__categoriesType = 'Google_ShoppingModelCategoryJsonV1';
   protected $__categoriesDataType = 'array';
   public $categories;
-  public function setPromotions(/* array(Google_ProductsPromotions) */ $promotions) {
+  public function setPromotions(/* [Google_ProductsPromotions] */ $promotions) {
     $this->assertIsArray($promotions, 'Google_ProductsPromotions', __METHOD__);
     $this->promotions = $promotions;
   }
@@ -279,7 +279,7 @@ class Google_Products extends Google_Model {
   public function getKind() {
     return $this->kind;
   }
-  public function setStores(/* array(Google_ProductsStores) */ $stores) {
+  public function setStores(/* [Google_ProductsStores] */ $stores) {
     $this->assertIsArray($stores, 'Google_ProductsStores', __METHOD__);
     $this->stores = $stores;
   }
@@ -292,14 +292,14 @@ class Google_Products extends Google_Model {
   public function getCurrentItemCount() {
     return $this->currentItemCount;
   }
-  public function setItems(/* array(Google_Product) */ $items) {
+  public function setItems(/* [Google_Product] */ $items) {
     $this->assertIsArray($items, 'Google_Product', __METHOD__);
     $this->items = $items;
   }
   public function getItems() {
     return $this->items;
   }
-  public function setFacets(/* array(Google_ProductsFacets) */ $facets) {
+  public function setFacets(/* [Google_ProductsFacets] */ $facets) {
     $this->assertIsArray($facets, 'Google_ProductsFacets', __METHOD__);
     $this->facets = $facets;
   }
@@ -312,7 +312,7 @@ class Google_Products extends Google_Model {
   public function getItemsPerPage() {
     return $this->itemsPerPage;
   }
-  public function setRedirects(/* array(Google_string) */ $redirects) {
+  public function setRedirects(/* [Google_string] */ $redirects) {
     $this->assertIsArray($redirects, 'Google_string', __METHOD__);
     $this->redirects = $redirects;
   }
@@ -325,7 +325,7 @@ class Google_Products extends Google_Model {
   public function getNextLink() {
     return $this->nextLink;
   }
-  public function setRelatedQueries(/* array(Google_string) */ $relatedQueries) {
+  public function setRelatedQueries(/* [Google_string] */ $relatedQueries) {
     $this->assertIsArray($relatedQueries, 'Google_string', __METHOD__);
     $this->relatedQueries = $relatedQueries;
   }
@@ -356,7 +356,7 @@ class Google_Products extends Google_Model {
   public function getRequestId() {
     return $this->requestId;
   }
-  public function setCategoryRecommendations(/* array(Google_ShoppingModelRecommendationsJsonV1) */ $categoryRecommendations) {
+  public function setCategoryRecommendations(/* [Google_ShoppingModelRecommendationsJsonV1] */ $categoryRecommendations) {
     $this->assertIsArray($categoryRecommendations, 'Google_ShoppingModelRecommendationsJsonV1', __METHOD__);
     $this->categoryRecommendations = $categoryRecommendations;
   }
@@ -387,7 +387,7 @@ class Google_Products extends Google_Model {
   public function getId() {
     return $this->id;
   }
-  public function setCategories(/* array(Google_ShoppingModelCategoryJsonV1) */ $categories) {
+  public function setCategories(/* [Google_ShoppingModelCategoryJsonV1] */ $categories) {
     $this->assertIsArray($categories, 'Google_ShoppingModelCategoryJsonV1', __METHOD__);
     $this->categories = $categories;
   }
@@ -424,7 +424,7 @@ class Google_ProductsFacets extends Google_Model {
   public function getName() {
     return $this->name;
   }
-  public function setBuckets(/* array(Google_ProductsFacetsBuckets) */ $buckets) {
+  public function setBuckets(/* [Google_ProductsFacetsBuckets] */ $buckets) {
     $this->assertIsArray($buckets, 'Google_ProductsFacetsBuckets', __METHOD__);
     $this->buckets = $buckets;
   }
@@ -539,7 +539,7 @@ class Google_ProductsPromotions extends Google_Model {
   public function getCustomHtml() {
     return $this->customHtml;
   }
-  public function setCustomFields(/* array(Google_ProductsPromotionsCustomFields) */ $customFields) {
+  public function setCustomFields(/* [Google_ProductsPromotionsCustomFields] */ $customFields) {
     $this->assertIsArray($customFields, 'Google_ProductsPromotionsCustomFields', __METHOD__);
     $this->customFields = $customFields;
   }
@@ -656,7 +656,7 @@ class Google_ShoppingModelCategoryJsonV1 extends Google_Model {
   public function getShortName() {
     return $this->shortName;
   }
-  public function setParents(/* array(Google_string) */ $parents) {
+  public function setParents(/* [Google_string] */ $parents) {
     $this->assertIsArray($parents, 'Google_string', __METHOD__);
     $this->parents = $parents;
   }
@@ -717,7 +717,7 @@ class Google_ShoppingModelDebugJsonV1 extends Google_Model {
   public function getFacetsResponse() {
     return $this->facetsResponse;
   }
-  public function setBackendTimes(/* array(Google_ShoppingModelDebugJsonV1BackendTimes) */ $backendTimes) {
+  public function setBackendTimes(/* [Google_ShoppingModelDebugJsonV1BackendTimes] */ $backendTimes) {
     $this->assertIsArray($backendTimes, 'Google_ShoppingModelDebugJsonV1BackendTimes', __METHOD__);
     $this->backendTimes = $backendTimes;
   }
@@ -817,14 +817,14 @@ class Google_ShoppingModelProductJsonV1 extends Google_Model {
   public function getGtin() {
     return $this->gtin;
   }
-  public function setImages(/* array(Google_ShoppingModelProductJsonV1Images) */ $images) {
+  public function setImages(/* [Google_ShoppingModelProductJsonV1Images] */ $images) {
     $this->assertIsArray($images, 'Google_ShoppingModelProductJsonV1Images', __METHOD__);
     $this->images = $images;
   }
   public function getImages() {
     return $this->images;
   }
-  public function setInventories(/* array(Google_ShoppingModelProductJsonV1Inventories) */ $inventories) {
+  public function setInventories(/* [Google_ShoppingModelProductJsonV1Inventories] */ $inventories) {
     $this->assertIsArray($inventories, 'Google_ShoppingModelProductJsonV1Inventories', __METHOD__);
     $this->inventories = $inventories;
   }
@@ -855,7 +855,7 @@ class Google_ShoppingModelProductJsonV1 extends Google_Model {
   public function getProvidedId() {
     return $this->providedId;
   }
-  public function setInternal8(/* array(Google_string) */ $internal8) {
+  public function setInternal8(/* [Google_string] */ $internal8) {
     $this->assertIsArray($internal8, 'Google_string', __METHOD__);
     $this->internal8 = $internal8;
   }
@@ -868,14 +868,14 @@ class Google_ShoppingModelProductJsonV1 extends Google_Model {
   public function getDescription() {
     return $this->description;
   }
-  public function setGtins(/* array(Google_string) */ $gtins) {
+  public function setGtins(/* [Google_string] */ $gtins) {
     $this->assertIsArray($gtins, 'Google_string', __METHOD__);
     $this->gtins = $gtins;
   }
   public function getGtins() {
     return $this->gtins;
   }
-  public function setInternal1(/* array(Google_string) */ $internal1) {
+  public function setInternal1(/* [Google_string] */ $internal1) {
     $this->assertIsArray($internal1, 'Google_string', __METHOD__);
     $this->internal1 = $internal1;
   }
@@ -894,7 +894,7 @@ class Google_ShoppingModelProductJsonV1 extends Google_Model {
   public function getInternal3() {
     return $this->internal3;
   }
-  public function setInternal4(/* array(Google_ShoppingModelProductJsonV1Internal4) */ $internal4) {
+  public function setInternal4(/* [Google_ShoppingModelProductJsonV1Internal4] */ $internal4) {
     $this->assertIsArray($internal4, 'Google_ShoppingModelProductJsonV1Internal4', __METHOD__);
     $this->internal4 = $internal4;
   }
@@ -919,14 +919,14 @@ class Google_ShoppingModelProductJsonV1 extends Google_Model {
   public function getLink() {
     return $this->link;
   }
-  public function setMpns(/* array(Google_string) */ $mpns) {
+  public function setMpns(/* [Google_string] */ $mpns) {
     $this->assertIsArray($mpns, 'Google_string', __METHOD__);
     $this->mpns = $mpns;
   }
   public function getMpns() {
     return $this->mpns;
   }
-  public function setAttributes(/* array(Google_ShoppingModelProductJsonV1Attributes) */ $attributes) {
+  public function setAttributes(/* [Google_ShoppingModelProductJsonV1Attributes] */ $attributes) {
     $this->assertIsArray($attributes, 'Google_ShoppingModelProductJsonV1Attributes', __METHOD__);
     $this->attributes = $attributes;
   }
@@ -939,7 +939,7 @@ class Google_ShoppingModelProductJsonV1 extends Google_Model {
   public function getTotalMatchingVariants() {
     return $this->totalMatchingVariants;
   }
-  public function setVariants(/* array(Google_ShoppingModelProductJsonV1Variants) */ $variants) {
+  public function setVariants(/* [Google_ShoppingModelProductJsonV1Variants] */ $variants) {
     $this->assertIsArray($variants, 'Google_ShoppingModelProductJsonV1Variants', __METHOD__);
     $this->variants = $variants;
   }
@@ -952,7 +952,7 @@ class Google_ShoppingModelProductJsonV1 extends Google_Model {
   public function getModificationTime() {
     return $this->modificationTime;
   }
-  public function setCategories(/* array(Google_string) */ $categories) {
+  public function setCategories(/* [Google_string] */ $categories) {
     $this->assertIsArray($categories, 'Google_string', __METHOD__);
     $this->categories = $categories;
   }
@@ -1001,7 +1001,7 @@ class Google_ShoppingModelProductJsonV1 extends Google_Model {
   public function getInternal13() {
     return $this->internal13;
   }
-  public function setInternal10(/* array(Google_string) */ $internal10) {
+  public function setInternal10(/* [Google_string] */ $internal10) {
     $this->assertIsArray($internal10, 'Google_string', __METHOD__);
     $this->internal10 = $internal10;
   }
@@ -1101,7 +1101,7 @@ class Google_ShoppingModelProductJsonV1Images extends Google_Model {
   public function getLink() {
     return $this->link;
   }
-  public function setThumbnails(/* array(Google_ShoppingModelProductJsonV1ImagesThumbnails) */ $thumbnails) {
+  public function setThumbnails(/* [Google_ShoppingModelProductJsonV1ImagesThumbnails] */ $thumbnails) {
     $this->assertIsArray($thumbnails, 'Google_ShoppingModelProductJsonV1ImagesThumbnails', __METHOD__);
     $this->thumbnails = $thumbnails;
   }
@@ -1283,7 +1283,7 @@ class Google_ShoppingModelRecommendationsJsonV1 extends Google_Model {
   protected $__recommendationListDataType = 'array';
   public $recommendationList;
   public $type;
-  public function setRecommendationList(/* array(Google_ShoppingModelRecommendationsJsonV1RecommendationList) */ $recommendationList) {
+  public function setRecommendationList(/* [Google_ShoppingModelRecommendationsJsonV1RecommendationList] */ $recommendationList) {
     $this->assertIsArray($recommendationList, 'Google_ShoppingModelRecommendationsJsonV1RecommendationList', __METHOD__);
     $this->recommendationList = $recommendationList;
   }

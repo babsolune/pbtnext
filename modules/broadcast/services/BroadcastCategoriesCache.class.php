@@ -34,9 +34,9 @@ class BroadcastCategoriesCache extends CategoriesCache
 		$now = new Date();
 		return BroadcastService::count(
 			'WHERE id_category = :id_category AND published = 1',
-			array(
+			[
 				'id_category' => $id_category
-			)
+			]
 		);
 	}
 	
@@ -46,7 +46,7 @@ class BroadcastCategoriesCache extends CategoriesCache
 		$root->set_authorizations(BroadcastConfig::load()->get_authorizations());
 		$root->set_description(
 			StringVars::replace_vars(LangLoader::get_message('broadcast.seo.description.root', 'common', 'broadcast'), 
-				array('site' => GeneralConfig::load()->get_site_name())
+				['site' => GeneralConfig::load()->get_site_name()]
 			));
 		return $root;
 	}

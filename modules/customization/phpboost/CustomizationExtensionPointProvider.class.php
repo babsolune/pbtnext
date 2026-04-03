@@ -21,7 +21,7 @@ class CustomizationExtensionPointProvider extends ExtensionPointProvider
 
 	public function url_mappings()
 	{
-		return new UrlMappings(array(new DispatcherUrlMapping('/customization/index.php', '([\w/_-]*(?:\.css)?)$')));
+		return new UrlMappings([new DispatcherUrlMapping('/customization/index.php', '([\w/_-]*(?:\.css)?)$')]);
 	}
 }
 ?>

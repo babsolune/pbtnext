@@ -117,7 +117,7 @@ class AdminCountdownConfigController extends DefaultAdminModuleController
 		$fieldset_authorizations = new FormFieldsetHTML('authorizations', $this->lang['form.authorizations']);
 		$form->add_fieldset($fieldset_authorizations);
 
-		$auth_settings = new AuthorizationsSettings(array(new ActionAuthorization($this->lang['form.authorizations.read'], CountdownAuthorizationsService::READ_AUTHORIZATIONS)));
+		$auth_settings = new AuthorizationsSettings([new ActionAuthorization($this->lang['form.authorizations.read'], CountdownAuthorizationsService::READ_AUTHORIZATIONS)]);
 		$auth_settings->build_from_auth_array($this->config->get_authorizations());
 		$fieldset_authorizations->add_field(new FormFieldAuthorizationsSetter('authorizations', $auth_settings));
 

@@ -38,7 +38,7 @@ class AdminDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvi
 		$js_bottom_tpl->add_lang($lang);
 		$js_bottom_tpl->put('JS_BOTTOM', $this->get_bottom_js_files_html_code());
 
-		$view->put_all(array(
+		$view->put_all([
 			'C_FAVICON' => $customization_config->favicon_exists(),
 
 			'FAVICON'      => Url::to_rel($customization_config->get_favicon_path()),
@@ -48,7 +48,7 @@ class AdminDisplayFrameGraphicalEnvironment extends AbstractDisplayGraphicalEnvi
 			'JS_TOP'       => $js_top_tpl,
 			'JS_BOTTOM'    => $js_bottom_tpl,
 			'BODY'         => new StringTemplate($content)
-		));
+		]);
 
 		$view->display();
 	}

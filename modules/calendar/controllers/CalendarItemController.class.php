@@ -46,18 +46,18 @@ class CalendarItemController extends DefaultModuleController
 		$item = $this->get_item();
 		$category = $item->get_content()->get_category();
 
-		$this->view->put_all(array_merge($item->get_template_vars(), array(
+		$this->view->put_all(array_merge($item->get_template_vars(), [
 			'NOT_VISIBLE_MESSAGE' => MessageHelper::display($this->lang['warning.element.not.visible'], MessageHelper::WARNING)
-		)));
+		]));
 
 		$participants_number = count($item->get_participants());
 		$i = 0;
 		foreach ($item->get_participants() as $participant)
 		{
 			$i++;
-			$this->view->assign_block_vars('participant', array_merge($participant->get_template_vars(), array(
+			$this->view->assign_block_vars('participant', array_merge($participant->get_template_vars(), [
 				'C_LAST_PARTICIPANT' => $i == $participants_number
-			)));
+			]));
 		}
 
 		$comments_config = CommentsConfig::load();
@@ -67,10 +67,10 @@ class CalendarItemController extends DefaultModuleController
 			$comments_topic->set_id_in_module($item->get_id());
 			$comments_topic->set_url(CalendarUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()));
 
-			$this->view->put_all(array(
+			$this->view->put_all([
 				'C_COMMENTS_ENABLED' => true,
 				'COMMENTS' => $comments_topic->display()
-			));
+			]);
 		}
 	}
 

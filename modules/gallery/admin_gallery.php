@@ -98,7 +98,7 @@ $nbr_column_pics = ($nbr_pics > $config->get_columns_number()) ? $config->get_co
 $nbr_column_pics = !empty($nbr_column_pics) ? $nbr_column_pics : 1;
 $column_width_pics = floor(100/$nbr_column_pics);
 
-$view->put_all(array(
+$view->put_all([
 	'C_ITEMS'                    => $nbr_pics > 0,
 	'C_IS_CATEGORY'              => !empty($id_category),
 	'C_DISPLAY_NO_ITEMS_MESSAGE' => $category->get_id() != Category::ROOT_CATEGORY,
@@ -116,14 +116,14 @@ $view->put_all(array(
 	'ITEMS_NUMBER'             => $nbr_pics,
 
 	'U_PARENT_CATEGORY' => $category->get_id_parent(),
-));
+]);
 
 ##### Catégorie disponibles #####
 $nbr_cat_displayed = 0;
 if ($total_cat > 0)
 {
-	$view->assign_block_vars('cat', array(
-	));
+	$view->assign_block_vars('cat', [
+	]);
 
 	$i = 0;
 	foreach ($subcategories as $id => $cat)
@@ -142,7 +142,7 @@ if ($total_cat > 0)
 			$category_thumbnail = $cat->get_thumbnail()->rel();
 			$elements_number = $cat->get_elements_number();
 
-			$view->assign_block_vars('cat.list', array(
+			$view->assign_block_vars('cat.list', [
 				'C_THUMBNAILS'  => !empty($category_thumbnail),
 				'CATEGORY_ID'   => $cat->get_id(),
 				'CATEGORY_NAME' => $cat->get_name(),
@@ -151,7 +151,7 @@ if ($total_cat > 0)
 				'HIDDEN_ITEMS_NUMBER' => $elements_number['pics_unaprob'],
 
 				'U_THUMBNAIL' => $category_thumbnail,
-			));
+			]);
 		}
 	}
 
@@ -159,20 +159,20 @@ if ($total_cat > 0)
 	while (!is_int($i/$nbr_column_cats))
 	{
 		$i++;
-		$view->assign_block_vars('cat.end_td', array(
+		$view->assign_block_vars('cat.end_td', [
 			'COLUMN_WIDTH_PICS' => $column_width_pics,
 			'C_DISPLAY_TR_END' => (is_int($i/$nbr_column_cats))
-		));
+		]);
 	}
 }
 
 if ($nbr_pics > 0 && empty($idpics))
 {
-	$nbr_pics_category = PersistenceContext::get_querier()->count(GallerySetup::$gallery_table, 'WHERE id_category = :id_category', array('id_category' => $id_category));
+	$nbr_pics_category = PersistenceContext::get_querier()->count(GallerySetup::$gallery_table, 'WHERE id_category = :id_category', ['id_category' => $id_category]);
 }
 
 ##### Affichage des photos #####
-$view->assign_block_vars('pics', array(
+$view->assign_block_vars('pics', [
 	'C_PICS_MAX' => $nbr_pics == 0 || !empty($idpics),
 	'C_EDIT'     => !empty($id_category),
 
@@ -182,7 +182,7 @@ $view->assign_block_vars('pics', array(
 	'CATEGORY_NAME' => $category->get_name(),
 
 	'U_EDIT_CATEGORY' => CategoriesUrlBuilder::edit($id_category, 'gallery')->rel()
-));
+]);
 
 if ($nbr_pics > 0)
 {
@@ -197,24 +197,24 @@ if ($nbr_pics > 0)
 		DispatchManager::redirect($error_controller);
 	}
 
-	$view->put_all(array(
+	$view->put_all([
 		'C_PAGINATION' => $pagination->has_several_pages(),
 		'PAGINATION'   => $pagination->display(),
-	));
+	]);
 
 	if (!empty($idpics))
 	{
-		$info_pics = array();
+		$info_pics = [];
 		try {
 			$info_pics = PersistenceContext::get_querier()->select_single_row_query("SELECT
 				g.id, g.id_category, g.name, g.user_id, g.views, g.width, g.height, g.weight, g.timestamp, g.aprob,
 				m.display_name, m.level, m.user_groups
 			FROM " . GallerySetup::$gallery_table . " g
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
-			WHERE g.id_category = :id_category AND g.id = :id", array(
+			WHERE g.id_category = :id_category AND g.id = :id", [
 				'id_category' => $id_category,
 				'id' => $idpics
-			));
+			]);
 		} catch (RowNotFoundException $e) {}
 
 		if ($info_pics && !empty($info_pics['id']))
@@ -224,15 +224,15 @@ if ($nbr_pics > 0)
 			$id_next = 0;
 			$nbr_pics_display_before = floor(($nbr_column_pics - 1)/2); //Nombres de photos de chaque côté de la miniature de la photo affichée.
 			$nbr_pics_display_after = ($nbr_column_pics - 1) - floor($nbr_pics_display_before);
-			list($i, $reach_pics_pos, $pos_pics, $thumbnails_before, $thumbnails_after, $start_thumbnails, $end_thumbnails) = array(0, false, 0, 0, 0, $nbr_pics_display_before, $nbr_pics_display_after);
-			$array_pics = array();
+			list($i, $reach_pics_pos, $pos_pics, $thumbnails_before, $thumbnails_after, $start_thumbnails, $end_thumbnails) = [0, false, 0, 0, 0, $nbr_pics_display_before, $nbr_pics_display_after];
+			$array_pics = [];
 			$array_js = 'var array_pics = new Array();';
 			$result = PersistenceContext::get_querier()->select("SELECT g.id, g.name, g.id_category, g.path
 			FROM " . GallerySetup::$gallery_table . " g
 			LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
-			WHERE g.id_category = :id_category", array(
+			WHERE g.id_category = :id_category", [
 				'id_category' => $id_category
-			));
+			]);
 			while ($row = $result->fetch())
 			{
 				//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
@@ -240,7 +240,7 @@ if ($nbr_pics > 0)
 					$Gallery->Resize_pics('pics/' . $row['path']); //Redimensionnement + création miniature
 
 				//Affichage de la liste des miniatures sous l'image.
-				$array_pics[] = array(
+				$array_pics[] = [
 					'C_CURRENT_ITEM' => $row['id'] == $idpics,
 
 					'HEIGHT' => ($config->get_mini_max_height() + 16),
@@ -248,7 +248,7 @@ if ($nbr_pics > 0)
 					'URL'    => 'admin_gallery.php?cat=' . $row['id_category'] . '&amp;id=' . $row['id'] . '#pics_max',
 					'NAME'   => stripslashes($row['name']),
 					'PATH'   => $row['path']
-				);
+				];
 
 				if ($row['id'] == $idpics)
 				{
@@ -282,12 +282,12 @@ if ($nbr_pics > 0)
 			if ($thumbnails_after < $nbr_pics_display_after)
 				$start_thumbnails += $nbr_pics_display_after - $thumbnails_after;
 
-			$view->put_all(array(
+			$view->put_all([
 				'ARRAY_JS'        => $array_js,
 				'JS_ITEMS_NUMBER' => ($i - 1),
 				'MAX_START'       => ($i - 1) - $nbr_column_pics,
 				'START_THUMB'     => (($pos_pics - $start_thumbnails) > 0) ? ($pos_pics - $start_thumbnails) : 0,
-			));
+			]);
 
 			//Liste des catégories.
 			$search_category_children_options = new SearchCategoryChildrensOptions();
@@ -309,7 +309,7 @@ if ($nbr_pics > 0)
 			$date = new Date($info_pics['timestamp'], Timezone::SERVER_TIMEZONE);
 
 			//Affichage de l'image et de ses informations.
-			$view->assign_block_vars('pics.pics_max', array_merge(Date::get_array_tpl_vars($date, 'date'), array(
+			$view->assign_block_vars('pics.pics_max', array_merge(Date::get_array_tpl_vars($date, 'date'), [
 				'C_APPROVED'         => $info_pics['aprob'],
 				'C_PREVIOUS'         => ($pos_pics > 0),
 				'C_NEXT'             => ($pos_pics < ($i - 1)),
@@ -337,7 +337,7 @@ if ($nbr_pics > 0)
 				'RENAME_CUT'          => addslashes($info_pics['name']),
 
 				'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($info_pics['user_id'])->rel(),
-			)));
+			]));
 
 			//Affichage de la liste des miniatures sous l'image.
 			$i = 0;
@@ -361,11 +361,11 @@ if ($nbr_pics > 0)
 		LEFT JOIN " . DB_TABLE_MEMBER . " m ON m.user_id = g.user_id
 		WHERE g.id_category = :id_category
 		ORDER BY g.timestamp
-		LIMIT :number_items_per_page OFFSET :display_from", array(
+		LIMIT :number_items_per_page OFFSET :display_from", [
 			'id_category' => $id_category,
 			'number_items_per_page' => $pagination->get_number_items_per_page(),
 			'display_from' => $pagination->get_display_from()
-		));
+		]);
 		while ($row = $result->fetch())
 		{
 			//Si la miniature n'existe pas (cache vidé) on regénère la miniature à partir de l'image en taille réelle.
@@ -410,7 +410,7 @@ if ($nbr_pics > 0)
 
 			$group_color = User::get_group_color($row['user_groups'], $row['level']);
 
-			$view->assign_block_vars('pics.list', array(
+			$view->assign_block_vars('pics.list', [
 				'C_APPROVED'           => $row['aprob'],
 				'C_AUTHOR_EXISTS'      => !empty($row['display_name']),
 				'C_AUTHOR_GROUP_COLOR' => !empty($group_color),
@@ -429,7 +429,7 @@ if ($nbr_pics > 0)
 
 				'U_ITEM'           => $display_link,
 				'U_AUTHOR_PROFILE' => UserUrlBuilder::profile($row['user_id'])->rel(),
-			));
+			]);
 		}
 		$result->dispose();
 	}

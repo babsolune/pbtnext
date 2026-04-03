@@ -18,7 +18,7 @@
 
 class FormFieldFree extends AbstractFormField
 {
-	public function __construct($id, $label, $value, array $properties = array())
+	public function __construct($id, $label, $value, array $properties = [])
 	{
 		parent::__construct($id, $label, $value, $properties);
 		$this->set_css_form_field_class(empty($label) ? 'form-field-free-large' : 'form-field-free');
@@ -30,9 +30,9 @@ class FormFieldFree extends AbstractFormField
 
 		$this->assign_common_template_variables($template);
 
-		$template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $this->get_value()
-		));
+		]);
 
 		$template->put('C_HIDE_FOR_ATTRIBUTE', true);
 

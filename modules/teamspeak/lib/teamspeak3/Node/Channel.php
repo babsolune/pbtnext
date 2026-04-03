@@ -59,9 +59,9 @@ class TeamSpeak3_Node_Channel extends TeamSpeak3_Node_Abstract
    * @param  array $filter
    * @return array
    */
-  public function subChannelList(array $filter = array())
+  public function subChannelList(array $filter = [])
   {
-    $channels = array();
+    $channels = [];
 
     foreach($this->getParent()->channelList() as $channel)
     {
@@ -114,9 +114,9 @@ class TeamSpeak3_Node_Channel extends TeamSpeak3_Node_Abstract
    * @param  array $filter
    * @return array
    */
-  public function clientList(array $filter = array())
+  public function clientList(array $filter = [])
   {
-    $clients = array();
+    $clients = [];
 
     foreach($this->getParent()->clientList() as $client)
     {
@@ -434,7 +434,7 @@ class TeamSpeak3_Node_Channel extends TeamSpeak3_Node_Abstract
       $this->getParent()->clientMove($this->getParent()->whoamiGet("client_id"), $this->getId(), $cpw);
     }
 
-    $this->execute("sendtextmessage", array("msg" => $msg, "target" => $this->getId(), "targetmode" => TeamSpeak3::TEXTMSG_CHANNEL));
+    $this->execute("sendtextmessage", ["msg" => $msg, "target" => $this->getId(), "targetmode" => TeamSpeak3::TEXTMSG_CHANNEL]);
   }
 
   /**
@@ -467,7 +467,7 @@ class TeamSpeak3_Node_Channel extends TeamSpeak3_Node_Abstract
    */
   protected function fetchNodeList()
   {
-    $this->nodeList = array();
+    $this->nodeList = [];
 
     if($this->getParent()->getLoadClientlistFirst())
     {
@@ -512,7 +512,7 @@ class TeamSpeak3_Node_Channel extends TeamSpeak3_Node_Abstract
    */
   protected function fetchNodeInfo()
   {
-    $this->nodeInfo = array_merge($this->nodeInfo, $this->execute("channelinfo", array("cid" => $this->getId()))->toList());
+    $this->nodeInfo = array_merge($this->nodeInfo, $this->execute("channelinfo", ["cid" => $this->getId()])->toList());
   }
 
   /**

@@ -34,10 +34,10 @@ class TeamspeakModuleMiniMenu extends ModuleMiniMenu
 
 				MenuService::assign_positions_conditions($view, $this->get_block());
 
-				$view->put_all(array(
+				$view->put_all([
 					'C_REFRESH_ENABLED' => $config->get_refresh_delay(),
 					'REFRESH_DELAY'     => $config->get_refresh_delay() * 60000
-				));
+				]);
 
 				return $view->render();
 			}

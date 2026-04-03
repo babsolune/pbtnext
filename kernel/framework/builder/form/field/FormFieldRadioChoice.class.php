@@ -22,7 +22,7 @@ class FormFieldRadioChoice extends AbstractFormFieldChoice
 	 * @param array $field_options Map of the field options (this field has no specific option, there are only the inherited ones)
 	 * @param FormFieldConstraint List of the constraints
 	 */
-	public function __construct($id, $label, $value, $options, array $field_options = array(), array $constraints = array())
+	public function __construct($id, $label, $value, $options, array $field_options = [], array $constraints = [])
 	{
 		parent::__construct($id, $label, $value, $options, $field_options, $constraints);
 		$this->set_css_form_field_class('form-field-radio-button');
@@ -40,17 +40,17 @@ class FormFieldRadioChoice extends AbstractFormFieldChoice
 		$has_value = false;
 		foreach ($this->get_options() as $option)
 		{
-			$template->assign_block_vars('fieldelements', array(
+			$template->assign_block_vars('fieldelements', [
 				'ELEMENT' => $option->display()->render(),
-			));
+			]);
 			if ($option->is_active())
 				$has_value = true;
 		}
 
-		$template->put_all(array(
+		$template->put_all([
 			'C_HIDE_FOR_ATTRIBUTE' => true,
 			'C_REQUIRED_AND_HAS_VALUE' => $this->is_required() && $has_value
-		));
+		]);
 
 		return $template;
 	}

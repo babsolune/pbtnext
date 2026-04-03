@@ -15,7 +15,7 @@ class MenuAdminService
 	public static function set_retrieved_filters(Menu $menu)
 	{
 		$request = AppContext::get_request();
-	    $filters = array();
+	    $filters = [];
 	    $i = 0;
 	    while (true)
 	    {
@@ -43,9 +43,9 @@ class MenuAdminService
 	{
 		$filter_tpl = new FileTemplate('admin/menus/filters.tpl');
 
-		$filter_tpl->assign_block_vars('modules', array(
+		$filter_tpl->assign_block_vars('modules', [
 			'ID' => '',
-		));
+		]);
 		foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $module)
 		{
 			$configuration = $module->get_configuration();
@@ -53,16 +53,16 @@ class MenuAdminService
 
 			if (!empty($home_page))
 			{
-				$filter_tpl->assign_block_vars('modules', array(
+				$filter_tpl->assign_block_vars('modules', [
 					'ID' => $module->get_id(),
-				));
+				]);
 			}
 		}
 
 		// Add menu
 		if ($menu->get_id() == '')
 		{
-			$menu->set_filters(array(new MenuStringFilter('/')));
+			$menu->set_filters([new MenuStringFilter('/')]);
 		}
 
 		// Installed modules
@@ -74,15 +74,15 @@ class MenuAdminService
 			$module_name = $filter_infos[0];
 			$regex = TextHelper::substr(TextHelper::strstr($filter_pattern, '/'), 1);
 
-			$filter_tpl->assign_block_vars('filters', array(
+			$filter_tpl->assign_block_vars('filters', [
 				'ID' => $key,
 				'FILTER' => $regex
-			));
+			]);
 
-			$filter_tpl->assign_block_vars('filters.modules', array(
+			$filter_tpl->assign_block_vars('filters.modules', [
 				'ID' => '',
 				'SELECTED' => $filter_pattern == '/' ? ' selected="selected"' : ''
-			));
+			]);
 			foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $module)
 			{
 				$configuration = $module->get_configuration();
@@ -90,19 +90,19 @@ class MenuAdminService
 
 				if (!empty($home_page))
 				{
-					$filter_tpl->assign_block_vars('filters.modules', array(
+					$filter_tpl->assign_block_vars('filters.modules', [
 						'ID' => $module->get_id(),
 						'NAME' => $configuration->get_name(),
 						'SELECTED' => $module_name == $module->get_id() ? ' selected="selected"' : ''
-					));
+					]);
 				}
 			}
 		}
 
 		$filter_tpl->add_lang(LangLoader::get_all_langs());
-		$filter_tpl->put_all(array(
+		$filter_tpl->put_all([
 		    'FILTERS_NUMBER' => ($menu->get_id() == '') ? 0 : count($menu->get_filters()) - 1,
-		));
+		]);
 
 		$tpl->put('FILTERS', $filter_tpl);
 	}

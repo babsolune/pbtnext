@@ -12,8 +12,8 @@
 class CalendarItemsListController extends DefaultModuleController
 {
 	private $items_number = 0;
-	private $ids = array();
-	private $hide_delete_input = array();
+	private $ids = [];
+	private $hide_delete_input = [];
 	private $display_multiple_delete = true;
 
 	public function execute(HTTPRequestCustom $request)
@@ -40,14 +40,14 @@ class CalendarItemsListController extends DefaultModuleController
 	{
 		$display_categories = CategoriesService::get_categories_manager()->get_categories_cache()->has_categories();
 
-		$columns = array(
+		$columns = [
 			new HTMLTableColumn($this->lang['common.title'], 'title'),
 			new HTMLTableColumn($this->lang['category.category'], 'id_category'),
 			new HTMLTableColumn($this->lang['common.author'], 'display_name'),
 			new HTMLTableColumn($this->lang['date.date'], 'start_date'),
 			new HTMLTableColumn($this->lang['calendar.repetition']),
 			new HTMLTableColumn('')
-		);
+		];
 
 		if (!$display_categories)
 			unset($columns[1]);
@@ -67,13 +67,13 @@ class CalendarItemsListController extends DefaultModuleController
 		$table = new HTMLTable($table_model);
 		$table->set_filters_fieldset_class_HTML();
 
-		$results = array();
+		$results = [];
 		$result = $table_model->get_sql_results('event
 			LEFT JOIN ' . CalendarSetup::$calendar_events_content_table . ' event_content ON event_content.id = event.content_id
 			LEFT JOIN ' . DB_TABLE_MEMBER . ' member ON member.user_id = event_content.author_user_id'
 		);
 
-		$items = array();
+		$items = [];
 		$moderation_link_number = 0;
 		foreach ($result as $row)
 		{
@@ -105,11 +105,11 @@ class CalendarItemsListController extends DefaultModuleController
 			$edit_link = new EditLinkHTMLElement(CalendarUrlBuilder::edit_item(!$item->get_parent_id() ? $item->get_id() : $item->get_parent_id()));
 			$edit_link = $item->is_authorized_to_edit() ? $edit_link->display() : '';
 
-			$delete_link = new DeleteLinkHTMLElement(CalendarUrlBuilder::delete_item($item->get_id()), '', array('data-confirmation' => !$item->belongs_to_a_serie() ? 'delete-element' : ''));
+			$delete_link = new DeleteLinkHTMLElement(CalendarUrlBuilder::delete_item($item->get_id()), '', ['data-confirmation' => !$item->belongs_to_a_serie() ? 'delete-element' : '']);
 			$delete_link = $item->is_authorized_to_delete() ? $delete_link->display() : '';
 
 			$user_group_color = User::get_group_color($user->get_groups(), $user->get_level(), true);
-			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? array('style' => 'color: ' . $user_group_color) : array()), UserService::get_level_class($user->get_level())) : $user->get_display_name();
+			$author = $user->get_id() !== User::VISITOR_LEVEL ? new LinkHTMLElement(UserUrlBuilder::profile($user->get_id()), $user->get_display_name(), (!empty($user_group_color) ? ['style' => 'color: ' . $user_group_color] : []), UserService::get_level_class($user->get_level())) : $user->get_display_name();
 
 			$br = new BrHTMLElement();
 
@@ -118,14 +118,14 @@ class CalendarItemsListController extends DefaultModuleController
 
 			if($item->get_content()->is_approved())
 			{
-				$row = array(
+				$row = [
 					new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::display($category->get_id(), $category->get_rewrited_name(), $item->get_id(), $item->get_content()->get_rewrited_title()), $item->get_content()->get_title()), 'align-left'),
-					new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), $item->get_start_date()->get_year(), $item->get_start_date()->get_month()), ($category->get_id() == Category::ROOT_CATEGORY ? $this->lang['common.none.alt'] : $category->get_name()), array('data-color-surround' => $category->get_id() != Category::ROOT_CATEGORY && $category->get_color() ? $category->get_color() : ($category->get_id() == Category::ROOT_CATEGORY ? $this->config->get_event_color() : '')), 'pinned')),
+					new HTMLTableRowCell(new LinkHTMLElement(CalendarUrlBuilder::display_category($category->get_id(), $category->get_rewrited_name(), $item->get_start_date()->get_year(), $item->get_start_date()->get_month()), ($category->get_id() == Category::ROOT_CATEGORY ? $this->lang['common.none.alt'] : $category->get_name()), ['data-color-surround' => $category->get_id() != Category::ROOT_CATEGORY && $category->get_color() ? $category->get_color() : ($category->get_id() == Category::ROOT_CATEGORY ? $this->config->get_event_color() : '')], 'pinned')),
 					new HTMLTableRowCell($author),
 					new HTMLTableRowCell(($start_date != $end_date) ? $this->lang['date.from.date'] . ' ' . $item->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR) . $br->display() . $this->lang['date.to.date'] . ' ' . $item->get_end_date()->format(Date::FORMAT_DAY_MONTH_YEAR) : $item->get_start_date()->format(Date::FORMAT_DAY_MONTH_YEAR)),
 					new HTMLTableRowCell($item->belongs_to_a_serie() ? $this->get_repeat_type_label($item) . ' - ' . $item->get_content()->get_repeat_number() . ' ' . $this->lang['calendar.repeat.times'] : $this->lang['common.no']),
 					$moderation_link_number ? new HTMLTableRowCell($edit_link . $delete_link, 'controls') : null
-				);
+				];
 
 				if (!$display_categories)
 					unset($row[1]);
@@ -172,7 +172,7 @@ class CalendarItemsListController extends DefaultModuleController
 							CalendarService::delete_item($item->get_id());
 
 							if (!$this->item->get_parent_id())
-								PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', array('module' => 'calendar', 'id' => $item->get_id()));
+								PersistenceContext::get_querier()->delete(DB_TABLE_EVENTS, 'WHERE module=:module AND id_in_module=:id', ['module' => 'calendar', 'id' => $item->get_id()]);
 
 							// Delete item comments
 							CommentsService::delete_comments_topic_module('calendar', $item->get_id());
@@ -229,7 +229,7 @@ class CalendarItemsListController extends DefaultModuleController
 		$response = new SiteDisplayResponse($this->view);
 		$graphical_environment = $response->get_graphical_environment();
 		$graphical_environment->set_page_title($this->lang['calendar.items.list'], $this->lang['calendar.module.title'], $page);
-		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['calendar.seo.description.events.list'], array('site' => GeneralConfig::load()->get_site_name())));
+		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['calendar.seo.description.events.list'], ['site' => GeneralConfig::load()->get_site_name()]));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::display_items_list());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();

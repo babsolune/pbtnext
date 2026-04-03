@@ -19,7 +19,7 @@ class FeedData
     private $desc = '';         // Feed Description
     private $lang = '';         // Feed Language
     private $host = '';         // Feed Host
-    private $items = array();   // Items
+    private $items = [];   // Items
     private $auth_bit = 0;      // Auth bit
 
     /**
@@ -100,7 +100,7 @@ class FeedData
      */
     public function get_items()
     {
-        $items = array();
+        $items = [];
         foreach ($this->items as $item)
         {
             if ((gettype($item->get_auth()) != 'array' || $this->auth_bit == 0) || AppContext::get_current_user()->check_auth($item->get_auth(), $this->auth_bit))
@@ -127,7 +127,7 @@ class FeedData
         $secured_items = $this->get_items();
         $nb_items = count($secured_items);
 
-        $items = array();
+        $items = [];
         $end_at = $begin_at + $number;
         for ($i = $begin_at; ($i < $nb_items) && ($i < $end_at) ; $i++)
             $items[] =& $secured_items[$i];

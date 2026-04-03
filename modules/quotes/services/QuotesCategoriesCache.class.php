@@ -34,9 +34,9 @@ class QuotesCategoriesCache extends CategoriesCache
 	{
 		$now = new Date();
 		return QuotesService::count('WHERE id_category = :id_category AND approved = 1',
-			array(
+			[
 				'id_category' => $id_category
-			)
+			]
 		);
 	}
 
@@ -46,7 +46,7 @@ class QuotesCategoriesCache extends CategoriesCache
 		$root->set_authorizations(QuotesConfig::load()->get_authorizations());
 		$description = QuotesConfig::load()->get_root_category_description();
 		if (empty($description))
-			$description = StringVars::replace_vars(LangLoader::get_message('quotes.seo.description.root', 'common', 'quotes'), array('site' => GeneralConfig::load()->get_site_name()));
+			$description = StringVars::replace_vars(LangLoader::get_message('quotes.seo.description.root', 'common', 'quotes'), ['site' => GeneralConfig::load()->get_site_name()]);
 		$root->set_description($description);
 		return $root;
 	}

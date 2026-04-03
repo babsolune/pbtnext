@@ -49,7 +49,7 @@ abstract class AdminModuleController extends AbstractController
 	
 	public static function get_module()
 	{
-		if (self::$module_id && !in_array(self::$module_id, array('admin', 'kernel', 'user')))
+		if (self::$module_id && !in_array(self::$module_id, ['admin', 'kernel', 'user']))
 			self::$module = ModulesManager::get_module(self::$module_id);
 		
 		return self::$module;
@@ -57,7 +57,7 @@ abstract class AdminModuleController extends AbstractController
 	
 	public static function get_module_configuration()
 	{
-		if (self::$module_id && !in_array(self::$module_id, array('admin', 'kernel', 'user')))
+		if (self::$module_id && !in_array(self::$module_id, ['admin', 'kernel', 'user']))
 			self::$module_configuration = self::get_module()->get_configuration();
 		
 		return self::$module_configuration;

@@ -36,7 +36,7 @@ class CalendarHomeController extends DefaultModuleController
 			$day = date('j');
 		}
 
-		$this->view->put_all(array(
+		$this->view->put_all([
 			'C_CATEGORY' 	  	   => true,
 			'C_ROOT_CATEGORY' 	   => $this->category->get_id() == Category::ROOT_CATEGORY,
 
@@ -47,7 +47,7 @@ class CalendarHomeController extends DefaultModuleController
 			'EVENTS'             => CalendarAjaxEventsController::get_view($year, $month, $day),
 
 			'U_EDIT_CATEGORY' 	   => $this->category->get_id() == Category::ROOT_CATEGORY ? CalendarUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->category->get_id(), 'calendar')->rel(),
-		));
+		]);
 
 		return $this->view;
 	}
@@ -102,7 +102,7 @@ class CalendarHomeController extends DefaultModuleController
 		else
 			$graphical_environment->set_page_title($this->lang['calendar.module.title']);
 
-		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['calendar.seo.description.root'], array('site' => GeneralConfig::load()->get_site_name())));
+		$graphical_environment->get_seo_meta_data()->set_description(StringVars::replace_vars($this->lang['calendar.seo.description.root'], ['site' => GeneralConfig::load()->get_site_name()]));
 		$graphical_environment->get_seo_meta_data()->set_canonical_url(CalendarUrlBuilder::home());
 
 		$breadcrumb = $graphical_environment->get_breadcrumb();

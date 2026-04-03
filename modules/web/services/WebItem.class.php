@@ -46,13 +46,13 @@ class WebItem
 	const SORT_NUMBER_VISITS = 'views_number';
 	const SORT_COMMENTS_NUMBER = 'comments_number';
 
-	const SORT_FIELDS_URL_VALUES = array(
+	const SORT_FIELDS_URL_VALUES = [
 		self::SORT_ALPHABETIC => 'title',
 		self::SORT_DATE => 'date',
 		self::SORT_NOTATION => 'notes',
 		self::SORT_NUMBER_VISITS => 'visits',
 		self::SORT_COMMENTS_NUMBER => 'comments'
-	);
+	];
 
 	const THUMBNAIL_URL = '/templates/__default__/images/default_item.webp';
 
@@ -361,7 +361,7 @@ class WebItem
 
 	public function get_properties()
 	{
-		return array(
+		return [
 			'id' => $this->get_id(),
 			'id_category' => $this->get_id_category(),
 			'title' => $this->get_title(),
@@ -380,7 +380,7 @@ class WebItem
 			'partner' => (int)$this->is_partner(),
 			'partner_thumbnail' => $this->get_partner_thumbnail()->relative(),
 			'privileged_partner' => (int)$this->is_privileged_partner()
-		);
+		];
 	}
 
 	public function set_properties(array $properties)
@@ -471,7 +471,7 @@ class WebItem
 			Date::get_array_tpl_vars($this->creation_date, 'date'),
 			Date::get_array_tpl_vars($this->update_date,'update_date'),
 			Date::get_array_tpl_vars($this->publishing_start_date, 'differed_publishing_start_date'),
-			array(
+			[
 				// Conditions
 				'C_VISIBLE'               => $this->is_published(),
 				'C_CONTROLS'              => $this->is_authorized_to_edit() || $this->is_authorized_to_delete() || $this->is_authorized_to_duplicate(),
@@ -528,7 +528,7 @@ class WebItem
 				'U_THUMBNAIL'         => $this->get_thumbnail()->rel(),
 				'U_PARTNER_THUMBNAIL' => $this->partner_thumbnail->rel(),
 				'U_COMMENTS'          => WebUrlBuilder::display_comments($category->get_id(), $category->get_rewrited_name(), $this->id, $this->rewrited_title)->rel()
-			)
+			]
 		);
 	}
 }

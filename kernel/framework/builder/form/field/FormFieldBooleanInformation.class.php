@@ -26,9 +26,9 @@ class FormFieldBooleanInformation extends FormFieldFree
 
 		$this->assign_common_template_variables($template);
 
-		$template->assign_block_vars('fieldelements', array(
+		$template->assign_block_vars('fieldelements', [
 			'ELEMENT' => $this->get_html_value()
-		));
+		]);
 
 		return $template;
 	}

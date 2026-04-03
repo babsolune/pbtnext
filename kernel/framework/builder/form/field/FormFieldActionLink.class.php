@@ -37,7 +37,7 @@ class FormFieldActionLink extends AbstractFormField
 	 */
 	public function display()
 	{
-		$field = new FormFieldActionLinkList($this->id, array($this->action));
+		$field = new FormFieldActionLinkList($this->id, [$this->action]);
 		return $field->display();
 	}
 
