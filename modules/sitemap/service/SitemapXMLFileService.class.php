@@ -6,8 +6,8 @@
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2023 02 13
  * @since       PHPBoost 3.0 - 2009 12 22
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 /**
@@ -16,7 +16,7 @@
 class SitemapXMLFileService
 {
 	/**
-	 * @desc Generates the sitemap.xml file if needed.
+	 * Generates the sitemap.xml file if needed.
 	 */
 	public static function generate_if_needed()
 	{
@@ -69,7 +69,7 @@ class SitemapXMLFileService
 	}
 
 	/**
-	 * @desc Generates if possible the file and if errors occur, writes them in the log file
+	 * Generates if possible the file and if errors occur, writes them in the log file
 	 * without throwing any exception.
 	 */
 	public static function generate()
@@ -91,7 +91,7 @@ class SitemapXMLFileService
 	}
 
 	/**
-	 * @desc Tries to generate the sitemap.xml file and throws an exception if it can't be done.
+	 * Tries to generate the sitemap.xml file and throws an exception if it can't be done.
 	 * @throws IOException
 	 */
 	public static function try_to_generate()

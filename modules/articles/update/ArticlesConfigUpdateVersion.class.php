@@ -5,7 +5,7 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2022 11 03
  * @since       PHPBoost 6.0 - 2020 05 03
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ArticlesConfigUpdateVersion extends ConfigUpdateVersion

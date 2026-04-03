@@ -5,10 +5,10 @@
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2025 11 24
  * @since       PHPBoost 5.0 - 2016 09 18
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 define('PATH_TO_ROOT', '../..');

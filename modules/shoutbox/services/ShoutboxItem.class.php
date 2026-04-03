@@ -5,9 +5,9 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2023 07 11
  * @since       PHPBoost 4.1 - 2014 10 15
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor janus57 <janus57@janus57.fr>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      janus57 <janus57@janus57.fr>
 */
 
 class ShoutboxItem

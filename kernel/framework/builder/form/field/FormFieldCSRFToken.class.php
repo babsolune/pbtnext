@@ -8,8 +8,8 @@
  * @author      Regis VIARRE <crowkait@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2016 10 24
  * @since       PHPBoost 3.0 - 2009 04 28
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class FormFieldCSRFToken extends FormFieldHidden

@@ -5,7 +5,7 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2021 12 05
  * @since       PHPBoost 4.0 - 2014 01 22
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class BugtrackerSitemapExtensionPoint implements SitemapExtensionPoint

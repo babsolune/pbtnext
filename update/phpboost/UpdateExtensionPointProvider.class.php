@@ -5,7 +5,7 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2016 08 02
  * @since       PHPBoost 5.0 - 2016 07 31
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  */
 
 class UpdateExtensionPointProvider extends ExtensionPointProvider

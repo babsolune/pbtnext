@@ -15,12 +15,12 @@
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2026 01 28
  * @since       PHPBoost 2.0 - 2009 01 14
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
- * @contributor janus57 <janus57@janus57.fr>
- * @contributor xela <xela@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      janus57 <janus57@janus57.fr>
+ * @author      xela <xela@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('SERVER_URL', $_SERVER['PHP_SELF']);

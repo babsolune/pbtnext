@@ -5,8 +5,8 @@
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2025 01 07
  * @since       PHPBoost 3.0 - 2009 12 09
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class UserErrorController extends AbstractController

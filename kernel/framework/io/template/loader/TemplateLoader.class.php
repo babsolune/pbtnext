@@ -14,7 +14,7 @@
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2014 12 22
  * @since       PHPBoost 3.0 - 2009 06 18
- * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
 */
 
 interface TemplateLoader

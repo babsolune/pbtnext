@@ -17,7 +17,7 @@ class ForumService
 	}
 
 	/**
-	 * @desc Count topics number.
+	 * Count topics number.
 	 * @param string $condition (optional) : Restriction to apply to the list of topics
 	 */
 	public static function count_topics($condition = '', $parameters = [])
@@ -26,7 +26,7 @@ class ForumService
 	}
 
 	/**
-	 * @desc Count messages number.
+	 * Count messages number.
 	 * @param string $condition (optional) : Restriction to apply to the list of messages
 	 */
 	public static function count_messages($condition = '', $parameters = [])

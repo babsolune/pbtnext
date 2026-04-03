@@ -7,7 +7,7 @@
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2018 11 30
  * @since       PHPBoost 3.0 - 2012 09 04
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 abstract class Captcha implements ExtensionPoint

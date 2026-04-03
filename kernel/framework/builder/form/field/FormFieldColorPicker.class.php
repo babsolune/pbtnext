@@ -8,8 +8,8 @@
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2017 03 10
  * @since       PHPBoost 3.0 - 2012 10 21
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 class FormFieldColorPicker extends AbstractFormField

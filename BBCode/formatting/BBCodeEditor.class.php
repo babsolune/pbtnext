@@ -6,9 +6,9 @@
  * @author      Regis VIARRE <crowkait@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2026 02 05
  * @since       PHPBoost 2.0 - 2008 07 05
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class BBCodeEditor extends ContentEditor
@@ -30,7 +30,7 @@ class BBCodeEditor extends ContentEditor
 	}
 
 	/**
-	 * @desc Display the editor
+	 * Display the editor
 	 * @return string Formated editor.
 	 */
 	public function display()

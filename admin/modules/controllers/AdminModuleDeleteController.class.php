@@ -5,9 +5,9 @@
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
  * @version     PHPBoost 6.1 - last update: 2021 12 23
  * @since       PHPBoost 3.0 - 2011 09 20
- * @contributor Kevin MASSY <reidlos@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class AdminModuleDeleteController extends DefaultAdminController

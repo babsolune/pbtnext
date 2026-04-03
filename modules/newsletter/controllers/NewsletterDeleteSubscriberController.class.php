@@ -5,7 +5,7 @@
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2021 06 26
  * @since       PHPBoost 3.0 - 2011 03 16
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class NewsletterDeleteSubscriberController extends ModuleController

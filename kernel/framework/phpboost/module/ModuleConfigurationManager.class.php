@@ -7,7 +7,7 @@
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2020 06 01
  * @since       PHPBoost 3.0 - 2009 12 12
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class ModuleConfigurationManager

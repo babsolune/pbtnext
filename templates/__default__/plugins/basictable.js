@@ -6,7 +6,7 @@
  * @link        https://github.com/jerrylow/basictable
  * @version     PHPBoost 6.1 - last update: 2021 09 21
  * @since       PHPBoost 5.0 - 2016 03 30
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  *
  * @patch       replace <span class="bt-content" /> by <div class="bt-content" />
  * @patch       add condition on headingText var to avoid errors if a th is missing

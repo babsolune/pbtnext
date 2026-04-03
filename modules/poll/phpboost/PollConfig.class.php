@@ -5,7 +5,7 @@
  * @author      xela <xela@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2025 01 10
  * @since       PHPBoost 6.0 - 2020 05 14
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class PollConfig extends DefaultRichModuleConfig

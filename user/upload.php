@@ -5,11 +5,11 @@
  * @author      Regis VIARRE <crowkait@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2026 02 01
  * @since       PHPBoost 1.6 - 2007 07 07
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor Mipel <mipel@phpboost.com>
- * @contributor janus57 <janus57@janus57.fr>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Mipel <mipel@phpboost.com>
+ * @author      janus57 <janus57@janus57.fr>
 */
 
 require_once('../kernel/begin.php');

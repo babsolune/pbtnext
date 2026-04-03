@@ -4,7 +4,7 @@
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @version     PHPBoost 6.1 - last update: 2026 03 29
  * @since       PHPBoost 3.0 - 2011 04 20
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '../..');

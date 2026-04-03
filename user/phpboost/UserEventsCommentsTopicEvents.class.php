@@ -26,7 +26,7 @@ class UserEventsCommentsTopicEvents extends CommentsTopicEvents
 	}
 
 	/**
-	 * @desc Return the list of members which commented the contribution.
+	 * Return the list of members which commented the contribution.
 	 * @param array $contribution Contribution which is concerned
 	 */
 	public function get_contribution_users_list(Contribution $contribution)
@@ -60,7 +60,7 @@ class UserEventsCommentsTopicEvents extends CommentsTopicEvents
 	}
 
 	/**
-	 * @desc Send a PM to a member.
+	 * Send a PM to a member.
 	 * @param int $recipient_id ID of the PM's recipient
 	 * @param array $contribution Contribution which is concerned
 	 * @param string $message Message to include in the PM
@@ -95,7 +95,7 @@ class UserEventsCommentsTopicEvents extends CommentsTopicEvents
 	}
 
 	/**
-	 * @desc Send a PM to a list of members.
+	 * Send a PM to a list of members.
 	 * @param array $contribution Contribution which is concerned
 	 * @param string $message Message to include in the PM
 	 */

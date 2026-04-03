@@ -8,8 +8,8 @@
  * @author      Regis VIARRE <crowkait@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2017 03 10
  * @since       PHPBoost 2.0 - 2009 04 28
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 class FormFieldHidden extends AbstractFormField

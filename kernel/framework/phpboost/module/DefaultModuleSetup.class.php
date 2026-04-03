@@ -7,9 +7,9 @@
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2022 02 18
  * @since       PHPBoost 2.0 - 2009 01 16
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor xela <xela@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      xela <xela@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DefaultModuleSetup implements ModuleSetup

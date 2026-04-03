@@ -5,8 +5,8 @@
  * @author      Regis VIARRE <crowkait@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2026 01 26
  * @since       PHPBoost 1.4 - 2006 02 08
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 require_once 'init.php';

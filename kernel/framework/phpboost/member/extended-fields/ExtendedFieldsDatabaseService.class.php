@@ -9,7 +9,7 @@
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2020 04 24
  * @since       PHPBoost 3.0 - 2010 08 14
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class ExtendedFieldsDatabaseService

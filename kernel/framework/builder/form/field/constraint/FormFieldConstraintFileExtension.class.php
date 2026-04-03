@@ -7,7 +7,7 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2021 06 25
  * @since       PHPBoost 4.1 - 2018 11 17
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FormFieldConstraintFileExtension extends FormFieldConstraintRegex

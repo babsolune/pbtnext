@@ -5,9 +5,9 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2021 12 14
  * @since       PHPBoost 4.0 - 2014 08 24
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DownloadDeleteItemController extends DefaultModuleController

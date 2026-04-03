@@ -7,9 +7,9 @@
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2021 12 16
  * @since       PHPBoost 3.0 - 2009 02 03
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class Sitemap
@@ -62,7 +62,7 @@ class Sitemap
 	private $site_name = '';
 
 	/**
-	 * @desc Builds a Sitemap object with its elements
+	 * Builds a Sitemap object with its elements
 	 * @param SitemapElement[] $elements List of the elements it contains
 	 */
 	public function __construct($site_name = '', $elements = null)
@@ -75,7 +75,7 @@ class Sitemap
 	}
 
 	/**
-	 * @desc Returns the name of the site
+	 * Returns the name of the site
 	 * @return string name
 	 */
 	public function get_site_name()
@@ -84,7 +84,7 @@ class Sitemap
 	}
 
 	/**
-	 * @desc Sets the name of the site. The default value is the name of the site taken from the site configuration.
+	 * Sets the name of the site. The default value is the name of the site taken from the site configuration.
 	 * @param string $site_name name of the site
 	 */
 	public function set_site_name($site_name)
@@ -101,7 +101,7 @@ class Sitemap
 	}
 
 	/**
-	 * @desc Adds an element to the elements list of the Sitemap
+	 * Adds an element to the elements list of the Sitemap
 	 * @param SitemapElement $element The element to add
 	 */
 	public function add($element)
@@ -110,7 +110,7 @@ class Sitemap
 	}
 
 	/**
-	 * @desc Exports a Sitemap. You will be able to use the following variables into the templates used to export:
+	 * Exports a Sitemap. You will be able to use the following variables into the templates used to export:
 	 * <ul>
 	 * 	<li>C_SITE_MAP which is a condition indicating if it's a site map (useful if you want to use a sigle template
 	 * for the whole export configuration)</li>
@@ -143,7 +143,7 @@ class Sitemap
 	}
 
 	/**
-	 * @desc Builds the whole sitemap
+	 * Builds the whole sitemap
 	 * @param int $mode USER_MODE ou SEARCH_ENGINE_MODE, it depends on if you want to show it to a user in particular or to anybody
 	 * @param int $auth_mode AUTH_GUEST or AUTH_USERS, it depends if you want to display only the public pages or also the private ones.
 	 */
@@ -154,7 +154,7 @@ class Sitemap
 	}
 
 	/**
-	 * @desc Adds to the site map all maps of the installed modules
+	 * Adds to the site map all maps of the installed modules
 	 * @param int $auth_mode AUTH_GUEST or AUTH_USERS, it depends if you want to display only the public pages or also the private ones.
 	 */
 	private function build_modules_maps($auth_mode = self::AUTH_PUBLIC)
@@ -182,7 +182,7 @@ class Sitemap
 	}
 
 	/**
-	 * @desc Adds to the site map all the kernel links.
+	 * Adds to the site map all the kernel links.
 	 * @param int $mode USER_MODE ou SEARCH_ENGINE_MODE, it depends on if you want to show it to a user in particular or to anybody
 	 * @param int $auth_mode AUTH_GUEST or AUTH_USERS, it depends if you want to display only the public pages or also the private ones.
 	 */

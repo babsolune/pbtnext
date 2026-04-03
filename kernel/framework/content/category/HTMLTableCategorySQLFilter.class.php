@@ -7,7 +7,7 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2021 06 20
  * @since       PHPBoost 6.0 - 2021 03 22
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class HTMLTableCategorySQLFilter extends AbstractHTMLTableFilter implements SQLFragmentBuilder

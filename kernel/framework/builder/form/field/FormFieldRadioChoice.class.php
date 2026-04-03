@@ -8,7 +8,7 @@
  * @author      Regis VIARRE <crowkait@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2016 05 26
  * @since       PHPBoost 2.0 - 2009 04 28
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class FormFieldRadioChoice extends AbstractFormFieldChoice

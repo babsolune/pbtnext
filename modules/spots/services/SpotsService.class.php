@@ -18,7 +18,7 @@ class SpotsService
 	}
 
     /**
-	 * @desc Count items number.
+	 * Count items number.
 	 * @param string $condition (optional) : Restriction to apply to the list of items
 	 */
 	public static function is_gmap_enabled()
@@ -27,7 +27,7 @@ class SpotsService
 	}
 
     /**
-	 * @desc Count items number.
+	 * Count items number.
 	 * @param string $condition (optional) : Restriction to apply to the list of items
 	 */
 	public static function count($condition = '', $parameters = [])
@@ -36,7 +36,7 @@ class SpotsService
 	}
 
     /**
-	 * @desc Create a new entry in the database table.
+	 * Create a new entry in the database table.
 	 * @param array $item : new SpotsItem
 	 */
 	public static function add(SpotsItem $item)
@@ -47,7 +47,7 @@ class SpotsService
 	}
 
     /**
-	 * @desc Update an entry.
+	 * Update an entry.
 	 * @param array $item : Item to update
 	 */
 	public static function update(SpotsItem $item)
@@ -56,7 +56,7 @@ class SpotsService
 	}
 
     /**
-	 * @desc Update the number of views of an item.
+	 * Update the number of views of an item.
 	 * @param array $item : SpotsItem to update
 	 */
 	public static function update_views_number(SpotsItem $item)
@@ -65,7 +65,7 @@ class SpotsService
 	}
 
     /**
-	 * @desc Update the number of visits of an website.
+	 * Update the number of visits of an website.
 	 * @param array $item : SpotsItem to update
 	 */
 	public static function update_visits_number(SpotsItem $item)
@@ -74,7 +74,7 @@ class SpotsService
 	}
 
     /**
-	 * @desc Delete an entry.
+	 * Delete an entry.
 	 * @param string $condition : Restriction to apply to the list
 	 * @param array $parameters : Parameters of the condition
 	 */
@@ -91,7 +91,7 @@ class SpotsService
 	}
 
     /**
-	 * @desc Return the properties of an item.
+	 * Return the properties of an item.
 	 * @param string $condition : Restriction to apply to the list
 	 * @param array $parameters : Parameters of the condition
 	 */

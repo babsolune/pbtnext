@@ -5,8 +5,8 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2022 04 14
  * @since       PHPBoost 3.0 - 2012 11 20
- * @contributor Mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class CalendarService
@@ -19,7 +19,7 @@ class CalendarService
 	}
 
 	/**
-	 * @desc Create a new item.
+	 * Create a new item.
 	 * @param string[] $item new CalendarItem
 	 */
 	public static function add_item(CalendarItem $item)
@@ -30,7 +30,7 @@ class CalendarService
 	}
 
 	/**
-	 * @desc Create a new item content.
+	 * Create a new item content.
 	 * @param string[] $item_content new CalendarItemContent
 	 */
 	public static function add_item_content(CalendarItemContent $item_content)
@@ -41,7 +41,7 @@ class CalendarService
 	}
 
 	/**
-	 * @desc Add a participant of an item.
+	 * Add a participant of an item.
 	 * @param int $item_id id of the item
 	 * @param int $user_id id of the participant to add
 	 */
@@ -54,7 +54,7 @@ class CalendarService
 	}
 
 	/**
-	 * @desc Update an item.
+	 * Update an item.
 	 * @param string[] $item CalendarItem to update
 	 */
 	public static function update_item(CalendarItem $item)
@@ -67,7 +67,7 @@ class CalendarService
 	}
 
 	/**
-	 * @desc Update the content of an item.
+	 * Update the content of an item.
 	 * @param string[] $item_content CalendarItemContent to update
 	 */
 	public static function update_item_content(CalendarItemContent $item_content)
@@ -78,7 +78,7 @@ class CalendarService
 	}
 
 	/**
-	 * @desc Delete an item.
+	 * Delete an item.
 	 * @param int $id id of the item
 	 * @param bool $has_parent Complete delete if event doesn't have a parent (complete delete), false per default
 	 * @param string $id_label table column to take into consideration. id_event per default
@@ -103,7 +103,7 @@ class CalendarService
 	}
 
 	/**
-	 * @desc Delete the content of an item.
+	 * Delete the content of an item.
 	 * @param int $id id of the content of the item
 	 */
 	public static function delete_item_content($id)
@@ -112,7 +112,7 @@ class CalendarService
 	}
 
 	/**
-	 * @desc Delete a serie of items.
+	 * Delete a serie of items.
 	 * @param int $content_id id of the content of the item
 	 */
 	public static function delete_all_serie_items($content_id)
@@ -122,7 +122,7 @@ class CalendarService
 	}
 
 	/**
-	 * @desc Delete the participants of an item.
+	 * Delete the participants of an item.
 	 * @param int $item_id id of the item
 	 */
 	public static function delete_all_participants($item_id)
@@ -133,7 +133,7 @@ class CalendarService
 	}
 
 	/**
-	 * @desc Delete a participant of an item.
+	 * Delete a participant of an item.
 	 * @param int $item_id id of the item
 	 * @param int $user_id id of the participant to delete
 	 */
@@ -146,7 +146,7 @@ class CalendarService
 	}
 
 	/**
-	 * @desc Return the content of an item.
+	 * Return the content of an item.
 	 * @param int $id Item identifier
 	 */
 	public static function get_item(int $id)
@@ -167,7 +167,7 @@ class CalendarService
 	}
 
 	/**
-	 * @desc Return the participants of an item.
+	 * Return the participants of an item.
 	 * @param int $item_id id of the item
 	 */
 	public static function get_item_participants($item_id)
@@ -196,7 +196,7 @@ class CalendarService
 	}
 
 	/**
-	 * @desc Return the items of a serie.
+	 * Return the items of a serie.
 	 * @param int $content_id id of the content of the item
 	 */
 	public static function get_serie_items($content_id)
@@ -223,7 +223,7 @@ class CalendarService
 	}
 
 	/**
-	 * @desc Clears all module elements in cache.
+	 * Clears all module elements in cache.
 	 */
 	public static function clear_cache()
 	{
@@ -232,7 +232,7 @@ class CalendarService
 	}
 
 	/**
-	 * @desc Return all the items of the requested month.
+	 * Return all the items of the requested month.
 	 * @param int $month Month of the request
 	 * @param int $year Year of the request
 	 * @param int $month_days Number of days in the requested month

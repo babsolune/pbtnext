@@ -5,7 +5,7 @@
  * @writer      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2021 02 22
  * @since       PHPBoost 5.0 - 2016 02 18
- * @contributor mipel <mipel@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 ####################################################

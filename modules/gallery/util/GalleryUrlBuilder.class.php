@@ -5,8 +5,8 @@
  * @author      Alain091 <alain091@gmail.com>
  * @version     PHPBoost 6.1 - last update: 2023 10 04
  * @since       PHPBoost 3.0 - 2011 08 13
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor xela <xela@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      xela <xela@phpboost.com>
 */
 
 class GalleryUrlBuilder

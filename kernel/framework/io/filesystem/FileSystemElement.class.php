@@ -8,10 +8,10 @@
  * @author      Nicolas Duhamel <akhenathon2@gmail.com>
  * @version     PHPBoost 6.1 - last update: 2022 03 28
  * @since       PHPBoost 2.0 - 2008 07 06
- * @contributor Loic ROUCHON <horn@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor ph-7 <me@ph7.me>
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      ph-7 <me@ph7.me>
 */
 
 abstract class FileSystemElement

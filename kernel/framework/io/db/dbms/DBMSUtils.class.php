@@ -7,7 +7,7 @@
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2024 02 23
  * @since       PHPBoost 3.0 - 2009 11 03
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 interface DBMSUtils

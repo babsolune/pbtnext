@@ -5,7 +5,7 @@
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2015 04 14
  * @since       PHPBoost 3.0 - 2011 10 11
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class TinyMCEExtensionPointProvider extends ExtensionPointProvider

@@ -5,7 +5,7 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2022 12 33
  * @since       PHPBoost 5.1 - 2018 03 15
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class SmalladsItemsManagerController extends DefaultModuleController

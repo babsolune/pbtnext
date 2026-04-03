@@ -6,7 +6,7 @@
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2022 04 24
  * @since       PHPBoost 3.0 - 2009 12 08
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  */
 
 define('PATH_TO_ROOT', '../..');

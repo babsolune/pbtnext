@@ -5,10 +5,10 @@
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2026 02 05
  * @since       PHPBoost 3.0 - 2011 10 08
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Pierre Pelisset <ppelisset@hotmail.fr>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Pierre Pelisset <ppelisset@hotmail.fr>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class GalleryModuleMiniMenu extends ModuleMiniMenu

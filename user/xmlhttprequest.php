@@ -5,8 +5,8 @@
  * @author      ??
  * @version     PHPBoost 6.1 - last update: 2020 09 04
  * @since       PHPBoost 3.0
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 require_once('../kernel/begin.php');

@@ -7,8 +7,8 @@
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2017 03 11
  * @since       PHPBoost 3.0 - 2010 02 17
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class FormFieldsetHorizontal extends AbstractFormFieldset

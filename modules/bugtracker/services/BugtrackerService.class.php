@@ -5,7 +5,7 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2020 12 11
  * @since       PHPBoost 3.0 - 2012 10 19
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class BugtrackerService
@@ -18,7 +18,7 @@ class BugtrackerService
 	}
 
 	/**
-	 * @desc Count the bug list.
+	 * Count the bug list.
 	 * @param string $condition (optional) Restriction to apply to the list
 	 */
 	public static function count($condition = '')
@@ -27,7 +27,7 @@ class BugtrackerService
 	}
 
 	/**
-	 * @desc Count the history list of the bug.
+	 * Count the history list of the bug.
 	 * @param int $bug_id ID of the bug which is concerned
 	 */
 	public static function count_history($bug_id)
@@ -36,7 +36,7 @@ class BugtrackerService
 	}
 
 	/**
-	 * @desc Create a new bug.
+	 * Create a new bug.
 	 * @param string[] $bug new Bug
 	 */
 	public static function add(BugtrackerItem $bug)
@@ -47,7 +47,7 @@ class BugtrackerService
 	}
 
 	/**
-	 * @desc Create a line in the history list.
+	 * Create a line in the history list.
 	 * @param string[] $columns Values of the history
 	 */
 	public static function add_history(array $columns)
@@ -58,7 +58,7 @@ class BugtrackerService
 	}
 
 	/**
-	 * @desc Create a line in the users_filters table.
+	 * Create a line in the users_filters table.
 	 * @param string[] $columns Values of the filters
 	 */
 	public static function add_filter(array $columns)
@@ -69,7 +69,7 @@ class BugtrackerService
 	}
 
 	/**
-	 * @desc Update a paramater of a bug.
+	 * Update a paramater of a bug.
 	 * @param string $condition Restriction to apply to the list
 	 * @param string[] $parameters Parameters of the condition
 	 */
@@ -79,7 +79,7 @@ class BugtrackerService
 	}
 
 	/**
-	 * @desc Update a history line of a bug.
+	 * Update a history line of a bug.
 	 * @param string $condition Restriction to apply to the list
 	 * @param string[] $parameters Parameters of the condition
 	 */
@@ -89,7 +89,7 @@ class BugtrackerService
 	}
 
 	/**
-	 * @desc Update a bug.
+	 * Update a bug.
 	 * @param string[] $bug Bug to update
 	 */
 	public static function update(BugtrackerItem $bug)
@@ -98,7 +98,7 @@ class BugtrackerService
 	}
 
 	/**
-	 * @desc Delete a bug.
+	 * Delete a bug.
 	 * @param string $condition Restriction to apply to the list
 	 * @param string[] $parameters Parameters of the condition
 	 */
@@ -108,7 +108,7 @@ class BugtrackerService
 	}
 
 	/**
-	 * @desc Delete a line in the history list.
+	 * Delete a line in the history list.
 	 * @param string $condition Restriction to apply to the list
 	 * @param string[] $parameters Parameters of the condition
 	 */
@@ -118,7 +118,7 @@ class BugtrackerService
 	}
 
 	/**
-	 * @desc Delete a line in the users_filters table.
+	 * Delete a line in the users_filters table.
 	 * @param string $condition Restriction to apply to the list
 	 * @param string[] $parameters Parameters of the condition
 	 */
@@ -128,7 +128,7 @@ class BugtrackerService
 	}
 
 	/**
-	 * @desc Return the content of a bug.
+	 * Return the content of a bug.
 	 * @param string $condition Restriction to apply to the list of bugs
 	 * @param string[] $parameters Parameters of the condition
 	 */
@@ -145,7 +145,7 @@ class BugtrackerService
 	}
 
 	/**
-	 * @desc Return the list of members which updated the bug.
+	 * Return the list of members which updated the bug.
 	 * @param int $bug_id ID of the bug which is concerned
 	 */
 	public static function get_updaters_list($bug_id)

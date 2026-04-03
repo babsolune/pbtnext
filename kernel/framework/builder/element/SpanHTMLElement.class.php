@@ -7,7 +7,7 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2019 12 20
  * @since       PHPBoost 4.1 - 2015 01 20
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class SpanHTMLElement extends AbstractHTMLElement

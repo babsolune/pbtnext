@@ -7,7 +7,7 @@
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2018 05 05
  * @since       PHPBoost 3.0 - 2010 08 08
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class FormFieldBooleanInformation extends FormFieldFree

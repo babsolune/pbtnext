@@ -5,11 +5,11 @@
  * @author      Regis VIARRE <crowkait@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2024 05 31
  * @since       PHPBoost 2.0 - 2007 12 10
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
- * @contributor ph-7 <me@ph7.me>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      ph-7 <me@ph7.me>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 define('NO_HISTORY', false);

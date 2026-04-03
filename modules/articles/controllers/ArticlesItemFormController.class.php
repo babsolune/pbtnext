@@ -5,10 +5,10 @@
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
  * @version     PHPBoost 6.1 - last update: 2022 03 19
  * @since       PHPBoost 4.0 - 2013 02 27
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ArticlesItemFormController extends DefaultItemFormController

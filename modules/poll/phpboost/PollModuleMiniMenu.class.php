@@ -5,8 +5,8 @@
  * @author      xela <xela@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2025 11 24
  * @since       PHPBoost 6.0 - 2020 05 14
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class PollModuleMiniMenu extends ModuleMiniMenu

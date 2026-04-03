@@ -7,7 +7,7 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2019 10 12
  * @since       PHPBoost 5.2 - 2019 10 11
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class FormFieldsetAccordionControls extends FormFieldsetHTML

@@ -5,8 +5,8 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2021 12 15
  * @since       PHPBoost 5.0 - 2017 03 26
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor xela <xela@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      xela <xela@phpboost.com>
 */
 
 class AdminGoogleMapsConfigController extends DefaultAdminModuleController

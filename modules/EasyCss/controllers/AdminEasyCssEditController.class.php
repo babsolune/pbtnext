@@ -6,8 +6,8 @@
  * @author      PaperToss <t0ssp4p3r@gmail.com>
  * @version     PHPBoost 6.1 - last update: 2018 11 30
  * @since       PHPBoost 5.0 - 2016 04 22
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class AdminEasyCssEditController extends ModuleController

@@ -5,10 +5,10 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2022 12 23
  * @since       PHPBoost 4.0 - 2014 09 02
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor Mipel <mipel@phpboost.com>
- * @contributor xela <xela@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Mipel <mipel@phpboost.com>
+ * @author      xela <xela@phpboost.com>
 */
 
 class FaqItemsManagerController extends DefaultModuleController

@@ -5,7 +5,7 @@
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2018 11 27
  * @since       PHPBoost 3.0 - 2009 10 25
- * @contributor ph-7 <me@ph7.me>
+ * @author      ph-7 <me@ph7.me>
 */
 
 class MenuControllerConfigurationsList extends AdminController

@@ -5,7 +5,7 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2019 12 20
  * @since       PHPBoost 4.0 - 2014 08 24
- * @contributor Mipel <mipel@phpboost.com>
+ * @author      Mipel <mipel@phpboost.com>
 */
 
 class DownloadScheduledJobs extends AbstractScheduledJobExtensionPoint

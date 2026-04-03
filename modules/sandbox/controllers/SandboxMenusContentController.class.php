@@ -5,7 +5,7 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2025 03 07
  * @since       PHPBoost 5.2 - 2019 07 30
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class SandboxMenusContentController extends DefaultModuleController

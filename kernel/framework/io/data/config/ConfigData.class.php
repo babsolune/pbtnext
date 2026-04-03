@@ -10,7 +10,7 @@
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2024 08 22
  * @since       PHPBoost 3.0 - 2009 09 16
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 interface ConfigData extends CacheData

@@ -5,9 +5,9 @@
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2022 05 14
  * @since       PHPBoost 3.0 - 2011 02 21
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class NewsletterDAO

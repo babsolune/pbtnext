@@ -5,13 +5,13 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2022 03 28
  * @since       PHPBoost 6.0 - 2021 02 26
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class NewsManager extends ItemsManager
 {
 	/**
-	 * @desc Initialize the additional parameters to custom the request to get items to sort by prioritized items.
+	 * Initialize the additional parameters to custom the request to get items to sort by prioritized items.
 	 */
 	protected function init_get_items_additional_parameters()
 	{
@@ -20,7 +20,7 @@ class NewsManager extends ItemsManager
 	}
 
 	/**
-	 * @desc Return a list of suggested news, related to the consulted one.
+	 * Return a list of suggested news, related to the consulted one.
 	 * @param string[] $item Item to compare with
 	 */
 	public function get_suggested_news(Item $item)
@@ -49,7 +49,7 @@ class NewsManager extends ItemsManager
 	}
 
 	/**	
-	 * @desc Return the previous and the next news from the consulted one.
+	 * Return the previous and the next news from the consulted one.
 	 * @param string[] $item Item the current news
 	 */
 	public function get_navigation_links(Item $item)

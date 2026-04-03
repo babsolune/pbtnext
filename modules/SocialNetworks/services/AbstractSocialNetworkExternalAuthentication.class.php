@@ -5,7 +5,7 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2021 05 24
  * @since       PHPBoost 5.1 - 2018 04 16
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class AbstractSocialNetworkExternalAuthentication implements ExternalAuthentication
@@ -64,7 +64,7 @@ abstract class AbstractSocialNetworkExternalAuthentication implements ExternalAu
 	abstract public function get_authentication();
 
 	/**
-	 * @desc Delete the Social Network session token
+	 * Delete the Social Network session token
 	 */
 	public function delete_session_token()
 	{

@@ -5,8 +5,8 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2022 04 24
  * @since       PHPBoost 5.2 - 2019 12 16
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Maxence CAUDERLIER <mxkoder@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Maxence CAUDERLIER <mxkoder@phpboost.com>
 */
 
 class StatsModuleUpdateVersion extends ModuleUpdateVersion

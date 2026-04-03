@@ -5,7 +5,7 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2026 01 16
  * @since       PHPBoost 5.1 - 2017 05 30
- * @contributor mipel <mipel@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 class LastcomsSetup extends DefaultModuleSetup

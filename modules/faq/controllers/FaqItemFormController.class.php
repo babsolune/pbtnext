@@ -5,8 +5,8 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2025 01 13
  * @since       PHPBoost 4.0 - 2014 09 02
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor Mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Mipel <mipel@phpboost.com>
 */
 
 class FaqItemFormController extends DefaultModuleController

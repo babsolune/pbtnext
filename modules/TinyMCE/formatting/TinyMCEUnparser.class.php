@@ -10,10 +10,10 @@
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2023 02 19
  * @since       PHPBoost 2.0 - 2008 08 10
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class TinyMCEUnparser extends ContentFormattingUnparser
@@ -39,7 +39,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	];
 
 	/**
-	 * @desc Unparses the content of the parser. It goes from the PHPBoost reference formatting syntax
+	 * Unparses the content of the parser. It goes from the PHPBoost reference formatting syntax
 	 * to the TinyMCE one.
 	 */
 	public function parse()
@@ -111,7 +111,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	}
 
 	/**
-	 * @desc Replaces the image code for smilies by the text code
+	 * Replaces the image code for smilies by the text code
 	 */
 	private function unparse_smilies()
 	{
@@ -126,7 +126,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	}
 
 	/**
-	 * @desc Function which unparses only the tags supported by TinyMCE
+	 * Function which unparses only the tags supported by TinyMCE
 	 */
 	private function unparse_tinymce_formatting()
 	{
@@ -215,7 +215,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	}
 
 	/**
-	 * @desc Manages the whole tags which doesn't not exist in TinyMCE
+	 * Manages the whole tags which doesn't not exist in TinyMCE
 	 */
 	private function unparse_bbcode_tags()
 	{
@@ -322,7 +322,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	}
 
 	/**
-	 * @desc Handler which clears the HTML code which is in the code and HTML tags
+	 * Handler which clears the HTML code which is in the code and HTML tags
 	 * @param string $var variable to clear
 	 * @return the clean content
 	 */
@@ -333,7 +333,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	}
 
 	/**
-	 * @desc Unparses the fieldset tag to BBCode syntax (it doesn't exist
+	 * Unparses the fieldset tag to BBCode syntax (it doesn't exist
 	 * in TinyMCE).
 	 * @param string[] $matches The matched elements
 	 * @return string The corresponding BBCode syntax
@@ -400,7 +400,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	}
 
 	/**
-	 * @desc Computes the correct TinyMCE syntax for changing the font.
+	 * Computes the correct TinyMCE syntax for changing the font.
 	 * The problem is that in BBCode we only use one font, and to be compatible (and it's not so bad),
 	 * TinyMCE uses three or four similar fonts. This method enables to map these two different expressions.
 	 * @param string[] $matches The matched elements
@@ -419,7 +419,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	}
 
 	/**
-	 * @desc Processes the size tag. PHPBoost and TinyMCE don't work similary.
+	 * Processes the size tag. PHPBoost and TinyMCE don't work similary.
 	 * PHPBoost needs to have a size in pixels, whereas TinyMCE explains it differently,
 	 * with a name associated to each size (for instance xx-small, medium, x-large...).
 	 * This method converts from PHPBoost to TinyMCE.
@@ -470,7 +470,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	}
 
 	/**
-	 * @desc Unparses the div tag to BBCode syntax (it doesn't exist
+	 * Unparses the div tag to BBCode syntax (it doesn't exist
 	 * in TinyMCE).
 	 * @param string[] $matches The matched elements
 	 * @return string The corresponding BBCode syntax

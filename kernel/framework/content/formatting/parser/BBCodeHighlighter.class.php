@@ -9,10 +9,10 @@
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2022 06 01
  * @since       PHPBoost 2.0 - 2008 08 29
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor xela <xela@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      xela <xela@phpboost.com>
 */
 
 class BBCodeHighlighter extends AbstractParser

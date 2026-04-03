@@ -5,8 +5,8 @@
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2022 11 29
  * @since       PHPBoost 3.0 - 2012 04 05
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor xela <xela@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      xela <xela@phpboost.com>
 */
 
 class NewsModuleUpdateVersion extends ModuleUpdateVersion

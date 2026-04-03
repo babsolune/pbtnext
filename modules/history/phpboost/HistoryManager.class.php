@@ -17,7 +17,7 @@ class HistoryManager
 	}
 
 	/**
-	 * @desc Count history lines number.
+	 * Count history lines number.
 	 * @param string $condition (optional) : Restriction to apply to the history list
 	 * @param array $parameters (optional) : Parameters list to apply to the condition
 	 */
@@ -27,7 +27,7 @@ class HistoryManager
 	}
 
 	/**
-	 * @desc Create a line in the history list.
+	 * Create a line in the history list.
 	 * @param string[] $columns Values of the history
 	 */
 	public static function add(array $columns)
@@ -38,7 +38,7 @@ class HistoryManager
 	}
 
 	/**
-	 * @desc Update a history line.
+	 * Update a history line.
 	 * @param string $condition Restriction to apply to the list
 	 * @param string[] $parameters Parameters of the condition
 	 */
@@ -48,7 +48,7 @@ class HistoryManager
 	}
 
 	/**
-	 * @desc Delete a line in the history list.
+	 * Delete a line in the history list.
 	 * @param string $condition Restriction to apply to the list
 	 * @param string[] $parameters Parameters of the condition
 	 */

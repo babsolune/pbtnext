@@ -5,7 +5,7 @@
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2025 01 10
  * @since       PHPBoost 3.0 - 2011 02 01
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class GuestbookConfig extends AbstractConfigData

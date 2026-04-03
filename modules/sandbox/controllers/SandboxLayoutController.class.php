@@ -5,7 +5,7 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2021 12 01
  * @since       PHPBoost 6.0 - 2020 03 04
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class SandboxLayoutController extends DefaultModuleController

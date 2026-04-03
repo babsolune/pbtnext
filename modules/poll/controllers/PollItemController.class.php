@@ -5,7 +5,7 @@
  * @author      xela <xela@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2025 11 27
  * @since       PHPBoost 6.0 - 2020 05 14
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class PollItemController extends DefaultDisplayItemController

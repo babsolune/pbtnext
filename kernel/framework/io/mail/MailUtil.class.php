@@ -8,9 +8,9 @@
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2016 11 15
  * @since       PHPBoost 3.0 - 2010 04 12
- * @contributor Regis VIARRE <crowkait@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 class MailUtil

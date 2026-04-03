@@ -24,8 +24,8 @@
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2026 03 04
  * @since       PHPBoost 3.0 - 2010 06 17
- * @contributor Loic ROUCHON <horn@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class TemplateSyntaxParser implements TemplateParser

@@ -5,9 +5,9 @@
  * @author      PaperToss <t0ssp4p3r@gmail.com>
  * @version     PHPBoost 6.1 - last update: 2026 01 16
  * @since       PHPBoost 5.0 - 2016 04 22
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class EasyCssSetup extends DefaultModuleSetup

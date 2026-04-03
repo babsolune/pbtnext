@@ -4,7 +4,7 @@
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @version     PHPBoost 6.1 - last update: 2025 01 13
  * @since       PHPBoost 4.0 - 2014 09 02
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FaqUrlBuilder

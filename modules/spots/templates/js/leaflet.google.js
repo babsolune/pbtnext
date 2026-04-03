@@ -6,7 +6,7 @@
  * @link        https://gitlab.com/IvanSanchez/Leaflet.GridLayer.GoogleMutant/
  * @version     PHPBoost 6.1 - last update: 2021 09 27
  * @since       PHPBoost 6.0 - 2021 09 27
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  *
  * @patch       remove .js.map
 */

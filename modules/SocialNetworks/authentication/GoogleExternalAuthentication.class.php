@@ -5,7 +5,7 @@
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2018 04 19
  * @since       PHPBoost 5.1 - 2018 01 08
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class GoogleExternalAuthentication extends AbstractSocialNetworkExternalAuthentication

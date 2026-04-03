@@ -5,9 +5,9 @@
  * @author      Regis VIARRE <crowkait@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2022 02 22
  * @since       PHPBoost 2.0 - 2008 07 07
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor xela <xela@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      xela <xela@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class GuestbookExtensionPointProvider extends ModuleExtensionPointProvider

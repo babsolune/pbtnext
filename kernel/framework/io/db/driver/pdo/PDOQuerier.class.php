@@ -7,7 +7,7 @@
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2016 11 14
  * @since       PHPBoost 3.0 - 2009 11 01
- * @contributor mipel <mipel@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 class PDOQuerier extends AbstractSQLQuerier

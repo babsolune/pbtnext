@@ -5,7 +5,7 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2021 05 26
  * @since       PHPBoost 5.1 - 2018 03 15
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class FormFieldSelectCurrencies extends FormFieldSimpleSelectChoice

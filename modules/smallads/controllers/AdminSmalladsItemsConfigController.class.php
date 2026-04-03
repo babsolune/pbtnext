@@ -5,8 +5,8 @@
  * @author       Sebastien LARTIGUE <babsolune@phpboost.com>
  * @version      PHPBoost 6.0 - last update: 2022 01 01
  * @since        PHPBoost 5.1 - 2019 11 04
- * @contributor  Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor  Mipel <mipel@phpboost.com>
+ * @author       Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author       Mipel <mipel@phpboost.com>
 */
 
 class AdminSmalladsItemsConfigController extends DefaultAdminModuleController

@@ -8,9 +8,9 @@
  * @author      Nicolas Duhamel <akhenathon2@gmail.com>
  * @version     PHPBoost 6.1 - last update: 2016 10 24
  * @since       PHPBoost 2.0 - 2008 07 06
- * @contributor Loic ROUCHON <horn@phpboost.com>
- * @contributor Benoit SAUTEL <ben.popeye@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class Folder extends FileSystemElement

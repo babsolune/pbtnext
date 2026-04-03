@@ -8,7 +8,7 @@
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2022 03 15
  * @since       PHPBoost 2.0 - 2008 06 16
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class ModuleMap extends SitemapSection
@@ -23,7 +23,7 @@ class ModuleMap extends SitemapSection
 	private $module_id;
 
 	/**
-	 * @desc Builds a ModuleMap object
+	 * Builds a ModuleMap object
 	 * @param SitemapLink $link Link associated to the root of the module
 	 * @param string $module_id Id of the corresponding module
 	 */
@@ -34,7 +34,7 @@ class ModuleMap extends SitemapSection
 	}
 
 	/**
-	 * @desc Return the module description
+	 * Return the module description
 	 * @return string
 	 */
 	public function get_description()
@@ -43,7 +43,7 @@ class ModuleMap extends SitemapSection
 	}
 
 	/**
-	 * @desc Sets the description of the module
+	 * Sets the description of the module
 	 * @param string $description Description of the module
 	 */
 	public function set_description($description)
@@ -52,7 +52,7 @@ class ModuleMap extends SitemapSection
 	}
 
 	/**
-	 * @desc Exports the sitemap (according to a configuration of templates).
+	 * Exports the sitemap (according to a configuration of templates).
 	 * In your template, you will be able to use the following variables:
 	 * <ul>
 	 * 	<li>MODULE_ID which contains the id of the module</li>

@@ -7,7 +7,7 @@
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2015 01 19
  * @since       PHPBoost 3.0 - 2009 12 21
- * @contributor Kevin MASSY <reidlos@phpboost.com>
+ * @author      Kevin MASSY <reidlos@phpboost.com>
 */
 
 interface HTMLElement

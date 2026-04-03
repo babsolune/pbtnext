@@ -8,7 +8,7 @@
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2016 10 24
  * @since       PHPBoost 3.0 - 2009 02 03
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 abstract class SitemapElement
@@ -19,7 +19,7 @@ abstract class SitemapElement
 	var $depth = 1;
 
 	/**
-	 * @desc Builds a SitemapElement object
+	 * Builds a SitemapElement object
 	 * @param string $name Name of the object
 	 */
 	public function __construct()
@@ -27,7 +27,7 @@ abstract class SitemapElement
 	}
 
 	/**
-	 * @desc Returns the depth of the element in the tree
+	 * Returns the depth of the element in the tree
 	 * @return int depth
 	 */
 	public function get_depth()
@@ -36,7 +36,7 @@ abstract class SitemapElement
 	}
 
 	/**
-	 * @desc Sets the depth of the element
+	 * Sets the depth of the element
 	 * @param int $depth the depth of the element
 	 */
 	public function set_depth($depth)
@@ -45,13 +45,13 @@ abstract class SitemapElement
 	}
 
 	/**
-	 * @desc Returns the name of the menu
+	 * Returns the name of the menu
 	 * @return string name
 	 */
 	public abstract function get_name();
 
 	/**
-	 * @desc Exports the element
+	 * Exports the element
 	 * @param SitemapExportConfig $export_config Export configuration
 	 * @param int $depth Depth of the element
 	 * @return string The exported code

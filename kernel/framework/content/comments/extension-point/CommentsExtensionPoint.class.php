@@ -7,7 +7,7 @@
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2016 10 09
  * @since       PHPBoost 3.0 - 2011 09 23
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 interface CommentsExtensionPoint extends ExtensionPoint

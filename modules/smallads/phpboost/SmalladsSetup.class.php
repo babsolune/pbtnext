@@ -5,8 +5,8 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2022 02 19
  * @since       PHPBoost 4.0 - 2013 01 29
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 class SmalladsSetup extends DefaultModuleSetup

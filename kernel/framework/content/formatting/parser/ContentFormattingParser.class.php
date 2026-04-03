@@ -8,10 +8,10 @@
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2023 02 19
  * @since       PHPBoost 2.0 - 2008 08 10
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class ContentFormattingParser extends AbstractParser
@@ -292,7 +292,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	}
 
 	/**
-	 * @desc Parses module special tags if any.
+	 * Parses module special tags if any.
 	 * The special tags are [link] for module pages or wiki for example.
 	 */
 	protected function parse_module_special_tags()
@@ -309,7 +309,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	}
 
 	/**
-	 * @desc Callback which parses the font awasome icons tag
+	 * Callback which parses the font awasome icons tag
 	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the fa tag are parsed
 	 */
@@ -335,7 +335,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	}
 
 	/**
-	 * @desc Callback which parses the html emojis
+	 * Callback which parses the html emojis
 	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the emo tag are parsed
 	 */
@@ -345,7 +345,7 @@ abstract class ContentFormattingParser extends AbstractParser
 	}
 
 	/**
-	 * @desc Callback which parses the wikipedia tag
+	 * Callback which parses the wikipedia tag
 	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the wikipedia tag are parsed
 	 */

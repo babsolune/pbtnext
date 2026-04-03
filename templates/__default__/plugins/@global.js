@@ -411,8 +411,8 @@
     /**
      * @author Kevin van Zonneveld
      * @link https://kvz.io/
-     * @contributor Steve Clay
-     * @contributor Legaev Andrey
+     * @author      Steve Clay
+     * @author      Legaev Andrey
      * @param {string} function_name 
      * @returns 
      */

@@ -8,7 +8,7 @@
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2016 10 24
  * @since       PHPBoost 4.0 - 2013 02 28
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class CategoriesItemsParameters

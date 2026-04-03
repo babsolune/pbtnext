@@ -7,8 +7,8 @@
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2016 11 14
  * @since       PHPBoost 1.5 - 2006 07 23
- * @contributor Regis VIARRE <crowkait@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 class Backup
@@ -26,7 +26,7 @@ class Backup
 	private $db_querier;
 
 	/**
-	 * @desc Builds a Backup object
+	 * Builds a Backup object
 	 */
 	public function __construct()
 	{
@@ -39,7 +39,7 @@ class Backup
 	}
 
 	/**
-	 * @desc Retrieves the list of the tables present on the database used.
+	 * Retrieves the list of the tables present on the database used.
 	 */
 	public function list_db_tables()
 	{
@@ -51,7 +51,7 @@ class Backup
 	}
 
 	/**
-	 * @desc Concatenates the query which drops the PHPBoost tables only if they exist to the backup SQL script.
+	 * Concatenates the query which drops the PHPBoost tables only if they exist to the backup SQL script.
 	 * @param array $table_list names of the tables which must be dropped by the query.
 	 * If you want to generate the query which will drop all the tables, don't use this parameter
 	 * of let an empty array.
@@ -69,7 +69,7 @@ class Backup
 	}
 
 	/**
-	 * @desc Concatenates the tables creation to the SQL backup script.
+	 * Concatenates the tables creation to the SQL backup script.
 	 * @param array $table_list names of the tables which must be created by the backup script.
 	 * If you want to generate the query which will create all the tables, don't use this parameter
 	 * of let an empty array.
@@ -93,7 +93,7 @@ class Backup
 	}
 
 	/**
-	 * @desc Concatenates the tables content insertion queries to the SQL backup script.
+	 * Concatenates the tables content insertion queries to the SQL backup script.
 	 * @param $tables names of the tables which must be filled by the backup script.
 	 * If you want to generate the query which will fill all the tables, don't use this parameter
 	 * of let an empty array.
@@ -141,7 +141,7 @@ class Backup
 	}
 
 	/**
-	 * @desc Concatenates a string at the end of the current script.
+	 * Concatenates a string at the end of the current script.
 	 * @param string $string String to concatenate.
 	 */
 	public function concatenate_to_query($string)
@@ -150,7 +150,7 @@ class Backup
 	}
 
 	/**
-	 * @desc Returns the current backup script.
+	 * Returns the current backup script.
 	 * @return string the whole script
 	 */
 	public function get_script()
@@ -159,7 +159,7 @@ class Backup
 	}
 
 	/**
-	* @desc Lists the tables (name and informations relative to each table) of the data base at which is connected this SQL object.
+	* Lists the tables (name and informations relative to each table) of the data base at which is connected this SQL object.
 	* This method calls the SHOW TABLE STATUS MySQL query, to know more about it, see https://dev.mysql.com/doc/refman/5.1/en/show-table-status.html
 	* @return array Map containing the following structure:
 	* for each table: table_name => [
@@ -182,7 +182,7 @@ class Backup
 	}
 
 	/**
-	 * @desc Retrieves the list of the tables used by PHPBoost.
+	 * Retrieves the list of the tables used by PHPBoost.
 	 * @return array The list of the table names.
 	 */
 	public function get_tables_list()
@@ -192,7 +192,7 @@ class Backup
 	}
 
 	/**
-	 * @desc Returns the number of tables used by PHPBoost.
+	 * Returns the number of tables used by PHPBoost.
 	 * @return int number of tables
 	 */
 	public function get_tables_number()
@@ -202,7 +202,7 @@ class Backup
 	}
 
 	/**
-	 * @desc Writes the backup script in a text file.
+	 * Writes the backup script in a text file.
 	 * @param string $file_path Path of the file.
 	 */
 	public function export_file($file_path)

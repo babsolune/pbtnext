@@ -5,7 +5,7 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2017 02 24
  * @since       PHPBoost 4.1 - 2015 09 30
- * @contributor xela <xela@phpboost.com>
+ * @author      xela <xela@phpboost.com>
 */
 
 class DatabaseUrlBuilder

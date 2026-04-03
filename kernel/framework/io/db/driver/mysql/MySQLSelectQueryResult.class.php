@@ -7,7 +7,7 @@
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2021 10 19
  * @since       PHPBoost 3.0 - 2009 10 01
- * @contributor janus57 <janus57@janus57.fr>
+ * @author      janus57 <janus57@janus57.fr>
 */
 
 class MySQLSelectQueryResult extends AbstractSelectQueryResult

@@ -5,9 +5,9 @@
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2025 11 24
  * @since       PHPBoost 3.0 - 2012 02 21
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ForumSearchable extends AbstractSearchableExtensionPoint
@@ -145,7 +145,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 	}
 
 	/**
-	 * @desc Return the array containing the result's data list
+	 * Return the array containing the result's data list
 	 * @param &array[] $args The array containing the result's id list
 	 * @return array The array containing the result's data list
 	 */
@@ -185,7 +185,7 @@ class ForumSearchable extends AbstractSearchableExtensionPoint
 	}
 
 	/**
-	 *  @desc Return the string to print the result
+	 *  Return the string to print the result
 	 *  @param &array $result_data the result's data
 	 *  @return array The string to print the result of a search element
 	 */

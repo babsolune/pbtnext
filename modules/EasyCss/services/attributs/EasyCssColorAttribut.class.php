@@ -5,9 +5,9 @@
  * @author      PaperToss <t0ssp4p3r@gmail.com>
  * @version     PHPBoost 6.1 - last update: 2020 12 15
  * @since       PHPBoost 5.0 - 2016 04 22
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class EasyCssColorAttribut extends EasyCssAbstractAttribut

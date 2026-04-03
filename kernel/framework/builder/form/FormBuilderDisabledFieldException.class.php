@@ -7,7 +7,7 @@
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2014 12 22
  * @since       PHPBoost 3.0 - 2010 04 10
- * @contributor Kevin MASSY <reidlos@phpboost.com>
+ * @author      Kevin MASSY <reidlos@phpboost.com>
 */
 
 class FormBuilderDisabledFieldException extends FormBuilderException

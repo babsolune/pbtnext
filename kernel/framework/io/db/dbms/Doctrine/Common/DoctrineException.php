@@ -25,7 +25,7 @@ function string_var_export($var) { return var_export($var, true); }
  * @author      Roman BORSCHEL <roman@code-factory.org>
  * @version     PHPBoost 6.1 - last update: 2016 11 14
  * @since       PHPBoost 4.0 - 2013 01 01
- * @contributor mipel <mipel@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 class DoctrineException extends Exception

@@ -5,8 +5,8 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2025 04 13
  * @since       PHPBoost 5.1 - 2018 12 19
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor Max KODER <maxkoder@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Max KODER <maxkoder@phpboost.com>
 */
 
 class WikiConfigUpdateVersion extends ConfigUpdateVersion

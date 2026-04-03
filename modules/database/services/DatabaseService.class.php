@@ -5,16 +5,16 @@
  * @author      Regis VIARRE <crowkait@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2018 06 14
  * @since       PHPBoost 2.0 - 2008 04 08
- * @contributor Loic ROUCHON <horn@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
+ * @author      Loic ROUCHON <horn@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 class DatabaseService
 {
 	/**
-	 * @desc Indents a MySQL query.
+	 * Indents a MySQL query.
 	 * @param string $query Query to indent.
 	 * @return string The indented SQL query.
 	 */
@@ -38,7 +38,7 @@ class DatabaseService
 	}
 
 	/**
-	 * @desc Highlights a SQL query to be more readable by a human.
+	 * Highlights a SQL query to be more readable by a human.
 	 * @param string $query Query to highlight
 	 * @return string HTML code corresponding to the highlighted query.
 	 */

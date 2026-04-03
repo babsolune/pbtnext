@@ -9,7 +9,7 @@
  * @author      Regis VIARRE <crowkait@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2014 12 22
  * @since       PHPBoost 1.4 - 2005 03 10
- * @contributor Loic ROUCHON <horn@phpboost.com>
+ * @author      Loic ROUCHON <horn@phpboost.com>
 */
 
 class RSS extends Feed

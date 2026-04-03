@@ -5,7 +5,7 @@
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2015 05 09
  * @since       PHPBoost 3.0 - 2010 02 07
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class RegisterNewsletterExtendedField extends AbstractMemberExtendedField

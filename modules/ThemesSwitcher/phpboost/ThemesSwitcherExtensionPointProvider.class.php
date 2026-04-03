@@ -5,7 +5,7 @@
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2022 04 09
  * @since       PHPBoost 3.0 - 2012 02 22
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class ThemesSwitcherExtensionPointProvider extends ExtensionPointProvider

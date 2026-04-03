@@ -7,7 +7,7 @@
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2014 12 22
  * @since       PHPBoost 3.0 - 2009 12 20
- * @contributor Loic ROUCHON <horn@phpboost.com>
+ * @author      Loic ROUCHON <horn@phpboost.com>
 */
 
 class DataStoreException extends Exception

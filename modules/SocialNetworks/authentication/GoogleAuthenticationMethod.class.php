@@ -11,7 +11,7 @@
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2020 12 14
  * @since       PHPBoost 4.1 - 2014 11 28
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 if (session_status() == PHP_SESSION_NONE)

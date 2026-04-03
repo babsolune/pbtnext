@@ -5,8 +5,8 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2024 06 29
  * @since       PHPBoost 3.0 - 2012 04 16
- * @contributor xela <xela@phpboost.com>
- * @contributor Maxence CAUDERLIER <mxkoder@phpboost.com>
+ * @author      xela <xela@phpboost.com>
+ * @author      Maxence CAUDERLIER <mxkoder@phpboost.com>
 */
 
 class BugtrackerExtensionPointProvider extends ExtensionPointProvider

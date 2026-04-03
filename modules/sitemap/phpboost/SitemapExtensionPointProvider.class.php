@@ -5,7 +5,7 @@
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2019 12 27
  * @since       PHPBoost 3.0 - 2009 12 10
- * @contributor xela <xela@phpboost.com>
+ * @author      xela <xela@phpboost.com>
 */
 
 class SitemapExtensionPointProvider extends ExtensionPointProvider

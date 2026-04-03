@@ -5,7 +5,7 @@
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
  * @version     PHPBoost 6.1 - last update: 2021 05 27
  * @since       PHPBoost 3.0 - 2009 07 26
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ####################################################

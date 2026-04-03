@@ -5,7 +5,7 @@
  * @author      Regis VIARRE <crowkait@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2016 10 24
  * @since       PHPBoost 2.0 - 2008 07 07
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class SearchExtensionPointProvider extends ExtensionPointProvider

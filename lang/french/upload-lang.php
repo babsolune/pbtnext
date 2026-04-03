@@ -5,7 +5,7 @@
  * @author      Mipel <mipel@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2022 08 29
  * @since       PHPBoost 6.0 - 2019 11 27
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ####################################################

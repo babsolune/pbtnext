@@ -13,7 +13,7 @@
  * @author      Regis VIARRE <crowkait@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2015 11 09
  * @since       PHPBoost 3.0 - 2009 09 19
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class FormFieldFree extends AbstractFormField

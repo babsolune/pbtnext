@@ -6,8 +6,8 @@
  * @link        https://github.com/cssmenumaker/jQuery-Plugin-Responsive-Drop-Down
  * @version     PHPBoost 6.1 - last update: 2021 07 23
  * @since       PHPBoost 5.0 - 2016 03 30
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 (function($) {

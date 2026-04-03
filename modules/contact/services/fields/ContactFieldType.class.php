@@ -10,19 +10,19 @@
 interface ContactFieldType
 {
 	/**
-	 * @desc This function displayed field for form
+	 * This function displayed field for form
 	 * @param instance of ContactField $field.
 	 */
 	public function display_field(ContactField $field);
 
 	/**
-	 * @desc This function returned value form fields
+	 * This function returned value form fields
 	 * @param instance of HTMLForm $form and instance of ContactField $field.
 	 */
 	public function get_value(HTMLForm $form, ContactField $field);
 
 	/**
-	 * @desc Return instanciat constraint depending integer type regex.
+	 * Return instanciat constraint depending integer type regex.
 	 * @return integer
 	 */
 	public function constraint($value);

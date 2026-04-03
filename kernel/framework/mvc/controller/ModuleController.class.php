@@ -8,7 +8,7 @@
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2022 01 31
  * @since       PHPBoost 3.0 - 2009 12 14
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 abstract class ModuleController extends AbstractController

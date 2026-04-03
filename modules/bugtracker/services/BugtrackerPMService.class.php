@@ -5,14 +5,14 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2021 12 05
  * @since       PHPBoost 3.0 - 2012 10 12
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor janus57 <janus57@janus57.fr>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      janus57 <janus57@janus57.fr>
 */
 
 class BugtrackerPMService
 {
 	/**
-	 * @desc Send a PM to a member.
+	 * Send a PM to a member.
 	 * @param string $pm_type Type of PM ('assigned', 'comment', 'pending', 'in_progress', 'delete', 'edit', 'fixed', 'rejected', 'reopen')
 	 * @param int $recipient_id ID of the PM's recipient
 	 * @param int $bug_id ID of the bug which is concerned
@@ -45,7 +45,7 @@ class BugtrackerPMService
 	}
 
 	/**
-	 * @desc Send a PM to a list of members.
+	 * Send a PM to a list of members.
 	 * @param string $pm_type Type of PM ('assigned', 'pending', 'in_progress', 'comment', 'delete', 'edit', 'fixed', 'rejected', 'reopen')
 	 * @param int $bug_id ID of the bug which is concerned
 	 * @param string $message (optional) Message to include in the PM

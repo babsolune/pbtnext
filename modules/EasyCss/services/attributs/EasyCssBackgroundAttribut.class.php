@@ -5,8 +5,8 @@
  * @author      PaperToss <t0ssp4p3r@gmail.com>
  * @version     PHPBoost 6.1 - last update: 2020 12 14
  * @since       PHPBoost 5.0 - 2016 06 03
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 class EasyCssBackgroundAttribut extends EasyCssAbstractAttribut

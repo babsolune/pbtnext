@@ -6,8 +6,8 @@
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2025 11 27
  * @since       PHPBoost 2.0 - 2008 06 16
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class SitemapLink extends SitemapElement
@@ -47,7 +47,7 @@ class SitemapLink extends SitemapElement
 	private static $priority_list = [Sitemap::PRIORITY_MAX, Sitemap::PRIORITY_HIGH, Sitemap::PRIORITY_AVERAGE, Sitemap::PRIORITY_LOW, Sitemap::PRIORITY_MIN];
 
 	/**
-	 * @desc Builds a SitemapLink object
+	 * Builds a SitemapLink object
 	 * @param string $name Name of the target page
 	 * @param Url $link link
 	 * @param string $change_freq Frequency taken into the following enum: Sitemap::FREQ_ALWAYS, Sitemap::FREQ_HOURLY,
@@ -70,7 +70,7 @@ class SitemapLink extends SitemapElement
 	}
 
 	/**
-	 * @desc Returns the name of the target page
+	 * Returns the name of the target page
 	 * @return string name
 	 */
 	public function get_name()
@@ -79,7 +79,7 @@ class SitemapLink extends SitemapElement
 	}
 
 	/**
-	 * @desc Returns the URL of the link
+	 * Returns the URL of the link
 	 * @return Url The URL of the link
 	 */
 	public function get_link()
@@ -88,7 +88,7 @@ class SitemapLink extends SitemapElement
 	}
 
 	/**
-	 * @desc Gets the change frequency (how often the target page is actualized)
+	 * Gets the change frequency (how often the target page is actualized)
 	 * @return string Frequency taken into the following enum: Sitemap::FREQ_ALWAYS, Sitemap::FREQ_HOURLY,
 	 * Sitemap::FREQ_DAILY, Sitemap::FREQ_WEEKLY, Sitemap::FREQ_MONTHLY, Sitemap::FREQ_YEARLY, Sitemap::FREQ_NEVER,
 	 * Sitemap::FREQ_DEFAULT
@@ -99,7 +99,7 @@ class SitemapLink extends SitemapElement
 	}
 
 	/**
-	 * @desc Gets the priority of the link
+	 * Gets the priority of the link
 	 * @return string Priority taken into the following enum: Sitemap::PRIORITY_MAX, Sitemap::PRIORITY_HIGH,
 	 * Sitemap::PRIORITY_AVERAGE, Sitemap::PRIORITY_LOW, Sitemap::PRIORITY_MIN
 	 */
@@ -109,7 +109,7 @@ class SitemapLink extends SitemapElement
 	}
 
 	/**
-	 * @desc Returns the last modification date of the target page
+	 * Returns the last modification date of the target page
 	 * @return Date the last modification date
 	 */
 	public function get_last_modification_date()
@@ -118,7 +118,7 @@ class SitemapLink extends SitemapElement
 	}
 
 	/**
-	 * @desc Returns the URL of the link
+	 * Returns the URL of the link
 	 * @return string the URL
 	 */
 	public function get_url()
@@ -134,7 +134,7 @@ class SitemapLink extends SitemapElement
 	}
 
 	/**
-	 * @desc Sets the name of the element
+	 * Sets the name of the element
 	 * @param string $name name of the element
 	 */
 	public function set_name($name)
@@ -143,7 +143,7 @@ class SitemapLink extends SitemapElement
 	}
 
 	/**
-	 * @desc Sets the URL of the link
+	 * Sets the URL of the link
 	 * @param Url $link URL
 	 */
 	public function set_link(Url $link)
@@ -152,7 +152,7 @@ class SitemapLink extends SitemapElement
 	}
 
 	/**
-	 * @desc Sets the change frequency
+	 * Sets the change frequency
 	 * @param string $change_freq Frequency taken into the following enum: Sitemap::FREQ_ALWAYS, Sitemap::FREQ_HOURLY,
 	 * Sitemap::FREQ_DAILY, Sitemap::FREQ_WEEKLY, Sitemap::FREQ_MONTHLY, Sitemap::FREQ_YEARLY, Sitemap::FREQ_NEVER,
 	 * Sitemap::FREQ_DEFAULT
@@ -171,7 +171,7 @@ class SitemapLink extends SitemapElement
 	}
 
 	/**
-	 * @desc Sets the priority of the link
+	 * Sets the priority of the link
 	 * @param string $priority Priority taken into the following enum: Sitemap::PRIORITY_MAX, Sitemap::PRIORITY_HIGH,
 	 * Sitemap::PRIORITY_AVERAGE, Sitemap::PRIORITY_LOW, Sitemap::PRIORITY_MIN
 	 */
@@ -188,7 +188,7 @@ class SitemapLink extends SitemapElement
 	}
 
 	/**
-	 * @desc Sets the last modification date of the target page
+	 * Sets the last modification date of the target page
 	 * @param Date $date date
 	 */
 	public function set_last_modification_date(Date $last_modification_date)
@@ -197,7 +197,7 @@ class SitemapLink extends SitemapElement
 	}
 
 	/**
-	 * @desc Exports the section according to the given configuration. You will use the following template variables:
+	 * Exports the section according to the given configuration. You will use the following template variables:
 	 * <ul>
 	 * 	<li>LOC containing the URL of the link</li>
 	 * 	<li>TEXT containing the name of the target page</li>

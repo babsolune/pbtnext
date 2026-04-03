@@ -5,7 +5,7 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2019 12 19
  * @since       PHPBoost 4.1 - 2015 12 15
- * @contributor Mipel <mipel@phpboost.com>
+ * @author      Mipel <mipel@phpboost.com>
 */
 
 class WebScheduledJobs extends AbstractScheduledJobExtensionPoint

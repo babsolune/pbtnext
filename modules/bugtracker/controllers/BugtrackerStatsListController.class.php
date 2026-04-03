@@ -5,8 +5,8 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2024 06 29
  * @since       PHPBoost 3.0 - 2012 11 13
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor Maxence CAUDERLIER <mxkoder@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Maxence CAUDERLIER <mxkoder@phpboost.com>
 */
 
 class BugtrackerStatsListController extends DefaultModuleController

@@ -7,7 +7,7 @@
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2021 07 04
  * @since       PHPBoost 3.0 - 2011 03 13
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class FormFieldConstraintPHPBoostAuthLoginExists extends AbstractFormFieldConstraint

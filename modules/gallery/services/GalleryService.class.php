@@ -17,7 +17,7 @@ class GalleryService
     }
 
     /**
-     * @desc Count items number.
+     * Count items number.
      * @param string $condition (optional) : Restriction to apply to the list of items
      */
     public static function count(string $condition = '', array $parameters = []): int

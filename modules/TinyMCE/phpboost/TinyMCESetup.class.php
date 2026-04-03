@@ -5,7 +5,7 @@
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2018 10 10
  * @since       PHPBoost 3.0 - 2010 01 17
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class TinyMCESetup extends DefaultModuleSetup

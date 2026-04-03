@@ -5,7 +5,7 @@
  * @author      PaperToss <t0ssp4p3r@gmail.com>
  * @version     PHPBoost 6.1 - last update: 2020 12 15
  * @since       PHPBoost 5.0 - 2016 05 04
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class EasyCssGenericAttribut extends EasyCssAbstractAttribut

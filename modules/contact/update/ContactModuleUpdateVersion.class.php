@@ -4,7 +4,7 @@
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      xela <xela@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2021 07 04
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ContactModuleUpdateVersion extends ModuleUpdateVersion

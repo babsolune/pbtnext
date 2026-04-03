@@ -5,7 +5,7 @@
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
  * @version     PHPBoost 6.1 - last update: 2021 11 06
  * @since       PHPBoost 4.0 - 2014 02 17
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class ArticlesModuleUpdateVersion extends ModuleUpdateVersion

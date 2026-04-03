@@ -7,7 +7,7 @@
  * @link        https://www.doctrine-project.org
  * @version     PHPBoost 6.1 - last update: 2025 11 27
  * @since       PHPBoost 4.0 - 2013 01 01
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class FloatType extends Type

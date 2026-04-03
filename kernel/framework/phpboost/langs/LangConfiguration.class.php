@@ -7,8 +7,8 @@
  * @author      Bruno MERCIER <aiglobulles@gmail.com>
  * @version     PHPBoost 6.1 - last update: 2024 03 14
  * @since       PHPBoost 3.0 - 2012 01 19
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class LangConfiguration

@@ -18,7 +18,7 @@ class VideoService
 	}
 
 	/**
-	 * @desc Count items number.
+	 * Count items number.
 	 * @param string $condition (optional) : Restriction to apply to the list of items
 	 */
 	public static function count($condition = '', $parameters = [])
@@ -27,7 +27,7 @@ class VideoService
 	}
 
 	/**
-	 * @desc Create a new entry in the database table.
+	 * Create a new entry in the database table.
 	 * @param VideoItem string[] $item : new VideoItem
 	 */
 	public static function add(VideoItem $item)
@@ -38,7 +38,7 @@ class VideoService
 	}
 
 	/**
-	 * @desc Update an entry.
+	 * Update an entry.
 	 * @param VideoItem string[] $item : VideoItem to update
 	 */
 	public static function update(VideoItem $item)
@@ -52,7 +52,7 @@ class VideoService
 	}
 
 	/**
-	 * @desc Delete an entry.
+	 * Delete an entry.
 	 * @param string $condition : Restriction to apply to the list
 	 * @param string[] $parameters : Parameters of the condition
 	 */
@@ -73,7 +73,7 @@ class VideoService
 	}
 
 	/**
-	 * @desc Return the item with all its properties from its id.
+	 * Return the item with all its properties from its id.
 	 * @param int $id Item identifier
 	 */
 	public static function get_item(int $id)

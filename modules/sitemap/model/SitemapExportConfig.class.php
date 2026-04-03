@@ -10,7 +10,7 @@
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2016 10 24
  * @since       PHPBoost 2.0 - 2008 06 16
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class SitemapExportConfig
@@ -35,7 +35,7 @@ class SitemapExportConfig
 	private $link_file;
 
 	/**
-	 * @desc Builds a SitemapExportConfig object
+	 * Builds a SitemapExportConfig object
 	 * @param mixed $module_map_file The template used to export a ModuleMap object. Can be a Template object or a string (path of the template to use).
 	 * @param mixed $section_file The template used to export a SitemapSection object. Can be a Template object or a string (path of the template to use).
 	 * @param mixed $link_file The template used to export a SitemapLink object. Can be a Template object or a string (path of the template to use).
@@ -50,7 +50,7 @@ class SitemapExportConfig
 	}
 
 	/**
-	 * @desc Returns the Template object to use while exporting a Sitemap object.
+	 * Returns the Template object to use while exporting a Sitemap object.
 	 * @return Template
 	 */
 	public function get_site_map_stream()
@@ -59,7 +59,7 @@ class SitemapExportConfig
 	}
 
 	/**
-	 * @desc Returns the Template object to use while exporting a ModuleMap object.
+	 * Returns the Template object to use while exporting a ModuleMap object.
 	 * @return Template
 	 */
 	public function get_module_map_stream()
@@ -68,7 +68,7 @@ class SitemapExportConfig
 	}
 
 	/**
-	 * @desc Returns the Template object to use while exporting a SitemapSection object.
+	 * Returns the Template object to use while exporting a SitemapSection object.
 	 * @return Template
 	 */
 	public function get_section_stream()
@@ -77,7 +77,7 @@ class SitemapExportConfig
 	}
 
 	/**
-	 * @desc Returns the Template object to use while exporting a SitemapLink object.
+	 * Returns the Template object to use while exporting a SitemapLink object.
 	 * @return Template
 	 */
 	public function get_link_stream()
@@ -86,7 +86,7 @@ class SitemapExportConfig
 	}
 
 	/**
-	 * @desc Sets the Template object to use while exporting a Site object.
+	 * Sets the Template object to use while exporting a Site object.
 	 * @param mixed $module_map_file The template used to export a Site object. Can be a Template object or a string (path of the template to use).
 	 */
 	public function set_site_map_stream($site_map_file)
@@ -95,7 +95,7 @@ class SitemapExportConfig
 	}
 
 	/**
-	 * @desc Sets the Template object to use while exporting a ModuleMap object.
+	 * Sets the Template object to use while exporting a ModuleMap object.
 	 * @param mixed $module_map_file The template used to export a ModuleMap object. Can be a Template object or a string (path of the template to use).
 	 */
 	public function set_module_map_stream($module_map_file)
@@ -104,7 +104,7 @@ class SitemapExportConfig
 	}
 
 	/**
-	 * @desc Sets the Template object to use while exporting a SitemapSection object.
+	 * Sets the Template object to use while exporting a SitemapSection object.
 	 * @param mixed $section_file The template used to export a SitemapSection object. Can be a Template object or a string (path of the template to use).
 	 */
 	public function set_section_stream($section_file)
@@ -113,7 +113,7 @@ class SitemapExportConfig
 	}
 
 	/**
-	 * @desc Sets the Template object to use while exporting a SitemapLink object.
+	 * Sets the Template object to use while exporting a SitemapLink object.
 	 * @param mixed $link_file The template used to export a SitemapLink object. Can be a Template object or a string (path of the template to use).
 	 */
 	public function set_link_stream($link_file)

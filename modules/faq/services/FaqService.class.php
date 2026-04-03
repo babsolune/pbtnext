@@ -5,7 +5,7 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2022 04 14
  * @since       PHPBoost 4.0 - 2014 09 02
- * @contributor Mipel <mipel@phpboost.com>
+ * @author      Mipel <mipel@phpboost.com>
 */
 
 class FaqService
@@ -18,7 +18,7 @@ class FaqService
 	}
 
 	/**
-	 * @desc Count items number.
+	 * Count items number.
 	 * @param string $condition (optional) : Restriction to apply to the list of items
 	 */
 	public static function count($condition = '', $parameters = [])
@@ -27,7 +27,7 @@ class FaqService
 	}
 
 	/**
-	 * @desc Create a new entry in the database table.
+	 * Create a new entry in the database table.
 	 * @param string[] $item : new FaqItem
 	 */
 	public static function add(FaqItem $item)
@@ -38,7 +38,7 @@ class FaqService
 	}
 
 	/**
-	 * @desc Update an entry.
+	 * Update an entry.
 	 * @param string[] $item : FaqItem to update
 	 */
 	public static function update(FaqItem $item)
@@ -47,7 +47,7 @@ class FaqService
 	}
 
 	/**
-	 * @desc Delete an entry.
+	 * Delete an entry.
 	 * @param int $id Item identifier
 	 */
 	public static function delete(int $id)
@@ -64,7 +64,7 @@ class FaqService
 	}
 
 	/**
-	 * @desc Return the item with all its properties from its id.
+	 * Return the item with all its properties from its id.
 	 * @param int $id Item identifier
 	 */
 	public static function get_item(int $id)
@@ -89,7 +89,7 @@ class FaqService
 	}
 
 	/**
-	 * @desc Update the position of a question.
+	 * Update the position of a question.
 	 * @param string[] $id_question : id of the question to update
 	 * @param string[] $position : new question position
 	 */

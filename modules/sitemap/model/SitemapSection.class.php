@@ -6,7 +6,7 @@
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2016 10 24
  * @since       PHPBoost 2.0 - 2008 06 16
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class SitemapSection extends SitemapElement
@@ -21,7 +21,7 @@ class SitemapSection extends SitemapElement
 	protected $elements = [];
 
 	/**
-	 * @desc Builds a SitemapSection object
+	 * Builds a SitemapSection object
 	 * @param SitemapLink $link The link associated to the section
 	 */
 	public function __construct(SitemapLink $link)
@@ -35,7 +35,7 @@ class SitemapSection extends SitemapElement
 	}
 
 	/**
-	 * @desc Returns the link associated to the section
+	 * Returns the link associated to the section
 	 * @return SitemapLink the link
 	 */
 	public function get_link()
@@ -44,7 +44,7 @@ class SitemapSection extends SitemapElement
 	}
 
 	/**
-	 * @desc Sets the link associated to the section
+	 * Sets the link associated to the section
 	 * @param SitemapLink $link the link
 	 */
 	public function set_link(SitemapLink  $link)
@@ -52,7 +52,7 @@ class SitemapSection extends SitemapElement
 		$this->link = $link;
 	}
 	/**
-	 * @desc Sets the depth of the element
+	 * Sets the depth of the element
 	 * @warning the description is not protected for XML displaying (but usefulless in sitemap.xml)
 	 * @param int $depth The depth of the element
 	 */
@@ -67,7 +67,7 @@ class SitemapSection extends SitemapElement
 	}
 
 	/**
-	 * @desc Adds an elemement to the section
+	 * Adds an elemement to the section
 	 * @param SitemapElement $element element to add
 	 */
 	public function add($element)
@@ -79,7 +79,7 @@ class SitemapSection extends SitemapElement
 	}
 
 	/**
-	 * @desc Exports the section according to the given configuration. You will use the following template variables:
+	 * Exports the section according to the given configuration. You will use the following template variables:
 	 * <ul>
 	 * 	<li>SECTION_NAME which contains the name of the section</li>
 	 * 	<li>SECTION_URL which contains the URL of the link associated to the section</li>

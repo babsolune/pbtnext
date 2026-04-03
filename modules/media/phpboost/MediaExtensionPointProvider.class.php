@@ -5,10 +5,10 @@
  * @author      Geoffrey ROGUELON <liaght@gmail.com>
  * @version     PHPBoost 6.1 - last update: 2019 12 28
  * @since       PHPBoost 2.0 - 2008 10 20
- * @contributor Kevin MASSY <reidlos@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor xela <xela@phpboost.com>
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      xela <xela@phpboost.com>
 */
 
 define('MEDIA_MAX_SEARCH_RESULTS', 100);

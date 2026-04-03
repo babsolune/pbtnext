@@ -11,7 +11,7 @@
  * @link        https://github.com/iignatov/LightOpenID         GitHub Repo
  * @version     PHPBoost 6.1 - last update: 2020 12 14
  * @since       PHPBoost 5.1 - 2018 04 22
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class LightOpenID

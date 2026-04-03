@@ -5,7 +5,7 @@
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2015 05 28
  * @since       PHPBoost 3.0 - 2009 12 13
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class AdminErrorsUrlBuilder

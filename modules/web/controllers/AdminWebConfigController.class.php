@@ -5,10 +5,10 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2023 09 17
  * @since       PHPBoost 4.1 - 2014 08 21
- * @contributor Kevin MASSY <reidlos@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
- * @contributor Mipel <mipel@phpboost.com>
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Mipel <mipel@phpboost.com>
 */
 
 class AdminWebConfigController extends DefaultAdminModuleController

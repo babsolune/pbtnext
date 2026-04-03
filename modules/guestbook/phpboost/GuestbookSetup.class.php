@@ -5,7 +5,7 @@
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2020 12 21
  * @since       PHPBoost 3.0 - 2010 05 28
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class GuestbookSetup extends DefaultModuleSetup

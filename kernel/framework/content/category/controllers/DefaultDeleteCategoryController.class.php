@@ -7,7 +7,7 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2022 02 18
  * @since       PHPBoost 6.0 - 2019 11 02
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DefaultDeleteCategoryController extends AbstractDeleteCategoryController

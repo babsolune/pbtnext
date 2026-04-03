@@ -5,8 +5,8 @@
  * @author      PaperToss <t0ssp4p3r@gmail.com>
  * @version     PHPBoost 6.1 - last update: 2016 11 14
  * @since       PHPBoost 5.0 - 2016 04 26
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 trait EasyCssColorTrait

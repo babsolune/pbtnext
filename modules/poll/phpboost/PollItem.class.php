@@ -5,7 +5,7 @@
  * @author      xela <xela@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2021 12 16
  * @since       PHPBoost 6.0 - 2020 05 14
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class PollItem extends RichItem

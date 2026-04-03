@@ -7,9 +7,9 @@
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2019 10 26
  * @since       PHPBoost 3.0 - 2010 07 08
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor janus57 <janus57@janus57.fr>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      janus57 <janus57@janus57.fr>
 */
 
 class ServerEnvironmentConfig extends AbstractConfigData

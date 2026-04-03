@@ -5,8 +5,8 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2022 04 14
  * @since       PHPBoost 5.0 - 2016 02 18
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class QuotesService
@@ -19,7 +19,7 @@ class QuotesService
 	}
 
 	 /**
-	 * @desc Count items number.
+	 * Count items number.
 	 * @param string $condition (optional) : Restriction to apply to the list of items
 	 */
 	public static function count($condition = '', $parameters = [])
@@ -28,7 +28,7 @@ class QuotesService
 	}
 
 	 /**
-	 * @desc Create a new item in the database table.
+	 * Create a new item in the database table.
 	 * @param string[] $item : new QuotesItem
 	 */
 	public static function add(QuotesItem $item)
@@ -39,7 +39,7 @@ class QuotesService
 	}
 
 	 /**
-	 * @desc Update an item.
+	 * Update an item.
 	 * @param string[] $item : QuotesItem to update
 	 */
 	public static function update(QuotesItem $item)
@@ -48,7 +48,7 @@ class QuotesService
 	}
 
 	 /**
-	 * @desc Delete an item.
+	 * Delete an item.
 	 * @param int $id Item identifier
 	 */
 	public static function delete(int $id)
@@ -65,7 +65,7 @@ class QuotesService
 	}
 
 	 /**
-	 * @desc Return the properties of an item.
+	 * Return the properties of an item.
 	 * @param int $id Item identifier
 	 */
 	public static function get_item(int $id)
@@ -83,7 +83,7 @@ class QuotesService
 	}
 
 	 /**
-	 * @desc Clears all module elements in cache.
+	 * Clears all module elements in cache.
 	 */
 	public static function clear_cache()
 	{

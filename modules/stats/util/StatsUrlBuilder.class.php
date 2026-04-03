@@ -5,7 +5,7 @@
  * @author      xela <xela@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2021 12 21
  * @since       PHPBoost 5.0 - 2017 02 24
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class StatsUrlBuilder

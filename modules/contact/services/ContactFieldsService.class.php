@@ -11,7 +11,7 @@
 class ContactFieldsService
 {
 	/**
-	 * @desc This function displayed field for form
+	 * This function displayed field for form
 	 * @param object $field ContactField
 	 */
 	public static function display_field(ContactField $field)
@@ -21,7 +21,7 @@ class ContactFieldsService
 	}
 
 	/**
-	 * @desc This function returned value form fields
+	 * This function returned value form fields
 	 * @param object $form HTMLForm
 	 * @param object $field ContactField
 	 */

@@ -5,10 +5,10 @@
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2021 03 11
  * @since       PHPBoost 4.0 - 2013 02 20
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Mipel <mipel@phpboost.com>
- * @contributor xela <xela@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Mipel <mipel@phpboost.com>
+ * @author      xela <xela@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 ####################################################

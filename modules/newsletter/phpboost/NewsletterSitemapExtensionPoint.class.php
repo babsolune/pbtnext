@@ -5,7 +5,7 @@
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2015 06 17
  * @since       PHPBoost 3.0 - 2012 05 30
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class NewsletterSitemapExtensionPoint extends SitemapCategoriesModule

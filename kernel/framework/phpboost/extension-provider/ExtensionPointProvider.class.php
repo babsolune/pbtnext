@@ -11,7 +11,7 @@
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2022 02 18
  * @since       PHPBoost 2.0 - 2008 01 15
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 abstract class ExtensionPointProvider

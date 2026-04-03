@@ -5,8 +5,8 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2021 12 12
  * @since       PHPBoost 5.0 - 2017 04 03
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class GoogleMapsFormFieldSimpleMarker extends AbstractFormField
@@ -17,7 +17,7 @@ class GoogleMapsFormFieldSimpleMarker extends AbstractFormField
 	private $include_api = true;
 
 	/**
-	 * @desc Constructs a GoogleMapsFormFieldSimpleAddress.
+	 * Constructs a GoogleMapsFormFieldSimpleAddress.
 	 * @param string $id Field identifier
 	 * @param string $label Field label
 	 * @param string $value Default value

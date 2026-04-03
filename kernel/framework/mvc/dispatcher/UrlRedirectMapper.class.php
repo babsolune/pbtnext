@@ -8,7 +8,7 @@
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2016 11 15
  * @since       PHPBoost 3.0 - 2010 11 06
- * @contributor mipel <mipel@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 class UrlRedirectMapper extends AbstractUrlMapper

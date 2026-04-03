@@ -5,7 +5,7 @@
  * @author      PaperToss <t0ssp4p3r@gmail.com>
  * @version     PHPBoost 6.1 - last update: 2016 06 16
  * @since       PHPBoost 5.0 - 2016 04 26
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
 class EasyCssTitleField extends EasyCssAbstractField

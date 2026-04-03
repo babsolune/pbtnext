@@ -12,7 +12,7 @@
 class HooksService
 {
 	/**
-	 * @desc Get the list of modules that have a Hook child class
+	 * Get the list of modules that have a Hook child class
 	 * @return array ist of modules that have a Hook child class
 	 */
 	public static function get_hooks()
@@ -27,7 +27,7 @@ class HooksService
 	}
 
 	/**
-	 * @desc Get the list of all specific hooks defined in additional modules
+	 * Get the list of all specific hooks defined in additional modules
 	 * @return array List of modules specific hooks
 	 */
 	public static function get_modules_specific_hooks_actions()
@@ -41,7 +41,7 @@ class HooksService
 	}
 
 	/**
-	 * @desc Get the list of modules that have specific hooks defined
+	 * Get the list of modules that have specific hooks defined
 	 * @return array List of modules
 	 */
 	public static function get_modules_with_specific_hooks_list()
@@ -56,7 +56,7 @@ class HooksService
 	}
 
 	/**
-	 * @desc Get the list of all the specific hooks defined in the modules with their localized name
+	 * Get the list of all the specific hooks defined in the modules with their localized name
 	 * @return array List of specific hooks (hook name in id and localized name in parameter if exists, empty value otherwise)
 	 */
 	public static function get_specific_hooks_list_with_localized_names()
@@ -75,7 +75,7 @@ class HooksService
 	}
 
 	/**
-	 * @desc Execute all Hook child classes functions defined for a requested action
+	 * Execute all Hook child classes functions defined for a requested action
 	 * @param string $action Name of the requested action
 	 * @param string $module_id Id of the current module
 	 * @param array $properties (optional) Properties of the item (title, content, ...)
@@ -96,7 +96,7 @@ class HooksService
 	}
 
 	/**
-	 * @desc Execute all Hook child classes functions defined for a requested action with a type (used for modules, langs and themes management)
+	 * Execute all Hook child classes functions defined for a requested action with a type (used for modules, langs and themes management)
 	 * @param string $action Name of the requested action ('install', 'uninstall', 'update')
 	 * @param string $type Type of element to treat ('module', 'lang', 'theme')
 	 * @param string $element_id Id of the current element
@@ -116,7 +116,7 @@ class HooksService
 	}
 
 	/**
-	 * @desc Execute all Hook child classes functions defined to modify a content (add ad, ...).
+	 * Execute all Hook child classes functions defined to modify a content (add ad, ...).
 	 * @param string $module_id Name of the current module
 	 * @param string $content Content to transform
 	 * @param array $properties (optional) Properties of the item (title, content, ...)
@@ -137,7 +137,7 @@ class HooksService
 	}
 
 	/**
-	 * @desc Execute all Hook child classes functions defined to display additional content related to a user.
+	 * Execute all Hook child classes functions defined to display additional content related to a user.
 	 * @param string $module_id Name of the current module
 	 * @param array $properties (optional) Properties of the user (display_name, ...)
 	 * @return string Content to display

@@ -5,7 +5,7 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2022 04 16
  * @since       PHPBoost 5.0 - 2017 03 09
- * @contributor xela <xela@phpboost.com>
+ * @author      xela <xela@phpboost.com>
 */
 
 class ShoutboxModuleUpdateVersion extends ModuleUpdateVersion

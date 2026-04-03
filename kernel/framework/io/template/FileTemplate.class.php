@@ -24,8 +24,8 @@
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2016 10 24
  * @since       PHPBoost 3.0 - 2009 06 18
- * @contributor Regis VIARRE <crowkait@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Regis VIARRE <crowkait@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class FileTemplate extends AbstractTemplate

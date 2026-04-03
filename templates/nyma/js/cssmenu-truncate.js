@@ -7,7 +7,7 @@
  * @link        https://github.com/insales/jquery.cut-list
  * @version     PHPBoost 6.0 - last update: 2022 01 06
  * @since       PHPBoost 6.0 - 2022 01 06
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 (function(jQuery) {

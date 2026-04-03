@@ -5,7 +5,7 @@
  * @author      PaperToss <t0ssp4p3r@gmail.com>
  * @version     PHPBoost 6.1 - last update: 2016 11 14
  * @since       PHPBoost 5.0 - 2016 05 03
- * @contributor mipel <mipel@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 class EasyCssColorsManager

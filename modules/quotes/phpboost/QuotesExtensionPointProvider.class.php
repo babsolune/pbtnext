@@ -5,9 +5,9 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2020 05 12
  * @since       PHPBoost 5.0 - 2016 02 18
- * @contributor mipel <mipel@phpboost.com>
- * @contributor xela <xela@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      xela <xela@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class QuotesExtensionPointProvider extends ItemsModuleExtensionPointProvider

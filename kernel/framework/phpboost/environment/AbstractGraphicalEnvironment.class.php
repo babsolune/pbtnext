@@ -7,8 +7,8 @@
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2017 11 11
  * @since       PHPBoost 3.0 - 2009 10 06
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Kevin MASSY <reidlos@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Kevin MASSY <reidlos@phpboost.com>
 */
 
 abstract class AbstractGraphicalEnvironment implements GraphicalEnvironment

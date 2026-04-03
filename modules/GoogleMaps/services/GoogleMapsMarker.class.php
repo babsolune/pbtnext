@@ -17,7 +17,7 @@ class GoogleMapsMarker
 	private $address_displayed_on_label;
 
 	/**
-	 * @desc Constructs a GoogleMapsMarker.
+	 * Constructs a GoogleMapsMarker.
 	 * @param string $address Marker address
 	 * @param string $latitude Marker latitude
 	 * @param string $longitude Marker longitude

@@ -6,7 +6,7 @@
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2015 01 06
  * @since       PHPBoost 3.0 - 2010 10 31
- * @contributor Kevin MASSY <reidlos@phpboost.com>
+ * @author      Kevin MASSY <reidlos@phpboost.com>
 */
 
 class AjaxRequest implements View

@@ -5,8 +5,8 @@
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2023 07 10
  * @since       PHPBoost 2.0 - 2008 02 01
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 define('CACHE_TIME', SearchConfig::load()->get_cache_lifetime());
@@ -27,7 +27,7 @@ class Search
 	//----------------------------------------------------------- Constructors
 
 	/**
-	 * @desc Builds a search object.
+	 * Builds a search object.
 	 * Query Complexity: 6 + k / 10 database queries. (k represent the number of
 	 * module without search cache)
 	 * @param string $search the string to search
@@ -151,7 +151,7 @@ class Search
 
 
 	/**
-	 * @desc Puts results from the search results identified by the $id_search parameter
+	 * Puts results from the search results identified by the $id_search parameter
 	 * in the $results parameter and returns the number of results.
 	 * Query complexity: 2 queries.
 	 * @param string[] &$results the results returned
@@ -188,7 +188,7 @@ class Search
 
 
 	/**
-	 * @desc Puts results from the search results in the $results parameter and
+	 * Puts results from the search results in the $results parameter and
 	 * returns the number of results.
 	 * Query complexity: 1 query.
 	 * @param string[] &$results the results returned
@@ -248,7 +248,7 @@ class Search
 
 
 	/**
-	 * @desc Inserts search results in the database cache in order to speed up next searches.
+	 * Inserts search results in the database cache in order to speed up next searches.
 	 * Query complexity: 1 + k / 10 queries. (k represent the number of results to insert in the database)
 	 * @param mixed[] $requestAndResults This parameters is an array with keys that are
 	 * modules ids and values that could be both a SQL query or a results array.
@@ -329,7 +329,7 @@ class Search
 
 
 	/**
-	 * @desc Returns true if the id_search is in cache, else, false.
+	 * Returns true if the id_search is in cache, else, false.
 	 * @param int $id_search the search id to check.
 	 * @return bool true if the id_search is in cache, else, false.
 	 */
@@ -354,7 +354,7 @@ class Search
 
 
 	/**
-	 * @desc Returns true if the module results are in cache, else, false.
+	 * Returns true if the module results are in cache, else, false.
 	 * @param string $module_id the module to check.
 	 * @return bool true if the module results are in cache, else, false.
 	 */
@@ -365,7 +365,7 @@ class Search
 
 
 	/**
-	 * @desc Returns the list of the modules ids present in the cache
+	 * Returns the list of the modules ids present in the cache
 	 * @return string[] the list of the modules present in the cache
 	 */
 	public function modules_in_cache()
@@ -374,7 +374,7 @@ class Search
 	}
 
 	/**
-	 * @desc Returns the search id
+	 * Returns the search id
 	 * @return int the search id
 	 */
 	public function get_ids()
@@ -384,7 +384,7 @@ class Search
 
 
 	/**
-	 * @desc Builds modules search conditions on the meta-information cache
+	 * Builds modules search conditions on the meta-information cache
 	 * @param mixed[string] $modules An array with modules ids keys and values
 	 * containings modules specifics options.
 	 * @return string The condition to put in a query WHERE clause

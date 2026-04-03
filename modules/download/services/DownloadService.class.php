@@ -5,8 +5,8 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2026 02 05
  * @since       PHPBoost 4.0 - 2014 08 24
- * @contributor Mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class DownloadService
@@ -20,7 +20,7 @@ class DownloadService
     }
 
     /**
-     * @desc Count items number.
+     * Count items number.
      * @param string $condition (optional) : Restriction to apply to the list of items
      */
     public static function count(string $condition = '', array $parameters = []): int
@@ -29,7 +29,7 @@ class DownloadService
     }
 
     /**
-     * @desc Create a new entry in the database table.
+     * Create a new entry in the database table.
      * @param DownloadItem $item : new DownloadItem
      */
     public static function add(DownloadItem $item): int
@@ -40,7 +40,7 @@ class DownloadService
     }
 
     /**
-     * @desc Update an entry.
+     * Update an entry.
      * @param DownloadItem $item : DownloadItem to update
      */
     public static function update(DownloadItem $item): void
@@ -49,7 +49,7 @@ class DownloadService
     }
 
     /**
-     * @desc Update the number of downloads of a file.
+     * Update the number of downloads of a file.
      * @param DownloadItem $item : DownloadItem to update
      */
     public static function update_downloads_number(DownloadItem $item): void
@@ -63,7 +63,7 @@ class DownloadService
     }
 
     /**
-     * @desc Delete an entry.
+     * Delete an entry.
      * @param string $condition : Restriction to apply to the list
      * @param string[] $parameters : Parameters of the condition
      */
@@ -84,7 +84,7 @@ class DownloadService
     }
 
     /**
-     * @desc Return the item with all its properties from its id.
+     * Return the item with all its properties from its id.
      * @param int $id Item identifier
      */
     public static function get_item(int $id): DownloadItem

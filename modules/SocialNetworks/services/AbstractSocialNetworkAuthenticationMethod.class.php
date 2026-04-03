@@ -5,7 +5,7 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2021 06 26
  * @since       PHPBoost 5.1 - 2018 04 16
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class AbstractSocialNetworkAuthenticationMethod extends AuthenticationMethod
@@ -159,7 +159,7 @@ abstract class AbstractSocialNetworkAuthenticationMethod extends AuthenticationM
 	}
 
 	/**
-	 * @desc Retrieves user data from the social network
+	 * Retrieves user data from the social network
 	 * @return string[] user data (id, name, email, picture_url)
 	 */
 	abstract protected function get_user_data();

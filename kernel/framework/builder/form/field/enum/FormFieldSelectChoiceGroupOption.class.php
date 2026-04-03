@@ -8,8 +8,8 @@
  * @author      Regis VIARRE <crowkait@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2017 03 10
  * @since       PHPBoost 3.0 - 2009 04 28
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
 class FormFieldSelectChoiceGroupOption extends AbstractFormFieldEnumOption

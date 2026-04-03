@@ -20,7 +20,7 @@ class WikiService
     }
 
     /**
-     * @desc Count items number.
+     * Count items number.
      * @param string $condition (optional) : Restriction to apply to the list of items
      */
     public static function count($condition = '', $parameters = [])
@@ -29,7 +29,7 @@ class WikiService
     }
 
     /**
-     * @desc Count active items number.
+     * Count active items number.
      * @param string $condition (optional) : Restriction to apply to the list of items
      * @param array $parameters (optional) : parameters to apply to the list of items
      */
@@ -45,7 +45,7 @@ class WikiService
     }
 
     /**
-     * @desc Create a new entry in the database table.
+     * Create a new entry in the database table.
      * @param WikiItem $item : new WikiItem
      */
     public static function add(WikiItem $item)
@@ -62,7 +62,7 @@ class WikiService
     }
 
     /**
-     * @desc Create a new item content.
+     * Create a new item content.
      * @param WikiItem $content new WikiItemContent
      */
     public static function add_content(WikiItemContent $content)
@@ -73,7 +73,7 @@ class WikiService
     }
 
     /**
-     * @desc Update an entry.
+     * Update an entry.
      * @param WikiItem $item : WikiItem to update
      */
     public static function update(WikiItem $item)
@@ -82,7 +82,7 @@ class WikiService
     }
 
     /**
-     * @desc Update an entry.
+     * Update an entry.
      * @param WikiItemContent $item : WikiItem to update
      */
     public static function update_content(WikiItemContent $item_content)
@@ -91,7 +91,7 @@ class WikiService
     }
 
     /**
-     * @desc Update the position of an item.
+     * Update the position of an item.
      * @param mixed $id : id of the item to update
      * @param mixed $position : new item position
      */
@@ -106,7 +106,7 @@ class WikiService
     }
 
     /**
-     * @desc Delete an entry with all ite contents.
+     * Delete an entry with all ite contents.
      * @param string $condition : Restriction to apply to the list
      * @param mixed $parameters : Parameters of the condition
      */
@@ -137,7 +137,7 @@ class WikiService
     }
 
     /**
-     * @desc Restore a content of an entry.
+     * Restore a content of an entry.
      * @param string $condition : Restriction to apply to the list
      * @param mixed $parameters : Parameters of the condition
      */
@@ -152,7 +152,7 @@ class WikiService
     }
 
     /**
-     * @desc Return the item with all its properties from its id.
+     * Return the item with all its properties from its id.
      * @param int $id Item identifier
      */
     public static function get_item(int $id)
@@ -201,7 +201,7 @@ class WikiService
     }
 
     /**
-     * @desc Return the item with all its properties from its id.
+     * Return the item with all its properties from its id.
      * @param int $id Item identifier
      */
     public static function get_item_archive(int $id, int $content_id)
@@ -263,7 +263,7 @@ class WikiService
     }
 
     /**
-     * @desc track an item.
+     * track an item.
      * @param int $item_id id of the item
      * @param int $user_id id of the user who track the item
      */
@@ -277,7 +277,7 @@ class WikiService
     }
 
     /**
-     * @desc untrack an item.
+     * untrack an item.
      * @param int $item_id id of the item
      * @param int $user_id id of the user who untrack the item
      */
@@ -290,7 +290,7 @@ class WikiService
     }
 
     /**
-     * @desc delete all tracked item when delete main item.
+     * delete all tracked item when delete main item.
      * @param int $item_id id of the item
      */
     public static function delete_tracked_item($item_id)

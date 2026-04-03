@@ -7,8 +7,8 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2022 02 18
  * @since       PHPBoost 6.0 - 2019 12 20
- * @contributor xela <xela@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      xela <xela@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class ItemsManager
@@ -40,7 +40,7 @@ class ItemsManager
 	}
 
 	/**
-	 * @desc Initialize the additional parameters to custom the request to get items. Possibility to modify this part only in modules to change the behaviour of the multiple select request.
+	 * Initialize the additional parameters to custom the request to get items. Possibility to modify this part only in modules to change the behaviour of the multiple select request.
 	 */
 	protected function init_get_items_additional_parameters()
 	{
@@ -52,7 +52,7 @@ class ItemsManager
 	}
 
 	/**
-	 * @desc Count items number.
+	 * Count items number.
 	 * @param string $condition (optional) : Restriction to apply to the list of items
 	 * @param array $parameters (optional) : Parameters list to apply to the condition
 	 */
@@ -62,7 +62,7 @@ class ItemsManager
 	}
 
 	/**
-	 * @desc Count items number having a specific keyword.
+	 * Count items number having a specific keyword.
 	 * @param string $condition (optional) : Restriction to apply to the list of items
 	 * @param array $parameters (optional) : Parameters list to apply to the condition
 	 */
@@ -75,7 +75,7 @@ class ItemsManager
 	}
 
 	/**
-	 * @desc Create a new item.
+	 * Create a new item.
 	 * @param array $item new Item
 	 */
 	public function add(Item $item)
@@ -85,7 +85,7 @@ class ItemsManager
 	}
 
 	/**
-	 * @desc Update an item.
+	 * Update an item.
 	 * @param array $item Item to update
 	 */
 	public function update(Item $item)
@@ -94,7 +94,7 @@ class ItemsManager
 	}
 
 	/**
-	 * @desc Delete an item.
+	 * Delete an item.
 	 * @param array $item Item to delete
 	 */
 	public function delete(Item $item)
@@ -115,7 +115,7 @@ class ItemsManager
 	}
 
 	/**
-	 * @desc Delete an item from its id.
+	 * Delete an item from its id.
 	 * @param int $id Item identifier
 	 */
 	public function delete_from_id(int $id)
@@ -124,7 +124,7 @@ class ItemsManager
 	}
 
 	/**
-	 * @desc Return the item with all its properties from its id.
+	 * Return the item with all its properties from its id.
 	 * @param int $id Item identifier
 	 */
 	public function get_item(int $id)
@@ -146,7 +146,7 @@ class ItemsManager
 	}
 
 	/**
-	 * @desc Updates the views number of the item.
+	 * Updates the views number of the item.
 	 * @param array $item Item to update
 	 */
 	public function update_views_number(Item $item)
@@ -155,7 +155,7 @@ class ItemsManager
 	}
 
 	/**
-	 * @desc Return the list of items corresponding to the condition.
+	 * Return the list of items corresponding to the condition.
 	 * @param string $condition Restriction to apply to the item
 	 * @param array $parameters Parameters of the condition
 	 * @param int $number_items_per_page Number of items to display
@@ -199,7 +199,7 @@ class ItemsManager
 	}
 
 	/**
-	 * @desc Clear caches files
+	 * Clear caches files
 	 */
 	public function clear_cache()
 	{
@@ -213,7 +213,7 @@ class ItemsManager
 	}
 
 	/**
-	 * @desc Clear module caches files if needed
+	 * Clear module caches files if needed
 	 */
 	protected function clear_module_cache()
 	{

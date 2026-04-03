@@ -5,8 +5,8 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2023 04 14
  * @since       PHPBoost 4.1 - 2014 08 21
- * @contributor Mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class WebService
@@ -20,7 +20,7 @@ class WebService
 	}
 
 	/**
-	 * @desc Count items number.
+	 * Count items number.
 	 * @param string $condition (optional) : Restriction to apply to the list of items
 	 */
 	public static function count($condition = '', $parameters = [])
@@ -29,7 +29,7 @@ class WebService
 	}
 
 	/**
-	 * @desc Create a new entry in the database table.
+	 * Create a new entry in the database table.
 	 * @param string[] $item : new WebLink
 	 */
 	public static function add(WebItem $item)
@@ -40,7 +40,7 @@ class WebService
 	}
 
 	/**
-	 * @desc Update an entry.
+	 * Update an entry.
 	 * @param string[] $item : WebLink to update
 	 */
 	public static function update(WebItem $item)
@@ -49,7 +49,7 @@ class WebService
 	}
 
 	/**
-	 * @desc Update the number of views of a link.
+	 * Update the number of views of a link.
 	 * @param string[] $item : WebLink to update
 	 */
 	public static function update_views_number(WebItem $item)
@@ -58,7 +58,7 @@ class WebService
 	}
 
 	/**
-	 * @desc Delete an entry.
+	 * Delete an entry.
 	 * @param string $condition : Restriction to apply to the list
 	 * @param string[] $parameters : Parameters of the condition
 	 */
@@ -79,7 +79,7 @@ class WebService
 	}
 
 	/**
-	 * @desc Return the item with all its properties from its id.
+	 * Return the item with all its properties from its id.
 	 * @param int $id Item identifier
 	 */
 	public static function get_item(int $id)

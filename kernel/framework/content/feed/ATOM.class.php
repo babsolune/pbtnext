@@ -9,7 +9,7 @@
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2016 11 14
  * @since       PHPBoost 2.0 - 2008 04 21
- * @contributor mipel <mipel@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 class ATOM extends Feed

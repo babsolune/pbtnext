@@ -7,7 +7,7 @@
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2017 03 11
  * @since       PHPBoost 3.0 - 2010 02 16
- * @contributor mipel <mipel@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
 */
 
 class FormFieldsetVertical extends AbstractFormFieldset

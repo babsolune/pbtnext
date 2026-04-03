@@ -5,7 +5,7 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2025 04 24
  * @since       PHPBoost 6.0 - 2022 11 18
- * @contributor Myster <MP : https://www.phpboost.com/user/pm-3023>
+ * @author      Myster <MP : https://www.phpboost.com/user/pm-3023>
  */
 
 class WikiItemFormController extends DefaultModuleController

@@ -7,16 +7,16 @@
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2025 03 13
  * @since       PHPBoost 2.0 - 2008 07 03
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class BBCodeUnparser extends ContentFormattingUnparser
 {
 	/**
-	 * @desc Unparses the content of the parser.
+	 * Unparses the content of the parser.
 	 * Converts it from HTML syntax to BBcode syntax
 	 */
 	public function parse()
@@ -53,7 +53,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	}
 
 	/**
-	 * @desc Unparse the smiley's code of the content of the parser.
+	 * Unparse the smiley's code of the content of the parser.
 	 * Replace the HTML code by the smiley code (for instance :) or :|)
 	 */
 	protected function unparse_smilies()
@@ -69,7 +69,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	}
 
 	/**
-	 * @desc Unparsed the simple tags of the content of the parser.
+	 * Unparsed the simple tags of the content of the parser.
 	 * The simple tags are the ones which are processable in a few lines
 	 */
 	protected function unparse_simple_tags()
@@ -236,7 +236,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	}
 
 	/**
-	 * @desc Unparses the table tag
+	 * Unparses the table tag
 	 */
 	protected function unparse_table()
 	{
@@ -260,7 +260,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	}
 
 	/**
-	 * @desc Unparses the list tag
+	 * Unparses the list tag
 	 */
 	protected function unparse_list()
 	{
@@ -280,7 +280,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	}
 
 	/**
-	 * @desc Callback which allows to unparse the fieldset tag
+	 * Callback which allows to unparse the fieldset tag
 	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the fieldset tag are parsed
 	 */
@@ -310,7 +310,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	}
 
 	/**
-	 * @desc Callback which allows to unparse the div tag
+	 * Callback which allows to unparse the div tag
 	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the fieldset tag are parsed
 	 */
@@ -341,7 +341,7 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	}
 
 	/**
-	 * @desc Callback which allows to unparse the div tag
+	 * Callback which allows to unparse the div tag
 	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the fieldset tag are parsed
 	 */

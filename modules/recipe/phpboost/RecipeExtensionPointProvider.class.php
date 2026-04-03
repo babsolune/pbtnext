@@ -5,7 +5,7 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2023 01 16
  * @since       PHPBoost 6.0 - 2022 08 26
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  */
 
 class RecipeExtensionPointProvider extends ItemsModuleExtensionPointProvider

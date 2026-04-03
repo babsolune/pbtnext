@@ -6,7 +6,7 @@
  * @link        https://9bitstudios.github.io/flexisel/
  * @version     PHPBoost 6.1 - last update: 2018 08 09
  * @since       PHPBoost 5.1 - 2018 03 15
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 (function ($) {

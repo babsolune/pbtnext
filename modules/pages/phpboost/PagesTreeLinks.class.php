@@ -5,7 +5,7 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version   	PHPBoost 6.0 - last update: 2021 03 17
  * @since   	PHPBoost 4.0 - 2016 11 25
- * @contributor xela <xela@phpboost.com>
+ * @author      xela <xela@phpboost.com>
 */
 
 class PagesTreeLinks extends DefaultTreeLinks

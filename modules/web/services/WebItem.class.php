@@ -5,11 +5,11 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2025 09 25
  * @since       PHPBoost 4.1 - 2014 08 21
- * @contributor Kevin MASSY <reidlos@phpboost.com>
- * @contributor Arnaud GENET <elenwii@phpboost.com>
- * @contributor janus57 <janus57@janus57.fr>
- * @contributor Mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Kevin MASSY <reidlos@phpboost.com>
+ * @author      Arnaud GENET <elenwii@phpboost.com>
+ * @author      janus57 <janus57@janus57.fr>
+ * @author      Mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class WebItem
