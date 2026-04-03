@@ -194,7 +194,7 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 		// Container
 		while (preg_match('`<div id="([^"]*)" class="([^"]*)" style="([^"]*)">(.+)</div>`suU', $this->content))
 		{
-			$this->content = preg_replace_callback('`<div id="([^"]*)" class="([^"]*)" style="([^"]*)">(.+)</div>`suU', array($this, 'unparse_container'), $this->content);
+			$this->content = preg_replace_callback('`<div id="([^"]*)" class="([^"]*)" style="([^"]*)">(.+)</div>`suU', array($this, 'unparse_box'), $this->content);
 		}
 
 		// Callbacks
@@ -311,7 +311,7 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 	 * @param string[] $matches Content matched by a regular expression
 	 * @return string The string in which the fieldset tag are parsed
 	 */
-	protected function unparse_container($matches)
+	protected function unparse_box($matches)
 	{
 		$id = '';
 		$class = '';
@@ -334,11 +334,11 @@ class OldBBCodeUnparser extends ContentFormattingUnparser
 
 		if (!empty($id) || !empty($class) || !empty($style))
 		{
-			return '[container' . $id . $class . $style . ']' . $matches[4] . '[/container]';
+			return '[box' . $id . $class . $style . ']' . $matches[4] . '[/box]';
 		}
 		else
 		{
-			return '[container]' . $matches[4] . '[/container]';
+			return '[box]' . $matches[4] . '[/box]';
 		}
 	}
 }

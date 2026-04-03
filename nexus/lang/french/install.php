@@ -13,15 +13,15 @@
 
 $lang['categories'] = $lang['items'] = [];
 
-$lang['categories'][] = array(
+$lang['categories'][] = [
 	'category.name'        => 'Catégorie de test',
 	'category.description' => 'Items de démonstration'
-);
+];
 
-$lang['items'][] = array(
+$lang['items'][] = [
 	'item.title'   => 'Débuter avec le module Items',
 	'item.content' => '
-		<p>Cette brève actualité va vous donner quelques conseils simples pour prendre en main ce module.</p>
+		<p>Cet article va vous donner quelques conseils simples pour prendre en main ce module.</p>
 		<ul class="formatter-ul">
 			<li class="formatter-li">Pour configurer votre module, <a class="offload" href="' . ModulesUrlBuilder::configuration('nexus')->relative() . '">cliquez ici</a></li>
 			<li class="formatter-li">Pour ajouter des catégories : <a class="offload" href="' . CategoriesUrlBuilder::add(Category::ROOT_CATEGORY, 'nexus')->relative() . '">cliquez ici</a> (les catégories et sous catégories sont à l\'infini)</li>
@@ -35,5 +35,5 @@ $lang['items'][] = array(
 		<br />
 		Bonne utilisation de ce module.',
 	'item.summary' => ''
-);
+];
 ?>

@@ -8,10 +8,10 @@
 		<div class="message-helper bgc error">{ERROR}</div>
 	# END #
 	<div class="cell-flex cell-columns-2">
-        <div class="next-step">
+        <div class="next-step cell-2-3">
             # INCLUDE DATABASE_FORM #
         </div>
-        <div class="cell">
+        <div class="cell cell-1-3">
             <div class="cell-thumbnail cell-center">
                 <img src="templates/images/mysql.webp" alt="MySQL" />
                 <a class="cell-thumbnail-caption" href="https://www.mysql.com/" target="_blank" rel="noopener noreferrer">mysql.com</a>

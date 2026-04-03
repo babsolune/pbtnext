@@ -1,3 +1,4 @@
+<!-- === /templates/__default__/admin/langs/AdminLangsManagementController.tpl === -->
 <div class="text-helper">
 	<span class="message-helper bgc warning">{@H|addon.langs.warning.delete}</span>
 	<span class="message-helper bgc notice">{@addon.langs.warning.install}</span>

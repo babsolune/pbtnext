@@ -1,3 +1,4 @@
+<!-- === /templates/__default__/admin/modules/AdminModuleAddController.tpl === -->
 # INCLUDE MESSAGE_HELPER_WARNING #
 # INCLUDE MESSAGE_HELPER_SUCCESS #
 <header>
@@ -208,7 +209,7 @@
 	var ajaxInstall       = '{U_AJAX_INSTALL}';
 	var csrfToken         = '{TOKEN}';
 
-	// ---- État courant ----
+	// ---- Current state ----
 	var gh = {
 		owner: '{GITHUB_DEFAULT_OWNER}',
 		repo:  '{GITHUB_DEFAULT_REPO}',
@@ -219,7 +220,7 @@
 		dir: '{WEBSITE_DEFAULT_DIR}'
 	};
 
-	// ---- Sélecteur dépôt GitHub ----
+	// ---- GitHub ----
 	var ghSel = document.getElementById('github-repo-select');
 	if (ghSel) {
 		ghSel.addEventListener('change', function () {
@@ -243,7 +244,20 @@
 		});
 	}
 
-	// ---- Sélecteur serveur Website ----
+	function loadGithub() {
+		var container = document.getElementById('github-addon-list');
+		setLoader(container);
+		var url = ajaxGithubList
+			+ '?repo_owner=' + encodeURIComponent(gh.owner)
+			+ '&repo_name='  + encodeURIComponent(gh.repo)
+			+ '&repo_dir='   + encodeURIComponent(gh.dir);
+		fetch(url)
+			.then(function (r) { return r.json(); })
+			.then(function (data) { renderList(container, data, 'github', ${escapejs(@addon.github.no.addon.found)}); })
+			.catch(function () { setError(container); });
+	}
+
+    // ---- Website ----
 	var wsSel = document.getElementById('website-server-select');
 	if (wsSel) {
 		wsSel.addEventListener('change', function () {
@@ -264,21 +278,6 @@
 		});
 	}
 
-	// ---- Chargement GitHub ----
-	function loadGithub() {
-		var container = document.getElementById('github-addon-list');
-		setLoader(container);
-		var url = ajaxGithubList
-			+ '?repo_owner=' + encodeURIComponent(gh.owner)
-			+ '&repo_name='  + encodeURIComponent(gh.repo)
-			+ '&repo_dir='   + encodeURIComponent(gh.dir);
-		fetch(url)
-			.then(function (r) { return r.json(); })
-			.then(function (data) { renderList(container, data, 'github', ${escapejs(@addon.github.no.addon.found)}); })
-			.catch(function () { setError(container); });
-	}
-
-	// ---- Chargement Website ----
 	function loadWebsite() {
 		var container = document.getElementById('website-addon-list');
 		setLoader(container);
@@ -291,14 +290,17 @@
 			.catch(function () { setError(container); });
 	}
 
-	// ---- Rendu de liste ----
-	function renderList(container, data, source, emptyMsg) {
-		if (data.error && data.error !== null) {
+	// ---- List render ----
+	function renderList(container, data, source, emptyMsg)
+    {
+		if (data.error && data.error !== null)
+        {
 			container.innerHTML = '<div class="message-helper bgc error">' + ${escapejs(@addon.source.error)} + '</div>';
 			return;
 		}
 		var addons = data.addons || [];
-		if (!addons.length) {
+		if (!addons.length)
+        {
 			container.innerHTML = '<div class="content"><div class="message-helper bgc notice message-helper-small">' + emptyMsg + '</div></div>';
 			return;
 		}
@@ -323,8 +325,8 @@
 			}
 			if (addon.thumbnail) {
 				html += '<img src="' + esc(addon.thumbnail) + '" alt="' + esc(addon.name) + '" class="addon-thumbnail" onerror="this.style.display=\'none\'">';
-			} else if (addon.icon) {
-				html += '<i class="' + esc(addon.icon) + '" aria-hidden="true"></i>';
+			} else if (addon.fa_icon) {
+				html += '<i class="' + esc(addon.fa_icon) + '" aria-hidden="true"></i>';
             } else {
 				html += '<i class="fa fa-fw fa-puzzle-piece" aria-hidden="true"></i>';
 			}
@@ -429,8 +431,8 @@
 		return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 	}
 
-	// Chargement automatique dès l'onglet rendu visible
-	// TabsBoost cache les divs, on lazy-load à la première activation
+	//  Automatic loading from the tab made visible
+	// TabsBoost hides the divs, on lazy-load at the first activation
 	var ghLoaded = false, wsLoaded = false;
 	var observer = new MutationObserver(function (mutations) {
 		mutations.forEach(function (m) {
@@ -447,7 +449,7 @@
 	if (ghDiv) observer.observe(ghDiv, { attributes: true, attributeFilter: ['class'] });
 	if (wsDiv) observer.observe(wsDiv, { attributes: true, attributeFilter: ['class'] });
 
-	// Si github est le premier onglet affiché au démarrage, charger immédiatement
+	// If github is the first tab displayed at startup, load immediately
 	document.addEventListener('DOMContentLoaded', function () {
 		if (ghDiv && ghDiv.classList.contains('current-tab') && !ghLoaded) {
 			ghLoaded = true; loadGithub();

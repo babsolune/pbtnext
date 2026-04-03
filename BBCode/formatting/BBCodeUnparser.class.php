@@ -186,9 +186,12 @@ class BBCodeUnparser extends ContentFormattingUnparser
 		$this->_parse_imbricated('<div class="formatter-container formatter-block" style=', '`<div class="formatter-container formatter-block" style="([^"]+)">(.+)</div>`suU', '[block style="$1"]$2[/block]', $this->content);
 
 		//Container
-		while (preg_match('`<div id="([^"]*)" class="([^"]*)" style="([^"]*)">(.+)</div>`suU', $this->content))
+		// La regex capture une <div> avec n'importe quelle combinaison d'attributs
+		// id, class, style dans n'importe quel ordre, tous optionnels.
+		// On exige au moins un attribut connu pour ne pas capturer des divs quelconques.
+		while (preg_match('`<div\b([^>]*)>(.+)</div>`suU', $this->content, $m) && preg_match('`(?:id|class|style)=`', $m[1]))
 		{
-			$this->content = preg_replace_callback('`<div id="([^"]*)" class="([^"]*)" style="([^"]*)">(.+)</div>`suU', array($this, 'unparse_container'), $this->content);
+			$this->content = preg_replace_callback('`<div\b([^>]*)>(.+)</div>`suU', array($this, 'unparse_box'), $this->content);
 		}
 
 		//Callbacks
@@ -311,13 +314,30 @@ class BBCodeUnparser extends ContentFormattingUnparser
 	 * @param array $matches Content matched by a regular expression
 	 * @return string The string in which the fieldset tag are parsed
 	 */
-	protected function unparse_container($matches)
+	protected function unparse_box($matches)
 	{
-        $id    = !empty($matches[1]) ? ' id="' . $matches[1] . '"' : '';
-        $class = !empty($matches[2]) ? ' class="' . $matches[2] . '"' : '';
-        $style = !empty($matches[3]) ? ' style="' . $matches[3] . '"' : '';
+		$attrs = $matches[1]; // Tous les attributs bruts de la div
+		$inner = $matches[2]; // Contenu
 
-        return '[container' . $id . $class . $style . ']' . $matches[4] . '[/container]';
+		// Extraire chaque attribut optionnel dans n'importe quel ordre
+		$id    = '';
+		$class = '';
+		$style = '';
+
+		if (preg_match('`id="([^"]*)"`', $attrs, $m))
+			$id = !empty($m[1]) ? ' id="' . $m[1] . '"' : '';
+
+		if (preg_match('`class="([^"]*)"`', $attrs, $m))
+			$class = !empty($m[1]) ? ' class="' . $m[1] . '"' : '';
+
+		if (preg_match('`style="([^"]*)"`', $attrs, $m))
+			$style = !empty($m[1]) ? ' style="' . $m[1] . '"' : '';
+
+		// Si aucun attribut reconnu : ne pas convertir, retourner tel quel
+		if (empty($id) && empty($class) && empty($style))
+			return $matches[0];
+
+		return '[box' . $id . $class . $style . ']' . $inner . '[/box]';
 	}
 
 	/**

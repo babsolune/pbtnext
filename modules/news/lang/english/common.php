@@ -15,7 +15,7 @@
 #                     English                      #
 ####################################################
 
-$lang['news.lobby.title'] = 'Pinned News';
+$lang['news.lobby.pinned.news'] = 'Pinned News';
 $lang['item'] = 'news';
 
 // Form

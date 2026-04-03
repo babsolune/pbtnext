@@ -15,7 +15,6 @@
 #                     French                       #
 ####################################################
 
-$lang['news.lobby.title'] = 'Actualités épinglées';
 $lang['news.lobby.pinned.news'] = 'Actualités épinglées';
 $lang['an.item'] = 'une actualité';
 

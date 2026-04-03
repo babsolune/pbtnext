@@ -43,8 +43,7 @@ class AdminModulesManagementController extends DefaultAdminController
 
         foreach ($installed_modules as $module)
         {
-            if (in_array($module->get_id(), ['BBCode', 'lobby', 'nexus', 'qaptcha']))
-                continue;
+            $undeletable = in_array($module->get_id(), ['BBCode', 'lobby', 'nexus', 'qaptcha']);
 
             $module_config  = $module->get_configuration();
             $author_email   = $module_config->get_author_email();
@@ -65,6 +64,8 @@ class AdminModulesManagementController extends DefaultAdminController
                 'C_COMPATIBLE_VERSION' => $module_config->get_compatibility() === $phpboost_version,
                 'C_IS_ACTIVATED'       => $module->is_activated(),
                 'C_DOCUMENTATION'      => !empty($documentation),
+                'C_DELETE'             => !$undeletable,
+                'C_DOCUMENTATION'      => $documentation,
 
                 'MODULE_NUMBER'  => $module_order[$module->get_id()],
                 'MODULE_ID'      => $module->get_id(),

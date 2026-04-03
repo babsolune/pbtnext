@@ -12,19 +12,19 @@
 ####################################################
 
 $lang['lobby.edito.description'] = '
-    Accédez à la <a class="offload" href="' . LobbyUrlBuilder::configuration()->relative() . '"><div class="pinned link-color">configuration de ce module</div></a> pour paramétrer la <strong>page d\'accueil</strong>
+    Vous êtes sur le module <strong>Page d\'accueil</strong> du site. N\'hésitez pas à le modifier via sa <div class="pinned bgc link-color"><a class="offload" href="' . LobbyUrlBuilder::configuration()->relative() . '">configuration</a></div>.
     <br />
     <br />
     Votre site propulsé par PHPBoost est bien installé et fonctionnel. Afin de vous aider à le prendre en main, voici quelques recommandations que nous vous proposons de lire avec attention :
     <br />
-    <h2 class="formatter-title">N\'oubliez pas de supprimer le répertoire <pre class="precode precode-inline"><code>install</code></pre></h2>
-    Supprimez le répertoire /install à la racine de votre site pour des raisons de sécurité afin que personne ne puisse recommencer l\'installation.
+    <h2 class="formatter-title">N\'oubliez pas de supprimer le répertoire <pre class="precode precode-inline"><code>/install</code></pre></h2>
+    Supprimez le répertoire <pre class="precode precode-inline"><code>/install</code></pre> à la racine de votre site pour des raisons de sécurité afin que personne ne puisse recommencer l\'installation.
     <br />
     <h2 class="formatter-title">Administrez votre site</h2>
     Accédez au <a class="offload" href="' . UserUrlBuilder::administration()->relative() . '">panneau d\'administration de votre site</a> afin de le paramétrer comme vous le souhaitez !
     <br />
     <br />
-    <div class="cell-flex cell-columns-4 cell-tile">
+    <div class="cell-flex formatter-columns cell-columns-4 cell-tile">
         <div class="cell">
             <div class="cell-header"><h4 class="formatter-title">1. Maintenance</h4></div>
             <div class="cell-body">
@@ -96,6 +96,5 @@ $lang['lobby.edito.description'] = '
     <br />
     <br />
     <p class="float-right">Toute l\'équipe de PHPBoost vous remercie d\'utiliser son logiciel pour créer votre site web !</p>
-    <div class="spacer"></div>
 ';
 ?>

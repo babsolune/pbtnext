@@ -22,30 +22,30 @@ $view->add_lang($lang);
 // Listing available modules
 foreach (ModulesManager::get_activated_modules_map_sorted_by_localized_name() as $module)
 {
-	$configuration = $module->get_configuration();
-	$admin_home_page = Url::to_rel($configuration->get_admin_main_page());
+    $configuration = $module->get_configuration();
+    $admin_home_page = Url::to_rel($configuration->get_admin_main_page());
 
-	$img_url = PATH_TO_ROOT . '/' . $module->get_id() . '/' . $module->get_id() . '.png';
-	$img = new File($img_url);
-	$thumbnail = $img->exists() ? $img_url : '';
-	$fa_icon = $configuration->get_fa_icon();
-	$hexa_icon = $configuration->get_hexa_icon();
+    $img_url = PATH_TO_ROOT . '/' . $module->get_id() . '/' . $module->get_id() . '.png';
+    $img = new File($img_url);
+    $thumbnail = $img->exists() ? $img_url : '';
+    $fa_icon = $configuration->get_fa_icon();
+    $hexa_icon = $configuration->get_hexa_icon();
 
-	if (!empty($admin_home_page))
-	{
-		$view->assign_block_vars('modules_extend', array(
-			'C_IMG'       => $img->exists(),
-			'C_FA_ICON'   => !empty($fa_icon),
-			'C_HEXA_ICON' => !empty($hexa_icon),
+    if (!empty($admin_home_page))
+    {
+        $view->assign_block_vars('modules_extend', [
+            'C_IMG'       => $img->exists(),
+            'C_FA_ICON'   => !empty($fa_icon),
+            'C_HEXA_ICON' => !empty($hexa_icon),
 
-			'NAME'      => $configuration->get_name(),
-			'IMG'       => $img_url,
-			'FA_ICON'   => $fa_icon,
-			'HEXA_ICON' => $hexa_icon,
+            'NAME'      => $configuration->get_name(),
+            'IMG'       => $img_url,
+            'FA_ICON'   => $fa_icon,
+            'HEXA_ICON' => $hexa_icon,
 
-			'U_ADMIN_MODULE' => $admin_home_page
-		));
-	}
+            'U_ADMIN_MODULE' => $admin_home_page
+        ]);
+    }
 }
 
 $view->display();

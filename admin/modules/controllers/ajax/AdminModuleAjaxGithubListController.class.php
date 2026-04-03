@@ -56,13 +56,14 @@ class AdminModuleAjaxGithubListController extends AbstractController
 			$thumb_path = ($path !== '' ? $path . '/' : '') . $addon_id . '/' . $addon_id . '.png';
 			$addons[] = [
 				'id'            => $addon_id,
-				'name'          => isset($desc['name'])             ? $desc['name']          : $addon_id,
+				'name'          => isset($desc['name'])             ? $desc['name']            : $addon_id,
+				'genre'         => isset($desc['genre'])            ? $desc['genre']           : $addon_id,
 				'compatibility' => isset($config['compatibility'])  ? $config['compatibility'] : '',
 				'version'       => isset($config['version'])        ? $config['version']       : '',
 				'author'        => isset($config['author'])         ? $config['author']        : '',
-				'description'   => isset($desc['description'])      ? $desc['description']   : '',
+				'description'   => isset($desc['desc'])             ? $desc['desc']            : '',
 				'compatible'    => (isset($config['compatibility']) ? $config['compatibility'] : '') === $phpboost_version,
-				'icon'          => isset($config['fa_icon']) ? $config['fa_icon'] : '',
+				'fa_icon'          => isset($config['fa_icon'])        ? $config['fa_icon']       : '',
 				'installed'     => ModulesManager::is_module_installed($addon_id),
 				'thumbnail'     => AddonRemoteHelper::remote_file_exists($raw_base . $thumb_path) ? $raw_base . $thumb_path : null,
 				'repo_url'      => 'https://github.com/' . $owner . '/' . $repo . '/tree/' . $branch . '/' . ($path !== '' ? $path . '/' : '') . $addon_id,

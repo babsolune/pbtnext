@@ -358,9 +358,9 @@ class BBCodeParser extends ContentFormattingParser
 		}
 
 		//Container tag
-		if (!in_array('container', $this->forbidden_tags))
+		if (!in_array('box', $this->forbidden_tags))
 		{
-			$this->_parse_imbricated('[container', '`\[container(?: id="([^"]*)")?(?: class="([^"]*)")?(?: style="([^"]*)")?\](.+)\[/container\]`suU', '<div id="$1" class="$2" style="$3">$4</div>');
+			$this->_parse_imbricated('[box', '`\[box(?: id="([^"]*)")?(?: class="([^"]*)")?(?: style="([^"]*)")?\](.+)\[/box\]`suU', '<div id="$1" class="$2" style="$3">$4</div>');
 		}
 
 		//Modal tag

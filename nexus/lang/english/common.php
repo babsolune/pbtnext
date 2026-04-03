@@ -12,6 +12,7 @@
 ####################################################
 
 $lang['item'] = 'item';
+$lang['items'] = 'items';
 
 // Configuration
 $lang['config.items.suggestions.enabled'] = 'Enable suggestions display';

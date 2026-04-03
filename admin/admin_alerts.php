@@ -30,8 +30,8 @@ $request = AppContext::get_request();
 $criteria = $request->get_getvalue('criteria', 'current_status');
 $order    = $request->get_getvalue('order', 'asc');
 
-if (!in_array($criteria, array('entitled', 'current_status', 'creation_date', 'priority')))
-	$criteria = 'current_status';
+if (!in_array($criteria, ['entitled', 'current_status', 'creation_date', 'priority']))
+    $criteria = 'current_status';
 $order = $order == 'desc' ? 'desc' : 'asc';
 
 $page = AppContext::get_request()->get_getint('p', 1);
@@ -40,68 +40,68 @@ $pagination->set_url(new Url('/admin/admin_alerts.php?p=%d&criteria=' . $criteri
 
 if ($pagination->current_page_is_empty() && $page > 1)
 {
-	$error_controller = PHPBoostErrors::unexisting_page();
-	DispatchManager::redirect($error_controller);
+    $error_controller = PHPBoostErrors::unexisting_page();
+    DispatchManager::redirect($error_controller);
 }
 
 // Get alerts list
 $alerts_list = AdministratorAlertService::get_all_alerts($criteria, $order, ($page - 1) * NUM_ALERTS_PER_PAGE, NUM_ALERTS_PER_PAGE);
 foreach ($alerts_list as $alert)
 {
-	$icon = '';
+    $icon = '';
 
-	switch ($alert->get_priority())
-	{
-		case AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY:
-			$icon = 'fa fa-exclamation-triangle';
-			$priority_css_class = 'alert-very-high-priority';
-			break;
-		case AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY:
-			$icon = 'fa fa-exclamation-triangle';
-			$priority_css_class = 'alert-high-priority';
-			break;
-		case AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY:
-			$priority_css_class = 'alert-medium-priority';
-			break;
-		case AdministratorAlert::ADMIN_ALERT_LOW_PRIORITY:
-			$priority_css_class = 'alert-low-priority';
-			break;
-		default:
-			$priority_css_class = 'alert-very-low-priority';
-			break;
-	}
+    switch ($alert->get_priority())
+    {
+        case AdministratorAlert::ADMIN_ALERT_VERY_HIGH_PRIORITY:
+            $icon = 'fa fa-exclamation-triangle';
+            $priority_css_class = 'alert-very-high-priority';
+            break;
+        case AdministratorAlert::ADMIN_ALERT_HIGH_PRIORITY:
+            $icon = 'fa fa-exclamation-triangle';
+            $priority_css_class = 'alert-high-priority';
+            break;
+        case AdministratorAlert::ADMIN_ALERT_MEDIUM_PRIORITY:
+            $priority_css_class = 'alert-medium-priority';
+            break;
+        case AdministratorAlert::ADMIN_ALERT_LOW_PRIORITY:
+            $priority_css_class = 'alert-low-priority';
+            break;
+        default:
+            $priority_css_class = 'alert-very-low-priority';
+            break;
+    }
 
-	$creation_date = $alert->get_creation_date();
+    $creation_date = $alert->get_creation_date();
 
-	$view->assign_block_vars('alerts', array(
-		'C_ICON'             => !empty($icon),
-		'C_PROCESSED'        => $alert->get_status() == AdministratorAlert::ADMIN_ALERT_STATUS_PROCESSED,
-		'FIXING_URL'         => Url::to_rel($alert->get_fixing_url()),
-		'NAME'               => $alert->get_entitled(),
-		'PRIORITY'           => $alert->get_priority_name(),
-		'PRIORITY_CSS_CLASS' => $priority_css_class,
-		'ICON'               => $icon,
-		'DATE'               => $creation_date->format(Date::FORMAT_DAY_MONTH_YEAR_TEXT),
-		'ID'                 => $alert->get_id(),
-		'STATUS'             => $alert->get_status()
-	));
+    $view->assign_block_vars('alerts', [
+        'C_ICON'             => !empty($icon),
+        'C_PROCESSED'        => $alert->get_status() == AdministratorAlert::ADMIN_ALERT_STATUS_PROCESSED,
+        'FIXING_URL'         => Url::to_rel($alert->get_fixing_url()),
+        'NAME'               => $alert->get_entitled(),
+        'PRIORITY'           => $alert->get_priority_name(),
+        'PRIORITY_CSS_CLASS' => $priority_css_class,
+        'ICON'               => $icon,
+        'DATE'               => $creation_date->format(Date::FORMAT_DAY_MONTH_YEAR_TEXT),
+        'ID'                 => $alert->get_id(),
+        'STATUS'             => $alert->get_status()
+    ]);
 }
 
-$view->put_all(array(
-	'C_EXISTING_ALERTS' => ((bool)count($alerts_list)),
-	'C_PAGINATION'      => $pagination->has_several_pages(),
+$view->put_all([
+    'C_EXISTING_ALERTS' => ((bool)count($alerts_list)),
+    'C_PAGINATION'      => $pagination->has_several_pages(),
 
-	'PAGINATION' => $pagination->display(),
+    'PAGINATION' => $pagination->display(),
 
-	'U_ORDER_ENTITLED_ASC'       => url('admin_alerts.php?p=' . $page . '&amp;criteria=entitled&amp;order=asc'),
-	'U_ORDER_ENTITLED_DESC'      => url('admin_alerts.php?p=' . $page . '&amp;criteria=entitled&amp;order=desc'),
-	'U_ORDER_CREATION_DATE_ASC'  => url('admin_alerts.php?p=' . $page . '&amp;criteria=creation_date&amp;order=asc'),
-	'U_ORDER_CREATION_DATE_DESC' => url('admin_alerts.php?p=' . $page . '&amp;criteria=creation_date&amp;order=desc'),
-	'U_ORDER_PRIORITY_ASC'       => url('admin_alerts.php?p=' . $page . '&amp;criteria=priority&amp;order=asc'),
-	'U_ORDER_PRIORITY_DESC'      => url('admin_alerts.php?p=' . $page . '&amp;criteria=priority&amp;order=desc'),
-	'U_ORDER_STATUS_ASC'         => url('admin_alerts.php?p=' . $page . '&amp;criteria=current_status&amp;order=asc'),
-	'U_ORDER_STATUS_DESC'        => url('admin_alerts.php?p=' . $page . '&amp;criteria=current_status&amp;order=desc'),
-));
+    'U_ORDER_ENTITLED_ASC'       => url('admin_alerts.php?p=' . $page . '&amp;criteria=entitled&amp;order=asc'),
+    'U_ORDER_ENTITLED_DESC'      => url('admin_alerts.php?p=' . $page . '&amp;criteria=entitled&amp;order=desc'),
+    'U_ORDER_CREATION_DATE_ASC'  => url('admin_alerts.php?p=' . $page . '&amp;criteria=creation_date&amp;order=asc'),
+    'U_ORDER_CREATION_DATE_DESC' => url('admin_alerts.php?p=' . $page . '&amp;criteria=creation_date&amp;order=desc'),
+    'U_ORDER_PRIORITY_ASC'       => url('admin_alerts.php?p=' . $page . '&amp;criteria=priority&amp;order=asc'),
+    'U_ORDER_PRIORITY_DESC'      => url('admin_alerts.php?p=' . $page . '&amp;criteria=priority&amp;order=desc'),
+    'U_ORDER_STATUS_ASC'         => url('admin_alerts.php?p=' . $page . '&amp;criteria=current_status&amp;order=asc'),
+    'U_ORDER_STATUS_DESC'        => url('admin_alerts.php?p=' . $page . '&amp;criteria=current_status&amp;order=desc'),
+]);
 
 $view->display();
 

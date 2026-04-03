@@ -1,3 +1,4 @@
+<!-- === /templates/__default__/admin/langs/AdminLangAddController.tpl === -->
 # INCLUDE MESSAGE_HELPER_WARNING #
 # INCLUDE MESSAGE_HELPER_SUCCESS #
 <header>

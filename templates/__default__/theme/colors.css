@@ -822,6 +822,7 @@ a.wikipedia-link { border-bottom-color: var(--main-tone); }
 
 .bgc.current-tab,
 .bgc-full,
+.bgc-full a,
 .bgc-full:hover	{ color: var(--txt-alt) !important; }
 
 .bgc-full.notice,

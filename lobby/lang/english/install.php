@@ -12,19 +12,19 @@
 ####################################################
 
 $lang['lobby.edito.description'] = '
-    Go to this <a class="offload" href="' . LobbyUrlBuilder::configuration()->relative() . '"><div class="pinned link-color">configuration module</div></a> to configure the <strong>homepage</strong>
+    You are on the <strong>Home page</strong> module of the site. Fell free to modify its <div class="pinned bgc link-color"><a class="offload" href="' . LobbyUrlBuilder::configuration()->relative() . '">configuration</a></div>.
     <br />
     <br />
     Your site powered by PHPBoost is successfully installed and functional. To help you get familiar with it, here are some recommendations we suggest you read carefully:
     <br />
-    <h2 class="formatter-title">Don\'t forget to delete the directory <pre class="precode precode-inline"><code>install</code></pre></h2>
+    <h2 class="formatter-title">Don\'t forget to delete the directory <pre class="precode precode-inline"><code>/install</code></pre></h2>
     Delete the /install directory at the root of your site for security reasons so that no one can restart the installation.
     <br />
     <h2 class="formatter-title">Manage your website</h2>
     Go to the <a class="offload" href="' . UserUrlBuilder::administration()->relative() . '">administration panel</a> to configure your site as you wish!
     <br />
     <br />
-    <div class="cell-flex cell-columns-4 cell-tile">
+    <div class="cell-flex formatter-columns cell-columns-4 cell-tile">
         <div class="cell">
             <div class="cell-header"><h4 class="formatter-title">1. Maintenance</h4></div>
             <div class="cell-body">
@@ -96,6 +96,5 @@ $lang['lobby.edito.description'] = '
     <br />
     <br />
     <p class="float-right">The PHPBoost Team thanks you for using its software to create your Web site!</p>
-    <div class="spacer"></div>
 ';
 ?>

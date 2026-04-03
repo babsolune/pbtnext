@@ -1,3 +1,4 @@
+<!-- === /templates/__default__/admin/themes/AdminThemesManagementController.tpl === -->
 <div class="text-helper">
 	<span class="message-helper bgc warning">{@H|addon.themes.warning.delete}</span>
 	<span class="message-helper bgc notice">{@addon.themes.warning.install}</span>

@@ -33,6 +33,10 @@ $lang['addon.authorizations']      = 'Autorisations';
 $lang['addon.authorizations.save'] = 'Save autorisations';
 $lang['addon.upload.clue']         = 'The uploaded archive must be in <span class="text-strong">zip or gzip</span> format and must not exceed <span class="text-strong">:max_size</span>. If exceeded, drop the folder extracted from the archive :addon of your site on your FTP. ';
 
+$lang['addon.add.tab.github']  = 'From GitHub';
+$lang['addon.add.tab.website'] = 'From a website';
+$lang['addon.add.tab.server']  = 'Available on this server';
+$lang['addon.add.tab.archive'] = 'From a compressed file';
 // Langs
 $lang['addon.langs.directory']       = 'in the <span class ="text-strong pinned question">lang</span> folder';
 $lang['addon.langs']                 = 'Languages';
@@ -68,10 +72,6 @@ $lang['addon.modules.select.all']      = 'Select all modules';
 $lang['addon.modules.no.icon']         = 'No icon';
     // add
 $lang['addon.modules.add']             = 'Add a module';
-$lang['addon.modules.add.tab.github']  = 'From GitHub';
-$lang['addon.modules.add.tab.website'] = 'From a website';
-$lang['addon.modules.add.tab.server']  = 'From the server';
-$lang['addon.modules.add.tab.archive'] = 'From an archive';
     // Warnings
 $lang['addon.modules.warning.delete']  = 'A module must be enabled, disabled or deleted only from this page. <br />Don\'t remove it directly from the FTP and/or the database.';
 $lang['addon.modules.warning.install'] = 'The installed modules are automatically enabled. Do not forget to disable them if necessary.';
@@ -122,8 +122,6 @@ $lang['addon.servers.add']     = 'Add a download website';
 $lang['addon.servers.website'] = 'Website name';
 $lang['addon.servers.url']     = 'Website URL';
 
-
-
 // Themes
 $lang['addon.themes.directory']       = 'in the <span class ="text-strong pinned question">templates</span> folder';
 $lang['addon.themes']                 = 'Themes';
@@ -164,20 +162,6 @@ $lang['addon.themes.drop.multiple'] = 'Delete all themes\'s files';
 
 // ---- Remote addon sources (GitHub / Website) ----
 
-// Tabs
-$lang['addon.modules.add.tab.github']  = 'From GitHub';
-$lang['addon.modules.add.tab.website'] = 'From a website';
-$lang['addon.modules.add.tab.server']  = 'From the server';
-$lang['addon.modules.add.tab.archive'] = 'From an archive';
-$lang['addon.themes.add.tab.github']   = 'From GitHub';
-$lang['addon.themes.add.tab.website']  = 'From a website';
-$lang['addon.themes.add.tab.server']   = 'From the server';
-$lang['addon.themes.add.tab.archive']  = 'From an archive';
-$lang['addon.langs.add.tab.github']    = 'From GitHub';
-$lang['addon.langs.add.tab.website']   = 'From a website';
-$lang['addon.langs.add.tab.server']    = 'From the server';
-$lang['addon.langs.add.tab.archive']   = 'From an archive';
-
 // GitHub
 $lang['addon.github.choose.repo']    = 'Choose a repository';
 $lang['addon.github.custom.repo']    = 'Use a custom repository';
@@ -197,8 +181,8 @@ $lang['addon.installing']            = 'Installing&hellip;';
 $lang['addon.already.installed']     = 'Already installed';
 $lang['addon.source.error']          = 'Unable to reach the source. Check the address or your connection.';
 $lang['addon.sub.directory']         = 'Subdirectory';
-$lang['addon.sub.directory.optional'] = 'Optional';
+$lang['addon.sub.directory.optional']   = 'Optional';
 $lang['addon.themes.already.installed'] = 'This theme is already installed.';
 $lang['addon.langs.already.installed']  = 'This language is already installed.';
-$lang['warning.download.error']         = 'Download failed. Check the URL or your network connection.';
+$lang['addon.warning.download.error']   = 'Download failed. Check the URL or your network connection.';
 ?>

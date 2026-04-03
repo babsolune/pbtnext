@@ -7,7 +7,7 @@
  * @since       PHPBoost 6.1 - 2026 03 28
 */
 
-define('PATH_TO_ROOT', '..');
+define('PATH_TO_ROOT', is_dir(__DIR__ . '/../../modules') ? '../..' : '..');
 
 require_once PATH_TO_ROOT . '/kernel/init.php';
 

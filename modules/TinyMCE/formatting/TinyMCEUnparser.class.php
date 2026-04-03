@@ -498,11 +498,11 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 
 		if (!empty($id) || !empty($class) || !empty($style))
 		{
-			return '[container' . $id . $class . $style . ']' . $matches[4] . '[/container]';
+			return '[box' . $id . $class . $style . ']' . $matches[4] . '[/box]';
 		}
 		else
 		{
-			return '[container]' . $matches[3] . '[/container]';
+			return '[box]' . $matches[3] . '[/box]';
 		}
 	}
 }

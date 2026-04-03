@@ -3,7 +3,7 @@
 		<div class="content-container">
 			<article id="pinned_news-panel">
 				<header class="module-header flex-between">
-					<h2>{@news.lobby.title}</h2>
+					<h2>{@news.lobby.pinned.news}</h2>
 					<div class="controls align-right">
 						<a class="offload" href="{PATH_TO_ROOT}/{MODULE_NAME}" aria-label="{@lobby.see.module}"><i class="fa fa-share-square" aria-hidden="true"></i></a>
 					</div>

@@ -16,6 +16,7 @@
 ####################################################
 
 $lang['item'] = 'item';
+$lang['items'] = 'items';
 $lang['the.item'] = 'l\'item';
 
 // Configuration

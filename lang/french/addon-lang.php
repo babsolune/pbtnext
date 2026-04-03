@@ -33,6 +33,10 @@ $lang['addon.authorizations']      = 'Autorisations';
 $lang['addon.authorizations.save'] = 'Sauvegarder les autorisations';
 $lang['addon.upload.clue']         = 'L\'archive uploadée doit être au format <span class="text-strong">zip ou gzip</span> et ne doit pas dépasser <span class="text-strong">:max_size</span>. En cas de dépassement, déposez le dossier extrait de l\'archive :addon de votre site sur votre FTP.';
 
+$lang['addon.add.tab.github']  = 'Depuis GitHub';
+$lang['addon.add.tab.website'] = 'Depuis un site internet';
+$lang['addon.add.tab.server']  = 'Disponible sur ce serveur';
+$lang['addon.add.tab.archive'] = 'Depuis un fichier compressé';
 // Langs
 $lang['addon.langs.directory']       = 'dans le dossier <span class ="text-strong pinned question">lang</span>';
 $lang['addon.langs']                 = 'Langues';
@@ -68,10 +72,6 @@ $lang['addon.modules.select.all']      = 'Sélectionner tous les modules';
 $lang['addon.modules.no.icon']         = 'Aucune icône';
     // add
 $lang['addon.modules.add']             = 'Ajouter un module';
-$lang['addon.modules.add.tab.github']  = 'Depuis GitHub';
-$lang['addon.modules.add.tab.website'] = 'Depuis un site';
-$lang['addon.modules.add.tab.server']  = 'Depuis le serveur';
-$lang['addon.modules.add.tab.archive'] = 'Depuis une archive';
     // Warnings
 $lang['addon.modules.warning.delete']  = 'Un module doit être activé, désactivé ou supprimé uniquement depuis cette page. <br />En aucun cas il ne faut intervenir sur le FTP et/ou dans la base de données.';
 $lang['addon.modules.warning.install'] = 'Les modules ajoutés sont automatiquement activés. Pensez à les désactiver si besoin.';
@@ -162,20 +162,6 @@ $lang['addon.themes.drop.multiple'] = 'Supprimer tous les fichiers des thèmes';
 
 // ---- Sources distantes d'addons (GitHub / Site) ----
 
-// Onglets
-$lang['addon.modules.add.tab.github']  = 'Depuis GitHub';
-$lang['addon.modules.add.tab.website'] = 'Depuis un site';
-$lang['addon.modules.add.tab.server']  = 'Depuis le serveur';
-$lang['addon.modules.add.tab.archive'] = 'Depuis une archive';
-$lang['addon.themes.add.tab.github']   = 'Depuis GitHub';
-$lang['addon.themes.add.tab.website']  = 'Depuis un site';
-$lang['addon.themes.add.tab.server']   = 'Depuis le serveur';
-$lang['addon.themes.add.tab.archive']  = 'Depuis une archive';
-$lang['addon.langs.add.tab.github']    = 'Depuis GitHub';
-$lang['addon.langs.add.tab.website']   = 'Depuis un site';
-$lang['addon.langs.add.tab.server']    = 'Depuis le serveur';
-$lang['addon.langs.add.tab.archive']   = 'Depuis une archive';
-
 // GitHub
 $lang['addon.github.choose.repo']    = 'Choisir un dépôt';
 $lang['addon.github.custom.repo']    = 'Utiliser un dépôt personnalisé';
@@ -183,20 +169,20 @@ $lang['addon.github.load.repo']      = 'Charger ce dépôt';
 $lang['addon.github.view.repo']      = 'Voir sur GitHub';
 $lang['addon.github.no.addon.found'] = 'Aucun addon compatible trouvé dans ce dépôt.';
 
-// Site web
+// Website
 $lang['addon.website.choose.server']  = 'Choisir un serveur de téléchargement';
 $lang['addon.website.custom.server']  = 'Utiliser un serveur personnalisé';
 $lang['addon.website.load']           = 'Charger ce serveur';
 $lang['addon.website.no.addon.found'] = 'Aucun addon compatible trouvé sur ce serveur.';
 
-// Commun
+// Common
 $lang['addon.loading']               = 'Chargement&hellip;';
 $lang['addon.installing']            = 'Installation&hellip;';
 $lang['addon.already.installed']     = 'Déjà installé';
 $lang['addon.source.error']          = 'Impossible d\'atteindre la source. Vérifiez l\'adresse ou votre connexion.';
 $lang['addon.sub.directory']         = 'Sous-dossier';
-$lang['addon.sub.directory.optional'] = 'Optionnel';
+$lang['addon.sub.directory.optional']   = 'Optionnel';
 $lang['addon.themes.already.installed'] = 'Ce thème est déjà installé.';
 $lang['addon.langs.already.installed']  = 'Cette langue est déjà installée.';
-$lang['warning.download.error']         = 'Le téléchargement a échoué. Vérifiez l\'URL ou votre connexion.';
+$lang['addon.warning.download.error']   = 'Le téléchargement a échoué. Vérifiez l\'URL ou votre connexion.';
 ?>

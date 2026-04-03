@@ -1,3 +1,4 @@
+<!-- === /templates/__default__/admin/modules/AdminModulesManagementController.tpl === -->
 # INCLUDE MESSAGE_HELPER #
 # START errors #
 	# INCLUDE errors.MESSAGE_HELPER #
@@ -11,7 +12,7 @@
 	<section id="installed-modules-container">
         <header class="legend">{@addon.modules.installed}</header>
         <div class="cell-list">
-            <ul class="col-v-3">
+            <ul class="col-v-2">
                 # START installed_modules #
                     <li class="li-stretch addon-row addon# IF NOT installed_modules.C_IS_ACTIVATED # disabled-addon# ENDIF ## IF NOT installed_modules.C_COMPATIBLE # not-compatible error# ENDIF #">
                         <div class="addon-name align-left mini-checkbox" id="module-{installed_modules.MODULE_NUMBER}">
@@ -56,12 +57,16 @@
                                                     {installed_modules.MODULE_NAME}
                                                 </h2>
                                             </li>
+                                            <li>
+                                                <span class="text-strong">{@common.description}</span>
+                                                {installed_modules.DESCRIPTION}
+                                            </li>
                                             <li class="li-stretch">
-                                                <span class="text-strong">{@common.author} :</span>
+                                                <span class="text-strong">{@common.author}</span>
                                                 <span>
                                                     {installed_modules.AUTHOR}
                                                     # IF installed_modules.C_AUTHOR_EMAIL # <a href="mailto:{installed_modules.AUTHOR_EMAIL}" class="pinned bgc notice" aria-label="{@common.email}"><i class="fa iboost fa-iboost-email fa-fw" aria-hidden="true"></i></a># ENDIF #
-                                                    # IF installed_modules.C_AUTHOR_WEBSITE # <a href="{installed_modules.AUTHOR_WEBSITE}" class="pinned bgc question" aria-label="{@common.website}"><i class="fa fa-share-square fa-fw" aria-hidden="true"></i></a> # ENDIF #
+                                                    # IF installed_modules.C_AUTHOR_WEBSITE # <a href="{installed_modules.AUTHOR_WEBSITE}" target="_blank" rel="noopener" class="pinned bgc question" aria-label="{@common.website}"><i class="fa fa-share-square fa-fw" aria-hidden="true"></i></a> # ENDIF #
                                                 </span>
                                             </li>
                                             <li class="li-stretch">
@@ -77,19 +82,15 @@
                                                 {installed_modules.COMPATIBILITY}
                                             </li>
                                             <li class="li-stretch">
-                                                <span class="text-strong">{@common.creation.date} :</span>
+                                                <span class="text-strong">{@common.creation.date}</span>
                                                 {installed_modules.CREATION_DATE}
                                             </li>
                                             <li class="li-stretch">
-                                                <span class="text-strong">{@common.last.update} :</span>
+                                                <span class="text-strong">{@common.last.update}</span>
                                                 {installed_modules.LAST_UPDATE}
                                             </li>
-                                            <li>
-                                                <span class="text-strong">{@common.description} :</span>
-                                                {installed_modules.DESCRIPTION}
-                                            </li>
                                             <li class="li-stretch">
-                                                <span class="text-strong">{@addon.modules.php.version} :</span>
+                                                <span class="text-strong">{@addon.modules.php.version}</span>
                                                 {installed_modules.PHP_VERSION}
                                             </li>
                                             # IF NOT installed_modules.C_COMPATIBLE_ADDON #
@@ -99,7 +100,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button onclick="window.open('{installed_modules.U_DOCUMENTATION}', '_blank', 'noopener'); return false;" class="button button-mini bgc submit" aria-label="{@addon.modules.documentation}"><i class="fa fa-fw fa-book" aria-hidden="true"></i></button></a>
+                            <button onclick="window.open('{installed_modules.U_DOCUMENTATION}', '_blank', 'noopener'); return false;" class="button button-mini bgc # IF installed_modules.C_DOCUMENTATION #submit# ELSE #visitor# ENDIF #" aria-label="{@addon.modules.documentation}"# IF NOT installed_modules.C_DOCUMENTATION # disabled # ENDIF #><i class="fa fa-fw fa-book" aria-hidden="true"></i></button></a>
                             # IF installed_modules.C_COMPATIBLE #
                                 # IF installed_modules.C_IS_ACTIVATED #
                                     <button type="submit" class="button button-mini bgc-full notice" name="disable-{installed_modules.MODULE_ID}" aria-label="{@H|addon.module.disable}" value="true"><i class="far fa-fw fa-eye-slash" aria-hidden="true"></i></button>
@@ -107,10 +108,12 @@
                                     <button type="submit" class="button button-mini bgc-full success" name="enable-{installed_modules.MODULE_ID}" aria-label="{@common.enable}" value="true"><i class="far fa-fw fa-eye" aria-hidden="true"></i></button>
                                 # ENDIF #
                             # ENDIF #
-                            # IF C_IS_LOCALHOST #
-                                <button type="submit" class="button button-mini bgc-full warning" name="uninstall-{installed_modules.MODULE_ID}" aria-label="{@H|addon.module.uninstall}" value="true" data-confirmation="uninstall-element"><i class="fa fa-fw fa-ban" aria-hidden="true"></i></button>
+                            # IF installed_modules.C_DELETE #
+                                # IF C_IS_LOCALHOST #
+                                    <button type="submit" class="button button-mini bgc-full warning" name="uninstall-{installed_modules.MODULE_ID}" aria-label="{@H|addon.module.uninstall}" value="true" data-confirmation="uninstall-element"><i class="fa fa-fw fa-ban" aria-hidden="true"></i></button>
+                                # ENDIF #
+                                <button type="submit" class="button button-mini bgc-full error" name="delete-{installed_modules.MODULE_ID}" aria-label="{@H|addon.module.delete}" value="true" data-confirmation="delete-element"><i class="far fa-fw fa-trash-can" aria-hidden="true"></i></button>
                             # ENDIF #
-                            <button type="submit" class="button button-mini bgc-full error" name="delete-{installed_modules.MODULE_ID}" aria-label="{@H|addon.module.delete}" value="true" data-confirmation="delete-element"><i class="far fa-fw fa-trash-can" aria-hidden="true"></i></button>
                         </div>
                     </li>
                 # END installed_modules #

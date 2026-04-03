@@ -11,9 +11,9 @@ define('PATH_TO_ROOT', '..');
 
 require_once PATH_TO_ROOT . '/kernel/begin.php';
 
-$url_controller_mappers = array(
-	new UrlRedirectMapper('/admin/admin_index.php', '`^.*$`')
-);
+$url_controller_mappers = [
+    new UrlRedirectMapper('/admin/admin_index.php', '`^.*$`')
+];
 DispatchManager::dispatch($url_controller_mappers);
 
 ?>
