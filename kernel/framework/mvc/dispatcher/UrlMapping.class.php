@@ -18,7 +18,7 @@ class UrlMapping
 	/**
 	 * @param UrlMapping[] $mappings
 	 */
-	public function __construct($from, $to, $options = 'L,QSA')
+	public function __construct($from, $to, $options = 'L,NC,QSA')
 	{
         $this->to = $to;
         $this->from = $from;

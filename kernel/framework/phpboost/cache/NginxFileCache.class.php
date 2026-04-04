@@ -218,7 +218,7 @@ class NginxFileCache implements CacheData
 	{
 		$this->add_section('User');
 
-		$rules = ['RewriteRule ^user/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})$ /user/pm.php?pm=$1&id=$2&p=$3&quote=$4 [L,QSA]'];
+		$rules = ['RewriteRule ^user/pm-?([0-9]+)-?([0-9]{0,})-?([0-9]{0,})-?([0-9]{0,})-?([a-z_]{0,})$ /user/pm.php?pm=$1&id=$2&p=$3&quote=$4 [L,NC,QSA]'];
 
 		$eps = AppContext::get_extension_provider_service();
 		$mappings = $eps->get_extension_point(UrlMappingsExtensionPoint::EXTENSION_POINT);
@@ -259,7 +259,7 @@ class NginxFileCache implements CacheData
             {
                 foreach ($rules as $rule)
                 {
-                    $this->add_line(str_replace(['DIR', 'RewriteRule', '^', '[L,QSA]', '[L]'], [$this->general_config->get_site_path(), '	rewrite', '^/', 'break;', 'break;'], $rule));
+                    $this->add_line(str_replace(['DIR', 'RewriteRule', '^', '[L,NC,QSA]', '[L]'], [$this->general_config->get_site_path(), '	rewrite', '^/', 'break;', 'break;'], $rule));
                 }
             }
             $first_location = false;

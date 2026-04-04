@@ -327,7 +327,7 @@ class HtaccessFileCache implements CacheData
 		$this->add_url_mapping($mappings['user']);
 	}
 
-	private function add_rewrite_rule($match, $path, $options = 'L,QSA')
+	private function add_rewrite_rule($match, $path, $options = 'L,NC,QSA')
 	{
 		$this->add_line('RewriteRule ' . $match . ' ' . $this->general_config->get_site_path() . '/' . ltrim($path, '/') . ' [' . $options . ']');
 	}
