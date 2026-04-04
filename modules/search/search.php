@@ -10,7 +10,7 @@
 */
 
 //------------------------------------------------------------------- Language
-require_once('../kernel/begin.php');
+require_once(PATH_TO_ROOT . '/kernel/begin.php');
 $lang = LangLoader::get_all_langs('search');
 
 //------------------------------------------------------------- Authorizations
@@ -47,16 +47,16 @@ else if (count($selected_modules) == 1)
 //--------------------------------------------------------------------- Header
 define('TITLE', $lang['search.module.title']);
 
-require_once('../kernel/header.php');
+require_once(PATH_TO_ROOT . '/kernel/header.php');
 $view->assign_vars(Array(
 	'C_SIMPLE_SEARCH' => $search_in == 'all',
 	'MODULE_MODE'     => $search_in,
 	'TEXT_SEARCHED'   => $unsecure_search,
-	'U_FORM_VALID'    => url('../modules/search/search.php#results'),
+	'U_FORM_VALID'    => url(PATH_TO_ROOT . '/modules/search/search.php#results'),
 ));
 
 //------------------------------------------------------------- Other includes
-require_once('../modules/search/search.inc.php');
+require_once(PATH_TO_ROOT . '/modules/search/search.inc.php');
 
 //----------------------------------------------------------------------- Main
 $config = SearchConfig::load();
@@ -205,6 +205,6 @@ if (!empty($search))
 }
 
 //--------------------------------------------------------------------- Footer
-require_once('../kernel/footer.php');
+require_once(PATH_TO_ROOT . '/kernel/footer.php');
 
 ?>

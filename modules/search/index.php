@@ -8,6 +8,8 @@
  * @author      Arnaud GENET <elenwii@phpboost.com>
 */
 
+define('PATH_TO_ROOT', '../..');
+
 require 'search.php';
 
 ?>
