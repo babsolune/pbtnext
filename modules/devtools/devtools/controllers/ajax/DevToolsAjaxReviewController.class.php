@@ -425,7 +425,7 @@ class DevToolsAjaxReviewController extends AbstractController
                     {
                         $start   = max(0, $pos - 40);
                         $excerpt = substr($combined, $start, 40 + strlen($needle) + 40);
-                        // Mark the filename with «» delimiters, strip BBCode tags around it
+                        // Mark the filename with «» delimiters, strip Bbcode tags around it
                         $excerpt = preg_replace('`\[/?[a-z]+[^\]]*\]`i', '', $excerpt);
                         $before  = substr($excerpt, 0, $pos - $start);
                         $after   = substr($excerpt, $pos - $start + strlen($needle));

@@ -43,7 +43,7 @@ class NewsletterMailFactory
 				return 'TextNewsletterMail';
 				break;
 			case NewsletterMailService::BBCODE_LANGUAGE:
-				return 'BBCodeNewsletterMail';
+				return 'BbcodeNewsletterMail';
 				break;
 			case NewsletterMailService::HTML_LANGUAGE:
 				return 'HTMLNewsletterMail';

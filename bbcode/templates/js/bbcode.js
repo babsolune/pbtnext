@@ -31,7 +31,7 @@ function textarea_resize(id, px, type)
 	return false;
 }
 
-// Insert BBCode code in textarea
+// Insert Bbcode code in textarea
 function simple_insert(open_balise, close_balise, field)
 {
 	var textarea = document.getElementById(field);
@@ -47,7 +47,7 @@ function simple_insert(open_balise, close_balise, field)
 	return;
 }
 
-// Insert BBCode code in textarea, taking into account the used browser
+// Insert Bbcode code in textarea, taking into account the used browser
 function insertbbcode(open_balise, close_balise, field)
 {
 	var area = document.getElementById(field);

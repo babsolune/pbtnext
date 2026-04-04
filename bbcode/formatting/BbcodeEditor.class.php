@@ -11,7 +11,7 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class BBCodeEditor extends ContentEditor
+class BbcodeEditor extends ContentEditor
 {
 	/**
 	 * @var Usefull to know if we have to include all the necessary JS includes
@@ -24,7 +24,7 @@ class BBCodeEditor extends ContentEditor
 	{
 		if (!is_object($this->template) || !($this->template instanceof Template))
 		{
-			$this->template = new FileTemplate('BBCode/bbcode_editor.tpl');
+			$this->template = new FileTemplate('bbcode/bbcode_editor.tpl');
 		}
 		return $this->template;
 	}
@@ -38,7 +38,7 @@ class BBCodeEditor extends ContentEditor
 		$template = $this->get_template();
 
 		// Files autoload for additional code and template variables
-		$extra_directory = new Folder(ModulesManager::get_module_path('BBCode') . '/extra/');
+		$extra_directory = new Folder(ModulesManager::get_module_path('bbcode') . '/extra/');
 		$extra_files = $extra_directory->get_files();
 		foreach ($extra_files as $extra_file)
 		{
@@ -56,7 +56,7 @@ class BBCodeEditor extends ContentEditor
 			]);
 		}
 
-		$lang = LangLoader::get_all_langs('BBCode');
+		$lang = LangLoader::get_all_langs('bbcode');
 		$template->add_lang($lang);
 
 		$template->put_all([
@@ -125,7 +125,7 @@ class BBCodeEditor extends ContentEditor
 			}
 		}
 
-        $fa_icons = LangLoader::get('fa-icons', 'BBCode');
+        $fa_icons = LangLoader::get('fa-icons', 'bbcode');
         foreach($fa_icons as $key => $values)
         {
             $template->assign_block_vars('code_fa', [

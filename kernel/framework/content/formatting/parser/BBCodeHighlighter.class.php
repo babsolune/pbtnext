@@ -1,6 +1,6 @@
 <?php
 /**
- * This class is a highlighter for the PHPBoost BBCode language.
+ * This class is a highlighter for the PHPBoost Bbcode language.
  * It supplies the highlighted code written in XHTML.
  * @package     Content
  * @subpackage  Formatting\parser
@@ -15,7 +15,7 @@
  * @author      xela <xela@phpboost.com>
 */
 
-class BBCodeHighlighter extends AbstractParser
+class BbcodeHighlighter extends AbstractParser
 {
 	const BBCODE_HIGHLIGHTER_INLINE_CODE = true;
 	const BBCODE_HIGHLIGHTER_BLOCK_CODE = false;
@@ -37,7 +37,7 @@ class BBCodeHighlighter extends AbstractParser
 	private static $bbcode_list_item_color = '#00AF07';
 
 	/**
-	 * Builds a BBCodeHighlighter objet
+	 * Builds a BbcodeHighlighter objet
 	 */
 	public function __construct()
 	{

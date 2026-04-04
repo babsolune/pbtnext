@@ -15,7 +15,7 @@ $lang['sandbox.trigger']             = 'Bac à sable';
 $lang['sandbox.builder.title']       = 'Formulaires';
 $lang['sandbox.component.title']     = 'Composants';
 $lang['sandbox.layout.title']        = 'Mise en page';
-$lang['sandbox.bbcode.title']        = 'BBCode';
+$lang['sandbox.bbcode.title']        = 'Bbcode';
 $lang['sandbox.menus.title']         = 'Menus';
 $lang['sandbox.menus.nav.title']     = 'Menus de navigation';
 $lang['sandbox.menus.content.title'] = 'Menus de contenu';
@@ -69,7 +69,7 @@ $lang['sandbox.hashtag.cell']     = '# Cellules';
 $lang['sandbox.hashtag.message']  = '# Messages';
 $lang['sandbox.hashtag.sortable'] = '# Sortables';
 
-// BBCode
+// Bbcode
 $lang['sandbox.hashtag.blocks'] = '# Blocs';
 $lang['sandbox.hashtag.code']   = '# Code';
 $lang['sandbox.hashtag.wiki']   = '# Wiki';

@@ -22,7 +22,7 @@ $url_controller_mappers = [
     new UrlControllerMapper('SandboxBuilderController', '`^/builder/?`'),
     new UrlControllerMapper('SandboxComponentController', '`^/component/?`'),
     new UrlControllerMapper('SandboxLayoutController', '`^/layout/?`'),
-    new UrlControllerMapper('SandboxBBCodeController', '`^/bbcode/?`'),
+    new UrlControllerMapper('SandboxBbcodeController', '`^/bbcode/?`'),
     new UrlControllerMapper('SandboxMenusNavController', '`^/menus/nav/?`'),
     new UrlControllerMapper('SandboxMenusContentController', '`^/menus/content/?`'),
     new UrlControllerMapper('SandboxIconsController', '`^/icons/?`'),

@@ -155,8 +155,8 @@ abstract class ConfigUpdateVersion implements UpdateVersion
         $old_config = $this->get_old_config();
         if ($old_config && (ModulesManager::is_module_installed(self::$module_id) && ModulesManager::is_module_activated(self::$module_id))) {
             $config           = $module_config::load();
-            $unparser         = new OldBBCodeUnparser();
-            $parser           = new BBCodeParser();
+            $unparser         = new OldBbcodeUnparser();
+            $parser           = new BbcodeParser();
             $root_description = $old_config->get_property($parameter);
 
             $getter = 'get_' . $parameter;

@@ -1,7 +1,7 @@
 <?php
 /**
- * BBCode unparser. It converts a content using the PHPBoost HTML reference code (for example
- * coming from a database) to the PHPBoost BBCode syntax.
+ * Bbcode unparser. It converts a content using the PHPBoost HTML reference code (for example
+ * coming from a database) to the PHPBoost Bbcode syntax.
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
@@ -13,7 +13,7 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class BBCodeUnparser extends ContentFormattingUnparser
+class BbcodeUnparser extends ContentFormattingUnparser
 {
 	/**
 	 * Unparses the content of the parser.

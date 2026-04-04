@@ -4,7 +4,7 @@
 * when the content is displayed. However, some tags cannot be cached, because we cannot have return to the original code. It's for instance the case of the code tag
 * which replaces the code by a lot of html code which formats the code.
 * This kind of tag is treated in real time by this class.
-* The content you put in that parser must come from a ContentFormattingParser class (BBCodeParser or TinyMCEParser) (it can have been saved in a database between the first parsing and the real time parsing).
+* The content you put in that parser must come from a ContentFormattingParser class (BbcodeParser or TinyMCEParser) (it can have been saved in a database between the first parsing and the real time parsing).
 * @package     Content
 * @subpackage  Formatting\parser
 * @copyright   &copy; 2005-2026 PHPBoost
@@ -152,7 +152,7 @@ class ContentSecondParser extends AbstractParser
      * Generates semantic HTML that Prism.js will highlight in the browser.
      * Supported: actionscript, asm, asp, bash, c, cpp, csharp, css, d, delphi, fortran, html,
      * java, javascript, latex, lua, matlab, mysql, pascal, perl, php, python, rails, ruby, sql, text, vb, xml,
-     * PHPBoost templates and PHPBoost BBCode.
+     * PHPBoost templates and PHPBoost Bbcode.
      * @param string $contents Content to highlight
      * @param string $language Language name
      * @param bool $line_number Indicate whether or not the line number must be added to the code.
@@ -164,10 +164,10 @@ class ContentSecondParser extends AbstractParser
 
         $lang_lower = TextHelper::strtolower($language);
 
-        //BBCode PHPBoost — uses its own inline highlighter
+        //Bbcode PHPBoost — uses its own inline highlighter
         if ($lang_lower == 'bbcode')
         {
-            $bbcode_highlighter = new BBCodeHighlighter();
+            $bbcode_highlighter = new BbcodeHighlighter();
             $bbcode_highlighter->set_content($contents);
             $bbcode_highlighter->parse($inline_code);
             return $bbcode_highlighter->get_content();

@@ -23,7 +23,7 @@ $lang['newsletter.email.sender.clue'] = 'Valid email Address';
 $lang['newsletter.name']              = 'Name of the newsletter';
 $lang['newsletter.name.clue']         = 'Subject of email sent';
 $lang['newsletter.streams.per.page']  = 'Streams number per page';
-$lang['newsletter.default.content']   = 'Default content of a BBCode or HTML newsletter';
+$lang['newsletter.default.content']   = 'Default content of a Bbcode or HTML newsletter';
 
 // Authorizations
 $lang['newsletter.authorizations.streams.read']           = 'Read authorizations';
@@ -79,8 +79,8 @@ $lang['newsletter.types.choice']      = 'Please select a type of message';
 $lang['newsletter.types.for.all']     = 'Every users';
 $lang['newsletter.types.text']        = 'Text';
 $lang['newsletter.types.text.clue']   = 'You can\'t make any formatting of the message.';
-$lang['newsletter.types.bbcode']      = 'BBCode';
-$lang['newsletter.types.bbcode.clue'] = 'You can format text using the BBCode, the simplified formatting language used throughout the portal.';
+$lang['newsletter.types.bbcode']      = 'Bbcode';
+$lang['newsletter.types.bbcode.clue'] = 'You can format text using the Bbcode, the simplified formatting language used throughout the portal.';
 $lang['newsletter.types.html']        = 'HTML';
 $lang['newsletter.types.for.experts'] = 'Only expert users';
 $lang['newsletter.types.html.clue']   = 'You can format the text as you wish, but you need to know HTML language.';

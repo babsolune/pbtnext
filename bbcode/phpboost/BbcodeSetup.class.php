@@ -8,11 +8,11 @@
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
 */
 
-class BBCodeSetup extends DefaultModuleSetup
+class BbcodeSetup extends DefaultModuleSetup
 {
 	public function uninstall()
 	{
-		return AppContext::get_content_formatting_service()->uninstall_editor('BBCode');
+		return AppContext::get_content_formatting_service()->uninstall_editor('bbcode');
 	}
 }
 ?>

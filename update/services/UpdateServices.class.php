@@ -237,6 +237,14 @@ class UpdateServices
             ModulesManager::install_module('SocialNetworks');
         }
 
+        // Installing the renamed bbcode module
+        if (ModulesManager::is_module_installed('Bbcode'))
+            ModulesManager::uninstall_module('Bbcode');
+        $folder = new Folder(PATH_TO_ROOT . '/bbcode');
+        if ($folder->exists() && !ModulesManager::is_module_installed('bbcode')) {
+            ModulesManager::install_module('bbcode');
+        }
+
         // Verification of the site installation date and correction if necessary
         $this->check_installation_date();
 
@@ -460,7 +468,7 @@ class UpdateServices
             }
         }
 
-        // Scan both root-level modules (qaptcha, BBCode — they stay at root in pbtnext)
+        // Scan both root-level modules (qaptcha, bbcode — they stay at root in pbtnext)
         // and /modules/ directory modules (all others moved there in pbtnext).
         $scan_paths = [PATH_TO_ROOT, PATH_TO_ROOT . '/modules'];
 
@@ -639,8 +647,8 @@ class UpdateServices
         // Update pm contents if needed
         self::update_table_content(PREFIX . 'pm_msg');
 
-        $unparser = new OldBBCodeUnparser();
-        $parser   = new BBCodeParser();
+        $unparser = new OldBbcodeUnparser();
+        $parser   = new BbcodeParser();
 
         $user_accounts_config = UserAccountsConfig::load();
 
@@ -670,8 +678,8 @@ class UpdateServices
         $columns = self::$db_utils->desc_table($table);
 
         if (isset($columns[$contents])) {
-            $unparser = new OldBBCodeUnparser();
-            $parser   = new BBCodeParser();
+            $unparser = new OldBbcodeUnparser();
+            $parser   = new BbcodeParser();
 
             $contents_list = [
                 '(' . $contents . ' LIKE "%href=\"%")',
@@ -725,8 +733,8 @@ class UpdateServices
         $columns  = self::$db_utils->desc_table($table);
 
         if (isset($columns[$contents])) {
-            $unparser = new OldBBCodeUnparser();
-            $parser   = new BBCodeParser();
+            $unparser = new OldBbcodeUnparser();
+            $parser   = new BbcodeParser();
 
             $contents_list = [
                 '(' . $contents . ' LIKE "%href=\"%")',
@@ -928,8 +936,8 @@ class UpdateServices
                 }
 
                 // check if 'addon_type' exists and if it equals "module"
-                // BBCode and qaptcha remain at root level in the new structure
-                if (isset($config['addon_type']) && $config['addon_type'] === 'module' && !in_array($dir_name, ['BBCode', 'lobby', 'nexus', 'qaptcha']))
+                // Bbcode and qaptcha remain at root level in the new structure
+                if (isset($config['addon_type']) && $config['addon_type'] === 'module' && !in_array($dir_name, ['bbcode', 'lobby', 'nexus', 'qaptcha']))
                 {
                     // Remove the old root-level module folder
                     $folder = new Folder($dir);

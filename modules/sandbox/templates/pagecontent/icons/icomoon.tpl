@@ -39,7 +39,7 @@
     &lt;i class="fa fa-heart fa-stack-1x faa-pulse animated" style="color: #FF0000;">&lt;/i>
 &lt;/span>
 &nbsp;
-// BBCode
+// Bbcode
 [box class="fa-stack logo-stack fa-2x faa-pulse animated"][color=#16a086][fa=iboost,fa-stack-2x]iboost-phpboost-01[/fa][/color][color=#ffc21c][fa=iboost,fa-stack-2x]iboost-phpboost-02[/fa][/color][color=#e45126][fa=iboost,fa-stack-2x]iboost-phpboost-03[/fa][/color][color=#FF0000][fa]heart[/fa][/color][/box]</code></pre>
                     </div>
                 </div>

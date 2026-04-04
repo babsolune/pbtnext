@@ -487,7 +487,7 @@ else
                     $tinymce = '<a href="/upload/' . $row['path'] . '">' . $row['name'] . '</a>';
                     $link = '/upload/' . $row['path'];
             }
-            $is_bbcode_editor = ($editor == 'BBCode');
+            $is_bbcode_editor = ($editor == 'bbcode');
             $displayed_code = $is_bbcode_editor ? $bbcode : '/upload/' . $row['path'];
             $inserted_code = !empty($parse) ? (!empty($no_path) ? $link : PATH_TO_ROOT . $link) : ($is_bbcode_editor ? addslashes($bbcode) : TextHelper::htmlspecialchars($tinymce));
 

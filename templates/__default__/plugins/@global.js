@@ -11,7 +11,7 @@
 	}
 
 	/**
-     * Adds an icon and functionality to hide/show BBCode blocks once the DOM is fully loaded.
+     * Adds an icon and functionality to hide/show Bbcode blocks once the DOM is fully loaded.
      * @param {function} callback - The function to execute once the DOM is fully loaded.
      */
 	var add_icon_bbcodeblockhide = (callback) => {
@@ -480,7 +480,7 @@
 		});
 	});
 
-    // Cookies, Cookiebar and BBCode management
+    // Cookies, Cookiebar and Bbcode management
 	// Send cookie to client
 	function sendCookie(name, value, delay)
 	{

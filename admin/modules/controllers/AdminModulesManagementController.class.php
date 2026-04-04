@@ -43,7 +43,7 @@ class AdminModulesManagementController extends DefaultAdminController
 
         foreach ($installed_modules as $module)
         {
-            $undeletable = in_array($module->get_id(), ['BBCode', 'lobby', 'nexus', 'qaptcha']);
+            $undeletable = in_array($module->get_id(), ['bbcode', 'lobby', 'nexus', 'qaptcha']);
 
             $module_config  = $module->get_configuration();
             $author_email   = $module_config->get_author_email();

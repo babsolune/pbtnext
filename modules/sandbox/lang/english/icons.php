@@ -31,12 +31,12 @@ $lang['sandbox.icons.fa.howto.css']                   = 'With CSS';
 $lang['sandbox.icons.fa.howto.css.class']             = 'Define a class, then add the icon code in "content" propertiy in the ::before or ::after of the class:';
 $lang['sandbox.icons.fa.howto.css.css.code']          = 'CSS code:';
 $lang['sandbox.icons.fa.howto.css.html.code']         = 'HTML code:';
-$lang['sandbox.icons.fa.howto.bbcode']                = 'With BBCode';
+$lang['sandbox.icons.fa.howto.bbcode']                = 'With Bbcode';
 $lang['sandbox.icons.fa.howto.bbcode.some.icons']     = 'A list of some icons is shown in the menu. Select one by a click:';
-$lang['sandbox.icons.fa.howto.bbcode.tag']            = 'Make yours with the [fa] BBCode tag as following:';
+$lang['sandbox.icons.fa.howto.bbcode.tag']            = 'Make yours with the [fa] Bbcode tag as following:';
 $lang['sandbox.icons.fa.howto.bbcode.icon.name']      = '[fa]icon name[/fa]';
 $lang['sandbox.icons.fa.howto.bbcode.icon.test']      = 'E.g., <pre class="precode precode-inline language-bbcode"><code class="language-bbcode">[fa]cubes[/fa]</code></pre> give the icon:';
-$lang['sandbox.icons.fa.howto.bbcode.icon.variants']  = 'Variants font-awesome features are usable with BBCode as explained at ';
+$lang['sandbox.icons.fa.howto.bbcode.icon.variants']  = 'Variants font-awesome features are usable with Bbcode as explained at ';
 $lang['sandbox.icons.fa.howto.variants']              = 'Variants';
 $lang['sandbox.icons.fa.howto.variants.clue']         = 'Font-Awesome aloows a list of variants feature such as width, animation, rotation, stacking and more.';
 $lang['sandbox.icons.fa.howto.variants.list']         = 'Variants documentation: ';
@@ -47,7 +47,7 @@ $lang['sandbox.icons.icomoon'] = 'IcoMoon';
 
 $lang['sandbox.icons.icomoon.howto.clue'] = '
     <p>Icomoon app allows to create font-icon with your own icons like Font-Awesome or some else.</p>
-    <p>So with a tricky feature while creating your own font-icon, you will be able to use it with the BBCode editor in PHPBoost.</p>
+    <p>So with a tricky feature while creating your own font-icon, you will be able to use it with the Bbcode editor in PHPBoost.</p>
 ';
 $lang['sandbox.icons.icomoon.howto.update'] = 'It works with any PHPBoost version from the 4.1 and one is already in it since the 6.0 version: <span class="text-strong">ICOBoost</span>. Take care to use it in templates to see some missing icons from Font-Awesome, used in PHPBoost.';
 $lang['sandbox.icons.icomoon.howto.guide.title'] = 'The app';
@@ -69,7 +69,7 @@ $lang['sandbox.icons.icomoon.howto.guide'] = '
             </li>
             <li>
                 Before downloading the pack, you must modify the <span class="pinned bgc administrator"><i class="fa fa-cog"></i>Preferences</span> and, <span class="warning"> at least</span>,
-                fill the <pre class="precode precode-inline"><code>Class Prefix</code></pre> field with <pre class="precode precode-inline"><code>fa-</code></pre> to enable it in PHPBoost BBCode
+                fill the <pre class="precode precode-inline"><code>Class Prefix</code></pre> field with <pre class="precode precode-inline"><code>fa-</code></pre> to enable it in PHPBoost Bbcode
                 with all Font-Awesome features. <br />
                 Customize all other field to avoid conflicts from other libraries.
             </li>
@@ -110,7 +110,7 @@ $lang['sandbox.icons.icomoon.howto.sample'] = '
     <p>
         <pre class="precode precode-inline language-html"><code class="">&lt;i class="fa iboost fa-iboost-email">&lt;/i></code></pre> <i class="fa iboost fa-iboost-email"></i>
     </p>
-    <h6>With BBCode</h6>
+    <h6>With Bbcode</h6>
     <p>
         <pre class="precode precode-inline language-bbcode"><code class="language-bbcode">[fa=iboost]iboost-phpboost[/fa]</code></pre> <i class="fa iboost fa-iboost-phpboost"></i>
     </p>

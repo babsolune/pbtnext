@@ -8,11 +8,11 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class SandboxBBCodeController extends DefaultModuleController
+class SandboxBbcodeController extends DefaultModuleController
 {
 	protected function get_template_to_use()
 	{
-		return new FileTemplate('sandbox/SandboxBBCodeController.tpl');
+		return new FileTemplate('sandbox/SandboxBbcodeController.tpl');
 	}
 
 	public function execute(HTTPRequestCustom $request)

@@ -21,8 +21,8 @@ class CookiebarConfigUpdateVersion extends ConfigUpdateVersion
         if ($old_config)
         {
             $config = CookieBarConfig::load();
-            $unparser = new OldBBCodeUnparser();
-            $parser = new BBCodeParser();
+            $unparser = new OldBbcodeUnparser();
+            $parser = new BbcodeParser();
             $old_content = $old_config->get_property('cookiebar_content');
 
             $unparser->set_content($old_content);

@@ -7,16 +7,16 @@
  * @since       PHPBoost 3.0 - 2011 10 11
 */
 
-class BBCodeExtensionPointProvider extends ExtensionPointProvider
+class BbcodeExtensionPointProvider extends ExtensionPointProvider
 {
 	public function __construct()
     {
-        parent::__construct('BBCode');
+        parent::__construct('bbcode');
     }
 
 	public function content_formatting()
 	{
-		return new BBCodeContentFormattingExtensionPoint();
+		return new BbcodeContentFormattingExtensionPoint();
 	}
 
 	public function css_files()

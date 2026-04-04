@@ -55,7 +55,7 @@ if (typeof Prism !== 'undefined' && Prism.plugins && Prism.plugins.autoloader) {
 		});
 	});
 
-// BBCode tables because they have no header
+// Bbcode tables because they have no header
 	jQuery('.formatter-table').each(function(){
 		$this = jQuery(this).find('tbody tr:first-child td');
 		if (!$this.hasClass('formatter-table-head'))
@@ -186,7 +186,7 @@ if (typeof Prism !== 'undefined' && Prism.plugins && Prism.plugins.autoloader) {
 			}
 	});
 
-// Sidebar behaviour - needed to fix the BBCode troubles on long texts
+// Sidebar behaviour - needed to fix the Bbcode troubles on long texts
 // jQuery('#main-inner-content').theiaStickySidebar();
 
 // Add outline on element if only Tab key is pressed

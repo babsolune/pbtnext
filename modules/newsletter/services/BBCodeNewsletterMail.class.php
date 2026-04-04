@@ -9,7 +9,7 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
-class BBCodeNewsletterMail extends AbstractNewsletterMail
+class BbcodeNewsletterMail extends AbstractNewsletterMail
 {
 	public function __construct()
 	{

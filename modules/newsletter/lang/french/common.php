@@ -23,7 +23,7 @@ $lang['newsletter.email.sender.clue'] = 'Adresse email valide';
 $lang['newsletter.name']              = 'Nom de la newsletter';
 $lang['newsletter.name.clue']         = 'Objet de l\'email envoyé';
 $lang['newsletter.streams.per.page']  = 'Nombre de flux par page';
-$lang['newsletter.default.content']   = 'Contenu par défaut d\'une newsletter de type BBCode ou HTML';
+$lang['newsletter.default.content']   = 'Contenu par défaut d\'une newsletter de type Bbcode ou HTML';
 
 // Authorizations
 $lang['newsletter.authorizations.streams.read']           = 'Autorisations d\'accès aux flux';
@@ -79,8 +79,8 @@ $lang['newsletter.types.choice']      = 'Veuillez sélectionner un type de messa
 $lang['newsletter.types.for.all']     = 'Pour tous';
 $lang['newsletter.types.text']        = 'Texte';
 $lang['newsletter.types.text.clue']   = 'Vous ne pourrez procéder à aucune mise en forme du message.';
-$lang['newsletter.types.bbcode']      = 'BBCode';
-$lang['newsletter.types.bbcode.clue'] = 'Vous pouvez formater le texte grâce au BBCode, le langage de mise en forme simplifié adopté sur tout le portail.';
+$lang['newsletter.types.bbcode']      = 'Bbcode';
+$lang['newsletter.types.bbcode.clue'] = 'Vous pouvez formater le texte grâce au Bbcode, le langage de mise en forme simplifié adopté sur tout le portail.';
 $lang['newsletter.types.html']        = 'HTML';
 $lang['newsletter.types.for.experts'] = 'Utilisateurs expérimentés seulement';
 $lang['newsletter.types.html.clue']   = 'Vous pouvez mettre en forme le texte à votre guise, mais vous devez connaître le langage html.';

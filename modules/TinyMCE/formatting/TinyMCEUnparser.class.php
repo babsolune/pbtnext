@@ -1,7 +1,7 @@
 <?php
 /**
  * This class enables to translate the content formatting from the PHPBoost standard one to
- * the TinyMCE one. The PHPBoost one is historically the one corresponding to the BBCode
+ * the TinyMCE one. The PHPBoost one is historically the one corresponding to the Bbcode
  * translation in HTML and is now the reference.
  * TinyMCE has a particular syntax and it must be respected if we want to make a formatting which
  * can be edited after having beeing written, enough what using a WYSIWYG editor hasn't any advantage.
@@ -87,7 +87,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 		//Module eventual special tags replacement
 		$this->unparse_module_special_tags();
 
-		//Unparsing tags unsupported by TinyMCE, those are in BBCode
+		//Unparsing tags unsupported by TinyMCE, those are in Bbcode
 		$this->unparse_bbcode_tags();
 		//Unparsing tags supported by TinyMCE
 		$this->unparse_tinymce_formatting();
@@ -333,10 +333,10 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	}
 
 	/**
-	 * Unparses the fieldset tag to BBCode syntax (it doesn't exist
+	 * Unparses the fieldset tag to Bbcode syntax (it doesn't exist
 	 * in TinyMCE).
 	 * @param string[] $matches The matched elements
-	 * @return string The corresponding BBCode syntax
+	 * @return string The corresponding Bbcode syntax
 	 */
 	private function unparse_fieldset($matches)
 	{
@@ -401,7 +401,7 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 
 	/**
 	 * Computes the correct TinyMCE syntax for changing the font.
-	 * The problem is that in BBCode we only use one font, and to be compatible (and it's not so bad),
+	 * The problem is that in Bbcode we only use one font, and to be compatible (and it's not so bad),
 	 * TinyMCE uses three or four similar fonts. This method enables to map these two different expressions.
 	 * @param string[] $matches The matched elements
 	 * @return string The correct TinyMCE formatting
@@ -470,10 +470,10 @@ class TinyMCEUnparser extends ContentFormattingUnparser
 	}
 
 	/**
-	 * Unparses the div tag to BBCode syntax (it doesn't exist
+	 * Unparses the div tag to Bbcode syntax (it doesn't exist
 	 * in TinyMCE).
 	 * @param string[] $matches The matched elements
-	 * @return string The corresponding BBCode syntax
+	 * @return string The corresponding Bbcode syntax
 	 */
 	private function unparse_container($matches)
 	{

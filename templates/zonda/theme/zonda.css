@@ -2,7 +2,7 @@
 .sticky-menu > nav > ul > li > a.cssmenu-title { color: var(--main-light); }
 .sticky-menu li:hover > a.cssmenu-title { color: var(--main-tone); }
 
-/* BBCode */
+/* Bbcode */
 .bbcode-bar { border-color: var(--bdr-sub) !important; }
 
 .bbcode-button       { color: var(--main-light); }

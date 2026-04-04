@@ -7,11 +7,11 @@
  * @since       PHPBoost 3.0 - 2011 10 11
 */
 
-class BBCodeContentFormattingExtensionPoint extends AbstractContentFormattingExtensionPoint
+class BbcodeContentFormattingExtensionPoint extends AbstractContentFormattingExtensionPoint
 {
 	public function get_name()
 	{
-		return 'BBCode';
+		return 'bbcode';
 	}
 
 	/**
@@ -19,7 +19,7 @@ class BBCodeContentFormattingExtensionPoint extends AbstractContentFormattingExt
 	 */
 	public function get_parser()
 	{
-		$parser = new BBCodeParser();
+		$parser = new BbcodeParser();
 		$parser->set_forbidden_tags($this->get_forbidden_tags());
 		$parser->set_html_auth($this->get_html_auth());
 		return $parser;
@@ -30,7 +30,7 @@ class BBCodeContentFormattingExtensionPoint extends AbstractContentFormattingExt
 	 */
 	public function get_unparser()
 	{
-		return new BBCodeUnparser();
+		return new BbcodeUnparser();
 	}
 
 	/**
@@ -46,7 +46,7 @@ class BBCodeContentFormattingExtensionPoint extends AbstractContentFormattingExt
 	 */
 	public function get_editor()
 	{
-		$editor = new BBCodeEditor();
+		$editor = new BbcodeEditor();
 		$editor->set_forbidden_tags($this->get_forbidden_tags());
 		return $editor;
 	}

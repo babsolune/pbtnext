@@ -48,7 +48,7 @@ class ContentFormattingConfig extends AbstractConfigData
 	protected function get_default_values()
 	{
 		return [
-			self::DEFAULT_EDITOR => 'BBCode',
+			self::DEFAULT_EDITOR => 'bbcode',
 			self::FORBIDDEN_TAGS => [],
 			self::HTML_TAG_AUTH => []
 		];

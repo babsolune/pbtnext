@@ -99,7 +99,7 @@
 	cursor: not-allowed !important;
 }
 
-/* --- BBCode bar icons --- */
+/* --- Bbcode bar icons --- */
 .cell-bbcode { max-width: 512px; }
 
 .bbcode-button {
@@ -109,7 +109,7 @@
 	font-size: 1.228em
 }
 
-/* --- BBCode bar styles --- */
+/* --- Bbcode bar styles --- */
 .emojis-list {
     li { padding: 0 !important; }
     .emoji-tag {

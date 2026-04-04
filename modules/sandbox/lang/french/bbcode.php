@@ -15,8 +15,8 @@
 ####################################################
 
 $lang['sandbox.bbcode.description'] = '
-    <p>Cette page présente le rendu des éléments spécifiques déclarés en BBCode qui apportent un design différent du <a class="offload" href="' . SandboxUrlBuilder::component()->rel() . '">FWKBoost</a>.</p>
-    <p>Pour connaitre le langage BBCode, la documentation complète est fournie sur le site de <a class="offload" href="https://www.phpboost.com/wiki"><i class="fa iboost fa-iboost-phpboost"></i> PHPHBoost</a></p>
+    <p>Cette page présente le rendu des éléments spécifiques déclarés en Bbcode qui apportent un design différent du <a class="offload" href="' . SandboxUrlBuilder::component()->rel() . '">FWKBoost</a>.</p>
+    <p>Pour connaitre le langage Bbcode, la documentation complète est fournie sur le site de <a class="offload" href="https://www.phpboost.com/wiki"><i class="fa iboost fa-iboost-phpboost"></i> PHPHBoost</a></p>
 ';
 
 $lang['sandbox.bbcode.typography'] = 'Typographie';

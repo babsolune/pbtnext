@@ -17,11 +17,11 @@
 abstract class ContentFormattingParser extends AbstractParser
 {
 	/**
-	 * @var array Authorization of the HTML BBCode tag.
+	 * @var array Authorization of the HTML Bbcode tag.
 	 */
 	protected $html_auth = [];
 	/**
-	 * @var array List of the BBCode forbidden tags
+	 * @var array List of the Bbcode forbidden tags
 	 */
 	protected $forbidden_tags = [];
 
@@ -114,14 +114,14 @@ abstract class ContentFormattingParser extends AbstractParser
 	}
 
 	/**
-	 * Splits a string according to a regular expression. The matched pattern can be nested and must follow the BBCode syntax,
+	 * Splits a string according to a regular expression. The matched pattern can be nested and must follow the Bbcode syntax,
 	 * i.e matching [tag=args]content of the tag[/tag].
 	 * It returns an array
 	 * For example, il you have this: $my_str = '[tag=1]test1[/tag]test2[tag=2]test3[tag=3]test4[/tag]test5[/tag]?est6';
 	 * You call it like that: ContentFormattingParser::preg_split_safe_recurse($my_str, 'tag', '[0-9]');
 	 * It will return you ['', '1', 'test1', 'test2', '2', ['test3', '3', 'test4', 'test5'], 'test6'].
 	 * @param $content string Content into which you want to search the pattern
-	 * @param $tag string BBCode tage name
+	 * @param $tag string Bbcode tage name
 	 * @param $attributes string The regular expression (PCRE syntax) corresponding to the arguments which you want to match.
 	 * There mustn't be any matching parenthesis into that regular expression
 	 * @return array the split string

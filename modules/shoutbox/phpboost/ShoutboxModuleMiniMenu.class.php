@@ -41,7 +41,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 		$view = new FileTemplate('shoutbox/ShoutboxModuleMiniMenu.tpl');
 
 		//Assign the lang file to the tpl
-		$view->add_lang(array_merge(LangLoader::get_all_langs('shoutbox'), LangLoader::get_module_langs('BBCode')));
+		$view->add_lang(array_merge(LangLoader::get_all_langs('shoutbox'), LangLoader::get_module_langs('bbcode')));
 
 		//Assign common menu variables to the tpl
 		MenuService::assign_positions_conditions($view, $this->get_block());
@@ -97,7 +97,7 @@ class ShoutboxModuleMiniMenu extends ModuleMiniMenu
 			'C_MEMBER' => AppContext::get_current_user()->check_level(User::MEMBER_LEVEL),
 			'C_DISPLAY_FORM' => ShoutboxAuthorizationsService::check_authorizations()->write() && !AppContext::get_current_user()->is_readonly(),
 			'C_VALIDATE_ONKEYPRESS_ENTER' => $config->is_validation_onkeypress_enter_enabled(),
-			'C_DISPLAY_SHOUT_BBCODE' => ModulesManager::is_module_installed('BBCode') && ModulesManager::is_module_activated('BBCode') && $config->is_shout_bbcode_enabled(),
+			'C_DISPLAY_SHOUT_BBCODE' => ModulesManager::is_module_installed('bbcode') && ModulesManager::is_module_activated('bbcode') && $config->is_shout_bbcode_enabled(),
 			'C_BOLD_DISABLED' => isset($forbidden_tags['b']),
 			'C_ITALIC_DISABLED' => isset($forbidden_tags['i']),
 			'C_UNDERLINE_DISABLED' => isset($forbidden_tags['u']),
