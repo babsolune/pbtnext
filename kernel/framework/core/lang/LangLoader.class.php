@@ -54,9 +54,9 @@ class LangLoader
 
 	public static function get_default_lang()
 	{
-		$browser_lang = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? strtolower(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2)) : '';
-		$browser_lang = !$browser_lang && isset($_SERVER['HTTP_X_COUNTRY_CODE']) ? strtolower($_SERVER['HTTP_X_COUNTRY_CODE']) : $browser_lang;
-		$browser_lang = !$browser_lang ? strtolower(AppContext::get_request()->get_location_info_by_ip()) : $browser_lang;
+		$browser_lang = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? TextHelper::strtolower(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2)) : '';
+		$browser_lang = !$browser_lang && isset($_SERVER['HTTP_X_COUNTRY_CODE']) ? TextHelper::strtolower($_SERVER['HTTP_X_COUNTRY_CODE']) : $browser_lang;
+		$browser_lang = !$browser_lang ? TextHelper::strtolower(AppContext::get_request()->get_location_info_by_ip()) : $browser_lang;
 		$langs = self::get_available_langs();
 
 		if ($browser_lang)

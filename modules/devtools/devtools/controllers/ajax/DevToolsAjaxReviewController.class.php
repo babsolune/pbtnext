@@ -549,7 +549,7 @@ class DevToolsAjaxReviewController extends AbstractController
         $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($module_path, RecursiveDirectoryIterator::SKIP_DOTS));
         foreach ($it as $f)
         {
-            $ext = strtolower(pathinfo($f->getFilename(), PATHINFO_EXTENSION));
+            $ext = TextHelper::strtolower(pathinfo($f->getFilename(), PATHINFO_EXTENSION));
             if (!in_array($ext, ['php', 'tpl'])) continue;
             if (strpos($f->getPathname(), DIRECTORY_SEPARATOR . 'lang' . DIRECTORY_SEPARATOR) !== false) continue;
             $c = @file_get_contents($f->getPathname());

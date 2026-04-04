@@ -400,7 +400,7 @@ class ReviewService
      */
     public static function is_picture_file($file, $folder)
     {
-        $ext = strtolower(substr(strrchr(is_array($file) ? $file['file_path'] : $file, '.'), 1));
+        $ext = TextHelper::strtolower(substr(strrchr(is_array($file) ? $file['file_path'] : $file, '.'), 1));
         return in_array($ext, ['jpg', 'jpeg', 'png', 'svg', 'gif']);
     }
 
@@ -409,7 +409,7 @@ class ReviewService
      */
     public static function is_pdf_file($file, $folder)
     {
-        $ext = strtolower(substr(strrchr(is_array($file) ? $file['file_path'] : $file, '.'), 1));
+        $ext = TextHelper::strtolower(substr(strrchr(is_array($file) ? $file['file_path'] : $file, '.'), 1));
         return $ext === 'pdf';
     }
 

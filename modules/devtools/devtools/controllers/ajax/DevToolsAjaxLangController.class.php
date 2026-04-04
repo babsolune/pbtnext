@@ -178,7 +178,7 @@ class DevToolsAjaxLangController extends AbstractController
 
         foreach ($iterator as $file)
         {
-            $ext = strtolower(pathinfo($file->getFilename(), PATHINFO_EXTENSION));
+            $ext = TextHelper::strtolower(pathinfo($file->getFilename(), PATHINFO_EXTENSION));
             if (!in_array($ext, ['php', 'tpl'])) continue;
             // Skip lang files themselves
             if (strpos($file->getPathname(), '/lang/') !== false) continue;
