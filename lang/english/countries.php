@@ -50,7 +50,7 @@ $lang = [
 	'bz' => 'Belize',
 	'ca' => 'Canada',
 	'cc' => 'Cocos (Keeling) Islands',
-	'cd' => 'Congo, (The Democratic Republic of the',
+	'cd' => 'Congo, (The Democratic Republic of the)',
 	'cf' => 'Central African Republic',
 	'cg' => 'Congo',
 	'ch' => 'Switzerland',
@@ -83,7 +83,7 @@ $lang = [
 	'fi' => 'Finland',
 	'fj' => 'Fiji',
 	'fk' => 'Falkland Islands (Malvinas)',
-	'fm' => 'Micronesia, (Federated States of',
+	'fm' => 'Micronesia, (Federated States of)',
 	'fo' => 'Faroe Islands',
 	'fr' => 'France',
 	'fs' => 'Scotland',
@@ -238,7 +238,7 @@ $lang = [
 	'tt' => 'Trinidad and Tobago',
 	'tv' => 'Tuvalu',
 	'tw' => 'Taiwan',
-	'tz' => 'Tanzania, (United Republic of',
+	'tz' => 'Tanzania, (United Republic of)',
 	'ua' => 'Ukraine',
 	'ug' => 'Uganda',
 	'uk' => 'United Kingdom',
@@ -249,8 +249,8 @@ $lang = [
 	'va' => 'Vatican City',
 	'vc' => 'Saint Vincent and the Grenadines',
 	've' => 'Venezuela',
-	'vg' => 'Virgin Islands, (British',
-	'vi' => 'Virgin Islands, (U.S.',
+	'vg' => 'Virgin Islands, (British)',
+	'vi' => 'Virgin Islands, (U.S.)',
 	'vn' => 'Vietnam',
 	'vu' => 'Vanuatu',
 	'wf' => 'Wallis and Futuna',
@@ -263,6 +263,5 @@ $lang = [
 	'zr' => 'Zaire',
 	'zw' => 'Zimbabwe',
 	'other' => 'Others',
-);
+];
 ?>
-]
