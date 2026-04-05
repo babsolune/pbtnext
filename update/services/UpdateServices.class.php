@@ -237,13 +237,24 @@ class UpdateServices
             ModulesManager::install_module('SocialNetworks');
         }
 
+        // Install the default modules
         // Installing the renamed bbcode module
         if (ModulesManager::is_module_installed('Bbcode'))
-            ModulesManager::uninstall_module('Bbcode');
+            ModulesManager::uninstall_module('Bbcode', true);
         $folder = new Folder(PATH_TO_ROOT . '/bbcode');
         if ($folder->exists() && !ModulesManager::is_module_installed('bbcode')) {
             ModulesManager::install_module('bbcode');
         }
+
+        // TODO save old config of HomeLanding to set it in lobby config
+        if(!ModulesManager::is_module_installed('HomeLanding'))
+            ModulesManager::uninstall_module('HomeLanding', true);
+        $folder = new Folder(PATH_TO_ROOT . '/lobby');
+        if ($folder->exists())
+            ModulesManager::install_module('lobby');
+
+        if (!ModulesManager::is_module_installed('pages'))
+            ModulesManager::install_module('pages');
 
         // Verification of the site installation date and correction if necessary
         $this->check_installation_date();
@@ -937,7 +948,7 @@ class UpdateServices
 
                 // check if 'addon_type' exists and if it equals "module"
                 // Bbcode and qaptcha remain at root level in the new structure
-                if (isset($config['addon_type']) && $config['addon_type'] === 'module' && !in_array($dir_name, ['bbcode', 'lobby', 'nexus', 'qaptcha']))
+                if (isset($config['addon_type']) && $config['addon_type'] === 'module' && !in_array($dir_name, ['bbcode', 'lobby', 'pages', 'qaptcha']))
                 {
                     // Remove the old root-level module folder
                     $folder = new Folder($dir);
