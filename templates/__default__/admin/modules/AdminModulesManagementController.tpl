@@ -19,7 +19,7 @@
                             # IF C_SEVERAL_MODULES_INSTALLED #
                                 # IF installed_modules.C_COMPATIBLE #
                                     <label class="checkbox" for="multiple-checkbox-{installed_modules.MODULE_NUMBER}">
-                                        <input type="checkbox" id="multiple-checkbox-{installed_modules.MODULE_NUMBER}" name="delete-checkbox-{installed_modules.MODULE_NUMBER}"/>
+                                        <input type="checkbox" id="multiple-checkbox-{installed_modules.MODULE_NUMBER}" name="delete-checkbox-{installed_modules.MODULE_NUMBER}"# IF NOT installed_modules.C_DELETE # disabled# ENDIF # />
                                         <span>&nbsp;</span>
                                     </label>
                                 # ENDIF #
@@ -149,11 +149,5 @@
 	opensubmenu('.addon-menu-title', {
 		osmTarget: '.addon-menu-title',
 		osmCloseExcept : '.addon-menu-checkbox, .addon-menu-checkbox *'
-	});
-
-	opensubmenu('.addon-auth', {
-		osmTarget: '.addon-auth-container',
-		osmCloseExcept: '.addon-auth-content *',
-		osmCloseButton: '.addon-auth-close i',
 	});
 </script>

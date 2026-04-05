@@ -31,8 +31,10 @@ class AdminThemesManagementController extends DefaultAdminController
 		$installed_themes = ThemesManager::get_installed_themes_map_sorted_by_localized_name();
 		$selected_theme_number = 0;
 		$theme_number = 1;
-		foreach($installed_themes as $theme)
+
+        foreach($installed_themes as $theme)
 		{
+            $undeletable = in_array($theme->get_id(), ['base']);
 			$configuration = $theme->get_configuration();
 			$theme_has_parent = $configuration->get_parent_theme() != '' && $configuration->get_parent_theme() != '__default__';
 
@@ -51,6 +53,7 @@ class AdminThemesManagementController extends DefaultAdminController
 				'C_IS_ACTIVATED'       => $theme->is_activated(),
 				'C_THUMBNAILS'         => count($pictures) > 0,
 				'C_PARENT_THEME'       => $configuration->get_parent_theme() != '' && $configuration->get_parent_theme() != '__default__',
+                'C_DELETE'             => !$undeletable,
 
 				'THEME_NUMBER'   => $theme_number,
 				'MODULE_ID'      => $theme->get_id(),

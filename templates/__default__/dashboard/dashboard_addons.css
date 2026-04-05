@@ -104,18 +104,19 @@
     &.default-addon { cursor: not-allowed; }
 }
 
-.addon-auth
-
 .addon-auth-content {
 	position: absolute;
 	z-index: 1;
-	top: 0.618em;
 	left: -9999px;
 	width: auto;
 	padding: 0.456em 0.456em;
 	border-width: 1px;
 	border-style: solid;
     border-color: transparent;
+}
+
+.addon-auth-close {
+    cursor: pointer;
 }
 
 .opened > .addon-auth-content {
@@ -125,6 +126,10 @@
 
 @media (min-width: 769px) {
 	.theme-element .opened > .addon-auth-content { bottom: 0.309em; }
+}
+
+.actions-container > * {
+    padding-left: 0.309em;
 }
 
 .addon-auth-content select { max-height: 185px; }
