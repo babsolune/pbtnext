@@ -99,4 +99,4 @@
 	# ENDIF #
 	<footer></footer>
 </section>
-<script src="{PATH_TO_ROOT}/modules/pages/templates/js/pages.js" defer></script>
+<script src="{TPL_PATH_TO_ROOT}/modules/pages/templates/js/pages.js" defer></script>

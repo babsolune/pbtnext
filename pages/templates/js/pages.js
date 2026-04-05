@@ -2,7 +2,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2020 06 30
+ * @version     PHPBoost 6.1 - last update: 2026 04 05
  * @since       PHPBoost 5.2 - 2020 06 15
 */
 
@@ -26,11 +26,12 @@ jQuery(document).ready(function(){
 	}
 
 	jQuery('#category-nav li').has('ul').addClass('has-children');
-});
 
-jQuery('[class*="toggle-menu-button"] .categories-item').each(function(){
-	jQuery(this).on('click', function(){
-		jQuery(this).toggleClass('is-open-menu');
-		jQuery(this).closest('li').children('[class*="items-list"]').toggleClass('show-list');
+	// Click handler registered after the DOM tree has been rebuilt by CreateChild
+	jQuery('[class*="toggle-menu-button"] .categories-item').each(function(){
+		jQuery(this).on('click', function(){
+			jQuery(this).toggleClass('is-open-menu');
+			jQuery(this).closest('li').children('[class*="items-list"]').toggleClass('show-list');
+		});
 	});
 });

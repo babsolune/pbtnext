@@ -23,5 +23,33 @@ class PagesExtensionPointProvider extends ItemsModuleExtensionPointProvider
 			new DefaultCategoryLobbyProvider('pages')
 		];
 	}
+
+	/**
+	 * Registers two URL mapping rules in the generated .htaccess:
+	 *
+	 * 1. Standard mapping (normal priority) — keeps /pages/ prefix for all
+	 *    administration URLs: admin/config, categories, manage, add, pending,
+	 *    member, reorder, edit, delete …
+	 *    RewriteRule ^pages/([\w/_-]*)$ /modules/pages/index.php?url=/$1
+	 *
+	 * 2. Root mapping (low priority, placed last) — exposes frontend pages
+	 *    directly at the site root without the /pages/ prefix.
+	 *    RewriteRule ^([\w/_-]*)$ /modules/pages/index.php?url=/$1
+	 *    This rule only fires when no other rule has already matched (e.g. an
+	 *    existing file, another module, or rule 1 above).
+	 *
+	 * After modifying this file, regenerate the .htaccess from the PHPBoost
+	 * administration panel: Administration → Cache → Regenerate .htaccess.
+	 */
+	public function url_mappings()
+	{
+		return new UrlMappings([
+			// Standard /pages/ dispatcher — catches admin & management URLs.
+			new DispatcherUrlMapping('/pages/index.php'),
+
+			// Root dispatcher (low priority) — catches frontend URLs at site root.
+			new DispatcherUrlMapping('/pages/index.php', '([\\w/_-]*)$', 'root'),
+		]);
+	}
 }
 ?>

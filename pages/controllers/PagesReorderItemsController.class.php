@@ -3,9 +3,9 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2021 11 30
+ * @version     PHPBoost 6.1 - last update: 2026 04 05
  * @since       PHPBoost 5.2 - 2020 06 15
- * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      Julien BRISWALTER <j1.beth@phpboost.com>
 */
 
 class PagesReorderItemsController extends DefaultSeveralItemsController
@@ -18,7 +18,14 @@ class PagesReorderItemsController extends DefaultSeveralItemsController
 		if ($request->get_value('submit', false))
 		{
 			$this->update_position($request);
-			AppContext::get_response()->redirect(ItemsUrlBuilder::display_category($this->get_category()->get_id(), $this->get_category()->get_rewrited_name(), self::$module_id), $this->lang['warning.success.position.update']);
+			// After reorder, redirect to the frontend category page (root-based URL)
+			AppContext::get_response()->redirect(
+				PagesUrlBuilder::display_category(
+					$this->get_category()->get_id(),
+					$this->get_category()->get_rewrited_name()
+				),
+				$this->lang['warning.success.position.update']
+			);
 		}
 
 		$this->build_view();
@@ -31,7 +38,11 @@ class PagesReorderItemsController extends DefaultSeveralItemsController
 		parent::init();
 		$this->customized_page_title = $this->lang['items.reordering'];
 		$this->page_description = '';
-		$this->current_url = ItemsUrlBuilder::specific_page('reorder', self::$module_id, $this->category->get_id() != Category::ROOT_CATEGORY ? [$this->get_category()->get_id() . '-' . $this->get_category()->get_rewrited_name()] : []);
+		// The reorder page itself lives under /pages/ (admin action)
+		$this->current_url = PagesUrlBuilder::reorder_items(
+			$this->category->get_id() != Category::ROOT_CATEGORY ? $this->get_category()->get_id() : 0,
+			$this->category->get_id() != Category::ROOT_CATEGORY ? $this->get_category()->get_rewrited_name() : ''
+		);
 	}
 
 	protected function build_view()
@@ -49,11 +60,13 @@ class PagesReorderItemsController extends DefaultSeveralItemsController
 			'C_SEVERAL_ITEMS'      => $items_number > 1,
 			'C_CATEGORY_THUMBNAIL' => !empty($category_thumbnail),
 			'CATEGORY_ID'          => $this->get_category()->get_id(),
-			'CATEGORY_NAME'	       => $this->get_category()->get_name(),
+			'CATEGORY_NAME'        => $this->get_category()->get_name(),
 			'ITEMS_NUMBER'         => $items_number,
 			'CATEGORY_DESCRIPTION' => FormatingHelper::second_parse($this->get_category()->get_description()),
 			'U_CATEGORY_THUMBNAIL' => $category_thumbnail,
-			'U_EDIT_CATEGORY'      => $this->get_category()->get_id() == Category::ROOT_CATEGORY ? ModulesUrlBuilder::configuration()->rel() : CategoriesUrlBuilder::edit($this->get_category()->get_id(), self::$module_id)->rel()
+			'U_EDIT_CATEGORY'      => $this->get_category()->get_id() == Category::ROOT_CATEGORY
+				? ModulesUrlBuilder::configuration()->rel()
+				: CategoriesUrlBuilder::edit($this->get_category()->get_id(), self::$module_id)->rel()
 		]);
 	}
 
