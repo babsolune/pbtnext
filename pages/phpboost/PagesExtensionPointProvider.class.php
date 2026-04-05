@@ -15,5 +15,13 @@ class PagesExtensionPointProvider extends ItemsModuleExtensionPointProvider
 	{
 		return new DefaultHomePageDisplay($this->get_id(), PagesHomeController::get_view($this->get_id()));
 	}
+
+    public function lobby(): array
+	{
+		return [
+			new DefaultItemsLobbyProvider('pages'),
+			new DefaultCategoryLobbyProvider('pages')
+		];
+	}
 }
 ?>

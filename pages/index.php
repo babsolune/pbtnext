@@ -9,19 +9,19 @@
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  */
 
-define('PATH_TO_ROOT', '../..');
+define('PATH_TO_ROOT', '..');
 
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
-$config           = PagesConfig::load();
-$columns_disabled = ThemesManager::get_theme(AppContext::get_current_user()->get_theme())->get_columns_disabled();
+$config  = PagesConfig::load();
+$columns = ThemesManager::get_theme(AppContext::get_current_user()->get_theme())->get_columns_disabled();
 
 if ($config->get_left_column_disabled()) {
-    $columns_disabled->set_disable_left_columns(true);
+    $columns->set_disable_left_columns(true);
 }
 
 if ($config->get_right_column_disabled()) {
-    $columns_disabled->set_disable_right_columns(true);
+    $columns->set_disable_right_columns(true);
 }
 
 $url_controller_mappers = [
