@@ -262,7 +262,10 @@
         });
 
         document.addEventListener('click', function (event) {
-            if ((!event.target.matches(params.osmCloseExcept) || event.target.matches(params.osmCloseButton))) {
+            const inExcept = params.osmCloseExcept && event.target.matches(params.osmCloseExcept);
+            const onCloseButton = params.osmCloseButton && event.target.matches(params.osmCloseButton);
+
+            if (!inExcept || onCloseButton) {
                 document.querySelectorAll(params.osmTarget).forEach(function (el) {
                     el.classList.remove(params.osmClass);
                 });
@@ -287,8 +290,10 @@
 
 		for (i = 1; i <= elements_number; i++)
 		{
-			if (jQuery('#multiple-checkbox-' + i)[0] && i != except_element)
-				jQuery('#multiple-checkbox-' + i)[0].checked = status;
+            var checkbox = jQuery('#multiple-checkbox-' + i)[0];
+            if (checkbox && i != except_element && !checkbox.disabled) {
+                checkbox.checked = status;
+            }
 		}
 
 		try {
