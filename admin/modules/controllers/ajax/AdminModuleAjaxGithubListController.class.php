@@ -63,7 +63,7 @@ class AdminModuleAjaxGithubListController extends AbstractController
 				'author'        => isset($config['author'])         ? $config['author']        : '',
 				'description'   => isset($desc['desc'])             ? $desc['desc']            : '',
 				'compatible'    => (isset($config['compatibility']) ? $config['compatibility'] : '') === $phpboost_version,
-				'fa_icon'          => isset($config['fa_icon'])        ? $config['fa_icon']       : '',
+				'fa_icon'       => isset($config['fa_icon'])        ? $config['fa_icon']       : '',
 				'installed'     => ModulesManager::is_module_installed($addon_id),
 				'thumbnail'     => AddonRemoteHelper::remote_file_exists($raw_base . $thumb_path) ? $raw_base . $thumb_path : null,
 				'repo_url'      => 'https://github.com/' . $owner . '/' . $repo . '/tree/' . $branch . '/' . ($path !== '' ? $path . '/' : '') . $addon_id,

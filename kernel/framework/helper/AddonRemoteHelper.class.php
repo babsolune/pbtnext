@@ -124,12 +124,12 @@ class AddonRemoteHelper
         $real_version = $version === GeneralConfig::load()->get_phpboost_major_version() ? $version : '/dev/';
 
 		$versioned = $base . '/' . $real_version . '/' . $addon_folder;
-		$data      = self::curl_get_json($versioned . '/addons.json');
+		$data      = self::curl_get_json($versioned . '/' . $addon_folder . '.json');
 		if (is_array($data))
 			return [$versioned, $data];
 
 		$dev  = $base . '/dev/' . $addon_folder;
-		$data = self::curl_get_json($dev . '/addons.json');
+		$data = self::curl_get_json($dev . '/' . $addon_folder . '.json');
 		if (is_array($data))
 			return [$dev, $data];
 

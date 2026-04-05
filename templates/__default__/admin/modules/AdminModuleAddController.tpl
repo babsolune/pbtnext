@@ -291,99 +291,128 @@
 	}
 
 	// ---- List render ----
-	function renderList(container, data, source, emptyMsg)
-    {
-		if (data.error && data.error !== null)
-        {
-			container.innerHTML = '<div class="message-helper bgc error">' + ${escapejs(@addon.source.error)} + '</div>';
-			return;
-		}
-		var addons = data.addons || [];
-		if (!addons.length)
-        {
-			container.innerHTML = '<div class="content"><div class="message-helper bgc notice message-helper-small">' + emptyMsg + '</div></div>';
-			return;
-		}
-		var pfx         = source;
-		var compatibles = addons.filter(function (a) { return a.compatible && !a.installed; });
+	function renderList(container, data, source, emptyMsg) {
+    if (data.error && data.error !== null) {
+        container.innerHTML = '<div class="message-helper bgc error">' + ${escapejs(@addon.source.error)} + '</div>';
+        return;
+    }
 
-		var html = '<div id="' + pfx + '-feedback"></div>';
-		html += '<section class="addons-container modules-elements-container not-installed-elements-container">';
-		html += '<div class="cell-list">';
-		html += '<ul class="col-v-3">';
+    var addons = data.addons || [];
+    if (!addons.length) {
+        container.innerHTML = '<div class="content"><div class="message-helper bgc notice message-helper-small">' + emptyMsg + '</div></div>';
+        return;
+    }
 
-		addons.forEach(function (addon) {
-            console.log(addon.thumbnail);
-			var cls = addon.compatible ? '' : ' not-compatible error';
-			if (addon.installed) cls += ' installed';
-			html += '<li class="li-stretch addon' + cls + '">';
-			html += '<div class="addon-name align-left mini-checkbox">';
-			if (compatibles.length > 1 && addon.compatible && !addon.installed) {
-				html += '<label class="checkbox" for="' + pfx + '-cb-' + esc(addon.id) + '">'
-					+ '<input type="checkbox" class="add-checkbox" id="' + pfx + '-cb-' + esc(addon.id) + '" value="' + esc(addon.id) + '">'
-					+ '<span>&nbsp;</span></label>';
-			}
-			if (addon.thumbnail) {
-				html += '<img src="' + esc(addon.thumbnail) + '" alt="' + esc(addon.name) + '" class="addon-thumbnail" onerror="this.style.display=\'none\'">';
-			} else if (addon.fa_icon) {
-				html += '<i class="' + esc(addon.fa_icon) + '" aria-hidden="true"></i>';
-            } else {
-				html += '<i class="fa fa-fw fa-puzzle-piece" aria-hidden="true"></i>';
-			}
-			html += esc(addon.name) + '</div>';
-			html += '<div class="addon-infos">';
-			html += '<span class="' + (addon.compatible ? 'success' : 'error') + '" aria-label="' + ${escapejs(@addon.compatibility)} + ' PHPBoost">' + esc(addon.compatibility) + '</span>';
-			if (source === 'github' && addon.repo_url) {
-				html += '<a href="' + esc(addon.repo_url) + '" class="button button-mini default offload" target="_blank" rel="noopener" aria-label="' + ${escapejs(@addon.github.view.repo)} + '"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a>';
-			}
-			if (addon.installed) {
-				html += '<span class="button button-mini bgc-full success" aria-label="' + ${escapejs(@addon.already.installed)} + '"><i class="fa fa-fw fa-check" aria-hidden="true"></i></span>';
-			} else if (addon.compatible) {
-				html += '<button type="button" class="button button-mini bgc-full logo-color btn-install-one" data-id="' + esc(addon.id) + '" data-source="' + pfx + '" aria-label="' + ${escapejs(@addon.install)} + '"><i class="fa fa-fw fa-arrows-spin" aria-hidden="true"></i></button>';
-			} else {
-				html += '<button type="button" class="button button-mini bgc-full error" disabled aria-label="' + ${escapejs(@addon.not.compatible)} + '"><i class="fa fa-fw fa-ban" aria-hidden="true"></i></button>';
-			}
-			html += '</div></li>';
-		});
+    // Group addons by genre
+    var addonsByGenre = {};
+    addons.forEach(function(addon) {
+        if (!addonsByGenre[addon.genre]) {
+            addonsByGenre[addon.genre] = [];
+        }
+        addonsByGenre[addon.genre].push(addon);
+    });
 
-		html += '</ul></div><footer></footer></section>';
+    // Sort genres alphabetically
+    var sortedGenres = Object.keys(addonsByGenre).sort();
 
-		if (compatibles.length > 1) {
-			html += '<div class="multiple-select-button select-all-checkbox mini-checkbox inline-checkbox bgc-full link-color">'
-				+ '<label class="checkbox" for="' + pfx + '-check-all">'
-				+ '<input type="checkbox" id="' + pfx + '-check-all">'
-				+ '<span aria-label="' + ${escapejs(@addon.modules.select.all)} + '">&nbsp;</span></label>'
-				+ '<button type="button" id="' + pfx + '-install-sel" class="button submit select-all-button">' + ${escapejs(@addon.multiple.install)} + '</button>'
-				+ '</div>';
-		}
+    var html = '<div id="' + source + '-feedback"></div>';
 
-		container.innerHTML = html;
+    // Render each genre section
+    sortedGenres.forEach(function(genre) {
+        var genreAddons = addonsByGenre[genre];
+        var compatibles = genreAddons.filter(function(a) { return a.compatible && !a.installed; });
 
-		// Tout cocher
-		var checkAll = document.getElementById(pfx + '-check-all');
-		if (checkAll) {
-			checkAll.addEventListener('change', function () {
-				container.querySelectorAll('.add-checkbox').forEach(function (cb) { cb.checked = checkAll.checked; });
-			});
-		}
+        html += '<h2>' + esc(genre) + '</h2>';
+        html += '<section class="addons-container modules-elements-container not-installed-elements-container">';
+        html += '<div class="cell-list">';
+        html += '<ul class="col-v-3">';
 
-		// Installer un seul
-		container.querySelectorAll('.btn-install-one').forEach(function (btn) {
-			btn.addEventListener('click', function () {
-				install([btn.getAttribute('data-id')], btn.getAttribute('data-source'));
-			});
-		});
+        genreAddons.forEach(function(addon) {
+            var cls = addon.compatible ? '' : ' not-compatible error';
+            if (addon.installed) cls += ' installed';
+            html += '<li class="li-stretch addon' + cls + '">';
+                html += '<div class="addon-name align-left mini-checkbox">';
+                    if (compatibles.length > 1 && addon.compatible && !addon.installed) {
+                        html += '<label class="checkbox" for="' + source + '-cb-' + esc(addon.id) + '">'
+                            + '<input type="checkbox" class="add-checkbox" id="' + source + '-cb-' + esc(addon.id) + '" value="' + esc(addon.id) + '">'
+                            + '<span>&nbsp;</span></label>';
+                    }
+                    html += esc(addon.name);
+                html += '</div>';
+                html += '<div class="addon-infos addon-large align-right">';
+                    html += '<button onclick="return false;" class="modal-button --infos-module-' + esc(addon.id) + ' button button-mini" aria-label="' + ${escapejs(@common.informations)} + '"><i class="far fa-circle-question" aria-hidden="true"></i></button>';
+                    html += '<div id="infos-module-' + esc(addon.id) + '" class="modal modal-full">';
+                        html += '<div class="modal-overlay close-modal" aria-label="' + ${escapejs(@common.close)} + '"></div>';
+                        html += '<div class="modal-content cell-list">';
+                            html += '<span class="error big hide-modal close-modal" aria-label="' + ${escapejs(@common.close)} + '"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>';
+                            html += '<ul>';
+                                html += '<li class="li-stretch">';
+                                    if (addon.thumbnail) {
+                                        html += '<img src="' + esc(addon.thumbnail) + '" alt="' + esc(addon.name) + '" class="addon-thumbnail" onerror="this.style.display=\'none\'">';
+                                    } else if (addon.fa_icon) {
+                                        html += '<i class="' + esc(addon.fa_icon) + '" aria-hidden="true"></i>';
+                                    } else {
+                                        html += '<i class="fa fa-fw fa-puzzle-piece" aria-hidden="true"></i>';
+                                    }
+                                    html += '<h2>' + esc(addon.name) + '</h2>';
+                                html += '</li>';
+                                html += '<li class="li-stretch"><span class="text-strong">{@common.description} :</span> ' + esc(addon.description) + '</li>';
+                                html += '<li class="li-stretch"><span class="text-strong">{@common.author} :</span> ' + esc(addon.author) + '</li>';
+                                html += '<li class="li-stretch"><span class="text-strong">{@common.version} :</span> ' + esc(addon.version) + '</li>';
+                                if (addon.creation_date) {
+                                    html += '<li class="li-stretch"><span class="text-strong">{@common.creation.date} :</span> ' + esc(addon.creation_date) + '</li>';
+                                }
+                                if (addon.last_update) {
+                                    html += '<li class="li-stretch"><span class="text-strong">{@common.last.update} :</span> ' + esc(addon.last_update) + '</li>';
+                                }
+                            html += '</ul>';
+                        html += '</div>';
+                    html += '</div>';
+                    html += ' <button class="button button-mini default ' + (addon.compatible ? 'success' : 'error') + '" aria-label="' + ${escapejs(@addon.compatibility)} + ' PHPBoost">' + esc(addon.compatibility) + '</button>';
+                    if (source === 'github' && addon.repo_url) {
+                        html += ' <a href="' + esc(addon.repo_url) + '" class="button button-mini default offload" target="_blank" rel="noopener" aria-label="' + ${escapejs(@addon.github.view.repo)} + '"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a>';
+                    }
+                    if (addon.installed) {
+                        html += ' <button onclick="return false;" class="button button-mini bgc-full success" aria-label="' + ${escapejs(@addon.already.installed)} + '"><i class="fa fa-fw fa-check" aria-hidden="true"></i></button>';
+                    } else if (addon.compatible) {
+                        html += ' <button type="button" class="button button-mini bgc-full logo-color btn-install-one" data-id="' + esc(addon.id) + '" data-source="' + source + '" aria-label="' + ${escapejs(@addon.install)} + '"><i class="fa fa-fw fa-arrows-spin" aria-hidden="true"></i></button>';
+                    } else {
+                        html += ' <button type="button" class="button button-mini bgc-full error" disabled aria-label="' + ${escapejs(@addon.not.compatible)} + '"><i class="fa fa-fw fa-ban" aria-hidden="true"></i></button>';
+                    }
+                html += '</div>';
+            html += '</li>';
+        });
 
-		// Installer la sélection
-		var btnSel = document.getElementById(pfx + '-install-sel');
-		if (btnSel) {
-			btnSel.addEventListener('click', function () {
-				var ids = [];
-				container.querySelectorAll('.add-checkbox:checked').forEach(function (cb) { ids.push(cb.value); });
-				if (ids.length) install(ids, pfx);
-			});
-		}
-	}
+        html += '</ul></div><footer></footer></section>';
+    });
+
+    container.innerHTML = html;
+
+    // Check all checkboxes
+    var checkAll = document.getElementById(source + '-check-all');
+    if (checkAll) {
+        checkAll.addEventListener('change', function() {
+            container.querySelectorAll('.add-checkbox').forEach(function(cb) { cb.checked = checkAll.checked; });
+        });
+    }
+
+    // Install one addon
+    container.querySelectorAll('.btn-install-one').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            install([btn.getAttribute('data-id')], btn.getAttribute('data-source'));
+        });
+    });
+
+    // Install selected addons
+    var btnSel = document.getElementById(source + '-install-sel');
+    if (btnSel) {
+        btnSel.addEventListener('click', function() {
+            var ids = [];
+            container.querySelectorAll('.add-checkbox:checked').forEach(function(cb) { ids.push(cb.value); });
+            if (ids.length) install(ids, source);
+        });
+    }
+}
 
 	// ---- Installation ----
 	function install(ids, source) {

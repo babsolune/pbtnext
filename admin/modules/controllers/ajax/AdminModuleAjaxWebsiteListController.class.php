@@ -35,19 +35,23 @@ class AdminModuleAjaxWebsiteListController extends AbstractController
 
             $locale = AppContext::get_current_user()->get_locale();
             $names  = isset($item['name']) && is_array($item['name']) ? $item['name'] : [];
+            $genres = isset($item['genre']) && is_array($item['genre']) ? $item['genre'] : [];
             $descs  = isset($item['description']) && is_array($item['description']) ? $item['description'] : [];
 
             $name        = $names[$locale]  ?? $names['english']  ?? (is_string($item['name'] ?? null) ? $item['name'] : $addon_id);
+            $genre       = $genres[$locale]  ?? $genres['english']  ?? (is_string($item['genre'] ?? null) ? $item['genre'] : $addon_id);
             $description = $descs[$locale]  ?? $descs['english']  ?? (is_string($item['description'] ?? null) ? $item['description'] : '');
 			$addons[] = [
 				'id'            => $addon_id,
 				'name'          => $name,
+				'genre'         => $genre,
 				'compatibility' => isset($item['compatibility']) ? $item['compatibility'] : '',
 				'version'       => isset($item['version'])       ? $item['version']       : '',
 				'author'        => isset($item['author'])        ? $item['author']        : '',
 				'description'   => $description,
 				'compatible'    => (isset($item['compatibility']) ? $item['compatibility'] : '') === $phpboost_version,
 				'installed'     => ModulesManager::is_module_installed($addon_id),
+				'fa_icon'       => isset($item['fa_icon'])        ? $item['fa_icon']       : '',
 				'thumbnail'     => !empty($item['thumbnail']) ? $base_url . '/' . $addon_id . '/' . $item['thumbnail'] : '',
 			];
 		}

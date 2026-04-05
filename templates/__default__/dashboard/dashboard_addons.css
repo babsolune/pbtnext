@@ -5,7 +5,19 @@
  * Contains css for addons menu in modules/themes/langs administration page
 */
 
-.addon { position: relative; }
+.addon {
+    position: relative;
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+    margin-bottom: 0.309em;
+}
+
+.cell-list ul {
+    & li.addon {
+        padding: 0.228em;
+    }
+}
 
 .disabled-addon { opacity: 0.5 }
 

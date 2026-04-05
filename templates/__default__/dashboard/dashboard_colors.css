@@ -33,6 +33,7 @@ body {
 
 .db-executed-query { background-color: var(--bgc-main); }
 
+.addon { border-color: var(--bdr-main); }
 .addon-auth-content {
     background-color: var(--bgc-sub);
     border-color: var(--bdr-sub);
