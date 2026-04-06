@@ -16,6 +16,7 @@
 class FormFieldAddonsRepositories extends AbstractFormField
 {
 	private $max_input = 1000;
+	private $addon_type = 'modules';
 
 	public function __construct($id, $label = '', array $value = [], array $field_options = [], array $constraints = [])
 	{
@@ -23,81 +24,123 @@ class FormFieldAddonsRepositories extends AbstractFormField
 
 	}
 
-	function display()
-	{
-		$template = $this->get_template_to_use();
+	public function display()
+    {
+        $template = $this->get_template_to_use();
+        $view = new FileTemplate('framework/builder/form/fieldelements/FormFieldAddonsRepositories.tpl');
+        $view->add_lang(LangLoader::get_all_langs());
 
-		$view = new FileTemplate('framework/builder/form/fieldelements/FormFieldAddonsRepositories.tpl');
-		$view->add_lang(LangLoader::get_all_langs());
+        $this->assign_common_template_variables($template);
 
-		$this->assign_common_template_variables($template);
+        $i = 0;
+        $order = [];
+        $defaultEntries = $this->get_default_entries();
+        foreach ($this->get_value() as $options) {
+            if (!empty($options)) {
+                $isDefault = $this->is_default_entry($options, $defaultEntries);
+                $view->assign_block_vars('fieldelements', [
+                    'C_DELETE' => !$isDefault,
+                    'ID'       => $i,
+                    'OWNER'    => $options['owner'],
+                    'REPO'     => $options['repository'],
+                    'DIR'      => $options['directory'],
+                    'TYPE'     => $this->addon_type,
+                ]);
+                $order[] = $i;
+                $i++;
+            }
+        }
 
-		$i = 0;
-		foreach ($this->get_value() as $options)
-		{
-			if (!empty($options))
-			{
-				$view->assign_block_vars('fieldelements', [
-                    'C_DELETE' => $i !== 0,
-					'ID'    => $i,
-					'OWNER' => $options['owner'],
-					'REPO'  => $options['repository'],
-					'DIR'   => $options['directory']
-				]);
-				$i++;
-			}
-		}
-
-		if ($i == 0)
-		{
+        if ($i == 0) {
+            $defaultEntry = $defaultEntries[0];
             $view->assign_block_vars('fieldelements', [
                 'ID'    => $i,
-                'OWNER' => '',
-                'REPO'  => '',
-                'DIR'   => ''
+                'OWNER' => $defaultEntry['owner'],
+                'REPO'  => $defaultEntry['repository'],
+                'DIR'   => $defaultEntry['directory'],
+                'TYPE'  => $this->addon_type,
+                'C_DELETE' => false,
             ]);
-		}
+            $order[] = $i;
+        }
 
-		$view->put_all([
-			'HTML_ID' => $this->get_html_id(),
+        $view->put_all([
+            'HTML_ID'        => $this->get_html_id(),
+            'MAX_INPUT'      => $this->max_input,
+            'FIELDS_NUMBER'  => $i,
+            'ADDON_TYPE'     => $this->addon_type,
+            'ORDER'          => implode(',', $order),
+        ]);
 
-            'MAX_INPUT'     => $this->max_input,
-			'FIELDS_NUMBER' => $i,
-		]);
+        $template->assign_block_vars('fieldelements', [
+            'ELEMENT' => $view->render()
+        ]);
 
-		$template->assign_block_vars('fieldelements', [
-			'ELEMENT' => $view->render()
-		]);
+        return $template;
+    }
 
-		return $template;
-	}
+    private function get_default_entries()
+    {
+        switch ($this->addon_type) {
+            case 'modules':
+                return AddonsConfig::DEFAULT_MODULES_REPO;
+            case 'themes':
+                return AddonsConfig::DEFAULT_THEMES_REPO;
+            case 'langs':
+                return AddonsConfig::DEFAULT_LANGS_REPO;
+            default:
+                return [];
+        }
+    }
 
-	public function retrieve_value()
-	{
-		$request = AppContext::get_request();
-		$values = [];
-		for ($i = 0; $i < $this->max_input; $i++)
-		{
-			$field_owner_id      = 'field_owner_' . $this->get_html_id() . '_' . $i;
-			$field_repository_id = 'field_repository_' . $this->get_html_id() . '_' . $i;
+    private function is_default_entry($entry, $defaultEntries)
+    {
+        foreach ($defaultEntries as $defaultEntry) {
+            if ($entry['owner'] === $defaultEntry['owner'] &&
+                $entry['repository'] === $defaultEntry['repository'] &&
+                $entry['directory'] === $defaultEntry['directory']) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-			if ($request->has_postparameter($field_owner_id) && $request->has_postparameter($field_repository_id))
-			{
-				$field_owner        = $request->get_poststring($field_owner_id);
-				$field_repository   = $request->get_poststring($field_repository_id);
-                $field_directory_id = 'field_directory_' . $this->get_html_id() . '_' . $i;
-				$field_directory    = $request->get_poststring($field_directory_id);
+    public function retrieve_value()
+    {
+        $request = AppContext::get_request();
+        $values = [];
 
-				if (!empty($field_owner) && !empty($field_repository))
-					$values[] = [
+        // Get the order of the <li> elements from the DOM
+        $orderParameterName = 'order_' . $this->get_html_id();
+        $order = $request->get_postvalue($orderParameterName, '');
+
+        // If order is not provided, use the default order
+        $order = !empty($order) ? explode(',', $order) : array_keys($this->get_value());
+
+        $retrievedValues = [];
+        foreach ($order as $index) {
+            $field_owner_id      = 'field_owner_' . $this->get_html_id() . '_' . $index;
+            $field_repository_id = 'field_repository_' . $this->get_html_id() . '_' . $index;
+
+            if ($request->has_postparameter($field_owner_id) && $request->has_postparameter($field_repository_id)) {
+                $field_owner        = $request->get_poststring($field_owner_id);
+                $field_repository   = $request->get_poststring($field_repository_id);
+                $field_directory_id = 'field_directory_' . $this->get_html_id() . '_' . $index;
+                $field_directory    = $request->get_poststring($field_directory_id);
+
+                if (!empty($field_owner) && !empty($field_repository)) {
+                    $retrievedValues[] = [
                         'owner'      => $field_owner,
                         'repository' => $field_repository,
-                        'directory'  => $field_directory
+                        'directory'  => $field_directory,
+                        'type'       => $this->addon_type,
                     ];
-			}
-		}
-		$this->set_value($values);
-	}
+                }
+            }
+        }
+
+        $this->set_value($retrievedValues);
+    }
 
 	protected function compute_options(array &$field_options)
 	{
@@ -110,7 +153,12 @@ class FormFieldAddonsRepositories extends AbstractFormField
 					$this->max_input = $value;
 					unset($field_options['max_input']);
 					break;
-			}
+                case 'addon_type':
+                    $this->addon_type = $value;
+                    unset($field_options['addon_type']);
+                    break;
+                default:
+            }
 		}
 		parent::compute_options($field_options);
 	}

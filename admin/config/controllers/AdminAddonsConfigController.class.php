@@ -42,15 +42,15 @@ class AdminAddonsConfigController extends DefaultAdminController
         $fieldset->add_field(new FormFieldTextEditor('github_token', $this->lang['addon.github.token'], $this->configuration->get_github_token()));
 
         $fieldset->add_field(new FormFieldAddonsRepositories('modules_repos', $this->lang['addon.modules.repos.add'], $this->configuration->get_modules_repo(), 
-            ['class' => 'full-field']
+            ['class' => 'full-field', 'addon_type' => 'modules']
         ));
 
         $fieldset->add_field(new FormFieldAddonsRepositories('themes_repos', $this->lang['addon.themes.repos.add'], $this->configuration->get_themes_repo(), 
-            ['class' => 'full-field']
+            ['class' => 'full-field', 'addon_type' => 'themes']
         ));
 
         $fieldset->add_field(new FormFieldAddonsRepositories('langs_repos', $this->lang['addon.langs.repos.add'], $this->configuration->get_langs_repo(), 
-            ['class' => 'full-field']
+            ['class' => 'full-field', 'addon_type' => 'langs']
         ));
 
         $server_fieldset = new FormFieldsetHTML('addon_server', $this->lang['addon.servers.configuration']);
