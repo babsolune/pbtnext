@@ -107,7 +107,7 @@
 
         jQuery('<span/>', {
             class: 'sortable-selector grouped-element',
-            'aria-label': '${escapejs(@common.move)}'
+            'aria-label': ${escapejs(@common.move)}
         }).html('&nbsp;').appendTo('#' + newFieldId + ' .grouped-inputs');
 
         jQuery('<input/>', {
@@ -115,7 +115,7 @@
             type: 'text',
             id: 'field_owner_' + newFieldId,
             name: 'field_owner_' + newFieldId,
-            placeholder: '${escapejs(@addon.repos.owner)}'
+            placeholder: ${escapejs(@addon.repos.owner)}
         }).appendTo('#' + newFieldId + ' .grouped-inputs');
 
         jQuery('<input/>', {
@@ -123,7 +123,7 @@
             type: 'text',
             id: 'field_repository_' + newFieldId,
             name: 'field_repository_' + newFieldId,
-            placeholder: '${escapejs(@addon.repos.repository)}'
+            placeholder: ${escapejs(@addon.repos.repository)}
         }).appendTo('#' + newFieldId + ' .grouped-inputs');
 
         jQuery('<input/>', {
@@ -131,7 +131,7 @@
             type: 'text',
             id: 'field_directory_' + newFieldId,
             name: 'field_directory_' + newFieldId,
-            placeholder: '${escapejs(@addon.sub.directory)}'
+            placeholder: ${escapejs(@addon.sub.directory)}
         }).appendTo('#' + newFieldId + ' .grouped-inputs');
 
         jQuery('<a/>', {
@@ -139,14 +139,14 @@
             href: 'javascript:void(0);',
             onclick: 'jQuery(this).closest("li").remove(); updateOrder("' + htmlId + '");',
             id: 'delete_' + newFieldId,
-            'aria-label': '${escapejs(@common.delete)}'
+            'aria-label': ${escapejs(@common.delete)}
         }).html('<i class="far fa-trash-alt" aria-hidden="true"></i>').appendTo('#' + newFieldId + ' .grouped-inputs');
 
         jQuery('<a/>', {
             class: 'move-up grouped-element',
             href: '#',
             id: 'move-up-' + newFieldId,
-            'aria-label': '${escapejs(@common.move.up)}',
+            'aria-label': ${escapejs(@common.move.up)},
             onclick: 'moveItem("' + newFieldId + '", "up", "' + htmlId + '"); return false;'
         }).html('<i class="fa fa-arrow-up" aria-hidden="true"></i>').appendTo('#' + newFieldId + ' .grouped-inputs');
 
@@ -154,7 +154,7 @@
             class: 'move-down grouped-element',
             href: '#',
             id: 'move-down-' + newFieldId,
-            'aria-label': '${escapejs(@common.move.down)}',
+            'aria-label': ${escapejs(@common.move.down)},
             onclick: 'moveItem("' + newFieldId + '", "down", "' + htmlId + '"); return false;'
         }).html('<i class="fa fa-arrow-down" aria-hidden="true"></i>').appendTo('#' + newFieldId + ' .grouped-inputs');
 
