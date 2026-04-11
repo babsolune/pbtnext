@@ -30,12 +30,14 @@ class FormFieldAddonsServers extends AbstractFormField
 		$this->assign_common_template_variables($template);
 
 		$i = 0;
+        $default_entries = $this->get_default_entries();
 		foreach ($this->get_value() as $options)
 		{
 			if (!empty($options))
 			{
+                $isDefault = $this->is_default_entry($options, $default_entries);
                 $view->assign_block_vars('fieldelements', [
-                    'C_DELETE' => $i !== 0,
+                    'C_DELETE' => !$isDefault,
                     'ID'      => $i,
                     'WEBSITE' => $options['website'],
                     'URL'     => $options['url'],
@@ -47,11 +49,12 @@ class FormFieldAddonsServers extends AbstractFormField
 
 		if ($i == 0)
 		{
+            $default_entry = $default_entries[0];
 			$view->assign_block_vars('fieldelements', [
 				'ID'      => $i,
-				'WEBSITE' => '',
-				'URL'     => '',
-				'DIR'     => '',
+				'WEBSITE' => $default_entry['website'],
+				'URL'     => $default_entry['url'],
+				'DIR'     => $default_entry['directory'],
 			]);
 		}
 
@@ -68,6 +71,23 @@ class FormFieldAddonsServers extends AbstractFormField
 
 		return $template;
 	}
+
+    private function get_default_entries()
+    {
+        return AddonsConfig::DEFAULT_ADDONS_SERVER;
+    }
+
+    private function is_default_entry($entry, $default_entries)
+    {
+        foreach ($default_entries as $default_entry) {
+            if ($entry['website'] === $default_entry['website'] &&
+                $entry['url'] === $default_entry['url'] &&
+                $entry['directory'] === $default_entry['directory']) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 	public function retrieve_value()
 	{

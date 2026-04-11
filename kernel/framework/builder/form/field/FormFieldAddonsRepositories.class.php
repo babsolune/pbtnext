@@ -34,10 +34,11 @@ class FormFieldAddonsRepositories extends AbstractFormField
 
         $i = 0;
         $order = [];
-        $defaultEntries = $this->get_default_entries();
+        $default_entries = $this->get_default_entries();
         foreach ($this->get_value() as $options) {
-            if (!empty($options)) {
-                $isDefault = $this->is_default_entry($options, $defaultEntries);
+            if (!empty($options))
+            {
+                $isDefault = $this->is_default_entry($options, $default_entries);
                 $view->assign_block_vars('fieldelements', [
                     'C_DELETE' => !$isDefault,
                     'ID'       => $i,
@@ -51,13 +52,14 @@ class FormFieldAddonsRepositories extends AbstractFormField
             }
         }
 
-        if ($i == 0) {
-            $defaultEntry = $defaultEntries[0];
+        if ($i == 0)
+        {
+            $default_entry = $default_entries[0];
             $view->assign_block_vars('fieldelements', [
                 'ID'    => $i,
-                'OWNER' => $defaultEntry['owner'],
-                'REPO'  => $defaultEntry['repository'],
-                'DIR'   => $defaultEntry['directory'],
+                'OWNER' => $default_entry['owner'],
+                'REPO'  => $default_entry['repository'],
+                'DIR'   => $default_entry['directory'],
                 'TYPE'  => $this->addon_type,
                 'C_DELETE' => false,
             ]);
@@ -81,7 +83,8 @@ class FormFieldAddonsRepositories extends AbstractFormField
 
     private function get_default_entries()
     {
-        switch ($this->addon_type) {
+        switch ($this->addon_type)
+        {
             case 'modules':
                 return AddonsConfig::DEFAULT_MODULES_REPO;
             case 'themes':
@@ -93,12 +96,12 @@ class FormFieldAddonsRepositories extends AbstractFormField
         }
     }
 
-    private function is_default_entry($entry, $defaultEntries)
+    private function is_default_entry($entry, $default_entries)
     {
-        foreach ($defaultEntries as $defaultEntry) {
-            if ($entry['owner'] === $defaultEntry['owner'] &&
-                $entry['repository'] === $defaultEntry['repository'] &&
-                $entry['directory'] === $defaultEntry['directory']) {
+        foreach ($default_entries as $default_entry) {
+            if ($entry['owner'] === $default_entry['owner'] &&
+                $entry['repository'] === $default_entry['repository'] &&
+                $entry['directory'] === $default_entry['directory']) {
                 return true;
             }
         }
@@ -111,8 +114,8 @@ class FormFieldAddonsRepositories extends AbstractFormField
         $values = [];
 
         // Get the order of the <li> elements from the DOM
-        $orderParameterName = 'order_' . $this->get_html_id();
-        $order = $request->get_postvalue($orderParameterName, '');
+        $order_parameter_name = 'order_' . $this->get_html_id();
+        $order = $request->get_postvalue($order_parameter_name, '');
 
         // If order is not provided, use the default order
         $order = !empty($order) ? explode(',', $order) : array_keys($this->get_value());
