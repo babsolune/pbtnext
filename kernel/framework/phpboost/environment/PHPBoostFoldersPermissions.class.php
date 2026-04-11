@@ -17,7 +17,7 @@ abstract class PHPBoostFoldersPermissions
 	{
 		self::$folders_path = [
             '/',
-            '/cache', '/cache/backup', '/cache/syndication', '/cache/tpl', '/cache/css', '/cache/js',
+            '/cache', '/cache/addons', '/cache/backup', '/cache/syndication', '/cache/tpl', '/cache/css', '/cache/js',
             '/images/avatars', '/images/customization', '/images/group', '/images/maths', '/images/smileys',
 			'/kernel/db', '/modules', '/lang', '/templates', '/upload'
         ];
