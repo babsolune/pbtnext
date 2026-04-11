@@ -5,12 +5,29 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 03 29
+ * @version     PHPBoost 6.1 - last update: 2026 04 06
  * @since       PHPBoost 6.1 - 2026 03 29
 */
 
 class AddonRemoteHelper
 {
+	/** Time-to-live for remote index cache files (in seconds). */
+	const CACHE_TTL = 3600; // 1 hour
+
+	/**
+	 * Supported addon types and their corresponding index file.
+	 * Provides uniform handling for modules / themes / languages.
+	 */
+	const ADDON_INDEX_FILES = [
+		'module' => 'modules.json',
+		'theme'  => 'themes.json',
+		'lang'   => 'langs.json',
+	];
+
+	// -------------------------------------------------------------------------
+	// Base cURL layer
+	// -------------------------------------------------------------------------
+
 	public static function curl_get($url, $extra_headers = [], $timeout = 15)
 	{
 		if (!function_exists('curl_init'))
@@ -40,21 +57,19 @@ class AddonRemoteHelper
 		return $body;
 	}
 
-    public static function remote_file_exists(string $url): bool
-    {
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_NOBODY, true);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-		curl_setopt($ch, CURLOPT_USERAGENT, 'PHPBoost/' . GeneralConfig::load()->get_phpboost_major_version());
-        curl_exec($ch);
-
-        $http_code = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-
-        return $http_code >= 200 && $http_code < 300;
-    }
+	public static function remote_file_exists(string $url): bool
+	{
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_NOBODY,         true);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_TIMEOUT,        5);
+		curl_setopt($ch, CURLOPT_USERAGENT,      'PHPBoost/' . GeneralConfig::load()->get_phpboost_major_version());
+		curl_exec($ch);
+		$http_code = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		curl_close($ch);
+		return $http_code >= 200 && $http_code < 300;
+	}
 
 	public static function curl_get_json($url, $extra_headers = [], $timeout = 15)
 	{
@@ -64,6 +79,10 @@ class AddonRemoteHelper
 		$decoded = json_decode($raw, true);
 		return is_array($decoded) ? $decoded : null;
 	}
+
+	// -------------------------------------------------------------------------
+	// GitHub helpers
+	// -------------------------------------------------------------------------
 
 	public static function github_headers($token)
 	{
@@ -115,13 +134,158 @@ class AddonRemoteHelper
 		return is_array($parsed) ? $parsed : [];
 	}
 
+	// -------------------------------------------------------------------------
+	// Centralised JSON index (modules.json / themes.json / langs.json …)
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Returns the local cache file path for a remote index URL.
+	 *
+	 * The filename includes the addon type (modules, themes, langs…) for
+	 * readability and to prevent collisions between repositories or addon types.
+	 *
+	 * Examples: /cache/remote_index_modules_a3f2c1d4.json
+	 *           /cache/remote_index_themes_b9e1f2a8.json
+	 */
+	private static function cache_path(string $raw_url, string $index_file): string
+	{
+		$type = pathinfo($index_file, PATHINFO_FILENAME); // "modules", "themes", "langs"…
+		return PATH_TO_ROOT . '/cache/remote_index_' . $type . '_' . md5($raw_url) . '.json';
+	}
+
+	/**
+	 * Returns whether the cache file for a given URL is still fresh.
+	 */
+	private static function cache_is_fresh(string $cache_file): bool
+	{
+		return file_exists($cache_file) && (time() - filemtime($cache_file)) < self::CACHE_TTL;
+	}
+
+	/**
+	 * Fetches and caches the JSON index of a GitHub repository.
+	 *
+	 * Generic method used for all addon types:
+	 *   - modules → $index_file = 'modules.json'  (or self::ADDON_INDEX_FILES['module'])
+	 *   - themes  → $index_file = 'themes.json'   (or self::ADDON_INDEX_FILES['theme'])
+	 *   - langs   → $index_file = 'langs.json'    (or self::ADDON_INDEX_FILES['lang'])
+	 *
+	 * The index file is expected at the repository root (or inside $subdir if provided).
+	 * The cache is stored in /cache/ with a name combining the addon type and a hash
+	 * of the raw URL to prevent any collision across repositories.
+	 *
+	 * @param  string $owner       GitHub repository owner (e.g. "PHPBoost")
+	 * @param  string $repo        Repository name         (e.g. "official-modules")
+	 * @param  string $subdir      Optional subdirectory inside the repository (may be empty)
+	 * @param  string $branch      Branch already resolved via resolve_github_branch()
+	 * @param  string $token       GitHub token (may be empty)
+	 * @param  string $index_file  Index filename; use ADDON_INDEX_FILES[type]
+	 * @param  bool   $force       true = bypass the cache and reload from GitHub
+	 * @return array|null          Decoded PHP array, or null if unreachable and no cache exists
+	 */
+	public static function fetch_github_index_json(
+		string $owner,
+		string $repo,
+		string $subdir,
+		string $branch,
+		string $token,
+		string $index_file = 'modules.json',
+		bool   $force      = false
+	): ?array
+	{
+		$path_parts = array_filter([$subdir, $index_file]);
+		$raw_url    = 'https://raw.githubusercontent.com/'
+			. $owner . '/' . $repo . '/' . $branch . '/'
+			. implode('/', $path_parts);
+
+		$cache_file = self::cache_path($raw_url, $index_file);
+
+		// Serve from cache if available and not expired
+		if (!$force && self::cache_is_fresh($cache_file))
+		{
+			$cached = @file_get_contents($cache_file);
+			if ($cached !== false)
+			{
+				$data = json_decode($cached, true);
+				if (is_array($data))
+					return $data;
+			}
+		}
+
+		// Download from GitHub (raw content)
+		$raw = self::curl_get($raw_url, self::github_headers($token), 20);
+		if ($raw === false)
+		{
+			// On network failure, return the stale cache rather than nothing
+			if (file_exists($cache_file))
+			{
+				$stale = @file_get_contents($cache_file);
+				if ($stale !== false)
+				{
+					$data = json_decode($stale, true);
+					if (is_array($data))
+						return $data;
+				}
+			}
+			return null;
+		}
+
+		$data = json_decode($raw, true);
+		if (!is_array($data))
+			return null;
+
+		// Persist cache atomically: write to a temp file then rename,
+		// so concurrent readers never see a partially written file.
+		$cache_dir = dirname($cache_file);
+		if (!is_dir($cache_dir))
+			@mkdir($cache_dir, 0755, true);
+
+		$tmp     = $cache_file . '.tmp.' . getmypid();
+		$written = @file_put_contents($tmp, $raw, LOCK_EX);
+		if ($written !== false)
+			@rename($tmp, $cache_file); // atomic on POSIX systems
+		else
+			@unlink($tmp); // clean up if write failed
+
+		return $data;
+	}
+
+	/**
+	 * Invalidates the cache for a given repository and addon type.
+	 *
+	 * Should be called after a successful installation or from the configuration
+	 * panel ("Clear remote addon cache" button).
+	 *
+	 * @param string $index_file  Same value passed to fetch_github_index_json()
+	 */
+	public static function invalidate_github_index_cache(
+		string $owner,
+		string $repo,
+		string $subdir,
+		string $branch,
+		string $index_file = 'modules.json'
+	): void
+	{
+		$path_parts = array_filter([$subdir, $index_file]);
+		$raw_url    = 'https://raw.githubusercontent.com/'
+			. $owner . '/' . $repo . '/' . $branch . '/'
+			. implode('/', $path_parts);
+
+		$cache_file = self::cache_path($raw_url, $index_file);
+		if (file_exists($cache_file))
+			@unlink($cache_file);
+	}
+
+	// -------------------------------------------------------------------------
+	// Web server index (legacy behaviour)
+	// -------------------------------------------------------------------------
+
 	public static function fetch_server_index($server_url, $directory, $version, $addon_folder)
 	{
 		$base = rtrim($server_url, '/');
 		if (!empty($directory))
 			$base .= '/' . trim($directory, '/');
 
-        $real_version = $version === GeneralConfig::load()->get_phpboost_major_version() ? $version : '/dev/';
+		$real_version = $version === GeneralConfig::load()->get_phpboost_major_version() ? $version : '/dev/';
 
 		$versioned = $base . '/' . $real_version . '/' . $addon_folder;
 		$data      = self::curl_get_json($versioned . '/' . $addon_folder . '.json');
@@ -135,6 +299,10 @@ class AddonRemoteHelper
 
 		return ['', []];
 	}
+
+	// -------------------------------------------------------------------------
+	// Download and extraction
+	// -------------------------------------------------------------------------
 
 	public static function download_and_extract_from_github($owner, $repo, $branch, $addon_prefix, $dest_dir, $token)
 	{
