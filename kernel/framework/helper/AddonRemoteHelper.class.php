@@ -147,10 +147,10 @@ class AddonRemoteHelper
 	 * Examples: /cache/remote_index_modules_a3f2c1d4.json
 	 *           /cache/remote_index_themes_b9e1f2a8.json
 	 */
-	private static function cache_path(string $raw_url, string $index_file): string
+	private static function cache_path(string $source, string $name, string $raw_url, string $index_file): string
 	{
 		$type = pathinfo($index_file, PATHINFO_FILENAME); // "modules", "themes", "langs"…
-		return PATH_TO_ROOT . '/cache/remote_index_' . $type . '_' . md5($raw_url) . '.json';
+		return PATH_TO_ROOT . '/cache/addons/'. $source . '_' . Url::encode_rewrite($name) . '_' . $type . '_' . md5($raw_url) . '.json';
 	}
 
 	/**
@@ -197,7 +197,7 @@ class AddonRemoteHelper
 			. $owner . '/' . $repo . '/' . $branch . '/'
 			. implode('/', $path_parts);
 
-		$cache_file = self::cache_path($raw_url, $index_file);
+		$cache_file = self::cache_path('github', $owner, $raw_url, $index_file);
 
 		// Serve from cache if available and not expired
 		if (!$force && self::cache_is_fresh($cache_file))
@@ -270,7 +270,7 @@ class AddonRemoteHelper
 			. $owner . '/' . $repo . '/' . $branch . '/'
 			. implode('/', $path_parts);
 
-		$cache_file = self::cache_path($raw_url, $index_file);
+		$cache_file = self::cache_path('github', $owner, $raw_url, $index_file);
 		if (file_exists($cache_file))
 			@unlink($cache_file);
 	}
