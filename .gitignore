@@ -1,5 +1,14 @@
 # Kernel
 cache/*
+!cache/.htaccess
+!cache/addons/.htaccess
+!cache/addons/.empty
+!cache/addons/phpboost-github-langs.json
+!cache/addons/phpboost-github-modules.json
+!cache/addons/phpboost-github-themes.json
+!cache/addons/phpboost-server-langs.json
+!cache/addons/phpboost-server-modules.json
+!cache/addons/phpboost-server-themes.json
 robots.txt
 sitemap.xml
 kernel/db/config.php
