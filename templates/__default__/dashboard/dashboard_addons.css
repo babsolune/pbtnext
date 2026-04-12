@@ -203,3 +203,9 @@
     min-width: 90px;
     &.addon-large { min-width: 170px; }
 }
+
+.addon-source-selector summary {
+    cursor: pointer;
+    padding: 0.618em;
+    text-align: right;
+}

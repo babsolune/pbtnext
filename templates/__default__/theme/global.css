@@ -38,7 +38,7 @@
 
     [class*="col-v-"] {
         column-gap: 1.618em;
-        page-break-inside: avoid;
+        & > * { break-inside: avoid;}
     }
     .col-v-2 { column-count: 2; }
     .col-v-3 { column-count: 3; }
