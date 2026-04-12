@@ -370,7 +370,7 @@
                     html += '</div>';
                     html += ' <button class="button button-mini default ' + (addon.compatible ? 'success' : 'error') + '" aria-label="' + ${escapejs(@addon.compatibility)} + ' PHPBoost">' + esc(addon.compatibility) + '</button>';
                     if (source === 'github' && addon.repo_url) {
-                        html += ' <a href="' + esc(addon.repo_url) + '" class="button button-mini default offload" target="_blank" rel="noopener" aria-label="' + ${escapejs(@addon.github.view.repo)} + '"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a>';
+                        html += ' <button onclick="window.open(\'' + esc(addon.repo_url) + '\', \'_blank\', \'noopener\')" class="button button-mini default offload" aria-label="' + ${escapejs(@addon.github.view.repo)} + '"><i class="fab fa-github fa-fw" aria-hidden="true"></i></button>';
                     }
                     if (addon.installed) {
                         html += ' <button onclick="return false;" class="button button-mini bgc-full success" aria-label="' + ${escapejs(@addon.already.installed)} + '"><i class="fa fa-fw fa-check" aria-hidden="true"></i></button>';
