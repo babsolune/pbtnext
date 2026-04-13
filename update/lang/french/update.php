@@ -211,6 +211,5 @@ $lang = [
     ',
     'site.index'  => 'Aller à l\'accueil du site',
     'admin.index' => 'Aller dans le panneau d\'administration'
-);
+];
 ?>
-]
