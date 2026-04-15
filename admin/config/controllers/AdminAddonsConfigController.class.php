@@ -10,11 +10,16 @@
 class AdminAddonsConfigController extends DefaultAdminController
 {
 	private $configuration;
+    /** @var FormButtonDefaultSubmit */
+    private $refresh_button;
+    /** @var HTMLForm */
+    private $refresh_form;
 
     public function execute(HTTPRequestCustom $request): AdminAddonsConfigDisplayResponse
     {
 		$this->init();
 		$this->build_form();
+		$this->build_refresh_form();
 
 		if ($this->submit_button->has_been_submited() && $this->form->validate())
 		{
@@ -22,7 +27,17 @@ class AdminAddonsConfigController extends DefaultAdminController
 			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.process.success'], MessageHelper::SUCCESS, 4));
         }
 
+		if ($this->refresh_button->has_been_submited() && $this->refresh_form->validate())
+		{
+            $cache_folder = new Folder(PATH_TO_ROOT . '/cache/addons');
+			$this->delete_files($cache_folder, '`^\.|.*\.log|apc.php|debug.php`iu');
+            AddonRemoteHelper::build_addons_caches(true);
+			$this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.process.success'], MessageHelper::SUCCESS, 4));
+        }
+
+        $this->view = new StringTemplate('# INCLUDE CONTENT ## INCLUDE REFRESH_CONTENT #');
 		$this->view->put('CONTENT', $this->form->display());
+		$this->view->put('REFRESH_CONTENT', $this->refresh_form->display());
 
 		return new AdminAddonsConfigDisplayResponse($this->view, $this->lang['form.configuration']);
     }
@@ -67,6 +82,15 @@ class AdminAddonsConfigController extends DefaultAdminController
         $this->form = $form;
     }
 
+    private function build_refresh_form()
+    {
+        $form = new HTMLForm('refresh_addons_cache', '', false);
+        $this->refresh_button = new FormButtonDefaultSubmit($this->lang['addon.refresh.cache']);
+        $form->add_button($this->refresh_button);
+
+        $this->refresh_form = $form;
+    }
+
     private function save()
     {
         $this->configuration->set_github_token($this->form->get_field_by_id('github_token')->get_value());
@@ -76,5 +100,15 @@ class AdminAddonsConfigController extends DefaultAdminController
         $this->configuration->set_addons_server($this->form->get_field_by_id('addons_server')->get_value());
         AddonsConfig::save();
     }
+
+	private function delete_files(Folder $folder, $regex = '')
+	{
+		$files_to_delete = $folder->get_files($regex, true);
+		foreach ($files_to_delete as $file)
+		{
+			if ($file->exists())
+				$file->delete();
+		}
+	}
 }
 ?>

@@ -162,6 +162,7 @@ $lang['addon.themes.drop.multiple'] = 'Supprimer tous les fichiers des thèmes';
 
 // ---- Sources distantes d'addons (GitHub / Site) ----
 
+$lang['addon.refresh.cache']   = 'Rafraîchir le cache';
 // GitHub
 $lang['addon.github.choose.repo']    = 'Choisir un dépôt';
 $lang['addon.github.custom.repo']    = 'Utiliser un dépôt personnalisé';

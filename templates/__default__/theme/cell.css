@@ -22,7 +22,7 @@
     select,
     textarea,
     .grouped-inputs,
-    .formatter-title { margin: 0 !important; }
+    .formatter-title { margin: 0; }
 
     &.new-content .cell-header { border-left-width: 3px; }
 }

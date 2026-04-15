@@ -15,6 +15,11 @@
 
 class AdminModuleAddController extends DefaultAdminController
 {
+    /** @var HTMLForm */
+    private $refresh_form;
+    /** @var FormButtonDefaultSubmit */
+    private $refresh_button;
+
     protected function get_template_to_use(): FileTemplate
     {
         return new FileTemplate('admin/modules/AdminModuleAddController.tpl');
@@ -64,6 +69,7 @@ class AdminModuleAddController extends DefaultAdminController
             }
         }
 
+        $this->refresh_form();
         $this->upload_form();
 
         if ($this->submit_button->has_been_submited() && $this->form->validate())
@@ -71,9 +77,18 @@ class AdminModuleAddController extends DefaultAdminController
             $this->upload_module();
         }
 
-        $this->build_view();
+        if ($this->refresh_button->has_been_submited())
+        {
+            AddonRemoteHelper::clear_all_index_caches();
+            AddonRemoteHelper::build_addons_caches(true);
+        }
 
-        $this->view->put('CONTENT', $this->form->display());
+        $this->build_view($request);
+
+        $this->view->put_all([
+            // 'REFRESH' => $this->refresh_form->display(),
+            'CONTENT' => $this->form->display()
+        ]);
 
         return new AdminModulesDisplayResponse($this->view, $this->lang['addon.modules.add']);
     }
@@ -95,7 +110,18 @@ class AdminModuleAddController extends DefaultAdminController
         $this->form = $form;
     }
 
-    private function build_view(): void
+    private function refresh_form(): void
+    {
+        $form = new HTMLForm('refresh_module', '', false);
+        $form->set_css_class('refresh-form options');
+
+        $this->refresh_button = new FormButtonDefaultSubmit('Refresh Caches Files');
+        $form->add_button($this->refresh_button);
+
+        $this->refresh_form = $form;
+    }
+
+    private function build_view(HTTPRequestCustom $request): void
     {
         $phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
         $modules_not_installed = $this->get_modules_not_installed();
@@ -180,41 +206,288 @@ class AdminModuleAddController extends DefaultAdminController
         // Populate github repos selector
         $addons_config = AddonsConfig::load();
         $github_repos  = $addons_config->get_modules_repo();
-        foreach ($github_repos as $repo)
-        {
-            $this->view->assign_block_vars('github_repos', [
-                'LABEL' => $repo['owner'] . '/' . $repo['repository'],
-                'OWNER' => $repo['owner'],
-                'REPO'  => $repo['repository'],
-                'DIR'   => $repo['directory'],
-            ]);
-        }
+
         $default_gh_owner = isset($github_repos[0]['owner'])      ? $github_repos[0]['owner']      : '';
         $default_gh_repo  = isset($github_repos[0]['repository']) ? $github_repos[0]['repository'] : '';
         $default_gh_dir   = isset($github_repos[0]['directory'])  ? $github_repos[0]['directory']  : '';
 
+        $active_gh_owner = $request->get_getstring('gh_owner', $default_gh_owner);
+        $active_gh_repo  = $request->get_getstring('gh_repo',  $default_gh_repo);
+        $active_gh_dir   = $request->get_getstring('gh_dir',   $default_gh_dir);
+
+        foreach ($github_repos as $repo)
+        {
+            $this->view->assign_block_vars('github_repos', [
+                'C_SELECTED' => $repo['owner'] === $active_gh_owner && $repo['repository'] === $active_gh_repo,
+                'LABEL'      => $repo['owner'] . '/' . $repo['repository'],
+                'OWNER'      => $repo['owner'],
+                'REPO'       => $repo['repository'],
+                'DIR'        => $repo['directory'],
+            ]);
+        }
+
         // Populate website servers selector
         $website_servers = $addons_config->get_addons_server();
+
+        $default_ws_url = isset($website_servers[0]['url'])       ? $website_servers[0]['url']       : '';
+        $default_ws_dir = isset($website_servers[0]['directory']) ? $website_servers[0]['directory'] : '';
+
+        $active_ws_url = $request->get_getstring('ws_url', $default_ws_url);
+        $active_ws_dir = $request->get_getstring('ws_dir', $default_ws_dir);
+
         foreach ($website_servers as $server)
         {
             $this->view->assign_block_vars('website_servers', [
-                'LABEL' => $server['website'] . ' (' . $server['url'] . ')',
-                'URL'   => $server['url'],
-                'DIR'   => $server['directory'],
+                'C_SELECTED' => $server['url'] === $active_ws_url,
+                'LABEL'      => $server['website'] . ' (' . $server['url'] . ')',
+                'URL'        => $server['url'],
+                'DIR'        => $server['directory'],
             ]);
         }
-        $default_ws_url = isset($website_servers[0]['url'])       ? $website_servers[0]['url']       : '';
-        $default_ws_dir = isset($website_servers[0]['directory']) ? $website_servers[0]['directory'] : '';
 
         $this->view->put_all([
             'C_GITHUB_HAS_REPOS'    => count($github_repos) > 1,
             'GITHUB_DEFAULT_OWNER'  => $default_gh_owner,
             'GITHUB_DEFAULT_REPO'   => $default_gh_repo,
             'GITHUB_DEFAULT_DIR'    => $default_gh_dir,
+            'GITHUB_ACTIVE_OWNER'   => $active_gh_owner,
+            'GITHUB_ACTIVE_REPO'    => $active_gh_repo,
+            'GITHUB_ACTIVE_DIR'     => $active_gh_dir,
             'C_WEBSITE_HAS_SERVERS' => count($website_servers) > 1,
             'WEBSITE_DEFAULT_URL'   => $default_ws_url,
             'WEBSITE_DEFAULT_DIR'   => $default_ws_dir,
+            'WEBSITE_ACTIVE_URL'    => $active_ws_url,
+            'WEBSITE_ACTIVE_DIR'    => $active_ws_dir,
+            'U_CURRENT_PAGE'        => AdminModulesUrlBuilder::add_module()->rel(),
         ]);
+
+        // ---- GitHub modules list — built server-side from the cached index ----
+        $github_token = $addons_config->get_github_token();
+
+        if (!empty($active_gh_owner) && !empty($active_gh_repo))
+        {
+            $branch = AddonRemoteHelper::resolve_github_branch($active_gh_owner, $active_gh_repo, $phpboost_version, $github_token);
+            $gh_index = AddonRemoteHelper::fetch_github_index_json(
+                $active_gh_owner, $active_gh_repo, $active_gh_dir,
+                $branch, $github_token, 'modules.json'
+            );
+
+            if (is_array($gh_index))
+            {
+                $locale   = AppContext::get_current_user()->get_locale();
+                $raw_base = 'https://raw.githubusercontent.com/' . $active_gh_owner . '/' . $active_gh_repo . '/' . $branch . '/';
+                $path     = trim($active_gh_dir, '/');
+
+                $gh_grouped = [];
+                foreach ($gh_index as $entry)
+                {
+                    if (!isset($entry['addon_type']) || $entry['addon_type'] !== 'module')
+                        continue;
+
+                    $addon_id = $entry['id'] ?? '';
+                    if (empty($addon_id))
+                        continue;
+
+                    $name  = $this->resolve_locale_field($entry, 'name',        $locale, $addon_id);
+                    $desc  = $this->resolve_locale_field($entry, 'description', $locale, '');
+                    $genre = $this->resolve_locale_field($entry, 'genre',       $locale, '');
+
+                    $thumbnail = !empty($entry['thumbnail']) ? $entry['thumbnail'] : '';
+
+                    $compatible       = ($entry['compatibility'] ?? '') === $phpboost_version;
+                    $addon_compatible = ($entry['addon_type'] ?? '') === 'module';
+
+                    if (!isset($gh_grouped[$genre]))
+                        $gh_grouped[$genre] = [];
+
+                    $gh_grouped[$genre][] = [
+                        'addon_id'         => $addon_id,
+                        'name'             => TextHelper::ucfirst($name),
+                        'genre'            => $genre,
+                        'compatibility'    => $entry['compatibility'] ?? '',
+                        'version'          => $entry['version']       ?? '',
+                        'author'           => $entry['author']        ?? '',
+                        'author_mail'      => $entry['author_mail']   ?? '',
+                        'author_website'   => $entry['author_website'] ?? '',
+                        'description'      => $desc,
+                        'creation_date'    => $entry['creation_date'] ?? '',
+                        'last_update'      => $entry['last_update']   ?? '',
+                        'php_version'      => $entry['php_version']   ?? '',
+                        'fa_icon'          => $entry['fa_icon']   ?? '',
+                        'hexa_icon'        => $entry['hexa_icon'] ?? '',
+                        'thumbnail'        => $thumbnail,
+                        'compatible'       => $compatible,
+                        'addon_compatible' => $addon_compatible,
+                        'installed'        => ModulesManager::is_module_installed($addon_id),
+                        'repo_url'         => 'https://github.com/' . $active_gh_owner . '/' . $active_gh_repo . '/tree/' . $branch . '/' . ($path !== '' ? $path . '/' : '') . $addon_id,
+                    ];
+                }
+
+                ksort($gh_grouped);
+
+                $gh_module_number = 1;
+                $gh_total = array_sum(array_map('count', $gh_grouped));
+
+                foreach ($gh_grouped as $genre => $gh_modules)
+                {
+                    usort($gh_modules, function ($a, $b) { return strcasecmp($a['name'], $b['name']); });
+
+                    $this->view->assign_block_vars('github_genres', [
+                        'GENRE_NAME' => $genre
+                    ]);
+
+                    foreach ($gh_modules as $m)
+                    {
+                        $this->view->assign_block_vars('github_genres.github_modules', [
+                            'C_THUMBNAIL'          => !empty($m['thumbnail']),
+                            'C_FA_ICON'            => !empty($m['fa_icon']),
+                            'C_HEXA_ICON'          => !empty($m['hexa_icon']),
+                            'C_AUTHOR_EMAIL'       => !empty($m['author_mail']),
+                            'C_AUTHOR_WEBSITE'     => !empty($m['author_website']),
+                            'C_COMPATIBLE'         => $m['compatible'] && $m['addon_compatible'],
+                            'C_COMPATIBLE_ADDON'   => $m['addon_compatible'],
+                            'C_COMPATIBLE_VERSION' => $m['compatible'],
+                            'C_IS_INSTALLED'       => $m['installed'],
+
+                            'MODULE_NUMBER'  => $gh_module_number,
+                            'MODULE_ID'      => $m['addon_id'],
+                            'MODULE_NAME'    => $m['name'],
+                            'GENRE_NAME'     => $m['genre'],
+                            'COMPATIBILITY'  => $m['compatibility'],
+                            'VERSION'        => $m['version'],
+                            'AUTHOR'         => $m['author'],
+                            'AUTHOR_EMAIL'   => $m['author_mail'],
+                            'AUTHOR_WEBSITE' => $m['author_website'],
+                            'DESCRIPTION'    => $m['description'],
+                            'CREATION_DATE'  => $m['creation_date'],
+                            'LAST_UPDATE'    => $m['last_update'],
+                            'PHP_VERSION'    => $m['php_version'],
+                            'FA_ICON'        => $m['fa_icon'],
+                            'HEXA_ICON'      => $m['hexa_icon'],
+                            'THUMBNAIL_URL'  => $m['thumbnail'] ?? '',
+                            'U_REPO'         => $m['repo_url'],
+                        ]);
+
+                        $gh_module_number++;
+                    }
+                }
+
+                $this->view->put_all([
+                    'C_GITHUB_MODULES'         => $gh_total > 0,
+                    'C_SEVERAL_GITHUB_MODULES' => $gh_total > 1,
+                    'GITHUB_MODULES_NUMBER'     => $gh_total,
+                ]);
+            }
+        }
+
+        // ---- Website modules list — built server-side from the cached index ----
+        if (!empty($active_ws_url))
+        {
+            $phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
+            $locale = AppContext::get_current_user()->get_locale();
+
+            list($base_url, $ws_index) = AddonRemoteHelper::fetch_website_index($active_ws_url, $active_ws_dir, $phpboost_version, 'modules');
+
+            if (!empty($ws_index))
+            {
+                $ws_grouped = [];
+                foreach ($ws_index as $item)
+                {
+                    $addon_id = $item['id'] ?? '';
+                    if (empty($addon_id) || ($item['addon_type'] ?? '') !== 'module')
+                        continue;
+
+                    $name  = $this->resolve_locale_field($item, 'name',        $locale, $addon_id);
+                    $genre = $this->resolve_locale_field($item, 'genre',       $locale, '');
+                    $desc  = $this->resolve_locale_field($item, 'description', $locale, '');
+
+                    $thumbnail = !empty($item['thumbnail']) ? $base_url . '/' . $addon_id . '/' . $item['thumbnail'] : '';
+                    $fa_icon   = $item['fa_icon']  ?? '';
+                    $hexa_icon = $item['hexa_icon'] ?? '';
+
+                    $compatible       = ($item['compatibility'] ?? '') === $phpboost_version;
+                    $addon_compatible = ($item['addon_type'] ?? '') === 'module';
+
+                    if (!isset($ws_grouped[$genre]))
+                        $ws_grouped[$genre] = [];
+
+                    $ws_grouped[$genre][] = [
+                        'addon_id'         => $addon_id,
+                        'name'             => TextHelper::ucfirst($name),
+                        'genre'            => $genre,
+                        'compatibility'    => $item['compatibility'] ?? '',
+                        'version'          => $item['version']       ?? '',
+                        'author'           => $item['author']        ?? '',
+                        'author_mail'      => $item['author_mail']   ?? '',
+                        'author_website'   => $item['author_website'] ?? '',
+                        'description'      => $desc,
+                        'creation_date'    => $item['creation_date'] ?? '',
+                        'last_update'      => $item['last_update']   ?? '',
+                        'php_version'      => $item['php_version']   ?? '',
+                        'fa_icon'          => $fa_icon,
+                        'hexa_icon'        => $hexa_icon,
+                        'thumbnail'        => $thumbnail,
+                        'compatible'       => $compatible,
+                        'addon_compatible' => $addon_compatible,
+                        'installed'        => ModulesManager::is_module_installed($addon_id),
+                    ];
+                }
+
+                ksort($ws_grouped);
+
+                $ws_module_number = 1;
+                $ws_total = array_sum(array_map('count', $ws_grouped));
+
+                foreach ($ws_grouped as $genre => $ws_modules)
+                {
+                    usort($ws_modules, function ($a, $b) { return strcasecmp($a['name'], $b['name']); });
+
+                    $this->view->assign_block_vars('website_genres', [
+                        'GENRE_NAME' => $genre
+                    ]);
+
+                    foreach ($ws_modules as $m)
+                    {
+                        $this->view->assign_block_vars('website_genres.website_modules', [
+                            'C_THUMBNAIL'          => !empty($m['thumbnail']),
+                            'C_FA_ICON'            => !empty($m['fa_icon']),
+                            'C_HEXA_ICON'          => !empty($m['hexa_icon']),
+                            'C_AUTHOR_EMAIL'       => !empty($m['author_mail']),
+                            'C_AUTHOR_WEBSITE'     => !empty($m['author_website']),
+                            'C_COMPATIBLE'         => $m['compatible'] && $m['addon_compatible'],
+                            'C_COMPATIBLE_ADDON'   => $m['addon_compatible'],
+                            'C_COMPATIBLE_VERSION' => $m['compatible'],
+                            'C_IS_INSTALLED'       => $m['installed'],
+
+                            'MODULE_NUMBER'  => $ws_module_number,
+                            'MODULE_ID'      => $m['addon_id'],
+                            'MODULE_NAME'    => $m['name'],
+                            'GENRE_NAME'     => $m['genre'],
+                            'COMPATIBILITY'  => $m['compatibility'],
+                            'VERSION'        => $m['version'],
+                            'AUTHOR'         => $m['author'],
+                            'AUTHOR_EMAIL'   => $m['author_mail'],
+                            'AUTHOR_WEBSITE' => $m['author_website'],
+                            'DESCRIPTION'    => $m['description'],
+                            'CREATION_DATE'  => $m['creation_date'],
+                            'LAST_UPDATE'    => $m['last_update'],
+                            'PHP_VERSION'    => $m['php_version'],
+                            'FA_ICON'        => $m['fa_icon'],
+                            'HEXA_ICON'      => $m['hexa_icon'],
+                            'THUMBNAIL_URL'  => $m['thumbnail'],
+                        ]);
+
+                        $ws_module_number++;
+                    }
+                }
+
+                $this->view->put_all([
+                    'C_WEBSITE_MODULES'         => $ws_total > 0,
+                    'C_SEVERAL_WEBSITE_MODULES' => $ws_total > 1,
+                    'WEBSITE_MODULES_NUMBER'     => $ws_total,
+                ]);
+            }
+        }
     }
 
     private function get_modules_not_installed(): array
@@ -266,6 +539,32 @@ class AdminModuleAddController extends DefaultAdminController
         usort($modules_not_installed, [self::class, 'callback_sort_modules_by_name']);
 
         return $modules_not_installed;
+    }
+
+
+    /**
+     * Résout un champ multilingue issu du JSON d'index GitHub.
+     * Le champ peut être une chaîne simple ou un tableau ['fr' => ..., 'english' => ...].
+     */
+    private function resolve_locale_field(array $entry, string $field, string $locale, string $default): string
+    {
+        if (!isset($entry[$field]))
+            return $default;
+
+        $value = $entry[$field];
+
+        if (is_string($value))
+            return $value;
+
+        if (is_array($value))
+        {
+            if (isset($value[$locale]))   return $value[$locale];
+            if (isset($value['english'])) return $value['english'];
+            $first = reset($value);
+            return is_string($first) ? $first : $default;
+        }
+
+        return $default;
     }
 
     private static function callback_sort_modules_by_name(Module $module1, Module $module2): int

@@ -9,7 +9,14 @@
 
 class AdminLangAjaxInstallController extends AbstractController
 {
-	public function execute(HTTPRequestCustom $request)
+    private $lang;
+
+    public function __construct()
+    {
+        $this->lang = LangLoader::get_all_langs();
+    }
+
+    public function execute(HTTPRequestCustom $request)
 	{
 		if (!AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL))
 			return new JSONResponse(['results' => [], 'error' => 'Unauthorized']);
@@ -46,9 +53,9 @@ class AdminLangAjaxInstallController extends AbstractController
 	{
 		$lang_folder = PATH_TO_ROOT . '/lang/';
 		if (!is_writable($lang_folder) && !@chmod($lang_folder, 0755))
-			return ['success' => false, 'msg_key' => 'warning.process.error'];
+			return ['success' => false, 'msg_key' => $this->lang['warning.process.error']];
 		if (LangsManager::get_lang_existed($addon_id))
-			return ['success' => false, 'msg_key' => 'addon.langs.already.installed'];
+			return ['success' => false, 'msg_key' => $this->lang['addon.langs.already.installed']];
 
 		$branch       = AddonRemoteHelper::resolve_github_branch($owner, $repo, $version, $token);
 		$path         = trim($subdir, '/');
@@ -56,7 +63,7 @@ class AdminLangAjaxInstallController extends AbstractController
 
 		$ok = AddonRemoteHelper::download_and_extract_from_github($owner, $repo, $branch, $addon_prefix, $lang_folder . $addon_id . '/', $token);
 		if (!$ok)
-			return ['success' => false, 'msg_key' => 'addon.warning.download.error'];
+			return ['success' => false, 'msg_key' => $this->lang['addon.warning.download.error']];
 
 		return $this->do_install($addon_id);
 	}
@@ -65,24 +72,24 @@ class AdminLangAjaxInstallController extends AbstractController
 	{
 		$lang_folder = PATH_TO_ROOT . '/lang/';
 		if (!is_writable($lang_folder) && !@chmod($lang_folder, 0755))
-			return ['success' => false, 'msg_key' => 'warning.process.error'];
+			return ['success' => false, 'msg_key' => $this->lang['warning.process.error']];
 		if (LangsManager::get_lang_existed($addon_id))
-			return ['success' => false, 'msg_key' => 'addon.langs.already.installed'];
+			return ['success' => false, 'msg_key' => $this->lang['addon.langs.already.installed']];
 
-		list($base_url) = AddonRemoteHelper::fetch_server_index($server_url, $server_dir, $version, 'langs');
+		list($base_url) = AddonRemoteHelper::fetch_website_index($server_url, $server_dir, $version, 'langs');
 		if (empty($base_url))
-			return ['success' => false, 'msg_key' => 'addon.warning.download.error'];
+			return ['success' => false, 'msg_key' => $this->lang['addon.warning.download.error']];
 
 		$zip_content = AddonRemoteHelper::curl_get($base_url . '/' . rawurlencode($addon_id). '/' . rawurlencode($addon_id) . '.zip', [], 60);
 		if ($zip_content === false)
-			return ['success' => false, 'msg_key' => 'addon.warning.download.error'];
+			return ['success' => false, 'msg_key' => $this->lang['addon.warning.download.error']];
 
 		$dest = $lang_folder . $addon_id . '/';
 		$ok   = AddonRemoteHelper::extract_zip_prefix_to($zip_content, $addon_id . '/', $dest);
 		if (!$ok)
 			$ok = AddonRemoteHelper::extract_zip_prefix_to($zip_content, '', $dest);
 		if (!$ok)
-			return ['success' => false, 'msg_key' => 'warning.invalid.archive.content'];
+			return ['success' => false, 'msg_key' => $this->lang['warning.invalid.archive.content']];
 
 		return $this->do_install($addon_id);
 	}
@@ -93,14 +100,14 @@ class AdminLangAjaxInstallController extends AbstractController
 		LangsManager::install($addon_id, $authorizations);
 		$error = LangsManager::get_error();
 		if ($error !== null)
-			return ['success' => false, 'msg_key' => 'warning.process.error'];
+			return ['success' => false, 'msg_key' => $this->lang['warning.process.error']];
 
 		$lang = LangsManager::get_lang($addon_id);
 		HooksService::execute_hook_typed_action('install', 'lang', $addon_id, array_merge(
 			['title' => $lang->get_configuration()->get_name(), 'url' => AdminLangsUrlBuilder::list_installed_langs()->rel()],
 			$lang->get_configuration()->get_properties()
 		));
-		return ['success' => true, 'msg_key' => 'warning.process.success'];
+		return ['success' => true, 'msg_key' => $this->lang['warning.process.success']];
 	}
 }
 ?>

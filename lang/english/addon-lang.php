@@ -162,6 +162,7 @@ $lang['addon.themes.drop.multiple'] = 'Delete all themes\'s files';
 
 // ---- Remote addon sources (GitHub / Website) ----
 
+$lang['addon.refresh.cache']   = 'Refresh cache';
 // GitHub
 $lang['addon.github.choose.repo']    = 'Choose a repository';
 $lang['addon.github.custom.repo']    = 'Use a custom repository';

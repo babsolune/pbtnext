@@ -9,7 +9,14 @@
 
 class AdminModuleAjaxInstallController extends AbstractController
 {
-	public function execute(HTTPRequestCustom $request)
+    private $lang;
+
+    public function __construct()
+    {
+        $this->lang = LangLoader::get_all_langs();
+    }
+
+    public function execute(HTTPRequestCustom $request)
 	{
 		if (!AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL))
 			return new JSONResponse(['results' => [], 'error' => 'Unauthorized']);
@@ -47,9 +54,9 @@ class AdminModuleAjaxInstallController extends AbstractController
 	{
 		$modules_folder = PATH_TO_ROOT . '/modules/';
 		if (!is_writable($modules_folder) && !@chmod($modules_folder, 0755))
-			return ['success' => false, 'msg_key' => 'warning.process.error'];
+			return ['success' => false, 'msg_key' => $this->lang['warning.process.error']];
 		if (ModulesManager::is_module_installed($addon_id))
-			return ['success' => false, 'msg_key' => 'addon.modules.already.installed'];
+			return ['success' => false, 'msg_key' => $this->lang['addon.modules.already.installed']];
 
 		$branch       = AddonRemoteHelper::resolve_github_branch($owner, $repo, $version, $token);
 		$path         = trim($subdir, '/');
@@ -57,7 +64,7 @@ class AdminModuleAjaxInstallController extends AbstractController
 
 		$ok = AddonRemoteHelper::download_and_extract_from_github($owner, $repo, $branch, $addon_prefix, $modules_folder . $addon_id . '/', $token);
 		if (!$ok)
-			return ['success' => false, 'msg_key' => 'addon.warning.download.error'];
+			return ['success' => false, 'msg_key' => $this->lang['addon.warning.download.error']];
 
 		return $this->do_install($addon_id);
 	}
@@ -66,17 +73,17 @@ class AdminModuleAjaxInstallController extends AbstractController
 	{
 		$modules_folder = PATH_TO_ROOT . '/modules/';
 		if (!is_writable($modules_folder) && !@chmod($modules_folder, 0755))
-			return ['success' => false, 'msg_key' => 'warning.process.error'];
+			return ['success' => false, 'msg_key' => $this->lang['warning.process.error']];
 		if (ModulesManager::is_module_installed($addon_id))
-			return ['success' => false, 'msg_key' => 'addon.modules.already.installed'];
+			return ['success' => false, 'msg_key' => $this->lang['addon.modules.already.installed']];
 
-		list($base_url) = AddonRemoteHelper::fetch_server_index($server_url, $server_dir, $version, 'modules');
+		list($base_url) = AddonRemoteHelper::fetch_website_index($server_url, $server_dir, $version, 'modules');
 		if (empty($base_url))
-			return ['success' => false, 'msg_key' => 'addon.warning.download.error'];
+			return ['success' => false, 'msg_key' => $this->lang['addon.warning.download.error']];
 
 		$zip_content = AddonRemoteHelper::curl_get($base_url . '/' . rawurlencode($addon_id) .'/' . rawurlencode($addon_id) . '.zip', [], 60);
 		if ($zip_content === false)
-			return ['success' => false, 'msg_key' => 'addon.warning.download.error'];
+			return ['success' => false, 'msg_key' => $this->lang['addon.warning.download.error']];
 
 		$dest = $modules_folder . $addon_id . '/';
 		$ok   = AddonRemoteHelper::extract_zip_prefix_to($zip_content, $addon_id . '/', $dest);
@@ -93,11 +100,11 @@ class AdminModuleAjaxInstallController extends AbstractController
 		ClassLoader::generate_classlist(true);
 		switch (ModulesManager::install_module($addon_id))
 		{
-			case ModulesManager::CONFIG_CONFLICT:          return ['success' => false, 'msg_key' => 'addon.modules.config.conflict'];
-			case ModulesManager::UNEXISTING_MODULE:        return ['success' => false, 'msg_key' => 'warning.element.unexists'];
-			case ModulesManager::MODULE_ALREADY_INSTALLED: return ['success' => false, 'msg_key' => 'addon.modules.already.installed'];
-			case ModulesManager::PHP_VERSION_CONFLICT:     return ['success' => false, 'msg_key' => 'warning.misfit.php'];
-			case ModulesManager::PHPBOOST_VERSION_CONFLICT:return ['success' => false, 'msg_key' => 'warning.misfit.phpboost'];
+			case ModulesManager::CONFIG_CONFLICT:          return ['success' => false, 'msg_key' => $this->lang['addon.modules.config.conflict']];
+			case ModulesManager::UNEXISTING_MODULE:        return ['success' => false, 'msg_key' => $this->lang['warning.element.unexists']];
+			case ModulesManager::MODULE_ALREADY_INSTALLED: return ['success' => false, 'msg_key' => $this->lang['addon.modules.already.installed']];
+			case ModulesManager::PHP_VERSION_CONFLICT:     return ['success' => false, 'msg_key' => $this->lang['warning.misfit.php']];
+			case ModulesManager::PHPBOOST_VERSION_CONFLICT:return ['success' => false, 'msg_key' => $this->lang['warning.misfit.phpboost']];
 			case ModulesManager::MODULE_INSTALLED:
 			default:
 				$module = ModulesManager::get_module($addon_id);
@@ -105,7 +112,7 @@ class AdminModuleAjaxInstallController extends AbstractController
 					['title' => $module->get_configuration()->get_name(), 'url' => AdminModulesUrlBuilder::list_installed_modules()->rel()],
 					$module->get_configuration()->get_properties()
 				));
-				return ['success' => true, 'msg_key' => 'warning.process.success'];
+				return ['success' => true, 'msg_key' => $this->lang['warning.process.success']];
 		}
 	}
 }

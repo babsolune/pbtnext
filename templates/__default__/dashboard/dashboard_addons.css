@@ -141,7 +141,7 @@
 }
 
 .actions-container > * {
-    padding-left: 0.309em;
+    margin-left: 0.309em !important;
 }
 
 .addon-auth-content select { max-height: 185px; }

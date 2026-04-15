@@ -23,10 +23,10 @@ class CacheService
 
 	public function __construct()
 	{
-		self::$cache_folder = new Folder(PATH_TO_ROOT . '/cache');
-		self::$tpl_cache_folder = new Folder(self::$cache_folder->get_path() . '/tpl');
-		self::$css_cache_folder = new Folder(self::$cache_folder->get_path() . '/css');
-		self::$js_cache_folder = new Folder(self::$cache_folder->get_path() . '/js');
+		self::$cache_folder             = new Folder(PATH_TO_ROOT . '/cache');
+		self::$tpl_cache_folder         = new Folder(self::$cache_folder->get_path() . '/tpl');
+		self::$css_cache_folder         = new Folder(self::$cache_folder->get_path() . '/css');
+		self::$js_cache_folder          = new Folder(self::$cache_folder->get_path() . '/js');
 		self::$syndication_cache_folder = new Folder(self::$cache_folder->get_path() . '/syndication');
 	}
 

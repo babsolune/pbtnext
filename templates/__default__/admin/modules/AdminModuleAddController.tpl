@@ -2,6 +2,7 @@
 # INCLUDE MESSAGE_HELPER_WARNING #
 # INCLUDE MESSAGE_HELPER_SUCCESS #
 <header>
+    # INCLUDE REFRESH #
 	<h2>{@addon.modules.add}</h2>
 	<div class="message-helper bgc notice">{@addon.modules.warning.install}</div>
 </header>
@@ -17,82 +18,307 @@
 	<div class="tabs-wrapper">
 		<div id="target-github" class="tab-content">
 			<div class="addon-source-selector fieldset-content">
-				# IF C_GITHUB_HAS_REPOS #
-					<div class="addon-repo-selector">
-						<label class="text-strong" for="github-repo-select">{@addon.github.choose.repo}</label>
-						<select id="github-repo-select">
-							# START github_repos #
-								<option value="{github_repos.OWNER}" data-repo="{github_repos.REPO}" data-dir="{github_repos.DIR}">{github_repos.LABEL}</option>
-							# END github_repos #
-						</select>
-					</div>
-				# ENDIF #
 				<details class="addon-custom-repo">
 					<summary class="text-strong">{@addon.github.custom.repo}</summary>
-					<div class="fieldset-content cell-flex cell-columns-3">
-						<div>
-							<label for="github-custom-owner">{@addon.repos.owner}</label>
-							<input type="text" id="github-custom-owner" value="{GITHUB_DEFAULT_OWNER}" placeholder="owner" />
+					<form method="get" action="{U_CURRENT_PAGE}">
+						<div class="fieldset-content cell-flex cell-columns-3">
+							<div>
+								<label for="gh_owner_custom">{@addon.repos.owner}</label>
+								<input type="text" id="gh_owner_custom" name="gh_owner" value="{GITHUB_ACTIVE_OWNER}" placeholder="owner" />
+							</div>
+							<div>
+								<label for="gh_repo_custom">{@addon.repos.repository}</label>
+								<input type="text" id="gh_repo_custom" name="gh_repo" value="{GITHUB_ACTIVE_REPO}" placeholder="repository" />
+							</div>
+							<div>
+								<label for="gh_dir_custom">{@addon.sub.directory}</label>
+								<input type="text" id="gh_dir_custom" name="gh_dir" value="{GITHUB_ACTIVE_DIR}" placeholder="{@addon.sub.directory.optional}" />
+							</div>
 						</div>
-						<div>
-							<label for="github-custom-repo">{@addon.repos.repository}</label>
-							<input type="text" id="github-custom-repo" value="{GITHUB_DEFAULT_REPO}" placeholder="repository" />
-						</div>
-						<div>
-							<label for="github-custom-dir">{@addon.sub.directory}</label>
-							<input type="text" id="github-custom-dir" value="{GITHUB_DEFAULT_DIR}" placeholder="{@addon.sub.directory.optional}" />
-						</div>
-					</div>
-					<button id="github-btn-load" type="button" class="button submit">{@addon.github.load.repo}</button>
+						<button type="submit" class="button submit">{@addon.github.load.repo}</button>
+					</form>
 				</details>
+				# IF C_GITHUB_HAS_REPOS #
+					<form id="gh-select-form" method="get" action="{U_CURRENT_PAGE}">
+						<label class="text-strong" for="github-repo-select">{@addon.github.choose.repo}</label>
+						<select id="github-repo-select" onchange="ghSelectChange(this)">
+							# START github_repos #
+								<option value="{github_repos.OWNER}" data-repo="{github_repos.REPO}" data-dir="{github_repos.DIR}"# IF github_repos.C_SELECTED # selected# ENDIF #>{github_repos.LABEL}</option>
+							# END github_repos #
+						</select>
+						<input type="hidden" id="gh_owner_hidden" name="gh_owner" value="{GITHUB_ACTIVE_OWNER}" />
+						<input type="hidden" id="gh_repo_hidden"  name="gh_repo"  value="{GITHUB_ACTIVE_REPO}" />
+						<input type="hidden" id="gh_dir_hidden"   name="gh_dir"   value="{GITHUB_ACTIVE_DIR}" />
+					</form>
+				# ENDIF #
 			</div>
-			<div id="github-addon-list" class="addon-remote-list">
-				<div class="addon-list-loader"><i class="fa fa-spinner fa-spin" aria-hidden="true"></i> {@addon.loading}</div>
-			</div>
+			<article id="github-modules-container" class="addons-container modules-elements-container not-installed-elements-container">
+				# IF C_GITHUB_MODULES #
+					<div class="col-v-3">
+						# START github_genres #
+							<div>
+								<header><h3>{github_genres.GENRE_NAME}</h3></header>
+								<div class="cell-list mini-checkbox">
+									<ul>
+										# START github_genres.github_modules #
+											<li class="li-stretch addon# IF NOT github_genres.github_modules.C_COMPATIBLE # not-compatible error# ENDIF ## IF github_genres.github_modules.C_IS_INSTALLED # installed# ENDIF #">
+												<div id="gh-module-{github_genres.github_modules.MODULE_NUMBER}" class="addon-name align-left">
+													# IF C_SEVERAL_GITHUB_MODULES #
+														# IF github_genres.github_modules.C_COMPATIBLE #
+															# IF NOT github_genres.github_modules.C_IS_INSTALLED #
+																<label class="checkbox" for="gh-multiple-checkbox-{github_genres.github_modules.MODULE_NUMBER}">
+																	<input type="checkbox" class="multiple-checkbox add-checkbox" id="gh-multiple-checkbox-{github_genres.github_modules.MODULE_NUMBER}" name="add-checkbox-{github_genres.github_modules.MODULE_NUMBER}" value="{github_genres.github_modules.MODULE_ID}"/>
+																	<span>&nbsp;</span>
+																</label>
+															# ENDIF #
+														# ENDIF #
+													# ENDIF #
+													{github_genres.github_modules.MODULE_NAME}
+												</div>
+												<div class="addon-infos">
+													<span class="# IF github_genres.github_modules.C_COMPATIBLE #success# ELSE #error# ENDIF #" aria-label="{@addon.compatibility} PHPBoost">{github_genres.github_modules.COMPATIBILITY}</span>
+													<button onclick="return false;" class="button button-mini default modal-button --infos-gh-module-{github_genres.github_modules.MODULE_NUMBER}" aria-label="{@common.informations}"><i class="far fa-circle-question" aria-hidden="true"></i></button>
+													<div id="infos-gh-module-{github_genres.github_modules.MODULE_NUMBER}" class="modal modal-half">
+														<div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
+														<div class="modal-content">
+															<span class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
+															<div class="cell-list">
+																<ul>
+																	<li class="li-stretch">
+																		<h2>
+																			# IF github_genres.github_modules.C_THUMBNAIL #
+																				<img src="{github_genres.github_modules.THUMBNAIL_URL}" alt="{github_genres.github_modules.MODULE_NAME}" class="addon-thumbnail" />
+																			# ELSEIF github_genres.github_modules.C_FA_ICON #
+																				<i class="fa {github_genres.github_modules.FA_ICON}" aria-hidden="true"></i>
+																			# ELSEIF github_genres.github_modules.C_HEXA_ICON #
+																				<span class="hexa-icon bigger">{github_genres.github_modules.HEXA_ICON}</span>
+																			# ELSE #
+																				<i class="far fa-fw fa-puzzle-piece" aria-hidden="true"></i>
+																			# ENDIF #
+																			{github_genres.github_modules.MODULE_NAME}
+																		</h2>
+																	</li>
+																	<li class="li-stretch">
+																		<span class="text-strong">{@common.author} :</span>
+																		<span>
+																			{github_genres.github_modules.AUTHOR}
+																			# IF github_genres.github_modules.C_AUTHOR_EMAIL # <a href="mailto:{github_genres.github_modules.AUTHOR_EMAIL}" class="pinned bgc notice" aria-label="{@common.email}"><i class="fa iboost fa-iboost-email fa-fw" aria-hidden="true"></i></a># ENDIF #
+																			# IF github_genres.github_modules.C_AUTHOR_WEBSITE # <a href="{github_genres.github_modules.AUTHOR_WEBSITE}" class="pinned bgc question" aria-label="{@common.website}"><i class="fa fa-share-square fa-fw" aria-hidden="true"></i></a># ENDIF #
+																		</span>
+																	</li>
+																	<li class="li-stretch">
+																		<span class="text-strong">{@common.version}</span>
+																		{github_genres.github_modules.VERSION}
+																	</li>
+																	<li class="li-stretch">
+																		<span class="text-strong">{@common.creation.date} :</span>
+																		{github_genres.github_modules.CREATION_DATE}
+																	</li>
+																	<li class="li-stretch">
+																		<span class="text-strong">{@common.last.update} :</span>
+																		{github_genres.github_modules.LAST_UPDATE}
+																	</li>
+																	<li>
+																		<span class="text-strong">{@common.description} :</span>
+																		{github_genres.github_modules.DESCRIPTION}
+																	</li>
+																	<li class="li-stretch">
+																		<span class="text-strong">{@addon.modules.php.version} :</span>
+																		{github_genres.github_modules.PHP_VERSION}
+																	</li>
+																	# IF NOT github_genres.github_modules.C_COMPATIBLE_ADDON #
+																		<li class="bgc-full error">{@addon.modules.not.module}</li>
+																	# ENDIF #
+																</ul>
+															</div>
+														</div>
+													</div>
+													# IF github_genres.github_modules.C_IS_INSTALLED #
+														<button onclick="return false;" class="button button-mini bgc-full success" aria-label="{@addon.already.installed}"><i class="fa fa-fw fa-check" aria-hidden="true"></i></button>
+													# ELSEIF github_genres.github_modules.C_COMPATIBLE #
+														<button type="button" class="button button-mini bgc-full logo-color btn-gh-install" data-id="{github_genres.github_modules.MODULE_ID}" aria-label="{@addon.install}"><i class="fa fa-fw fa-arrows-spin" aria-hidden="true"></i></button>
+													# ELSE #
+														<button onclick="return false;" class="button button-mini bgc-full error" aria-label="{@addon.not.compatible}"><i class="fa fa-fw fa-ban" aria-hidden="true"></i></button>
+													# ENDIF #
+													<button type="button" class="button button-mini default offload" aria-label="{@addon.github.view.repo}" onclick="window.open('{github_genres.github_modules.U_REPO}', '_blank', 'noopener');"><i class="fab fa-github fa-fw" aria-hidden="true"></i></button>
+												</div>
+											</li>
+										# END github_genres.github_modules #
+										</ul>
+									</div>
+								</div>
+						# END github_genres #
+					</div>
+				# ELSE #
+					<div class="content">
+						<div class="message-helper bgc notice message-helper-small">{@common.no.item.now}</div>
+					</div>
+				# ENDIF #
+							# IF C_SEVERAL_GITHUB_MODULES #
+					<div class="multiple-select-button select-all-checkbox mini-checkbox inline-checkbox bgc-full link-color">
+						<label class="checkbox" for="gh-check-all">
+							<input type="checkbox" id="gh-check-all" />
+							<span aria-label="{@addon.modules.select.all}">&nbsp;</span>
+						</label>
+						<button type="button" id="gh-install-selected" class="button submit select-all-button">{@addon.multiple.install}</button>
+					</div>
+				# ENDIF #
+            </article>
 		</div>
 
 		<div id="target-website" class="tab-content">
 			<div class="addon-source-selector fieldset-content">
-				# IF C_WEBSITE_HAS_SERVERS #
-					<div class="addon-repo-selector">
-						<label class="text-strong" for="website-server-select">{@addon.website.choose.server}</label>
-						<select id="website-server-select">
-							# START website_servers #
-								<option value="{website_servers.URL}" data-dir="{website_servers.DIR}">{website_servers.LABEL}</option>
-							# END website_servers #
-						</select>
-					</div>
-				# ENDIF #
 				<details class="addon-custom-server">
 					<summary class="text-strong">{@addon.website.custom.server}</summary>
-					<div class="fieldset-content cell-flex cell-columns-2">
-						<div>
-							<label for="website-custom-url">{@addon.servers.url}</label>
-							<input type="text" id="website-custom-url" value="{WEBSITE_DEFAULT_URL}" placeholder="https://example.com" />
+					<form method="get" action="{U_CURRENT_PAGE}">
+						<div class="fieldset-content cell-flex cell-columns-2">
+							<div>
+								<label for="ws_url_custom">{@addon.servers.url}</label>
+								<input type="text" id="ws_url_custom" name="ws_url" value="{WEBSITE_ACTIVE_URL}" placeholder="https://example.com" />
+							</div>
+							<div>
+								<label for="ws_dir_custom">{@addon.sub.directory}</label>
+								<input type="text" id="ws_dir_custom" name="ws_dir" value="{WEBSITE_ACTIVE_DIR}" placeholder="{@addon.sub.directory.optional}" />
+							</div>
 						</div>
-						<div>
-							<label for="website-custom-dir">{@addon.sub.directory}</label>
-							<input type="text" id="website-custom-dir" value="{WEBSITE_DEFAULT_DIR}" placeholder="{@addon.sub.directory.optional}" />
-						</div>
-					</div>
-					<button id="website-btn-load" type="button" class="button submit">{@addon.website.load}</button>
+						<button type="submit" class="button submit">{@addon.website.load}</button>
+					</form>
 				</details>
+				# IF C_WEBSITE_HAS_SERVERS #
+					<form id="ws-select-form" method="get" action="{U_CURRENT_PAGE}">
+						<label class="text-strong" for="website-server-select">{@addon.website.choose.server}</label>
+						<select id="website-server-select" onchange="wsSelectChange(this)">
+							# START website_servers #
+								<option value="{website_servers.URL}" data-dir="{website_servers.DIR}"# IF website_servers.C_SELECTED # selected# ENDIF #>{website_servers.LABEL}</option>
+							# END website_servers #
+						</select>
+						<input type="hidden" id="ws_url_hidden" name="ws_url" value="{WEBSITE_ACTIVE_URL}" />
+						<input type="hidden" id="ws_dir_hidden" name="ws_dir" value="{WEBSITE_ACTIVE_DIR}" />
+					</form>
+				# ENDIF #
 			</div>
-			<div id="website-addon-list" class="addon-remote-list">
-				<div class="addon-list-loader"><i class="fa fa-spinner fa-spin" aria-hidden="true"></i> {@addon.loading}</div>
-			</div>
-		</div>
-
+			<article id="website-modules-container" class="addons-container modules-elements-container not-installed-elements-container">
+				# IF C_WEBSITE_MODULES #
+					<div class="col-v-3">
+						# START website_genres #
+							<div>
+								<header><h3>{website_genres.GENRE_NAME}</h3></header>
+								<div class="cell-list mini-checkbox">
+									<ul>
+										# START website_genres.website_modules #
+											<li class="li-stretch addon# IF NOT website_genres.website_modules.C_COMPATIBLE # not-compatible error# ENDIF ## IF website_genres.website_modules.C_IS_INSTALLED # installed# ENDIF #">
+												<div id="ws-module-{website_genres.website_modules.MODULE_NUMBER}" class="addon-name align-left">
+													# IF C_SEVERAL_WEBSITE_MODULES #
+														# IF website_genres.website_modules.C_COMPATIBLE #
+															# IF NOT website_genres.website_modules.C_IS_INSTALLED #
+																<label class="checkbox" for="ws-multiple-checkbox-{website_genres.website_modules.MODULE_NUMBER}">
+																	<input type="checkbox" class="multiple-checkbox add-checkbox" id="ws-multiple-checkbox-{website_genres.website_modules.MODULE_NUMBER}" name="add-checkbox-{website_genres.website_modules.MODULE_NUMBER}" value="{website_genres.website_modules.MODULE_ID}"/>
+																	<span>&nbsp;</span>
+																</label>
+															# ENDIF #
+														# ENDIF #
+													# ENDIF #
+													{website_genres.website_modules.MODULE_NAME}
+												</div>
+												<div class="addon-infos">
+													<span class="# IF website_genres.website_modules.C_COMPATIBLE #success# ELSE #error# ENDIF #" aria-label="{@addon.compatibility} PHPBoost">{website_genres.website_modules.COMPATIBILITY}</span>
+													<button onclick="return false;" class="button button-mini default modal-button --infos-ws-module-{website_genres.website_modules.MODULE_NUMBER}" aria-label="{@common.informations}"><i class="far fa-circle-question" aria-hidden="true"></i></button>
+													<div id="infos-ws-module-{website_genres.website_modules.MODULE_NUMBER}" class="modal modal-half">
+														<div class="modal-overlay close-modal" aria-label="{@common.close}"></div>
+														<div class="modal-content">
+															<span class="error big hide-modal close-modal" aria-label="{@common.close}"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>
+															<div class="cell-list">
+																<ul>
+																	<li class="li-stretch">
+																		<h2>
+																			# IF website_genres.website_modules.C_THUMBNAIL #
+																				<img src="{website_genres.website_modules.THUMBNAIL_URL}" alt="{website_genres.website_modules.MODULE_NAME}" class="addon-thumbnail" />
+																			# ELSEIF website_genres.website_modules.C_FA_ICON #
+																				<i class="fa {website_genres.website_modules.FA_ICON}" aria-hidden="true"></i>
+																			# ELSEIF website_genres.website_modules.C_HEXA_ICON #
+																				<span class="hexa-icon bigger">{website_genres.website_modules.HEXA_ICON}</span>
+																			# ELSE #
+																				<i class="far fa-fw fa-puzzle-piece" aria-hidden="true"></i>
+																			# ENDIF #
+																			{website_genres.website_modules.MODULE_NAME}
+																		</h2>
+																	</li>
+																	<li class="li-stretch">
+																		<span class="text-strong">{@common.author} :</span>
+																		<span>
+																			{website_genres.website_modules.AUTHOR}
+																			# IF website_genres.website_modules.C_AUTHOR_EMAIL # <a href="mailto:{website_genres.website_modules.AUTHOR_EMAIL}" class="pinned bgc notice" aria-label="{@common.email}"><i class="fa iboost fa-iboost-email fa-fw" aria-hidden="true"></i></a># ENDIF #
+																			# IF website_genres.website_modules.C_AUTHOR_WEBSITE # <a href="{website_genres.website_modules.AUTHOR_WEBSITE}" class="pinned bgc question" aria-label="{@common.website}"><i class="fa fa-share-square fa-fw" aria-hidden="true"></i></a># ENDIF #
+																		</span>
+																	</li>
+																	<li class="li-stretch">
+																		<span class="text-strong">{@common.version}</span>
+																		{website_genres.website_modules.VERSION}
+																	</li>
+																	<li class="li-stretch">
+																		<span class="text-strong">{@common.creation.date} :</span>
+																		{website_genres.website_modules.CREATION_DATE}
+																	</li>
+																	<li class="li-stretch">
+																		<span class="text-strong">{@common.last.update} :</span>
+																		{website_genres.website_modules.LAST_UPDATE}
+																	</li>
+																	<li>
+																		<span class="text-strong">{@common.description} :</span>
+																		{website_genres.website_modules.DESCRIPTION}
+																	</li>
+																	<li class="li-stretch">
+																		<span class="text-strong">{@addon.modules.php.version} :</span>
+																		{website_genres.website_modules.PHP_VERSION}
+																	</li>
+																	# IF NOT website_genres.website_modules.C_COMPATIBLE_ADDON #
+																		<li class="bgc-full error">{@addon.modules.not.module}</li>
+																	# ENDIF #
+																</ul>
+															</div>
+														</div>
+													</div>
+													# IF website_genres.website_modules.C_IS_INSTALLED #
+														<button onclick="return false;" class="button button-mini bgc-full success" aria-label="{@addon.already.installed}"><i class="fa fa-fw fa-check" aria-hidden="true"></i></button>
+													# ELSEIF website_genres.website_modules.C_COMPATIBLE #
+														<button type="button" class="button button-mini bgc-full logo-color btn-ws-install" data-id="{website_genres.website_modules.MODULE_ID}" aria-label="{@addon.install}"><i class="fa fa-fw fa-arrows-spin" aria-hidden="true"></i></button>
+													# ELSE #
+														<button onclick="return false;" class="button button-mini bgc-full error" aria-label="{@addon.not.compatible}"><i class="fa fa-fw fa-ban" aria-hidden="true"></i></button>
+													# ENDIF #
+												</div>
+											</li>
+										# END website_genres.website_modules #
+										</ul>
+									</div>
+								</div>
+						# END website_genres #
+					</div>
+				# ELSE #
+					<div class="content">
+						<div class="message-helper bgc notice message-helper-small">{@common.no.item.now}</div>
+					</div>
+				# ENDIF #
+							# IF C_SEVERAL_WEBSITE_MODULES #
+					<div class="multiple-select-button select-all-checkbox mini-checkbox inline-checkbox bgc-full link-color">
+						<label class="checkbox" for="ws-check-all">
+							<input type="checkbox" id="ws-check-all" />
+							<span aria-label="{@addon.modules.select.all}">&nbsp;</span>
+						</label>
+						<button type="button" id="ws-install-selected" class="button submit select-all-button">{@addon.multiple.install}</button>
+					</div>
+				# ENDIF #
+            </article>
+        </div>
 		<div id="target-server" class="tab-content">
 			<form action="{REWRITED_SCRIPT}" method="post" class="fieldset-content">
 				<input type="hidden" name="token" value="{TOKEN}">
 				<section id="not-installed-modules-container" class="addons-container modules-elements-container not-installed-elements-container">
 					# IF C_MODULE_AVAILABLE #
-						<div class="cell-flex cell-columns-4 cell-tile mini-checkbox">
+						<div class="col-v-3">
 							# START genres #
 								<div>
 									<header><h3>{genres.GENRE_NAME}</h3></header>
-									<div class="cell-list cell cell-tile">
+									<div class="cell-list mini-checkbox">
 										<ul>
 											# START genres.server_modules #
 												<li class="li-stretch addon# IF NOT genres.server_modules.C_COMPATIBLE # not-compatible error# ENDIF #">
@@ -203,220 +429,78 @@
 </div>
 
 <script>
+	function ghSelectChange(sel) {
+		var opt = sel.options[sel.selectedIndex];
+		document.getElementById('gh_owner_hidden').value = opt.value;
+		document.getElementById('gh_repo_hidden').value  = opt.getAttribute('data-repo') || '';
+		document.getElementById('gh_dir_hidden').value   = opt.getAttribute('data-dir')  || '';
+		document.getElementById('gh-select-form').submit();
+	}
+	function wsSelectChange(sel) {
+		var opt = sel.options[sel.selectedIndex];
+		document.getElementById('ws_url_hidden').value = opt.value;
+		document.getElementById('ws_dir_hidden').value = opt.getAttribute('data-dir') || '';
+		document.getElementById('ws-select-form').submit();
+	}
 (function () {
-	var ajaxGithubList    = '{U_AJAX_GITHUB_LIST}';
-	var ajaxWebsiteList   = '{U_AJAX_WEBSITE_LIST}';
-	var ajaxInstall       = '{U_AJAX_INSTALL}';
-	var csrfToken         = '{TOKEN}';
+	var ajaxInstall = '{U_AJAX_INSTALL}';
+	var csrfToken   = '{TOKEN}';
+	var gh = { owner: '{GITHUB_ACTIVE_OWNER}', repo: '{GITHUB_ACTIVE_REPO}', dir: '{GITHUB_ACTIVE_DIR}' };
+	var ws = { url: '{WEBSITE_ACTIVE_URL}', dir: '{WEBSITE_ACTIVE_DIR}' };
 
-	// ---- Current state ----
-	var gh = {
-		owner: '{GITHUB_DEFAULT_OWNER}',
-		repo:  '{GITHUB_DEFAULT_REPO}',
-		dir:   '{GITHUB_DEFAULT_DIR}'
-	};
-	var ws = {
-		url: '{WEBSITE_DEFAULT_URL}',
-		dir: '{WEBSITE_DEFAULT_DIR}'
-	};
+	// Single install buttons
+	document.querySelectorAll('.btn-gh-install').forEach(function(btn) {
+		btn.addEventListener('click', function() { install([btn.getAttribute('data-id')], 'github'); });
+	});
+	document.querySelectorAll('.btn-ws-install').forEach(function(btn) {
+		btn.addEventListener('click', function() { install([btn.getAttribute('data-id')], 'website'); });
+	});
 
-	// ---- GitHub ----
-	var ghSel = document.getElementById('github-repo-select');
-	if (ghSel) {
-		ghSel.addEventListener('change', function () {
-			var opt = ghSel.options[ghSel.selectedIndex];
-			gh.owner = opt.value;
-			gh.repo  = opt.getAttribute('data-repo') || '';
-			gh.dir   = opt.getAttribute('data-dir')  || '';
-			document.getElementById('github-custom-owner').value = gh.owner;
-			document.getElementById('github-custom-repo').value  = gh.repo;
-			document.getElementById('github-custom-dir').value   = gh.dir;
-			loadGithub();
+	// Check-all
+	var ghCheckAll = document.getElementById('gh-check-all');
+	if (ghCheckAll) {
+		ghCheckAll.addEventListener('change', function() {
+			var ghCont = document.getElementById('github-modules-container');
+			if (ghCont) ghCont.querySelectorAll('.add-checkbox').forEach(function(cb) { cb.checked = ghCheckAll.checked; });
 		});
 	}
-	var ghBtn = document.getElementById('github-btn-load');
-	if (ghBtn) {
-		ghBtn.addEventListener('click', function () {
-			gh.owner = document.getElementById('github-custom-owner').value;
-			gh.repo  = document.getElementById('github-custom-repo').value;
-			gh.dir   = document.getElementById('github-custom-dir').value;
-			loadGithub();
+	var wsCheckAll = document.getElementById('ws-check-all');
+	if (wsCheckAll) {
+		wsCheckAll.addEventListener('change', function() {
+			var wsCont = document.getElementById('website-modules-container');
+			if (wsCont) wsCont.querySelectorAll('.add-checkbox').forEach(function(cb) { cb.checked = wsCheckAll.checked; });
 		});
 	}
 
-	function loadGithub() {
-		var container = document.getElementById('github-addon-list');
-		setLoader(container);
-		var url = ajaxGithubList
-			+ '?repo_owner=' + encodeURIComponent(gh.owner)
-			+ '&repo_name='  + encodeURIComponent(gh.repo)
-			+ '&repo_dir='   + encodeURIComponent(gh.dir);
-		fetch(url)
-			.then(function (r) { return r.json(); })
-			.then(function (data) { renderList(container, data, 'github', ${escapejs(@addon.github.no.addon.found)}); })
-			.catch(function () { setError(container); });
-	}
-
-    // ---- Website ----
-	var wsSel = document.getElementById('website-server-select');
-	if (wsSel) {
-		wsSel.addEventListener('change', function () {
-			var opt = wsSel.options[wsSel.selectedIndex];
-			ws.url = opt.value;
-			ws.dir = opt.getAttribute('data-dir') || '';
-			document.getElementById('website-custom-url').value = ws.url;
-			document.getElementById('website-custom-dir').value = ws.dir;
-			loadWebsite();
+	// Install selected
+	var ghInstSel = document.getElementById('gh-install-selected');
+	if (ghInstSel) {
+		ghInstSel.addEventListener('click', function() {
+			var ids = [];
+			var ghCont = document.getElementById('github-modules-container');
+			if (ghCont) ghCont.querySelectorAll('.add-checkbox:checked').forEach(function(cb) { ids.push(cb.value); });
+			if (ids.length) install(ids, 'github');
 		});
 	}
-	var wsBtn = document.getElementById('website-btn-load');
-	if (wsBtn) {
-		wsBtn.addEventListener('click', function () {
-			ws.url = document.getElementById('website-custom-url').value;
-			ws.dir = document.getElementById('website-custom-dir').value;
-			loadWebsite();
+	var wsInstSel = document.getElementById('ws-install-selected');
+	if (wsInstSel) {
+		wsInstSel.addEventListener('click', function() {
+			var ids = [];
+			var wsCont = document.getElementById('website-modules-container');
+			if (wsCont) wsCont.querySelectorAll('.add-checkbox:checked').forEach(function(cb) { ids.push(cb.value); });
+			if (ids.length) install(ids, 'website');
 		});
 	}
 
-	function loadWebsite() {
-		var container = document.getElementById('website-addon-list');
-		setLoader(container);
-		var url = ajaxWebsiteList
-			+ '?server_url=' + encodeURIComponent(ws.url)
-			+ '&server_dir=' + encodeURIComponent(ws.dir);
-		fetch(url)
-			.then(function (r) { return r.json(); })
-			.then(function (data) { renderList(container, data, 'website', ${escapejs(@addon.website.no.addon.found)}); })
-			.catch(function () { setError(container); });
-	}
-
-	// ---- List render ----
-	function renderList(container, data, source, emptyMsg) {
-    if (data.error && data.error !== null) {
-        container.innerHTML = '<div class="message-helper bgc error">' + ${escapejs(@addon.source.error)} + '</div>';
-        return;
-    }
-
-    var addons = data.addons || [];
-    if (!addons.length) {
-        container.innerHTML = '<div class="content"><div class="message-helper bgc notice message-helper-small">' + emptyMsg + '</div></div>';
-        return;
-    }
-
-    // Group addons by genre
-    var addonsByGenre = {};
-    addons.forEach(function(addon) {
-        if (!addonsByGenre[addon.genre]) {
-            addonsByGenre[addon.genre] = [];
-        }
-        addonsByGenre[addon.genre].push(addon);
-    });
-
-    // Sort genres alphabetically
-    var sortedGenres = Object.keys(addonsByGenre).sort();
-
-    var html = '<div id="' + source + '-feedback"></div>';
-
-    // Render each genre section
-    sortedGenres.forEach(function(genre) {
-        var genreAddons = addonsByGenre[genre];
-        var compatibles = genreAddons.filter(function(a) { return a.compatible && !a.installed; });
-
-        html += '<h2>' + esc(genre) + '</h2>';
-        html += '<section class="addons-container modules-elements-container not-installed-elements-container">';
-        html += '<div class="cell-list">';
-        html += '<ul class="col-v-3">';
-
-        genreAddons.forEach(function(addon) {
-            var cls = addon.compatible ? '' : ' not-compatible error';
-            if (addon.installed) cls += ' installed';
-            html += '<li class="li-stretch addon' + cls + '">';
-                html += '<div class="addon-name align-left mini-checkbox">';
-                    if (compatibles.length > 1 && addon.compatible && !addon.installed) {
-                        html += '<label class="checkbox" for="' + source + '-cb-' + esc(addon.id) + '">'
-                            + '<input type="checkbox" class="add-checkbox" id="' + source + '-cb-' + esc(addon.id) + '" value="' + esc(addon.id) + '">'
-                            + '<span>&nbsp;</span></label>';
-                    }
-                    html += esc(addon.name);
-                html += '</div>';
-                html += '<div class="addon-infos addon-large align-right">';
-                    html += '<button onclick="return false;" class="modal-button --infos-module-' + esc(addon.id) + ' button button-mini" aria-label="' + ${escapejs(@common.informations)} + '"><i class="far fa-circle-question" aria-hidden="true"></i></button>';
-                    html += '<div id="infos-module-' + esc(addon.id) + '" class="modal modal-full">';
-                        html += '<div class="modal-overlay close-modal" aria-label="' + ${escapejs(@common.close)} + '"></div>';
-                        html += '<div class="modal-content cell-list">';
-                            html += '<span class="error big hide-modal close-modal" aria-label="' + ${escapejs(@common.close)} + '"><i class="far fa-circle-xmark" aria-hidden="true"></i></span>';
-                            html += '<ul>';
-                                html += '<li class="li-stretch">';
-                                    if (addon.thumbnail) {
-                                        html += '<img src="' + esc(addon.thumbnail) + '" alt="' + esc(addon.name) + '" class="addon-thumbnail" onerror="this.style.display=\'none\'">';
-                                    } else if (addon.fa_icon) {
-                                        html += '<i class="' + esc(addon.fa_icon) + '" aria-hidden="true"></i>';
-                                    } else {
-                                        html += '<i class="fa fa-fw fa-puzzle-piece" aria-hidden="true"></i>';
-                                    }
-                                    html += '<h2>' + esc(addon.name) + '</h2>';
-                                html += '</li>';
-                                html += '<li class="li-stretch"><span class="text-strong">{@common.description} :</span> ' + esc(addon.description) + '</li>';
-                                html += '<li class="li-stretch"><span class="text-strong">{@common.author} :</span> ' + esc(addon.author) + '</li>';
-                                html += '<li class="li-stretch"><span class="text-strong">{@common.version} :</span> ' + esc(addon.version) + '</li>';
-                                if (addon.creation_date) {
-                                    html += '<li class="li-stretch"><span class="text-strong">{@common.creation.date} :</span> ' + esc(addon.creation_date) + '</li>';
-                                }
-                                if (addon.last_update) {
-                                    html += '<li class="li-stretch"><span class="text-strong">{@common.last.update} :</span> ' + esc(addon.last_update) + '</li>';
-                                }
-                            html += '</ul>';
-                        html += '</div>';
-                    html += '</div>';
-                    html += ' <button class="button button-mini default ' + (addon.compatible ? 'success' : 'error') + '" aria-label="' + ${escapejs(@addon.compatibility)} + ' PHPBoost">' + esc(addon.compatibility) + '</button>';
-                    if (source === 'github' && addon.repo_url) {
-                        html += ' <button onclick="window.open(\'' + esc(addon.repo_url) + '\', \'_blank\', \'noopener\')" class="button button-mini default offload" aria-label="' + ${escapejs(@addon.github.view.repo)} + '"><i class="fab fa-github fa-fw" aria-hidden="true"></i></button>';
-                    }
-                    if (addon.installed) {
-                        html += ' <button onclick="return false;" class="button button-mini bgc-full success" aria-label="' + ${escapejs(@addon.already.installed)} + '"><i class="fa fa-fw fa-check" aria-hidden="true"></i></button>';
-                    } else if (addon.compatible) {
-                        html += ' <button type="button" class="button button-mini bgc-full logo-color btn-install-one" data-id="' + esc(addon.id) + '" data-source="' + source + '" aria-label="' + ${escapejs(@addon.install)} + '"><i class="fa fa-fw fa-arrows-spin" aria-hidden="true"></i></button>';
-                    } else {
-                        html += ' <button type="button" class="button button-mini bgc-full error" disabled aria-label="' + ${escapejs(@addon.not.compatible)} + '"><i class="fa fa-fw fa-ban" aria-hidden="true"></i></button>';
-                    }
-                html += '</div>';
-            html += '</li>';
-        });
-
-        html += '</ul></div><footer></footer></section>';
-    });
-
-    container.innerHTML = html;
-
-    // Check all checkboxes
-    var checkAll = document.getElementById(source + '-check-all');
-    if (checkAll) {
-        checkAll.addEventListener('change', function() {
-            container.querySelectorAll('.add-checkbox').forEach(function(cb) { cb.checked = checkAll.checked; });
-        });
-    }
-
-    // Install one addon
-    container.querySelectorAll('.btn-install-one').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            install([btn.getAttribute('data-id')], btn.getAttribute('data-source'));
-        });
-    });
-
-    // Install selected addons
-    var btnSel = document.getElementById(source + '-install-sel');
-    if (btnSel) {
-        btnSel.addEventListener('click', function() {
-            var ids = [];
-            container.querySelectorAll('.add-checkbox:checked').forEach(function(cb) { ids.push(cb.value); });
-            if (ids.length) install(ids, source);
-        });
-    }
-}
-
-	// ---- Installation ----
 	function install(ids, source) {
-		var feedback = document.getElementById(source + '-feedback');
+		var containerId = source === 'github' ? 'github-modules-container' : 'website-modules-container';
+		var container   = document.getElementById(containerId);
+		var feedback    = document.getElementById(source + '-install-feedback');
+		if (!feedback) {
+			feedback = document.createElement('div');
+			feedback.id = source + '-install-feedback';
+			if (container) container.prepend(feedback);
+		}
 		feedback.innerHTML = '<div class="addon-list-loader"><i class="fa fa-spinner fa-spin" aria-hidden="true"></i> ' + ${escapejs(@addon.installing)} + '</div>';
 
 		var body = 'token=' + encodeURIComponent(csrfToken) + '&source=' + encodeURIComponent(source);
@@ -428,61 +512,24 @@
 			body += '&server_url=' + encodeURIComponent(ws.url)
 				+ '&server_dir='   + encodeURIComponent(ws.dir);
 		}
-		ids.forEach(function (id) { body += '&addon_ids[]=' + encodeURIComponent(id); });
+		ids.forEach(function(id) { body += '&addon_ids[]=' + encodeURIComponent(id); });
 
-		fetch(ajaxInstall, {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-			body: body
-		})
-		.then(function (r) { return r.json(); })
-		.then(function (data) {
+		fetch(ajaxInstall, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body })
+		.then(function(r) { return r.json(); })
+		.then(function(data) {
 			var results = data.results || {};
 			var html = '';
-			Object.keys(results).forEach(function (id) {
-				var r   = results[id];
-				var cls = r.success ? 'success' : 'warning';
-				html += '<div class="message-helper bgc ' + cls + '"><b>' + esc(id) + '</b> : ' + esc(r.msg_key) + '</div>';
+			Object.keys(results).forEach(function(id) {
+				var r = results[id];
+				html += '<div class="message-helper bgc ' + (r.success ? 'success' : 'warning') + '"><b>' + esc(id) + '</b> : ' + esc(r.msg_key) + '</div>';
 			});
 			feedback.innerHTML = html;
-			if (source === 'github') loadGithub(); else loadWebsite();
 		})
-		.catch(function () { setError(document.getElementById(source + '-feedback')); });
-	}
-
-	function setLoader(el) {
-		el.innerHTML = '<div class="addon-list-loader"><i class="fa fa-spinner fa-spin" aria-hidden="true"></i> ' + ${escapejs(@addon.loading)} + '</div>';
-	}
-	function setError(el) {
-		el.innerHTML = '<div class="message-helper bgc error">' + ${escapejs(@addon.source.error)} + '</div>';
-	}
-	function esc(s) {
-		return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-	}
-
-	//  Automatic loading from the tab made visible
-	// TabsBoost hides the divs, on lazy-load at the first activation
-	var ghLoaded = false, wsLoaded = false;
-	var observer = new MutationObserver(function (mutations) {
-		mutations.forEach(function (m) {
-			if (m.target.id === 'target-github' && m.target.classList.contains('current-tab') && !ghLoaded) {
-				ghLoaded = true; loadGithub();
-			}
-			if (m.target.id === 'target-website' && m.target.classList.contains('current-tab') && !wsLoaded) {
-				wsLoaded = true; loadWebsite();
-			}
+		.catch(function() {
+			feedback.innerHTML = '<div class="message-helper bgc error">' + ${escapejs(@addon.source.error)} + '</div>';
 		});
-	});
-	var ghDiv = document.getElementById('target-github');
-	var wsDiv = document.getElementById('target-website');
-	if (ghDiv) observer.observe(ghDiv, { attributes: true, attributeFilter: ['class'] });
-	if (wsDiv) observer.observe(wsDiv, { attributes: true, attributeFilter: ['class'] });
+	}
 
-	// If github is the first tab displayed at startup, load immediately
-	document.addEventListener('DOMContentLoaded', function () {
-		if (ghDiv && ghDiv.classList.contains('current-tab') && !ghLoaded) {
-			ghLoaded = true; loadGithub();
-		}
-	});
+	function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 }());
 </script>

@@ -9,7 +9,14 @@
 
 class AdminThemeAjaxInstallController extends AbstractController
 {
-	public function execute(HTTPRequestCustom $request)
+    private $lang;
+
+    public function __construct()
+    {
+        $this->lang = LangLoader::get_all_langs();
+    }
+
+    public function execute(HTTPRequestCustom $request)
 	{
 		if (!AppContext::get_current_user()->check_level(User::ADMINISTRATOR_LEVEL))
 			return new JSONResponse(['results' => [], 'error' => 'Unauthorized']);
@@ -46,9 +53,9 @@ class AdminThemeAjaxInstallController extends AbstractController
 	{
 		$templates_folder = PATH_TO_ROOT . '/templates/';
 		if (!is_writable($templates_folder) && !@chmod($templates_folder, 0755))
-			return ['success' => false, 'msg_key' => 'warning.process.error'];
+			return ['success' => false, 'msg_key' => $this->lang['warning.process.error']];
 		if (ThemesManager::get_theme_existed($addon_id))
-			return ['success' => false, 'msg_key' => 'addon.themes.already.installed'];
+			return ['success' => false, 'msg_key' => $this->lang['addon.themes.already.installed']];
 
 		$branch       = AddonRemoteHelper::resolve_github_branch($owner, $repo, $version, $token);
 		$path         = trim($subdir, '/');
@@ -56,7 +63,7 @@ class AdminThemeAjaxInstallController extends AbstractController
 
 		$ok = AddonRemoteHelper::download_and_extract_from_github($owner, $repo, $branch, $addon_prefix, $templates_folder . $addon_id . '/', $token);
 		if (!$ok)
-			return ['success' => false, 'msg_key' => 'addon.warning.download.error'];
+			return ['success' => false, 'msg_key' => $this->lang['addon.warning.download.error']];
 
 		return $this->do_install($addon_id);
 	}
@@ -65,24 +72,24 @@ class AdminThemeAjaxInstallController extends AbstractController
 	{
 		$templates_folder = PATH_TO_ROOT . '/templates/';
 		if (!is_writable($templates_folder) && !@chmod($templates_folder, 0755))
-			return ['success' => false, 'msg_key' => 'warning.process.error'];
+			return ['success' => false, 'msg_key' => $this->lang['warning.process.error']];
 		if (ThemesManager::get_theme_existed($addon_id))
-			return ['success' => false, 'msg_key' => 'addon.themes.already.installed'];
+			return ['success' => false, 'msg_key' => $this->lang['addon.themes.already.installed']];
 
-		list($base_url) = AddonRemoteHelper::fetch_server_index($server_url, $server_dir, $version, 'templates');
+		list($base_url) = AddonRemoteHelper::fetch_website_index($server_url, $server_dir, $version, 'themes');
 		if (empty($base_url))
-			return ['success' => false, 'msg_key' => 'addon.warning.download.error'];
+			return ['success' => false, 'msg_key' => $this->lang['addon.warning.download.error']];
 
 		$zip_content = AddonRemoteHelper::curl_get($base_url . '/' . rawurlencode($addon_id) . '/' . rawurlencode($addon_id) . '.zip', [], 60);
 		if ($zip_content === false)
-			return ['success' => false, 'msg_key' => 'addon.warning.download.error'];
+			return ['success' => false, 'msg_key' => $this->lang['addon.warning.download.error']];
 
 		$dest = $templates_folder . $addon_id . '/';
 		$ok   = AddonRemoteHelper::extract_zip_prefix_to($zip_content, $addon_id . '/', $dest);
 		if (!$ok)
 			$ok = AddonRemoteHelper::extract_zip_prefix_to($zip_content, '', $dest);
 		if (!$ok)
-			return ['success' => false, 'msg_key' => 'warning.invalid.archive.content'];
+			return ['success' => false, 'msg_key' => $this->lang['warning.invalid.archive.content']];
 
 		return $this->do_install($addon_id);
 	}
@@ -93,14 +100,14 @@ class AdminThemeAjaxInstallController extends AbstractController
 		ThemesManager::install($addon_id, $authorizations);
 		$error = ThemesManager::get_error();
 		if ($error !== null)
-			return ['success' => false, 'msg_key' => 'warning.process.error'];
+			return ['success' => false, 'msg_key' => $this->lang['warning.process.error']];
 
 		$theme = ThemesManager::get_theme($addon_id);
 		HooksService::execute_hook_typed_action('install', 'theme', $addon_id, array_merge(
 			['title' => $theme->get_configuration()->get_name(), 'url' => AdminThemeUrlBuilder::list_installed_theme()->rel()],
 			$theme->get_configuration()->get_properties()
 		));
-		return ['success' => true, 'msg_key' => 'warning.process.success'];
+		return ['success' => true, 'msg_key' => $this->lang['warning.process.success']];
 	}
 }
 ?>

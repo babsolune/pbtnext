@@ -38,14 +38,14 @@ class AdminThemeAddController extends DefaultAdminController
             $this->upload_theme();
         }
 
-        $this->build_view();
+        $this->build_view($request);
 
         $this->view->put('UPLOAD_FORM', $this->form->display());
 
         return new AdminThemesDisplayResponse($this->view, $this->lang['addon.themes.add']);
     }
 
-    private function build_view(): void
+    private function build_view(HTTPRequestCustom $request): void
     {
         $phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
         $not_installed_themes = $this->get_not_installed_themes();
@@ -115,47 +115,237 @@ class AdminThemeAddController extends DefaultAdminController
             'THEMES_NUMBER'              => $not_installed_themes_number
         ]);
 
-        // Populate github repos selector
+
+        // ── Defaults & active source (GitHub) ──
         $addons_config = AddonsConfig::load();
         $github_repos  = $addons_config->get_themes_repo();
-        foreach ($github_repos as $repo)
-        {
-            $this->view->assign_block_vars('github_repos', [
-                'LABEL' => $repo['owner'] . '/' . $repo['repository'],
-                'OWNER' => $repo['owner'],
-                'REPO'  => $repo['repository'],
-                'DIR'   => $repo['directory'],
-            ]);
-        }
+
         $default_gh_owner = isset($github_repos[0]['owner'])      ? $github_repos[0]['owner']      : '';
         $default_gh_repo  = isset($github_repos[0]['repository']) ? $github_repos[0]['repository'] : '';
         $default_gh_dir   = isset($github_repos[0]['directory'])  ? $github_repos[0]['directory']  : '';
 
-        // Populate website servers selector
+        $active_gh_owner = $request->get_getstring('gh_owner', $default_gh_owner);
+        $active_gh_repo  = $request->get_getstring('gh_repo',  $default_gh_repo);
+        $active_gh_dir   = $request->get_getstring('gh_dir',   $default_gh_dir);
+
+        foreach ($github_repos as $repo)
+        {
+            $this->view->assign_block_vars('github_repos', [
+                'C_SELECTED' => $repo['owner'] === $active_gh_owner && $repo['repository'] === $active_gh_repo,
+                'LABEL'      => $repo['owner'] . '/' . $repo['repository'],
+                'OWNER'      => $repo['owner'],
+                'REPO'       => $repo['repository'],
+                'DIR'        => $repo['directory'],
+            ]);
+        }
+
+        // ── Defaults & active source (Website) ──
         $website_servers = $addons_config->get_addons_server();
+
+        $default_ws_url = isset($website_servers[0]['url'])       ? $website_servers[0]['url']       : '';
+        $default_ws_dir = isset($website_servers[0]['directory']) ? $website_servers[0]['directory'] : '';
+
+        $active_ws_url = $request->get_getstring('ws_url', $default_ws_url);
+        $active_ws_dir = $request->get_getstring('ws_dir', $default_ws_dir);
+
         foreach ($website_servers as $server)
         {
             $this->view->assign_block_vars('website_servers', [
-                'LABEL' => $server['website'] . ' (' . $server['url'] . ')',
-                'URL'   => $server['url'],
-                'DIR'   => $server['directory'],
+                'C_SELECTED' => $server['url'] === $active_ws_url,
+                'LABEL'      => $server['website'] . ' (' . $server['url'] . ')',
+                'URL'        => $server['url'],
+                'DIR'        => $server['directory'],
             ]);
         }
-        $default_ws_url = isset($website_servers[0]['url'])       ? $website_servers[0]['url']       : '';
-        $default_ws_dir = isset($website_servers[0]['directory']) ? $website_servers[0]['directory'] : '';
 
         $this->view->put_all([
             'C_GITHUB_HAS_REPOS'    => count($github_repos) > 1,
             'GITHUB_DEFAULT_OWNER'  => $default_gh_owner,
             'GITHUB_DEFAULT_REPO'   => $default_gh_repo,
             'GITHUB_DEFAULT_DIR'    => $default_gh_dir,
+            'GITHUB_ACTIVE_OWNER'   => $active_gh_owner,
+            'GITHUB_ACTIVE_REPO'    => $active_gh_repo,
+            'GITHUB_ACTIVE_DIR'     => $active_gh_dir,
             'C_WEBSITE_HAS_SERVERS' => count($website_servers) > 1,
             'WEBSITE_DEFAULT_URL'   => $default_ws_url,
             'WEBSITE_DEFAULT_DIR'   => $default_ws_dir,
-            'U_AJAX_GITHUB_LIST'    => AdminThemeUrlBuilder::ajax_github_list()->rel(),
-            'U_AJAX_WEBSITE_LIST'   => AdminThemeUrlBuilder::ajax_website_list()->rel(),
+            'WEBSITE_ACTIVE_URL'    => $active_ws_url,
+            'WEBSITE_ACTIVE_DIR'    => $active_ws_dir,
             'U_AJAX_INSTALL'        => AdminThemeUrlBuilder::ajax_install()->rel(),
+            'U_CURRENT_PAGE'        => AdminThemeUrlBuilder::add_theme()->rel(),
         ]);
+
+        // ── GitHub list (server-side, from cache) ──
+        $github_token = $addons_config->get_github_token();
+        if (!empty($active_gh_owner) && !empty($active_gh_repo))
+        {
+            $branch = AddonRemoteHelper::resolve_github_branch($active_gh_owner, $active_gh_repo, $phpboost_version, $github_token);
+            $gh_index = AddonRemoteHelper::fetch_github_index_json(
+                $active_gh_owner, $active_gh_repo, $active_gh_dir,
+                $branch, $github_token, 'themes.json'
+            );
+
+            if (is_array($gh_index))
+            {
+                $locale   = AppContext::get_current_user()->get_locale();
+                $raw_base = 'https://raw.githubusercontent.com/' . $active_gh_owner . '/' . $active_gh_repo . '/' . $branch . '/';
+                $path     = trim($active_gh_dir, '/');
+                $gh_grouped = [];
+
+                foreach ($gh_index as $entry)
+                {
+                    if (($entry['addon_type'] ?? '') !== 'theme') continue;
+                    $addon_id = $entry['id'] ?? '';
+                    if (empty($addon_id)) continue;
+
+                    $name  = $this->resolve_locale_field($entry, 'name',        $locale, $addon_id);
+                    $desc  = $this->resolve_locale_field($entry, 'description', $locale, '');
+
+                    $thumbnail = !empty($entry['thumbnail']) ? $entry['thumbnail'] : '';
+
+                    $compatible       = ($entry['compatibility'] ?? '') === $phpboost_version;
+                    $addon_compatible = ($entry['addon_type'] ?? '') === 'theme';
+
+                    $gh_grouped[] = [
+                        'addon_id'         => $addon_id,
+                        'name'             => TextHelper::ucfirst($name),
+                        'compatibility'    => $entry['compatibility'] ?? '',
+                        'version'          => $entry['version']       ?? '',
+                        'author'           => $entry['author']        ?? '',
+                        'author_mail'      => $entry['author_mail']   ?? '',
+                        'author_website'   => $entry['author_website'] ?? '',
+                        'description'      => $desc,
+                        'creation_date'    => $entry['creation_date'] ?? '',
+                        'last_update'      => $entry['last_update']   ?? '',
+                        'php_version'      => $entry['php_version']   ?? '',
+                        'fa_icon'          => $entry['fa_icon']   ?? '',
+                        'hexa_icon'        => $entry['hexa_icon'] ?? '',
+                        'thumbnail'        => $entry['thumbnail'] ?? '',
+                        'compatible'       => $compatible,
+                        'addon_compatible' => $addon_compatible,
+                        'installed'        => ThemesManager::get_theme_existed($addon_id),
+                        'repo_url'         => 'https://github.com/' . $active_gh_owner . '/' . $active_gh_repo . '/tree/' . $branch . '/' . ($path !== '' ? $path . '/' : '') . $addon_id,
+                    ];
+                }
+
+                ksort($gh_grouped);
+                $gh_number = 1;
+                $gh_total  = array_sum(array_map('count', $gh_grouped));
+
+                foreach ($gh_grouped as $m)
+                {
+                    $this->view->assign_block_vars('github_addons', [
+                        'C_THUMBNAIL'          => !empty($m['thumbnail']),
+                        'C_FA_ICON'            => !empty($m['fa_icon']),
+                        'C_HEXA_ICON'          => !empty($m['hexa_icon']),
+                        'C_AUTHOR_EMAIL'       => !empty($m['author_mail']),
+                        'C_AUTHOR_WEBSITE'     => !empty($m['author_website']),
+                        'C_COMPATIBLE'         => $m['compatible'] && $m['addon_compatible'],
+                        'C_COMPATIBLE_ADDON'   => $m['addon_compatible'],
+                        'C_COMPATIBLE_VERSION' => $m['compatible'],
+                        'C_IS_INSTALLED'       => $m['installed'],
+                        'ADDON_NUMBER'   => $gh_number,
+                        'ADDON_ID'       => $m['addon_id'],
+                        'ADDON_NAME'     => $m['name'],
+                        'COMPATIBILITY'  => $m['compatibility'],
+                        'VERSION'        => $m['version'],
+                        'AUTHOR'         => $m['author'],
+                        'AUTHOR_EMAIL'   => $m['author_mail'],
+                        'AUTHOR_WEBSITE' => $m['author_website'],
+                        'DESCRIPTION'    => $m['description'],
+                        'CREATION_DATE'  => $m['creation_date'],
+                        'LAST_UPDATE'    => $m['last_update'],
+                        'FA_ICON'        => $m['fa_icon'],
+                        'HEXA_ICON'      => $m['hexa_icon'],
+                        'THUMBNAIL_URL'  => 'https://raw.githubusercontent.com/' . $active_gh_owner . '/' . $active_gh_repo . '/' . $branch . '/' . $m['addon_id'] . '/' . $m['thumbnail'][0],
+                        'U_REPO'         => $m['repo_url'],
+                    ]);
+                    $gh_number++;
+                }
+
+                $this->view->put_all([
+                    'C_GITHUB_ADDONS'         => $gh_total > 0,
+                    'C_SEVERAL_GITHUB_ADDONS' => $gh_total > 1,
+                    'GITHUB_ADDONS_NUMBER'    => $gh_total,
+                ]);
+            }
+        }
+
+        // ── Website list (server-side, from cache) ──
+        if (!empty($active_ws_url))
+        {
+            $locale = AppContext::get_current_user()->get_locale();
+            list($base_url, $ws_index) = AddonRemoteHelper::fetch_website_index($active_ws_url, $active_ws_dir, $phpboost_version, 'themes');
+
+            if (!empty($ws_index))
+            {
+                $ws_grouped = [];
+                foreach ($ws_index as $item)
+                {
+                    $addon_id = $item['id'] ?? '';
+                    if (empty($addon_id) || ($item['addon_type'] ?? '') !== 'theme') continue;
+
+                    $name  = $this->resolve_locale_field($item, 'name',        $locale, $addon_id);
+                    $desc  = $this->resolve_locale_field($item, 'description', $locale, '');
+
+                    $compatible       = ($item['compatibility'] ?? '') === $phpboost_version;
+                    $addon_compatible = ($item['addon_type'] ?? '') === 'theme';
+
+                    $ws_grouped[] = [
+                        'addon_id'         => $addon_id,
+                        'name'             => TextHelper::ucfirst($name),
+                        'compatibility'    => $item['compatibility'] ?? '',
+                        'version'          => $item['version']       ?? '',
+                        'author'           => $item['author']        ?? '',
+                        'author_mail'      => $item['author_mail']   ?? '',
+                        'author_website'   => $item['author_website'] ?? '',
+                        'description'      => $desc,
+                        'creation_date'    => $item['creation_date'] ?? '',
+                        'last_update'      => $item['last_update']   ?? '',
+                        'thumbnail'        => $item['thumbnail'] ?? '',
+                        'compatible'       => $compatible,
+                        'addon_compatible' => $addon_compatible,
+                        'installed'        => ThemesManager::get_theme_existed($addon_id),
+                    ];
+                }
+
+                ksort($ws_grouped);
+                $ws_number = 1;
+                $ws_total  = array_sum(array_map('count', $ws_grouped));
+
+                foreach ($ws_grouped as $m)
+                {
+                    $this->view->assign_block_vars('website_addons', [
+                        'C_THUMBNAIL'          => !empty($m['thumbnail']),
+                        'C_AUTHOR_EMAIL'       => !empty($m['author_mail']),
+                        'C_AUTHOR_WEBSITE'     => !empty($m['author_website']),
+                        'C_COMPATIBLE'         => $m['compatible'] && $m['addon_compatible'],
+                        'C_COMPATIBLE_ADDON'   => $m['addon_compatible'],
+                        'C_COMPATIBLE_VERSION' => $m['compatible'],
+                        'C_IS_INSTALLED'       => $m['installed'],
+                        'ADDON_NUMBER'   => $ws_number,
+                        'ADDON_ID'       => $m['addon_id'],
+                        'ADDON_NAME'     => $m['name'],
+                        'COMPATIBILITY'  => $m['compatibility'],
+                        'VERSION'        => $m['version'],
+                        'AUTHOR'         => $m['author'],
+                        'AUTHOR_EMAIL'   => $m['author_mail'],
+                        'AUTHOR_WEBSITE' => $m['author_website'],
+                        'DESCRIPTION'    => $m['description'],
+                        'CREATION_DATE'  => $m['creation_date'],
+                        'LAST_UPDATE'    => $m['last_update'],
+                        'THUMBNAIL_URL'  => $base_url . '/' . $m['addon_id'] . '/' . $m['thumbnail'][0],
+                    ]);
+                    $ws_number++;
+                }
+
+                $this->view->put_all([
+                    'C_WEBSITE_ADDONS'         => $ws_total > 0,
+                    'C_SEVERAL_WEBSITE_ADDONS' => $ws_total > 1,
+                    'WEBSITE_ADDONS_NUMBER'     => $ws_total,
+                ]);
+            }
+        }
     }
 
     private function get_not_installed_themes(): array
@@ -183,6 +373,21 @@ class AdminThemeAddController extends DefaultAdminController
         return $themes_not_installed;
     }
 
+
+    private function resolve_locale_field(array $entry, string $field, string $locale, string $default): string
+    {
+        if (!isset($entry[$field])) return $default;
+        $value = $entry[$field];
+        if (is_string($value)) return $value;
+        if (is_array($value))
+        {
+            if (isset($value[$locale]))   return $value[$locale];
+            if (isset($value['english'])) return $value['english'];
+            $first = reset($value);
+            return is_string($first) ? $first : $default;
+        }
+        return $default;
+    }
     private static function callback_sort_themes_by_name(Theme $theme1, Theme $theme2): int
     {
         if (TextHelper::strtolower($theme1->get_configuration()->get_name()) > TextHelper::strtolower($theme2->get_configuration()->get_name()))
