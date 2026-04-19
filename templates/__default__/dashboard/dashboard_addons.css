@@ -5,6 +5,14 @@
  * Contains css for addons menu in modules/themes/langs administration page
 */
 
+.addons-container {
+    margin: 1.236em 0 0;
+}
+
+.addon-header > * {
+    padding: 0.618em 0.309em 0.309em 1.618em;
+}
+
 .addon {
     position: relative;
     border-width: 1px;
@@ -78,7 +86,7 @@
         top: auto;
         bottom: 100%;
         width: 190px;
-    @media (min-width: 769px) { width: 180px; }
+    @media (min-width: 769px) { width: 200px; }
 }
 
 .opened + .addon-menu-content {
@@ -102,7 +110,7 @@
 	z-index: 1;
 	top: 100%;
 	left: 0;
-	padding: 8px 1px 10px 10px;
+	padding: 8px 5px 11px 10px;
 }
 
 .addon-menu-checkbox .checkbox {

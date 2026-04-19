@@ -29,6 +29,42 @@ class AdminModuleAddController extends DefaultAdminController
     {
         $message_success = $message_warning = '';
         $modules_selected = $modules_success = 0;
+
+        // ── Remote install (github / website) ──────────────────────────────
+        $source = $request->get_poststring('remote_source', '');
+        if ($source === 'github' || $source === 'website')
+        {
+            AppContext::get_session()->csrf_post_protect();
+            $addon_ids = $request->get_postarray('addon_ids', []);
+            foreach ($addon_ids as $raw_id)
+            {
+                $addon_id = preg_replace('/[^A-Za-z0-9_-]/', '', $raw_id);
+                if (empty($addon_id)) continue;
+                $modules_selected++;
+                if ($source === 'github')
+                    $result = $this->install_from_github(
+                        $addon_id,
+                        $request->get_poststring('gh_owner', ''),
+                        $request->get_poststring('gh_repo',  ''),
+                        $request->get_poststring('gh_dir',   '')
+                    );
+                else
+                    $result = $this->install_from_website(
+                        $addon_id,
+                        $request->get_poststring('ws_url', ''),
+                        $request->get_poststring('ws_dir', '')
+                    );
+                if ($result['success'])
+                {
+                    $modules_success++;
+                    $message_success .= '<b>' . $addon_id . '</b> : ' . $result['msg'] . '<br />';
+                }
+                else
+                    $message_warning .= '<b>' . $addon_id . '</b> : ' . $result['msg'] . '<br />';
+            }
+        }
+
+        // ── Local install (server tab) ──────────────────────────────────────
         $module_number = 1;
         ClassLoader::generate_classlist(true);
         foreach ($this->get_modules_not_installed() as $name => $module)
@@ -39,7 +75,7 @@ class AdminModuleAddController extends DefaultAdminController
 
                 $result = $this->install_module($module->get_id());
 
-                if ($result['type'] == MessageHelper::SUCCESS)
+                if ($result['success'])
                 {
                     $modules_success++;
                     $message_success .= '<b>' . $module->get_configuration()->get_name() . '</b> : ' . $result['msg'] . '<br />';
@@ -547,25 +583,7 @@ class AdminModuleAddController extends DefaultAdminController
      * Le champ peut être une chaîne simple ou un tableau ['fr' => ..., 'english' => ...].
      */
     private function resolve_locale_field(array $entry, string $field, string $locale, string $default): string
-    {
-        if (!isset($entry[$field]))
-            return $default;
-
-        $value = $entry[$field];
-
-        if (is_string($value))
-            return $value;
-
-        if (is_array($value))
-        {
-            if (isset($value[$locale]))   return $value[$locale];
-            if (isset($value['english'])) return $value['english'];
-            $first = reset($value);
-            return is_string($first) ? $first : $default;
-        }
-
-        return $default;
-    }
+    { return AddonHelper::resolve_locale_field($entry, $field, $locale, $default); }
 
     private static function callback_sort_modules_by_name(Module $module1, Module $module2): int
     {
@@ -576,25 +594,47 @@ class AdminModuleAddController extends DefaultAdminController
         return -1;
     }
 
+    private function install_from_github(string $addon_id, string $owner, string $repo, string $subdir): array
+    {
+        return AddonHelper::install_from_github(
+            $addon_id, $owner, $repo, $subdir,
+            PATH_TO_ROOT . '/modules/',
+            'addon.modules.already.installed',
+            [ModulesManager::class, 'is_module_installed'],
+            function($id) { return $this->install_module($id); }
+        );
+    }
+
+    private function install_from_website(string $addon_id, string $server_url, string $server_dir): array
+    {
+        return AddonHelper::install_from_website(
+            $addon_id, $server_url, $server_dir, 'modules',
+            PATH_TO_ROOT . '/modules/',
+            'addon.modules.already.installed',
+            [ModulesManager::class, 'is_module_installed'],
+            function($id) { return $this->install_module($id); }
+        );
+    }
+
     private function install_module(string $module_id): array
     {
         switch (ModulesManager::install_module($module_id))
         {
             case ModulesManager::CONFIG_CONFLICT:
-                return ['msg' => $this->lang['addon.modules.config.conflict'], 'type' => MessageHelper::WARNING];
+                return ['success' => false, 'msg' => $this->lang['addon.modules.config.conflict']];
             case ModulesManager::UNEXISTING_MODULE:
-                return ['msg' => $this->lang['warning.element.unexists'], 'type' => MessageHelper::WARNING];
+                return ['success' => false, 'msg' => $this->lang['warning.element.unexists']];
             case ModulesManager::MODULE_ALREADY_INSTALLED:
-                return ['msg' => $this->lang['addon.modules.already.installed'], 'type' => MessageHelper::WARNING];
+                return ['success' => false, 'msg' => $this->lang['addon.modules.already.installed']];
             case ModulesManager::PHP_VERSION_CONFLICT:
-                return ['msg' => $this->lang['warning.misfit.php'], 'type' => MessageHelper::WARNING];
+                return ['success' => false, 'msg' => $this->lang['warning.misfit.php']];
             case ModulesManager::PHPBOOST_VERSION_CONFLICT:
-                return ['msg' => $this->lang['warning.misfit.phpboost'], 'type' => MessageHelper::WARNING];
+                return ['success' => false, 'msg' => $this->lang['warning.misfit.phpboost']];
             case ModulesManager::MODULE_INSTALLED:
             default:
                 $module = ModulesManager::get_module($module_id);
                 HooksService::execute_hook_typed_action('install', 'module', $module_id, array_merge(['title' => $module->get_configuration()->get_name(), 'url' => AdminModulesUrlBuilder::list_installed_modules()->rel()], $module->get_configuration()->get_properties()));
-                return ['msg' => $this->lang['warning.process.success'], 'type' => MessageHelper::SUCCESS];
+                return ['success' => true, 'msg' => $this->lang['warning.process.success']];
         }
     }
 
@@ -686,7 +726,7 @@ class AdminModuleAddController extends DefaultAdminController
 
                             $result = $this->install_module($module_id);
 
-                            if ($result['type'] == MessageHelper::SUCCESS)
+                            if ($result['success'])
                             {
                                 $this->view->put('MESSAGE_HELPER_SUCCESS', MessageHelper::display($result['msg'], MessageHelper::SUCCESS, 10));
                             }
@@ -721,90 +761,15 @@ class AdminModuleAddController extends DefaultAdminController
     }
 
     private function list_zip_content(string $archive): array
-    {
-        $content = [];
-        $zip = new ZipArchive();
-        if ($zip->open($archive) === true)
-        {
-            for ($i = 0; $i < $zip->numFiles; $i++)
-            {
-                $stat = $zip->statIndex($i);
-                $content[] = [
-                    'filename' => $stat['name'],
-                    'folder'   => (TextHelper::substr($stat['name'], -1) === '/') ? 1 : 0,
-                ];
-            }
-            $zip->close();
-        }
-        return $content;
-    }
+    { return AddonHelper::list_zip_content($archive); }
 
     private function extract_zip(string $archive, string $destination): void
-    {
-        $zip = new ZipArchive();
-        if ($zip->open($archive) === true)
-        {
-            $zip->extractTo($destination);
-            $zip->close();
-
-            // Apply permissions recursively to extracted files
-            $this->apply_permissions($destination, 0755);
-        }
-    }
+    { AddonHelper::extract_zip($archive, $destination); }
 
     private function list_tar_gz_content(string $archive): array
-    {
-        $content = [];
-        try
-        {
-            $phar = new PharData($archive);
-            foreach (new RecursiveIteratorIterator($phar) as $file)
-            {
-                $relative = str_replace('phar://' . $archive . '/', '', $file->getPathname());
-                $content[] = [
-                    'filename' => $relative,
-                    'folder'   => 0,
-                ];
-            }
-            // Also collect directories
-            foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator('phar://' . $archive), RecursiveIteratorIterator::SELF_FIRST) as $file)
-            {
-                if ($file->isDir())
-                {
-                    $relative = str_replace('phar://' . $archive . '/', '', $file->getPathname()) . '/';
-                    $content[] = [
-                        'filename' => $relative,
-                        'folder'   => 1,
-                        'typeflag' => 5,
-                    ];
-                }
-            }
-        }
-        catch (Exception $e) {}
-        return $content;
-    }
+    { return AddonHelper::list_tar_gz_content($archive); }
 
     private function extract_tar_gz(string $archive, string $destination): void
-    {
-        try
-        {
-            $phar = new PharData($archive);
-            $phar->extractTo($destination, null, true);
-            $this->apply_permissions($destination, 0755);
-        }
-        catch (Exception $e) {}
-    }
+    { AddonHelper::extract_tar_gz($archive, $destination); }
 
-    private function apply_permissions(string $path, int $mode): void
-    {
-        @chmod($path, $mode);
-        if (is_dir($path))
-        {
-            foreach (scandir($path) as $item)
-            {
-                if ($item === '.' || $item === '..') continue;
-                $this->apply_permissions($path . '/' . $item, $mode);
-            }
-        }
-    }
 }

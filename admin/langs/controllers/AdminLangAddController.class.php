@@ -21,6 +21,39 @@ class AdminLangAddController extends DefaultAdminController
 
     public function execute(HTTPRequestCustom $request): AdminLangsDisplayResponse
     {
+        // ── Remote install (github / website) ──────────────────────────────
+        $source = $request->get_poststring('remote_source', '');
+        if ($source === 'github' || $source === 'website')
+        {
+            AppContext::get_session()->csrf_post_protect();
+            $addon_ids = $request->get_postarray('addon_ids', []);
+            $selected = $success = 0;
+            foreach ($addon_ids as $raw_id)
+            {
+                $addon_id = preg_replace('/[^A-Za-z0-9_-]/', '', $raw_id);
+                if (empty($addon_id)) continue;
+                $selected++;
+                if ($source === 'github')
+                    $ok = $this->install_lang_from_github(
+                        $addon_id,
+                        $request->get_poststring('gh_owner', ''),
+                        $request->get_poststring('gh_repo',  ''),
+                        $request->get_poststring('gh_dir',   '')
+                    );
+                else
+                    $ok = $this->install_lang_from_website(
+                        $addon_id,
+                        $request->get_poststring('ws_url', ''),
+                        $request->get_poststring('ws_dir', '')
+                    );
+                if ($ok) $success++;
+            }
+            if ($selected > 0 && $selected === $success)
+                $this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.process.success'], MessageHelper::SUCCESS, 10));
+            elseif ($selected > 0)
+                $this->view->put('MESSAGE_HELPER', MessageHelper::display($this->lang['warning.process.error'], MessageHelper::WARNING, -1));
+        }
+
         $this->save($request);
         $this->upload_form();
 
@@ -319,19 +352,7 @@ class AdminLangAddController extends DefaultAdminController
 
 
     private function resolve_locale_field(array $entry, string $field, string $locale, string $default): string
-    {
-        if (!isset($entry[$field])) return $default;
-        $value = $entry[$field];
-        if (is_string($value)) return $value;
-        if (is_array($value))
-        {
-            if (isset($value[$locale]))   return $value[$locale];
-            if (isset($value['english'])) return $value['english'];
-            $first = reset($value);
-            return is_string($first) ? $first : $default;
-        }
-        return $default;
-    }
+    { return AddonHelper::resolve_locale_field($entry, $field, $locale, $default); }
     private static function callback_sort_langs_by_name(Lang $lang1, Lang $lang2): int
     {
         if (TextHelper::strtolower($lang1->get_configuration()->get_name()) > TextHelper::strtolower($lang2->get_configuration()->get_name()))
@@ -353,6 +374,30 @@ class AdminLangAddController extends DefaultAdminController
             }
             $lang_number++;
         }
+    }
+
+    private function install_lang_from_github(string $addon_id, string $owner, string $repo, string $subdir): bool
+    {
+        $result = AddonHelper::install_from_github(
+            $addon_id, $owner, $repo, $subdir,
+            PATH_TO_ROOT . '/lang/',
+            'addon.langs.already.installed',
+            [LangsManager::class, 'get_lang_existed'],
+            function($id) { $this->install_lang($id, ['r-1' => 1, 'r0' => 1, 'r1' => 1]); return ['success' => LangsManager::get_error() === null, 'msg' => '']; }
+        );
+        return $result['success'];
+    }
+
+    private function install_lang_from_website(string $addon_id, string $server_url, string $server_dir): bool
+    {
+        $result = AddonHelper::install_from_website(
+            $addon_id, $server_url, $server_dir, 'langs',
+            PATH_TO_ROOT . '/lang/',
+            'addon.langs.already.installed',
+            [LangsManager::class, 'get_lang_existed'],
+            function($id) { $this->install_lang($id, ['r-1' => 1, 'r0' => 1, 'r1' => 1]); return ['success' => LangsManager::get_error() === null, 'msg' => '']; }
+        );
+        return $result['success'];
     }
 
     private function install_lang(string $id_lang, array $authorizations = []): void
@@ -504,77 +549,15 @@ class AdminLangAddController extends DefaultAdminController
     }
 
     private function list_zip_content(string $archive): array
-    {
-        $content = [];
-        $zip = new ZipArchive();
-        if ($zip->open($archive) === true)
-        {
-            for ($i = 0; $i < $zip->numFiles; $i++)
-            {
-                $stat = $zip->statIndex($i);
-                $content[] = [
-                    'filename' => $stat['name'],
-                    'folder'   => (TextHelper::substr($stat['name'], -1) === '/') ? 1 : 0,
-                ];
-            }
-            $zip->close();
-        }
-        return $content;
-    }
+    { return AddonHelper::list_zip_content($archive); }
 
     private function extract_zip(string $archive, string $destination): void
-    {
-        $zip = new ZipArchive();
-        if ($zip->open($archive) === true)
-        {
-            $zip->extractTo($destination);
-            $zip->close();
-
-            $this->apply_permissions($destination, 0755);
-        }
-    }
+    { AddonHelper::extract_zip($archive, $destination); }
 
     private function list_tar_gz_content(string $archive): array
-    {
-        $content = [];
-        try
-        {
-            foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator('phar://' . $archive), RecursiveIteratorIterator::SELF_FIRST) as $file)
-            {
-                $relative = str_replace('phar://' . $archive . '/', '', $file->getPathname());
-                $is_dir = $file->isDir();
-                $content[] = [
-                    'filename' => $is_dir ? $relative . '/' : $relative,
-                    'folder'   => $is_dir ? 1 : 0,
-                    'typeflag' => $is_dir ? 5 : 0,
-                ];
-            }
-        }
-        catch (Exception $e) {}
-        return $content;
-    }
+    { return AddonHelper::list_tar_gz_content($archive); }
 
     private function extract_tar_gz(string $archive, string $destination): void
-    {
-        try
-        {
-            $phar = new PharData($archive);
-            $phar->extractTo($destination, null, true);
-            $this->apply_permissions($destination, 0755);
-        }
-        catch (Exception $e) {}
-    }
+    { AddonHelper::extract_tar_gz($archive, $destination); }
 
-    private function apply_permissions(string $path, int $mode): void
-    {
-        @chmod($path, $mode);
-        if (is_dir($path))
-        {
-            foreach (scandir($path) as $item)
-            {
-                if ($item === '.' || $item === '..') continue;
-                $this->apply_permissions($path . '/' . $item, $mode);
-            }
-        }
-    }
 }

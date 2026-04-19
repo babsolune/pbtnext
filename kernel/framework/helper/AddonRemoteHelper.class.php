@@ -484,11 +484,14 @@ class AddonRemoteHelper
             $target = $dest_dir . $relative;
             if (substr($name, -1) === '/')
             {
-                @mkdir($target, 0755, true);
+                if (!is_dir($target))
+                    @mkdir($target, 0755, true);
             }
             else
             {
-                @mkdir(dirname($target), 0755, true);
+                $parent = dirname($target);
+                if (!is_dir($parent))
+                    @mkdir($parent, 0755, true);
                 $stream = $zip->getStream($name);
                 if ($stream !== false)
                 {
@@ -500,14 +503,15 @@ class AddonRemoteHelper
         }
         $zip->close();
         @unlink($tmp);
-        if ($extracted)
-            self::apply_permissions($dest_dir, 0755);
         return $extracted;
     }
 
     public static function apply_permissions($path, $mode)
     {
-        @chmod($path, $mode);
+        $prev = error_reporting(0);
+        if (file_exists($path))
+            chmod($path, $mode);
+        error_reporting($prev);
         if (is_dir($path))
         {
             foreach (scandir($path) as $item)
