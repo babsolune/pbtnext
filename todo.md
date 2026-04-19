@@ -37,7 +37,7 @@ Ideas with a #number come from PHPBoost.com members [via the bugtracker](https:/
 1. **Done 6.0** New form field in Ajax to choose files without going through the popup
 
 ## Files
-- **Done 5.2** Cleaning all language variables [Trello private doc](https://trello.com/c/Lrqy2NPq/86-lang)
+- **Done** Cleaning all language variables [Trello private doc](https://trello.com/c/Lrqy2NPq/86-lang)
 - Image editor with js interface to resize, rotate, scale, etc.
 
 ## Comments
