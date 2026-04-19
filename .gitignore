@@ -1,19 +1,8 @@
 # Kernel
-cache/*
-!cache/.htaccess
-!cache/addons/.htaccess
-!cache/addons/phpboost-github-langs.json
-!cache/addons/phpboost-github-modules.json
-!cache/addons/phpboost-github-themes.json
-!cache/addons/phpboost-server-langs.json
-!cache/addons/phpboost-server-modules.json
-!cache/addons/phpboost-server-themes.json
-robots.txt
-sitemap.xml
 kernel/db/config.php
-*.swp
-*.orig
-*.htaccess
+
+# Cache
+cache/*
 
 # Images & files
 images/group/*
@@ -24,27 +13,38 @@ images/smileys/*
 upload/*
 
 # Modules
-modules/flux/xml/*
-modules/gallery/pics/*
-modules/stats/cache/*
+!modules
+# Ignore modules => PHPBoost/Modules
+modules/*.*
+modules/*
+# Exceptions
+!modules/.empty
 
-# Non official graphic templates
+# Themes
 !templates
-# Ignore template directories :
-#templates/*.*
-#templates/*
-# Except following templates :
+# Ignore themes => PHPBoost/Themes
+templates/*.*
+templates/*
+# Exceptions
 !templates/base
 !templates/__default__
 
-# Non official languages
+# Languages
 !lang
-# Ignore language directories :
+# Ignore languages => PHPBoost/Langs
 lang/*.*
 lang/*
-# Except following languages :
+# Exceptions :
 !lang/french
 !lang/english
+
+# Root
+robots.txt
+sitemap.xml
+*.swp
+*.orig
+*.htaccess
+nginx.conf
 
 # Editor folder/file projects
 nbproject
@@ -53,9 +53,7 @@ nbproject
 *.tags
 *.tags_swap
 *.vscode
+*.github
 
 # Directories starting by a dot (.)
 .*/
-
-# nginx file configuration
-nginx.conf
