@@ -7,33 +7,33 @@
 */
 
 jQuery(document).ready(function(){
-	// jQuery('#category-nav').append(CreateChild(0)).find('ul:first').remove();
+	jQuery('#category-nav').append(CreateChild(0)).find('ul:first').remove();
 
 	function CreateChild(id){
-		// var $li = jQuery('li[data_p_id="' + id + '"]');
+		var $li = jQuery('li[data_p_id="' + id + '"]');
 		// Convert to array, sort, and return jQuery object
-		// var liArray = $li.toArray().sort(function(a, b){
-		// 	return jQuery(a).attr('data-order-id') - jQuery(b).attr('data-order-id');
-		// });
-		// $li = jQuery(liArray);
-		// if ($li.length > 0)
-        // {
-		// 	for (var i = 0; i < $li.length; i++)
-        //     {
-		// 		var $this = $li.eq(i);
-		// 		$this.append(CreateChild($this.attr('data-id')));
-		// 	}
-		// 	return jQuery('<ul class="items-list-'+id+'">').append($li);
-		// }
+		var liArray = $li.toArray().sort(function(a, b){
+			return jQuery(a).attr('data-order-id') - jQuery(b).attr('data-order-id');
+		});
+		$li = jQuery(liArray);
+		if ($li.length > 0)
+        {
+			for (var i = 0; i < $li.length; i++)
+            {
+				var $this = $li.eq(i);
+				$this.append(CreateChild($this.attr('data-id')));
+			}
+			return jQuery('<ul class="items-list-'+id+'">').append($li);
+		}
 	}
 
 	jQuery('#category-nav li').has('ul').addClass('has-children');
 
 	// Click handler registered after the DOM tree has been rebuilt by CreateChild
-	// jQuery('[class*="toggle-menu-button"] .categories-item').each(function(){
-	// 	jQuery(this).on('click', function(){
-	// 		jQuery(this).toggleClass('is-open-menu');
-	// 		jQuery(this).closest('li').children('[class*="items-list"]').toggleClass('show-list');
-	// 	});
-	// });
+	jQuery('[class*="toggle-menu-button"] .categories-item').each(function(){
+		jQuery(this).on('click', function(){
+			jQuery(this).toggleClass('is-open-menu');
+			jQuery(this).closest('li').children('[class*="items-list"]').toggleClass('show-list');
+		});
+	});
 });
