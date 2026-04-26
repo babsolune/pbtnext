@@ -3,6 +3,8 @@ kernel/db/config.php
 
 # Cache
 cache/*
+!cache/addons
+!cache/addons/.empty
 
 # Images & files
 images/group/*
