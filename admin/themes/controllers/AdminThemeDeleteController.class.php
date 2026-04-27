@@ -143,9 +143,11 @@ class AdminThemeDeleteController extends DefaultAdminController
 			$this->file->delete();
 		}
 		else
+		{
 			$theme = ThemesManager::get_theme($this->theme_id);
 			ThemesManager::uninstall($this->theme_id, $drop_files);
 			HooksService::execute_hook_typed_action('uninstall', 'theme', $this->theme_id, array_merge(['title' => $theme->get_configuration()->get_name(), $theme->get_configuration()->get_properties()]));
+		}
 	}
 
 	private function theme_exists()

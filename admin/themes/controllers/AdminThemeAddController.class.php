@@ -107,9 +107,9 @@ class AdminThemeAddController extends DefaultAdminController
                 'C_PARENT_COMPATIBLE'  => $theme_has_parent ? ThemesManager::get_theme_existed($configuration->get_parent_theme()) : true,
                 'C_THUMBNAIL'          => count($pictures) > 0,
 
-                'THEME_NUMBER'   => $theme_number,
-                'MODULE_ID'      => $theme->get_id(),
-                'MODULE_NAME'    => $configuration->get_name(),
+                'ADDON_NUMBER'   => $theme_number,
+                'ADDON_ID'       => $theme->get_id(),
+                'ADDON_NAME'     => $configuration->get_name(),
                 'CREATION_DATE'  => $configuration->get_creation_date(),
                 'LAST_UPDATE'    => $configuration->get_last_update(),
                 'VERSION'        => $configuration->get_version(),
@@ -145,8 +145,7 @@ class AdminThemeAddController extends DefaultAdminController
         }
 
         $not_installed_themes_number = count($not_installed_themes);
-        $this->view->put_all(
-        [
+        $this->view->put_all([
             'C_SEVERAL_THEMES_AVAILABLE' => $not_installed_themes_number > 1,
             'C_THEME_AVAILABLE'          => $not_installed_themes_number > 0,
             'THEMES_NUMBER'              => $not_installed_themes_number
@@ -225,7 +224,7 @@ class AdminThemeAddController extends DefaultAdminController
             if (is_array($gh_index))
             {
                 $locale   = AppContext::get_current_user()->get_locale();
-                $raw_base = 'https://raw.githubusercontent.com/' . $active_gh_owner . '/' . $active_gh_repo . '/' . $branch . '/';
+                // $raw_base = 'https://raw.githubusercontent.com/' . $active_gh_owner . '/' . $active_gh_repo . '/' . $branch . '/';
                 $path     = trim($active_gh_dir, '/');
                 $gh_grouped = [];
 
@@ -237,8 +236,6 @@ class AdminThemeAddController extends DefaultAdminController
 
                     $name  = $this->resolve_locale_field($entry, 'name',        $locale, $addon_id);
                     $desc  = $this->resolve_locale_field($entry, 'description', $locale, '');
-
-                    $thumbnail = !empty($entry['thumbnail']) ? $entry['thumbnail'] : '';
 
                     $compatible       = ($entry['compatibility'] ?? '') === $phpboost_version;
                     $addon_compatible = ($entry['addon_type'] ?? '') === 'theme';
@@ -410,9 +407,11 @@ class AdminThemeAddController extends DefaultAdminController
         return $themes_not_installed;
     }
 
-
     private function resolve_locale_field(array $entry, string $field, string $locale, string $default): string
-    { return AddonHelper::resolve_locale_field($entry, $field, $locale, $default); }
+    {
+        return AddonHelper::resolve_locale_field($entry, $field, $locale, $default);
+    }
+
     private static function callback_sort_themes_by_name(Theme $theme1, Theme $theme2): int
     {
         if (TextHelper::strtolower($theme1->get_configuration()->get_name()) > TextHelper::strtolower($theme2->get_configuration()->get_name()))
