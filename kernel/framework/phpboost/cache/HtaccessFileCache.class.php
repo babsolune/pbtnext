@@ -44,9 +44,9 @@ class HtaccessFileCache implements CacheData
 
 			$this->add_core_rules();
 
-			$this->add_modules_rules();
-
 			$this->add_user_rules();
+
+			$this->add_modules_rules();
 
 			$this->add_php_and_http_protections();
 
