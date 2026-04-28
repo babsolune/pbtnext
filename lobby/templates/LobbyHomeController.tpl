@@ -1,4 +1,4 @@
-<section id="module-lobby" class="several-items">
+<section id="module-lobby" class="several-items flex-col">
 	<header class="section-header" style="order: 0;">
 		<h1>{MODULE_TITLE}</h1>
 	</header>

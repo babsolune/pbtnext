@@ -19,7 +19,7 @@ $lang['lobby.modules.position']    = 'Position des éléments';
 $lang['lobby.add.modules']             = 'Ajouter des éléments';
 $lang['lobby.add.modules.warning']     = '
     <p class="text-strong">:modules_list</p>
-    <p>Cliquer sur <strong>Valider</strong> pour ajouter les nouveaux modules au <strong>Lobby</strong>.</p>
+    <p>Cliquer sur <strong>Valider</strong> pour ajouter les nouveaux modules.</p>
 ';
 $lang['lobby.incomplete.module.warning'] = '
     <p>Le module <strong>:module_name</strong> déclare la feature <code>lobby</code> mais il manque les fichiers suivants : <code>:missing_files</code>.</p>
@@ -29,7 +29,7 @@ $lang['lobby.new.modules']             = 'Nouveaux modules détectés';
 $lang['lobby.no.new.module']           = '<p>Les nouveaux modules ont bien été ajoutés au <strong>Lobby</strong>.</p>';
 $lang['lobby.back.to.configuration']   = '<p>La <a href="' . LobbyUrlBuilder::configuration()->rel() . '">configuration</a> des nouveaux modules est maintenant disponible.</p>';
 $lang['lobby.new.modules.description'] = '
-    <p>Des nouveaux modules compatibles avec le <strong>Lobby</strong> ont été installés et activés sur le site :</p>
+    <p>Des nouveaux modules éligibles au module <strong>Page d\'accueil</strong> ont été installés et activés sur le site :</p>
     <p class="text-strong">:modules_list</p>
 ';
 

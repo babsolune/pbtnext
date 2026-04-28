@@ -202,6 +202,19 @@ a.pinned { cursor: pointer; }
 	.flex-around.flex-around-large > * { margin-bottom: 0; }
 }
 
+.flex-col {
+    display: flex !important;
+    flex-direction: column;
+}
+
+.flex-row {
+    display: flex !important;
+    flex-direction: column;
+    @media (min-width: 769px) {
+        flex-direction: row;
+    }
+}
+
 /* --- Display --- */
 .d-none         { display: none !important; }
 .d-flex         { display: flex !important; }
