@@ -7,7 +7,7 @@
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2020 09 02
  * @since       PHPBoost 4.1 - 2014 08 10
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class StatsCache implements CacheData

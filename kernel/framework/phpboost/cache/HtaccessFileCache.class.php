@@ -9,10 +9,10 @@
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
  * @version     PHPBoost 6.1 - last update: 2026 02 23
  * @since       PHPBoost 3.0 - 2009 10 22
- * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
- * @contributor janus57 <janus57@janus57.fr>
- * @contributor mipel <mipel@phpboost.com>
- * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @author      Julien BRISWALTER <j1.seth@phpboost.com>
+ * @author      janus57 <janus57@janus57.fr>
+ * @author      mipel <mipel@phpboost.com>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class HtaccessFileCache implements CacheData

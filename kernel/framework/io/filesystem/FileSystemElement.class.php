@@ -6,12 +6,13 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Nicolas Duhamel <akhenathon2@gmail.com>
- * @version     PHPBoost 6.1 - last update: 2022 03 28
+ * @version     PHPBoost 6.1 - last update: 2026 04 28
  * @since       PHPBoost 2.0 - 2008 07 06
  * @author      Loic ROUCHON <horn@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
  * @author      ph-7 <me@ph7.me>
+ * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 abstract class FileSystemElement
@@ -107,7 +108,7 @@ abstract class FileSystemElement
 	{
 		if (!empty($this->path))
 		{
-			return chmod($this->path, $chmod);
+			return @chmod($this->path, $chmod);
 		}
 		return false;
 	}
