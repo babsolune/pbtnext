@@ -17,11 +17,11 @@ $lang['lobby.edito.description'] = '
     <br />
     Votre site propulsé par PHPBoost est bien installé et fonctionnel. Afin de vous aider à le prendre en main, voici quelques recommandations que nous vous proposons de lire avec attention :
     <br />
-    <h2 class="formatter-title">N\'oubliez pas de supprimer le répertoire <pre class="precode precode-inline"><code>/install</code></pre></h2>
-    Supprimez le répertoire <pre class="precode precode-inline"><code>/install</code></pre> à la racine de votre site pour des raisons de sécurité afin que personne ne puisse recommencer l\'installation.
+    <h2 class="formatter-title">N\'oubliez pas de supprimer le répertoire /install</h2>
+    Supprimez le répertoire /install à la racine de votre site pour des raisons de sécurité afin que personne ne puisse recommencer l\'installation.
     <br />
     <h2 class="formatter-title">Administrez votre site</h2>
-    Accédez au <a class="offload" href="' . UserUrlBuilder::administration()->relative() . '">panneau d\'administration de votre site</a> afin de le paramétrer comme vous le souhaitez !
+    Accédez au <div class="pinned link-color"><a class="offload" href="' . UserUrlBuilder::administration()->relative() . '">panneau d\'administration</a></div> de votre site afin de le paramétrer comme vous le souhaitez !
     <br />
     <br />
     <div class="cell-flex formatter-columns cell-columns-4 cell-tile">

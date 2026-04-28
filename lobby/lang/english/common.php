@@ -12,24 +12,24 @@
 ####################################################
 
 $lang['lobby.title']               = 'Welcome';
-$lang['lobby.config.module.title'] = 'Lobby module configuration';
+$lang['lobby.config.module.title'] = 'Homepage module configuration';
 $lang['lobby.modules.position']    = 'Elements position';
 
 // Module detection
 $lang['lobby.add.modules']             = 'Add some elements';
 $lang['lobby.add.modules.warning']     = '
     <p class="text-strong">:modules_list</p>
-    <p>Click on <strong>Submit</strong> to add the new modules to the <strong>Lobby</strong>.</p>
+    <p>Click on <strong>Submit</strong> to add the new modules to the <strong>Homepage</strong>.</p>
 ';
 $lang['lobby.incomplete.module.warning'] = '
     <p>The module <strong>:module_name</strong> declares the <code>lobby</code> feature but the following files are missing: <code>:missing_files</code>.</p>
-    <p>This module cannot be added to Lobby until these files are present.</p>
+    <p>This module cannot be added to Homepage until these files are present.</p>
 ';
 $lang['lobby.new.modules']             = 'New modules detected';
-$lang['lobby.no.new.module']           = '<p>New modules have been successfully added to the <strong>Lobby</strong>.</p>';
+$lang['lobby.no.new.module']           = '<p>New modules have been successfully added to the <strong>Homepage</strong>.</p>';
 $lang['lobby.back.to.configuration']   = '<p>The <a href="' . LobbyUrlBuilder::configuration()->rel() . '">configuration</a> of the new modules is now available.</p>';
 $lang['lobby.new.modules.description'] = '
-    <p>New modules compatible with the <strong>Lobby</strong> have been installed and activated on the site:</p>
+    <p>New modules compatible with the <strong>Homepage</strong> have been installed and activated on the site:</p>
     <p class="text-strong">:modules_list</p>
 ';
 
@@ -72,7 +72,7 @@ $lang['lobby.subcategories.content.displayed'] = 'Display subcategories content'
 // Configuration Anchors Menu
 $lang['lobby.config.anchors']       = 'Homepage menu display';
 $lang['lobby.display.anchors']      = 'Display the homepage menu';
-$lang['lobby.display.anchors.clue'] = 'This menu allows quick navigation within the lobby page';
+$lang['lobby.display.anchors.clue'] = 'This menu allows quick navigation within the homepage';
 
 // Configuration Edito
 $lang['lobby.config.edito']  = 'Edito display';
