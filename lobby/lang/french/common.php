@@ -58,11 +58,13 @@ $lang['lobby.link.to.contact']      = 'Voir la page contact';
 $lang['lobby.label.module.title']      = 'Titre du module';
 $lang['lobby.label.module.title.clue'] = 'Affiche le titre du module sur la page, le fil d\'Ariane et l\'onglet';
 
-$lang['lobby.hide.menu.left']           = 'Cacher le menu gauche';
-$lang['lobby.hide.menu.right']          = 'Cacher le menu droite';
-$lang['lobby.hide.menu.top.central']    = 'Cacher le menu central haut';
-$lang['lobby.hide.menu.bottom.central'] = 'Cacher le menu central bas';
-$lang['lobby.hide.menu.top.footer']     = 'Cacher le menu sur-pied de page';
+$lang['lobby.menus.display']            = 'Affichage des emplacements de menus';
+$lang['lobby.show.menus']               = 'L\'affichage des menus ne concerne que la page d\'accueil';
+$lang['lobby.show.menu.left']           = 'Afficher le menu gauche';
+$lang['lobby.show.menu.right']          = 'Afficher le menu droite';
+$lang['lobby.show.menu.top.central']    = 'Afficher le menu central haut';
+$lang['lobby.show.menu.bottom.central'] = 'Afficher le menu central bas';
+$lang['lobby.show.menu.top.footer']     = 'Afficher le menu sur-pied de page';
 
 $lang['lobby.items.number']                    = 'Nombre d\'éléments à afficher';
 $lang['lobby.chars.number']                    = 'Limiter le nombre de caractères';

@@ -180,30 +180,32 @@ class AdminLobbyConfigController extends DefaultAdminModuleController
             ['description' => $this->lang['lobby.label.module.title.clue']]
         ));
 
-        $fieldset->add_field(new FormFieldCheckbox('left_columns', $this->lang['lobby.hide.menu.left'], $this->config->get_left_columns(),
-            ['class' => 'custom-checkbox']
-        ));
-
-        $fieldset->add_field(new FormFieldCheckbox('right_columns', $this->lang['lobby.hide.menu.right'], $this->config->get_right_columns(),
-            ['class' => 'custom-checkbox']
-        ));
-
-        $fieldset->add_field(new FormFieldCheckbox('top_central', $this->lang['lobby.hide.menu.top.central'], $this->config->get_top_central(),
-            ['class' => 'custom-checkbox']
-        ));
-
-        $fieldset->add_field(new FormFieldCheckbox('bottom_central', $this->lang['lobby.hide.menu.bottom.central'], $this->config->get_bottom_central(),
-            ['class' => 'custom-checkbox']
-        ));
-
-        $fieldset->add_field(new FormFieldCheckbox('top_footer', $this->lang['lobby.hide.menu.top.footer'], $this->config->get_top_footer(),
-            ['class' => 'custom-checkbox']
-        ));
-
-        $fieldset->add_field(new FormFieldSubTitle('admin_anchors', $this->lang['lobby.config.anchors'], ''));
-
         $fieldset->add_field(new FormFieldCheckbox('anchors_menu_enabled', $this->lang['lobby.display.anchors'], $this->config->get_anchors_menu(),
             ['class' => 'custom-checkbox', 'description' => $this->lang['lobby.display.anchors.clue']]
+        ));
+
+		$fieldset->add_field(new FormFieldSubTitle('columns', $this->lang['lobby.menus.display'], ''));
+
+        $fieldset->add_field(new FormFieldSpacer('columns_desc', $this->lang['lobby.show.menus']));
+
+        $fieldset->add_field(new FormFieldCheckbox('left_columns', $this->lang['lobby.show.menu.left'], !$this->config->get_left_columns(),
+            ['class' => 'custom-checkbox']
+        ));
+
+        $fieldset->add_field(new FormFieldCheckbox('right_columns', $this->lang['lobby.show.menu.right'], !$this->config->get_right_columns(),
+            ['class' => 'custom-checkbox']
+        ));
+
+        $fieldset->add_field(new FormFieldCheckbox('top_central', $this->lang['lobby.show.menu.top.central'], !$this->config->get_top_central(),
+            ['class' => 'custom-checkbox']
+        ));
+
+        $fieldset->add_field(new FormFieldCheckbox('bottom_central', $this->lang['lobby.show.menu.bottom.central'], !$this->config->get_bottom_central(),
+            ['class' => 'custom-checkbox']
+        ));
+
+        $fieldset->add_field(new FormFieldCheckbox('top_footer', $this->lang['lobby.show.menu.top.footer'], !$this->config->get_top_footer(),
+            ['class' => 'custom-checkbox']
         ));
 
         $fieldset->add_field(new FormFieldSubTitle('admin_edito', $this->lang['lobby.config.edito'], ''));
@@ -292,11 +294,11 @@ class AdminLobbyConfigController extends DefaultAdminModuleController
     private function save(): void
     {
         $this->config->set_module_title($this->form->get_value('module_title'));
-        $this->config->set_left_columns($this->form->get_value('left_columns'));
-        $this->config->set_right_columns($this->form->get_value('right_columns'));
-        $this->config->set_top_central($this->form->get_value('top_central'));
-        $this->config->set_bottom_central($this->form->get_value('bottom_central'));
-        $this->config->set_top_footer($this->form->get_value('top_footer'));
+        $this->config->set_left_columns(!$this->form->get_value('left_columns'));
+        $this->config->set_right_columns(!$this->form->get_value('right_columns'));
+        $this->config->set_top_central(!$this->form->get_value('top_central'));
+        $this->config->set_bottom_central(!$this->form->get_value('bottom_central'));
+        $this->config->set_top_footer(!$this->form->get_value('top_footer'));
 
         // Anchors menu
         $this->config->set_anchors_menu($this->form->get_value('anchors_menu_enabled'));
