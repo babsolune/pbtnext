@@ -108,7 +108,10 @@ abstract class FileSystemElement
 	{
 		if (!empty($this->path))
 		{
-			return @chmod($this->path, $chmod);
+			$prev_reporting = error_reporting(0);
+			$result = chmod($this->path, $chmod);
+			error_reporting($prev_reporting);
+			return $result;
 		}
 		return false;
 	}
