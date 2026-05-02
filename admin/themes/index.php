@@ -12,12 +12,9 @@ defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '../..');
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = [
-	new UrlControllerMapper('AdminThemesManagementController',     '`^/(?:installed/?)?$`'),
-	new UrlControllerMapper('AdminThemeAddController',             '`^/add/?$`'),
-	new UrlControllerMapper('AdminThemeAjaxGithubListController',  '`^/ajax/github/list/?$`'),
-	new UrlControllerMapper('AdminThemeAjaxWebsiteListController', '`^/ajax/website/list/?$`'),
-	new UrlControllerMapper('AdminThemeAjaxInstallController',     '`^/ajax/install/?$`'),
-	new UrlControllerMapper('AdminThemeDeleteController',          '`^/([A-Za-z0-9-_]+)/delete/?$`', ['id']),
+	new UrlControllerMapper('AdminThemesManagementController', '`^/(?:installed/?)?$`'),
+	new UrlControllerMapper('AdminThemeAddController', '`^/add/?$`'),
+	new UrlControllerMapper('AdminThemeDeleteController', '`^/([A-Za-z0-9-_]+)/delete/?$`', ['id']),
 ];
 DispatchManager::dispatch($url_controller_mappers);
 ?>

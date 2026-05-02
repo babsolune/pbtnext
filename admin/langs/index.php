@@ -12,12 +12,9 @@ defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '../..');
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = [
-	new UrlControllerMapper('AdminLangsManagementController',     '`^/(?:installed/?)?$`'),
-	new UrlControllerMapper('AdminLangAddController',             '`^/install/?$`'),
-	new UrlControllerMapper('AdminLangAjaxGithubListController',  '`^/ajax/github/list/?$`'),
-	new UrlControllerMapper('AdminLangAjaxWebsiteListController', '`^/ajax/website/list/?$`'),
-	new UrlControllerMapper('AdminLangAjaxInstallController',     '`^/ajax/install/?$`'),
-	new UrlControllerMapper('AdminUninstallLangController',       '`^/([A-Za-z0-9-_]+)/uninstall/?$`', ['id']),
+	new UrlControllerMapper('AdminLangsManagementController', '`^/(?:installed/?)?$`'),
+	new UrlControllerMapper('AdminLangAddController', '`^/install/?$`'),
+	new UrlControllerMapper('AdminUninstallLangController', '`^/([A-Za-z0-9-_]+)/uninstall/?$`', ['id']),
 ];
 DispatchManager::dispatch($url_controller_mappers);
 ?>

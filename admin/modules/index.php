@@ -12,13 +12,10 @@ defined('PATH_TO_ROOT') or define('PATH_TO_ROOT', '../..');
 require_once PATH_TO_ROOT . '/kernel/init.php';
 
 $url_controller_mappers = [
-	new UrlControllerMapper('AdminModulesManagementController',     '`^/(?:installed/?)?$`'),
-	new UrlControllerMapper('AdminModuleAddController',             '`^/add/?$`'),
-	new UrlControllerMapper('AdminModuleAjaxGithubListController',  '`^/ajax/github/list/?$`'),
-	new UrlControllerMapper('AdminModuleAjaxWebsiteListController', '`^/ajax/website/list/?$`'),
-	new UrlControllerMapper('AdminModuleAjaxInstallController',     '`^/ajax/install/?$`'),
-	new UrlControllerMapper('AdminModuleUpdateController',          '`^/update(?:/([A-Za-z0-9_-]+))?/?$`', ['id_module']),
-	new UrlControllerMapper('AdminModuleDeleteController',          '`^/([A-Za-z0-9-_]+)/delete/([0-9])+/?$`', ['id', 'level']),
+	new UrlControllerMapper('AdminModulesManagementController', '`^/(?:installed/?)?$`'),
+	new UrlControllerMapper('AdminModuleAddController', '`^/add/?$`'),
+	new UrlControllerMapper('AdminModuleUpdateController', '`^/update(?:/([A-Za-z0-9_-]+))?/?$`', ['id_module']),
+	new UrlControllerMapper('AdminModuleDeleteController', '`^/([A-Za-z0-9-_]+)/delete/([0-9])+/?$`', ['id', 'level']),
 ];
 DispatchManager::dispatch($url_controller_mappers);
 ?>
