@@ -109,8 +109,8 @@ $lang['addon.github.token.clue']     = 'Lien vers le site Github api.github.com 
 $lang['addon.modules.repos.add']     = 'Ajouter un repo GitHub pour les modules';
 $lang['addon.themes.repos.add']      = 'Ajouter un repo GitHub pour les thèmes';
 $lang['addon.langs.repos.add']       = 'Ajouter un repo GitHub pour les langues';
-$lang['addon.repos.owner']           = 'Propriétaire';
-$lang['addon.repos.repository']      = 'Repository';
+$lang['addon.repos.owner']           = 'Propriétaire du dépot';
+$lang['addon.repos.repository']      = 'Nom du dépot';
 $lang['addon.servers.configuration'] = 'Configuration des sites de téléchargement';
 $lang['addon.servers.configuration.clue'] = '
     Le site doit contenir les sous-dossiers
@@ -169,6 +169,8 @@ $lang['addon.github.custom.repo']    = 'Utiliser un dépôt personnalisé';
 $lang['addon.github.load.repo']      = 'Charger ce dépôt';
 $lang['addon.github.view.repo']      = 'Voir sur GitHub';
 $lang['addon.github.no.addon.found'] = 'Aucun addon compatible trouvé dans ce dépôt.';
+$lang['addon.github.token.missing']  = 'Le token GitHub est manquant. <a href="' . AdminConfigUrlBuilder::addons_config()->rel() . '" class="offload">Configuration</a>';
+$lang['addon.github.bad.token']      = 'Le token GitHub est invalide ou le fichier JSON est manquant. <a href="' . AdminConfigUrlBuilder::addons_config()->rel() . '" class="offload">Configuration</a>';
 
 // Website
 $lang['addon.website.choose.server']  = 'Choisir un serveur de téléchargement';

@@ -109,8 +109,8 @@ $lang['addon.github.token.clue']     = 'Link to the GitHub api.github.com site t
 $lang['addon.modules.repos.add']     = 'Add a GitHub repository for modules';
 $lang['addon.themes.repos.add']      = 'Add a GitHub repository for themes';
 $lang['addon.langs.repos.add']       = 'Add a GitHub repository for languages';
-$lang['addon.repos.owner']           = 'Owner';
-$lang['addon.repos.repository']      = 'Repository';
+$lang['addon.repos.owner']           = 'Repository Owner';
+$lang['addon.repos.repository']      = 'Repository name';
 $lang['addon.servers.configuration'] = 'Configuration of download websites';
 $lang['addon.servers.configuration.clue'] = '
     The site must contain the following subfolders
@@ -169,6 +169,8 @@ $lang['addon.github.custom.repo']    = 'Use a custom repository';
 $lang['addon.github.load.repo']      = 'Load this repository';
 $lang['addon.github.view.repo']      = 'View on GitHub';
 $lang['addon.github.no.addon.found'] = 'No compatible addon found in this repository.';
+$lang['addon.github.token.missing']  = 'This token is missing. <a href="' . AdminConfigUrlBuilder::addons_config()->rel() . '" class="offload">Configuration</a>';
+$lang['addon.github.bad.token']      = 'The GitHub token is invalid or the JSON file is missing. <a href="' . AdminConfigUrlBuilder::addons_config()->rel() . '" class="offload">Configuration</a>';
 
 // Website
 $lang['addon.website.choose.server']  = 'Choose a download server';
