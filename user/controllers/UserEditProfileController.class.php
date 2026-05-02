@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2023 07 10
+ * @version     PHPBoost 6.1 - last update: 2026 05 02
  * @since       PHPBoost 3.0 - 2011 10 09
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>
@@ -383,11 +383,11 @@ class UserEditProfileController extends AbstractController
 			$old_password = $this->form->get_value('old_password');
 			if (!empty($old_password) || (AppContext::get_current_user()->is_admin() && $user_id != AppContext::get_current_user()->get_id()))
 			{
-				$old_password_hashed = KeyGenerator::string_hash($old_password);
+				$old_password_verification = PasswordHasher::verify($old_password, $this->internal_auth_infos['password']);
 
-				if ($old_password_hashed == $this->internal_auth_infos['password'] || (AppContext::get_current_user()->is_admin() && $user_id != AppContext::get_current_user()->get_id()))
+				if ($old_password_verification['verified'] || (AppContext::get_current_user()->is_admin() && $user_id != AppContext::get_current_user()->get_id()))
 				{
-					PHPBoostAuthenticationMethod::update_auth_infos($user_id, $login, $approbation, KeyGenerator::string_hash($password));
+					PHPBoostAuthenticationMethod::update_auth_infos($user_id, $login, $approbation, $password);
 					$has_error = false;
 				}
 				else

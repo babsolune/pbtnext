@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Kevin MASSY <reidlos@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2022 12 09
+ * @version     PHPBoost 6.1 - last update: 2026 05 02
  * @since       PHPBoost 3.0 - 2011 10 07
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -92,7 +92,7 @@ class UserChangeLostPasswordController extends AbstractController
 	{
 		$maintain_config = MaintenanceConfig::load();
 
-		PHPBoostAuthenticationMethod::update_auth_infos($user_id, null, null, KeyGenerator::string_hash($password), null, '');
+		PHPBoostAuthenticationMethod::update_auth_infos($user_id, null, null, $password, null, '');
 
 		$auth_infos = [];
 		try {

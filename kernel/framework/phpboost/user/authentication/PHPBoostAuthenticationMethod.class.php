@@ -10,7 +10,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Loic ROUCHON <horn@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2023 09 11
+ * @version     PHPBoost 6.1 - last update: 2026 05 02
  * @since       PHPBoost 3.0 - 2010 11 28
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
@@ -43,7 +43,8 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 	public function __construct($login, $password)
 	{
 		$this->login = $login;
-		$this->password = KeyGenerator::string_hash($password);
+		// Store plain password for verification with both bcrypt and legacy hashes
+		$this->password = $password;
 		$this->querier = PersistenceContext::get_querier();
 	}
 
@@ -66,7 +67,7 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 		$internal_authentication_columns = [
 			'user_id' => $user_id,
 			'login' => $this->login,
-			'password' => $this->password,
+			'password' => PasswordHasher::hash($this->password),
 			'registration_pass' => $this->registration_pass,
 			'last_connection' => time(),
 			'approved' => (int)$this->approved
@@ -214,18 +215,56 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 
 	private function check_user_password($user_id)
 	{
-		$condition = 'WHERE user_id=:user_id and password=:password';
-		$parameters = ['user_id' => $user_id, 'password' => $this->password];
-		$match = $this->querier->row_exists(DB_TABLE_INTERNAL_AUTHENTICATION, $condition, $parameters, '*');
-		if ($match)
+		$condition = 'WHERE user_id=:user_id';
+		$parameters = ['user_id' => $user_id];
+
+		try
 		{
-			$this->connection_attempts = 0;
+			$row = $this->querier->select_single_row(DB_TABLE_INTERNAL_AUTHENTICATION, ['password'], $condition, $parameters);
+			$stored_hash = $row['password'];
+
+			// Verify password against bcrypt or legacy hash
+			$verification = PasswordHasher::verify($this->password, $stored_hash);
+
+			if ($verification['verified'])
+			{
+				// If password needs migration from legacy to bcrypt
+				if ($verification['needs_migration'])
+				{
+					$this->migrate_password_to_bcrypt($user_id);
+				}
+
+				$this->connection_attempts = 0;
+				return true;
+			}
+			else
+			{
+				$this->connection_attempts++;
+				return false;
+			}
 		}
-		else
+		catch (RowNotFoundException $ex)
 		{
 			$this->connection_attempts++;
+			return false;
 		}
-		return $match;
+	}
+
+	private function migrate_password_to_bcrypt($user_id): void
+	{
+		try
+		{
+			$bcrypt_hash = PasswordHasher::hash($this->password);
+			$columns = ['password' => $bcrypt_hash];
+			$condition = 'WHERE user_id=:user_id';
+			$parameters = ['user_id' => $user_id];
+			$this->querier->update(DB_TABLE_INTERNAL_AUTHENTICATION, $columns, $condition, $parameters);
+		}
+		catch (Exception $ex)
+		{
+			// Log error but don't break authentication
+			error_log('Error migrating password to bcrypt for user ' . $user_id . ': ' . $ex->getMessage());
+		}
 	}
 
 	private function update_user_info($user_id)
@@ -257,7 +296,7 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 			$columns['approved'] = (int)$approved;
 
 		if (!empty($password))
-			$columns['password'] = $password;
+			$columns['password'] = PasswordHasher::hash($password);
 
 		if ($registration_pass !== null)
 			$columns['registration_pass'] = $registration_pass;
