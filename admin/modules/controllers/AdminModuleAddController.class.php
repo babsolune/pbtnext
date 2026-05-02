@@ -300,120 +300,131 @@ class AdminModuleAddController extends DefaultAdminController
         // ---- GitHub modules list — built server-side from the cached index ----
         $github_token = $addons_config->get_github_token();
 
-        if (!empty($active_gh_owner) && !empty($active_gh_repo))
+        if (!empty($github_token))
         {
-            $branch = AddonRemoteHelper::resolve_github_branch($active_gh_owner, $active_gh_repo, $phpboost_version, $github_token);
-            $gh_index = AddonRemoteHelper::fetch_github_index_json(
-                $active_gh_owner, $active_gh_repo, $active_gh_dir,
-                $branch, $github_token, 'modules.json'
-            );
-
-            if (is_array($gh_index))
+            if (!empty($active_gh_owner) && !empty($active_gh_repo))
             {
-                $locale   = AppContext::get_current_user()->get_locale();
-                $raw_base = 'https://raw.githubusercontent.com/' . $active_gh_owner . '/' . $active_gh_repo . '/' . $branch . '/';
-                $path     = trim($active_gh_dir, '/');
+                $branch = AddonRemoteHelper::resolve_github_branch($active_gh_owner, $active_gh_repo, $phpboost_version, $github_token);
+                $gh_index = AddonRemoteHelper::fetch_github_index_json(
+                    $active_gh_owner, $active_gh_repo, $active_gh_dir,
+                    $branch, $github_token, 'modules.json'
+                );
 
-                $gh_grouped = [];
-                foreach ($gh_index as $entry)
+                if (is_array($gh_index))
                 {
-                    if (!isset($entry['addon_type']) || $entry['addon_type'] !== 'module')
-                        continue;
+                    $locale   = AppContext::get_current_user()->get_locale();
+                    $raw_base = 'https://raw.githubusercontent.com/' . $active_gh_owner . '/' . $active_gh_repo . '/' . $branch . '/';
+                    $path     = trim($active_gh_dir, '/');
 
-                    $addon_id = $entry['id'] ?? '';
-                    if (empty($addon_id))
-                        continue;
-
-                    $name  = $this->resolve_locale_field($entry, 'name',        $locale, $addon_id);
-                    $desc  = $this->resolve_locale_field($entry, 'description', $locale, '');
-                    $genre = $this->resolve_locale_field($entry, 'genre',       $locale, '');
-
-                    $thumbnail = !empty($entry['thumbnail']) ? $entry['thumbnail'] : '';
-
-                    $compatible       = ($entry['compatibility'] ?? '') === $phpboost_version;
-                    $addon_compatible = ($entry['addon_type'] ?? '') === 'module';
-
-                    if (!isset($gh_grouped[$genre]))
-                        $gh_grouped[$genre] = [];
-
-                    $gh_grouped[$genre][] = [
-                        'addon_id'         => $addon_id,
-                        'name'             => TextHelper::ucfirst($name),
-                        'genre'            => $genre,
-                        'compatibility'    => $entry['compatibility'] ?? '',
-                        'version'          => $entry['version']       ?? '',
-                        'author'           => $entry['author']        ?? '',
-                        'author_mail'      => $entry['author_mail']   ?? '',
-                        'author_website'   => $entry['author_website'] ?? '',
-                        'description'      => $desc,
-                        'creation_date'    => $entry['creation_date'] ?? '',
-                        'last_update'      => $entry['last_update']   ?? '',
-                        'php_version'      => $entry['php_version']   ?? '',
-                        'fa_icon'          => $entry['fa_icon']   ?? '',
-                        'hexa_icon'        => $entry['hexa_icon'] ?? '',
-                        'thumbnail'        => $thumbnail,
-                        'compatible'       => $compatible,
-                        'addon_compatible' => $addon_compatible,
-                        'installed'        => ModulesManager::is_module_installed($addon_id),
-                        'repo_url'         => 'https://github.com/' . $active_gh_owner . '/' . $active_gh_repo . '/tree/' . $branch . '/' . ($path !== '' ? $path . '/' : '') . $addon_id,
-                    ];
-                }
-
-                ksort($gh_grouped);
-
-                $gh_module_number = 1;
-                $gh_total = array_sum(array_map('count', $gh_grouped));
-
-                foreach ($gh_grouped as $genre => $gh_modules)
-                {
-                    usort($gh_modules, function ($a, $b) { return strcasecmp($a['name'], $b['name']); });
-
-                    $this->view->assign_block_vars('github_genres', [
-                        'GENRE_NAME' => $genre
-                    ]);
-
-                    foreach ($gh_modules as $m)
+                    $gh_grouped = [];
+                    foreach ($gh_index as $entry)
                     {
-                        $this->view->assign_block_vars('github_genres.github_modules', [
-                            'C_THUMBNAIL'          => !empty($m['thumbnail']),
-                            'C_FA_ICON'            => !empty($m['fa_icon']),
-                            'C_HEXA_ICON'          => !empty($m['hexa_icon']),
-                            'C_AUTHOR_EMAIL'       => !empty($m['author_mail']),
-                            'C_AUTHOR_WEBSITE'     => !empty($m['author_website']),
-                            'C_COMPATIBLE'         => $m['compatible'] && $m['addon_compatible'],
-                            'C_COMPATIBLE_ADDON'   => $m['addon_compatible'],
-                            'C_COMPATIBLE_VERSION' => $m['compatible'],
-                            'C_IS_INSTALLED'       => $m['installed'],
+                        if (!isset($entry['addon_type']) || $entry['addon_type'] !== 'module')
+                            continue;
 
-                            'MODULE_NUMBER'  => $gh_module_number,
-                            'MODULE_ID'      => $m['addon_id'],
-                            'MODULE_NAME'    => $m['name'],
-                            'GENRE_NAME'     => $m['genre'],
-                            'COMPATIBILITY'  => $m['compatibility'],
-                            'VERSION'        => $m['version'],
-                            'AUTHOR'         => $m['author'],
-                            'AUTHOR_EMAIL'   => $m['author_mail'],
-                            'AUTHOR_WEBSITE' => $m['author_website'],
-                            'DESCRIPTION'    => $m['description'],
-                            'CREATION_DATE'  => $m['creation_date'],
-                            'LAST_UPDATE'    => $m['last_update'],
-                            'PHP_VERSION'    => $m['php_version'],
-                            'FA_ICON'        => $m['fa_icon'],
-                            'HEXA_ICON'      => $m['hexa_icon'],
-                            'THUMBNAIL_URL'  => $m['thumbnail'] ?? '',
-                            'U_REPO'         => $m['repo_url'],
+                        $addon_id = $entry['id'] ?? '';
+                        if (empty($addon_id))
+                            continue;
+
+                        $name  = $this->resolve_locale_field($entry, 'name',        $locale, $addon_id);
+                        $desc  = $this->resolve_locale_field($entry, 'description', $locale, '');
+                        $genre = $this->resolve_locale_field($entry, 'genre',       $locale, '');
+
+                        $thumbnail = !empty($entry['thumbnail']) ? $entry['thumbnail'] : '';
+
+                        $compatible       = ($entry['compatibility'] ?? '') === $phpboost_version;
+                        $addon_compatible = ($entry['addon_type'] ?? '') === 'module';
+
+                        if (!isset($gh_grouped[$genre]))
+                            $gh_grouped[$genre] = [];
+
+                        $gh_grouped[$genre][] = [
+                            'addon_id'         => $addon_id,
+                            'name'             => TextHelper::ucfirst($name),
+                            'genre'            => $genre,
+                            'compatibility'    => $entry['compatibility'] ?? '',
+                            'version'          => $entry['version']       ?? '',
+                            'author'           => $entry['author']        ?? '',
+                            'author_mail'      => $entry['author_mail']   ?? '',
+                            'author_website'   => $entry['author_website'] ?? '',
+                            'description'      => $desc,
+                            'creation_date'    => $entry['creation_date'] ?? '',
+                            'last_update'      => $entry['last_update']   ?? '',
+                            'php_version'      => $entry['php_version']   ?? '',
+                            'fa_icon'          => $entry['fa_icon']   ?? '',
+                            'hexa_icon'        => $entry['hexa_icon'] ?? '',
+                            'thumbnail'        => $thumbnail,
+                            'compatible'       => $compatible,
+                            'addon_compatible' => $addon_compatible,
+                            'installed'        => ModulesManager::is_module_installed($addon_id),
+                            'repo_url'         => 'https://github.com/' . $active_gh_owner . '/' . $active_gh_repo . '/tree/' . $branch . '/' . ($path !== '' ? $path . '/' : '') . $addon_id,
+                        ];
+                    }
+
+                    ksort($gh_grouped);
+
+                    $gh_module_number = 1;
+                    $gh_total = array_sum(array_map('count', $gh_grouped));
+
+                    foreach ($gh_grouped as $genre => $gh_modules)
+                    {
+                        usort($gh_modules, function ($a, $b) { return strcasecmp($a['name'], $b['name']); });
+
+                        $this->view->assign_block_vars('github_genres', [
+                            'GENRE_NAME' => $genre
                         ]);
 
-                        $gh_module_number++;
-                    }
-                }
+                        foreach ($gh_modules as $m)
+                        {
+                            $this->view->assign_block_vars('github_genres.github_modules', [
+                                'C_THUMBNAIL'          => !empty($m['thumbnail']),
+                                'C_FA_ICON'            => !empty($m['fa_icon']),
+                                'C_HEXA_ICON'          => !empty($m['hexa_icon']),
+                                'C_AUTHOR_EMAIL'       => !empty($m['author_mail']),
+                                'C_AUTHOR_WEBSITE'     => !empty($m['author_website']),
+                                'C_COMPATIBLE'         => $m['compatible'] && $m['addon_compatible'],
+                                'C_COMPATIBLE_ADDON'   => $m['addon_compatible'],
+                                'C_COMPATIBLE_VERSION' => $m['compatible'],
+                                'C_IS_INSTALLED'       => $m['installed'],
 
-                $this->view->put_all([
-                    'C_GITHUB_MODULES'         => $gh_total > 0,
-                    'C_SEVERAL_GITHUB_MODULES' => $gh_total > 1,
-                    'GITHUB_MODULES_NUMBER'     => $gh_total,
-                ]);
+                                'MODULE_NUMBER'  => $gh_module_number,
+                                'MODULE_ID'      => $m['addon_id'],
+                                'MODULE_NAME'    => $m['name'],
+                                'GENRE_NAME'     => $m['genre'],
+                                'COMPATIBILITY'  => $m['compatibility'],
+                                'VERSION'        => $m['version'],
+                                'AUTHOR'         => $m['author'],
+                                'AUTHOR_EMAIL'   => $m['author_mail'],
+                                'AUTHOR_WEBSITE' => $m['author_website'],
+                                'DESCRIPTION'    => $m['description'],
+                                'CREATION_DATE'  => $m['creation_date'],
+                                'LAST_UPDATE'    => $m['last_update'],
+                                'PHP_VERSION'    => $m['php_version'],
+                                'FA_ICON'        => $m['fa_icon'],
+                                'HEXA_ICON'      => $m['hexa_icon'],
+                                'THUMBNAIL_URL'  => $m['thumbnail'] ?? '',
+                                'U_REPO'         => $m['repo_url'],
+                            ]);
+
+                            $gh_module_number++;
+                        }
+                    }
+
+                    $this->view->put_all([
+                        'C_GITHUB_MODULES'         => $gh_total > 0,
+                        'C_SEVERAL_GITHUB_MODULES' => $gh_total > 1,
+                        'GITHUB_MODULES_NUMBER'     => $gh_total,
+                    ]);
+                }
+                else
+                {
+                    $this->view->put('MESSAGE_HELPER_WARNING', MessageHelper::display($this->lang['addon.github.bad.token'], MessageHelper::ERROR, -1));
+                }
             }
+        }
+        else
+        {
+            $this->view->put('MESSAGE_HELPER_WARNING', MessageHelper::display($this->lang['addon.github.token.missing'], MessageHelper::ERROR, -1));
         }
 
         // ---- Website modules list — built server-side from the cached index ----

@@ -7,12 +7,12 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Benoit SAUTEL <ben.popeye@phpboost.com>
- * @version     PHPBoost 6.1 - last update: 2026 02 23
+ * @version     PHPBoost 6.1 - last update: 2026 04 26
  * @since       PHPBoost 3.0 - 2009 10 22
- * @author      Julien BRISWALTER <j1.seth@phpboost.com>
- * @author      janus57 <janus57@janus57.fr>
- * @author      mipel <mipel@phpboost.com>
- * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
+ * @contributor Julien BRISWALTER <j1.seth@phpboost.com>
+ * @contributor janus57 <janus57@janus57.fr>
+ * @contributor mipel <mipel@phpboost.com>
+ * @contributor Sebastien LARTIGUE <babsolune@phpboost.com>
 */
 
 class HtaccessFileCache implements CacheData

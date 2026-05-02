@@ -9,16 +9,16 @@
 
 class AdminAddonsConfigDisplayResponse extends AdminMenuDisplayResponse
 {
-	public function __construct($view, $title_page)
+	public function __construct(View $view, string $title_page)
 	{
 		parent::__construct($view);
 
 		$lang = LangLoader::get_all_langs();
 		$this->set_title($lang['configuration.title']);
 
-		$this->add_link($lang['addon.modules.add'], AdminModulesUrlBuilder::add_module());
-		$this->add_link($lang['addon.themes.add'], AdminThemeUrlBuilder::add_theme());
-		$this->add_link($lang['addon.langs.add'], AdminLangsUrlBuilder::install());
+		$this->add_link($lang['addon.modules.add'],  AdminModulesUrlBuilder::add_module());
+		$this->add_link($lang['addon.themes.add'],   AdminThemeUrlBuilder::add_theme());
+		$this->add_link($lang['addon.langs.add'],    AdminLangsUrlBuilder::install());
 		$this->add_link($lang['form.configuration'], AdminConfigUrlBuilder::addons_config());
 
 		$env = $this->get_graphical_environment();
