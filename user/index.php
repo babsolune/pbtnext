@@ -28,6 +28,9 @@ $url_controller_mappers = [
 	new UrlControllerMapper('UserError403Controller', '`^/error/403/?$`'),
 	new UrlControllerMapper('UserError404Controller', '`^/error/404/?$`'),
 	new UrlControllerMapper('UserAboutCookieController', '`^/aboutcookie/?$`'),
+	new UrlControllerMapper('UserPMController', '`^/pm/?$`'),
+	new UrlControllerMapper('UserPMController', '`^/pm-([0-9]+)/?$`', ['user_id']),
+	new UrlControllerMapper('UserPMController', '`^/pm-[0-9]+-([0-9]+)/?$`', ['pm_id']),
 	new UrlControllerMapper('UserUsersListController', '`^(?:/([a-z]+))?/?([a-z]+)?/?([0-9]+)?/?$`', ['field', 'sort', 'page']),
 
 ];

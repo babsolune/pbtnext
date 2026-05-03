@@ -16,14 +16,9 @@ class UserEditProfileController extends AbstractController
 	private $view;
 	private $user_accounts_config;
 	private $lang;
-	/**
-	 * @var HTMLForm
-	 */
-	private $form;
-	/**
-	 * @var FormButtonDefaultSubmit
-	 */
-	private $submit_button;
+
+    private HTMLForm $form;
+	private FormButtonDefaultSubmit $submit_button;
 
 	private $user;
 	private $internal_auth_infos;
