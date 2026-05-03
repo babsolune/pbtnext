@@ -16,6 +16,8 @@ interface FormConstraint
 
 	function get_js_validation();
 
+	function get_validation_error_message();
+
 	function get_related_fields();
 }
 

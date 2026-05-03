@@ -289,6 +289,7 @@ class PHPBoostAuthenticationMethod extends AuthenticationMethod
 
 	public static function update_auth_infos($user_id, $login = null, $approved = null, $password = null, $registration_pass = null, $change_password_pass = null)
 	{
+        $columns = [];
 		if (!empty($login))
 			$columns['login'] = $login;
 

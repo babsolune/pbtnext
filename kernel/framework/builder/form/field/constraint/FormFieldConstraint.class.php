@@ -20,7 +20,7 @@ interface FormFieldConstraint
 
 	function get_validation_error_message();
 
-	function set_validation_error_message($error_message);
+	function set_validation_error_message(string $error_message);
 }
 
 ?>
