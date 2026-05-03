@@ -20,6 +20,7 @@ $lang['lobby.edito.description'] = '
     <h2 class="formatter-title">N\'oubliez pas de supprimer le répertoire /install</h2>
     Supprimez le répertoire /install à la racine de votre site pour des raisons de sécurité afin que personne ne puisse recommencer l\'installation.
     <br />
+    <br />
     <h2 class="formatter-title">Administrez votre site</h2>
     Accédez au <div class="pinned link-color"><a class="offload" href="' . UserUrlBuilder::administration()->relative() . '">panneau d\'administration</a></div> de votre site afin de le paramétrer comme vous le souhaitez !
     <br />

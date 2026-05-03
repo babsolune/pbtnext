@@ -20,6 +20,7 @@ $lang['lobby.edito.description'] = '
     <h2 class="formatter-title">Don\'t forget to delete the directory /install</h2>
     Delete the /install directory at the root of your site for security reasons so that no one can restart the installation.
     <br />
+    <br />
     <h2 class="formatter-title">Manage your website</h2>
     Go to the <div class="pinned link-color"><a class="offload" href="' . UserUrlBuilder::administration()->relative() . '">administration panel</a></div> to configure your site as you wish!
     <br />
