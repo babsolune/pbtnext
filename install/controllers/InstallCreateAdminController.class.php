@@ -22,7 +22,7 @@ class InstallCreateAdminController extends InstallController
 	 */
 	private $form;
 	/**
-	 * @var HTMLForm
+	 * @var FormButtonSubmit
 	 */
 	private $submit_button;
 
@@ -39,10 +39,14 @@ class InstallCreateAdminController extends InstallController
 			}
 
 			$installation_services = new InstallationServices($this->locale);
-			$installation_services->create_admin($this->form->get_value('display_name'),
-			$login, $this->form->get_value('password'),
-			$this->form->get_value('email'), $this->form->get_value('createSession'),
-			$this->form->get_value('autoconnect'));
+			$installation_services->create_admin(
+                $this->form->get_value('display_name'),
+                $login,
+                $this->form->get_value('password'),
+                $this->form->get_value('email'),
+                $this->form->get_value('createSession'),
+                $this->form->get_value('autoconnect')
+            );
 			$installation_services->regenerate_cache();
 			HtaccessFileCache::regenerate();
 			NginxFileCache::regenerate();

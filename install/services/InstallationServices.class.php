@@ -25,12 +25,12 @@ class InstallationServices
     private $token;
 
     /**
-     * @var string[string]
+     * @var string[]
      */
     private $messages;
 
     /**
-     * @var mixed[string] Distribution configuration
+     * @var mixed[] Distribution configuration
      */
     private $distribution_config;
 
@@ -552,7 +552,6 @@ class InstallationServices
 
     private function initialize_db_connection($dbms, $host, $port, $database, $login, $password, $tables_prefix)
     {
-        defined('PREFIX') or define('PREFIX', $tables_prefix);
         $db_connection_data = [
             'dbms' => $dbms,
             'dsn' => 'mysql:host=' . $host . ';port=' . $port . ';dbname=' . $database,
@@ -648,8 +647,17 @@ class InstallationServices
     private function send_installation_mail($login, $password, $email)
     {
         $general_config = GeneralConfig::load();
-        AppContext::get_mail_service()->send_from_properties($email, $this->messages['install.admin.created.email.object'], sprintf($this->messages['install.admin.created.email.unlock.code'], stripslashes($login),
-        stripslashes($login), UserUrlBuilder::forget_password()->absolute(), $general_config->get_site_url() . $general_config->get_site_path()));
+        AppContext::get_mail_service()->send_from_properties(
+            $email,
+            $this->messages['install.admin.created.email.object'],
+            sprintf(
+                $this->messages['install.admin.created.email.unlock.code'],
+                stripslashes($login),
+                stripslashes($login),
+                UserUrlBuilder::forget_password()->absolute(),
+                $general_config->get_site_url() . $general_config->get_site_path()
+            )
+        );
     }
 
     private function connect_admin($user_id, $auto_connect)
