@@ -15,23 +15,23 @@
 class MemberShortTextExtendedField extends AbstractMemberExtendedField
 {
 	public static $brands_pictures_list = [
-		'bitbucket' => ['title' => 'Bitbucket', 'picture' => 'fa-bitbucket'],
+		'bitbucket'  => ['title' => 'Bitbucket', 'picture' => 'fa-bitbucket'],
 		'deviantart' => ['title' => 'Deviantart', 'picture' => 'fa-deviantart'],
-		'facebook' => ['title' => 'Facebook', 'picture' => 'fa-facebook'],
-		'github' => ['title' => 'Github', 'picture' => 'fa-github'],
-		'google' => ['title' => 'Google+', 'picture' => 'fa-google-plus-g'],
-		'hotmail' => ['title' => 'Hotmail', 'picture' => 'fa-windows'],
-		'instagram' => ['title' => 'Instagram', 'picture' => 'fa-instagram'],
-		'linkedin' => ['title' => 'Linkedin', 'picture' => 'fa-linkedin'],
-		'live' => ['title' => 'Live', 'picture' => 'fa-windows'],
-		'msn' => ['title' => 'MSN', 'picture' => 'fa-windows'],
-		'outlook' => ['title' => 'Outlook', 'picture' => 'fa-windows'],
-		'skype' => ['title' => 'Skype', 'picture' => 'fa-skype'],
-		'steam' => ['title' => 'Steam', 'picture' => 'fa-steam'],
-		'twitch' => ['title' => 'Twitch', 'picture' => 'fa-twitch'],
-		'twitter' => ['title' => 'Twitter', 'picture' => 'fa-twitter'],
-		'yahoo' => ['title' => 'Yahoo', 'picture' => 'fa-yahoo'],
-		'youtube' => ['title' => 'Youtube', 'picture' => 'fa-youtube']
+		'facebook'   => ['title' => 'Facebook', 'picture' => 'fa-facebook'],
+		'github'     => ['title' => 'Github', 'picture' => 'fa-github'],
+		'google'     => ['title' => 'Google+', 'picture' => 'fa-google-plus-g'],
+		'hotmail'    => ['title' => 'Hotmail', 'picture' => 'fa-windows'],
+		'instagram'  => ['title' => 'Instagram', 'picture' => 'fa-instagram'],
+		'linkedin'   => ['title' => 'Linkedin', 'picture' => 'fa-linkedin'],
+		'live'       => ['title' => 'Live', 'picture' => 'fa-windows'],
+		'msn'        => ['title' => 'MSN', 'picture' => 'fa-windows'],
+		'outlook'    => ['title' => 'Outlook', 'picture' => 'fa-windows'],
+		'skype'      => ['title' => 'Skype', 'picture' => 'fa-skype'],
+		'steam'      => ['title' => 'Steam', 'picture' => 'fa-steam'],
+		'twitch'     => ['title' => 'Twitch', 'picture' => 'fa-twitch'],
+		'x-twitter'  => ['title' => 'X-Twitter', 'picture' => 'fa-x-twitter'],
+		'yahoo'      => ['title' => 'Yahoo', 'picture' => 'fa-yahoo'],
+		'youtube'    => ['title' => 'Youtube', 'picture' => 'fa-youtube']
 	];
 
 	public function __construct()
