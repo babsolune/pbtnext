@@ -15,7 +15,7 @@
 
 .listorder-selected a {
 	border-color: var(--main-tone);
-	background-color: rgba(var(--main-rgb-t), 0.3);
+	background-color: rgba(var(--main-tone-rgb), 0.3);
 }
 
 /* --- Filter types --- */
