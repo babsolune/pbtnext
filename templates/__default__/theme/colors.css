@@ -377,7 +377,7 @@ td.calendar-weekend { background-color: rgba(var(--main-tone-rgb), 0.1); }
 .fa-female:before           		{ color: #F49CC4; }
 
 .fa-announce:before,
-.fa-announce-hot:before     		{ color: var(--main-light); }
+.fa-announce-hot:before     		{ color: var(--main-lite); }
 .fa-announce-new:before,
 .fa-announce-new-hot:before 		{ color: var(--success-tone); }
 
@@ -393,7 +393,7 @@ td.calendar-weekend { background-color: rgba(var(--main-tone-rgb), 0.1); }
 .bbcode-button { color: var(--main-tone); }
 
 .bbcode-button:hover {
-	color: var(--main-light);
+	color: var(--main-lite);
 	background-color: rgba(var(--main-tone-rgb), 0.2);
 }
 
@@ -460,7 +460,7 @@ h3.formatter-title { border-color: var(--bdr-alt); }
 
 	.cssmenu-group .cssmenu-title { border-color: var(--bdr-alt); }
 
-	.cssmenu-group .cssmenu-title:hover  { border-color: var(--main-light); }
+	.cssmenu-group .cssmenu-title:hover  { border-color: var(--main-lite); }
 }
 
 .cssmenu-static ul ul {
@@ -528,7 +528,7 @@ a.nav-next { border-color: var(--bdr-main); }
 .pushmenu .nav-close span::before,
 .pushmenu .nav-close span::after { border-color: var(--txt-main); }
 
-.pushmenu a[href]:not([href="#"])>span.nav-next { border-color: var(--main-light); }
+.pushmenu a[href]:not([href="#"])>span.nav-next { border-color: var(--main-lite); }
 .pushmenu .nav-next span::before,
 .pushmenu .nav-back span::before { border-color: var(--txt-main); }
 
@@ -552,7 +552,7 @@ a.nav-next { border-color: var(--bdr-main); }
 .pushmenu.nav-levels-none .nav-container .level-open > .nav-item-link { background-color: rgba(var(--main-tone-rgb), 0.2); }
 
 .pushmenu.nav-levels-expand .nav-container .level-open .nav-item-wrapper > a,
-.pushmenu.nav-levels-none .nav-container .level-open .nav-item-wrapper > a { border-color: var(--main-light); }
+.pushmenu.nav-levels-none .nav-container .level-open .nav-item-wrapper > a { border-color: var(--main-lite); }
 
 .pushmenu.nav-levels-expand .nav-container .level-open .nav-item-wrapper > a:hover,
 .pushmenu.nav-levels-none .nav-container .level-open .nav-item-wrapper > a:hover { background-color: rgba(var(--main-tone-rgb), 0.1); }
@@ -678,8 +678,8 @@ a {
 }
 
 a:hover {
-	color: var(--main-light);
-	border-color: var(--main-light);
+	color: var(--main-lite);
+	border-color: var(--main-lite);
 }
 
 .dropdown-container {

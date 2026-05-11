@@ -180,7 +180,7 @@ nav.admin-index a { color: var(--txt-alt); }
 
 	#admin-quick-menu li .quick-link { color: var(--main-tone); }
 
-	#admin-quick-menu li:hover .quick-link { color: var(--main-light); }
+	#admin-quick-menu li:hover .quick-link { color: var(--main-lite); }
 }
 
 .admin-extend-menu li:hover { background-color: var(--bgc-main); }
