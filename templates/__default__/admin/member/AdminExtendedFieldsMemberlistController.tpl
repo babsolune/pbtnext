@@ -1,3 +1,4 @@
+<!-- === AdminExtendedFieldsMemberlistController.tpl === -->
 <script>
 	var ExtendedFields = function(id){
 		this.id = id;

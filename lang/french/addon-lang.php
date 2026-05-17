@@ -160,23 +160,26 @@ $lang['addon.themes.upload'] = 'Uploader un thème';
 $lang['addon.themes.drop']          = 'Supprimer tous les fichiers du thème';
 $lang['addon.themes.drop.multiple'] = 'Supprimer tous les fichiers des thèmes';
 
-// ---- Sources distantes d'addons (GitHub / Site) ----
+// ---- Sources distantes d'extension (GitHub / Site) ----
 
-$lang['addon.refresh.cache']   = 'Rafraîchir le cache';
+$lang['addon.refresh.cache'] = 'Rafraîchir le cache';
+$lang['addon.add.source']    = 'Ajouter une source';
 // GitHub
+$lang['addon.github.running.repo']   = 'Dépôt courant';
 $lang['addon.github.choose.repo']    = 'Choisir un dépôt';
 $lang['addon.github.custom.repo']    = 'Utiliser un dépôt personnalisé';
 $lang['addon.github.load.repo']      = 'Charger ce dépôt';
 $lang['addon.github.view.repo']      = 'Voir sur GitHub';
-$lang['addon.github.no.addon.found'] = 'Aucun addon compatible trouvé dans ce dépôt.';
+$lang['addon.github.no.addon.found'] = 'Aucune extension compatible trouvée dans ce dépôt.';
 $lang['addon.github.token.missing']  = 'Le token GitHub est manquant. <a href="' . AdminConfigUrlBuilder::addons_config()->rel() . '" class="offload">Configuration</a>';
 $lang['addon.github.bad.token']      = 'Le token GitHub est invalide ou le fichier JSON est manquant. <a href="' . AdminConfigUrlBuilder::addons_config()->rel() . '" class="offload">Configuration</a>';
 
 // Website
+$lang['addon.website.running.server'] = 'Serveur courant';
 $lang['addon.website.choose.server']  = 'Choisir un serveur de téléchargement';
 $lang['addon.website.custom.server']  = 'Utiliser un serveur personnalisé';
 $lang['addon.website.load']           = 'Charger ce serveur';
-$lang['addon.website.no.addon.found'] = 'Aucun addon compatible trouvé sur ce serveur.';
+$lang['addon.website.no.addon.found'] = 'Aucune extension compatible trouvée sur ce serveur.';
 
 // Common
 $lang['addon.loading']               = 'Chargement&hellip;';

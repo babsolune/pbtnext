@@ -162,8 +162,10 @@ $lang['addon.themes.drop.multiple'] = 'Delete all themes\'s files';
 
 // ---- Remote addon sources (GitHub / Website) ----
 
-$lang['addon.refresh.cache']   = 'Refresh cache';
+$lang['addon.refresh.cache'] = 'Refresh cache';
+$lang['addon.add.source']    = 'Add a repository';
 // GitHub
+$lang['addon.github.running.repo']   = 'Running repository';
 $lang['addon.github.choose.repo']    = 'Choose a repository';
 $lang['addon.github.custom.repo']    = 'Use a custom repository';
 $lang['addon.github.load.repo']      = 'Load this repository';
@@ -173,6 +175,7 @@ $lang['addon.github.token.missing']  = 'This token is missing. <a href="' . Admi
 $lang['addon.github.bad.token']      = 'The GitHub token is invalid or the JSON file is missing. <a href="' . AdminConfigUrlBuilder::addons_config()->rel() . '" class="offload">Configuration</a>';
 
 // Website
+$lang['addon.website.running.server'] = 'Running server';
 $lang['addon.website.choose.server']  = 'Choose a download server';
 $lang['addon.website.custom.server']  = 'Use a custom server';
 $lang['addon.website.load']           = 'Load this server';

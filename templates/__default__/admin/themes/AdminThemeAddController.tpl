@@ -19,19 +19,25 @@
 		<!-- ==================== GITHUB ==================== -->
 		<div id="target-github" class="tab-content">
 			<div class="cell-flex cell-columns-2 addon-source-selector">
-				# IF C_GITHUB_HAS_REPOS #
-					<form id="gh-select-form" method="get" action="{U_CURRENT_PAGE}">
-						<label class="text-strong" for="github-repo-select">{@addon.github.choose.repo}</label>
-						<select id="github-repo-select" onchange="ghSelectChange(this)">
-							# START github_repos #
-								<option value="{github_repos.OWNER}" data-repo="{github_repos.REPO}" data-dir="{github_repos.DIR}"# IF github_repos.C_SELECTED # selected# ENDIF #>{github_repos.LABEL}</option>
-							# END github_repos #
-						</select>
-						<input type="hidden" id="gh_owner_hidden" name="gh_owner" value="{GITHUB_ACTIVE_OWNER}" />
-						<input type="hidden" id="gh_repo_hidden"  name="gh_repo"  value="{GITHUB_ACTIVE_REPO}" />
-						<input type="hidden" id="gh_dir_hidden"   name="gh_dir"   value="{GITHUB_ACTIVE_DIR}" />
-					</form>
-				# ENDIF #
+                <div>
+                    <div class="flex-between flex-between-large">
+                        <span>{@addon.github.running.repo} : {GITHUB_ACTIVE_OWNER}/{GITHUB_ACTIVE_REPO}</span>
+                        <span><a class="button button-mini default offload" href="${relative_url(AdminConfigUrlBuilder::addons_config())}">{@addon.add.source}</a></span>
+                    </div>
+                    # IF C_GITHUB_HAS_REPOS #
+                        <form id="gh-select-form" method="get" action="{U_CURRENT_PAGE}">
+                            <label class="text-strong" for="github-repo-select">{@addon.github.choose.repo}</label>
+                            <select id="github-repo-select" onchange="ghSelectChange(this)">
+                                # START github_repos #
+                                    <option value="{github_repos.OWNER}" data-repo="{github_repos.REPO}" data-dir="{github_repos.DIR}"# IF github_repos.C_SELECTED # selected# ENDIF #>{github_repos.LABEL}</option>
+                                # END github_repos #
+                            </select>
+                            <input type="hidden" id="gh_owner_hidden" name="gh_owner" value="{GITHUB_ACTIVE_OWNER}" />
+                            <input type="hidden" id="gh_repo_hidden"  name="gh_repo"  value="{GITHUB_ACTIVE_REPO}" />
+                            <input type="hidden" id="gh_dir_hidden"   name="gh_dir"   value="{GITHUB_ACTIVE_DIR}" />
+                        </form>
+                    # ENDIF #
+                </div>
 				<details class="addon-custom-repo">
 					<summary class="text-strong">{@addon.github.custom.repo}</summary>
 					<form class="grouped-inputs inputs-with-sup" method="get" action="{U_CURRENT_PAGE}">
@@ -47,7 +53,7 @@
                             <span>{@addon.sub.directory}</span>
                             <input type="text" id="gh_dir_custom" name="gh_dir" value="{GITHUB_ACTIVE_DIR}" placeholder="{@addon.sub.directory.optional}" />
                         </label>
-						<button type="submit" class="button submit grouped-element">{@addon.github.load.repo}</button>
+						<button type="submit" class="button submit grouped-element">{@form.submit}</button>
 					</form>
 				</details>
 			</div>
@@ -141,18 +147,24 @@
         <!-- ==================== WEBSITE ==================== -->
 		<div id="target-website" class="tab-content">
 			<div class="cell-flex cell-columns-2 addon-source-selector">
-				# IF C_WEBSITE_HAS_SERVERS #
-					<form id="ws-select-form" method="get" action="{U_CURRENT_PAGE}">
-						<label class="text-strong" for="website-server-select">{@addon.website.choose.server}</label>
-						<select id="website-server-select" onchange="wsSelectChange(this)">
-							# START website_servers #
-								<option value="{website_servers.URL}" data-dir="{website_servers.DIR}"# IF website_servers.C_SELECTED # selected# ENDIF #>{website_servers.LABEL}</option>
-							# END website_servers #
-						</select>
-						<input type="hidden" id="ws_url_hidden" name="ws_url" value="{WEBSITE_ACTIVE_URL}" />
-						<input type="hidden" id="ws_dir_hidden" name="ws_dir" value="{WEBSITE_ACTIVE_DIR}" />
-					</form>
-				# ENDIF #
+                <div>
+                    <div class="flex-between flex-between-large">
+                        <span>{@addon.website.running.server} : {WEBSITE_ACTIVE_URL}</span>
+                        <span><a class="button button-mini default offload" href="${relative_url(AdminConfigUrlBuilder::addons_config())}">{@addon.add.source}</a></span>
+                    </div>
+                    # IF C_WEBSITE_HAS_SERVERS #
+                        <form id="ws-select-form" method="get" action="{U_CURRENT_PAGE}">
+                            <label class="text-strong" for="website-server-select">{@addon.website.choose.server}</label>
+                            <select id="website-server-select" onchange="wsSelectChange(this)">
+                                # START website_servers #
+                                    <option value="{website_servers.URL}" data-dir="{website_servers.DIR}"# IF website_servers.C_SELECTED # selected# ENDIF #>{website_servers.LABEL}</option>
+                                # END website_servers #
+                            </select>
+                            <input type="hidden" id="ws_url_hidden" name="ws_url" value="{WEBSITE_ACTIVE_URL}" />
+                            <input type="hidden" id="ws_dir_hidden" name="ws_dir" value="{WEBSITE_ACTIVE_DIR}" />
+                        </form>
+                    # ENDIF #
+                </div>
 				<details class="addon-custom-server">
 					<summary class="text-strong">{@addon.website.custom.server}</summary>
 					<form class="grouped-inputs inputs-with-sup" method="get" action="{U_CURRENT_PAGE}">
