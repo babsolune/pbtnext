@@ -39,21 +39,23 @@ class HtaccessFileCache implements CacheData
 		if ($this->server_environment_config->is_url_rewriting_enabled())
 		{
 			$this->enable_rewrite_rules();
-
 			$this->force_redirection_if_available();
-
 			$this->add_core_rules();
-
 			$this->add_user_rules();
-
 			$this->add_modules_rules();
-
 			$this->add_php_and_http_protections();
-
 			$this->add_file_and_sql_injections_protections();
-
 			$this->add_bandwidth_protection();
 		}
+        else
+        {
+            $site_path = $this->general_config->get_site_path();
+            $this->add_section('Module routing without URL rewriting');
+            $this->add_line('RewriteEngine on');
+            $this->add_line('RewriteBase /');
+            $this->add_line('RewriteRule ^([a-zA-Z0-9_-]+)/?$ ' . $site_path . '/modules/$1/index.php [L,QSA]');
+            $this->add_line('RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_\-.]+\.php)(.*)$ ' . $site_path . '/modules/$1/$2$3 [L,QSA]');
+        }
 
 		$this->set_default_charset();
 

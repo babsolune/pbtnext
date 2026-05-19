@@ -39,6 +39,20 @@ class NginxFileCache implements CacheData
 
 			$this->add_bandwidth_protection();
 		}
+        else
+        {
+            $site_path = $this->general_config->get_site_path();
+            $this->add_section('Module routing without URL rewriting');
+
+            $this->add_line('location ~ ^/([a-zA-Z0-9_-]+)/?$ {');
+            $this->add_line("\trewrite ^/([a-zA-Z0-9_-]+)/?$ " . $site_path . '/modules/$1/index.php last;');
+            $this->add_line('}');
+            $this->add_empty_line();
+
+            $this->add_line('location ~ ^/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_\-.]+\.php)(.*)$ {');
+            $this->add_line("\trewrite ^/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_\\-.]+\\.php)(.*)$ " . $site_path . '/modules/$1/$2$3 last;');
+            $this->add_line('}');
+        }
 
 		$this->set_default_charset();
 
