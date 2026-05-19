@@ -5,7 +5,7 @@
  * @author	    RubaXa   <trash@rubaxa.org>
  * @author	    owenm    <owen23355@gmail.com>
  * @link        https://github.com/SortableJS/Sortable
- * @version     PHPBoost 6.1 - last update: 2026 03 14
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 6.1 - 2026 03 14
 */
 

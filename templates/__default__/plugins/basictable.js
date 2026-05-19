@@ -4,7 +4,7 @@
  * @license     https://www.opensource.org/licenses/mit-license.php
  * @author      Jerry Low
  * @link        https://github.com/jerrylow/basictable
- * @version     PHPBoost 6.1 - last update: 2021 09 21
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 5.0 - 2016 03 30
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
  *

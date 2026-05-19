@@ -61,7 +61,7 @@
 }
 
 .bbcode-sub > span {
-	color: var(--main-lite);
+	color: var(--main-light);
 	background-color: rgba(var(--main-rgb-t), 0.2);
 }
 

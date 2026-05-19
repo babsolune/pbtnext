@@ -11,7 +11,7 @@
  * @author      Jonathan WAGE <jonwage@gmail.com>
  * @author      Roman BORSCHEL <roman@code-factory.org>
  * @author      Lukas Smith <smith@pooteeweet.org> (PEAR MDB2 library)
- * @version     PHPBoost 6.1 - last update: 2018 08 27
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 4.0 - 2013 01 01
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
  * @author      Arnaud GENET <elenwii@phpboost.com>

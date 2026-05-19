@@ -3,7 +3,7 @@
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
  * @author      Patrick DUBEAU <daaxwizeman@gmail.com>
- * @version     PHPBoost 6.1 - last update: 2026 03 08
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2011 09 20
  * @author      Kevin MASSY <reidlos@phpboost.com>
  * @author      Julien BRISWALTER <j1.seth@phpboost.com>
@@ -159,6 +159,7 @@ class AdminModuleAddController extends DefaultAdminController
 
     private function build_view(HTTPRequestCustom $request): void
     {
+        $this->view->put('C_IS_LOCALHOST', AppContext::get_request()->get_is_localhost());
         $phpboost_version = GeneralConfig::load()->get_phpboost_major_version();
         $modules_not_installed = $this->get_modules_not_installed();
 

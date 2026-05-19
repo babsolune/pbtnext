@@ -2,7 +2,7 @@
 /**
  * @copyright   &copy; 2005-2026 PHPBoost
  * @license     https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL-3.0
- * @version     PHPBoost 6.1 - last update: 2026 03 29
+ * @version     PHPBoost 6.1 - last update: 2026 05 19
  * @since       PHPBoost 3.0 - 2011 04 20
  * @author      Sebastien LARTIGUE <babsolune@phpboost.com>
 */
